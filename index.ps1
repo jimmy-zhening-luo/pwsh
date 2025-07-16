@@ -1,7 +1,7 @@
 # Set-PSDebug -Trace 1
 $code = "$HOME\code"
 $PROFILE_REPO = "$code\pwsh"
-$PROFILE_REPO_INDEX = "$PROFILE_REPO\index.ps1"
+$PROFILE_REPO_INDEX = "$PROFILE_REPO\index.ps1" # Must match dot-scope script in `$HOME\Documents\PowerShell\profile.ps1`
 
 $PSDefaultParameterValues = @{
   "Format-Table:Wrap" = $true
