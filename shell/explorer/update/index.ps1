@@ -1,0 +1,1 @@
+. $PSScriptRoot\edit.ps1
