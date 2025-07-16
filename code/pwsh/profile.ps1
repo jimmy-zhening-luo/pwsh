@@ -6,7 +6,7 @@ function Open-Profile {
 New-Alias opp Open-ProfileRepository
 function Open-ProfileRepository {
   Edit-File $PROFILE_REPO
-  Edit-File $PROFILE_REPO\windows\pwsh\index.ps1 --reuse-window
+  Edit-File $PROFILE_REPO_INDEX --reuse-window
 }
 New-Alias ops Sync-ProfileRepository
 function Sync-ProfileRepository {

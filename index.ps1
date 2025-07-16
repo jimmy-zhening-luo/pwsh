@@ -1,11 +1,14 @@
 # Set-PSDebug -Trace 1
-
-. $PSScriptRoot\consts\index.ps1
+$code = "$HOME\code"
+$PROFILE_REPO = "$code\pwsh"
+$PROFILE_REPO_INDEX = "$PROFILE_REPO\index.ps1"
 
 $PSDefaultParameterValues = @{
   "Format-Table:Wrap" = $true
   "Invoke-Item:Path"  = "."
 }
+
+. $PSScriptRoot\consts\index.ps1
 
 . $PSScriptRoot\object.ps1
 . $PSScriptRoot\system\index.ps1
