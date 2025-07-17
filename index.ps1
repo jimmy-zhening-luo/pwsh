@@ -1,9 +1,8 @@
 $code = "$HOME\code"
 $PROFILE_REPO = "$code\pwsh"
-$PROFILE_REPO_INDEX = "$PROFILE_REPO\index.ps1" # Must match dot-scope script in `$HOME\Documents\PowerShell\profile.ps1`
-$PROFILE_REPO_MODULES = "$PROFILE_REPO\modules"
+$Env:PSModulePath += ";$PROFILE_REPO\modules"
+$PROFILE_REPO_INDEX = "$PROFILE_REPO\index.ps1" # Must match dot-sourced script in $PROFILE; see `.\profile.ps1.example`.
 
-$Env:PSModulePath += ";$PROFILE_REPO_MODULES"
 $PSDefaultParameterValues = @{
   "Format-Table:Wrap" = $true
   "Invoke-Item:Path"  = "."
