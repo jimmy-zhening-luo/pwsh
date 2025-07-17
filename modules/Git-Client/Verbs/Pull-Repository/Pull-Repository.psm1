@@ -1,3 +1,5 @@
+Import-Module "$(Split-Path (Split-Path $PSScriptRoot))\Invoke-Repository"
+
 New-Alias gitp Get-Repository
 function Get-Repository {
   param(
@@ -12,3 +14,5 @@ function Get-ChildRepository {
   | Where-Object { Resolve-Repository $_.FullName }
   | ForEach-Object { Invoke-Repository -Path $_.FullName -Verb pull }
 }
+
+Export-ModuleMember Get-Repository, Get-ChildRepository -Alias gitp, gitpa

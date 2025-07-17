@@ -1,3 +1,5 @@
+Import-Module "$(Split-Path (Split-Path $PSScriptRoot))\Invoke-Repository"
+
 New-Alias gitcr Undo-Repository
 function Undo-Repository {
   param(
@@ -19,5 +21,6 @@ function Restore-Repository {
   catch {
     throw ("Failed to reset and pull repository at '$Path' with message '$Message'. Caught error: " + $_.Exception.Message)
   }
-
 }
+
+Export-ModuleMember Undo-Repository, Restore-Repository -Alias gitcr, gitcrp

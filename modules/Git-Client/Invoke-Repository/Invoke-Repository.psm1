@@ -1,4 +1,4 @@
-. $PSScriptRoot\resolve.ps1
+Import-Module "$PSScriptRoot\Resolve-Repository"
 
 New-Alias gitc Invoke-Repository
 function Invoke-Repository {
@@ -103,3 +103,5 @@ function Invoke-Repository {
     git -C $Repository $Verb @args
   }
 }
+
+Export-ModuleMember Invoke-Repository, Resolve-Repository -Alias gitc

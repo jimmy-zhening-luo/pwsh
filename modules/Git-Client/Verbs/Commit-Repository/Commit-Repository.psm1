@@ -1,3 +1,5 @@
+Import-Module "$(Split-Path (Split-Path $PSScriptRoot))\Invoke-Repository"
+
 New-Alias gitm Write-Repository
 function Write-Repository {
   param(
@@ -17,3 +19,5 @@ function Write-Repository {
     throw ("Failed to commit changes to repository at '$Path' with message '$Message'. Caught error: " + $_.Exception.Message)
   }
 }
+
+Export-ModuleMember Write-Repository -Alias gitm

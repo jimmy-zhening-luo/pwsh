@@ -25,3 +25,5 @@ function Resolve-Repository {
     }
   }
 }
+
+Export-ModuleMember Resolve-Repository

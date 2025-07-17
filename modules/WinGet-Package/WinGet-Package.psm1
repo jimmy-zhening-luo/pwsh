@@ -4,4 +4,4 @@ function Add-WinGetPackage {
   winget add @args
 }
 
-Export-ModuleMember -Function Add-WinGetPackage -Alias wg, wga
+Export-ModuleMember Add-WinGetPackage -Alias wg, wga

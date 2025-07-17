@@ -13,5 +13,4 @@ $PSDefaultParameterValues = @{
 . $PSScriptRoot\scripts\object\index.ps1
 . $PSScriptRoot\scripts\system\index.ps1
 . $PSScriptRoot\scripts\shell\index.ps1
-. $PSScriptRoot\scripts\code\index.ps1
 . $PSScriptRoot\scripts\apps\index.ps1

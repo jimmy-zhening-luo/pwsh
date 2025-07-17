@@ -1,1 +1,3 @@
+$HELP_ROOT = https://example.com
+
 . $HOME\code\pwsh\index.ps1
