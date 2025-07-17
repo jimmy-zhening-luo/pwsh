@@ -9,11 +9,6 @@ $PSDefaultParameterValues = @{
   "Invoke-Item:Path"  = "."
 }
 
-if (-not $COUNTER) {
-  $COUNTER = 0
-}
-$COUNTER += 1
-
 . $PSScriptRoot\consts\index.ps1
 
 . $PSScriptRoot\scripts\object\index.ps1
