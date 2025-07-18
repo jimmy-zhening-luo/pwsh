@@ -46,5 +46,3 @@ function Stop-Task {
     Stop-Process @Splat
   }
 }
-
-Export-ModuleMember Stop-Task -Alias tkill, tkillx
