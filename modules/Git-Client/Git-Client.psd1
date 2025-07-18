@@ -4,6 +4,11 @@
   NestedModules = @(
     ".\Invoke-Repository"
     ".\Add-Repository"
+    ".\Clone-Repository"
+    ".\Commit-Repository"
+    ".\Pull-Repository"
+    ".\Push-Repository"
+    ".\Reset-Repository"
   )
   AliasesToExport = @(
     "gitc"
