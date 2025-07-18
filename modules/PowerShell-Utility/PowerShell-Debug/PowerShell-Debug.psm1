@@ -15,5 +15,3 @@ function Measure-PowerShellNoProfile {
     }
   ).TotalMilliseconds
 }
-
-Export-ModuleMember Measure-PowerShellProfile, Measure-PowerShellNoProfile -Alias mc, mcn
