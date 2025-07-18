@@ -1,5 +1,5 @@
-New-Alias mc Measure-PowerShellProfile
-function Measure-PowerShellProfile {
+New-Alias mc Measure-Profile
+function Measure-Profile {
   (
     Measure-Command {
       pwsh -Command 1
@@ -7,8 +7,8 @@ function Measure-PowerShellProfile {
   ).TotalMilliseconds
 }
 
-New-Alias mn Measure-PowerShellNoProfile
-function Measure-PowerShellNoProfile {
+New-Alias mn Measure-NoProfile
+function Measure-NoProfile {
   (
     Measure-Command {
       pwsh -NoProfile -Command 1

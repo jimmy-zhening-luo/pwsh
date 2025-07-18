@@ -1,5 +1,5 @@
 @{
-  ModuleVersion     = "1.0"
+  ModuleVersion     = "1.1"
   GUID              = "c84491db-0b43-4dfc-80ea-890b16269a28"
   NestedModules     = @(
     ".\PowerShell-Alias"
@@ -13,8 +13,8 @@
     "Get-HelpOnline"
     "Get-PowerShellVerb"
     "Open-ConsoleHistory"
-    "Measure-PowerShellProfile"
-    "Measure-PowerShellNoProfile"
+    "Measure-Profile"
+    "Measure-NoProfile"
   )
   AliasesToExport   = @(
     "galc"

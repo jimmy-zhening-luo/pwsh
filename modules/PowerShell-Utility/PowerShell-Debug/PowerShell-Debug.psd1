@@ -1,10 +1,10 @@
 @{
   RootModule        = "PowerShell-Debug.psm1"
-  ModuleVersion     = "1.0"
+  ModuleVersion     = "1.1"
   GUID              = "d97743fb-8ecf-4420-9862-2704499e99ef"
   FunctionsToExport = @(
-    "Measure-PowerShellProfile"
-    "Measure-PowerShellNoProfile"
+    "Measure-Profile"
+    "Measure-NoProfile"
   )
   AliasesToExport   = @(
     "mc"
