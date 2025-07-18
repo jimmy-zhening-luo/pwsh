@@ -1,6 +1,6 @@
 $code = "$HOME\code"
 $PROFILE_REPO = "$code\pwsh"
-$Env:PSModulePath = $Env:PSModulePath + ";$PROFILE_REPO\modules"
+$Env:PSModulePath += ";$PROFILE_REPO\modules"
 $PROFILE_REPO_INDEX = "$PROFILE_REPO\index.ps1" # Must match dot-sourced script in $PROFILE; see `.\profile.ps1.example`.
 
 $PSDefaultParameterValues = @{
