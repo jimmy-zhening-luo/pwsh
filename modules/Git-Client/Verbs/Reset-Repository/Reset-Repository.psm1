@@ -1,5 +1,3 @@
-Import-Module "$(Split-Path (Split-Path $PSScriptRoot))\Invoke-Repository"
-
 New-Alias gitcr Undo-Repository
 function Undo-Repository {
   param(

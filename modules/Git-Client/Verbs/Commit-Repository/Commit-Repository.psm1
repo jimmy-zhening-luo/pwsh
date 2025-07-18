@@ -1,5 +1,3 @@
-Import-Module "$(Split-Path (Split-Path $PSScriptRoot))\Invoke-Repository"
-
 New-Alias gitm Write-Repository
 function Write-Repository {
   param(

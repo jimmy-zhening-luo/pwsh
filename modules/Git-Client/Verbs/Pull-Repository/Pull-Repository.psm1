@@ -1,5 +1,3 @@
-Import-Module "$(Split-Path (Split-Path $PSScriptRoot))\Invoke-Repository"
-
 New-Alias gitp Get-Repository
 function Get-Repository {
   param(
