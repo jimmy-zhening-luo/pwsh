@@ -6,7 +6,7 @@
     ".\PowerShell-Debug"
   )
   AliasesToExport = @(
-    "tkill"
-    "tkillx"
+    "mc"
+    "mcn"
   )
 }

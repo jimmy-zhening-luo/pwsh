@@ -1,1 +1,1 @@
-Export-ModuleMember -Function * -Alias *
+Export-ModuleMember * -Alias *
