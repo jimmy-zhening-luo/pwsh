@@ -1,9 +1,7 @@
 @{
+  RootModule        = "Stop-Task.psm1"
   ModuleVersion     = "1.0"
-  GUID              = "9560b44f-3980-45d7-80f3-0c0f7d2ac2c4"
-  NestedModules     = @(
-    ".\Stop-Task"
-  )
+  GUID              = "2a3c21a6-d75f-4256-a385-5888fce17a64"
   FunctionsToExport = @(
     "Stop-Task"
   )

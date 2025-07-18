@@ -1,9 +1,7 @@
 @{
+  RootModule        = "Add-WinGetPackage.psm1"
   ModuleVersion     = "1.0"
-  GUID              = "3a5b4926-a508-40f6-8df1-e8415625ac12"
-  NestedModules     = @(
-    ".\Add-WinGetPackage"
-  )
+  GUID              = "ac527367-746f-4560-a51a-380c9abeb26a"
   FunctionsToExport = @(
     "Add-WinGetPackage"
   )
