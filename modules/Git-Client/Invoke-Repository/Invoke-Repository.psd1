@@ -5,6 +5,10 @@
   NestedModules = @(
     ".\Resolve-Repository"
   )
+  FunctionsToExport = @(
+    "Invoke-Repository"
+    "Resolve-Repository"
+  )
   AliasesToExport = @(
     "gitc"
   )

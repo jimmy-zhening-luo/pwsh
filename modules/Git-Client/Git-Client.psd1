@@ -8,7 +8,13 @@
   NestedModules = @(
     ".\Verbs\Add-Repository"
   )
+  FunctionsToExport = @(
+    "Invoke-Repository"
+    "Resolve-Repository"
+    "Add-Repository"
+  )
   AliasesToExport = @(
+    "gitc"
     "gita"
   )
 }
