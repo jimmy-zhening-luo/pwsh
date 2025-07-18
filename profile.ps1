@@ -6,7 +6,6 @@ function Open-Profile {
 New-Alias opp Open-ProfileRepository
 function Open-ProfileRepository {
   Edit-File $PROFILE_REPO
-  Edit-File $PROFILE_REPO_MAIN --reuse-window
 }
 
 New-Alias ops Sync-ProfileRepository
