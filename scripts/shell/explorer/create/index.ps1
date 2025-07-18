@@ -1,1 +1,0 @@
-. $PSScriptRoot\file.ps1

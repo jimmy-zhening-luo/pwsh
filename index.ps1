@@ -1,17 +1,12 @@
 $code = "$HOME\code"
 $PROFILE_REPO = "$code\pwsh"
+$PROFILE_REPO_MAIN = "$PROFILE_REPO\index.ps1"
 $Env:PSModulePath += ";$PROFILE_REPO\modules"
-$PROFILE_REPO_INDEX = "$PROFILE_REPO\index.ps1" # Must match dot-sourced script in $PROFILE; see `.\profile.ps1.example`.
 
-$PSDefaultParameterValues = @{
-  "Format-Table:Wrap" = $true
-  "Invoke-Item:Path"  = "."
-  "Remove-Item:Force" = $true
-}
+$PSDefaultParameterValues = Import-PowerShellDataFile "$PSScriptRoot\defaults.psd1"
+
+. $PSScriptRoot\profile.ps1
 
 . $PSScriptRoot\data\index.ps1
-
-. $PSScriptRoot\scripts\object\index.ps1
-. $PSScriptRoot\scripts\system\index.ps1
-. $PSScriptRoot\scripts\shell\index.ps1
-. $PSScriptRoot\scripts\apps\index.ps1
+. $PSScriptRoot\alias\index.ps1
+. $PSScriptRoot\legacy\index.ps1

@@ -1,25 +1,6 @@
-New-Alias galc Get-AliasCommand
-function Get-AliasCommand {
-  param([string]$Definition)
-
-  $Splat = $Definition ? @{
-    Definition = (
-      ($Definition.Length -lt 3) ? "" : "*"
-    ) + $Definition + "*"
-  } : @{}
-
-  Get-Alias @Splat | Select-Object DisplayName
-}
-
-New-Alias verb Get-VerbList
-function Get-VerbList {
-  Get-Verb | Sort-Object -Property Verb | Select-Object Verb
-}
-
-New-Alias help Get-Help
-New-Alias mano Get-HelpOnline
-New-Alias m Get-HelpOnline
 New-Alias upman Update-Help
+
+New-Alias m Get-HelpOnline
 function Get-HelpOnline {
   param(
     [Parameter(Position = 0)]

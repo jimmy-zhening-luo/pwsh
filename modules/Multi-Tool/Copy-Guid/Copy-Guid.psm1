@@ -1,7 +1,5 @@
-New-Alias clip Set-Clipboard # default: clip.exe
-
-New-Alias guid Copy-NewGuid
-function Copy-NewGuid {
+New-Alias guid Copy-Guid
+function Copy-Guid {
   param (
     [switch]$UpperCase,
     [switch]$NoOutput

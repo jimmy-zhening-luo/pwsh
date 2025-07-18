@@ -1,5 +1,3 @@
-. $PSScriptRoot\test.ps1
-
 New-Alias open Open-Url
 New-Alias o Open-Url
 function Open-Url {
