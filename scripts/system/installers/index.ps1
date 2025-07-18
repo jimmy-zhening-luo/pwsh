@@ -1,1 +1,0 @@
-. $PSScriptRoot\appx.ps1
