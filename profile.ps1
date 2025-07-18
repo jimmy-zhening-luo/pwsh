@@ -1,5 +1,5 @@
 New-Alias p Edit-Profile
-function Open-ProfileRepository {
+function Edit-Profile {
   Edit-File $PROFILE_REPO
 }
 
@@ -8,7 +8,7 @@ function Initialize-Profile {
   Edit-File $PROFILE.CurrentUserAllHosts
 }
 
-New-Alias pp Sync-ProfileRepository
-function Sync-ProfileRepository {
+New-Alias pp Sync-Profile
+function Sync-Profile {
   Get-Repository -Path $PROFILE_REPO
 }
