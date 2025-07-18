@@ -1,4 +1,4 @@
-New-Alias oc Open-ConsoleHistory
-function Open-ConsoleHistory {
+New-Alias hh Edit-History
+function Edit-History {
   Edit-File (Get-PSReadLineOption).HistorySavePath
 }

@@ -1,5 +1,5 @@
 @{
-  ModuleVersion     = "1.1"
+  ModuleVersion     = "1.2"
   GUID              = "c84491db-0b43-4dfc-80ea-890b16269a28"
   NestedModules     = @(
     ".\PowerShell-Alias"
@@ -12,7 +12,7 @@
     "Get-AliasCommand"
     "Get-HelpOnline"
     "Get-PowerShellVerb"
-    "Open-ConsoleHistory"
+    "Edit-History"
     "Measure-Profile"
     "Measure-NoProfile"
   )
@@ -21,7 +21,7 @@
     "m"
     "upman"
     "verb"
-    "oc"
+    "hh"
     "mc"
     "mn"
   )
