@@ -6,6 +6,7 @@ $PROFILE_REPO_INDEX = "$PROFILE_REPO\index.ps1" # Must match dot-sourced script 
 $PSDefaultParameterValues = @{
   "Format-Table:Wrap" = $true
   "Invoke-Item:Path"  = "."
+  "Remove-Item:Force" = $true
 }
 
 . $PSScriptRoot\data\index.ps1
