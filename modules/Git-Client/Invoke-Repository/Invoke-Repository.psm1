@@ -1,5 +1,3 @@
-Import-Module "$PSScriptRoot\Resolve-Repository"
-
 New-Alias gitc Invoke-Repository
 function Invoke-Repository {
   param(
