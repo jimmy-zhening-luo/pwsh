@@ -23,6 +23,6 @@
     "verb"
     "oc"
     "mc"
-    "mcn"
+    "mn"
   )
 }

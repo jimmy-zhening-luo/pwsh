@@ -8,6 +8,6 @@
   )
   AliasesToExport   = @(
     "mc"
-    "mcn"
+    "mn"
   )
 }
