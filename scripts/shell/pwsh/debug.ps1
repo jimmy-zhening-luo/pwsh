@@ -1,6 +1,4 @@
-New-Alias mc Measure-Command
-
-New-Alias mcp Measure-PowerShellProfile
+New-Alias mc Measure-PowerShellProfile
 function Measure-PowerShellProfile {
   (
     Measure-Command {
@@ -9,7 +7,6 @@ function Measure-PowerShellProfile {
   ).TotalMilliseconds
 }
 
-New-Alias mcnp Measure-PowerShellNoProfile
 New-Alias mcn Measure-PowerShellNoProfile
 function Measure-PowerShellNoProfile {
   (
