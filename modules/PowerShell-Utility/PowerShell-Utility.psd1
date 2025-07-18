@@ -1,5 +1,5 @@
 @{
-  ModuleVersion     = "1.2"
+  ModuleVersion     = "1.0.0.0"
   GUID              = "c84491db-0b43-4dfc-80ea-890b16269a28"
   NestedModules     = @(
     ".\PowerShell-Alias"
@@ -11,7 +11,7 @@
   FunctionsToExport = @(
     "Get-AliasCommand"
     "Get-HelpOnline"
-    "Get-PowerShellVerb"
+    "Get-VerbPowerShell"
     "Edit-History"
     "Measure-Profile"
     "Measure-NoProfile"
@@ -20,8 +20,7 @@
     "galc"
     "m"
     "upman"
-    "verb"
-    "hh"
+    "ch"
     "mc"
     "mn"
   )

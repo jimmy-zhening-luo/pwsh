@@ -1,5 +1,5 @@
 @{
-  ModuleVersion     = "1.0"
+  ModuleVersion     = "1.0.0.0"
   GUID              = "7ef2a734-a882-4b6e-b3d9-2c43b1bdd3ed"
   NestedModules     = @(
     ".\Set-Folder"
