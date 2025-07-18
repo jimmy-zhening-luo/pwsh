@@ -5,6 +5,10 @@
   NestedModules = @(
     ".\PowerShell-Debug"
   )
+  FunctionsToExport = @(
+    "Measure-PowerShellProfile"
+    "Measure-PowerShellNoProfile"
+  )
   AliasesToExport = @(
     "mc"
     "mcn"
