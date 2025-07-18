@@ -9,4 +9,3 @@ $PSDefaultParameterValues = Import-PowerShellDataFile "$PSScriptRoot\defaults.ps
 
 . $PSScriptRoot\data\index.ps1
 . $PSScriptRoot\alias\index.ps1
-. $PSScriptRoot\legacy\index.ps1

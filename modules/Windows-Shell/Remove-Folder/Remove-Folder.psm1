@@ -1,4 +1,3 @@
-Set-Alias rd Remove-Folder # default: Remove-Item
 function Remove-Folder {
   [CmdletBinding(SupportsShouldProcess)]
   param(

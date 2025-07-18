@@ -5,3 +5,4 @@ New-Alias remsv Remove-Service
 
 New-Alias gapx Get-AppxPackage
 New-Alias remapx Remove-AppxPackage
+New-Alias wg winget

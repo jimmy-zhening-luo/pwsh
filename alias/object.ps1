@@ -1,5 +1,4 @@
 New-Alias count Measure-Object
-New-Alias num Measure-Object
 New-Alias n Measure-Object
 
 New-Alias keyof Get-Member
