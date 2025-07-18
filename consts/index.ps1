@@ -1,1 +1,0 @@
-. $PSScriptRoot\help.ps1

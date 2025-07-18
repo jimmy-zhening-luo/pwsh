@@ -8,7 +8,7 @@ $PSDefaultParameterValues = @{
   "Invoke-Item:Path"  = "."
 }
 
-. $PSScriptRoot\consts\index.ps1
+. $PSScriptRoot\data\index.ps1
 
 . $PSScriptRoot\scripts\object\index.ps1
 . $PSScriptRoot\scripts\system\index.ps1

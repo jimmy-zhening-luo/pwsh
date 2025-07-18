@@ -1,4 +1,4 @@
-$HELP = @{
+@{
   Lint = "https://learn.microsoft.com/powershell/utility-modules/psscriptanalyzer/rules/readme"
   Verb = @(
     "https://learn.microsoft.com/powershell/scripting/learn/ps101/09-functions#naming"
