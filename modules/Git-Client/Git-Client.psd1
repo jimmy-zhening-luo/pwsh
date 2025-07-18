@@ -7,20 +7,8 @@
   )
   NestedModules = @(
     ".\Verbs\Add-Repository"
-    ".\Verbs\Clone-Repository"
-    ".\Verbs\Commit-Repository"
-    ".\Verbs\Pull-Repository"
-    ".\Verbs\Push-Repository"
-    ".\Verbs\Reset-Repository"
   )
   AliasesToExport = @(
     "gita"
-    "gitcl"
-    "gitcp"
-    "gitcr"
-    "gitcrp"
-    "gitm"
-    "gitp"
-    "gitpa"
   )
 }
