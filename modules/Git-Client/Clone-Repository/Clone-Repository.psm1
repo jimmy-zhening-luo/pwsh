@@ -39,5 +39,3 @@ function Import-Repository {
     }
   }
 }
-
-Export-ModuleMember Import-Repository -Alias gitcl

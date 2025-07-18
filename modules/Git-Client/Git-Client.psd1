@@ -11,6 +11,19 @@
     ".\Push-Repository"
     ".\Reset-Repository"
   )
+  FunctionsToExport = @(
+    "Invoke-Repository"
+    "Resolve-Repository"
+    # Verbs
+    "Add-Repository"
+    "Import-Repository"
+    "Write-Repository"
+    "Get-Repository"
+    "Get-ChildRepository"
+    "Push-Repository"
+    "Undo-Repository"
+    "Restore-Repository"
+  )
   AliasesToExport = @(
     "gitc"
     # Verbs

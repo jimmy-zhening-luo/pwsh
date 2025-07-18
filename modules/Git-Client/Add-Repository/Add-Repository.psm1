@@ -5,5 +5,3 @@ function Add-Repository {
   )
   Invoke-Repository -Path $Path -Verb add .
 }
-
-Export-ModuleMember Add-Repository -Alias gita

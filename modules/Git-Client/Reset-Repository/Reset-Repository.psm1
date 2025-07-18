@@ -20,5 +20,3 @@ function Restore-Repository {
     throw ("Failed to reset and pull repository at '$Path' with message '$Message'. Caught error: " + $_.Exception.Message)
   }
 }
-
-Export-ModuleMember Undo-Repository, Restore-Repository -Alias gitcr, gitcrp

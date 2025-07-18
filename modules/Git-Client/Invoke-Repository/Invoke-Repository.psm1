@@ -101,5 +101,3 @@ function Invoke-Repository {
     git -C $Repository $Verb @args
   }
 }
-
-Export-ModuleMember Invoke-Repository, Resolve-Repository -Alias gitc

@@ -5,5 +5,3 @@ function Push-Repository {
   )
   Invoke-Repository -Path $Path -Verb push
 }
-
-Export-ModuleMember Push-Repository -Alias gitcp
