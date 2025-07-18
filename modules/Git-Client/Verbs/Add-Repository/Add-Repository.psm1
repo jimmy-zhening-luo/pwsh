@@ -3,7 +3,8 @@ function Add-Repository {
   param(
     [string]$Path
   )
-  Invoke-Repository -Path $Path -Verb add .
+  echo $Path
+  # Invoke-Repository -Path $Path -Verb add .
 }
 
 Export-ModuleMember Add-Repository -Alias gita
