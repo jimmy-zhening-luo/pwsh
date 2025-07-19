@@ -1,12 +1,13 @@
 New-Alias galc Get-AliasCommand
+<#
+.FORWARDHELPTARGETNAME Get-Alias
+#>
 function Get-AliasCommand {
-  param([string]$Definition)
+  param(
+    [string]$Definition = "*"
+  )
 
-  $Splat = $Definition ? @{
-    Definition = (
-      ($Definition.Length -lt 3) ? "" : "*"
-    ) + $Definition + "*"
-  } : @{}
+  $DefinitionMatch = $Definition.Contains('*') ? $Definition : ($Definition.Length -lt 3 ? "$Definition*" : "*$Definition*")
 
-  Get-Alias @Splat | Select-Object DisplayName
+  Get-Alias -Definition $DefinitionMatch | Select-Object DisplayName
 }

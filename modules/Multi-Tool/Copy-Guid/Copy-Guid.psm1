@@ -1,4 +1,7 @@
 New-Alias guid Copy-Guid
+<#
+.FORWARDHELPTARGETNAME New-Guid
+#>
 function Copy-Guid {
   param (
     [switch]$UpperCase,
