@@ -1,6 +1,6 @@
-New-Alias -Name upman -Value Update-Help -Option ReadOnly
+New-Alias -Option ReadOnly -Name upman -Value Update-Help
 
-New-Alias -Name m -Value Get-HelpOnline -Option ReadOnly
+New-Alias -Option ReadOnly -Name m -Value Get-HelpOnline
 function Get-HelpOnline {
   param(
     [Parameter(Position = 0)]

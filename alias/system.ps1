@@ -1,8 +1,8 @@
-New-Alias -Name restart -Value Restart-Computer -Option ReadOnly
+New-Alias -Option ReadOnly -Name restart -Value Restart-Computer
 
-New-Alias -Name sesv -Value Set-Service -Option ReadOnly
-New-Alias -Name remsv -Value Remove-Service -Option ReadOnly
+New-Alias -Option ReadOnly -Name sesv -Value Set-Service
+New-Alias -Option ReadOnly -Name remsv -Value Remove-Service
 
-New-Alias -Name gapx -Value Get-AppxPackage -Option ReadOnly
-New-Alias -Name remapx -Value Remove-AppxPackage -Option ReadOnly
-New-Alias -Name wg -Value winget -Option ReadOnly
+New-Alias -Option ReadOnly -Name gapx -Value Get-AppxPackage
+New-Alias -Option ReadOnly -Name remapx -Value Remove-AppxPackage
+New-Alias -Option ReadOnly -Name wg -Value winget

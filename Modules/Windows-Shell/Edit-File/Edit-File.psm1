@@ -1,5 +1,5 @@
-New-Alias -Name edit -Value Edit-File -Option ReadOnly
-New-Alias -Name i -Value Edit-File -Option ReadOnly
+New-Alias -Option ReadOnly -Name edit -Value Edit-File
+New-Alias -Option ReadOnly -Name i -Value Edit-File
 function Edit-File {
   param([string]$Path)
 

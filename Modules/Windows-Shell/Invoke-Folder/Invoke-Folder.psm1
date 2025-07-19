@@ -1,5 +1,5 @@
-New-Alias -Name explore -Value Invoke-Folder -Option ReadOnly
-New-Alias -Name e -Value Invoke-Folder -Option ReadOnly
+New-Alias -Option ReadOnly -Name explore -Value Invoke-Folder
+New-Alias -Option ReadOnly -Name e -Value Invoke-Folder
 function Invoke-Folder {
   param(
     [Parameter(ValueFromPipeline)]
@@ -21,19 +21,19 @@ function Invoke-Folder {
   }
 }
 
-New-Alias -Name e. -Value Invoke-Parent -Option ReadOnly
-New-Alias -Name e.. -Value Invoke-Parent -Option ReadOnly
+New-Alias -Option ReadOnly -Name e. -Value Invoke-Parent
+New-Alias -Option ReadOnly -Name e.. -Value Invoke-Parent
 function Invoke-Parent {
   Invoke-Item -Path ($PWD | Split-Path)
 }
 
-New-Alias -Name e~ -Value Invoke-Home -Option ReadOnly
+New-Alias -Option ReadOnly -Name e~ -Value Invoke-Home
 function Invoke-Home {
   Invoke-Item $HOME
 }
 
-New-Alias -Name e\ -Value Invoke-Drive -Option ReadOnly
-New-Alias -Name e/ -Value Invoke-Drive -Option ReadOnly
+New-Alias -Option ReadOnly -Name e\ -Value Invoke-Drive
+New-Alias -Option ReadOnly -Name e/ -Value Invoke-Drive
 function Invoke-Drive {
   Invoke-Item $PWD.Drive.Root
 }

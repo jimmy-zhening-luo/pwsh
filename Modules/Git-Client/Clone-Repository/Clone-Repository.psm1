@@ -1,4 +1,4 @@
-New-Alias -Name gitcl -Value Import-Repository -Option ReadOnly
+New-Alias -Option ReadOnly -Name gitcl -Value Import-Repository
 function Import-Repository {
   [CmdletBinding(SupportsShouldProcess)]
   param (

@@ -1,4 +1,4 @@
-New-Alias -Name gitp -Value Get-Repository -Option ReadOnly
+New-Alias -Option ReadOnly -Name gitp -Value Get-Repository
 function Get-Repository {
   param(
     [string]$Path
@@ -6,7 +6,7 @@ function Get-Repository {
   Invoke-Repository -Path $Path -Verb pull
 }
 
-New-Alias -Name gitpa -Value Get-ChildRepository -Option ReadOnly
+New-Alias -Option ReadOnly -Name gitpa -Value Get-ChildRepository
 function Get-ChildRepository {
   Get-ChildItem -Path $code -Directory
   | Where-Object { Resolve-Repository $_.FullName }

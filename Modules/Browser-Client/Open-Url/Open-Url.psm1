@@ -1,5 +1,5 @@
-New-Alias -Name open -Value Open-Url -Option ReadOnly
-New-Alias -Name o -Value Open-Url -Option ReadOnly
+New-Alias -Option ReadOnly -Name open -Value Open-Url
+New-Alias -Option ReadOnly -Name o -Value Open-Url
 function Open-Url {
   [CmdletBinding(
     SupportsShouldProcess,

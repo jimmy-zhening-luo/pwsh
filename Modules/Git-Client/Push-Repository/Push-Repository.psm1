@@ -1,4 +1,4 @@
-New-Alias -Name gitcp -Value Push-Repository -Option ReadOnly
+New-Alias -Option ReadOnly -Name gitcp -Value Push-Repository
 function Push-Repository {
   param(
     [string]$Path
