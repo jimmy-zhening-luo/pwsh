@@ -1,4 +1,4 @@
-New-Alias parent Get-Parent
+New-Alias -Name parent -Value Get-Parent
 function Get-Parent {
   param(
     [Parameter(ValueFromPipeline)]
@@ -9,7 +9,7 @@ function Get-Parent {
   }
 }
 
-New-Alias size Get-FileSize
+New-Alias -Name size -Value Get-FileSize
 function Get-FileSize {
   param(
     [Parameter(ValueFromPipeline)]

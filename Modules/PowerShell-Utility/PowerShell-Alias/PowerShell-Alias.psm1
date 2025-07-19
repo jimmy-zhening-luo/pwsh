@@ -1,4 +1,4 @@
-New-Alias galc Get-AliasCommand
+New-Alias -Name galc -Value Get-AliasCommand
 <#
 .FORWARDHELPTARGETNAME Get-Alias
 #>

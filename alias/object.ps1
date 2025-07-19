@@ -1,13 +1,13 @@
-New-Alias count Measure-Object
-New-Alias n Measure-Object
+New-Alias -Name count -Value Measure-Object
+New-Alias -Name n -Value Measure-Object
 
-New-Alias keyof Get-Member
-New-Alias k Get-Member
+New-Alias -Name keyof -Value Get-Member
+New-Alias -Name k -Value Get-Member
 
-New-Alias z Sort-Object
+New-Alias -Name z -Value Sort-Object
 
-New-Alias pick Select-Object
-New-Alias of Select-Object
-New-Alias to Select-Object
+New-Alias -Name pick -Value Select-Object
+New-Alias -Name of -Value Select-Object
+New-Alias -Name to -Value Select-Object
 
-New-Alias format Format-Table
+New-Alias -Name format -Value Format-Table

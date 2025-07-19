@@ -1,5 +1,5 @@
-New-Alias edit Edit-File
-New-Alias i Edit-File
+New-Alias -Name edit -Value Edit-File
+New-Alias -Name i -Value Edit-File
 function Edit-File {
   param([string]$Path)
 

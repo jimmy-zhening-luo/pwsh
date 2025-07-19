@@ -1,10 +1,9 @@
-Set-Alias clear Clear-Container # default: Clear-Host
-Set-Alias rd Remove-Folder # default: Remove-Item
-Set-Alias del Remove-Folder # default: Remove-Item
+Set-Alias -Name clear -Value Clear-Container # default: Clear-Host
+Set-Alias -Name rd -Value Remove-Folder # default: Remove-Item
 
-New-Alias c Set-Location
-New-Alias l Get-ChildItem
-New-Alias split Split-Path
+New-Alias -Name c -Value Set-Location
+New-Alias -Name l -Value Get-ChildItem
+New-Alias -Name split -Value Split-Path
 
-New-Alias touch New-Item
-New-Alias hash Get-FileHash
+New-Alias -Name touch -Value New-Item
+New-Alias -Name hash -Value Get-FileHash

@@ -1,4 +1,4 @@
-New-Alias wga Add-WinGetPackage
+New-Alias -Name wga -Value Add-WinGetPackage
 <#
 .SYNOPSIS
 Add a package using WinGet.

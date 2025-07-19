@@ -1,4 +1,4 @@
-New-Alias gitp Get-Repository
+New-Alias -Name gitp -Value Get-Repository
 function Get-Repository {
   param(
     [string]$Path
@@ -6,7 +6,7 @@ function Get-Repository {
   Invoke-Repository -Path $Path -Verb pull
 }
 
-New-Alias gitpa Get-ChildRepository
+New-Alias -Name gitpa -Value Get-ChildRepository
 function Get-ChildRepository {
   Get-ChildItem -Path $code -Directory
   | Where-Object { Resolve-Repository $_.FullName }
