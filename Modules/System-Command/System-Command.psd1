@@ -10,7 +10,6 @@
     "Stop-Task"
   )
   AliasesToExport   = @(
-    "run"
     "tkill"
     "tkillx"
   )

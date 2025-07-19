@@ -5,7 +5,4 @@
   FunctionsToExport = @(
     "Invoke-CommandPrompt"
   )
-  AliasesToExport   = @(
-    "run"
-  )
 }

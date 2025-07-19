@@ -1,3 +1,5 @@
+New-Alias -Option AllScope, ReadOnly -Name run -Value Invoke-CommandPrompt
+
 New-Alias -Option ReadOnly -Name restart -Value Restart-Computer
 
 New-Alias -Option ReadOnly -Name sesv -Value Set-Service
