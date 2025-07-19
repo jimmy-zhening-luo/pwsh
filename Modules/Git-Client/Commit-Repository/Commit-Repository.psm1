@@ -1,4 +1,4 @@
-New-Alias -Name gitm -Value Write-Repository
+New-Alias -Name gitm -Value Write-Repository -Option ReadOnly
 function Write-Repository {
   param(
     [string]$Path,

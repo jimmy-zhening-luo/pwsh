@@ -1,5 +1,5 @@
-New-Alias -Name tkill -Value Stop-Task
-New-Alias -Name tkillx -Value Stop-Task
+New-Alias -Name tkill -Value Stop-Task -Option ReadOnly
+New-Alias -Name tkillx -Value Stop-Task -Option ReadOnly
 function Stop-Task {
   [CmdletBinding(
     SupportsShouldProcess,

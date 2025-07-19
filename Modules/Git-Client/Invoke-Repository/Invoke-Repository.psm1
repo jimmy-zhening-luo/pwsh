@@ -1,4 +1,4 @@
-New-Alias -Name gitc -Value Invoke-Repository
+New-Alias -Name gitc -Value Invoke-Repository -Option ReadOnly
 function Invoke-Repository {
   param(
     [string]$Path,

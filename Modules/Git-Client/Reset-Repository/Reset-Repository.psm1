@@ -1,4 +1,4 @@
-New-Alias -Name gitcr -Value Undo-Repository
+New-Alias -Name gitcr -Value Undo-Repository -Option ReadOnly
 function Undo-Repository {
   param(
     [string]$Path
@@ -6,7 +6,7 @@ function Undo-Repository {
   Invoke-Repository -Path $Path -Verb reset --hard
 }
 
-New-Alias -Name gitcrp -Value Restore-Repository
+New-Alias -Name gitcrp -Value Restore-Repository -Option ReadOnly
 function Restore-Repository {
   param(
     [string]$Path

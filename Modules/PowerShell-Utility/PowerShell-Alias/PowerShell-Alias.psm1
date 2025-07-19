@@ -1,4 +1,4 @@
-New-Alias -Name galc -Value Get-AliasCommand
+New-Alias -Name galc -Value Get-AliasCommand -Option ReadOnly
 <#
 .FORWARDHELPTARGETNAME Get-Alias
 #>

@@ -1,4 +1,4 @@
-New-Alias -Name gita -Value Add-Repository
+New-Alias -Name gita -Value Add-Repository -Option ReadOnly
 function Add-Repository {
   param(
     [string]$Path

@@ -1,8 +1,8 @@
-New-Alias -Name c. -Value cd..
-New-Alias -Name c.. -Value cd..
-New-Alias -Name cd. -Value cd..
-New-Alias -Name c~ -Value cd~
-New-Alias -Name c\ -Value cd\
-New-Alias -Name c/ -Value cd\
-New-Alias -Name d\ -Value D:
-New-Alias -Name d/ -Value D:
+New-Alias -Name c. -Value cd.. -Option ReadOnly
+New-Alias -Name c.. -Value cd.. -Option ReadOnly
+New-Alias -Name cd. -Value cd.. -Option ReadOnly
+New-Alias -Name c~ -Value cd~ -Option ReadOnly
+New-Alias -Name c\ -Value cd\ -Option ReadOnly
+New-Alias -Name c/ -Value cd\ -Option ReadOnly
+New-Alias -Name d\ -Value D: -Option ReadOnly
+New-Alias -Name d/ -Value D: -Option ReadOnly
