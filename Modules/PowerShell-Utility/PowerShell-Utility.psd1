@@ -14,7 +14,6 @@
     "Get-VerbPowerShell"
     "Edit-History"
     "Measure-Profile"
-    "Measure-NoProfile"
   )
   AliasesToExport   = @(
     "galc"
@@ -22,6 +21,5 @@
     "upman"
     "ch"
     "mc"
-    "mn"
   )
 }
