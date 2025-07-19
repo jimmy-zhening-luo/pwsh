@@ -3,7 +3,7 @@ function Edit-Profile {
   Edit-File $PROFILE_REPO
 }
 
-New-Alias oi Initialize-Profile
+New-Alias opi Initialize-Profile
 function Initialize-Profile {
   Edit-File $PROFILE.CurrentUserAllHosts
 }
