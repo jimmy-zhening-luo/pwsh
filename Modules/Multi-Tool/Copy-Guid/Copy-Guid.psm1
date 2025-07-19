@@ -1,4 +1,4 @@
-New-Alias -Option ReadOnly -Name guid -Value Copy-Guid
+New-Alias -Name guid -Value Copy-Guid
 <#
 .FORWARDHELPTARGETNAME New-Guid
 #>

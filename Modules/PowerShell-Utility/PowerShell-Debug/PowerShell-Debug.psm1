@@ -1,4 +1,4 @@
-New-Alias -Option ReadOnly -Name mc -Value Measure-Profile
+New-Alias -Name mc -Value Measure-Profile
 function Measure-Profile {
   $TotalLoadTime = (
     Measure-Command {
