@@ -1,8 +1,7 @@
 $code = "$HOME\code"
-$PROFILE_REPO = "$code\pwsh"
-$Env:PSModulePath += ";$PROFILE_REPO\Modules"
 
 $PSDefaultParameterValues = Import-PowerShellDataFile "$PSScriptRoot\defaults.psd1"
+$Env:PSModulePath += ";$PSScriptRoot\Modules"
 
 . $PSScriptRoot\profile.ps1
 
