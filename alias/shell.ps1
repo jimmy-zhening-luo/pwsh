@@ -6,4 +6,6 @@ New-Alias -Option ReadOnly -Name l -Value Get-ChildItem
 New-Alias -Option ReadOnly -Name split -Value Split-Path
 
 New-Alias -Option ReadOnly -Name touch -Value New-Item
+New-Alias -Option ReadOnly -Name t -Value New-Item
+New-Alias -Option ReadOnly -Name mk -Value mkdir
 New-Alias -Option ReadOnly -Name hash -Value Get-FileHash
