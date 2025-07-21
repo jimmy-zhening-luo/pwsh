@@ -32,5 +32,6 @@
     "gitm"
     "gitp"
     "gitpa"
+    "gpa"
   )
 }

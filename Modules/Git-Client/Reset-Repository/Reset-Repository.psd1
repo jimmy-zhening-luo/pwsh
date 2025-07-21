@@ -3,11 +3,11 @@
   ModuleVersion     = "1.0.0.0"
   GUID              = "ba9a5388-7511-4093-828f-c889f540a2c1"
   FunctionsToExport = @(
-    "Undo-Repository",
+    "Undo-Repository"
     "Restore-Repository"
   )
   AliasesToExport   = @(
-    "gitcr",
+    "gitcr"
     "gitcrp"
   )
 }

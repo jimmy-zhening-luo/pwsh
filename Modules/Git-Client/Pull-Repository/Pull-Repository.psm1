@@ -7,6 +7,7 @@ function Get-Repository {
 }
 
 New-Alias gitpa Get-ChildRepository
+New-Alias gpa Get-ChildRepository
 function Get-ChildRepository {
   Get-ChildItem -Path $code -Directory
   | Where-Object { Resolve-Repository $_.FullName }
