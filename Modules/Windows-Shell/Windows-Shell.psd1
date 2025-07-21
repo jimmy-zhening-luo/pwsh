@@ -2,6 +2,7 @@
   ModuleVersion     = "1.0.0.0"
   GUID              = "7ef2a734-a882-4b6e-b3d9-2c43b1bdd3ed"
   NestedModules     = @(
+    ".\New-Junction"
     ".\Set-Folder"
     ".\Get-FolderChildItem"
     ".\Invoke-Folder"
@@ -11,6 +12,7 @@
     ".\Get-Property"
   )
   FunctionsToExport = @(
+    "New-Junction"
     "Get-SiblingItem"
     "Get-HomeItem"
     "Invoke-Folder"
@@ -24,6 +26,7 @@
     "Get-FileSize"
   )
   AliasesToExport   = @(
+    "nj"
     "c."
     "c.."
     "cd."

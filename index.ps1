@@ -1,9 +1,24 @@
-$code = "$HOME\code"
+if (Test-Path $HOME\code) {
+  $code = "$HOME\code"
 
-$PSDefaultParameterValues = Import-PowerShellDataFile "$PSScriptRoot\defaults.psd1"
-$Env:PSModulePath += ";$PSScriptRoot\Modules"
+  if (Test-Path "$PSScriptRoot\Modules") {
+    $Env:PSModulePath += ";$PSScriptRoot\Modules"
 
-. $PSScriptRoot\profile.ps1
+    try {
+      $PSDefaultParameterValues = Import-PowerShellDataFile -ErrorAction Stop "$PSScriptRoot\defaults.psd1"
 
-. $PSScriptRoot\data\index.ps1
-. $PSScriptRoot\alias\index.ps1
+      . $PSScriptRoot\profile.ps1
+      . $PSScriptRoot\data\index.ps1
+      . $PSScriptRoot\alias\index.ps1
+    }
+    catch {
+      throw "Failed to initialize PowerShell profile: $($_.Exception.Message)"
+    }
+  }
+  else {
+    Write-Warning "Skipping custom PowerShell profile: failed to find required Modules at $PSScriptRoot\Modules."
+  }
+}
+else {
+  Write-Warning "Skipping custom PowerShell profile: failed to find required PowerShell code repository at $HOME\code."
+}

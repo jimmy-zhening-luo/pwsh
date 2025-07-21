@@ -1,5 +1,5 @@
-New-Alias -Name edit -Value Edit-File
-New-Alias -Name i -Value Edit-File
+New-Alias edit Edit-File
+New-Alias i Edit-File
 <#
 .SYNOPSIS
 Edit a file in Visual Studio Code.

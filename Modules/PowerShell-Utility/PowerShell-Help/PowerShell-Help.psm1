@@ -1,6 +1,6 @@
-New-Alias -Name upman -Value Update-Help
+New-Alias upman Update-Help
 
-New-Alias -Name m -Value Get-HelpOnline
+New-Alias m Get-HelpOnline
 function Get-HelpOnline {
   param(
     [Parameter(Position = 0)]

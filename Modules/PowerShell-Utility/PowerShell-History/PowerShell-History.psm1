@@ -1,4 +1,4 @@
-New-Alias -Name ch -Value Edit-History
+New-Alias ch Edit-History
 function Edit-History {
   Edit-File (Get-PSReadLineOption).HistorySavePath
 }

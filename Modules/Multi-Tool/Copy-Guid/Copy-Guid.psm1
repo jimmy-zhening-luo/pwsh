@@ -1,4 +1,4 @@
-New-Alias -Name guid -Value Copy-Guid
+New-Alias guid Copy-Guid
 <#
 .FORWARDHELPTARGETNAME New-Guid
 #>

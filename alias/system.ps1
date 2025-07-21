@@ -1,10 +1,10 @@
-New-Alias -Option AllScope, ReadOnly -Name run -Value Invoke-CommandPrompt
+New-Alias -Option AllScope, ReadOnly run Invoke-CommandPrompt
 
-New-Alias -Option ReadOnly -Name restart -Value Restart-Computer
+New-Alias -Option ReadOnly restart Restart-Computer
 
-New-Alias -Option ReadOnly -Name sesv -Value Set-Service
-New-Alias -Option ReadOnly -Name remsv -Value Remove-Service
+New-Alias -Option ReadOnly sesv Set-Service
+New-Alias -Option ReadOnly remsv Remove-Service
 
-New-Alias -Option ReadOnly -Name gapx -Value Get-AppxPackage
-New-Alias -Option ReadOnly -Name remapx -Value Remove-AppxPackage
-New-Alias -Option ReadOnly -Name wg -Value winget
+New-Alias -Option ReadOnly gapx Get-AppxPackage
+New-Alias -Option ReadOnly remapx Remove-AppxPackage
+New-Alias -Option ReadOnly wg winget

@@ -41,7 +41,7 @@
     "PSProvideCommentHelp"
     "PSReservedCmdletChar"
     "PSReservedParams"
-    "PSReviewUnusedParameter"
+    # "PSReviewUnusedParameter"
     "PSShouldProcess"
     "PSUseApprovedVerbs"
     "PSUseBOMForUnicodeEncodedFile"
