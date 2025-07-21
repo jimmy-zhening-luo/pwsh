@@ -26,7 +26,7 @@
     "Get-FileSize"
   )
   AliasesToExport   = @(
-    "nj"
+    "mj"
     "c."
     "c.."
     "cd."

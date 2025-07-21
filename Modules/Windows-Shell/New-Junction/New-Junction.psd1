@@ -6,6 +6,6 @@
     "New-Junction"
   )
   AliasesToExport   = @(
-    "nj"
+    "mj"
   )
 }
