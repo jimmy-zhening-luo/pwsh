@@ -8,7 +8,7 @@ function Edit-Profile {
   }
 }
 
-New-Alias -Option ReadOnly os Sync-Profile
+New-Alias -Option ReadOnly up Sync-Profile
 function Sync-Profile {
   try {
     Get-Repository -ErrorAction Stop $PSScriptRoot
