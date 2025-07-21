@@ -6,6 +6,6 @@
     "Edit-History"
   )
   AliasesToExport   = @(
-    "oh"
+    "oc"
   )
 }

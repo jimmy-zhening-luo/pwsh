@@ -19,7 +19,7 @@
     "galc"
     "m"
     "upman"
-    "oh"
+    "oc"
     "mc"
   )
 }
