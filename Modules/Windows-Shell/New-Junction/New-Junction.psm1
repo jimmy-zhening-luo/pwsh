@@ -4,7 +4,10 @@ New-Alias -Option ReadOnly mj New-Junction
 .FORWARDHELPCATEGORY Cmdlet
 #>
 function New-Junction {
-  [CmdletBinding(SupportsShouldProcess)]
+  [CmdletBinding(
+    SupportsShouldProcess,
+    SupportsTransactions
+  )]
   [OutputType([System.IO.DirectoryInfo])]
   param(
     [Parameter(
@@ -21,22 +24,23 @@ function New-Junction {
     [System.Object]${Value},
     [Switch]${Force}
   )
-
   begin {
     $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [System.Management.Automation.CommandTypes]::Cmdlet)
     $scriptCmd = { & $wrappedCmd -ItemType Junction @PSBoundParameters }
-
     $steppablePipeline = $scriptCmd.GetSteppablePipeline()
-    $steppablePipeline.Begin($PSCmdlet)
-  }
 
+    if ($PSCmdlet.ShouldProcess($Value, "Open Transaction: Create $($Path.Count) junction(s) [[$Path]]")) {
+      $steppablePipeline.Begin($PSCmdlet)
+    }
+  }
   process {
-    if ($PSCmdlet.ShouldProcess($Path, "Create junction")) {
+    if ($PSCmdlet.ShouldProcess($Value, "> Step: Create junction [$Path]")) {
       $steppablePipeline.Process($_)
     }
   }
-
   end {
-    $steppablePipeline.End()
+    if ($PSCmdlet.ShouldProcess("Transaction", "Close")) {
+      $steppablePipeline.End()
+    }
   }
 }
