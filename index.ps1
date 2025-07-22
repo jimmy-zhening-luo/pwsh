@@ -1,7 +1,7 @@
-if (Test-Path $HOME\code) {
+if (Test-Path -PathType Container $HOME\code) {
   $code = "$HOME\code"
 
-  if (Test-Path "$PSScriptRoot\Modules") {
+  if (Test-Path -PathType Container "$PSScriptRoot\Modules") {
     $Env:PSModulePath += ";$PSScriptRoot\Modules"
 
     try {
