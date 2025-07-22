@@ -1,47 +1,26 @@
 New-Alias -Option ReadOnly op Edit-Profile
 function Edit-Profile {
-  try {
-    Edit-File $PSScriptRoot
-  }
-  catch {
-    throw "Failed to open PowerShell profile in Visual Studio Code: $($_.Exception.Message)"
-  }
+  Edit-File $PSScriptRoot
 }
 
 New-Alias -Option ReadOnly up Sync-Profile
 function Sync-Profile {
-  try {
-    Get-Repository -ErrorAction Stop $PSScriptRoot
-    try {
-      Sync-Linter
-    }
-    catch {
-      Write-Warning "Failed to synchronize linter configuration: $($_.Exception.Message)"
-    }
-  }
-  catch {
-    throw "Failed to synchronize PowerShell profile repository: $($_.Exception.Message)"
-  }
+  Get-Repository -ErrorAction Stop $PSScriptRoot
+  Sync-Linter
 }
 
 function Sync-Linter {
-  $linterName = "PSScriptAnalyzerSettings.psd1"
+  $linter = "PSScriptAnalyzerSettings.psd1"
 
-  if (Test-Path $PSScriptRoot\$linterName) {
-    $linterFullName = "$HOME\$linterName"
-
-    try {
-      if (Test-Path $linterFullName) {
-        Remove-Item -ErrorAction Stop -Force $linterFullName
-      }
-
-      Copy-Item "$PSScriptRoot\$linterName" $linterFullName
+  if (Test-Path -PathType Leaf $PSScriptRoot\$linter) {
+    if (Test-Path -PathType Container $HOME\$linter) {
+      Write-Warning "Wtf? You have a folder named $linter in your home directory where a file should be."
     }
-    catch {
-      throw "Failed to copy linter configuration from repository to ${HOME}: $($_.Exception.Message)"
+    else {
+      Copy-Item $PSScriptRoot\$linter $HOME\$linter
     }
   }
   else {
-    Write-Warning "No linter configuration '$linterName' found in PowerShell profile repository. If a linter configuration is already cached in $HOME, it will not be updated."
+    Write-Warning "Linter configuration missing from PowerShell profile repository."
   }
 }
