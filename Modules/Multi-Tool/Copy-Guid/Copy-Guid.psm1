@@ -4,16 +4,16 @@ New-Alias guid Copy-Guid
 #>
 function Copy-Guid {
   param (
-    [switch]$UpperCase,
-    [switch]$NoOutput
+    [switch]$Upper,
+    [switch]$Silent
   )
   $Guid = (New-Guid).Guid
 
-  if ($UpperCase) {
+  if ($Upper) {
     $Guid = $Guid.ToUpperInvariant()
   }
 
-  if (-not $NoOutput) {
+  if (-not $Silent) {
     Write-Output $Guid
   }
 
