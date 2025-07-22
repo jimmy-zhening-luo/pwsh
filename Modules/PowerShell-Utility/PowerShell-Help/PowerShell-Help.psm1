@@ -1,6 +1,10 @@
 New-Alias upman Update-Help
 
 New-Alias m Get-HelpOnline
+<#
+.FORWARDHELPTARGETNAME Get-Help
+.FORWARDHELPCATEGORY Cmdlet
+#>
 function Get-HelpOnline {
   param(
     [Parameter(Position = 0)]
