@@ -48,7 +48,6 @@
     "e~"
     "e\"
     "e/"
-    "edit"
     "i"
     "cl"
     "parent"

@@ -1,4 +1,3 @@
-New-Alias edit Edit-File
 New-Alias i Edit-File
 <#
 .SYNOPSIS

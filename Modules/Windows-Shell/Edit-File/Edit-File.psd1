@@ -6,7 +6,6 @@
     "Edit-File"
   )
   AliasesToExport   = @(
-    "edit"
     "i"
   )
 }
