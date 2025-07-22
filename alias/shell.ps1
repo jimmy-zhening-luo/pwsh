@@ -1,4 +1,4 @@
-Set-Alias clear Clear-Container # default: Clear-Host
+Set-Alias clear Clear-Line # default: Clear-Host
 Set-Alias rd Remove-Folder # default: Remove-Item
 
 New-Alias -Option ReadOnly c Set-Location

@@ -7,7 +7,7 @@
     ".\Get-FolderChildItem"
     ".\Invoke-Folder"
     ".\Edit-File"
-    ".\Clear-Container"
+    ".\Clear-Line"
     ".\Remove-Folder"
     ".\Get-Property"
   )
@@ -20,7 +20,7 @@
     "Invoke-Home"
     "Invoke-Drive"
     "Edit-File"
-    "Clear-Container"
+    "Clear-Line"
     "Remove-Folder"
     "Get-Parent"
     "Get-FileSize"

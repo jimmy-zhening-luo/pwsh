@@ -1,5 +1,5 @@
-New-Alias cl Clear-Container
-function Clear-Container {
+New-Alias cl Clear-Line
+function Clear-Line {
   if ($args) {
     Clear-Content @args
   }
