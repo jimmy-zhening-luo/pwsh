@@ -18,7 +18,7 @@ function Open-Url {
     [Uri]$Uri
   )
 
-  $Target = $PSCmdlet.ParameterSetName -eq "Uri" ? $Uri : Test-Path $Path ? Resolve-Path $Path : $Path
+  $Target = $PSCmdlet.ParameterSetName -eq "Uri" ? $Uri : (Test-Path $Path ? Resolve-Path $Path : $Path)
 
   Start-Process "C:\Program Files\Google\Chrome\Application\chrome.exe" $Target
 }
