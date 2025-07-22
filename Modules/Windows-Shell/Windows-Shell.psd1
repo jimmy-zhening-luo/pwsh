@@ -2,19 +2,21 @@
   ModuleVersion     = "1.0.0.0"
   GUID              = "7ef2a734-a882-4b6e-b3d9-2c43b1bdd3ed"
   NestedModules     = @(
-    ".\New-Junction"
     ".\Set-Folder"
     ".\Get-FolderChildItem"
+    ".\Get-Property"
+    ".\New-Junction"
     ".\Invoke-Folder"
     ".\Edit-File"
     ".\Clear-Line"
     ".\Remove-Folder"
-    ".\Get-Property"
   )
   FunctionsToExport = @(
-    "New-Junction"
-    "Get-SiblingItem"
     "Get-HomeItem"
+    "Get-SiblingItem"
+    "Get-Parent"
+    "Get-FileSize"
+    "New-Junction"
     "Invoke-Folder"
     "Invoke-Parent"
     "Invoke-Home"
@@ -22,11 +24,8 @@
     "Edit-File"
     "Clear-Line"
     "Remove-Folder"
-    "Get-Parent"
-    "Get-FileSize"
   )
   AliasesToExport   = @(
-    "mj"
     "c."
     "c.."
     "cd."
@@ -41,6 +40,9 @@
     "ls.."
     "l~"
     "ls~"
+    "parent"
+    "size"
+    "mj"
     "explore"
     "e"
     "e."
@@ -50,7 +52,5 @@
     "e/"
     "i"
     "cl"
-    "parent"
-    "size"
   )
 }
