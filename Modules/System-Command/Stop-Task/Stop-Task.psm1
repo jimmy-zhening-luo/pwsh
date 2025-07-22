@@ -21,26 +21,23 @@ function Stop-Task {
 
   switch ($PSCmdlet.ParameterSetName) {
     "Name" {
-      if (
-        $PSCmdlet.ShouldProcess(
-          $Name,
-          "Stop-Process -Name"
-        )
-      ) {
-        Stop-Process -Force -Name $Name
+      $Params = @{
+        Name = $Name
       }
     }
     "Id" {
-      if (
-        $PSCmdlet.ShouldProcess(
-          $Id,
-          "Stop-Process -Id"
-        )
-      ) {
-        Stop-Process -Force -Id $Id
+      $Params = @{
+        Id = $Id
       }
     }
   }
 
-
+  if (
+    $PSCmdlet.ShouldProcess(
+      "Name:$Name or Id:$Id",
+      "Stop-Process"
+    )
+  ) {
+    Stop-Process -Force @Params
+  }
 }
