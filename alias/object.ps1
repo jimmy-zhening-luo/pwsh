@@ -11,3 +11,5 @@ New-Alias -Option ReadOnly of Select-Object
 New-Alias -Option ReadOnly to Select-Object
 
 New-Alias -Option ReadOnly format Format-Table
+New-Alias -Option ReadOnly table Format-Table
+New-Alias -Option ReadOnly wrap Format-Table
