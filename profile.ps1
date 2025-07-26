@@ -14,7 +14,7 @@ function Sync-Linter {
 
   if (Test-Path -PathType Leaf $PSScriptRoot\$linter) {
     if (Test-Path -PathType Container $HOME\$linter) {
-      Write-Warning "Wtf? You have a folder named $linter in your home directory where a file should be."
+      Write-Warning "Linter path $linter already exists and is a directory."
     }
     else {
       Copy-Item $PSScriptRoot\$linter $HOME\$linter
