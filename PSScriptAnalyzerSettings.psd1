@@ -75,6 +75,8 @@
       CommandAllowList = @(
         "npm"
         "npx"
+        "yt"
+        "yta"
       )
     }
     # done by VSCode too but keeping it on because it catches VSCode not doing it
