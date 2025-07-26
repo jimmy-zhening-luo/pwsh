@@ -27,7 +27,7 @@
     "PSAvoidUsingEmptyCatchBlock"
     "PSAvoidUsingInvokeExpression"
     "PSAvoidUsingPlainTextForPassword"
-    "PSAvoidUsingPositionalParameters"
+    # "PSAvoidUsingPositionalParameters"
     "PSAvoidUsingUsernameAndPasswordParams"
     "PSAvoidUsingWMICmdlet"
     "PSAvoidUsingWriteHost"
@@ -71,16 +71,16 @@
     #         "cd"
     #     )
     # }
-    PSAvoidUsingPositionalParameters = @{
-      CommandAllowList = @(
-        "npm"
-        "npx"
-        "wg"
-        "wga"
-        "yt"
-        "yta"
-      )
-    }
+    # PSAvoidUsingPositionalParameters = @{
+    #   CommandAllowList = @(
+    #     "npm"
+    #     "npx"
+    #     "wg"
+    #     "wga"
+    #     "yt"
+    #     "yta"
+    #   )
+    # }
     # done by VSCode too but keeping it on because it catches VSCode not doing it
     # PSUseConsistentIndentation       = @{
     #   Enable              = $true
@@ -107,7 +107,7 @@
     #   CheckKeyword  = $true
     #   CheckOperator = $true
     # }
-    PSUseSingularNouns               = @{
+    PSUseSingularNouns = @{
       NounAllowList = @(
         "Data" # default
         "Windows" # default
