@@ -10,7 +10,5 @@ function Sync-Profile {
 }
 
 function Sync-Linter {
-  $linter = "PSScriptAnalyzerSettings.psd1"
-
-  Copy-Item $PSScriptRoot\$linter $HOME\$linter
+  Copy-Item $PSScriptRoot\PSScriptAnalyzerSettings.psd1 $HOME\PSScriptAnalyzerSettings.psd1
 }
