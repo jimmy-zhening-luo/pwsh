@@ -1,4 +1,2 @@
-. $PSScriptRoot\object.ps1
-. $PSScriptRoot\shell.ps1
-. $PSScriptRoot\system.ps1
-. $PSScriptRoot\utility.ps1
+. $PSScriptRoot\override.ps1
+. $PSScriptRoot\common.ps1
