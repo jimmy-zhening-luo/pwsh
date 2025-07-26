@@ -5,16 +5,22 @@
   NestedModules     = @(
     ".\Invoke-CommandPrompt"
     ".\Stop-Task"
+    ".\Update-System"
   )
   FunctionsToExport = @(
     "Invoke-CommandPrompt"
     "Stop-Task"
+    "Update-Windows"
+    "Update-StoreApp"
   )
   AliasesToExport   = @(
-    "tkill"
-    "tkillx"
     "restart"
     "sesv"
     "remsv"
+    "cmd"
+    "tkill"
+    "tkillx"
+    "wu"
+    "su"
   )
 }

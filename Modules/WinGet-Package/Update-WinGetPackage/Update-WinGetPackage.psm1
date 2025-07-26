@@ -1,4 +1,4 @@
-New-Alias wgu Sync-WinGetPackage
+New-Alias wgu Update-WinGetPackage
 <#
 .SYNOPSIS
 Use WinGet to check for a package upgrade or to upgrade a package.
@@ -9,6 +9,6 @@ This function is an alias for `winget upgrade`.
 .LINK
 https://learn.microsoft.com/en-us/windows/package-manager/winget/upgrade
 #>
-function Sync-WinGetPackage {
+function Update-WinGetPackage {
   winget upgrade @args
 }
