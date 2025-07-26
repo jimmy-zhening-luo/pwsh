@@ -5,15 +5,21 @@ function Get-YouTube {
   )
 
   if (-not $Video) {
-    Write-Error "No video specified."
-    return
+    if ($args) {
+      $Video = $args[0]
+      $Rest = $args[1..$args.Length]
+    }
+    else {
+      throw Write-Error "No video specified."
+    }
+  }
+  else {
+    $Rest = $args
   }
 
-  $VideoUrl = (Test-Url $Video) ? (
-    ($Video.StartsWith('http://') -or $Video.StartsWith('https://')) ? $Video : "https://$Video"
-  ) : "https://www.youtube.com/watch?v=$Video"
+  $VideoUrl = ($Video.StartsWith('http://') -or $Video.StartsWith('https://')) ? $Video : ($Video -match '^(?:(?:www|m)\.)?youtube\.com/watch\?v=(?<video>[-\w]+).*$') ? "https://www.youtube.com/watch?v=$($Matches.video)" : "https://www.youtube.com/watch?v=$Video"
 
-  yt-dlp @args -- $VideoUrl
+  yt-dlp @Rest -- $VideoUrl
 }
 
 New-Alias yta Get-YouTubeAudio
@@ -22,7 +28,7 @@ function Get-YouTubeAudio {
     [System.String]$Video
   )
 
-  Get-YouTube -Video $Video --format "bestaudio" --extract-audio --audio-format "mp3" --audio-quality 0 --audio-quality 0 --postprocessor-args "-ar 44100" @args
+  Get-YouTube -Video $Video @args --format "bestaudio" --extract-audio --audio-format "mp3" --audio-quality 0 --audio-quality 0 --postprocessor-args "-ar 44100"
 }
 
 New-Alias ytf Get-YouTubeFormat
@@ -31,5 +37,5 @@ function Get-YouTubeFormat {
     [System.String]$Video
   )
 
-  Get-YouTube -Video $Video "-F" @args
+  Get-YouTube -Video $Video @args "-F"
 }
