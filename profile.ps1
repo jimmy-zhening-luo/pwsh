@@ -12,15 +12,5 @@ function Sync-Profile {
 function Sync-Linter {
   $linter = "PSScriptAnalyzerSettings.psd1"
 
-  if (Test-Path -PathType Leaf $PSScriptRoot\$linter) {
-    if (Test-Path -PathType Container $HOME\$linter) {
-      Write-Warning "Linter path $linter already exists and is a directory."
-    }
-    else {
-      Copy-Item $PSScriptRoot\$linter $HOME\$linter
-    }
-  }
-  else {
-    Write-Warning "Linter configuration missing from PowerShell profile repository."
-  }
+  Copy-Item $PSScriptRoot\$linter $HOME\$linter
 }
