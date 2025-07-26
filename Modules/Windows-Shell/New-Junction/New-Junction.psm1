@@ -1,4 +1,4 @@
-New-Alias -Option ReadOnly mj New-Junction
+New-Alias mj New-Junction
 <#
 .FORWARDHELPTARGETNAME New-Item
 .FORWARDHELPCATEGORY Cmdlet

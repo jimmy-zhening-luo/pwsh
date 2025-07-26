@@ -1,4 +1,4 @@
-New-Alias -Option ReadOnly zip Compress-File
+New-Alias zip Compress-File
 <#
 .FORWARDHELPTARGETNAME Compress-Archive
 .FORWARDHELPCATEGORY Cmdlet

@@ -9,9 +9,9 @@
     "Add-WinGetPackage"
   )
   AliasesToExport   = @(
-    "wga"
-    "wg"
     "gapx"
     "remapx"
+    "wg"
+    "wga"
   )
 }
