@@ -7,9 +7,9 @@ if (Test-Path -PathType Container $HOME\code) {
     try {
       $PSDefaultParameterValues = Import-PowerShellDataFile -ErrorAction Stop "$PSScriptRoot\defaults.psd1"
 
-      . $PSScriptRoot\profile.ps1
       . $PSScriptRoot\data\index.ps1
       . $PSScriptRoot\alias\index.ps1
+      . $PSScriptRoot\profile.ps1
     }
     catch {
       throw "Failed to initialize PowerShell profile: $($_.Exception.Message)"
