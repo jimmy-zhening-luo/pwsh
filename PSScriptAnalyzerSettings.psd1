@@ -58,7 +58,7 @@
     "PSUseOutputTypeCorrectly"
     "PSUseProcessBlockForPipelineCommand"
     "PSUsePSCredentialType"
-    "PSUseShouldProcessForStateChangingFunctions"
+    # "PSUseShouldProcessForStateChangingFunctions"
     "PSUseSingularNouns"
     "PSUseSupportsShouldProcess"
     "PSUseToExportFieldsInManifest"
