@@ -75,6 +75,8 @@
       CommandAllowList = @(
         "npm"
         "npx"
+        "wg"
+        "wga"
         "yt"
         "yta"
       )
