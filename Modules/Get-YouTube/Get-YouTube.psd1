@@ -5,9 +5,11 @@
   FunctionsToExport = @(
     "Get-YouTube"
     "Get-YouTubeAudio"
+    "Get-YouTubeFormat"
   )
   AliasesToExport   = @(
     "yt"
     "yta"
+    "ytf"
   )
 }

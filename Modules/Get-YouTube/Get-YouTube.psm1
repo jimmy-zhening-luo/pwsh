@@ -24,3 +24,12 @@ function Get-YouTubeAudio {
 
   Get-YouTube -Video $Video --format "bestaudio" --extract-audio --audio-format "mp3" --audio-quality 0 --audio-quality 0 --postprocessor-args "-ar 44100" @args
 }
+
+New-Alias ytf Get-YouTubeFormat
+function Get-YouTubeFormat {
+  param(
+    [System.String]$Video
+  )
+
+  Get-YouTube -Video $Video "-F" @args
+}
