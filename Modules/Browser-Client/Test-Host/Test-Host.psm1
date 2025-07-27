@@ -8,7 +8,7 @@ function Test-Host {
     [Alias("ComputerName", "RemoteAddress", "cn")]
     [System.String]$HostName,
     [Alias("RemotePort", "p")]
-    [System.Int32]$Port
+    [System.UInt16]$Port
   )
   $Splat = @{
     ComputerName = $HostName

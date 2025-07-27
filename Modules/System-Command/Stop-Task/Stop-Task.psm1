@@ -16,7 +16,7 @@ function Stop-Task {
       Position = 0,
       Mandatory
     )]
-    [int]$Id
+    [System.UInt32]$Id
   )
 
   switch ($PSCmdlet.ParameterSetName) {
