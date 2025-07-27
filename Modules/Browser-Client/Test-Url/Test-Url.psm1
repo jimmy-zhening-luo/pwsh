@@ -11,7 +11,7 @@ Specifies the URL to test. This parameter is mandatory and must be castable to a
 function Test-Url {
   param(
     [Parameter(Mandatory)]
-    [Uri]$Uri
+    [System.Uri]$Uri
   )
 
   try {

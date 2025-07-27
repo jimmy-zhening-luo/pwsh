@@ -15,7 +15,7 @@ function Open-Url {
       Position = 0,
       Mandatory
     )]
-    [Uri]$Uri
+    [System.Uri]$Uri
   )
 
   $Target = ($PSCmdlet.ParameterSetName -eq "Uri") ? ($Uri) : (
