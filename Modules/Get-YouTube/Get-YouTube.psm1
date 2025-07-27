@@ -19,7 +19,12 @@ function Get-YouTube {
 
   $VideoUrl = ($Video.StartsWith('http://') -or $Video.StartsWith('https://')) ? $Video : ($Video -match '^(?:(?:www|m)\.)?youtube\.com/watch\?v=(?<video>[-\w]+).*$') ? "https://www.youtube.com/watch?v=$($Matches.video)" : "https://www.youtube.com/watch?v=$Video"
 
-  yt-dlp @Rest -- $VideoUrl
+  if (Test-Url $VideoUrl) {
+    yt-dlp @Rest -- $VideoUrl
+  }
+  else {
+    throw Write-Error "The specified YouTube video URL is not reachable: $VideoUrl"
+  }
 }
 
 New-Alias yta Get-YouTubeAudio
