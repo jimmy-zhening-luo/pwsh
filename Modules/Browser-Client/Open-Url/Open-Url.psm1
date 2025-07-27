@@ -1,9 +1,7 @@
 New-Alias open Open-Url
 New-Alias o Open-Url
 function Open-Url {
-  [CmdletBinding(
-    DefaultParameterSetName = "Path"
-  )]
+  [CmdletBinding(DefaultParameterSetName = "Path")]
   param(
     [Parameter(
       ParameterSetName = "Path",
@@ -18,9 +16,5 @@ function Open-Url {
     [System.Uri]$Uri
   )
 
-  $Target = ($PSCmdlet.ParameterSetName -eq "Uri") ? ($Uri) : (
-    (Test-Path $Path) ? (Resolve-Path $Path) : ($Path)
-  )
-
-  Start-Process "C:\Program Files\Google\Chrome\Application\chrome.exe" $Target
+  Start-Process "C:\Program Files\Google\Chrome\Application\chrome.exe" (($PSCmdlet.ParameterSetName -eq "Uri") ? ($Uri) : ((Test-Path $Path) ? (Resolve-Path $Path) : ($Path)))
 }

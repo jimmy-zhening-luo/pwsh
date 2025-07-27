@@ -15,10 +15,21 @@ function Test-Url {
   )
 
   try {
-    $StatusCode = (Invoke-WebRequest -Uri $Uri).StatusCode
+    $Request = @{
+      Uri                          = $Uri
+      Method                       = "HEAD"
+      PreserveHttpMethodOnRedirect = $true
+      DisableKeepAlive             = $true
+      ConnectionTimeoutSeconds     = 1
+      MaximumRetryCount            = 0
+      ErrorAction                  = "Stop"
+    }
+    $Response = Invoke-WebRequest @Request
+    $Status = $Response.StatusCode
   }
   catch {
-    $StatusCode = $_.Exception.Response.StatusCode.value__
+    $Status = $_.Exception.Response.StatusCode.value__
   }
-  return $StatusCode -eq 200
+
+  $Status -ge 200 -and $Status -lt 300
 }

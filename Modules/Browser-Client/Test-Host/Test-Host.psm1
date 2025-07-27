@@ -10,13 +10,11 @@ function Test-Host {
     [Alias("RemotePort", "p")]
     [System.UInt16]$Port
   )
-  $Splat = @{
-    ComputerName = $HostName
-  }
 
   if ($Port) {
-    $Splat.Add("Port", $Port)
+    Test-NetConnection -ComputerName $HostName -Port $Port
   }
-
-  Test-NetConnection @Splat
+  else {
+    Test-NetConnection -ComputerName $HostName
+  }
 }
