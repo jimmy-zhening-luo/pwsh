@@ -1,7 +1,7 @@
 New-Alias gitcr Undo-Repository
 function Undo-Repository {
   param(
-    [string]$Path
+    [System.String]$Path
   )
   Invoke-Repository -Path $Path -Verb reset --hard
 }
@@ -9,7 +9,7 @@ function Undo-Repository {
 New-Alias gitcrp Restore-Repository
 function Restore-Repository {
   param(
-    [string]$Path
+    [System.String]$Path
   )
 
   try {

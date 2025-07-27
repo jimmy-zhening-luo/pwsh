@@ -1,5 +1,5 @@
 function Resolve-Repository {
-  param([string]$Path)
+  param([System.String]$Path)
 
   if (
     Test-Path (

@@ -1,7 +1,7 @@
 New-Alias gitp Get-Repository
 function Get-Repository {
   param(
-    [string]$Path
+    [System.String]$Path
   )
   Invoke-Repository -Path $Path -Verb pull
 }

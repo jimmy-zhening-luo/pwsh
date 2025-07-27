@@ -1,7 +1,7 @@
 New-Alias gitcp Push-Repository
 function Push-Repository {
   param(
-    [string]$Path
+    [System.String]$Path
   )
   Invoke-Repository -Path $Path -Verb push
 }

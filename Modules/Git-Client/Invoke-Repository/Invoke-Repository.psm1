@@ -1,7 +1,7 @@
 New-Alias gitc Invoke-Repository
 function Invoke-Repository {
   param(
-    [string]$Path,
+    [System.String]$Path,
     [ArgumentCompletions(
       "add",
       "clone",
@@ -12,7 +12,7 @@ function Invoke-Repository {
       "status",
       "switch"
     )]
-    [string]$Verb
+    [System.String]$Verb
   )
 
   $VERB_LIST = @(

@@ -18,9 +18,9 @@ http://learn.microsoft.com/powershell/module/microsoft.powershell.utility/get-ve
 Get-Verb
 #>
 function Get-VerbPowerShell {
-  [OutputType([string])]
+  [OutputType([System.String])]
   param (
-    [string]$Verb = "*"
+    [System.String]$Verb = "*"
   )
 
   $VerbMatch = $Verb.Contains('*') ? $Verb : ($Verb.Length -lt 3 ? "$Verb*" : "*$Verb*")

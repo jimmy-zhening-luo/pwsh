@@ -10,7 +10,7 @@ This function is an alias for the Visual Studio Code command line interface, `co
 https://code.visualstudio.com/docs/configure/command-line
 #>
 function Edit-File {
-  param([string]$Path)
+  param([System.String]$Path)
 
   if ($Path) {
     if (Test-Path $Path) {

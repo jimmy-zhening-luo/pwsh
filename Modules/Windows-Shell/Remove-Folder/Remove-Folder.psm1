@@ -5,7 +5,7 @@ function Remove-Folder {
       Position = 0,
       Mandatory
     )]
-    [string]$Path
+    [System.String]$Path
   )
 
   if (

@@ -4,7 +4,7 @@ New-Alias galc Get-AliasCommand
 #>
 function Get-AliasCommand {
   param(
-    [string]$Definition = "*"
+    [System.String]$Definition = "*"
   )
 
   $DefinitionMatch = $Definition.Contains('*') ? $Definition : ($Definition.Length -lt 3 ? "$Definition*" : "*$Definition*")

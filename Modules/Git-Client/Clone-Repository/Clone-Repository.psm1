@@ -6,11 +6,11 @@ function Import-Repository {
       Position = 0,
       Mandatory
     )]
-    [string]$Repository,
+    [System.String]$Repository,
     [Parameter(
       Position = 1
     )]
-    [string]$Path = $code,
+    [System.String]$Path = $code,
     [switch]$Http
   )
 

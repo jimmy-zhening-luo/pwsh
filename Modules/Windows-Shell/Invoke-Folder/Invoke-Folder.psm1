@@ -3,7 +3,7 @@ New-Alias e Invoke-Folder
 function Invoke-Folder {
   param(
     [Parameter(ValueFromPipeline)]
-    [string]$Path = "."
+    [System.String]$Path = "."
   )
 
   process {

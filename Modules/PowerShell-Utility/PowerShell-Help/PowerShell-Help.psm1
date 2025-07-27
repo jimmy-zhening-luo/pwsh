@@ -8,9 +8,9 @@ New-Alias m Get-HelpOnline
 function Get-HelpOnline {
   param(
     [Parameter(Position = 0)]
-    [string]$Name,
+    [System.String]$Name,
     [Parameter(ValueFromRemainingArguments)]
-    [string[]]$Parameter
+    [System.String[]]$Parameter
   )
 
   $Articles = @()

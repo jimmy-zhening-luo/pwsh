@@ -2,7 +2,7 @@ New-Alias parent Get-Parent
 function Get-Parent {
   param(
     [Parameter(ValueFromPipeline)]
-    [string]$Path = "."
+    [System.String]$Path = "."
   )
   process {
     Split-Path $Path -Resolve
@@ -13,7 +13,7 @@ New-Alias size Get-FileSize
 function Get-FileSize {
   param(
     [Parameter(ValueFromPipeline)]
-    [string]$Path = "."
+    [System.String]$Path = "."
   )
   process {
     if (Test-Path $Path) {

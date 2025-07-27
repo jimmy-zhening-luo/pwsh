@@ -10,7 +10,7 @@ function Stop-Task {
       ParameterSetName = "Name",
       Position = 0
     )]
-    [string]$Name = "explorer",
+    [System.String]$Name = "explorer",
     [Parameter(
       ParameterSetName = "Id",
       Position = 0,

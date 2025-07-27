@@ -1,7 +1,7 @@
 New-Alias gita Add-Repository
 function Add-Repository {
   param(
-    [string]$Path
+    [System.String]$Path
   )
   Invoke-Repository -Path $Path -Verb add .
 }

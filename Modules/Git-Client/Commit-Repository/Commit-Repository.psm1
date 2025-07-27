@@ -1,8 +1,8 @@
 New-Alias gitm Write-Repository
 function Write-Repository {
   param(
-    [string]$Path,
-    [string]$Message
+    [System.String]$Path,
+    [System.String]$Message
   )
   if (-not $Message) {
     $Message = $Path

@@ -9,7 +9,7 @@ function Open-Url {
       ParameterSetName = "Path",
       Position = 0
     )]
-    [string]$Path = ".",
+    [System.String]$Path = ".",
     [Parameter(
       ParameterSetName = "Uri",
       Position = 0,
