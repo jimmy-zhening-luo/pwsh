@@ -1,23 +1,13 @@
 function Resolve-Repository {
   param([System.String]$Path)
 
-  if (
-    Test-Path (
-      Join-Path $Path ".git"
-    )
-  ) {
+  if (Test-Path (Join-Path $Path ".git")) {
     Resolve-Path $Path
   }
   else {
-    $CodeSubpath = Join-Path $code (
-      $Path -replace "^\.[\/\\]+", ""
-    )
+    $CodeSubpath = Join-Path $code ($Path -replace "^\.[\/\\]+", "")
 
-    if (
-      Test-Path (
-        Join-Path $CodeSubpath ".git"
-      )
-    ) {
+    if (Test-Path (Join-Path $CodeSubpath ".git")) {
       Resolve-Path $CodeSubpath
     }
     else {

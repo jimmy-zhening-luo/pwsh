@@ -19,11 +19,11 @@ Get-Verb
 #>
 function Get-VerbPowerShell {
   [OutputType([System.String])]
-  param (
-    [System.String]$Verb = "*"
-  )
+  param([System.String]$Verb = "*")
 
-  $VerbMatch = $Verb.Contains('*') ? $Verb : ($Verb.Length -lt 3 ? "$Verb*" : "*$Verb*")
-
-  (Get-Verb -Verb $VerbMatch @args | Sort-Object -Property Verb | Select-Object Verb).Verb
+  (
+    Get-Verb -Verb ($Verb.Contains('*') ? $Verb : ($Verb.Length -lt 3 ? "$Verb*" : "*$Verb*")) @args |
+      Sort-Object -Property Verb |
+      Select-Object Verb
+  ).Verb
 }

@@ -1,5 +1,6 @@
 $PSDefaultParameterValues = Import-PowerShellDataFile -ErrorAction Stop "$PSScriptRoot\defaults.psd1"
 $Env:PSModulePath += ";$PSScriptRoot\Modules"
+$code = "$HOME\code"
 
 try {
   . $PSScriptRoot\data\index.ps1

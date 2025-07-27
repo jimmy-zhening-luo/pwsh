@@ -5,7 +5,6 @@ function Invoke-Folder {
     [Parameter(ValueFromPipeline)]
     [System.String]$Path = "."
   )
-
   process {
     if (Test-Path $Path) {
       if ((Get-Item $Path).PSIsContainer) {

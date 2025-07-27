@@ -1,15 +1,13 @@
 New-Alias gitcl Import-Repository
 function Import-Repository {
   [CmdletBinding(SupportsShouldProcess)]
-  param (
+  param(
     [Parameter(
       Position = 0,
       Mandatory
     )]
     [System.String]$Repository,
-    [Parameter(
-      Position = 1
-    )]
+    [Parameter(Position = 1)]
     [System.String]$Path = $code,
     [switch]$Http
   )
@@ -24,7 +22,12 @@ function Import-Repository {
     $RepositoryPath = ($Segments.Count -eq 1 ? "jimmy-zhening-luo/" : "") + ($Segments -join "/")
     $RepositoryUrl = $Provider + $RepositoryPath + ($RepositoryPath.EndsWith(".git") ? "" : ".git")
 
-    if ($PSCmdlet.ShouldProcess($RepositoryUrl, "git clone -C $Path")) {
+    if (
+      $PSCmdlet.ShouldProcess(
+        $RepositoryUrl,
+        "git clone -C $Path"
+      )
+    ) {
       if (Test-Path $Path) {
         if ((Get-Item $Path).PSIsContainer) {
           git -C $Path clone $RepositoryUrl

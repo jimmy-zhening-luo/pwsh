@@ -28,17 +28,32 @@ function New-Junction {
     $scriptCmd = { & $wrappedCmd -Force -ItemType Junction @PSBoundParameters }
     $steppablePipeline = $scriptCmd.GetSteppablePipeline()
 
-    if ($PSCmdlet.ShouldProcess($Value, "Open Transaction: Create $($Path.Count) junction(s) [[$Path]]")) {
+    if (
+      $PSCmdlet.ShouldProcess(
+        $Value,
+        "Open Transaction: Create $($Path.Count) junction(s) [[$Path]]"
+      )
+    ) {
       $steppablePipeline.Begin($PSCmdlet)
     }
   }
   process {
-    if ($PSCmdlet.ShouldProcess($Value, "> Step: New-Item -Force -ItemType Junction -Path [$Path]")) {
+    if (
+      $PSCmdlet.ShouldProcess(
+        $Value,
+        "> Step: New-Item -Force -ItemType Junction -Path [$Path]"
+      )
+    ) {
       $steppablePipeline.Process($_)
     }
   }
   end {
-    if ($PSCmdlet.ShouldProcess("Transaction", "Close")) {
+    if (
+      $PSCmdlet.ShouldProcess(
+        "Transaction",
+        "Close"
+      )
+    ) {
       $steppablePipeline.End()
     }
   }

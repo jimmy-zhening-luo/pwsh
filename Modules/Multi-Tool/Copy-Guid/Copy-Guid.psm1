@@ -3,7 +3,7 @@ New-Alias guid Copy-Guid
 .FORWARDHELPTARGETNAME New-Guid
 #>
 function Copy-Guid {
-  param (
+  param(
     [switch]$Upper,
     [switch]$Silent
   )
@@ -17,5 +17,6 @@ function Copy-Guid {
     $Guid
   }
 
-  $Guid | Set-Clipboard
+  $Guid |
+    Set-Clipboard
 }
