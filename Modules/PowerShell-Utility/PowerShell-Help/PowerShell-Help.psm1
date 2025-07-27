@@ -13,30 +13,28 @@ function Get-HelpOnline {
     [string[]]$Parameter
   )
 
+  $Articles = @()
+
   if ($Name) {
-    $Articles = @()
-    $Splat = @{
-      Name        = $Name
-      ErrorAction = "Stop"
-    }
+    $ErrorStop = @{ ErrorAction = "Stop" }
 
     if ($HELP.Contains($Name)) {
-      $HELP[$Name]
-      | ForEach-Object {
-        $Articles += $_
-        Open-Url $_
-      }
+      $HELP[$Name] |
+        ForEach-Object {
+          $Articles += $_
+          Open-Url $_
+        }
     }
     else {
       try {
         $Articles += (
           (
-            Get-Help @Splat
-          ).relatedLinks.navigationLink.Uri
-          | Where-Object { $_ -ne "" }
-          | ForEach-Object { $_ -replace "\?.*$", "" }
+            Get-Help $Name @ErrorStop
+          ).relatedLinks.navigationLink.Uri |
+            Where-Object { $_ -ne "" } |
+            ForEach-Object { $_ -replace "\?.*$", "" }
         )
-        Get-Help @Splat -Online | Out-Null
+        Get-Help $Name -Online -ErrorAction Stop | Out-Null
       }
       catch {
         $NameLower = $Name.ToLowerInvariant()
@@ -56,11 +54,11 @@ function Get-HelpOnline {
 
     if ($Parameter) {
       try {
-        Get-Help @Splat -Parameter $Parameter
+        Get-Help $Name -Parameter $Parameter @ErrorStop
       }
       catch {
         try {
-          Get-Help @Splat
+          Get-Help $Name @ErrorStop
           Write-Warning "No offline help found for parameters '$Parameter' in topic '$Name'."
         }
         catch {
@@ -70,7 +68,7 @@ function Get-HelpOnline {
     }
     else {
       try {
-        Get-Help @Splat
+        Get-Help $Name @ErrorStop
       }
       catch {
         throw "No offline help found for topic '$Name'."
@@ -78,16 +76,16 @@ function Get-HelpOnline {
     }
   }
   else {
-    Get-Help -Name "Get-Help" -Online
+    Get-Help Get-Help -Online
     Get-Help Get-Help
     Write-Warning "No help topic specified, showing Get-Help by default."
   }
 
-  if ($Articles.Count -gt 0) {
-    Write-Output "`r`nOnline Help:"
-    Write-Output $Articles
-    | ForEach-Object { $_ -replace "^https?:\/\/", "http://" }
-    | ForEach-Object { $_ -replace "^learn\.microsoft\.com\/en-us\/", "^learn.microsoft.com/" }
+  if ($Local:Articles.Count -gt 0) {
+    "`r`nOnline Help:"
+    $Articles |
+      ForEach-Object { $_ -replace "^https?:\/\/", "http://" } |
+      ForEach-Object { $_ -replace "^learn\.microsoft\.com\/en-us\/", "^learn.microsoft.com/" }
   }
   else {
     Write-Warning "No online help found."

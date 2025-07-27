@@ -4,5 +4,5 @@ New-Alias zip Compress-File
 .FORWARDHELPCATEGORY Cmdlet
 #>
 function Compress-File {
-  echo "Hello"
+  "Hello"
 }

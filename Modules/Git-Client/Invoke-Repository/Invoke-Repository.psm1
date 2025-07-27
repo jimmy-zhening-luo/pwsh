@@ -27,7 +27,6 @@ function Invoke-Repository {
   )
   $DEFAULT_VERB = "status"
   $DEFAULT_PATH = ".\"
-  $Option = $null
 
   if ($Path) {
     if ($Verb) {
@@ -94,7 +93,7 @@ function Invoke-Repository {
 
   $Repository = Resolve-Repository $Path
 
-  if ($Option) {
+  if ($Local:Option) {
     git -C $Repository $Verb $Option @args
   }
   else {

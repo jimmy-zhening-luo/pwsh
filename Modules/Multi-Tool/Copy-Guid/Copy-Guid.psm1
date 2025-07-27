@@ -14,7 +14,7 @@ function Copy-Guid {
   }
 
   if (-not $Silent) {
-    Write-Output $Guid
+    $Guid
   }
 
   $Guid | Set-Clipboard

@@ -21,7 +21,7 @@ function Resolve-Repository {
       Resolve-Path $CodeSubpath
     }
     else {
-      return $null
+      $null
     }
   }
 }
