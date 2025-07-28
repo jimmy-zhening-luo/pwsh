@@ -1,3 +1,5 @@
+New-Alias split Split-Path
+
 New-Alias parent Get-Parent
 function Get-Parent {
   param(
@@ -8,6 +10,8 @@ function Get-Parent {
     Split-Path $Path -Resolve
   }
 }
+
+New-Alias hash Get-FileHash
 
 New-Alias size Get-FileSize
 function Get-FileSize {

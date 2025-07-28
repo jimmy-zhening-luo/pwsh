@@ -7,6 +7,7 @@
     "Get-HomeItem"
   )
   AliasesToExport   = @(
+    "l"
     "l."
     "l.."
     "ls."

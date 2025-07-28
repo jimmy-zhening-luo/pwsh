@@ -7,7 +7,9 @@
     "Get-FileSize"
   )
   AliasesToExport   = @(
+    "split"
     "parent"
+    "hash"
     "size"
   )
 }

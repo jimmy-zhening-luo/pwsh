@@ -1,3 +1,5 @@
+New-Alias l Get-ChildItem
+
 New-Alias l. Get-SiblingItem
 New-Alias l.. Get-SiblingItem
 New-Alias ls. Get-SiblingItem

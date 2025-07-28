@@ -2,6 +2,7 @@
   ModuleVersion     = "1.0.0.0"
   GUID              = "c84491db-0b43-4dfc-80ea-890b16269a28"
   NestedModules     = @(
+    ".\PowerShell-Object"
     ".\PowerShell-Alias"
     ".\PowerShell-Help"
     ".\PowerShell-Verb"
@@ -21,6 +22,15 @@
     "Sync-Linter"
   )
   AliasesToExport   = @(
+    "count"
+    "n"
+    "k"
+    "pick"
+    "to"
+    "az"
+    "format"
+    "table"
+    "wrap"
     "galc"
     "m"
     "upman"
