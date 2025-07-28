@@ -5,20 +5,27 @@
     ".\PowerShell-Alias"
     ".\PowerShell-Help"
     ".\PowerShell-Verb"
+    ".\PowerShell-Profile"
     ".\PowerShell-History"
     ".\PowerShell-Debug"
+    ".\Lint-PowerShell"
   )
   FunctionsToExport = @(
     "Get-AliasCommand"
     "Get-HelpOnline"
     "Get-VerbPowerShell"
+    "Edit-Profile"
+    "Sync-Profile"
     "Edit-History"
     "Measure-Profile"
+    "Sync-Linter"
   )
   AliasesToExport   = @(
     "galc"
     "m"
     "upman"
+    "op"
+    "up"
     "oc"
     "mc"
   )

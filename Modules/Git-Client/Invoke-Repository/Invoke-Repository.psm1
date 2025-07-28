@@ -16,13 +16,13 @@ function Invoke-Repository {
   )
 
   $VERB_LIST = @(
-    "add",
-    "clone",
-    "commit",
-    "pull",
-    "push",
-    "reset",
-    "status",
+    "add"
+    "clone"
+    "commit"
+    "pull"
+    "push"
+    "reset"
+    "status"
     "switch"
   )
   $DEFAULT_VERB = "status"
