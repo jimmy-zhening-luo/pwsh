@@ -1,6 +1,7 @@
 New-Alias guid Copy-Guid
 <#
 .FORWARDHELPTARGETNAME New-Guid
+.FORWARDHELPCATEGORY Cmdlet
 #>
 function Copy-Guid {
   param(

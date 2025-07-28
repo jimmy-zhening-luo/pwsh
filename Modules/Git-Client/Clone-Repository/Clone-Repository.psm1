@@ -1,4 +1,12 @@
 New-Alias gitcl Import-Repository
+<#
+.SYNOPSIS
+Use Git to clone a repository.
+.DESCRIPTION
+This function is an alias for `git clone` and allows you to clone a repository into a specified path.
+.LINK
+https://git-scm.com/docs/git-clone
+#>
 function Import-Repository {
   [CmdletBinding(SupportsShouldProcess)]
   param(

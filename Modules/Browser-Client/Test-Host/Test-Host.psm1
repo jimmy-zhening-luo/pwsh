@@ -1,6 +1,7 @@
 New-Alias tn Test-Host
 <#
 .FORWARDHELPTARGETNAME Test-NetConnection
+.FORWARDHELPCATEGORY Function
 #>
 function Test-Host {
   param(

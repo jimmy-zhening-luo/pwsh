@@ -2,10 +2,8 @@ New-Alias i Edit-File
 <#
 .SYNOPSIS
 Edit a file in Visual Studio Code.
-
 .DESCRIPTION
 This function is an alias for the Visual Studio Code command line interface, `code.cmd`.
-
 .LINK
 https://code.visualstudio.com/docs/configure/command-line
 #>

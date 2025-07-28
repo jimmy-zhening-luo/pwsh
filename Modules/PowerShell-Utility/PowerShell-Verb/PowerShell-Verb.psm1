@@ -14,6 +14,7 @@ Specifies the verb to search for. The default value is `*`. If the value contain
 
 .LINK
 http://learn.microsoft.com/powershell/module/microsoft.powershell.utility/get-verb
+
 .LINK
 Get-Verb
 #>
