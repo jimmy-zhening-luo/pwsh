@@ -6,6 +6,6 @@
     "Push-Repository"
   )
   AliasesToExport   = @(
-    "gitcp"
+    "gits"
   )
 }

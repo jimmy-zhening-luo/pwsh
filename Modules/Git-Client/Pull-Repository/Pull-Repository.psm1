@@ -5,7 +5,6 @@ function Get-Repository {
   Invoke-Repository -Path $Path -Verb pull
 }
 
-New-Alias gitpa Get-ChildRepository
 New-Alias gpa Get-ChildRepository
 function Get-ChildRepository {
   Get-ChildItem -Path $code -Directory |

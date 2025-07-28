@@ -1,11 +1,11 @@
-New-Alias gitcr Undo-Repository
+New-Alias gitr Undo-Repository
 function Undo-Repository {
   param([System.String]$Path)
 
   Invoke-Repository -Path $Path -Verb reset --hard
 }
 
-New-Alias gitcrp Restore-Repository
+New-Alias gitrs Restore-Repository
 function Restore-Repository {
   param([System.String]$Path)
 

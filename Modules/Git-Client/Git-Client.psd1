@@ -26,12 +26,11 @@
     "gitc"
     "gita"
     "gitcl"
-    "gitcp"
-    "gitcr"
-    "gitcrp"
+    "gits"
+    "gitr"
+    "gitrs"
     "gitm"
     "gitp"
-    "gitpa"
     "gpa"
   )
 }
