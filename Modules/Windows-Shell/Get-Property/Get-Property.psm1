@@ -17,22 +17,78 @@ New-Alias size Get-FileSize
 function Get-FileSize {
   param(
     [Parameter(ValueFromPipeline)]
-    [System.String]$Path = "."
+    [System.String]$Path,
+    [ArgumentCompletions(
+      "B",
+      "KB",
+      "MB",
+      "GB"
+    )]
+    [System.String]$Unit
   )
   process {
-    if (Test-Path $Path) {
-      if ((Get-Item $Path).PSIsContainer) {
-        (
-          Get-ChildItem -Path $Path -Recurse -File |
-            Measure-Object -Property Length -Sum
-        ).Sum
+    $UNITS = @{
+      B  = 1
+      KB = 1KB
+      MB = 1MB
+      GB = 1GB
+    }
+    $DEFAULT_UNIT = "KB"
+    $DEFAULT_PATH = ".\"
+
+    if ($Path) {
+      if ($Unit) {
+        if (-not ($UNITS.Contains($Unit))) {
+          throw "Unknown unit '$Unit'. Allowed units: $($UNITS.Keys -join ', ')."
+        }
       }
       else {
-        (Get-Item $Path).Length
+        if (Test-Path $Path) {
+          $Unit = $DEFAULT_UNIT
+        }
+        else {
+          if ($UNITS.Contains($Path)) {
+            $Unit = $Path
+            $Path = $DEFAULT_PATH
+          }
+          else {
+            throw "'$Path' does not exist."
+          }
+        }
       }
     }
     else {
-      throw "'$Path' is not a path."
+      if ($Unit) {
+        if ($UNITS.Contains($Unit)) {
+          $Path = $DEFAULT_PATH
+        }
+        else {
+          throw "Unknown unit '$Unit'. Allowed units: $($UNITS.Keys -join ', ')."
+        }
+      }
+      else {
+        $Path = $DEFAULT_PATH
+        $Unit = $DEFAULT_UNIT
+
+      }
     }
+
+    $Item = Get-Item $Path
+
+    [math]::Round(
+      (
+        (
+          $Item.PSIsContainer
+        ) ? (
+          (
+            Get-ChildItem -Path $Path -Recurse -File |
+              Measure-Object -Property Length -Sum
+          ).Sum
+        ) : (
+          $Item.Length
+        )
+      ) / $UNITS[$Unit],
+      3
+    )
   }
 }
