@@ -14,6 +14,7 @@
     ".\Remove-Folder"
   )
   FunctionsToExport = @(
+    "Set-FolderCode"
     "Get-HomeItem"
     "Get-SiblingItem"
     "Get-Parent"
@@ -36,6 +37,7 @@
     "c~"
     "c\"
     "c/"
+    "cc"
     "d\"
     "d/"
     "l"
