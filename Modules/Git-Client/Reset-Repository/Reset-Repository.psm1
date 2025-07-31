@@ -13,7 +13,7 @@ function Undo-Repository {
   Invoke-Repository -Path $Path -Verb reset --hard
 }
 
-New-Alias gitrs Restore-Repository
+New-Alias gitrp Restore-Repository
 <#
 .SYNOPSIS
 Use Git to restore a repository to its previous state.

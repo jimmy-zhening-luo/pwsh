@@ -28,7 +28,7 @@
     "gitcl"
     "gits"
     "gitr"
-    "gitrs"
+    "gitrp"
     "gitm"
     "gitp"
     "gpa"
