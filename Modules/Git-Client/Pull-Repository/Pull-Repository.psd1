@@ -8,6 +8,7 @@
   )
   AliasesToExport   = @(
     "gitp"
+    "ggp"
     "gpa"
   )
 }

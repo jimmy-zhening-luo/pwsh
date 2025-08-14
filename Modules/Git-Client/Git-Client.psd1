@@ -24,13 +24,19 @@
   )
   AliasesToExport   = @(
     "gitc"
+    "gg"
     "gita"
     "gitcl"
     "gits"
+    "ggs"
     "gitr"
+    "gr"
     "gitrp"
+    "grp"
     "gitm"
+    "ggm"
     "gitp"
+    "ggp"
     "gpa"
   )
 }

@@ -11,5 +11,6 @@
   )
   AliasesToExport   = @(
     "gitc"
+    "gg"
   )
 }

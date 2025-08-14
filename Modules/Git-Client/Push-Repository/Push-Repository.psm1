@@ -1,4 +1,5 @@
 New-Alias gits Push-Repository
+New-Alias ggs Push-Repository
 <#
 .SYNOPSIS
 Use Git to push changes to a repository.

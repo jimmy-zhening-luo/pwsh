@@ -1,4 +1,5 @@
 New-Alias gitp Get-Repository
+New-Alias ggp Get-Repository
 <#
 .SYNOPSIS
 Use Git to pull changes from a repository.

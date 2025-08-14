@@ -7,5 +7,6 @@
   )
   AliasesToExport   = @(
     "gitm"
+    "ggm"
   )
 }

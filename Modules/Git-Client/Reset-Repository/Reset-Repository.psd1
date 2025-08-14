@@ -8,6 +8,8 @@
   )
   AliasesToExport   = @(
     "gitr"
+    "gr"
     "gitrp"
+    "grp"
   )
 }

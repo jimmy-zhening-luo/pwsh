@@ -1,4 +1,5 @@
 New-Alias gitc Invoke-Repository
+New-Alias gg Invoke-Repository
 function Invoke-Repository {
   param(
     [System.String]$Path,

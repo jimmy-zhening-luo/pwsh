@@ -1,4 +1,5 @@
 New-Alias gitr Undo-Repository
+New-Alias gr Undo-Repository
 <#
 .SYNOPSIS
 Use Git to undo changes in a repository.
@@ -14,6 +15,7 @@ function Undo-Repository {
 }
 
 New-Alias gitrp Restore-Repository
+New-Alias grp Restore-Repository
 <#
 .SYNOPSIS
 Use Git to restore a repository to its previous state.
