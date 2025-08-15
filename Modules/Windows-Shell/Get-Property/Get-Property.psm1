@@ -1,15 +1,5 @@
 New-Alias split Split-Path
-
-New-Alias parent Get-Parent
-function Get-Parent {
-  param(
-    [Parameter(ValueFromPipeline)]
-    [System.String]$Path = "."
-  )
-  process {
-    Split-Path $Path -Resolve
-  }
-}
+New-Alias parent Split-Path
 
 New-Alias hash Get-FileHash
 
@@ -32,6 +22,9 @@ function Get-FileSize {
       KB = 1KB
       MB = 1MB
       GB = 1GB
+      K  = 1KB
+      M  = 1MB
+      G  = 1GB
     }
     $DEFAULT_UNIT = "KB"
     $DEFAULT_PATH = ".\"
