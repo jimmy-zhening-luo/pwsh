@@ -5,7 +5,7 @@ function Resolve-Repository {
     Resolve-Path $Path
   }
   else {
-    $CodeSubpath = Join-Path $code ($Path -replace "^\.[\/\\]+", "")
+    $CodeSubpath = Join-Path $CODE ($Path -replace "^\.[\/\\]+", "")
 
     if (Test-Path (Join-Path $CodeSubpath ".git")) {
       Resolve-Path $CodeSubpath

@@ -1,3 +1,3 @@
 function Sync-Linter {
-  Copy-Item $PROFILE_REPO\PSScriptAnalyzerSettings.psd1 $HOME\PSScriptAnalyzerSettings.psd1
+  Copy-Item $PROFILE_SRC\PSScriptAnalyzerSettings.psd1 $DEV_DRIVE\PSScriptAnalyzerSettings.psd1
 }

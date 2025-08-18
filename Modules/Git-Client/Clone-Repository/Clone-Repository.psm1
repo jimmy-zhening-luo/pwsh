@@ -16,7 +16,7 @@ function Import-Repository {
     )]
     [System.String]$Repository,
     [Parameter(Position = 1)]
-    [System.String]$Path = $code,
+    [System.String]$Path = $CODE,
     [switch]$Http
   )
 

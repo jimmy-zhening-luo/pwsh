@@ -2,7 +2,7 @@ New-Alias c Set-Location
 
 New-Alias cc Set-Code
 function Set-Code {
-  Set-Location $code
+  Set-Location $CODE
 }
 
 New-Alias c. Set-Sibling

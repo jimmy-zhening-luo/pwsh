@@ -1,7 +1,8 @@
 $PSDefaultParameterValues = Import-PowerShellDataFile -ErrorAction Stop "$PSScriptRoot\defaults.psd1"
 $Env:PSModulePath += ";$PSScriptRoot\Modules"
-$code = "$HOME\code"
-$PROFILE_REPO = "$code\pwsh"
+$DEV_DRIVE = 'V:'
+$CODE = "$DEV_DRIVE\code"
+$PROFILE_SRC = "$CODE\pwsh"
 
 try {
   . $PSScriptRoot\data\index.ps1

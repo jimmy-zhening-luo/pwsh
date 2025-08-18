@@ -24,7 +24,7 @@ This function retrieves all child repositories in `~\code\` and pulls changes fr
 https://git-scm.com/docs/git-pull
 #>
 function Get-ChildRepository {
-  Get-ChildItem -Path $code -Directory |
+  Get-ChildItem -Path $CODE -Directory |
     Where-Object { Resolve-Repository $_.FullName } |
     ForEach-Object { Invoke-Repository -Path $_.FullName -Verb pull }
 }
