@@ -17,7 +17,7 @@ function Import-Repository {
     [System.String]$Repository,
     [Parameter(Position = 1)]
     [System.String]$Path = $CODE,
-    [switch]$Http
+    [switch]$ForceSsh
   )
 
   $Segments = $Repository.Trim() -split '/' | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne "" }
@@ -26,9 +26,8 @@ function Import-Repository {
     throw "Empty repository name provided."
   }
   else {
-    $Provider = $Http ? "https://github.com/" : "git@github.com:"
     $RepositoryPath = ($Segments.Count -eq 1 ? "jimmy-zhening-luo/" : "") + ($Segments -join "/")
-    $RepositoryUrl = $Provider + $RepositoryPath + ($RepositoryPath.EndsWith(".git") ? "" : ".git")
+    $RepositoryUrl = ($ForceSsh ? "git@github.com:" : "https://github.com/") + $RepositoryPath + ($RepositoryPath.EndsWith(".git") ? "" : ".git")
 
     if (
       $PSCmdlet.ShouldProcess(
@@ -36,16 +35,11 @@ function Import-Repository {
         "git clone -C $Path"
       )
     ) {
-      if (Test-Path $Path) {
-        if ((Get-Item $Path).PSIsContainer) {
-          git -C $Path clone $RepositoryUrl
-        }
-        else {
-          throw "The specified path '$Path' is not a directory."
-        }
+      if (Test-Path $Path -PathType Container) {
+        git -C $Path clone $RepositoryUrl
       }
       else {
-        throw "The specified path '$Path' does not exist."
+        throw "The specified path '$Path' is not a directory."
       }
     }
   }
