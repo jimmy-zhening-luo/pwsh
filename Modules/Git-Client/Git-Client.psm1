@@ -3,36 +3,18 @@ New-Alias gg Invoke-Repository
 function Invoke-Repository {
   param(
     [System.String]$Path,
-    [ArgumentCompletions(
-      "add",
-      "clone",
-      "commit",
-      "pull",
-      "push",
-      "reset",
-      "status",
-      "switch"
-    )]
+    [ValidateSet([GitVerb])]
     [System.String]$Verb
   )
 
-  $VERB_LIST = @(
-    "add"
-    "clone"
-    "commit"
-    "pull"
-    "push"
-    "reset"
-    "status"
-    "switch"
-  )
+  $GIT_VERB = (Import-PowerShellDataFile (Join-Path $PSScriptRoot "Git-Verb.psd1" -Resolve) -ErrorAction Stop).GIT_VERB
   $DEFAULT_VERB = "status"
   $DEFAULT_PATH = ".\"
 
   if ($Path) {
     if ($Verb) {
-      if (-not ($Verb -in $VERB_LIST)) {
-        if ($Path -in $VERB_LIST) {
+      if (-not ($Verb -in $GIT_VERB)) {
+        if ($Path -in $GIT_VERB) {
           if (Resolve-Repository $DEFAULT_PATH) {
             $Option = $Verb
             $Verb = $Path.ToLowerInvariant()
@@ -43,7 +25,7 @@ function Invoke-Repository {
           }
         }
         else {
-          throw "Unknown git verb '$Verb'. Allowed git verbs: $($VERB_LIST -join ', ')."
+          throw "Unknown git verb '$Verb'. Allowed git verbs: $($GIT_VERB -join ', ')."
         }
       }
       elseif (-not (Resolve-Repository $Path)) {
@@ -57,7 +39,7 @@ function Invoke-Repository {
       }
     }
     else {
-      if ($Path -in $VERB_LIST) {
+      if ($Path -in $GIT_VERB) {
         if (Resolve-Repository $DEFAULT_PATH) {
           $Verb = $Path.ToLowerInvariant()
           $Path = $DEFAULT_PATH
@@ -115,3 +97,35 @@ function Resolve-Repository {
     }
   }
 }
+
+class GitVerb : System.Management.Automation.IValidateSetValuesGenerator {
+  [System.String[]] GetValidValues() {
+    return [System.String[]] (Import-PowerShellDataFile (Join-Path $PSScriptRoot "Git-Verb.psd1" -Resolve)).GIT_VERB
+  }
+}
+
+$ExportableTypes = @(
+  [GitVerb]
+)
+$TypeAcceleratorsClass = [PSObject].Assembly.GetType(
+  'System.Management.Automation.TypeAccelerators'
+)
+$ExistingTypeAccelerators = $TypeAcceleratorsClass::Get
+foreach ($Type in $ExportableTypes) {
+  if ($Type.FullName -in $ExistingTypeAccelerators.Keys) {
+    throw [System.Management.Automation.ErrorRecord]::new(
+      [System.InvalidOperationException]::new("Unable to register type accelerator '$($Type.FullName)' - Accelerator already exists."),
+      'TypeAcceleratorAlreadyExists',
+      [System.Management.Automation.ErrorCategory]::InvalidOperation,
+      $Type.FullName
+    )
+  }
+}
+foreach ($Type in $ExportableTypes) {
+  $TypeAcceleratorsClass::Add($Type.FullName, $Type)
+}
+$MyInvocation.MyCommand.ScriptBlock.Module.OnRemove = {
+  foreach ($Type in $ExportableTypes) {
+    $TypeAcceleratorsClass::Remove($Type.FullName)
+  }
+}.GetNewClosure()
