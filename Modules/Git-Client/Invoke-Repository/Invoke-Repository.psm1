@@ -43,8 +43,6 @@ function Invoke-Repository {
           }
         }
         else {
-          # If $Path and $Verb are both provided, but neither is a verb, the request is definitely malformed: make no further attempts to resolve.
-
           throw "Unknown git verb '$Verb'. Allowed git verbs: $($VERB_LIST -join ', ')."
         }
       }
@@ -59,8 +57,6 @@ function Invoke-Repository {
       }
     }
     else {
-      # If $Path is supplied BUT $Verb is not supplied, very weird and very short leash.
-
       if ($Path -in $VERB_LIST) {
         if (Resolve-Repository $DEFAULT_PATH) {
           $Verb = $Path.ToLowerInvariant()
