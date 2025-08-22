@@ -20,7 +20,9 @@ function Import-Repository {
     [switch]$ForceSsh
   )
 
-  $Segments = $Repository.Trim() -split '/' | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne "" }
+  $Segments = $Repository.Trim() -split '/' |
+    ForEach-Object { $_.Trim() } |
+    Where-Object { $_ -ne "" }
 
   if ($Segments.Count -eq 0) {
     throw "Empty repository name provided."
