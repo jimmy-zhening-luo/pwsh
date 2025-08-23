@@ -10,20 +10,25 @@ https://code.visualstudio.com/docs/configure/command-line
 function Edit-File {
   param([System.String]$Path)
 
-  if ($Path) {
-    if (Test-Path $Path) {
-      code.cmd $Path @args
-    }
-    else {
-      if ($Path.StartsWith("-")) {
-        code.cmd . $Path @args
-      }
-      else {
-        throw "File '$Path' does not exist."
-      }
-    }
+  if ($env:SSH_CLIENT) {
+    throw "Cannot launch Visual Studio Code from SSH client."
   }
   else {
-    code.cmd .
+    if ($Path) {
+      if (Test-Path $Path) {
+        code.cmd $Path @args
+      }
+      else {
+        if ($Path.StartsWith("-")) {
+          code.cmd $PWD $Path @args
+        }
+        else {
+          throw "File '$Path' does not exist."
+        }
+      }
+    }
+    else {
+      code.cmd $PWD
+    }
   }
 }

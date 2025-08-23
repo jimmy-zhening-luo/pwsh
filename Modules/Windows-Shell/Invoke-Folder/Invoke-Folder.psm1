@@ -7,7 +7,12 @@ function Invoke-Folder {
     Edit-File -Path $Path @args
   }
   else {
-    Invoke-Item -Path $Path @args
+    if ($env:SSH_CLIENT) {
+      throw 'Cannot launch File Explorer from SSH client.'
+    }
+    else {
+      Invoke-Item -Path $Path @args
+    }
   }
 }
 
