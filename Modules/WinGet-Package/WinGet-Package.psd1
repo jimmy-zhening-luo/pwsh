@@ -17,6 +17,7 @@
   AliasesToExport   = @(
     "gapx"
     "remapx"
+    "wget"
     "wga"
     "wgu"
     "wgr"
