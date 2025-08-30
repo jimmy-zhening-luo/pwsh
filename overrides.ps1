@@ -4,7 +4,6 @@ Set-Alias rd Remove-Folder # default: Remove-Item
 $ReadOnly = @{
   Option = 'ReadOnly'
 }
-
 $ReadOnlyAll = @{
   Option = @(
     'ReadOnly'
