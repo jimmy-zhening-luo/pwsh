@@ -9,7 +9,22 @@ This function is an alias for `git add .` and stages all changes in the reposito
 https://git-scm.com/docs/git-add
 #>
 function Add-Repository {
-  param([System.String]$Path)
+  param(
+    [System.String]$Path,
+    [Alias("r")]
+    [switch]$Renormalize
+  )
 
-  Invoke-Repository -Path $Path -Verb add .
+  $Required = @{
+    Path       = $Path
+    Verb       = "add"
+  }
+
+  $GitOptions = , "."
+
+  if ($Renormalize) {
+    $GitOptions += "--renormalize"
+  }
+
+  Invoke-Repository @Required $GitOptions @args
 }
