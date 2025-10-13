@@ -65,53 +65,12 @@
     "PSUseUsingScopeModifierInNewRunspaces"
     "PSUseUTF8EncodingForHelpFile"
   )
-  Rules        = @{
-    # PSAvoidUsingCmdletAliases      = @{
-    #     AllowList = @(
-    #         "cd"
-    #     )
-    # }
-    # PSAvoidUsingPositionalParameters = @{
-    #   CommandAllowList = @(
-    #     "npm"
-    #     "npx"
-    #     "wg"
-    #     "wga"
-    #     "yt"
-    #     "yta"
-    #   )
-    # }
-    # done by VSCode too but keeping it on because it catches VSCode not doing it
-    # PSUseConsistentIndentation       = @{
-    #   Enable              = $true
-    #   IndentationSize     = 2
-    #   PipelineIndentation = "IncreaseIndentationForFirstPipeline"
-    # }
-    # defer to VSCode
-    # PSUseConsistentWhitespace        = @{
-    #   Enable                                  = $true
-    #   CheckInnerBrace                         = $true
-    #   CheckOpenBrace                          = $true
-    #   CheckOpenParen                          = $true
-    #   CheckOperator                           = $true
-    #   CheckSeparator                          = $true
-    #   CheckPipe                               = $true
-    #   CheckPipeForRedundantWhitespace         = $true
-    #   CheckParameter                          = $false
-    #   IgnoreAssignmentOperatorInsideHashTable = $true
-    # }
-    # defer to VSCode
-    # PSUseCorrectCasing               = @{
-    #   Enable        = $true
-    #   CheckCommands = $true
-    #   CheckKeyword  = $true
-    #   CheckOperator = $true
-    # }
-    PSUseSingularNouns = @{
-      NounAllowList = @(
-        "Data" # default
-        "Windows" # default
-      )
-    }
-  }
+  # Rules        = @{
+  #   PSUseSingularNouns = @{
+  #     NounAllowList = @(
+  #       "Data" # default
+  #       "Windows" # default
+  #     )
+  #   }
+  # }
 }
