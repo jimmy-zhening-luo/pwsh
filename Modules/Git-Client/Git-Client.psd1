@@ -6,6 +6,7 @@
     ".\Add-Repository"
     ".\Clone-Repository"
     ".\Commit-Repository"
+    ".\Invoke-Repository"
     ".\Pull-Repository"
     ".\Push-Repository"
     ".\Reset-Repository"
