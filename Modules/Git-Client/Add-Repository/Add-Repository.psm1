@@ -16,8 +16,8 @@ function Add-Repository {
   )
 
   $Required = @{
-    Path       = $Path
-    Verb       = "add"
+    Path = $Path
+    Verb = "add"
   }
 
   $GitOptions = , "."
