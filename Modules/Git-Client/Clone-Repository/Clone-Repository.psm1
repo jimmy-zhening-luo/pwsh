@@ -29,7 +29,7 @@ function Import-Repository {
   }
   else {
     $RepositoryPath = ($Segments.Count -eq 1 ? "jimmy-zhening-luo/" : "") + ($Segments -join "/")
-    $RepositoryUrl = ($ForceSsh ? "git@github.com:" : "https://github.com/") + $RepositoryPath + ($RepositoryPath.EndsWith(".git") ? "" : ".git")
+    $RepositoryUrl = ($ForceSsh ? "git@github.com:" : "https://github.com/") + $RepositoryPath
 
     if (
       $PSCmdlet.ShouldProcess(
