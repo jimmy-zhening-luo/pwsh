@@ -3,7 +3,7 @@ New-Alias gg Invoke-Repository
 function Invoke-Repository {
   param(
     [System.String]$Path,
-    # [ValidateSet([GitVerb])]
+    [ValidateSet([GitVerb])]
     [System.String]$Verb
   )
 
