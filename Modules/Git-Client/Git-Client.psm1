@@ -73,10 +73,17 @@ function Invoke-Repository {
   $Repository = Resolve-Repository $Path
 
   if ($Local:Option) {
-    git -C $Repository $Verb $Option @args
+    $Output = git -C $Repository $Verb $Option @args 2>&1
   }
   else {
-    git -C $Repository $Verb @args
+    $Output = git -C $Repository $Verb @args 2>&1
+  }
+
+  if (($Output -as "string").StartsWith("fatal:")) {
+    throw $Output
+  }
+  else {
+    $Output
   }
 }
 
