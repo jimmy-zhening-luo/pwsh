@@ -69,7 +69,7 @@ function Undo-Repository {
     Path = $Path
   }
 
-  (Add-Repository @PathSpec) && (Invoke-Repository @PathSpec -Verb reset --hard @args)
+  (Add-Repository @PathSpec) && (Invoke-Repository @PathSpec -Verb reset --hard $Tree @args)
 }
 
 New-Alias gitrp Restore-Repository
