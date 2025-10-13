@@ -5,8 +5,6 @@ $PROFILE_SRC = "$CODE\pwsh"
 
 try {
   $PSDefaultParameterValues = Import-PowerShellDataFile "$PSScriptRoot\defaults.psd1" -ErrorAction Stop
-
-  . $PSScriptRoot\data\index.ps1
   . $PSScriptRoot\overrides.ps1
 }
 catch {
