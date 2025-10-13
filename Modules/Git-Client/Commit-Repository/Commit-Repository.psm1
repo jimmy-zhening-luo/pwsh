@@ -19,5 +19,12 @@ function Write-Repository {
     $Path = $null
   }
 
-  (Add-Repository -Path $Path -ErrorAction Stop) && (Invoke-Repository -Path $Path -Verb commit -m $Message)
+  try {
+    Add-Repository -Path $Path
+  }
+  catch {
+    throw $_
+  }
+
+  Invoke-Repository -Path $Path -Verb commit -m $Message
 }
