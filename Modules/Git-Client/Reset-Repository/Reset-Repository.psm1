@@ -14,91 +14,62 @@ function Undo-Repository {
     [System.String]$Tree
   )
 
-  $Option = $null
-
-  if ($Path -and (-not $Tree) -and (-not (Test-Path -Path $Path -PathType Container))) {
+  if ($Path -and (-not $Tree) -and (($Path -eq "~") -or (-not (Test-Path -Path $Path -PathType Container)))) {
     $Tree = $Path
-    $Path = $null
+    $Path = ""
   }
 
   if ($Tree) {
     if ($Tree -as "System.UInt32") {
-      $Tree = "HEAD~$(Path -as "System.UInt32")"
+      $Tree = "HEAD~$($Tree -as 'System.UInt32')"
     }
     elseif ($Tree.StartsWith("~")) {
       if ($Tree -eq "~") {
         $Tree = "HEAD~"
       }
       elseif ($Tree.Substring(1) -as "System.UInt32") {
-        $Tree = "HEAD~$(Path.Substring(1) -as "System.UInt32")"
-      }
-      else {
-        $Option = $Tree
-        $Tree = $null
+        $Tree = "HEAD~$($Tree.Substring(1) -as 'System.UInt32')"
       }
     }
     elseif ($Tree.StartsWith("^")) {
       if ($Tree -eq "^") {
         $Tree = "HEAD^"
       }
-      elseif ($Path.Substring(1) -as "System.UInt32") {
-        $Tree = "HEAD^$(Path.Substring(1) -as "System.UInt32")"
-      }
-      else {
-        $Option = $Tree
-        $Tree = $null
+      elseif ($Tree.Substring(1) -as "System.UInt32") {
+        $Tree = "HEAD^$($Tree.Substring(1) -as 'System.UInt32')"
       }
     }
     elseif ($Tree.ToUpperInvariant().StartsWith("HEAD")) {
-      if ($Tree.ToUpperInvariant() -eq "HEAD") {
-        $Tree = $null
+      if ($Tree.Length -eq 4) {
+        $Tree = ""
       }
       elseif ($Tree[4] -eq "~") {
-        if ($Tree -eq "HEAD~") {
+        if ($Tree.Length -eq 5) {
           $Tree = "HEAD~"
         }
         elseif ($Tree.Substring(5) -as "System.UInt32") {
-          $Tree = "HEAD~$(Tree.Substring(5) -as "System.UInt32")"
-        }
-        else {
-          $Option = $Tree
-          $Tree = $null
+          $Tree = "HEAD~$($Tree.Substring(5) -as 'System.UInt32')"
         }
       }
       elseif ($Tree[4] -eq "^") {
-        if ($Tree -eq "HEAD^") {
+        if ($Tree.Length -eq 5) {
           $Tree = "HEAD^"
         }
         elseif ($Tree.Substring(5) -as "System.UInt32") {
-          $Tree = "HEAD^$(Tree.Substring(5) -as "System.UInt32")"
-        }
-        else {
-          $Option = $Tree
-          $Tree = $null
+          $Tree = "HEAD^$($Tree.Substring(5) -as 'System.UInt32')"
         }
       }
       elseif ($Tree.Substring(4) -as "System.UInt32") {
-        $Tree = "HEAD~$(Tree.Substring(4) -as "System.UInt32")"
+        $Tree = "HEAD~$($Tree.Substring(4) -as "System.UInt32")"
       }
-      else {
-        $Option = $Tree
-        $Tree = $null
-      }
-    }
-    else {
-      $Option = $Tree
-      $Tree = $null
     }
   }
 
   $PathSpec = @{
     Path = $Path
   }
-  $Verb = @{
-    Verb = "reset"
-  }
 
-  (Add-Repository @PathSpec) && (Invoke-Repository @PathSpec @Verb --hard $Tree $Option @args)
+  (Add-Repository @PathSpec) && (Invoke-Repository @PathSpec -Verb reset --hard @args)
 }
 
 New-Alias gitrp Restore-Repository
