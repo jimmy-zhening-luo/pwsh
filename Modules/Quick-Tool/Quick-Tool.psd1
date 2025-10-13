@@ -1,6 +1,6 @@
 @{
   ModuleVersion     = "1.0.0.0"
-  GUID              = "2ffe344f-5e36-472f-94bd-8af95254b02e"
+  GUID              = "8984f438-f595-48c1-92a1-b893106bbfe2"
   NestedModules     = @(
     ".\Copy-Guid"
   )
