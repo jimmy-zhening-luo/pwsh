@@ -14,11 +14,11 @@ function Undo-Repository {
     [System.String]$Tree
   )
 
-  $Option = ""
+  $Option = $null
 
   if ($Path -and (-not $Tree) -and (-not (Test-Path -Path $Path -PathType Container))) {
     $Tree = $Path
-    $Path = ""
+    $Path = $null
   }
 
   if ($Tree) {
@@ -34,7 +34,7 @@ function Undo-Repository {
       }
       else {
         $Option = $Tree
-        $Tree = ""
+        $Tree = $null
       }
     }
     elseif ($Tree.StartsWith("^")) {
@@ -46,12 +46,12 @@ function Undo-Repository {
       }
       else {
         $Option = $Tree
-        $Tree = ""
+        $Tree = $null
       }
     }
     elseif ($Tree.ToUpperInvariant().StartsWith("HEAD")) {
       if ($Tree.ToUpperInvariant() -eq "HEAD") {
-        $Tree = ""
+        $Tree = $null
       }
       elseif ($Tree[4] -eq "~") {
         if ($Tree -eq "HEAD~") {
@@ -62,7 +62,7 @@ function Undo-Repository {
         }
         else {
           $Option = $Tree
-          $Tree = ""
+          $Tree = $null
         }
       }
       elseif ($Tree[4] -eq "^") {
@@ -74,7 +74,7 @@ function Undo-Repository {
         }
         else {
           $Option = $Tree
-          $Tree = ""
+          $Tree = $null
         }
       }
       elseif ($Tree.Substring(4) -as "System.UInt32") {
@@ -82,12 +82,12 @@ function Undo-Repository {
       }
       else {
         $Option = $Tree
-        $Tree = ""
+        $Tree = $null
       }
     }
     else {
       $Option = $Tree
-      $Tree = ""
+      $Tree = $null
     }
   }
 
