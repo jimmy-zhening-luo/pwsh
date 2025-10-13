@@ -4,14 +4,101 @@ New-Alias gr Undo-Repository
 .SYNOPSIS
 Use Git to undo changes in a repository.
 .DESCRIPTION
-This function is an alias for `git add . && git reset --hard`.
+This function is an alias for `git add . && git reset --hard [[[HEAD]~][n=1]]`.
 .LINK
 https://git-scm.com/docs/git-reset
 #>
 function Undo-Repository {
-  param([System.String]$Path)
+  param(
+    [System.String]$Path,
+    [System.String]$Tree
+  )
 
-  (Add-Repository -Path $Path) && (Invoke-Repository -Path $Path -Verb reset --hard @args)
+  $Option = ""
+
+  if ($Path -and (-not $Tree) -and (-not (Test-Path -Path $Path -PathType Container))) {
+    $Tree = $Path
+    $Path = ""
+  }
+
+  if ($Tree) {
+    if ($Tree -as "System.UInt32") {
+      $Tree = "HEAD~$(Path -as "System.UInt32")"
+    }
+    elseif ($Tree.StartsWith("~")) {
+      if ($Tree -eq "~") {
+        $Tree = "HEAD~"
+      }
+      elseif ($Tree.Substring(1) -as "System.UInt32") {
+        $Tree = "HEAD~$(Path.Substring(1) -as "System.UInt32")"
+      }
+      else {
+        $Option = $Tree
+        $Tree = ""
+      }
+    }
+    elseif ($Tree.StartsWith("^")) {
+      if ($Tree -eq "^") {
+        $Tree = "HEAD^"
+      }
+      elseif ($Path.Substring(1) -as "System.UInt32") {
+        $Tree = "HEAD^$(Path.Substring(1) -as "System.UInt32")"
+      }
+      else {
+        $Option = $Tree
+        $Tree = ""
+      }
+    }
+    elseif ($Tree.ToUpperInvariant().StartsWith("HEAD")) {
+      if ($Tree.ToUpperInvariant() -eq "HEAD") {
+        $Tree = ""
+      }
+      elseif ($Tree[4] -eq "~") {
+        if ($Tree -eq "HEAD~") {
+          $Tree = "HEAD~"
+        }
+        elseif ($Tree.Substring(5) -as "System.UInt32") {
+          $Tree = "HEAD~$(Tree.Substring(5) -as "System.UInt32")"
+        }
+        else {
+          $Option = $Tree
+          $Tree = ""
+        }
+      }
+      elseif ($Tree[4] -eq "^") {
+        if ($Tree -eq "HEAD^") {
+          $Tree = "HEAD^"
+        }
+        elseif ($Tree.Substring(5) -as "System.UInt32") {
+          $Tree = "HEAD^$(Tree.Substring(5) -as "System.UInt32")"
+        }
+        else {
+          $Option = $Tree
+          $Tree = ""
+        }
+      }
+      elseif ($Tree.Substring(4) -as "System.UInt32") {
+        $Tree = "HEAD~$(Tree.Substring(4) -as "System.UInt32")"
+      }
+      else {
+        $Option = $Tree
+        $Tree = ""
+      }
+    }
+    else {
+      $Option = $Tree
+      $Tree = ""
+    }
+  }
+
+  $PathSpec = @{
+    Path = $Path
+  }
+  $Verb = @{
+    Verb = "reset"
+  }
+
+  (Add-Repository @PathSpec) && (Invoke-Repository @PathSpec @Verb --hard $Tree $Option @args)
 }
 
 New-Alias gitrp Restore-Repository
@@ -29,5 +116,9 @@ https://git-scm.com/docs/git-pull
 function Restore-Repository {
   param([System.String]$Path)
 
-  (Undo-Repository -Path $Path) && (Get-Repository -Path $Path)
+  $PathSpec = @{
+    Path = $Path
+  }
+
+  (Undo-Repository @PathSpec) && (Get-Repository @PathSpec)
 }
