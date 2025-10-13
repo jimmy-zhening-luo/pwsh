@@ -11,7 +11,7 @@ https://git-scm.com/docs/git-reset
 function Undo-Repository {
   param([System.String]$Path)
 
-  (Add-Repository -Path $Path -ErrorAction Stop) && (Invoke-Repository -Path $Path -Verb reset --hard)
+  (Add-Repository -Path $Path -ErrorAction Stop) && (Invoke-Repository -Path $Path -Verb reset --hard @args)
 }
 
 New-Alias gitrp Restore-Repository
