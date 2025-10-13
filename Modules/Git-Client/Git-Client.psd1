@@ -26,6 +26,7 @@
     "gitc"
     "gg"
     "gita"
+    "gga"
     "gitcl"
     "gits"
     "ggs"

@@ -7,5 +7,6 @@
   )
   AliasesToExport   = @(
     "gita"
+    "gga"
   )
 }

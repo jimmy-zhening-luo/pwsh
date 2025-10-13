@@ -1,4 +1,5 @@
 New-Alias gita Add-Repository
+New-Alias gga Add-Repository
 <#
 .SYNOPSIS
 Use Git to stage all changes in a repository.
