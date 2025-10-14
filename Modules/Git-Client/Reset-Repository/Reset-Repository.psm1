@@ -11,7 +11,8 @@ https://git-scm.com/docs/git-reset
 function Undo-Repository {
   param(
     [System.String]$Path,
-    [System.String]$Tree
+    [System.String]$Tree,
+    [switch]$StopError
   )
 
   if ($Path -and (-not $Tree) -and (($Path -eq "~") -or (-not (Resolve-Repository $Path)))) {
@@ -65,11 +66,22 @@ function Undo-Repository {
     }
   }
 
-  $PathSpec = @{
-    Path = $Path
+  $Add = @{
+    Path      = $Path
+    StopError = $true
+  }
+  $Reset = @{
+    Path      = $Path
+    Verb      = "reset"
+    StopError = $StopError
+  }
+  $GitArguments = , "--hard"
+
+  if ($Tree) {
+    $GitArguments += $Tree
   }
 
-  (Add-Repository @PathSpec) && (($Tree) ? (Invoke-Repository @PathSpec -Verb reset --hard $Tree @args) : (Invoke-Repository @PathSpec -Verb reset --hard @args))
+  (Add-Repository @Add) && (Invoke-Repository @Reset $GitArguments @args)
 }
 
 New-Alias gitrp Restore-Repository
@@ -87,9 +99,10 @@ https://git-scm.com/docs/git-pull
 function Restore-Repository {
   param([System.String]$Path)
 
-  $PathSpec = @{
-    Path = $Path
+  $Undo = @{
+    Path      = $Path
+    StopError = $true
   }
 
-  (Undo-Repository @PathSpec) && (Get-Repository @PathSpec)
+  (Undo-Repository @Undo) && (Get-Repository -Path $Path)
 }

@@ -41,13 +41,22 @@ function Write-Repository {
     }
   }
 
-  $PathSpec = @{
-    Path = $Path
+  $Add = @{
+    Path      = $Path
+    StopError = $true
   }
-  $Verb = @{
+  $Commit = @{
+    Path = $Path
     Verb = "commit"
   }
 
+  (Add-Repository @Add) && (
+    (
+      $AllowEmpty
+    ) ? (
+      Invoke-Repository @Commit -m $Message --allow-empty @args
+    ) : (
+      Invoke-Repository @Commit -m $Message @args
+    )
+  )
 }
-(Add-Repository @PathSpec) && (
-  ($AllowEmpty) ? (Invoke-Repository @PathSpec @Verb -- -m $Message --allow-empty @args) : (Invoke-Repository @PathSpec @Verb -- -m $Message @args))

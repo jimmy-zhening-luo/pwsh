@@ -12,19 +12,20 @@ function Add-Repository {
   param(
     [System.String]$Path,
     [Alias("r")]
-    [switch]$Renormalize
+    [switch]$Renormalize,
+    [switch]$StopError
   )
 
-  $Required = @{
-    Path = $Path
-    Verb = "add"
+  $Add = @{
+    Path      = $Path
+    Verb      = "add"
+    StopError = $StopError
   }
-
-  $GitOptions = , "."
+  $GitArguments = , "."
 
   if ($Renormalize) {
-    $GitOptions += "--renormalize"
+    $GitArguments += "--renormalize"
   }
 
-  Invoke-Repository @Required $GitOptions @args
+  Invoke-Repository @Add $GitArguments @args
 }

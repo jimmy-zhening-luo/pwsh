@@ -3,7 +3,8 @@ New-Alias gg Invoke-Repository
 function Invoke-Repository {
   param(
     [System.String]$Path,
-    [System.String]$Verb
+    [System.String]$Verb,
+    [switch]$StopError
   )
 
   $GIT_VERB = @(
@@ -81,18 +82,28 @@ function Invoke-Repository {
 
   $Repository = Resolve-Repository $Path
 
-  if ($Local:Option) {
-    $Output = git -C $Repository $Verb $Option @args 2>&1
-  }
-  else {
-    $Output = git -C $Repository $Verb @args 2>&1
-  }
+  if ($StopError) {
+    if ($Local:Option) {
+      $Output = git -C $Repository $Verb $Option @args 2>&1
+    }
+    else {
+      $Output = git -C $Repository $Verb @args 2>&1
+    }
 
-  if (($Output -as "string").StartsWith("fatal:")) {
-    throw $Output
+    if (($Output -as "string").StartsWith("fatal:")) {
+      throw $Output
+    }
+    else {
+      $Output
+    }
   }
   else {
-    $Output
+    if ($Local:Option) {
+      git -C $Repository $Verb $Option @args
+    }
+    else {
+      git -C $Repository $Verb @args
+    }
   }
 }
 
