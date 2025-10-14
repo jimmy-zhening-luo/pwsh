@@ -17,6 +17,7 @@ function Import-Repository {
     [System.String]$Repository,
     [Parameter(Position = 1)]
     [System.String]$Path = $CODE,
+    [Alias("fs", "ssh", "sh", "git")]
     [switch]$ForceSsh
   )
 
