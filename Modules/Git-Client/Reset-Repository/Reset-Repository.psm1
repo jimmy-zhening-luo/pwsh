@@ -98,12 +98,20 @@ https://git-scm.com/docs/git-reset
 https://git-scm.com/docs/git-pull
 #>
 function Restore-Repository {
-  param([System.String]$Path)
+  param(
+    [System.String]$Path,
+    [Alias("Stop", "es")]
+    [switch]$ErrorStop
+  )
 
   $Reset = @{
     Path      = $Path
     ErrorStop = $true
   }
+  $Pull = @{
+    Path      = $Path
+    ErrorStop = $ErrorStop
+  }
 
-  (Reset-Repository @Reset) && (Get-Repository -Path $Path)
+  (Reset-Repository @Reset) && (Get-Repository @Pull)
 }
