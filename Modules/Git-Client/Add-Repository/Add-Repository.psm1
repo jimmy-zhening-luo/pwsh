@@ -20,7 +20,7 @@ function Add-Repository {
   $Add = @{
     Path      = $Path
     Verb      = "add"
-    StopError = $ErrorStop
+    ErrorStop = $ErrorStop
   }
   $GitArguments = , "."
 

@@ -69,12 +69,12 @@ function Undo-Repository {
 
   $Add = @{
     Path      = $Path
-    StopError = $true
+    ErrorStop = $true
   }
   $Reset = @{
     Path      = $Path
     Verb      = "reset"
-    StopError = $ErrorStop
+    ErrorStop = $ErrorStop
   }
   $GitArguments = , "--hard"
 
@@ -102,7 +102,7 @@ function Restore-Repository {
 
   $Undo = @{
     Path      = $Path
-    StopError = $true
+    ErrorStop = $true
   }
 
   (Undo-Repository @Undo) && (Get-Repository -Path $Path)

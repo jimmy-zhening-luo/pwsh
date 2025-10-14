@@ -43,7 +43,7 @@ function Write-Repository {
 
   $Add = @{
     Path      = $Path
-    StopError = $true
+    ErrorStop = $true
   }
   $Commit = @{
     Path = $Path
