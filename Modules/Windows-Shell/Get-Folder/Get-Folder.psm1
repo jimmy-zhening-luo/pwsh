@@ -6,7 +6,7 @@ function Get-Sibling {
     [ValidateSet([SiblingFolder])]
     [System.String]$Path
   )
-  Get-ChildItem (Join-Path (Split-Path $PWD) $Path) @args
+  Get-ChildItem (Join-Path (Split-Path $PWD.Path) $Path) @args
 }
 
 New-Alias l.. Get-Relative
@@ -15,7 +15,7 @@ function Get-Relative {
     [ValidateSet([RelativeFolder])]
     [System.String]$Path
   )
-  Get-ChildItem (Join-Path (Split-Path (Split-Path $PWD)) $Path) @args
+  Get-ChildItem (Join-Path (Split-Path (Split-Path $PWD.Path)) $Path) @args
 }
 
 New-Alias l~ Get-Home

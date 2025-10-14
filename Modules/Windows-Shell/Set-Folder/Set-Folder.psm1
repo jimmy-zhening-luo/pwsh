@@ -11,7 +11,7 @@ function Set-Sibling {
     [ValidateSet([SiblingFolder])]
     [System.String]$Path
   )
-  Set-Location (Join-Path (Split-Path $PWD) $Path)
+  Set-Location (Join-Path (Split-Path $PWD.Path) $Path)
 }
 
 New-Alias c.. Set-Relative
@@ -20,7 +20,7 @@ function Set-Relative {
     [ValidateSet([RelativeFolder])]
     [System.String]$Path
   )
-  Set-Location (Join-Path (Split-Path (Split-Path $PWD)) $Path)
+  Set-Location (Join-Path (Split-Path (Split-Path $PWD.Path)) $Path)
 }
 
 New-Alias c~ Set-Home

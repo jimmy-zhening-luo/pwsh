@@ -1,7 +1,7 @@
 New-Alias explore Invoke-Folder
 New-Alias e Invoke-Folder
 function Invoke-Folder {
-  param([System.String]$Path = $PWD)
+  param([System.String]$Path = $PWD.Path)
 
   if ($env:SSH_CLIENT) {
     throw 'Cannot launch File Explorer from SSH client.'
@@ -21,7 +21,7 @@ function Invoke-Sibling {
     [ValidateSet([SiblingItem])]
     [System.String]$Path
   )
-  Invoke-Folder (Join-Path (Split-Path $PWD) $Path) @args
+  Invoke-Folder (Join-Path (Split-Path $PWD.Path) $Path) @args
 }
 
 New-Alias e.. Invoke-Relative
@@ -30,7 +30,7 @@ function Invoke-Relative {
     [ValidateSet([RelativeItem])]
     [System.String]$Path
   )
-  Invoke-Folder (Join-Path (Split-Path (Split-Path $PWD)) $Path) @args
+  Invoke-Folder (Join-Path (Split-Path (Split-Path $PWD.Path)) $Path) @args
 }
 
 New-Alias e~ Invoke-Home
