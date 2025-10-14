@@ -19,7 +19,7 @@
     "Get-Repository"
     "Get-ChildRepository"
     "Push-Repository"
-    "Undo-Repository"
+    "Reset-Repository"
     "Restore-Repository"
   )
   AliasesToExport   = @(

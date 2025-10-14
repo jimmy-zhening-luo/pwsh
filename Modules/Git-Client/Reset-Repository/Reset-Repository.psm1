@@ -1,5 +1,5 @@
-New-Alias gitr Undo-Repository
-New-Alias gr Undo-Repository
+New-Alias gitr Reset-Repository
+New-Alias gr Reset-Repository
 <#
 .SYNOPSIS
 Use Git to undo changes in a repository.
@@ -8,7 +8,7 @@ This function is an alias for `git add . && git reset --hard [[[HEAD]~][n=1]]`.
 .LINK
 https://git-scm.com/docs/git-reset
 #>
-function Undo-Repository {
+function Reset-Repository {
   param(
     [System.String]$Path,
     [System.String]$Tree,
@@ -100,10 +100,10 @@ https://git-scm.com/docs/git-pull
 function Restore-Repository {
   param([System.String]$Path)
 
-  $Undo = @{
+  $Reset = @{
     Path      = $Path
     ErrorStop = $true
   }
 
-  (Undo-Repository @Undo) && (Get-Repository -Path $Path)
+  (Reset-Repository @Reset) && (Get-Repository -Path $Path)
 }
