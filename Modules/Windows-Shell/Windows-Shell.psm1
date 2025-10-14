@@ -1,25 +1,24 @@
 class SiblingItem : System.Management.Automation.IValidateSetValuesGenerator {
   [System.String[]] GetValidValues() {
-    $Parent = Split-Path -Parent $PWD
-    return [System.String[]] (Split-Path -Parent $PWD | Get-ChildItem).BaseName
+    return [System.String[]] (Split-Path $PWD | Get-ChildItem).BaseName
   }
 }
 
 class SiblingFolder : System.Management.Automation.IValidateSetValuesGenerator {
   [System.String[]] GetValidValues() {
-    return [System.String[]] (Split-Path -Parent $PWD | Get-ChildItem -Directory).BaseName
+    return [System.String[]] (Split-Path $PWD | Get-ChildItem -Directory).BaseName
   }
 }
 
 class RelativeItem : System.Management.Automation.IValidateSetValuesGenerator {
   [System.String[]] GetValidValues() {
-    return [System.String[]] (Split-Path -Parent (Split-Path -Parent $PWD) | Get-ChildItem).BaseName
+    return [System.String[]] (Split-Path (Split-Path $PWD) | Get-ChildItem).BaseName
   }
 }
 
 class RelativeFolder : System.Management.Automation.IValidateSetValuesGenerator {
   [System.String[]] GetValidValues() {
-    return [System.String[]] (Split-Path -Parent (Split-Path -Parent $PWD) | Get-ChildItem -Directory).BaseName
+    return [System.String[]] (Split-Path (Split-Path $PWD) | Get-ChildItem -Directory).BaseName
   }
 }
 

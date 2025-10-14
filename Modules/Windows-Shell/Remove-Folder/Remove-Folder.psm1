@@ -14,6 +14,6 @@ function Remove-Folder {
       "Remove-Item -Recurse -Force"
     )
   ) {
-    Remove-Item -Path $Path -Recurse -Force
+    Remove-Item $Path -Recurse -Force
   }
 }

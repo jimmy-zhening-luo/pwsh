@@ -3,16 +3,15 @@ New-Alias e Invoke-Folder
 function Invoke-Folder {
   param([System.String]$Path = $PWD)
 
-  if (Test-Path -Path $Path -PathType Leaf) {
-    Edit-File -Path $Path @args
+  if ($env:SSH_CLIENT) {
+    throw 'Cannot launch File Explorer from SSH client.'
+  }
+
+  if (Test-Path $Path -PathType Container) {
+    Invoke-Item $Path @args
   }
   else {
-    if ($env:SSH_CLIENT) {
-      throw 'Cannot launch File Explorer from SSH client.'
-    }
-    else {
-      Invoke-Item -Path $Path @args
-    }
+    Edit-File $Path @args
   }
 }
 
@@ -22,7 +21,7 @@ function Invoke-Sibling {
     [ValidateSet([SiblingItem])]
     [System.String]$Path
   )
-  Invoke-Folder -Path (Join-Path (Split-Path -Parent $PWD) $Path) @args
+  Invoke-Folder (Join-Path (Split-Path $PWD) $Path) @args
 }
 
 New-Alias e.. Invoke-Relative
@@ -31,7 +30,7 @@ function Invoke-Relative {
     [ValidateSet([RelativeItem])]
     [System.String]$Path
   )
-  Invoke-Folder -Path (Join-Path (Split-Path -Parent (Split-Path -Parent $PWD)) $Path) @args
+  Invoke-Folder (Join-Path (Split-Path (Split-Path $PWD)) $Path) @args
 }
 
 New-Alias e~ Invoke-Home
@@ -40,7 +39,7 @@ function Invoke-Home {
     [ValidateSet([HomeItem])]
     [System.String]$Path
   )
-  Invoke-Folder -Path (Join-Path $HOME $Path) @args
+  Invoke-Folder (Join-Path $HOME $Path) @args
 }
 
 New-Alias e\ Invoke-Drive
@@ -50,5 +49,5 @@ function Invoke-Drive {
     [ValidateSet([DriveItem])]
     [System.String]$Path
   )
-  Invoke-Folder -Path (Join-Path $PWD.Drive.Root $Path) @args
+  Invoke-Folder (Join-Path $PWD.Drive.Root $Path) @args
 }

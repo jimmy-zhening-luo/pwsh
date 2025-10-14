@@ -74,7 +74,7 @@ function Get-FileSize {
           $Item.PSIsContainer
         ) ? (
           (
-            Get-ChildItem -Path $Path -Recurse -File |
+            Get-ChildItem $Path -Recurse -File |
               Measure-Object -Property Length -Sum
           ).Sum
         ) : (

@@ -6,7 +6,7 @@ function Get-Sibling {
     [ValidateSet([SiblingFolder])]
     [System.String]$Path
   )
-  Get-ChildItem -Path (Join-Path (Split-Path -Parent $PWD) $Path) @args
+  Get-ChildItem (Join-Path (Split-Path $PWD) $Path) @args
 }
 
 New-Alias l.. Get-Relative
@@ -15,7 +15,7 @@ function Get-Relative {
     [ValidateSet([RelativeFolder])]
     [System.String]$Path
   )
-  Get-ChildItem -Path (Join-Path (Split-Path -Parent (Split-Path -Parent $PWD)) $Path) @args
+  Get-ChildItem (Join-Path (Split-Path (Split-Path $PWD)) $Path) @args
 }
 
 New-Alias l~ Get-Home
@@ -24,7 +24,7 @@ function Get-Home {
     [ValidateSet([HomeFolder])]
     [System.String]$Path
   )
-  Get-ChildItem -Path (Join-Path $HOME $Path) @args
+  Get-ChildItem (Join-Path $HOME $Path) @args
 }
 
 New-Alias l\ Get-Drive
@@ -34,5 +34,5 @@ function Get-Drive {
     [ValidateSet([DriveFolder])]
     [System.String]$Path
   )
-  Get-ChildItem -Path (Join-Path $PWD.Drive.Root $Path) @args
+  Get-ChildItem (Join-Path $PWD.Drive.Root $Path) @args
 }
