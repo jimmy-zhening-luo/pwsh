@@ -1,21 +1,31 @@
+$GIT_VERB = (
+  Import-PowerShellDataFile (
+    Join-Path $PSScriptRoot "Git-Verb.psd1" -Resolve
+  ) -ErrorAction Stop
+).GIT_VERB
+
+$GitVerbArgumentCompleter = {
+  param (
+    $commandName,
+    $parameterName,
+    $wordToComplete,
+    $commandAst,
+    $fakeBoundParameters
+  )
+
+  $GIT_VERB | Where-Object {
+    $_ -like "$wordToComplete*"
+  }
+}
+Register-ArgumentCompleter -CommandName Invoke-Repository -ParameterName Verb -ScriptBlock $GitVerbArgumentCompleter
+
 New-Alias gitc Invoke-Repository
 New-Alias gg Invoke-Repository
 function Invoke-Repository {
   param(
-    [System.String]$Path,
-    [System.String]$Verb,
+    $Path,
+    $Verb,
     [switch]$StopError
-  )
-
-  $GIT_VERB = @(
-    "add"
-    "clone"
-    "commit"
-    "pull"
-    "push"
-    "reset"
-    "status"
-    "switch"
   )
 
   $DEFAULT_VERB = "status"
