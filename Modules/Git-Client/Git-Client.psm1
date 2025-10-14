@@ -74,8 +74,8 @@ New-Alias gitc Invoke-Repository
 New-Alias gg Invoke-Repository
 function Invoke-Repository {
   param(
-    $Path,
-    $Verb,
+    [System.String]$Path,
+    [System.String]$Verb,
     [Alias("Stop", "es")]
     [switch]$ErrorStop
   )
