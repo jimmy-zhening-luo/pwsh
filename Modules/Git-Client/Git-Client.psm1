@@ -1,5 +1,6 @@
 function Resolve-Repository {
   param(
+    [Parameter(Mandatory)]
     [System.String]$Path,
     [Alias("Clone")]
     [switch]$Initialize
@@ -11,6 +12,9 @@ function Resolve-Repository {
 
   if (Test-Path (Join-Path $Path ".git") @Container) {
     (Resolve-Path $Path).Path
+  }
+  elseif ($Path.Contains(":")) {
+    $null
   }
   else {
     $StrippedPath = ($Path -replace "^\.[\/\\]+", "")
@@ -50,9 +54,7 @@ $GitVerbArgumentCompleter = {
   )
 
   $GIT_VERB |
-    ? {
-      $_ -like "$wordToComplete*"
-    }
+    ? { $_ -like "$wordToComplete*" }
 }
 Register-ArgumentCompleter -CommandName Invoke-Repository -ParameterName Verb -ScriptBlock $GitVerbArgumentCompleter
 
@@ -67,16 +69,15 @@ function Invoke-Repository {
   )
 
   $DEFAULT_VERB = "status"
-  $DEFAULT_PATH = ".\"
 
   if ($Path) {
     if ($Verb) {
       if (-not ($Verb -in $GIT_VERB)) {
         if ($Path -in $GIT_VERB) {
-          if (Resolve-Repository $DEFAULT_PATH) {
+          if (Resolve-Repository $PWD.Path) {
             $Option = $Verb
             $Verb = $Path.ToLowerInvariant()
-            $Path = $DEFAULT_PATH
+            $Path = $PWD.Path
           }
           else {
             throw "No 'Path' parameter given, and current directory '$($PWD.Path)' is not a repository."
@@ -87,9 +88,9 @@ function Invoke-Repository {
         }
       }
       elseif (-not (Resolve-Repository $Path)) {
-        if (Resolve-Repository $DEFAULT_PATH) {
+        if (Resolve-Repository $PWD.Path) {
           $Option = $Path
-          $Path = $DEFAULT_PATH
+          $Path = $PWD.Path
         }
         else {
           throw "Neither 'Path' parameter '$Path' (or '$code\$path') nor current directory '$($PWD.Path)' is a repository."
@@ -98,9 +99,9 @@ function Invoke-Repository {
     }
     else {
       if ($Path -in $GIT_VERB) {
-        if (Resolve-Repository $DEFAULT_PATH) {
+        if (Resolve-Repository $PWD.Path) {
           $Verb = $Path.ToLowerInvariant()
-          $Path = $DEFAULT_PATH
+          $Path = $PWD.Path
         }
         else {
           throw "No 'Path' parameter given, and current directory '$($PWD.Path)' is not a repository."
@@ -117,8 +118,9 @@ function Invoke-Repository {
     }
   }
   else {
-    if (Resolve-Repository $DEFAULT_PATH) {
-      $Path = $DEFAULT_PATH
+    if (Resolve-Repository $PWD.Path) {
+      $Path = $PWD.Path
+
       if (-not $Verb) {
         $Verb = $DEFAULT_VERB
       }
