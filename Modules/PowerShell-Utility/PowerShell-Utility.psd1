@@ -19,7 +19,6 @@
     "Sync-Profile"
     "Edit-History"
     "Measure-Profile"
-    "Edit-Linter"
     "Sync-Linter"
   )
   AliasesToExport   = @(
