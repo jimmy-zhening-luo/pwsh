@@ -25,7 +25,8 @@ function Invoke-Repository {
   param(
     $Path,
     $Verb,
-    [switch]$StopError
+    [Alias("Stop", "es")]
+    [switch]$ErrorStop
   )
 
   $DEFAULT_VERB = "status"
@@ -92,7 +93,7 @@ function Invoke-Repository {
 
   $Repository = Resolve-Repository $Path
 
-  if ($StopError) {
+  if ($ErrorStop) {
     if ($Local:Option) {
       $Output = git -C $Repository $Verb $Option @args 2>&1
     }

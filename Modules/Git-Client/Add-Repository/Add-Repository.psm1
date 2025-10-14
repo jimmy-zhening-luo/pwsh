@@ -13,13 +13,14 @@ function Add-Repository {
     [System.String]$Path,
     [Alias("r")]
     [switch]$Renormalize,
-    [switch]$StopError
+    [Alias("Stop", "es")]
+    [switch]$ErrorStop
   )
 
   $Add = @{
     Path      = $Path
     Verb      = "add"
-    StopError = $StopError
+    StopError = $ErrorStop
   }
   $GitArguments = , "."
 

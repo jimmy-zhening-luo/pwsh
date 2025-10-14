@@ -12,7 +12,8 @@ function Undo-Repository {
   param(
     [System.String]$Path,
     [System.String]$Tree,
-    [switch]$StopError
+    [Alias("Stop", "es")]
+    [switch]$ErrorStop
   )
 
   if ($Path -and (-not $Tree) -and (($Path -eq "~") -or (-not (Resolve-Repository $Path)))) {
@@ -73,7 +74,7 @@ function Undo-Repository {
   $Reset = @{
     Path      = $Path
     Verb      = "reset"
-    StopError = $StopError
+    StopError = $ErrorStop
   }
   $GitArguments = , "--hard"
 
