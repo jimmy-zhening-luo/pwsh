@@ -9,11 +9,16 @@ This function is an alias for `git push`.
 https://git-scm.com/docs/git-push
 #>
 function Push-Repository {
-  param([System.String]$Path)
+  param(
+    [System.String]$Path,
+    [Alias("Stop", "es")]
+    [switch]$ErrorStop
+  )
 
   $Required = @{
-    Path = $Path
-    Verb = "push"
+    Path      = $Path
+    Verb      = "push"
+    ErrorStop = $ErrorStop
   }
 
   Invoke-Repository @Required @args
