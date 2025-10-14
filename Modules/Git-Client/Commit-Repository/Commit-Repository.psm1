@@ -13,7 +13,9 @@ function Write-Repository {
     [System.String]$Path,
     [System.String]$Message,
     [Alias("empty", "ae")]
-    [switch]$AllowEmpty
+    [switch]$AllowEmpty,
+    [Alias("Stop", "es")]
+    [switch]$ErrorStop
   )
 
   if ($Path) {
@@ -46,8 +48,9 @@ function Write-Repository {
     ErrorStop = $true
   }
   $Commit = @{
-    Path = $Path
-    Verb = "commit"
+    Path      = $Path
+    Verb      = "commit"
+    ErrorStop = $ErrorStop
   }
 
   (Add-Repository @Add) && (
