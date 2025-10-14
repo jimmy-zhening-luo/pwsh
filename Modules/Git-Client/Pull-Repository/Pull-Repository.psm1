@@ -15,13 +15,13 @@ function Get-Repository {
     [switch]$ErrorStop
   )
 
-  $Required = @{
+  $Pull = @{
     Path      = $Path
     Verb      = "pull"
     ErrorStop = $ErrorStop
   }
 
-  Invoke-Repository @Required @args
+  Invoke-Repository @Pull @args
 }
 
 New-Alias gpa Get-ChildRepository
@@ -34,11 +34,11 @@ This function retrieves all child repositories in `~\code\` and pulls changes fr
 https://git-scm.com/docs/git-pull
 #>
 function Get-ChildRepository {
-  $Verb = @{
+  $Pull = @{
     Verb = "pull"
   }
 
   Get-ChildItem $CODE -Directory |
     Where-Object { Resolve-Repository $_.FullName } |
-    ForEach-Object { Invoke-Repository $_.FullName @Verb @args }
+    ForEach-Object { Invoke-Repository $_.FullName @Pull @args }
 }
