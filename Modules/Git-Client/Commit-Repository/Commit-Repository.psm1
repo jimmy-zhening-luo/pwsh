@@ -11,13 +11,43 @@ https://git-scm.com/docs/git-commit
 function Write-Repository {
   param(
     [System.String]$Path,
-    [System.String]$Message
+    [System.String]$Message,
+    [Alias("empty", "ae")]
+    [switch]$AllowEmpty
   )
 
-  if (-not $Message) {
-    $Message = $Path
-    $Path = $null
+  if ($Path) {
+    if (-not $Message) {
+      if (-not (Resolve-Repository $Path)) {
+        $Message = $Path
+        $Path = ""
+      }
+      elseif ($AllowEmpty) {
+        $Message = "-"
+      }
+      else {
+        throw "Missing commit message."
+      }
+    }
+  }
+  else {
+    if (-not $Message) {
+      if ($AllowEmpty) {
+        $Message = "-"
+      }
+      else {
+        throw "Missing commit message."
+      }
+    }
   }
 
-  (Add-Repository -Path $Path) && (Invoke-Repository -Path $Path -Verb commit -m $Message)
+  $PathSpec = @{
+    Path = $Path
+  }
+  $Verb = @{
+    Verb = "commit"
+  }
+
 }
+(Add-Repository @PathSpec) && (
+  ($AllowEmpty) ? (Invoke-Repository @PathSpec @Verb -- -m $Message --allow-empty @args) : (Invoke-Repository @PathSpec @Verb -- -m $Message @args))
