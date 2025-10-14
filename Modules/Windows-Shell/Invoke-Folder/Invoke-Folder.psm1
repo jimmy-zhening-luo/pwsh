@@ -1,17 +1,22 @@
 New-Alias explore Invoke-Folder
 New-Alias e Invoke-Folder
 function Invoke-Folder {
-  param([System.String]$Path = $PWD.Path)
+  param([System.String]$Path)
 
   if ($env:SSH_CLIENT) {
     throw 'Cannot launch File Explorer from SSH client.'
   }
 
-  if (Test-Path $Path -PathType Container) {
-    Invoke-Item $Path @args
+  if ($Path) {
+    if (Test-Path $Path -PathType Leaf) {
+      Edit-File $Path @args
+    }
+    else {
+      Invoke-Item $Path @args
+    }
   }
   else {
-    Edit-File $Path @args
+    Invoke-Item $PWD.Path @args
   }
 }
 
