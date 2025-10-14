@@ -20,6 +20,42 @@ $GitVerbArgumentCompleter = {
 }
 Register-ArgumentCompleter -CommandName Invoke-Repository -ParameterName Verb -ScriptBlock $GitVerbArgumentCompleter
 
+function Resolve-Repository {
+  param(
+    [System.String]$Path,
+    [Alias("Clone")]
+    [switch]$Initialize
+  )
+
+  $Container = @{
+    PathType = "Container"
+  }
+
+  if (Test-Path (Join-Path $Path ".git") @Container) {
+    (Resolve-Path $Path).Path
+  }
+  else {
+    $StrippedPath = ($Path -replace "^\.[\/\\]+", "")
+
+    if ($StrippedPath) {
+      $CodeRelativePath = Join-Path $CODE $StrippedPath
+
+      if (Test-Path (Join-Path $CodeRelativePath ".git") @Container) {
+        (Resolve-Path $CodeRelativePath).Path
+      }
+      elseif ($Initialize) {
+        $CodeRelativePath
+      }
+      else {
+        $null
+      }
+    }
+    else {
+      $null
+    }
+  }
+}
+
 New-Alias gitc Invoke-Repository
 New-Alias gg Invoke-Repository
 function Invoke-Repository {
@@ -115,24 +151,6 @@ function Invoke-Repository {
     }
     else {
       git -C $Repository $Verb @args
-    }
-  }
-}
-
-function Resolve-Repository {
-  param([System.String]$Path)
-
-  if (Test-Path (Join-Path $Path ".git") -PathType Container) {
-    Resolve-Path $Path
-  }
-  else {
-    $CodeSubpath = Join-Path $CODE ($Path -replace "^\.[\/\\]+", "")
-
-    if (Test-Path (Join-Path $CodeSubpath ".git") -PathType Container) {
-      Resolve-Path $CodeSubpath
-    }
-    else {
-      $null
     }
   }
 }
