@@ -1,6 +1,6 @@
 New-Alias op Edit-Profile
 function Edit-Profile {
-  Edit-File $PROFILE_SRC --profile PowerShell @args
+  Edit-File $PROFILE_SRC PowerShell @args
 }
 
 New-Alias up Sync-Profile

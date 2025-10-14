@@ -8,26 +8,59 @@ This function is an alias for the Visual Studio Code command line interface, `co
 https://code.visualstudio.com/docs/configure/command-line
 #>
 function Edit-File {
-  param([System.String]$Path)
+  param(
+    [System.String]$Path,
+    [Alias("pn")]
+    [System.String]$ProfileName,
+    [Alias("nw")]
+    [switch]$NewWindow,
+    [Alias("rw")]
+    [switch]$ReuseWindow
+  )
 
   if ($env:SSH_CLIENT) {
     throw "Cannot launch Visual Studio Code from SSH client."
   }
 
+  $CodeArguments = @()
+
   if ($Path) {
-    if (Test-Path $Path) {
-      code.cmd $Path @args
-    }
-    else {
-      if ($Path.StartsWith("-")) {
-        code.cmd $PWD $Path @args
-      }
-      else {
+    if (-not (Test-Path $Path)) {
+      if (-not $Path.StartsWith("-")) {
         throw "Path '$Path' does not exist."
       }
+
+      $CodeArguments += $PWD.Path
     }
+
+    $CodeArguments += $Path
+  }
+
+  if ($ProfileName) {
+    if (-not $ProfileName.StartsWith("-")) {
+      $NewWindow = $true
+
+      $CodeArguments += "--profile"
+    }
+
+    $CodeArguments += $ProfileName
+  }
+
+  if ($NewWindow) {
+    $CodeArguments += "--new-window"
+  }
+  elseif ($ReuseWindow) {
+    $CodeArguments += "--reuse-window"
+  }
+
+  echo $CodeArguments
+
+  if ($CodeArguments) {
+    code.cmd $CodeArguments @args
   }
   else {
     code.cmd @args
   }
+
+  return
 }
