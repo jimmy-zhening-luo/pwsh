@@ -95,10 +95,10 @@ function Invoke-Repository {
 
   if ($ErrorStop) {
     if ($Local:Option) {
-      $Output = git -C $Repository $Verb $Option @args 2>&1
+      $Output = git -C $Repository $Verb $Option @args 3>&1 2>&1
     }
     else {
-      $Output = git -C $Repository $Verb @args 2>&1
+      $Output = git -C $Repository $Verb @args 3>&1 2>&1
     }
 
     if (($Output -as "string").StartsWith("fatal:")) {
