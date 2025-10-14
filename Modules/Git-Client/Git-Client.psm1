@@ -5,32 +5,44 @@ function Resolve-Repository {
     [Alias("Clone")]
     [switch]$Initialize
   )
+  function Select-ResolvedPath([string] $Path) {
+    (Resolve-Path $Path).Path
+  }
 
+  $CodeRelativePath = $Path.Contains(":") ? $null : (
+    Join-Path $CODE (
+      $Path -replace "^\.[\/\\]+", ""
+    )
+  )
   $Container = @{
     PathType = "Container"
   }
 
-  if (Test-Path (Join-Path $Path ".git") @Container) {
-    (Resolve-Path $Path).Path
-  }
-  elseif ($Path.Contains(":")) {
-    $null
+  if ($Initialize) {
+    if (Test-Path $Path @Container) {
+      Select-ResolvedPath $Path
+    }
+    elseif (
+      $CodeRelativePath -and (
+        Test-Path $CodeRelativePath @Container
+      )
+    ) {
+      Select-ResolvedPath $CodeRelativePath
+    }
+    else {
+      $null
+    }
   }
   else {
-    $StrippedPath = ($Path -replace "^\.[\/\\]+", "")
-
-    if ($StrippedPath) {
-      $CodeRelativePath = Join-Path $CODE $StrippedPath
-
-      if (Test-Path (Join-Path $CodeRelativePath ".git") @Container) {
-        (Resolve-Path $CodeRelativePath).Path
-      }
-      elseif ($Initialize) {
-        $CodeRelativePath
-      }
-      else {
-        $null
-      }
+    if (Test-Path (Join-Path $Path ".git") @Container) {
+      Select-ResolvedPath $Path
+    }
+    elseif (
+      $CodeRelativePath -and (
+        Test-Path (Join-Path $CodeRelativePath ".git") @Container
+      )
+    ) {
+      Select-ResolvedPath $CodeRelativePath
     }
     else {
       $null
