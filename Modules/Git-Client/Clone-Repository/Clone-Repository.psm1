@@ -9,12 +9,8 @@ https://git-scm.com/docs/git-clone
 #>
 function Import-Repository {
   param(
-    [Parameter(
-      Position = 0,
-      Mandatory
-    )]
+    [Parameter(Mandatory)]
     [System.String]$Repository,
-    [Parameter(Position = 1)]
     [System.String]$Path = $CODE,
     [Alias("fs", "ssh", "sh", "git")]
     [switch]$ForceSsh
