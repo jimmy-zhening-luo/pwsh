@@ -11,5 +11,10 @@ https://git-scm.com/docs/git-push
 function Push-Repository {
   param([System.String]$Path)
 
-  Invoke-Repository -Path $Path -Verb push
+  $Required = @{
+    Path = $Path
+    Verb = "push"
+  }
+
+  Invoke-Repository @Required @args
 }
