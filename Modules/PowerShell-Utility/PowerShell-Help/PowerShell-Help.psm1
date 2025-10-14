@@ -23,8 +23,8 @@ function Get-HelpOnline {
     try {
       $Articles += (
         (Show-Help).relatedLinks.navigationLink.Uri |
-          Where-Object { $_ -ne "" } |
-          ForEach-Object { $_ -replace "\?.*$", "" }
+          ? { $_ -ne "" } |
+          % { $_ -replace "\?.*$", "" }
       )
       Show-Help -Online | Out-Null
     }
@@ -70,8 +70,8 @@ function Get-HelpOnline {
     if ($Local:Articles.Count -gt 0) {
       "`r`nDOCS"
       $Articles |
-        ForEach-Object { $_ -replace "^https?:\/\/", "http://" } |
-        ForEach-Object { $_ -replace "^learn\.microsoft\.com\/en-us\/", "^learn.microsoft.com/" }
+        % { $_ -replace "^https?:\/\/", "http://" } |
+        % { $_ -replace "^learn\.microsoft\.com\/en-us\/", "^learn.microsoft.com/" }
     }
     else {
       Write-Warning "No online help found."

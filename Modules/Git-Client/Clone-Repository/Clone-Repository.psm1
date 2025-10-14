@@ -22,8 +22,8 @@ function Import-Repository {
   )
 
   $Segments = $Repository.Trim() -split '/' |
-    ForEach-Object { $_.Trim() } |
-    Where-Object { $_ -ne "" }
+    % { $_.Trim() } |
+    ? { $_ -ne "" }
 
   if ($Segments.Count -eq 0) {
     throw "Empty repository name provided."

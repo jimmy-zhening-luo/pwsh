@@ -13,9 +13,10 @@ $GitVerbArgumentCompleter = {
     $fakeBoundParameters
   )
 
-  $GIT_VERB | Where-Object {
-    $_ -like "$wordToComplete*"
-  }
+  $GIT_VERB |
+    ? {
+      $_ -like "$wordToComplete*"
+    }
 }
 Register-ArgumentCompleter -CommandName Invoke-Repository -ParameterName Verb -ScriptBlock $GitVerbArgumentCompleter
 
