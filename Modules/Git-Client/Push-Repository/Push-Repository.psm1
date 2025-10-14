@@ -15,11 +15,11 @@ function Push-Repository {
     [switch]$ErrorStop
   )
 
-  $Required = @{
+  $Push = @{
     Path      = $Path
     Verb      = "push"
     ErrorStop = $ErrorStop
   }
 
-  Invoke-Repository @Required @args
+  Invoke-Repository @Push @args
 }
