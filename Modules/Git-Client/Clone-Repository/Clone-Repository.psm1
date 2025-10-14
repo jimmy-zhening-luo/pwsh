@@ -8,7 +8,6 @@ This function is an alias for `git clone` and allows you to clone a repository i
 https://git-scm.com/docs/git-clone
 #>
 function Import-Repository {
-  [CmdletBinding(SupportsShouldProcess)]
   param(
     [Parameter(
       Position = 0,
@@ -21,29 +20,29 @@ function Import-Repository {
     [switch]$ForceSsh
   )
 
-  $Segments = $Repository.Trim() -split '/' |
+  $Parts = $Repository.Trim() -split '/' |
     % { $_.Trim() } |
-    ? { $_ -ne "" }
+    ? { $_ -ne '' }
 
-  if ($Segments.Count -eq 0) {
-    throw "Empty repository name provided."
+  if ($Parts) {
+    $OrganizationParts = $()
+
+    if ($Parts.Count -eq 1) {
+      $OrganizationParts += 'jimmy-zhening-luo'
+    }
+
+    $OrganizationParts += $Parts
+
+    $RepositoryUrl = ($ForceSsh ? "git@github.com:" : "https://github.com/") + ($OrganizationParts -join '/')
+
+    if (Test-Path $Path -PathType Container) {
+      git -C $Path clone $RepositoryUrl
+    }
+    else {
+      throw "Path '$Path' is not a directory."
+    }
   }
   else {
-    $RepositoryPath = ($Segments.Count -eq 1 ? "jimmy-zhening-luo/" : "") + ($Segments -join "/")
-    $RepositoryUrl = ($ForceSsh ? "git@github.com:" : "https://github.com/") + $RepositoryPath
-
-    if (
-      $PSCmdlet.ShouldProcess(
-        $RepositoryUrl,
-        "git clone -C $Path"
-      )
-    ) {
-      if (Test-Path $Path -PathType Container) {
-        git -C $Path clone $RepositoryUrl
-      }
-      else {
-        throw "The specified path '$Path' is not a directory."
-      }
-    }
+    throw "No repository name provided."
   }
 }
