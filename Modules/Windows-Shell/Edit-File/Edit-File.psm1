@@ -13,22 +13,21 @@ function Edit-File {
   if ($env:SSH_CLIENT) {
     throw "Cannot launch Visual Studio Code from SSH client."
   }
-  else {
-    if ($Path) {
-      if (Test-Path $Path) {
-        code.cmd $Path @args
-      }
-      else {
-        if ($Path.StartsWith("-")) {
-          code.cmd $PWD $Path @args
-        }
-        else {
-          throw "File '$Path' does not exist."
-        }
-      }
+
+  if ($Path) {
+    if (Test-Path $Path) {
+      code.cmd $Path @args
     }
     else {
-      code.cmd $PWD
+      if ($Path.StartsWith("-")) {
+        code.cmd $PWD $Path @args
+      }
+      else {
+        throw "Path '$Path' does not exist."
+      }
     }
+  }
+  else {
+    code.cmd @args
   }
 }
