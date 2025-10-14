@@ -11,7 +11,12 @@ https://git-scm.com/docs/git-pull
 function Get-Repository {
   param([System.String]$Path)
 
-  Invoke-Repository -Path $Path -Verb pull
+  $Required = @{
+    Path = $Path
+    Verb = "pull"
+  }
+
+  Invoke-Repository @Required @args
 }
 
 New-Alias gpa Get-ChildRepository
@@ -24,7 +29,11 @@ This function retrieves all child repositories in `~\code\` and pulls changes fr
 https://git-scm.com/docs/git-pull
 #>
 function Get-ChildRepository {
-  Get-ChildItem -Path $CODE -Directory |
+  $Verb = @{
+    Verb = "pull"
+  }
+
+  Get-ChildItem $CODE -Directory |
     Where-Object { Resolve-Repository $_.FullName } |
-    ForEach-Object { Invoke-Repository -Path $_.FullName -Verb pull }
+    ForEach-Object { Invoke-Repository $_.FullName @Verb @args }
 }
