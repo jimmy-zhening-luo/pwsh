@@ -53,8 +53,6 @@ function Edit-File {
     $CodeArguments += "--reuse-window"
   }
 
-  echo $CodeArguments
-
   if ($CodeArguments) {
     code.cmd $CodeArguments @args
   }
