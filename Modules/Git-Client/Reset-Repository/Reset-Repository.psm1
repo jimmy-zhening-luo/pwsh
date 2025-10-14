@@ -14,7 +14,7 @@ function Undo-Repository {
     [System.String]$Tree
   )
 
-  if ($Path -and (-not $Tree) -and (($Path -eq "~") -or (-not (Test-Path -Path $Path -PathType Container)))) {
+  if ($Path -and (-not $Tree) -and (($Path -eq "~") -or (-not (Resolve-Repository $Path)))) {
     $Tree = $Path
     $Path = ""
   }
