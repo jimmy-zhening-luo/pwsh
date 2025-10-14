@@ -9,11 +9,16 @@ This function is an alias for `git pull`.
 https://git-scm.com/docs/git-pull
 #>
 function Get-Repository {
-  param([System.String]$Path)
+  param(
+    [System.String]$Path,
+    [Alias("Stop", "es")]
+    [switch]$ErrorStop
+  )
 
   $Required = @{
-    Path = $Path
-    Verb = "pull"
+    Path      = $Path
+    Verb      = "pull"
+    ErrorStop = $ErrorStop
   }
 
   Invoke-Repository @Required @args
