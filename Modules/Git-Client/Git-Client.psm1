@@ -212,7 +212,7 @@ function Invoke-Repository {
   if ($ErrorStop) {
     $GitOutput = git $GitArguments @args 2>&1
 
-    if (([System.String]$GitOutput).StartsWith("fatal:")) {
+    if (($GitOutput -as [string]).StartsWith("fatal:")) {
       throw $GitOutput
     }
     else {
