@@ -4,13 +4,13 @@ function Resolve-Repository {
     [Alias("Clone")]
     [switch]$Initialize
   )
-  function Get-CodeRelativePath([string] $Path) {
+  function Get-CodeRelativePath([System.String]$Path) {
     Join-Path $CODE ($Path -replace "^\.[\/\\]+", '')
   }
-  function Add-Git([string] $Path) {
+  function Add-Git([System.String]$Path) {
     Join-Path $Path '.git'
   }
-  function Select-ResolvedPath([string] $Path) {
+  function Select-ResolvedPath([System.String]$Path) {
     (Resolve-Path $Path).Path
   }
 
@@ -212,7 +212,7 @@ function Invoke-Repository {
   if ($ErrorStop) {
     $GitOutput = git $GitArguments @args 2>&1
 
-    if (([string]$GitOutput).StartsWith("fatal:")) {
+    if (([System.String]$GitOutput).StartsWith("fatal:")) {
       throw $GitOutput
     }
     else {

@@ -16,13 +16,21 @@ function Reset-Repository {
     [switch]$ErrorStop
   )
 
-  if ($Path -and (-not $Tree) -and (($Path -eq "~") -or (-not (Resolve-Repository $Path)))) {
+  if (
+    $Path -and -not $Tree -and (
+      (
+        $Path -eq '~'
+      ) -or (
+        -not (Resolve-Repository $Path)
+      )
+    )
+  ) {
     $Tree = $Path
-    $Path = ""
+    $Path = ''
   }
 
   if ($Tree) {
-    if ([UInt32]$Tree) {
+    if ([System.UInt32]$Tree) {
       $Tree = "HEAD~$([System.UInt32]$Tree)"
     }
     elseif ($Tree.StartsWith("~")) {
