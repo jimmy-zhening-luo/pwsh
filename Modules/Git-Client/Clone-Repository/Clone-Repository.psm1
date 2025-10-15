@@ -11,34 +11,39 @@ function Import-Repository {
   param(
     [Parameter(Mandatory)]
     [System.String]$Repository,
-    [System.String]$Path = $CODE,
+    [System.String]$Path,
     [Alias("fs", "ssh", "sh", "git")]
     [switch]$ForceSsh
   )
 
-  $Parts = $Repository.Trim() -split '/' |
+  $RepoParts = $Repository.Trim() -split '/' |
     % { $_.Trim() } |
     ? { $_ -ne '' }
 
-  if ($Parts) {
-    $OrganizationParts = $()
-
-    if ($Parts.Count -eq 1) {
-      $OrganizationParts += 'jimmy-zhening-luo'
-    }
-
-    $OrganizationParts += $Parts
-
-    $RepositoryUrl = ($ForceSsh ? "git@github.com:" : "https://github.com/") + ($OrganizationParts -join '/')
-
-    if (Test-Path $Path -PathType Container) {
-      git -C $Path clone $RepositoryUrl
-    }
-    else {
-      throw "Path '$Path' is not a directory."
-    }
-  }
-  else {
+  if (-not $RepoParts) {
     throw "No repository name provided."
   }
+
+  $OrgRepoParts = $()
+
+  if ($RepoParts.Count -eq 1) {
+    $OrgRepoParts += 'jimmy-zhening-luo'
+  }
+
+  $OrgRepoParts += $RepoParts
+
+  $GitArguments = , ($ForceSsh ? "git@github.com:" : "https://github.com/") + ($OrgRepoParts -join '/')
+
+  if ($Path -and $Path.StartsWith('-')) {
+    $GitArguments += $Path
+    $Path = ""
+  }
+
+  $Clone = @{
+    Path      = $Path
+    Verb      = 'clone'
+    ErrorStop = $true
+  }
+
+  Invoke-Repository @Clone $GitArguments @args
 }

@@ -1,51 +1,66 @@
 function Resolve-Repository {
   param(
-    [Parameter(Mandatory)]
     [System.String]$Path,
     [Alias("Clone")]
     [switch]$Initialize
   )
+  function Get-CodeRelativePath([string] $Path) {
+    Join-Path $CODE ($Path -replace "^\.[\/\\]+", '')
+  }
+  function Add-Git([string] $Path) {
+    Join-Path $Path '.git'
+  }
   function Select-ResolvedPath([string] $Path) {
     (Resolve-Path $Path).Path
   }
 
-  $CodeRelativePath = $Path.Contains(":") ? $null : (
-    Join-Path $CODE (
-      $Path -replace "^\.[\/\\]+", ""
-    )
-  )
   $Container = @{
-    PathType = "Container"
+    PathType = 'Container'
   }
 
   if ($Initialize) {
-    if (Test-Path $Path @Container) {
-      Select-ResolvedPath $Path
-    }
-    elseif (
-      $CodeRelativePath -and (
-        Test-Path $CodeRelativePath @Container
-      )
-    ) {
-      Select-ResolvedPath $CodeRelativePath
+    if ($Path) {
+      if (Test-Path $Path @Container) {
+        Select-ResolvedPath $Path
+      }
+      elseif (
+        -not $Path.contains(':') -and (
+          Test-Path (Get-CodeRelativePath $Path) @Container
+        )
+      ) {
+        Select-ResolvedPath $CodeRelativePath
+      }
+      else {
+        ''
+      }
     }
     else {
-      $null
+      Select-ResolvedPath $CODE
     }
   }
   else {
-    if (Test-Path (Join-Path $Path ".git") @Container) {
-      Select-ResolvedPath $Path
+    if ($Path) {
+      if (Test-Path (Add-Git $Path) @Container) {
+        Select-ResolvedPath $Path
+      }
+      elseif (
+        -not $Path.contains(':') -and (
+          Test-Path (
+            Add-Git (Get-CodeRelativePath $Path)
+          ) @Container
+        )
+      ) {
+        Select-ResolvedPath (Get-CodeRelativePath $Path)
+      }
+      else {
+        ''
+      }
     }
-    elseif (
-      $CodeRelativePath -and (
-        Test-Path (Join-Path $CodeRelativePath ".git") @Container
-      )
-    ) {
-      Select-ResolvedPath $CodeRelativePath
+    elseif (Test-Path (Add-Git $PWD.Path) @Container) {
+      Select-ResolvedPath $PWD.Path
     }
     else {
-      $null
+      ''
     }
   }
 }
@@ -55,7 +70,6 @@ $GIT_VERB = (
     Join-Path $PSScriptRoot "Git-Verb.psd1" -Resolve
   ) -ErrorAction Stop
 ).GIT_VERB
-
 $GitVerbArgumentCompleter = {
   param (
     $commandName,
@@ -80,91 +94,132 @@ function Invoke-Repository {
     [switch]$ErrorStop
   )
 
-  $DEFAULT_VERB = "status"
+  $GitArguments = , '-C'
+  $GitOptions = @()
 
-  if ($Path) {
+  if ($Path.StartsWith('-')) {
+    $GitOptions += $Path
+    $Path = ''
+
     if ($Verb) {
-      if (-not ($Verb -in $GIT_VERB)) {
-        if ($Path -in $GIT_VERB) {
-          if (Resolve-Repository $PWD.Path) {
-            $Option = $Verb
-            $Verb = $Path.ToLowerInvariant()
-            $Path = $PWD.Path
-          }
-          else {
-            throw "No 'Path' parameter given, and current directory '$($PWD.Path)' is not a repository."
-          }
-        }
-        else {
-          throw "Unknown git verb '$Verb'. Allowed git verbs: $($GIT_VERB -join ', ')."
-        }
-      }
-      elseif (-not (Resolve-Repository $Path)) {
-        if (Resolve-Repository $PWD.Path) {
-          $Option = $Path
-          $Path = $PWD.Path
-        }
-        else {
-          throw "Neither 'Path' parameter '$Path' (or '$code\$path') nor current directory '$($PWD.Path)' is a repository."
-        }
-      }
-    }
-    else {
-      if ($Path -in $GIT_VERB) {
-        if (Resolve-Repository $PWD.Path) {
-          $Verb = $Path.ToLowerInvariant()
-          $Path = $PWD.Path
-        }
-        else {
-          throw "No 'Path' parameter given, and current directory '$($PWD.Path)' is not a repository."
-        }
+      if ($Verb.StartsWith('-')) {
+        $GitOptions += $Verb
+        $Verb = ''
       }
       else {
-        if (Resolve-Repository $Path) {
-          $Verb = $DEFAULT_VERB
-        }
-        else {
-          throw "'Path' parameter '$Path' (or '$code\$path') is not a repository."
-        }
+        $Path = $Verb
+        $Verb = ''
       }
     }
   }
-  else {
-    if (Resolve-Repository $PWD.Path) {
-      $Path = $PWD.Path
 
-      if (-not $Verb) {
-        $Verb = $DEFAULT_VERB
+  if ($Verb.StartsWith('-')) {
+    $GitOptions += $Verb
+    $Verb = ''
+  }
+
+  if (-not $Path -and -not $Verb) {
+    if (Resolve-Repository $Path) {
+      $GitArguments += (Resolve-Repository $Path), 'status'
+    }
+    else {
+      throw "'git status' requires an existing repository. The current directory '$($PWD.Path)' is not a repository, and no other path was provided."
+    }
+  }
+  elseif (-not $Path) {
+    if ($Verb -in $GIT_VERB) {
+      $Verb = $Verb.ToLowerInvariant()
+
+      $Resolve = @{
+        Path       = $Path
+        Initialize = $Verb -eq 'clone'
+      }
+
+      if (Resolve-Repository @Resolve) {
+        $GitArguments += (Resolve-Repository @Resolve), $Verb
+      }
+      else {
+        throw "'git $Verb' requires an existing repository. '$($PWD.Path)' is not a repository, and no other path was provided."
       }
     }
     else {
-      throw "No 'Path' parameter given, and current directory '$($PWD.Path)' is not a repository."
+      throw "Unknown git verb '$Verb'. Allowed git verbs: $($GIT_VERB -join ', ')."
+    }
+  }
+  elseif (-not $Verb) {
+    if (Resolve-Repository $Path) {
+      $GitArguments += (Resolve-Repository $Path), 'status'
+    }
+    elseif ($Path -in $GIT_VERB) {
+      $Verb = $Path.ToLowerInvariant()
+      $Path = ''
+
+      $Resolve = @{
+        Path       = $Path
+        Initialize = $Verb -eq 'clone'
+      }
+
+      if (Resolve-Repository @Resolve) {
+        $GitArguments += (Resolve-Repository @Resolve), $Verb
+      }
+      else {
+        throw "'git $Verb' requires an existing repository. '$($PWD.Path)' is not a repository, and no other path was provided."
+      }
+    }
+    else {
+      throw "'git status' requires an existing repository. Neither '$Path' nor '$code\$path' is a repository."
+    }
+  }
+  else {
+    if ($Verb -in $GIT_VERB) {
+      $Verb = $Verb.ToLowerInvariant()
+
+      $Resolve = @{
+        Path       = $Path
+        Initialize = $Verb -eq 'clone'
+      }
+
+      if (Resolve-Repository @Resolve) {
+        $GitArguments += (Resolve-Repository @Resolve), $Verb
+      }
+      else {
+        throw "Path '$Path' is not a valid target for 'git $Verb'."
+      }
+    }
+    elseif ($Path -in $GIT_VERB) {
+      $Verb = $Path.ToLowerInvariant()
+      $Path = ''
+
+      $Resolve = @{
+        Path       = $Path
+        Initialize = $Verb -eq 'clone'
+      }
+
+      if (Resolve-Repository @Resolve) {
+        $GitArguments += (Resolve-Repository @Resolve), $Verb
+      }
+      else {
+        throw "'git $Verb' requires an existing repository. '$($PWD.Path)' is not a repository, and no other path was provided."
+      }
+    }
+    else {
+      throw "Unknown git verb '$Verb' or '$Path'. Allowed git verbs: $($GIT_VERB -join ', ')."
     }
   }
 
-  $Repository = Resolve-Repository $Path
+  $GitArguments += $GitOptions
 
   if ($ErrorStop) {
-    if ($Local:Option) {
-      $Output = git -C $Repository $Verb $Option @args 3>&1 2>&1
-    }
-    else {
-      $Output = git -C $Repository $Verb @args 3>&1 2>&1
-    }
+    $GitOutput = git $GitArguments @args 3>&1 2>&1
 
-    if (($Output -as "string").StartsWith("fatal:")) {
-      throw $Output
+    if (([string]$GitOutput).StartsWith("fatal:")) {
+      throw $GitOutput
     }
     else {
-      $Output
+      $GitOutput
     }
   }
   else {
-    if ($Local:Option) {
-      git -C $Repository $Verb $Option @args
-    }
-    else {
-      git -C $Repository $Verb @args
-    }
+    git $GitArguments @args
   }
 }
