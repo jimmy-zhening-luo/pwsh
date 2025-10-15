@@ -13,7 +13,9 @@ function Import-Repository {
     [System.String]$Repository,
     [System.String]$Path,
     [Alias("fs", "ssh", "sh", "git")]
-    [switch]$ForceSsh
+    [switch]$ForceSsh,
+    [Alias("Stop", "es")]
+    [switch]$ErrorStop
   )
 
   $RepoParts = $Repository.Trim() -split '/' |
@@ -32,7 +34,7 @@ function Import-Repository {
 
   $OrgRepoParts += $RepoParts
 
-  $GitArguments = , ($ForceSsh ? "git@github.com:" : "https://github.com/") + ($OrgRepoParts -join '/')
+  $GitArguments = , (($ForceSsh ? "git@github.com:" : "https://github.com/") + ($OrgRepoParts -join '/'))
 
   if ($Path -and $Path.StartsWith('-')) {
     $GitArguments += $Path
@@ -42,7 +44,7 @@ function Import-Repository {
   $Clone = @{
     Path      = $Path
     Verb      = 'clone'
-    ErrorStop = $true
+    ErrorStop = $ErrorStop
   }
 
   Invoke-Repository @Clone $GitArguments @args
