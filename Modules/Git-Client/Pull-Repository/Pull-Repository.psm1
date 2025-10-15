@@ -42,9 +42,7 @@ function Get-ChildRepository {
     ? { Resolve-Repository $_.FullName }
 
   $Repositories |
-    % {
-      Write-Output "$($_.Name): $(Invoke-Repository $_.FullName @Pull @args)"
-    }
+    % { Invoke-Repository $_.FullName @Pull @args }
 
   Write-Output "`nPulled $(Format-Count repository/repositories $Repositories.Count)."
 }
