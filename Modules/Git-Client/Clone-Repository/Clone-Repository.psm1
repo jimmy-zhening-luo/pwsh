@@ -24,7 +24,7 @@ function Import-Repository {
     throw "No repository name provided."
   }
 
-  $OrgRepoParts = $()
+  $OrgRepoParts = @()
 
   if ($RepoParts.Count -eq 1) {
     $OrgRepoParts += 'jimmy-zhening-luo'
