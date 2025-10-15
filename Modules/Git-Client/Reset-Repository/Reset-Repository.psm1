@@ -22,23 +22,23 @@ function Reset-Repository {
   }
 
   if ($Tree) {
-    if ($Tree -as "System.UInt32") {
-      $Tree = "HEAD~$($Tree -as 'System.UInt32')"
+    if ([UInt32]$Tree) {
+      $Tree = "HEAD~$([System.UInt32]$Tree)"
     }
     elseif ($Tree.StartsWith("~")) {
       if ($Tree -eq "~") {
         $Tree = "HEAD~"
       }
-      elseif ($Tree.Substring(1) -as "System.UInt32") {
-        $Tree = "HEAD~$($Tree.Substring(1) -as 'System.UInt32')"
+      elseif ([System.UInt32]$Tree.Substring(1)) {
+        $Tree = "HEAD~$([System.UInt32]$Tree.Substring(1))"
       }
     }
     elseif ($Tree.StartsWith("^")) {
       if ($Tree -eq "^") {
         $Tree = "HEAD^"
       }
-      elseif ($Tree.Substring(1) -as "System.UInt32") {
-        $Tree = "HEAD^$($Tree.Substring(1) -as 'System.UInt32')"
+      elseif ([System.UInt32]$Tree.Substring(1)) {
+        $Tree = "HEAD^$([System.UInt32]$Tree.Substring(1))"
       }
     }
     elseif ($Tree.ToUpperInvariant().StartsWith("HEAD")) {
@@ -49,20 +49,20 @@ function Reset-Repository {
         if ($Tree.Length -eq 5) {
           $Tree = "HEAD~"
         }
-        elseif ($Tree.Substring(5) -as "System.UInt32") {
-          $Tree = "HEAD~$($Tree.Substring(5) -as 'System.UInt32')"
+        elseif ([System.UInt32]$Tree.Substring(5)) {
+          $Tree = "HEAD~$([System.UInt32]$Tree.Substring(5))"
         }
       }
       elseif ($Tree[4] -eq "^") {
         if ($Tree.Length -eq 5) {
           $Tree = "HEAD^"
         }
-        elseif ($Tree.Substring(5) -as "System.UInt32") {
-          $Tree = "HEAD^$($Tree.Substring(5) -as 'System.UInt32')"
+        elseif ([System.UInt32]$Tree.Substring(5)) {
+          $Tree = "HEAD^$([System.UInt32]$Tree.Substring(5))"
         }
       }
-      elseif ($Tree.Substring(4) -as "System.UInt32") {
-        $Tree = "HEAD~$($Tree.Substring(4) -as "System.UInt32")"
+      elseif ([System.UInt32]$Tree.Substring(4)) {
+        $Tree = "HEAD~$([System.UInt32]$Tree.Substring(4))"
       }
     }
   }
