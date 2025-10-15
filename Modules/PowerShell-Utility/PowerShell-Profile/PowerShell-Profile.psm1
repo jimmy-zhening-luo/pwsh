@@ -5,5 +5,5 @@ function Edit-Profile {
 
 New-Alias up Sync-Profile
 function Sync-Profile {
-  Get-Repository $PROFILE_SRC -ErrorStop && Sync-Linter
+  Get-Repository $PROFILE_SRC && Sync-Linter
 }
