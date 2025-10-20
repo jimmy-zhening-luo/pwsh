@@ -1,1 +1,5 @@
-New-Alias p Get-Content
+New-Alias p Show-Content
+
+function Show-Content {
+  
+}
