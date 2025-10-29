@@ -7,7 +7,7 @@ function Get-File {
     if (Test-Path $Path -PathType Leaf) {
       Get-Content $Path @args
     }
-    elseif (Test-Path $Path -PathType Leaf) {
+    elseif (Test-Path $Path -PathType Container) {
       Get-ChildItem $Path @args
     }
     else {
