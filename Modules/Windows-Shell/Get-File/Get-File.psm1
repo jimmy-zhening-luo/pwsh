@@ -1,10 +1,20 @@
 New-Alias p Get-File
 
 function Get-File {
-  if ($args) {
-    Get-Content @args
+  param([System.String]$Path)
+
+  if ($Path) {
+    if (Test-Path $Path -PathType Leaf) {
+      Get-Content $Path @args
+    }
+    elseif (Test-Path $Path -PathType Leaf) {
+      Get-ChildItem $Path @args
+    }
+    else {
+      throw "No file to print at path '$Path'"
+    }
   }
   else {
-    Get-ChildItem
+    Get-ChildItem @args
   }
 }
