@@ -14,7 +14,7 @@ function Compare-Package {
     if (Test-Path $Path -PathType Container) {
       $AbsolutePath = (Resolve-Path $Path).Path
 
-      npm outdated --prefix=$AbsolutePath
+      npm outdated --prefix $AbsolutePath
     }
     else {
       throw "Path '$Path' is not a directory."
