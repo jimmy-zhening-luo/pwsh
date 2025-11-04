@@ -1,89 +1,3 @@
-function Resolve-Repository {
-  param(
-    [System.String]$Path,
-    [Alias("Clone")]
-    [switch]$Initialize
-  )
-  function Get-CodeRelativePath([System.String]$Path) {
-    Join-Path $CODE ($Path -replace "^\.[\/\\]+", '')
-  }
-  function Add-Git([System.String]$Path) {
-    Join-Path $Path '.git'
-  }
-  function Select-ResolvedPath([System.String]$Path) {
-    (Resolve-Path $Path).Path
-  }
-
-  $Container = @{
-    PathType = 'Container'
-  }
-
-  if ($Initialize) {
-    if ($Path) {
-      if (Test-Path $Path @Container) {
-        Select-ResolvedPath $Path
-      }
-      elseif (
-        -not $Path.contains(':') -and (
-          Test-Path (Get-CodeRelativePath $Path) @Container
-        )
-      ) {
-        Select-ResolvedPath $CodeRelativePath
-      }
-      else {
-        ''
-      }
-    }
-    else {
-      Select-ResolvedPath $CODE
-    }
-  }
-  else {
-    if ($Path) {
-      if (Test-Path (Add-Git $Path) @Container) {
-        Select-ResolvedPath $Path
-      }
-      elseif (
-        -not $Path.contains(':') -and (
-          Test-Path (
-            Add-Git (Get-CodeRelativePath $Path)
-          ) @Container
-        )
-      ) {
-        Select-ResolvedPath (Get-CodeRelativePath $Path)
-      }
-      else {
-        ''
-      }
-    }
-    elseif (Test-Path (Add-Git $PWD.Path) @Container) {
-      Select-ResolvedPath $PWD.Path
-    }
-    else {
-      ''
-    }
-  }
-}
-
-$GIT_VERB = (
-  Import-PowerShellDataFile (
-    Join-Path $PSScriptRoot "Git-Verb.psd1" -Resolve
-  ) -ErrorAction Stop
-).GIT_VERB
-$GitVerbArgumentCompleter = {
-  param (
-    $commandName,
-    $parameterName,
-    $wordToComplete,
-    $commandAst,
-    $fakeBoundParameters
-  )
-
-  $GIT_VERB |
-    ? { $_ -like "$wordToComplete*" }
-}
-Register-ArgumentCompleter -CommandName Invoke-Repository -ParameterName Verb -ScriptBlock $GitVerbArgumentCompleter
-
 New-Alias gitc Invoke-Repository
 New-Alias gg Invoke-Repository
 function Invoke-Repository {
@@ -223,3 +137,89 @@ function Invoke-Repository {
     git $GitArguments @args
   }
 }
+
+function Resolve-Repository {
+  param(
+    [System.String]$Path,
+    [Alias("Clone")]
+    [switch]$Initialize
+  )
+  function Get-CodeRelativePath([System.String]$Path) {
+    Join-Path $CODE ($Path -replace "^\.[\/\\]+", '')
+  }
+  function Add-Git([System.String]$Path) {
+    Join-Path $Path '.git'
+  }
+  function Select-ResolvedPath([System.String]$Path) {
+    (Resolve-Path $Path).Path
+  }
+
+  $Container = @{
+    PathType = 'Container'
+  }
+
+  if ($Initialize) {
+    if ($Path) {
+      if (Test-Path $Path @Container) {
+        Select-ResolvedPath $Path
+      }
+      elseif (
+        -not $Path.contains(':') -and (
+          Test-Path (Get-CodeRelativePath $Path) @Container
+        )
+      ) {
+        Select-ResolvedPath $CodeRelativePath
+      }
+      else {
+        ''
+      }
+    }
+    else {
+      Select-ResolvedPath $CODE
+    }
+  }
+  else {
+    if ($Path) {
+      if (Test-Path (Add-Git $Path) @Container) {
+        Select-ResolvedPath $Path
+      }
+      elseif (
+        -not $Path.contains(':') -and (
+          Test-Path (
+            Add-Git (Get-CodeRelativePath $Path)
+          ) @Container
+        )
+      ) {
+        Select-ResolvedPath (Get-CodeRelativePath $Path)
+      }
+      else {
+        ''
+      }
+    }
+    elseif (Test-Path (Add-Git $PWD.Path) @Container) {
+      Select-ResolvedPath $PWD.Path
+    }
+    else {
+      ''
+    }
+  }
+}
+
+$GIT_VERB = (
+  Import-PowerShellDataFile (
+    Join-Path $PSScriptRoot "Git-Verb.psd1" -Resolve
+  ) -ErrorAction Stop
+).GIT_VERB
+$GitVerbArgumentCompleter = {
+  param (
+    $commandName,
+    $parameterName,
+    $wordToComplete,
+    $commandAst,
+    $fakeBoundParameters
+  )
+
+  $GIT_VERB |
+    ? { $_ -like "$wordToComplete*" }
+}
+Register-ArgumentCompleter -CommandName Invoke-Repository -ParameterName Verb -ScriptBlock $GitVerbArgumentCompleter
