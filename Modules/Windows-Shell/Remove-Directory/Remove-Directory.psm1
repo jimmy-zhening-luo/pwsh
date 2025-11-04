@@ -1,4 +1,4 @@
-function Remove-Folder {
+function Remove-Directory {
   [CmdletBinding(SupportsShouldProcess)]
   param(
     [Parameter(

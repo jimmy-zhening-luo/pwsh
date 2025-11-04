@@ -3,16 +3,16 @@
   ModuleVersion     = "1.0.0.0"
   GUID              = "7ef2a734-a882-4b6e-b3d9-2c43b1bdd3ed"
   NestedModules     = @(
-    ".\Set-Folder"
+    ".\Set-Directory"
     ".\Get-File"
-    ".\Get-Folder"
+    ".\Get-Directory"
     ".\Get-Property"
     ".\New-File"
     ".\New-Junction"
-    ".\Invoke-Folder"
+    ".\Invoke-Directory"
     ".\Edit-File"
     ".\Clear-Line"
-    ".\Remove-Folder"
+    ".\Remove-Directory"
   )
   FunctionsToExport = @(
     "Set-Code"
@@ -28,14 +28,14 @@
     "Get-Drive"
     "Get-FileSize"
     "New-Junction"
-    "Invoke-Folder"
+    "Invoke-Directory"
     "Invoke-Sibling"
     "Invoke-Relative"
     "Invoke-Home"
     "Invoke-Drive"
     "Edit-File"
     "Clear-Line"
-    "Remove-Folder"
+    "Remove-Directory"
   )
   AliasesToExport   = @(
     "c"

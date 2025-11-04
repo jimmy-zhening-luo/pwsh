@@ -4,7 +4,7 @@ class SiblingItem : System.Management.Automation.IValidateSetValuesGenerator {
   }
 }
 
-class SiblingFolder : System.Management.Automation.IValidateSetValuesGenerator {
+class SiblingDirectory : System.Management.Automation.IValidateSetValuesGenerator {
   [string[]] GetValidValues() {
     return [string[]] (Split-Path $PWD.Path | Get-ChildItem -Directory).BaseName
   }
@@ -16,7 +16,7 @@ class RelativeItem : System.Management.Automation.IValidateSetValuesGenerator {
   }
 }
 
-class RelativeFolder : System.Management.Automation.IValidateSetValuesGenerator {
+class RelativeDirectory : System.Management.Automation.IValidateSetValuesGenerator {
   [string[]] GetValidValues() {
     return [string[]] (Split-Path (Split-Path $PWD.Path) | Get-ChildItem -Directory).BaseName
   }
@@ -28,7 +28,7 @@ class HomeItem : System.Management.Automation.IValidateSetValuesGenerator {
   }
 }
 
-class HomeFolder : System.Management.Automation.IValidateSetValuesGenerator {
+class HomeDirectory : System.Management.Automation.IValidateSetValuesGenerator {
   [string[]] GetValidValues() {
     return [string[]] (Get-ChildItem -Directory '~').BaseName
   }
@@ -40,7 +40,7 @@ class DriveItem : System.Management.Automation.IValidateSetValuesGenerator {
   }
 }
 
-class DriveFolder : System.Management.Automation.IValidateSetValuesGenerator {
+class DriveDirectory : System.Management.Automation.IValidateSetValuesGenerator {
   [string[]] GetValidValues() {
     return [string[]] ($PWD.Drive.Root | Get-ChildItem -Directory).BaseName
   }
@@ -52,7 +52,7 @@ class DriveDItem : System.Management.Automation.IValidateSetValuesGenerator {
   }
 }
 
-class DriveDFolder : System.Management.Automation.IValidateSetValuesGenerator {
+class DriveDDirectory : System.Management.Automation.IValidateSetValuesGenerator {
   [string[]] GetValidValues() {
     return [string[]] ((Test-Path 'D:\') ? ('D:\' | Get-ChildItem -Directory).BaseName : @())
   }
@@ -60,15 +60,15 @@ class DriveDFolder : System.Management.Automation.IValidateSetValuesGenerator {
 
 $ExportableTypes = @(
   [SiblingItem]
-  [SiblingFolder]
+  [SiblingDirectory]
   [RelativeItem]
-  [RelativeFolder]
+  [RelativeDirectory]
   [HomeItem]
-  [HomeFolder]
+  [HomeDirectory]
   [DriveItem]
-  [DriveFolder]
+  [DriveDirectory]
   [DriveDItem]
-  [DriveDFolder]
+  [DriveDDirectory]
 )
 $TypeAcceleratorsClass = [PSObject].Assembly.GetType(
   'System.Management.Automation.TypeAccelerators'

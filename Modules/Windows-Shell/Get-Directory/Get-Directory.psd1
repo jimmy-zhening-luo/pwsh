@@ -1,5 +1,5 @@
 @{
-  RootModule        = "Get-Folder.psm1"
+  RootModule        = "Get-Directory.psm1"
   ModuleVersion     = "1.0.0.0"
   GUID              = "b04dc21c-3d93-42fb-bafc-3ab15860ad95"
   FunctionsToExport = @(

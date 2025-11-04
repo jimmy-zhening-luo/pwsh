@@ -1,6 +1,6 @@
-New-Alias explore Invoke-Folder
-New-Alias e Invoke-Folder
-function Invoke-Folder {
+New-Alias explore Invoke-Directory
+New-Alias e Invoke-Directory
+function Invoke-Directory {
   param([string]$Path)
 
   if ($env:SSH_CLIENT) {
@@ -26,7 +26,7 @@ function Invoke-Sibling {
     [ValidateSet([SiblingItem])]
     [string]$Path
   )
-  Invoke-Folder (Join-Path (Split-Path $PWD.Path) $Path) @args
+  Invoke-Directory (Join-Path (Split-Path $PWD.Path) $Path) @args
 }
 
 New-Alias e.. Invoke-Relative
@@ -35,7 +35,7 @@ function Invoke-Relative {
     [ValidateSet([RelativeItem])]
     [string]$Path
   )
-  Invoke-Folder (Join-Path (Split-Path (Split-Path $PWD.Path)) $Path) @args
+  Invoke-Directory (Join-Path (Split-Path (Split-Path $PWD.Path)) $Path) @args
 }
 
 New-Alias e~ Invoke-Home
@@ -44,7 +44,7 @@ function Invoke-Home {
     [ValidateSet([HomeItem])]
     [string]$Path
   )
-  Invoke-Folder (Join-Path $HOME $Path) @args
+  Invoke-Directory (Join-Path $HOME $Path) @args
 }
 
 New-Alias e\ Invoke-Drive
@@ -54,5 +54,5 @@ function Invoke-Drive {
     [ValidateSet([DriveItem])]
     [string]$Path
   )
-  Invoke-Folder (Join-Path $PWD.Drive.Root $Path) @args
+  Invoke-Directory (Join-Path $PWD.Drive.Root $Path) @args
 }

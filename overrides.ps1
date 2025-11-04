@@ -1,5 +1,5 @@
 Set-Alias clear Clear-Line # default: Clear-Host
-Set-Alias rd Remove-Folder # default: Remove-Item
+Set-Alias rd Remove-Directory # default: Remove-Item
 
 $ReadOnly = @{
   Option = 'ReadOnly'
