@@ -9,9 +9,9 @@ https://code.visualstudio.com/docs/configure/command-line
 #>
 function Edit-File {
   param(
-    [System.String]$Path,
+    [string]$Path,
     [Alias("pn")]
-    [System.String]$ProfileName,
+    [string]$ProfileName,
     [Alias("nw")]
     [switch]$NewWindow,
     [Alias("rw")]

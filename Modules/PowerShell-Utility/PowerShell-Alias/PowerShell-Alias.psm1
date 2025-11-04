@@ -4,7 +4,7 @@ New-Alias galc Get-AliasCommand
 .FORWARDHELPCATEGORY Cmdlet
 #>
 function Get-AliasCommand {
-  param([System.String]$Definition = "*")
+  param([string]$Definition = "*")
 
   Get-Alias -Definition ($Definition.Contains('*') ? $Definition : ($Definition.Length -lt 3 ? "$Definition*" : "*$Definition*")) |
     Select-Object DisplayName, Options, Source

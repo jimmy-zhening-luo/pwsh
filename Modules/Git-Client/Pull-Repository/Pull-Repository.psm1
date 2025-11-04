@@ -10,7 +10,7 @@ https://git-scm.com/docs/git-pull
 #>
 function Get-Repository {
   param(
-    [System.String]$Path,
+    [string]$Path,
     [Alias("Stop", "es")]
     [switch]$ErrorStop
   )

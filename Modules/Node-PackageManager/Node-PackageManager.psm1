@@ -1,6 +1,6 @@
 class Repository : System.Management.Automation.IValidateSetValuesGenerator {
-  [System.String[]] GetValidValues() {
-    return [System.String[]] (Get-ChildItem -Directory $Script:CODE).BaseName
+  [string[]] GetValidValues() {
+    return [string[]] (Get-ChildItem -Directory $Script:CODE).BaseName
   }
 }
 
@@ -14,7 +14,7 @@ $ExistingTypeAccelerators = $TypeAcceleratorsClass::Get
 foreach ($Type in $ExportableTypes) {
   if ($Type.FullName -in $ExistingTypeAccelerators.Keys) {
     throw [System.Management.Automation.ErrorRecord]::new(
-      [System.InvalidOperationException]::new("Unable to register type accelerator '$($Type.FullName)' - Accelerator already exists."),
+      [InvalidOperationException]::new("Unable to register type accelerator '$($Type.FullName)' - Accelerator already exists."),
       'TypeAcceleratorAlreadyExists',
       [System.Management.Automation.ErrorCategory]::InvalidOperation,
       $Type.FullName

@@ -2,7 +2,7 @@ New-Alias plural Format-Count
 function Format-Count {
   param(
     [Parameter(Mandatory)]
-    [System.String]$Noun,
+    [string]$Noun,
     [Parameter(
       Mandatory,
       ValueFromRemainingArguments

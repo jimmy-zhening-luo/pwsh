@@ -9,7 +9,7 @@ New-Alias c. Set-Sibling
 function Set-Sibling {
   param (
     [ValidateSet([SiblingFolder])]
-    [System.String]$Path
+    [string]$Path
   )
   Set-Location (Join-Path (Split-Path $PWD.Path) $Path)
 }
@@ -18,7 +18,7 @@ New-Alias c.. Set-Relative
 function Set-Relative {
   param (
     [ValidateSet([RelativeFolder])]
-    [System.String]$Path
+    [string]$Path
   )
   Set-Location (Join-Path (Split-Path (Split-Path $PWD.Path)) $Path)
 }
@@ -27,7 +27,7 @@ New-Alias c~ Set-Home
 function Set-Home {
   param (
     [ValidateSet([HomeFolder])]
-    [System.String]$Path
+    [string]$Path
   )
   Set-Location (Join-Path $HOME $Path)
 }
@@ -37,7 +37,7 @@ New-Alias c/ Set-Drive
 function Set-Drive {
   param (
     [ValidateSet([DriveFolder])]
-    [System.String]$Path
+    [string]$Path
   )
   Set-Location (Join-Path $PWD.Drive.Root $Path)
 }
@@ -47,7 +47,7 @@ New-Alias d/ Set-DriveD
 function Set-DriveD {
   param (
     [ValidateSet([DriveDFolder])]
-    [System.String]$Path
+    [string]$Path
   )
   Set-Location (Join-Path 'D:\' $Path)
 }

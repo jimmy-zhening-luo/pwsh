@@ -2,10 +2,10 @@ New-Alias gitc Invoke-Repository
 New-Alias gg Invoke-Repository
 function Invoke-Repository {
   param(
-    [System.String]$Path,
-    [System.String]$Verb,
+    [string]$Path,
+    [string]$Verb,
     [Alias("Stop", "es")]
-    [switch]$ErrorStop
+    [Uri]$ErrorStop
   )
 
   $GitArguments = , '-C'
@@ -140,17 +140,17 @@ function Invoke-Repository {
 
 function Resolve-Repository {
   param(
-    [System.String]$Path,
+    [string]$Path,
     [Alias("Clone")]
     [switch]$Initialize
   )
-  function Get-CodeRelativePath([System.String]$Path) {
+  function Get-CodeRelativePath([string]$Path) {
     Join-Path $CODE ($Path -replace "^\.[\/\\]+", '')
   }
-  function Add-Git([System.String]$Path) {
+  function Add-Git([string]$Path) {
     Join-Path $Path '.git'
   }
-  function Select-ResolvedPath([System.String]$Path) {
+  function Select-ResolvedPath([string]$Path) {
     (Resolve-Path $Path).Path
   }
 

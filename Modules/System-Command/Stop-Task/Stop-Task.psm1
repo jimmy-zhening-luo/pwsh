@@ -10,13 +10,13 @@ function Stop-Task {
       ParameterSetName = "Name",
       Position = 0
     )]
-    [System.String]$Name = "explorer",
+    [string]$Name = "explorer",
     [Parameter(
       ParameterSetName = "Id",
       Position = 0,
       Mandatory
     )]
-    [System.UInt32]$Id
+    [uint32]$Id
   )
 
   if (

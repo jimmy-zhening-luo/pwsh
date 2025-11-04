@@ -1,7 +1,7 @@
 New-Alias p Get-File
 
 function Get-File {
-  param([System.String]$Path)
+  param([string]$Path)
 
   if ($Path) {
     if (Test-Path $Path -PathType Leaf) {

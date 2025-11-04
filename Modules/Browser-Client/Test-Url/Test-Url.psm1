@@ -9,7 +9,7 @@ Specifies the URL to test. This parameter is mandatory and must be castable to a
 function Test-Url {
   param(
     [Parameter(Mandatory)]
-    [System.Uri]$Uri
+    [Uri]$Uri
   )
 
   try {

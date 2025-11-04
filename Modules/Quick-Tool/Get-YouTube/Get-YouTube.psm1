@@ -8,7 +8,7 @@ This function is an alias for `yt-dlp` and allows you to download YouTube videos
 https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#usage-and-options
 #>
 function Get-YouTube {
-  param([System.String]$Video)
+  param([string]$Video)
 
   if ($Video) {
     $Rest = $args
@@ -43,7 +43,7 @@ This function is an alias for `yt-dlp` and extracts audio from a YouTube video.
 https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#video-format-options
 #>
 function Get-YouTubeAudio {
-  param([System.String]$Video)
+  param([string]$Video)
 
   Get-YouTube -Video $Video @args --format "bestaudio" --extract-audio --audio-format "mp3" --audio-quality 0 --audio-quality 0 --postprocessor-args "-ar 44100"
 }
@@ -58,7 +58,7 @@ This function is an alias for `yt-dlp -F` and lists all available formats for a 
 https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#video-format-options
 #>
 function Get-YouTubeFormat {
-  param([System.String]$Video)
+  param([string]$Video)
 
   Get-YouTube -Video $Video @args "-F"
 }

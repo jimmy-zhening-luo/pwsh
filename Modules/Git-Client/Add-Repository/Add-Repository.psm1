@@ -10,7 +10,7 @@ https://git-scm.com/docs/git-add
 #>
 function Add-Repository {
   param(
-    [System.String]$Path,
+    [string]$Path,
     [Alias("r")]
     [switch]$Renormalize,
     [Alias("Stop", "es")]

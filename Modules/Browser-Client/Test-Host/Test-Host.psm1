@@ -7,9 +7,9 @@ function Test-Host {
   param(
     [Parameter(Mandatory)]
     [Alias("ComputerName", "RemoteAddress", "cn")]
-    [System.String]$HostName,
+    [string]$HostName,
     [Alias("RemotePort", "p")]
-    [System.UInt16]$Port
+    [uint16]$Port
   )
 
   if ($Port) {

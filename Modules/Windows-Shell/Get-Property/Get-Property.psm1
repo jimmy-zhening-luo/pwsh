@@ -7,14 +7,14 @@ New-Alias size Get-FileSize
 function Get-FileSize {
   param(
     [Parameter(ValueFromPipeline)]
-    [System.String]$Path,
+    [string]$Path,
     [ArgumentCompletions(
       "B",
       "KB",
       "MB",
       "GB"
     )]
-    [System.String]$Unit
+    [string]$Unit
   )
   process {
     $UNITS = @{

@@ -14,14 +14,14 @@ function New-Junction {
       Mandatory,
       ValueFromPipelineByPropertyName
     )]
-    [System.String[]]${Path},
+    [string[]]${Path},
     [Parameter(
       Mandatory,
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
     [Alias("Target")]
-    [System.Object]${Value}
+    [Object]${Value}
   )
   begin {
     $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [System.Management.Automation.CommandTypes]::Cmdlet)

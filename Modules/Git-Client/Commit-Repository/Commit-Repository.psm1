@@ -10,8 +10,8 @@ https://git-scm.com/docs/git-commit
 #>
 function Write-Repository {
   param(
-    [System.String]$Path,
-    [System.String]$Message,
+    [string]$Path,
+    [string]$Message,
     [Alias("empty", "ae")]
     [switch]$AllowEmpty,
     [Alias("Stop", "es")]

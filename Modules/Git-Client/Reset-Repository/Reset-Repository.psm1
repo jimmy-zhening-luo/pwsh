@@ -10,8 +10,8 @@ https://git-scm.com/docs/git-reset
 #>
 function Reset-Repository {
   param(
-    [System.String]$Path,
-    [System.String]$Tree,
+    [string]$Path,
+    [string]$Tree,
     [Alias("Stop", "es")]
     [switch]$ErrorStop
   )
@@ -30,23 +30,23 @@ function Reset-Repository {
   }
 
   if ($Tree) {
-    if ($Tree -as [System.UInt32]) {
-      $Tree = "HEAD~$($Tree -as [System.UInt32])"
+    if ($Tree -as [uint32]) {
+      $Tree = "HEAD~$($Tree -as [uint32])"
     }
     elseif ($Tree.StartsWith("~")) {
       if ($Tree -eq "~") {
         $Tree = "HEAD~"
       }
-      elseif ($Tree.Substring(1) -as [System.UInt32]) {
-        $Tree = "HEAD~$($Tree.Substring(1) -as [System.UInt32])"
+      elseif ($Tree.Substring(1) -as [uint32]) {
+        $Tree = "HEAD~$($Tree.Substring(1) -as [uint32])"
       }
     }
     elseif ($Tree.StartsWith("^")) {
       if ($Tree -eq "^") {
         $Tree = "HEAD^"
       }
-      elseif ($Tree.Substring(1) -as [System.UInt32]) {
-        $Tree = "HEAD^$($Tree.Substring(1) -as [System.UInt32])"
+      elseif ($Tree.Substring(1) -as [uint32]) {
+        $Tree = "HEAD^$($Tree.Substring(1) -as [uint32])"
       }
     }
     elseif ($Tree.ToUpperInvariant().StartsWith("HEAD")) {
@@ -57,20 +57,20 @@ function Reset-Repository {
         if ($Tree.Length -eq 5) {
           $Tree = "HEAD~"
         }
-        elseif ($Tree.Substring(5) -as [System.UInt32]) {
-          $Tree = "HEAD~$($Tree.Substring(5) -as [System.UInt32])"
+        elseif ($Tree.Substring(5) -as [uint32]) {
+          $Tree = "HEAD~$($Tree.Substring(5) -as [uint32])"
         }
       }
       elseif ($Tree[4] -eq "^") {
         if ($Tree.Length -eq 5) {
           $Tree = "HEAD^"
         }
-        elseif ($Tree.Substring(5) -as [System.UInt32]) {
-          $Tree = "HEAD^$($Tree.Substring(5) -as [System.UInt32])"
+        elseif ($Tree.Substring(5) -as [uint32]) {
+          $Tree = "HEAD^$($Tree.Substring(5) -as [uint32])"
         }
       }
-      elseif ($Tree.Substring(4) -as [System.UInt32]) {
-        $Tree = "HEAD~$($Tree.Substring(4) -as [System.UInt32])"
+      elseif ($Tree.Substring(4) -as [uint32]) {
+        $Tree = "HEAD~$($Tree.Substring(4) -as [uint32])"
       }
     }
   }
@@ -107,7 +107,7 @@ https://git-scm.com/docs/git-pull
 #>
 function Restore-Repository {
   param(
-    [System.String]$Path,
+    [string]$Path,
     [Alias("Stop", "es")]
     [switch]$ErrorStop
   )

@@ -8,7 +8,7 @@ This function is an alias for `npm outdated [--prefix $Path]`.
 https://docs.npmjs.com/cli/commands/npm-outdated
 #>
 function Compare-Package {
-  param([System.String]$Path)
+  param([string]$Path)
 
   if ($Path) {
     if (Test-Path $Path -PathType Container) {
