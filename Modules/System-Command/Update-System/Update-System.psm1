@@ -6,6 +6,11 @@ Opens the `Settings` app to the `Windows Update` page.
 This function invokes the URI `ms-settings:windowsupdate` to open the `Windows Update` page in the `Settings` app.
 #>
 function Update-Windows {
+  if ($env:SSH_CLIENT) {
+    Write-Warning 'Cannot open Settings app during SSH session'
+    return
+  }
+
   Start-Process ms-settings:windowsupdate
 }
 
@@ -17,5 +22,10 @@ Opens the `Microsoft Store` app to the `Updates & downloads` page.
 This function invokes the URI `ms-windows-store://downloadsandupdates` to open the `Updates & downloads` page in the `Microsoft Store` app.
 #>
 function Update-StoreApp {
+  if ($env:SSH_CLIENT) {
+    Write-Warning 'Cannot launch Microsoft Store app during SSH session'
+    return
+  }
+
   Start-Process ms-windows-store://downloadsandupdates
 }

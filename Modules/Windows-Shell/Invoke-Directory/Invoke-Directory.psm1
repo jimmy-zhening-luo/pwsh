@@ -4,7 +4,8 @@ function Invoke-Directory {
   param([string]$Path)
 
   if ($env:SSH_CLIENT) {
-    throw 'Cannot launch File Explorer from SSH client.'
+    Write-Warning 'Cannot launch File Explorer during SSH session'
+    return
   }
 
   if ($Path) {

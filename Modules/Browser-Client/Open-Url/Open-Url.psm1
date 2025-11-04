@@ -16,5 +16,10 @@ function Open-Url {
     [Uri]$Uri
   )
 
+  if ($env:SSH_CLIENT) {
+    Write-Warning 'Cannot launch web browser during SSH session'
+    return
+  }
+
   Start-Process "C:\Program Files\Google\Chrome\Application\chrome.exe" (($PSCmdlet.ParameterSetName -eq "Uri") ? ($Uri) : ((Test-Path $Path) ? (Resolve-Path $Path) : ($Path)))
 }

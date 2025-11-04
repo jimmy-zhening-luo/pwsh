@@ -19,7 +19,8 @@ function Edit-File {
   )
 
   if ($env:SSH_CLIENT) {
-    throw "Cannot launch Visual Studio Code from SSH client."
+    Write-Warning 'Cannot launch Visual Studio Code during SSH session'
+    return
   }
 
   $CodeArguments = @()
