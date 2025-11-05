@@ -1,5 +1,13 @@
 New-Alias upman Update-Help
 
+$CUSTOM_HELP_ARTICLE_PATH = @{
+  Path = Join-Path $PSScriptRoot 'PowerShell-HelpArticle.psd1'
+}
+$CUSTOM_HELP_ARTICLE = (
+  Test-Path @CUSTOM_HELP_ARTICLE_PATH -Type Leaf
+) ? (Import-PowerShellDataFile @CUSTOM_HELP_ARTICLE_PATH) : @{}
+$ONLINE_HELP_ROOT = 'https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about'
+
 New-Alias m Get-HelpOnline
 <#
 .FORWARDHELPTARGETNAME Get-Help
@@ -7,78 +15,90 @@ New-Alias m Get-HelpOnline
 #>
 function Get-HelpOnline {
   param(
-    [Parameter(Position = 0)]
-    [string]$Name,
-    [Parameter(ValueFromRemainingArguments)]
+    [string[]]$Name,
+    [Alias('params', 'args', 'Argument')]
     [string[]]$Parameter
   )
 
-  if ($Name) {
-    function Show-Help {
-      Get-Help -Name $Name -ErrorAction Stop @args
+  if (-not $Name) {
+    Get-Help -Name Get-Help
+    return
+  }
+
+  $Help = $null
+  $HelpUri = $null
+  $Articles = @()
+  $Suppress = @{
+    ErrorAction = 'SilentlyContinue'
+  }
+
+  $FullName = $Name -join '_'
+
+  if ($CUSTOM_HELP_ARTICLE.Contains($FullName)) {
+    $Record = $CUSTOM_HELP_ARTICLE[$FullName]
+
+    if ($Record -is [string] -and -not $Record.Contains(':')) {
+      $Record = $CUSTOM_HELP_ARTICLE[$Record]
     }
 
-    $Articles = @()
-
-    try {
-      $Articles += (
-        (Show-Help).relatedLinks.navigationLink.Uri |
-          ? { $_ -ne "" } |
-          % { $_ -replace "\?.*$", "" }
-      )
-      Show-Help -Online | Out-Null
-    }
-    catch {
-      $NameLower = $Name.ToLowerInvariant()
-      $about_Name = $NameLower.StartsWith("about_") ? $Name : $NameLower.StartsWith("about") ? ("about_" + $Name.Substring(5)) : $Name.StartsWith("_") ? "about$Name" : "about_$Name"
-      $AboutArticle = "https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about/$about_Name"
-
-      if (Test-Url $AboutArticle) {
-        $Articles += $AboutArticle
-        Open-Url $AboutArticle
-      }
-      elseif (-not $AboutArticle.EndsWith("s") -and (Test-Url ($AboutArticle + "s"))) {
-        $Articles += $AboutArticle + "s"
-        Open-Url ($AboutArticle + "s")
-      }
-    }
-
-
-    if ($Parameter) {
-      try {
-        Show-Help -Parameter $Parameter
-      }
-      catch {
-        try {
-          Show-Help
-          Write-Warning "No offline help found for parameters '$Parameter' in topic '$Name'."
-        }
-        catch {
-          throw "No offline help found for topic '$Name'."
-        }
-      }
-    }
-    else {
-      try {
-        Show-Help
-      }
-      catch {
-        throw "No offline help found for topic '$Name'."
-      }
-    }
-
-    if ($Local:Articles.Count -gt 0) {
-      "`r`nDOCS"
-      $Articles |
-        % { $_ -replace "^https?:\/\/", "http://" } |
-        % { $_ -replace "^learn\.microsoft\.com\/en-us\/", "^learn.microsoft.com/" }
-    }
-    else {
-      Write-Warning "No online help found."
-    }
+    if ($Record) { $Articles += $Record }
   }
   else {
-    Get-Help -Name Get-Help -Online
-    Get-Help -Name Get-Help
+    $Help = Get-Help -Name $FullName @Suppress
+    $HelpUri = $Help.relatedLinks.navigationLink.Uri |
+      ? { -not [string]::IsNullOrEmpty($_) } |
+      % { $_ -replace '\?.*$', '' } |
+      ? { $_ -ne '' }
+
+    if ($HelpUri) {
+      $Articles += $HelpUri
+    }
+    else {
+      $about_Name = $FullName -replace '[-_ :]+', '_' -replace '^(?:about)?_?', 'about_'
+      $about_Article = "$ONLINE_HELP_ROOT/$about_Name"
+
+      if (Test-Url $about_Article) {
+        $Articles += $about_Article
+      }
+      elseif ($about_Name -notmatch 's$' -and (Test-Url ($about_Article + 's'))) {
+        $Articles += $about_Article + 's'
+      }
+    }
+
+    if ($Help -and $Parameter) {
+      $ParameterHelp = Get-Help -Name $FullName -Parameter $Parameter @Suppress
+
+      if ($ParameterHelp) {
+        $Help = $ParameterHelp
+
+        if ($HelpUri -and $Parameter.Count -eq 1) {
+          $Articles[-1] = $HelpUri + "#-$Parameter".ToLowerInvariant()
+        }
+      }
+    }
+  }
+
+  if ($Help) { $Help }
+
+  if ($Articles) {
+    "`r`nDOCS"
+    $Articles |
+      % { $_ -replace '^(?:https?:\/\/)?', 'https://' } |
+      % { $_ -replace '^https:\/\/learn\.microsoft\.com\/en-us\/', 'https://learn.microsoft.com/' }
+  }
+
+  if (-not $env:SSH_CLIENT) {
+    if ($Articles) {
+      foreach ($Article in $Articles) {
+        Open-Url -Uri $Article
+      }
+    }
+    else {
+      $ErrorMessage = Get-Help -Name $FullName -Online 2>&1
+
+      if ($ErrorMessage) {
+        Write-Warning "No online help found for topic '$FullName'"
+      }
+    }
   }
 }
