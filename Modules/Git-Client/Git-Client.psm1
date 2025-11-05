@@ -1,3 +1,22 @@
+$GIT_VERB = (
+  Import-PowerShellDataFile (
+    Join-Path $PSScriptRoot "Git-Verb.psd1" -Resolve
+  ) -ErrorAction Stop
+).GIT_VERB
+$GitVerbArgumentCompleter = {
+  param (
+    $commandName,
+    $parameterName,
+    $wordToComplete,
+    $commandAst,
+    $fakeBoundParameters
+  )
+
+  $GIT_VERB |
+    ? { $_ -like "$wordToComplete*" }
+}
+Register-ArgumentCompleter -CommandName Invoke-Repository -ParameterName Verb -ScriptBlock $GitVerbArgumentCompleter
+
 New-Alias gitc Invoke-Repository
 New-Alias gg Invoke-Repository
 function Invoke-Repository {
@@ -204,22 +223,3 @@ function Resolve-Repository {
     }
   }
 }
-
-$GIT_VERB = (
-  Import-PowerShellDataFile (
-    Join-Path $PSScriptRoot "Git-Verb.psd1" -Resolve
-  ) -ErrorAction Stop
-).GIT_VERB
-$GitVerbArgumentCompleter = {
-  param (
-    $commandName,
-    $parameterName,
-    $wordToComplete,
-    $commandAst,
-    $fakeBoundParameters
-  )
-
-  $GIT_VERB |
-    ? { $_ -like "$wordToComplete*" }
-}
-Register-ArgumentCompleter -CommandName Invoke-Repository -ParameterName Verb -ScriptBlock $GitVerbArgumentCompleter
