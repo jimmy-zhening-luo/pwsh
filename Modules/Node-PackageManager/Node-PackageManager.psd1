@@ -5,13 +5,17 @@
   NestedModules     = @(
     ".\Clear-PackageCache"
     ".\Compare-Package"
+    ".\Invoke-Script"
   )
   FunctionsToExport = @(
+    "Resolve-NodeProject"
     "Clear-PackageCache"
     "Compare-Package"
+    "Invoke-Script"
   )
   AliasesToExport   = @(
     "npc"
     "npo"
+    "nr"
   )
 }

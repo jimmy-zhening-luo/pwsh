@@ -1,3 +1,14 @@
+function Resolve-NodeProject {
+  param([string]$Path = ".")
+  $PKG = "package.json"
+  $PkgPath = (Join-Path $Path $PKG)
+
+  if (Test-Path $PkgPath -PathType Leaf) {
+    (Resolve-Path $Path).Path
+  }
+  else { '' }
+}
+
 class Repository : System.Management.Automation.IValidateSetValuesGenerator {
   [string[]] GetValidValues() {
     return [string[]] (Get-ChildItem -Directory $Script:CODE).BaseName

@@ -11,13 +11,13 @@ function Compare-Package {
   param([string]$Path)
 
   if ($Path) {
-    if (Test-Path $Path -PathType Container) {
-      $AbsolutePath = (Resolve-Path $Path).Path
+    $AbsolutePath = Resolve-NodeProject $Path
 
+    if ($AbsolutePath) {
       npm outdated --prefix $AbsolutePath
     }
     else {
-      throw "Path '$Path' is not a directory."
+      throw "Path '$Path' is not a Node project directory."
     }
   }
   else {
