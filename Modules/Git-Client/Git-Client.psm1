@@ -24,7 +24,7 @@ function Invoke-Repository {
     [string]$Path,
     [string]$Verb,
     [Alias("Stop", "es")]
-    [Uri]$ErrorStop
+    [switch]$ErrorStop
   )
 
   $GitArguments = , '-C'
