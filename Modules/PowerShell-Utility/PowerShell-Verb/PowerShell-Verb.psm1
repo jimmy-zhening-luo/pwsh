@@ -19,7 +19,7 @@ http://learn.microsoft.com/powershell/module/microsoft.powershell.utility/get-ve
 Get-Verb
 #>
 function Get-VerbPowerShell {
-  [OutputType([string])]
+  [OutputType([string[]])]
   param([string]$Verb = "*")
 
   (
