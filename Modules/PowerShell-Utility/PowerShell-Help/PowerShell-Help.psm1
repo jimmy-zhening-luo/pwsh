@@ -14,7 +14,13 @@ New-Alias m Get-HelpOnline
 .FORWARDHELPCATEGORY Cmdlet
 #>
 function Get-HelpOnline {
-  [OutputType([void], [Object[]])]
+  [OutputType(
+    [void],
+    [PSCustomObject],
+    [string],
+    [string[]],
+    [Object[]]
+  )]
   param(
     [string[]]$Name,
     [Alias('params', 'args', 'Argument')]
@@ -101,8 +107,5 @@ function Get-HelpOnline {
     }
   }
 
-  if ($Articles) {
-    "`r`nDOCS"
-    $Articles
-  }
+  if ($Articles) { $Articles }
 }
