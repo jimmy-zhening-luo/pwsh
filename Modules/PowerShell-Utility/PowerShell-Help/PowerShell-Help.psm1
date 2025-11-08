@@ -14,6 +14,7 @@ New-Alias m Get-HelpOnline
 .FORWARDHELPCATEGORY Cmdlet
 #>
 function Get-HelpOnline {
+  [OutputType([void], [Object[]])]
   param(
     [string[]]$Name,
     [Alias('params', 'args', 'Argument')]
@@ -50,6 +51,18 @@ function Get-HelpOnline {
       % { $_ -replace '\?.*$', '' } |
       ? { $_ -ne '' }
 
+    if ($Help -and $Parameter) {
+      $ParameterHelp = Get-Help -Name $FullName -Parameter $Parameter @Suppress
+
+      if ($ParameterHelp) {
+        $Help = $ParameterHelp
+
+        if ($HelpUri -and $Parameter.Count -eq 1) {
+          $HelpUri = $HelpUri + "#-$Parameter".ToLowerInvariant()
+        }
+      }
+    }
+
     if ($HelpUri) {
       $Articles += $HelpUri
     }
@@ -64,41 +77,32 @@ function Get-HelpOnline {
         $Articles += $about_Article + 's'
       }
     }
-
-    if ($Help -and $Parameter) {
-      $ParameterHelp = Get-Help -Name $FullName -Parameter $Parameter @Suppress
-
-      if ($ParameterHelp) {
-        $Help = $ParameterHelp
-
-        if ($HelpUri -and $Parameter.Count -eq 1) {
-          $Articles[-1] = $HelpUri + "#-$Parameter".ToLowerInvariant()
-        }
-      }
-    }
   }
 
   if ($Help) { $Help }
 
   if ($Articles) {
-    "`r`nDOCS"
-    $Articles |
+    $Articles = $Articles |
       % { $_ -replace '^(?:https?:\/\/)?', 'https://' } |
-      % { $_ -replace '^https:\/\/learn\.microsoft\.com\/en-us\/', 'https://learn.microsoft.com/' }
+      % { $_ -replace '^https:\/\/learn\.microsoft\.com\/en-us\/', 'https://learn.microsoft.com/' } |
+      Select-Object -Unique
   }
 
   if (-not $env:SSH_CLIENT) {
     if ($Articles) {
       foreach ($Article in $Articles) {
-        Open-Url -Uri $Article
+        [void](Open-Url -Uri $Article)
       }
     }
     else {
-      $ErrorMessage = Get-Help -Name $FullName -Online 2>&1
-
-      if ($ErrorMessage) {
-        Write-Warning "No online help found for topic '$FullName'"
+      if ($Help) {
+        [void](Get-Help -Name $FullName -Online 2>&1)
       }
     }
+  }
+
+  if ($Articles) {
+    "`r`nDOCS"
+    $Articles
   }
 }
