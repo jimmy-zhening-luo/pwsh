@@ -8,7 +8,7 @@ This function is an alias for `winget install`, unless no arguments are provided
 https://learn.microsoft.com/en-us/windows/package-manager/winget/install
 #>
 function Add-WinGetPackage {
-  if ($args.Length -eq 0) {
+  if ($args.Count -eq 0) {
     winget upgrade
   }
   else {

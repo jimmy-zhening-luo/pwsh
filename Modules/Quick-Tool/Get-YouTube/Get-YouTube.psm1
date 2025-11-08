@@ -16,7 +16,7 @@ function Get-YouTube {
   else {
     if ($args) {
       $Video = $args[0]
-      $Rest = $args[1..$args.Length]
+      $Rest = $args[1..$args.Count]
     }
     else {
       throw Write-Error "No video specified."
