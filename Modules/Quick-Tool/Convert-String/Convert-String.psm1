@@ -14,6 +14,6 @@ function Format-Count {
   $Singular = $Nouns[0]
   $Plural = $Nouns[1]
 
-  return $Count |
+  $Count |
     % { "$_ $((($_ -eq 1) -or ($_ -eq -1)) ? $Singular : $Plural)" }
 }

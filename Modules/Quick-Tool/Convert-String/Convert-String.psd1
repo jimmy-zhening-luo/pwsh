@@ -1,7 +1,7 @@
 @{
-  RootModule        = "Edit-String.psm1"
+  RootModule        = "Convert-String.psm1"
   ModuleVersion     = "1.0.0.0"
-  GUID              = "0f1e5a39-19e3-4767-8556-1a9449572e58"
+  GUID              = "605ef4f3-18ca-405d-975a-87f75c571852"
   FunctionsToExport = @(
     "Format-Count"
   )
