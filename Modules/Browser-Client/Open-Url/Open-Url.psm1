@@ -1,6 +1,7 @@
 New-Alias open Open-Url
 New-Alias o Open-Url
 function Open-Url {
+  [OutputType([void])]
   [CmdletBinding(DefaultParameterSetName = "Path")]
   param(
     [Parameter(
@@ -16,10 +17,17 @@ function Open-Url {
     [Uri]$Uri
   )
 
-  if ($env:SSH_CLIENT) {
-    Write-Warning 'Cannot launch web browser during SSH session'
-    return
+  if (-not $env:SSH_CLIENT) {
+    [void](
+      Start-Process "C:\Program Files\Google\Chrome\Application\chrome.exe" (
+        (
+          $PSCmdlet.ParameterSetName -eq "Uri"
+        ) ? (
+          $Uri
+        ) : (
+          (Test-Path $Path) ? (Resolve-Path $Path) : ($Path)
+        )
+      )
+    )
   }
-
-  Start-Process "C:\Program Files\Google\Chrome\Application\chrome.exe" (($PSCmdlet.ParameterSetName -eq "Uri") ? ($Uri) : ((Test-Path $Path) ? (Resolve-Path $Path) : ($Path)))
 }
