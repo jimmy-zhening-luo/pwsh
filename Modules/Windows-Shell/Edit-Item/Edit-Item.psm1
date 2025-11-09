@@ -53,7 +53,12 @@ function Edit-Item {
   }
 
   if ($env:SSH_CLIENT) {
-    Read-Item -Path $FullPath
+    if (Test-Path -Path $FullPath -PathType Container) {
+      Set-Location -Path $FullPath
+    }
+    else {
+      Read-Item -Path $FullPath
+    }
   }
   else {
     if ($ProfileName) {
