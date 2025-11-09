@@ -35,7 +35,7 @@ function Set-Sibling {
 }
 
 New-Alias c.. Set-Relative
-New-Alias ... Set-Sibling
+New-Alias ... Set-Relative
 <#
 .FORWARDHELPTARGETNAME Set-Location
 .FORWARDHELPCATEGORY Function
@@ -51,7 +51,7 @@ function Set-Relative {
 }
 
 New-Alias c~ Set-Home
-New-Alias ~ Set-Sibling
+New-Alias ~ Set-Home
 <#
 .FORWARDHELPTARGETNAME Set-Location
 .FORWARDHELPCATEGORY Function
