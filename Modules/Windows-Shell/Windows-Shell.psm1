@@ -27,7 +27,7 @@ class PathCompleter : IArgumentCompleter {
     [CommandAst] $commandAst,
     [IDictionary] $fakeBoundParameters) {
 
-    $resultList = [List[CompletionResult]]::new()
+    $completions = [List[CompletionResult]]::new()
     $Local:root = $this.Root
     $word = $wordToComplete
 
@@ -41,12 +41,10 @@ class PathCompleter : IArgumentCompleter {
       $word = $word -replace '[\\\/]+', '\' -replace '^\\', ''
     }
 
-    if (-not $word) {
-      Get-ChildItem @query |
-        Select-Object -ExpandProperty Name |
-        % { $resultList.Add([CompletionResult]::new($_)) }
-    }
-    else {
+    $subpath = ''
+    $leaves = $();
+
+    if ($word) {
       if ($word.EndsWith('\')) {
         $word += '*'
       }
@@ -63,24 +61,47 @@ class PathCompleter : IArgumentCompleter {
       if (Test-Path -Path $Local:path -PathType Container) {
         $query.Path = $Local:path
         $query["Filter"] = "$Local:fragment*"
-
-        $completions = Get-ChildItem @query |
-          Select-Object -ExpandProperty Name
-
-        if ($subpath) {
-          $completions = $completions |
-            % { Join-Path $subpath $_ }
-        }
-
-        $completions = $completions |
-          % { $_ -replace '[\\]+', '/' }
-
-        foreach ($completion in $completions) {
-          $resultList.Add([CompletionResult]::new($completion))
-        }
+        $leaves = Get-ChildItem @query
       }
     }
-    return $resultList
+    else {
+      $leaves = Get-ChildItem @query |
+        Select-Object -ExpandProperty Name |
+        % { $completions.Add([CompletionResult]::new($_)) }
+    }
+
+    $directories = $leaves |
+      ? { $_.PSIsContainer }
+    $files = $leaves |
+      ? { -not $_.PSIsContainer }
+
+    $directories = $directories |
+      Select-Object -ExpandProperty Name
+    $files = $files |
+      Select-Object -ExpandProperty Name
+
+    if ($subpath) {
+      $directories = $directories |
+        % { Join-Path $subpath $_ }
+      $files = $files |
+        % { Join-Path $subpath $_ }
+    }
+
+    $directories = $directories |
+      % { $_ + "\" }
+    $directories = $directories |
+      % { $_ -replace '[\\]+', '/' }
+    $files = $files |
+      % { $_ -replace '[\\]+', '/' }
+
+    foreach ($directory in $directories) {
+      $completions.Add([CompletionResult]::new($directory))
+    }
+    foreach ($file in $files) {
+      $completions.Add([CompletionResult]::new($file))
+    }
+
+    return $completions
   }
 }
 
