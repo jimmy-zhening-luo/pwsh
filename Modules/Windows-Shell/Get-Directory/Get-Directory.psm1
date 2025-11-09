@@ -4,7 +4,10 @@ New-Alias l Get-Directory
 .FORWARDHELPCATEGORY Function
 #>
 function Get-Directory {
-  [OutputType([void])]
+  [OutputType(
+    [System.IO.DirectoryInfo[]],
+    [System.IO.FileInfo[]])
+  ]
   param (
     [PathCompletions(".", "Directory")]
     [string]$Path
