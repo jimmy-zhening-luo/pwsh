@@ -1,6 +1,6 @@
 New-Alias hex ConvertTo-Hex
 function ConvertTo-Hex {
-  [OutputType([void], [string[]])]
+  [OutputType([string[]])]
   param(
     [int[]]$Decimal,
     [switch]$Lowercase
@@ -20,7 +20,7 @@ New-Alias hexl ConvertTo-HexLower
 .FORWARDHELPCATEGORY Function
 #>
 function ConvertTo-HexLower {
-  [OutputType([void], [string[]])]
+  [OutputType([string[]])]
   param([int[]]$Decimal)
 
   ConvertTo-Hex -Lowercase @PSBoundParameters

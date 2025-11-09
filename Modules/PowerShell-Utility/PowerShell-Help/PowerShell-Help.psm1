@@ -17,7 +17,7 @@ function Get-HelpOnline {
   [OutputType(
     [void],
     [string[]],
-    [MamlCommandHelpInfo[]]
+    [Object[]]
   )]
   param(
     [string[]]$Name,
