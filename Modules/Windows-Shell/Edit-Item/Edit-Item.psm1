@@ -155,7 +155,7 @@ New-Alias ic Edit-Code
 #>
 function Edit-Code {
   param (
-    [PathCompletions($CODE, "")]
+    [PathCompletions("$CODE", "")]
     [string]$Path,
     [Alias("Name", "pn")]
     [string]$ProfileName,

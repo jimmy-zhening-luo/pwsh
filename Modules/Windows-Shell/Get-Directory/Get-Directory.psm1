@@ -82,7 +82,7 @@ New-Alias lc Get-Code
 #>
 function Get-Code {
   param (
-    [PathCompletions($CODE, "Directory")]
+    [PathCompletions("$CODE", "Directory")]
     [string]$Path
   )
 
