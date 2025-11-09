@@ -6,14 +6,18 @@ function Resolve-NodeProject {
   $PkgPath = (Join-Path $Path $PKG)
 
   if (Test-Path $PkgPath -PathType Leaf) {
-    (Resolve-Path $Path).Path
+    Resolve-Path $Path |
+      Select-Object -ExpandProperty Path
   }
   else { '' }
 }
 
 class Repository : System.Management.Automation.IValidateSetValuesGenerator {
   [string[]] GetValidValues() {
-    return [string[]] (Get-ChildItem -Directory $Script:CODE).BaseName
+    return [string[]] (
+      Get-ChildItem -Directory $Script:CODE |
+        Select-Object -ExpandProperty BaseName
+    )
   }
 }
 
