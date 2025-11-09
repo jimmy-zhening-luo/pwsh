@@ -8,7 +8,7 @@
     "k"
     "key"
     "keys"
-    "az"
+    "z"
     "format"
     "table"
   )
