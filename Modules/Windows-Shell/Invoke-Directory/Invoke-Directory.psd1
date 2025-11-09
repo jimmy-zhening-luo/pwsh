@@ -7,6 +7,7 @@
     "Invoke-Sibling"
     "Invoke-Relative"
     "Invoke-Home"
+    "Invoke-Code"
     "Invoke-Drive"
   )
   AliasesToExport   = @(
@@ -15,6 +16,7 @@
     "e."
     "e.."
     "e~"
+    "ec"
     "e\"
     "e/"
   )

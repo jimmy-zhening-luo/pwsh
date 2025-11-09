@@ -1,5 +1,8 @@
 New-Alias p Read-Item
-
+<#
+.FORWARDHELPTARGETNAME Get-Content
+.FORWARDHELPCATEGORY Function
+#>
 function Read-Item {
   [OutputType(
     [string[]],
@@ -8,6 +11,7 @@ function Read-Item {
   ]
   param(
     [Parameter(Position = 0)]
+    [PathCompletions(".", "")]
     [string]$Path,
     [Parameter()]
     [string]$RootPath
@@ -69,8 +73,11 @@ function Read-Item {
   }
 }
 
-
 New-Alias p. Read-Sibling
+<#
+.FORWARDHELPTARGETNAME Get-Content
+.FORWARDHELPCATEGORY Function
+#>
 function Read-Sibling {
   param (
     [PathCompletions("..", "")]
@@ -81,6 +88,10 @@ function Read-Sibling {
 }
 
 New-Alias p.. Read-Relative
+<#
+.FORWARDHELPTARGETNAME Get-Content
+.FORWARDHELPCATEGORY Function
+#>
 function Read-Relative {
   param (
     [PathCompletions("..\..", "")]
@@ -91,6 +102,10 @@ function Read-Relative {
 }
 
 New-Alias p~ Read-Home
+<#
+.FORWARDHELPTARGETNAME Get-Content
+.FORWARDHELPCATEGORY Function
+#>
 function Read-Home {
   param (
     [PathCompletions("~", "")]
@@ -100,8 +115,27 @@ function Read-Home {
   Read-Item @PSBoundParameters -RootPath "~" @args
 }
 
+New-Alias pc Read-Code
+<#
+.FORWARDHELPTARGETNAME Get-Content
+.FORWARDHELPCATEGORY Function
+#>
+function Read-Code {
+  [OutputType([void])]
+  param (
+    [PathCompletions($CODE, "")]
+    [string]$Path
+  )
+
+  Read-Item @PSBoundParameters -RootPath $CODE @args
+}
+
 New-Alias p\ Read-Drive
 New-Alias p/ Read-Drive
+<#
+.FORWARDHELPTARGETNAME Get-Content
+.FORWARDHELPCATEGORY Function
+#>
 function Read-Drive {
   param (
     [PathCompletions("\", "")]

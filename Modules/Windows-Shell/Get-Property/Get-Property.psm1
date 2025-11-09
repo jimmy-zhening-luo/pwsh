@@ -11,6 +11,7 @@ function Get-FileSize {
       ValueFromPipeline,
       Position = 0
     )]
+    [PathCompletions(".", "")]
     [string]$Path,
     [ArgumentCompletions(
       "B",

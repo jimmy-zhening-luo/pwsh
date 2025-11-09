@@ -3,10 +3,11 @@
   ModuleVersion     = "1.0.0.0"
   GUID              = "b6522962-e911-4dc4-bfbe-0181264ad7d2"
   FunctionsToExport = @(
-    "Set-Code"
+    "Set-Directory"
     "Set-Sibling"
     "Set-Relative"
     "Set-Home"
+    "Set-Code"
     "Set-Drive"
     "Set-DriveD"
   )
@@ -15,9 +16,9 @@
     "c."
     "c.."
     "c~"
+    "cc"
     "c\"
     "c/"
-    "cc"
     "d\"
     "d/"
   )

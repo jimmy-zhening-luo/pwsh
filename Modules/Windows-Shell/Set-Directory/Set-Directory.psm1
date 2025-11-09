@@ -1,14 +1,28 @@
-New-Alias c Set-Location
-
-New-Alias cc Set-Code
-function Set-Code {
+New-Alias c Set-Directory
+<#
+.FORWARDHELPTARGETNAME Set-Location
+.FORWARDHELPCATEGORY Function
+#>
+function Set-Directory {
   [OutputType([void])]
-  param ()
+  param (
+    [PathCompletions(".", "Directory")]
+    [string]$Path
+  )
 
-  Set-Location -Path $CODE
+  if ($Path) {
+    Set-Location -Path $Path @args
+  }
+  else {
+    Set-Location @args
+  }
 }
 
 New-Alias c. Set-Sibling
+<#
+.FORWARDHELPTARGETNAME Set-Location
+.FORWARDHELPCATEGORY Function
+#>
 function Set-Sibling {
   [OutputType([void])]
   param (
@@ -20,6 +34,10 @@ function Set-Sibling {
 }
 
 New-Alias c.. Set-Relative
+<#
+.FORWARDHELPTARGETNAME Set-Location
+.FORWARDHELPCATEGORY Function
+#>
 function Set-Relative {
   [OutputType([void])]
   param (
@@ -31,6 +49,10 @@ function Set-Relative {
 }
 
 New-Alias c~ Set-Home
+<#
+.FORWARDHELPTARGETNAME Set-Location
+.FORWARDHELPCATEGORY Function
+#>
 function Set-Home {
   [OutputType([void])]
   param (
@@ -41,8 +63,27 @@ function Set-Home {
   Set-Location -Path (Join-Path $HOME $Path)
 }
 
+New-Alias cc Set-Code
+<#
+.FORWARDHELPTARGETNAME Set-Location
+.FORWARDHELPCATEGORY Function
+#>
+function Set-Code {
+  [OutputType([void])]
+  param (
+    [PathCompletions($CODE, "Directory")]
+    [string]$Path
+  )
+
+  Set-Location -Path (Join-Path $CODE $Path)
+}
+
 New-Alias c\ Set-Drive
 New-Alias c/ Set-Drive
+<#
+.FORWARDHELPTARGETNAME Set-Location
+.FORWARDHELPCATEGORY Function
+#>
 function Set-Drive {
   [OutputType([void])]
   param (
@@ -55,6 +96,10 @@ function Set-Drive {
 
 New-Alias d\ Set-DriveD
 New-Alias d/ Set-DriveD
+<#
+.FORWARDHELPTARGETNAME Set-Location
+.FORWARDHELPCATEGORY Function
+#>
 function Set-DriveD {
   [OutputType([void])]
   param (

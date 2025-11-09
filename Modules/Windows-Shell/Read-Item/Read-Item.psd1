@@ -7,6 +7,7 @@
     "Read-Sibling"
     "Read-Relative"
     "Read-Home"
+    "Read-Code"
     "Read-Drive"
   )
   AliasesToExport   = @(
@@ -14,6 +15,7 @@
     "p."
     "p.."
     "p~"
+    "pc"
     "p\"
     "p/"
   )

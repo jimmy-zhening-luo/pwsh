@@ -11,6 +11,7 @@ function Edit-Item {
   [OutputType([void])]
   param(
     [Parameter(Position = 0)]
+    [PathCompletions(".", "")]
     [string]$Path,
     [Parameter(Position = 1)]
     [Alias("Name", "pn")]
@@ -88,6 +89,10 @@ function Edit-Item {
 }
 
 New-Alias i. Edit-Sibling
+<#
+.FORWARDHELPTARGETNAME Edit-Item
+.FORWARDHELPCATEGORY Function
+#>
 function Edit-Sibling {
   param (
     [PathCompletions("..", "")]
@@ -104,6 +109,10 @@ function Edit-Sibling {
 }
 
 New-Alias i.. Edit-Relative
+<#
+.FORWARDHELPTARGETNAME Edit-Item
+.FORWARDHELPCATEGORY Function
+#>
 function Edit-Relative {
   param (
     [PathCompletions("..\..", "")]
@@ -120,6 +129,10 @@ function Edit-Relative {
 }
 
 New-Alias i~ Edit-Home
+<#
+.FORWARDHELPTARGETNAME Edit-Item
+.FORWARDHELPCATEGORY Function
+#>
 function Edit-Home {
   param (
     [PathCompletions("~", "")]
@@ -135,8 +148,32 @@ function Edit-Home {
   Edit-Item @PSBoundParameters -RootPath "~" @args
 }
 
+New-Alias ic Edit-Code
+<#
+.FORWARDHELPTARGETNAME Edit-Item
+.FORWARDHELPCATEGORY Function
+#>
+function Edit-Code {
+  param (
+    [PathCompletions($CODE, "")]
+    [string]$Path,
+    [Alias("Name", "pn")]
+    [string]$ProfileName,
+    [Alias("Window")]
+    [switch]$Force,
+    [Alias("rw")]
+    [switch]$ReuseWindow
+  )
+
+  Edit-Item @PSBoundParameters -RootPath $CODE @args
+}
+
 New-Alias i\ Edit-Drive
 New-Alias i/ Edit-Drive
+<#
+.FORWARDHELPTARGETNAME Edit-Item
+.FORWARDHELPCATEGORY Function
+#>
 function Edit-Drive {
   param (
     [PathCompletions("\", "")]

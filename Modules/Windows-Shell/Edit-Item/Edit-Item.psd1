@@ -7,6 +7,7 @@
     "Edit-Sibling"
     "Edit-Relative"
     "Edit-Home"
+    "Edit-Code"
     "Edit-Drive"
   )
   AliasesToExport   = @(
@@ -14,6 +15,7 @@
     "i."
     "i.."
     "i~"
+    "ic"
     "i\"
     "i/"
   )
