@@ -52,10 +52,10 @@ function Edit-File {
     }
 
     if ($CodeArguments) {
-      [void](code.cmd $CodeArguments @args)
+      code.cmd $CodeArguments @args
     }
     else {
-      [void](code.cmd @args)
+      code.cmd @args
     }
   }
 }
