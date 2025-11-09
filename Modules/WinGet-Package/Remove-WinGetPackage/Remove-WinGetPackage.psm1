@@ -8,5 +8,8 @@ This function is an alias for `winget uninstall`.
 https://learn.microsoft.com/en-us/windows/package-manager/winget/uninstall
 #>
 function Remove-WinGetPackage {
+  [OutputType([string[]])]
+  param()
+
   winget uninstall @args
 }

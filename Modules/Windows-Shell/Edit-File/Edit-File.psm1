@@ -8,6 +8,7 @@ This function is an alias for the Visual Studio Code command line interface, `co
 https://code.visualstudio.com/docs/configure/command-line
 #>
 function Edit-File {
+  [OutputType([void])]
   param(
     [string]$Path,
     [Alias("pn")]
@@ -18,48 +19,43 @@ function Edit-File {
     [switch]$ReuseWindow
   )
 
-  if ($env:SSH_CLIENT) {
-    Write-Warning 'Cannot launch Visual Studio Code during SSH session'
-    return
-  }
+  if (-not $env:SSH_CLIENT) {
+    $CodeArguments = @()
 
-  $CodeArguments = @()
+    if ($Path) {
+      if (-not (Test-Path $Path)) {
+        if (-not $Path.StartsWith("-")) {
+          throw "Path '$Path' does not exist."
+        }
 
-  if ($Path) {
-    if (-not (Test-Path $Path)) {
-      if (-not $Path.StartsWith("-")) {
-        throw "Path '$Path' does not exist."
+        $CodeArguments += $PWD.Path
       }
 
-      $CodeArguments += $PWD.Path
+      $CodeArguments += $Path
     }
 
-    $CodeArguments += $Path
-  }
+    if ($ProfileName) {
+      if (-not $ProfileName.StartsWith("-")) {
+        $NewWindow = $true
 
-  if ($ProfileName) {
-    if (-not $ProfileName.StartsWith("-")) {
-      $NewWindow = $true
+        $CodeArguments += "--profile"
+      }
 
-      $CodeArguments += "--profile"
+      $CodeArguments += $ProfileName
     }
 
-    $CodeArguments += $ProfileName
-  }
+    if ($NewWindow) {
+      $CodeArguments += "--new-window"
+    }
+    elseif ($ReuseWindow) {
+      $CodeArguments += "--reuse-window"
+    }
 
-  if ($NewWindow) {
-    $CodeArguments += "--new-window"
+    if ($CodeArguments) {
+      [void](code.cmd $CodeArguments @args)
+    }
+    else {
+      [void](code.cmd @args)
+    }
   }
-  elseif ($ReuseWindow) {
-    $CodeArguments += "--reuse-window"
-  }
-
-  if ($CodeArguments) {
-    code.cmd $CodeArguments @args
-  }
-  else {
-    code.cmd @args
-  }
-
-  return
 }

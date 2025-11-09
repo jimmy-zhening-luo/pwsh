@@ -1,6 +1,11 @@
 New-Alias p Get-File
 
 function Get-File {
+  [OutputType(
+    [string[]],
+    [System.IO.DirectoryInfo[]],
+    [System.IO.FileInfo[]])
+  ]
   param([string]$Path)
 
   if ($Path) {

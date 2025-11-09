@@ -4,6 +4,7 @@ New-Alias tn Test-Host
 .FORWARDHELPCATEGORY Function
 #>
 function Test-Host {
+  [OutputType([Object])]
   param(
     [Parameter(Mandatory)]
     [Alias("ComputerName", "RemoteAddress", "cn")]

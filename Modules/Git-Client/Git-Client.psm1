@@ -158,17 +158,21 @@ function Invoke-Repository {
 }
 
 function Resolve-Repository {
+  [OutputType([string])]
   param(
     [string]$Path,
     [Alias("Clone")]
     [switch]$Initialize
   )
+
   function Get-CodeRelativePath([string]$Path) {
     Join-Path $CODE ($Path -replace "^\.[\/\\]+", '')
   }
+
   function Add-Git([string]$Path) {
     Join-Path $Path '.git'
   }
+
   function Select-ResolvedPath([string]$Path) {
     (Resolve-Path $Path).Path
   }

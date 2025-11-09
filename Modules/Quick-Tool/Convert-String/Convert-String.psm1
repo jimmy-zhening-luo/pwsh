@@ -1,6 +1,6 @@
 New-Alias plural Format-Count
 function Format-Count {
-  [OutputType([void], [string], [string[]])]
+  [OutputType([void], [string[]])]
   param(
     [Parameter(Mandatory)]
     [string]$Noun,

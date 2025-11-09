@@ -17,6 +17,7 @@ function Get-FileSize {
     )]
     [string]$Unit
   )
+
   process {
     $UNITS = @{
       B  = 1

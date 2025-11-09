@@ -1,9 +1,8 @@
 New-Alias count Measure-Object
 New-Alias n Measure-Object
 New-Alias k Get-Member
-New-Alias pick Select-Object
-New-Alias to Select-Object
+New-Alias key Get-Member
+New-Alias keys Get-Member
 New-Alias az Sort-Object
 New-Alias format Format-Table
 New-Alias table Format-Table
-New-Alias wrap Format-Table

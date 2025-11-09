@@ -1,5 +1,7 @@
 function Resolve-NodeProject {
+  [OutputType([string])]
   param([string]$Path = ".")
+
   $PKG = "package.json"
   $PkgPath = (Join-Path $Path $PKG)
 

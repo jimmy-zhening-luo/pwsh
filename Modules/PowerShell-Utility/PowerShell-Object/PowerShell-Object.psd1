@@ -6,11 +6,10 @@
     "count"
     "n"
     "k"
-    "pick"
-    "to"
+    "key"
+    "keys"
     "az"
     "format"
     "table"
-    "wrap"
   )
 }

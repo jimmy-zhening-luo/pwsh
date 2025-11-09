@@ -12,6 +12,7 @@ function Invoke-Script {
     [string]$Script,
     [string]$Path
   )
+
   if (-not $Script) {
     throw 'No script name provided'
   }

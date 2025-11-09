@@ -16,10 +16,8 @@ New-Alias m Get-HelpOnline
 function Get-HelpOnline {
   [OutputType(
     [void],
-    [PSCustomObject],
-    [string],
     [string[]],
-    [Object[]]
+    [MamlCommandHelpInfo[]]
   )]
   param(
     [string[]]$Name,

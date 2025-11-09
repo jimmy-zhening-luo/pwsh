@@ -4,6 +4,7 @@ New-Alias guid Copy-Guid
 .FORWARDHELPCATEGORY Cmdlet
 #>
 function Copy-Guid {
+  [OutputType([void], [string])]
   param(
     [switch]$Upper,
     [switch]$Silent

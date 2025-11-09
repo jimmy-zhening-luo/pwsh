@@ -1,5 +1,8 @@
 New-Alias op Edit-Profile
 function Edit-Profile {
+  [OutputType([void])]
+  param()
+
   Edit-File $PROFILE_SRC PowerShell @args
 }
 

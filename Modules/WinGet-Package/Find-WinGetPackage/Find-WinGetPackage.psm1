@@ -8,6 +8,9 @@ This function is an alias for `winget search`, unless no arguments are provided,
 https://learn.microsoft.com/en-us/windows/package-manager/winget/search
 #>
 function Find-WinGetPackage {
+  [OutputType([string[]])]
+  param()
+
   if ($args.Count -eq 0) {
     winget list
   }

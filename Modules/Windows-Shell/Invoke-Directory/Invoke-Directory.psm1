@@ -3,21 +3,19 @@ New-Alias e Invoke-Directory
 function Invoke-Directory {
   param([string]$Path)
 
-  if ($env:SSH_CLIENT) {
-    Write-Warning 'Cannot launch File Explorer during SSH session'
-    return
-  }
+  if (-not $env:SSH_CLIENT) {
 
-  if ($Path) {
-    if (Test-Path $Path -PathType Leaf) {
-      Edit-File $Path @args
+    if ($Path) {
+      if (Test-Path $Path -PathType Leaf) {
+        Edit-File $Path @args
+      }
+      else {
+        Invoke-Item $Path @args
+      }
     }
     else {
-      Invoke-Item $Path @args
+      Invoke-Item $PWD.Path @args
     }
-  }
-  else {
-    Invoke-Item $PWD.Path @args
   }
 }
 
@@ -27,6 +25,7 @@ function Invoke-Sibling {
     [ValidateSet([SiblingItem])]
     [string]$Path
   )
+
   Invoke-Directory (Join-Path (Split-Path $PWD.Path) $Path) @args
 }
 
@@ -36,6 +35,7 @@ function Invoke-Relative {
     [ValidateSet([RelativeItem])]
     [string]$Path
   )
+
   Invoke-Directory (Join-Path (Split-Path (Split-Path $PWD.Path)) $Path) @args
 }
 
@@ -45,6 +45,7 @@ function Invoke-Home {
     [ValidateSet([HomeItem])]
     [string]$Path
   )
+
   Invoke-Directory (Join-Path $HOME $Path) @args
 }
 
@@ -55,5 +56,6 @@ function Invoke-Drive {
     [ValidateSet([DriveItem])]
     [string]$Path
   )
+
   Invoke-Directory (Join-Path $PWD.Drive.Root $Path) @args
 }

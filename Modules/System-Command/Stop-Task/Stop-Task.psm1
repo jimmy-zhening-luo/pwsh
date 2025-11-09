@@ -1,6 +1,7 @@
 New-Alias tkill Stop-Task
 New-Alias tkillx Stop-Task
 function Stop-Task {
+  [OutputType([void], [System.Diagnostics.Process[]])]
   [CmdletBinding(
     SupportsShouldProcess,
     DefaultParameterSetName = "Name"
