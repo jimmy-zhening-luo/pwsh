@@ -7,7 +7,10 @@ New-Alias size Get-FileSize
 function Get-FileSize {
   [OutputType([double])]
   param(
-    [Parameter(ValueFromPipeline)]
+    [Parameter(
+      ValueFromPipeline,
+      Position = 0
+    )]
     [string]$Path,
     [ArgumentCompletions(
       "B",
@@ -75,7 +78,7 @@ function Get-FileSize {
         (
           $Item.PSIsContainer
         ) ? (
-          Get-ChildItem $Path -Recurse -File |
+          Get-ChildItem -Path $Path -Recurse -File |
             Measure-Object -Property Length -Sum |
             Select-Object -ExpandProperty Sum
         ) : (

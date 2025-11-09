@@ -80,8 +80,8 @@ function Invoke-Repository {
     }
   }
   elseif (-not $Verb) {
-    if (Resolve-Repository $Path) {
-      $GitArguments += (Resolve-Repository $Path), 'status'
+    if (Resolve-Repository -Path $Path) {
+      $GitArguments += (Resolve-Repository -Path $Path), 'status'
     }
     elseif ($Path -in $GIT_VERB) {
       $Verb = $Path.ToLowerInvariant()
@@ -174,7 +174,7 @@ function Resolve-Repository {
   }
 
   function Select-ResolvedPath([string]$Path) {
-    Resolve-Path $Path |
+    Resolve-Path -Path $Path |
       Select-Object -ExpandProperty Path
   }
 
@@ -184,12 +184,12 @@ function Resolve-Repository {
 
   if ($Initialize) {
     if ($Path) {
-      if (Test-Path $Path @Container) {
+      if (Test-Path -Path $Path @Container) {
         Select-ResolvedPath $Path
       }
       elseif (
         -not $Path.contains(':') -and (
-          Test-Path (Get-CodeRelativePath $Path) @Container
+          Test-Path -Path (Get-CodeRelativePath $Path) @Container
         )
       ) {
         Select-ResolvedPath $CodeRelativePath
@@ -204,12 +204,12 @@ function Resolve-Repository {
   }
   else {
     if ($Path) {
-      if (Test-Path (Add-Git $Path) @Container) {
+      if (Test-Path -Path (Add-Git $Path) @Container) {
         Select-ResolvedPath $Path
       }
       elseif (
         -not $Path.contains(':') -and (
-          Test-Path (
+          Test-Path -Path (
             Add-Git (Get-CodeRelativePath $Path)
           ) @Container
         )
@@ -220,7 +220,7 @@ function Resolve-Repository {
         ''
       }
     }
-    elseif (Test-Path (Add-Git $PWD.Path) @Container) {
+    elseif (Test-Path -Path (Add-Git $PWD.Path) @Container) {
       Select-ResolvedPath $PWD.Path
     }
     else {

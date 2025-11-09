@@ -18,7 +18,7 @@ function Open-Url {
   )
 
   if (-not $env:SSH_CLIENT) {
-    Start-Process "C:\Program Files\Google\Chrome\Application\chrome.exe" (
+    Start-Process -FilePath "C:\Program Files\Google\Chrome\Application\chrome.exe" (
       (
         $PSCmdlet.ParameterSetName -eq "Uri"
       ) ? (

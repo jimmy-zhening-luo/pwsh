@@ -5,7 +5,7 @@ function Set-Code {
   [OutputType([void])]
   param ()
 
-  Set-Location $CODE
+  Set-Location -Path $CODE
 }
 
 New-Alias c. Set-Sibling
@@ -16,7 +16,7 @@ function Set-Sibling {
     [string]$Path
   )
 
-  Set-Location (Join-Path (Split-Path $PWD.Path) $Path)
+  Set-Location -Path (Join-Path (Split-Path $PWD.Path) $Path)
 }
 
 New-Alias c.. Set-Relative
@@ -27,7 +27,7 @@ function Set-Relative {
     [string]$Path
   )
 
-  Set-Location (Join-Path (Split-Path (Split-Path $PWD.Path)) $Path)
+  Set-Location -Path (Join-Path (Split-Path (Split-Path $PWD.Path)) $Path)
 }
 
 New-Alias c~ Set-Home
@@ -38,7 +38,7 @@ function Set-Home {
     [string]$Path
   )
 
-  Set-Location (Join-Path $HOME $Path)
+  Set-Location -Path (Join-Path $HOME $Path)
 }
 
 New-Alias c\ Set-Drive
@@ -50,7 +50,7 @@ function Set-Drive {
     [string]$Path
   )
 
-  Set-Location (Join-Path $PWD.Drive.Root $Path)
+  Set-Location -Path (Join-Path $PWD.Drive.Root $Path)
 }
 
 New-Alias d\ Set-DriveD
@@ -62,5 +62,5 @@ function Set-DriveD {
     [string]$Path
   )
 
-  Set-Location (Join-Path 'D:\' $Path)
+  Set-Location -Path (Join-Path 'D:\' $Path)
 }

@@ -8,7 +8,7 @@ class PathCompleter : IArgumentCompleter {
   [string] $Type
 
   PathCompleter([string] $root, [string] $type) {
-    if (-not $root -or -not (Test-Path $root -PathType Container)) {
+    if (-not $root -or -not (Test-Path -Path $root -PathType Container)) {
       throw [ArgumentException]::new("root")
     }
 
@@ -16,7 +16,7 @@ class PathCompleter : IArgumentCompleter {
       throw [ArgumentException]::new("type")
     }
 
-    $this.Root = Resolve-Path $root
+    $this.Root = Resolve-Path -Path $root
     $this.Type = $type
   }
 
@@ -60,7 +60,7 @@ class PathCompleter : IArgumentCompleter {
 
       $Local:path = Join-Path $Local:root $subpath
 
-      if (Test-Path $Local:path -PathType Container) {
+      if (Test-Path -Path $Local:path -PathType Container) {
         $query.Path = $Local:path
         $query["Filter"] = "$Local:fragment*"
 

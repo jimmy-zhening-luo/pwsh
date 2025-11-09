@@ -13,7 +13,7 @@ function Update-Windows {
     throw 'Cannot open Settings app during SSH session'
   }
 
-  Start-Process ms-settings:windowsupdate
+  Start-Process -FilePath ms-settings:windowsupdate
 }
 
 New-Alias su Update-StoreApp
@@ -31,5 +31,5 @@ function Update-StoreApp {
     throw 'Cannot launch Microsoft Store app during SSH session'
   }
 
-  Start-Process ms-windows-store://downloadsandupdates
+  Start-Process -FilePath ms-windows-store://downloadsandupdates
 }

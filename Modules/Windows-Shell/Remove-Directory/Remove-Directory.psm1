@@ -3,8 +3,8 @@ function Remove-Directory {
   [CmdletBinding(SupportsShouldProcess)]
   param(
     [Parameter(
-      Position = 0,
-      Mandatory
+      Mandatory,
+      Position = 0
     )]
     [string]$Path
   )
@@ -15,6 +15,6 @@ function Remove-Directory {
       "Remove-Item -Recurse -Force"
     )
   ) {
-    Remove-Item $Path -Recurse -Force
+    Remove-Item -Path $Path -Recurse -Force
   }
 }

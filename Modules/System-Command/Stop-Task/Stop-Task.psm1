@@ -14,8 +14,8 @@ function Stop-Task {
     [string]$Name = "explorer",
     [Parameter(
       ParameterSetName = "Id",
-      Position = 0,
-      Mandatory
+      Mandatory,
+      Position = 0
     )]
     [uint32]$Id
   )
@@ -28,10 +28,10 @@ function Stop-Task {
   ) {
     switch ($PSCmdlet.ParameterSetName) {
       "Name" {
-        Stop-Process -Force -Name $Name
+        Stop-Process -Name $Name -Force
       }
       "Id" {
-        Stop-Process -Force -Id $Id
+        Stop-Process -Id $Id -Force
       }
     }
   }

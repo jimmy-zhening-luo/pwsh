@@ -3,18 +3,20 @@ New-Alias e Invoke-Directory
 function Invoke-Directory {
   param([string]$Path)
 
-  if (-not $env:SSH_CLIENT) {
-
+  if ($env:SSH_CLIENT) {
+    Read-Item -Path $Path
+  }
+  else {
     if ($Path) {
-      if (Test-Path $Path -PathType Leaf) {
-        Edit-File $Path @args
+      if (Test-Path -Path $Path -PathType Leaf) {
+        Edit-Item -Path $Path @args
       }
       else {
-        Invoke-Item $Path @args
+        Invoke-Item -Path $Path @args
       }
     }
     else {
-      Invoke-Item $PWD.Path @args
+      Invoke-Item -Path $PWD.Path @args
     }
   }
 }
@@ -26,7 +28,7 @@ function Invoke-Sibling {
     [string]$Path
   )
 
-  Invoke-Directory (Join-Path (Split-Path $PWD.Path) $Path) @args
+  Invoke-Directory -Path (Join-Path (Split-Path $PWD.Path) $Path) @args
 }
 
 New-Alias e.. Invoke-Relative
@@ -36,7 +38,7 @@ function Invoke-Relative {
     [string]$Path
   )
 
-  Invoke-Directory (Join-Path (Split-Path (Split-Path $PWD.Path)) $Path) @args
+  Invoke-Directory -Path (Join-Path (Split-Path (Split-Path $PWD.Path)) $Path) @args
 }
 
 New-Alias e~ Invoke-Home
@@ -46,7 +48,7 @@ function Invoke-Home {
     [string]$Path
   )
 
-  Invoke-Directory (Join-Path $HOME $Path) @args
+  Invoke-Directory -Path (Join-Path $HOME $Path) @args
 }
 
 New-Alias e\ Invoke-Drive
@@ -57,5 +59,5 @@ function Invoke-Drive {
     [string]$Path
   )
 
-  Invoke-Directory (Join-Path $PWD.Drive.Root $Path) @args
+  Invoke-Directory -Path (Join-Path $PWD.Drive.Root $Path) @args
 }

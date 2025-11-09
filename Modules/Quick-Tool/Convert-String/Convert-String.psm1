@@ -2,11 +2,14 @@ New-Alias plural Format-Count
 function Format-Count {
   [OutputType([void], [string[]])]
   param(
-    [Parameter(Mandatory)]
     [string]$Noun,
     [Parameter(ValueFromRemainingArguments)]
     [string[]]$Count
   )
+
+  if (-not $Noun) {
+    throw "Noun parameter is required."
+  }
 
   if ($Noun -as [int]) {
     if ($Count -and $Count.Count -gt 0) {

@@ -11,7 +11,7 @@ function Get-Sibling {
     [string]$Path
   )
 
-  Get-ChildItem (Join-Path (Split-Path $PWD.Path) $Path) @args
+  Get-ChildItem -Path (Join-Path (Split-Path $PWD.Path) $Path) @args
 }
 
 New-Alias l.. Get-Relative
@@ -25,7 +25,7 @@ function Get-Relative {
     [string]$Path
   )
 
-  Get-ChildItem (Join-Path (Split-Path (Split-Path $PWD.Path)) $Path) @args
+  Get-ChildItem -Path (Join-Path (Split-Path (Split-Path $PWD.Path)) $Path) @args
 }
 
 New-Alias l~ Get-Home
@@ -39,7 +39,7 @@ function Get-Home {
     [string]$Path
   )
 
-  Get-ChildItem (Join-Path $HOME $Path) @args
+  Get-ChildItem -Path (Join-Path $HOME $Path) @args
 }
 
 New-Alias l\ Get-Drive
@@ -54,5 +54,5 @@ function Get-Drive {
     [string]$Path
   )
 
-  Get-ChildItem (Join-Path $PWD.Drive.Root $Path) @args
+  Get-ChildItem -Path (Join-Path $PWD.Drive.Root $Path) @args
 }

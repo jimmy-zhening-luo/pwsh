@@ -15,7 +15,7 @@ function Resolve-NodeProject {
 class Repository : System.Management.Automation.IValidateSetValuesGenerator {
   [string[]] GetValidValues() {
     return [string[]] (
-      Get-ChildItem -Directory $Script:CODE |
+      Get-ChildItem -Path $Script:CODE -Directory |
         Select-Object -ExpandProperty BaseName
     )
   }

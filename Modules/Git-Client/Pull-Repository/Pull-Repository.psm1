@@ -38,11 +38,12 @@ function Get-ChildRepository {
     Verb = "pull"
   }
 
-  $Repositories = Get-ChildItem $CODE -Directory |
-    ? { Resolve-Repository $_.FullName }
+  $Repositories = Get-ChildItem -Path $CODE -Directory |
+    ? { Resolve-Repository -Path $_.FullName } |
+    ? { -not [string]::IsNullOrEmpty($_) }
 
   $Repositories |
-    % { Invoke-Repository $_.FullName @Pull @args }
+    % { Invoke-Repository -Path $_.FullName @Pull @args }
 
   Write-Output "`nPulled $(Format-Count repository/repositories $Repositories.Count)."
 }

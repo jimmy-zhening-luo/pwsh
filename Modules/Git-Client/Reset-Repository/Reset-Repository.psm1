@@ -21,7 +21,7 @@ function Reset-Repository {
       (
         $Path -eq '~'
       ) -or (
-        -not (Resolve-Repository $Path)
+        -not (Resolve-Repository -Path $Path)
       )
     )
   ) {

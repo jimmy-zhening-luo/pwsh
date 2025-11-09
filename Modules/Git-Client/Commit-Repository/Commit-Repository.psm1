@@ -20,7 +20,7 @@ function Write-Repository {
 
   if ($Path) {
     if (-not $Message) {
-      if (-not (Resolve-Repository $Path)) {
+      if (-not (Resolve-Repository -Path $Path)) {
         $Message = $Path
         $Path = ""
       }

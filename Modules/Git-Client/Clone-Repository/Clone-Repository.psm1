@@ -9,7 +9,6 @@ https://git-scm.com/docs/git-clone
 #>
 function Import-Repository {
   param(
-    [Parameter(Mandatory)]
     [string]$Repository,
     [string]$Path,
     [Alias("fs", "ssh", "sh", "git")]
@@ -17,6 +16,9 @@ function Import-Repository {
     [Alias("Stop", "es")]
     [switch]$ErrorStop
   )
+  if (-not $Repository) {
+    throw "No repository name provided."
+  }
 
   $RepoParts = $Repository.Trim() -split '/' |
     % { $_.Trim() } |
