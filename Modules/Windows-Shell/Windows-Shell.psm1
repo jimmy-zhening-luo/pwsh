@@ -27,15 +27,13 @@ class PathCompleter : IArgumentCompleter {
     [CommandAst] $commandAst,
     [IDictionary] $fakeBoundParameters) {
 
-    $completions = [List[CompletionResult]]::new()
     $Local:root = $this.Root
-    $word = $wordToComplete
-
     $query = @{
       Path      = $Local:root
       Directory = $this.Type -eq 'Directory'
       File      = $this.Type -eq 'File'
     }
+    $word = $wordToComplete
 
     if ($word) {
       $word = $word -replace '[\\\/]+', '\' -replace '^\\', ''
@@ -43,6 +41,7 @@ class PathCompleter : IArgumentCompleter {
 
     $subpath = ''
     $leaves = $();
+    $completions = [List[CompletionResult]]::new()
 
     if ($word) {
       if ($word.EndsWith('\')) {
@@ -65,9 +64,7 @@ class PathCompleter : IArgumentCompleter {
       }
     }
     else {
-      $leaves = Get-ChildItem @query |
-        Select-Object -ExpandProperty Name |
-        % { $completions.Add([CompletionResult]::new($_)) }
+      $leaves = Get-ChildItem @query
     }
 
     $directories = $leaves |
