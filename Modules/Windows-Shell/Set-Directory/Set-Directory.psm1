@@ -71,7 +71,7 @@ New-Alias cc Set-Code
 function Set-Code {
   [OutputType([void])]
   param (
-    [PathCompletions("$CODE", "Directory")]
+    [PathCompletions("~\code", "Directory")]
     [string]$Path
   )
 

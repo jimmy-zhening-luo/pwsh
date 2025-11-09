@@ -77,7 +77,7 @@ New-Alias ec Invoke-Code
 #>
 function Invoke-Code {
   param (
-    [PathCompletions("$CODE", "")]
+    [PathCompletions("~\code", "")]
     [string]$Path
   )
 

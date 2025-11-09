@@ -123,7 +123,7 @@ New-Alias pc Read-Code
 function Read-Code {
   [OutputType([void])]
   param (
-    [PathCompletions("$CODE", "")]
+    [PathCompletions("~\code", "")]
     [string]$Path
   )
 
