@@ -11,10 +11,10 @@ function Edit-File {
   [OutputType([void])]
   param(
     [string]$Path,
-    [Alias("pn")]
+    [Alias("Name", "pn")]
     [string]$ProfileName,
-    [Alias("nw")]
-    [switch]$NewWindow,
+    [Alias("Window")]
+    [switch]$Force,
     [Alias("rw")]
     [switch]$ReuseWindow
   )
