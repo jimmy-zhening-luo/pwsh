@@ -12,7 +12,7 @@ New-Alias c. Set-Sibling
 function Set-Sibling {
   [OutputType([void])]
   param (
-    [ValidateSet([SiblingDirectory])]
+    [PathCompletions("..", "Directory")]
     [string]$Path
   )
 
@@ -23,7 +23,7 @@ New-Alias c.. Set-Relative
 function Set-Relative {
   [OutputType([void])]
   param (
-    [ValidateSet([RelativeDirectory])]
+    [PathCompletions("..\..", "Directory")]
     [string]$Path
   )
 
@@ -34,7 +34,7 @@ New-Alias c~ Set-Home
 function Set-Home {
   [OutputType([void])]
   param (
-    [ValidateSet([HomeDirectory])]
+    [PathCompletions("~", "Directory")]
     [string]$Path
   )
 
@@ -46,7 +46,7 @@ New-Alias c/ Set-Drive
 function Set-Drive {
   [OutputType([void])]
   param (
-    [ValidateSet([DriveDirectory])]
+    [PathCompletions("\", "Directory")]
     [string]$Path
   )
 
@@ -58,7 +58,7 @@ New-Alias d/ Set-DriveD
 function Set-DriveD {
   [OutputType([void])]
   param (
-    [ValidateSet([DriveDDirectory])]
+    [PathCompletions("D:\", "Directory")]
     [string]$Path
   )
 

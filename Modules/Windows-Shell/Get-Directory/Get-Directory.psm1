@@ -7,7 +7,7 @@ function Get-Sibling {
     [System.IO.FileInfo[]])
   ]
   param (
-    [ValidateSet([SiblingDirectory])]
+    [PathCompletions("..", "Directory")]
     [string]$Path
   )
 
@@ -21,7 +21,7 @@ function Get-Relative {
     [System.IO.FileInfo[]])
   ]
   param (
-    [ValidateSet([RelativeDirectory])]
+    [PathCompletions("..\..", "Directory")]
     [string]$Path
   )
 
@@ -35,7 +35,7 @@ function Get-Home {
     [System.IO.FileInfo[]])
   ]
   param (
-    [ValidateSet([HomeDirectory])]
+    [PathCompletions("~", "Directory")]
     [string]$Path
   )
 
@@ -50,7 +50,7 @@ function Get-Drive {
     [System.IO.FileInfo[]])
   ]
   param (
-    [ValidateSet([DriveDirectory])]
+    [PathCompletions("\", "Directory")]
     [string]$Path
   )
 

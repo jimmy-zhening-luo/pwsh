@@ -1,74 +1,104 @@
-class SiblingItem : System.Management.Automation.IValidateSetValuesGenerator {
-  [string[]] GetValidValues() {
-    return [string[]] (Split-Path $PWD.Path | Get-ChildItem).BaseName
+using namespace System.Collections
+using namespace System.Collections.Generic
+using namespace System.Management.Automation
+using namespace System.Management.Automation.Language
+
+class PathCompleter : IArgumentCompleter {
+  [string] $Root
+  [string] $Type
+
+  PathCompleter([string] $root, [string] $type) {
+    if (-not $root -or -not (Test-Path $root -PathType Container)) {
+      throw [ArgumentException]::new("root")
+    }
+
+    if ($type -and -not ($type -eq 'File' -or $type -eq 'Directory')) {
+      throw [ArgumentException]::new("type")
+    }
+
+    $this.Root = Resolve-Path $root
+    $this.Type = $type
+  }
+
+  [IEnumerable[CompletionResult]] CompleteArgument(
+    [string] $CommandName,
+    [string] $parameterName,
+    [string] $wordToComplete,
+    [CommandAst] $commandAst,
+    [IDictionary] $fakeBoundParameters) {
+
+    $resultList = [List[CompletionResult]]::new()
+    $Local:root = $this.Root
+    $word = $wordToComplete
+
+    $query = @{
+      Path      = $Local:root
+      Directory = $this.Type -eq 'Directory'
+      File      = $this.Type -eq 'File'
+    }
+
+    if ($word) {
+      $word = $word -replace '[\\\/]+', '\' -replace '^\\', ''
+    }
+
+    if (-not $word) {
+      Get-ChildItem @query |
+        Select-Object -ExpandProperty Name |
+        % { $resultList.Add([CompletionResult]::new($_)) }
+    }
+    else {
+      if ($word.EndsWith('\')) {
+        $word += '*'
+      }
+
+      $subpath = Split-Path $word
+      $fragment = Split-Path $word -Leaf
+
+      if ($fragment -eq '*') {
+        $fragment = ''
+      }
+
+      $Local:path = Join-Path $Local:root $subpath
+
+      if (Test-Path $Local:path -PathType Container) {
+        $query.Path = $Local:path
+        $query["Filter"] = "$Local:fragment*"
+
+        $completions = Get-ChildItem @query |
+          Select-Object -ExpandProperty Name
+
+        if ($subpath) {
+          $completions = $completions |
+            % { Join-Path $subpath $_ }
+        }
+
+        $completions = $completions |
+          % { $_ -replace '[\\]+', '/' }
+
+        foreach ($completion in $completions) {
+          $resultList.Add([CompletionResult]::new($completion))
+        }
+      }
+    }
+    return $resultList
   }
 }
 
-class SiblingDirectory : System.Management.Automation.IValidateSetValuesGenerator {
-  [string[]] GetValidValues() {
-    return [string[]] (Split-Path $PWD.Path | Get-ChildItem -Directory).BaseName
-  }
-}
+class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory {
+  [string] $Root
+  [string] $Type
 
-class RelativeItem : System.Management.Automation.IValidateSetValuesGenerator {
-  [string[]] GetValidValues() {
-    return [string[]] (Split-Path (Split-Path $PWD.Path) | Get-ChildItem).BaseName
+  PathCompletionsAttribute([string] $root, [string] $type) {
+    $this.Root = $root
+    $this.Type = $type
   }
-}
 
-class RelativeDirectory : System.Management.Automation.IValidateSetValuesGenerator {
-  [string[]] GetValidValues() {
-    return [string[]] (Split-Path (Split-Path $PWD.Path) | Get-ChildItem -Directory).BaseName
-  }
-}
-
-class HomeItem : System.Management.Automation.IValidateSetValuesGenerator {
-  [string[]] GetValidValues() {
-    return [string[]] (Get-ChildItem '~').BaseName
-  }
-}
-
-class HomeDirectory : System.Management.Automation.IValidateSetValuesGenerator {
-  [string[]] GetValidValues() {
-    return [string[]] (Get-ChildItem -Directory '~').BaseName
-  }
-}
-
-class DriveItem : System.Management.Automation.IValidateSetValuesGenerator {
-  [string[]] GetValidValues() {
-    return [string[]] ($PWD.Drive.Root | Get-ChildItem).BaseName
-  }
-}
-
-class DriveDirectory : System.Management.Automation.IValidateSetValuesGenerator {
-  [string[]] GetValidValues() {
-    return [string[]] ($PWD.Drive.Root | Get-ChildItem -Directory).BaseName
-  }
-}
-
-class DriveDItem : System.Management.Automation.IValidateSetValuesGenerator {
-  [string[]] GetValidValues() {
-    return [string[]] ((Test-Path 'D:\') ? ('D:\' | Get-ChildItem).BaseName : @())
-  }
-}
-
-class DriveDDirectory : System.Management.Automation.IValidateSetValuesGenerator {
-  [string[]] GetValidValues() {
-    return [string[]] ((Test-Path 'D:\') ? ('D:\' | Get-ChildItem -Directory).BaseName : @())
-  }
+  [IArgumentCompleter] Create() { return [PathCompleter]::new($this.Root, $this.Type) }
 }
 
 $ExportableTypes = @(
-  [SiblingItem]
-  [SiblingDirectory]
-  [RelativeItem]
-  [RelativeDirectory]
-  [HomeItem]
-  [HomeDirectory]
-  [DriveItem]
-  [DriveDirectory]
-  [DriveDItem]
-  [DriveDDirectory]
+  [PathCompleter]
+  [PathCompletionsAttribute]
 )
 $TypeAcceleratorsClass = [PSObject].Assembly.GetType(
   'System.Management.Automation.TypeAccelerators'
