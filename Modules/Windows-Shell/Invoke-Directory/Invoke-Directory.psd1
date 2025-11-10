@@ -11,7 +11,6 @@
     "Invoke-Drive"
   )
   AliasesToExport   = @(
-    "explore"
     "e"
     "e."
     "e.."

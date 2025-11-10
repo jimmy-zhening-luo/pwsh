@@ -79,11 +79,11 @@ function Edit-Item {
       $ArgumentList += "--new-window"
     }
     elseif ($ReuseWindow) {
-      $ArgumentList += "--reuse-window"
+          $ArgumentList += "--reuse-window"
     }
 
-    if ($CommandArguments) {
-      & code.cmd $CommandArguments @args
+    if ($ArgumentList) {
+      & code.cmd $ArgumentList @args
     }
     else {
       & code.cmd @args

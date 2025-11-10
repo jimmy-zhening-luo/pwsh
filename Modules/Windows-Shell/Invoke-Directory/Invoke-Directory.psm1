@@ -1,4 +1,3 @@
-New-Alias explore Invoke-Directory
 New-Alias e Invoke-Directory
 function Invoke-Directory {
   param(

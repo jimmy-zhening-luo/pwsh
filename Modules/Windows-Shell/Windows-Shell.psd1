@@ -84,7 +84,6 @@
     "touch"
     "mk"
     "mj"
-    "explore"
     "e"
     "e."
     "e.."
