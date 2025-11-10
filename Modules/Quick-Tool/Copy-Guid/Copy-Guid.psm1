@@ -5,6 +5,7 @@ function Copy-Guid {
     [switch]$Upper,
     [switch]$Silent
   )
+
   $Guid = New-Guid |
     Select-Object -ExpandProperty Guid
 
