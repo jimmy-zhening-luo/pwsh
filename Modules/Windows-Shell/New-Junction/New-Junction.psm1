@@ -1,8 +1,4 @@
 New-Alias mj New-Junction
-<#
-.FORWARDHELPTARGETNAME New-Item
-.FORWARDHELPCATEGORY Cmdlet
-#>
 function New-Junction {
   [CmdletBinding(
     SupportsShouldProcess,

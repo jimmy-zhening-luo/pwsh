@@ -1,8 +1,4 @@
 New-Alias l Get-Directory
-<#
-.FORWARDHELPTARGETNAME Get-ChildItem
-.FORWARDHELPCATEGORY Function
-#>
 function Get-Directory {
   [OutputType(
     [System.IO.DirectoryInfo[]],
@@ -22,10 +18,6 @@ function Get-Directory {
 }
 
 New-Alias l. Get-Sibling
-<#
-.FORWARDHELPTARGETNAME Get-ChildItem
-.FORWARDHELPCATEGORY Function
-#>
 function Get-Sibling {
   [OutputType(
     [System.IO.DirectoryInfo[]],
@@ -40,10 +32,6 @@ function Get-Sibling {
 }
 
 New-Alias l.. Get-Relative
-<#
-.FORWARDHELPTARGETNAME Get-ChildItem
-.FORWARDHELPCATEGORY Function
-#>
 function Get-Relative {
   [OutputType(
     [System.IO.DirectoryInfo[]],
@@ -58,10 +46,6 @@ function Get-Relative {
 }
 
 New-Alias l~ Get-Home
-<#
-.FORWARDHELPTARGETNAME Get-ChildItem
-.FORWARDHELPCATEGORY Function
-#>
 function Get-Home {
   [OutputType(
     [System.IO.DirectoryInfo[]],
@@ -76,10 +60,6 @@ function Get-Home {
 }
 
 New-Alias lc Get-Code
-<#
-.FORWARDHELPTARGETNAME Get-ChildItem
-.FORWARDHELPCATEGORY Function
-#>
 function Get-Code {
   param (
     [PathCompletions("~\code", "Directory")]
@@ -91,10 +71,6 @@ function Get-Code {
 
 New-Alias l\ Get-Drive
 New-Alias l/ Get-Drive
-<#
-.FORWARDHELPTARGETNAME Get-ChildItem
-.FORWARDHELPCATEGORY Function
-#>
 function Get-Drive {
   [OutputType(
     [System.IO.DirectoryInfo[]],

@@ -1,9 +1,5 @@
 New-Alias explore Invoke-Directory
 New-Alias e Invoke-Directory
-<#
-.FORWARDHELPTARGETNAME Invoke-Item
-.FORWARDHELPCATEGORY Function
-#>
 function Invoke-Directory {
   param(
     [PathCompletions(".", "")]
@@ -29,10 +25,6 @@ function Invoke-Directory {
 }
 
 New-Alias e. Invoke-Sibling
-<#
-.FORWARDHELPTARGETNAME Invoke-Item
-.FORWARDHELPCATEGORY Function
-#>
 function Invoke-Sibling {
   param (
     [PathCompletions("..", "")]
@@ -43,10 +35,6 @@ function Invoke-Sibling {
 }
 
 New-Alias e.. Invoke-Relative
-<#
-.FORWARDHELPTARGETNAME Invoke-Item
-.FORWARDHELPCATEGORY Function
-#>
 function Invoke-Relative {
   param (
     [PathCompletions("..\..", "")]
@@ -57,10 +45,6 @@ function Invoke-Relative {
 }
 
 New-Alias e~ Invoke-Home
-<#
-.FORWARDHELPTARGETNAME Invoke-Item
-.FORWARDHELPCATEGORY Function
-#>
 function Invoke-Home {
   param (
     [PathCompletions("~", "")]
@@ -71,10 +55,6 @@ function Invoke-Home {
 }
 
 New-Alias ec Invoke-Code
-<#
-.FORWARDHELPTARGETNAME Invoke-Item
-.FORWARDHELPCATEGORY Function
-#>
 function Invoke-Code {
   param (
     [PathCompletions("~\code", "")]
@@ -86,10 +66,6 @@ function Invoke-Code {
 
 New-Alias e\ Invoke-Drive
 New-Alias e/ Invoke-Drive
-<#
-.FORWARDHELPTARGETNAME Invoke-Item
-.FORWARDHELPCATEGORY Function
-#>
 function Invoke-Drive {
   param (
     [PathCompletions("\", "")]

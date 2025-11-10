@@ -3,14 +3,13 @@ New-Alias i Edit-Item
 .SYNOPSIS
 Edit a file in Visual Studio Code.
 .DESCRIPTION
-This function is an alias for the Visual Studio Code command line interface, `code.cmd`.
+This function is an alias for the Visual Studio Code command line interface, 'code.cmd'.
 .LINK
 https://code.visualstudio.com/docs/configure/command-line
 #>
 function Edit-Item {
   [OutputType([void])]
   param(
-    [Parameter(Position = 0)]
     [PathCompletions(".", "")]
     [string]$Path,
     [Parameter(Position = 1)]
@@ -20,41 +19,47 @@ function Edit-Item {
     [switch]$Force,
     [Alias("rw")]
     [switch]$ReuseWindow,
-    [Parameter()]
     [string]$RootPath
   )
 
+  $ArgumentList = @()
+
   if ($RootPath) {
-    if (-not (Test-Path -Path $RootPath -PathType Container)) {
-      $CommandArguments += $RootPath
+    if (Test-Path -Path $RootPath -PathType Container) {
+      $RootPath = Resolve-Path -Path $RootPath |
+        Select-Object -ExpandProperty Path
+    }
+    else {
+      $ArgumentList += $RootPath
       $RootPath = ''
     }
   }
-
-  $FullPath = $RootPath ? (Join-Path $RootPath $Path) : $Path
-  $CommandArguments = @()
+  $FullPath = ($RootPath ? (Join-Path $RootPath $Path) : ($Path ? $Path : ''))
 
   if ($Path) {
     if (Test-Path -Path $FullPath) {
-      $CommandArguments = , (Resolve-Path -Path $FullPath) + $CommandArguments
+      $ArgumentList = , (
+        Resolve-Path -Path $FullPath |
+          Select-Object -ExpandProperty Path
+      ) + $ArgumentList
     }
     else {
       if (-not $Path.StartsWith("-")) {
         throw "Path '$FullPath' does not exist."
       }
 
-      $FullPath = ($RootPath ? (Resolve-Path -Path $RootPath -) : ".")
-      $CommandArguments = $FullPath, $Path + $CommandArguments
+      $FullPath = ($RootPath ? ($RootPath) : ".")
+      $ArgumentList = $FullPath, $Path + $ArgumentList
     }
   }
   else {
     if ($FullPath) {
-      $CommandArguments = , $FullPath + $CommandArguments
+      $ArgumentList = , $FullPath + $ArgumentList
     }
   }
 
   if ($env:SSH_CLIENT) {
-    if (Test-Path -Path $FullPath -PathType Container) {
+    if ($FullPath -and (Test-Path -Path $FullPath -PathType   Container)) {
       Set-Location -Path $FullPath
     }
     else {
@@ -66,17 +71,17 @@ function Edit-Item {
       if (-not $ProfileName.StartsWith("-")) {
         $Force = $true
 
-        $CommandArguments += "--profile"
+        $ArgumentList += "--profile"
       }
 
-      $CommandArguments += $ProfileName
+      $ArgumentList += $ProfileName
     }
 
     if ($Force) {
-      $CommandArguments += "--new-window"
+      $ArgumentList += "--new-window"
     }
     elseif ($ReuseWindow) {
-      $CommandArguments += "--reuse-window"
+      $ArgumentList += "--reuse-window"
     }
 
     if ($CommandArguments) {
@@ -89,10 +94,6 @@ function Edit-Item {
 }
 
 New-Alias i. Edit-Sibling
-<#
-.FORWARDHELPTARGETNAME Edit-Item
-.FORWARDHELPCATEGORY Function
-#>
 function Edit-Sibling {
   param (
     [PathCompletions("..", "")]
@@ -109,10 +110,6 @@ function Edit-Sibling {
 }
 
 New-Alias i.. Edit-Relative
-<#
-.FORWARDHELPTARGETNAME Edit-Item
-.FORWARDHELPCATEGORY Function
-#>
 function Edit-Relative {
   param (
     [PathCompletions("..\..", "")]
@@ -129,10 +126,6 @@ function Edit-Relative {
 }
 
 New-Alias i~ Edit-Home
-<#
-.FORWARDHELPTARGETNAME Edit-Item
-.FORWARDHELPCATEGORY Function
-#>
 function Edit-Home {
   param (
     [PathCompletions("~", "")]
@@ -149,10 +142,6 @@ function Edit-Home {
 }
 
 New-Alias ic Edit-Code
-<#
-.FORWARDHELPTARGETNAME Edit-Item
-.FORWARDHELPCATEGORY Function
-#>
 function Edit-Code {
   param (
     [PathCompletions("~\code", "")]
@@ -165,15 +154,11 @@ function Edit-Code {
     [switch]$ReuseWindow
   )
 
-  Edit-Item @PSBoundParameters -RootPath ~\code @args
+  Edit-Item @PSBoundParameters -RootPath "~\code" @args
 }
 
 New-Alias i\ Edit-Drive
 New-Alias i/ Edit-Drive
-<#
-.FORWARDHELPTARGETNAME Edit-Item
-.FORWARDHELPCATEGORY Function
-#>
 function Edit-Drive {
   param (
     [PathCompletions("\", "")]

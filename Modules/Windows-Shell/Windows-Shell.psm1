@@ -54,7 +54,7 @@ class PathCompleter : IArgumentCompleter {
     }
 
     $subpath = ''
-    $leaves = $()
+    $leaves = @()
     $completions = [List[CompletionResult]]::new()
 
     if ($word) {

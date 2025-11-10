@@ -1,8 +1,4 @@
 New-Alias c Set-Directory
-<#
-.FORWARDHELPTARGETNAME Set-Location
-.FORWARDHELPCATEGORY Function
-#>
 function Set-Directory {
   [OutputType([void])]
   param (
@@ -20,10 +16,6 @@ function Set-Directory {
 
 New-Alias c. Set-Sibling
 New-Alias .. Set-Sibling
-<#
-.FORWARDHELPTARGETNAME Set-Location
-.FORWARDHELPCATEGORY Function
-#>
 function Set-Sibling {
   [OutputType([void])]
   param (
@@ -36,10 +28,6 @@ function Set-Sibling {
 
 New-Alias c.. Set-Relative
 New-Alias ... Set-Relative
-<#
-.FORWARDHELPTARGETNAME Set-Location
-.FORWARDHELPCATEGORY Function
-#>
 function Set-Relative {
   [OutputType([void])]
   param (
@@ -51,10 +39,6 @@ function Set-Relative {
 }
 
 New-Alias c~ Set-Home
-<#
-.FORWARDHELPTARGETNAME Set-Location
-.FORWARDHELPCATEGORY Function
-#>
 function Set-Home {
   [OutputType([void])]
   param (
@@ -66,10 +50,6 @@ function Set-Home {
 }
 
 New-Alias cc Set-Code
-<#
-.FORWARDHELPTARGETNAME Set-Location
-.FORWARDHELPCATEGORY Function
-#>
 function Set-Code {
   [OutputType([void])]
   param (
@@ -82,10 +62,6 @@ function Set-Code {
 
 New-Alias c\ Set-Drive
 New-Alias c/ Set-Drive
-<#
-.FORWARDHELPTARGETNAME Set-Location
-.FORWARDHELPCATEGORY Function
-#>
 function Set-Drive {
   [OutputType([void])]
   param (
@@ -98,10 +74,6 @@ function Set-Drive {
 
 New-Alias d\ Set-DriveD
 New-Alias d/ Set-DriveD
-<#
-.FORWARDHELPTARGETNAME Set-Location
-.FORWARDHELPCATEGORY Function
-#>
 function Set-DriveD {
   [OutputType([void])]
   param (

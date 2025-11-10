@@ -15,10 +15,6 @@ function ConvertTo-Hex {
 }
 
 New-Alias hexl ConvertTo-HexLower
-<#
-.FORWARDHELPTARGETNAME ConvertTo-Hex
-.FORWARDHELPCATEGORY Function
-#>
 function ConvertTo-HexLower {
   [OutputType([string[]])]
   param([int[]]$Decimal)

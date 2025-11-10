@@ -1,56 +1,42 @@
 New-Alias p Read-Item
-<#
-.FORWARDHELPTARGETNAME Get-Content
-.FORWARDHELPCATEGORY Function
-#>
 function Read-Item {
-  [OutputType(
-    [string[]],
-    [System.IO.DirectoryInfo[]],
-    [System.IO.FileInfo[]])
-  ]
   param(
-    [Parameter(Position = 0)]
     [PathCompletions(".", "")]
     [string]$Path,
-    [Parameter()]
     [string]$RootPath
   )
 
   $Argument = ''
-  $Container = @{
-    PathType = 'Container'
-  }
 
   if ($RootPath) {
-    if (-not (Test-Path -Path $RootPath @Container)) {
+    if (Test-Path -Path $RootPath -PathType Container) {
+      $RootPath = Resolve-Path -Path $RootPath |
+        Select-Object -ExpandProperty Path
+    }
+    else {
       $Argument = $RootPath
       $RootPath = ''
     }
   }
 
-  $FullPath = $RootPath ? (Join-Path $RootPath $Path) : $Path
-
-  $Item = @{
-    Path = $FullPath
-  }
+  $FullPath = ($RootPath ? (Join-Path $RootPath $Path) : ($Path ? $Path : ''))
 
   if ($Path) {
-    if (Test-Path @Item) {
-      if (Test-Path @Item @Container) {
+    if (Test-Path -Path $FullPath) {
+      if (Test-Path -Path $FullPath -PathType Container) {
         if ($Argument) {
-          Get-ChildItem @Item $Argument @args
+          Get-ChildItem -Path $FullPath $Argument @args
         }
         else {
-          Get-ChildItem @Item @args
+          Get-ChildItem -Path $FullPath @args
         }
       }
       else {
         if ($Argument) {
-          Get-Content @Item $Argument @args
+          Get-Content -Path $FullPath $Argument @args
         }
         else {
-          Get-Content @Item @args
+          Get-Content -Path $FullPath @args
         }
       }
     }
@@ -61,10 +47,10 @@ function Read-Item {
   else {
     if ($FullPath) {
       if ($Argument) {
-        Get-ChildItem @Item $Argument @args
+        Get-ChildItem -Path $FullPath $Argument @args
       }
       else {
-        Get-ChildItem @Item @args
+        Get-ChildItem -Path $FullPath @args
       }
     }
     else {
@@ -74,10 +60,6 @@ function Read-Item {
 }
 
 New-Alias p. Read-Sibling
-<#
-.FORWARDHELPTARGETNAME Get-Content
-.FORWARDHELPCATEGORY Function
-#>
 function Read-Sibling {
   param (
     [PathCompletions("..", "")]
@@ -88,10 +70,6 @@ function Read-Sibling {
 }
 
 New-Alias p.. Read-Relative
-<#
-.FORWARDHELPTARGETNAME Get-Content
-.FORWARDHELPCATEGORY Function
-#>
 function Read-Relative {
   param (
     [PathCompletions("..\..", "")]
@@ -102,10 +80,6 @@ function Read-Relative {
 }
 
 New-Alias p~ Read-Home
-<#
-.FORWARDHELPTARGETNAME Get-Content
-.FORWARDHELPCATEGORY Function
-#>
 function Read-Home {
   param (
     [PathCompletions("~", "")]
@@ -116,10 +90,6 @@ function Read-Home {
 }
 
 New-Alias pc Read-Code
-<#
-.FORWARDHELPTARGETNAME Get-Content
-.FORWARDHELPCATEGORY Function
-#>
 function Read-Code {
   [OutputType([void])]
   param (
@@ -127,15 +97,11 @@ function Read-Code {
     [string]$Path
   )
 
-  Read-Item @PSBoundParameters -RootPath ~\code @args
+  Read-Item @PSBoundParameters -RootPath "~\code" @args
 }
 
 New-Alias p\ Read-Drive
 New-Alias p/ Read-Drive
-<#
-.FORWARDHELPTARGETNAME Get-Content
-.FORWARDHELPCATEGORY Function
-#>
 function Read-Drive {
   param (
     [PathCompletions("\", "")]

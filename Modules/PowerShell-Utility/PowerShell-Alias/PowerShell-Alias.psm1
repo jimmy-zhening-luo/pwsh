@@ -1,8 +1,4 @@
 New-Alias galc Get-AliasCommand
-<#
-.FORWARDHELPTARGETNAME Get-Alias
-.FORWARDHELPCATEGORY Cmdlet
-#>
 function Get-AliasCommand {
   [OutputType([System.Management.Automation.AliasInfo[]])]
   param([string]$Definition = "*")

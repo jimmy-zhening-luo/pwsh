@@ -9,10 +9,6 @@ $CUSTOM_LINKS = (
 $ABOUT_ARTICLE_ROOT = 'https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about'
 
 New-Alias m Get-HelpOnline
-<#
-.FORWARDHELPTARGETNAME Get-Help
-.FORWARDHELPCATEGORY Cmdlet
-#>
 function Get-HelpOnline {
   [OutputType(
     [void],
