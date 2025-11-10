@@ -8,7 +8,10 @@ This function is an alias for 'npm outdated [--prefix $Path]'.
 https://docs.npmjs.com/cli/commands/npm-outdated
 #>
 function Compare-Package {
-  param([string]$Path)
+  param(
+    [PathCompletions("~\code", "Directory", $true)]
+    [string]$Path
+  )
 
   if ($Path) {
     $AbsolutePath = Resolve-NodeProject $Path

@@ -11,38 +11,3 @@ function Resolve-NodeProject {
   }
   else { '' }
 }
-
-class NodeProject : System.Management.Automation.IValidateSetValuesGenerator {
-  [string[]] GetValidValues() {
-    return [string[]] (
-      Get-ChildItem -Path $Script:CODE -Directory |
-        Select-Object -ExpandProperty BaseName
-    )
-  }
-}
-
-$ExportableTypes = @(
-  [NodeProject]
-)
-$TypeAcceleratorsClass = [PSObject].Assembly.GetType(
-  'System.Management.Automation.TypeAccelerators'
-)
-$ExistingTypeAccelerators = $TypeAcceleratorsClass::Get
-foreach ($Type in $ExportableTypes) {
-  if ($Type.FullName -in $ExistingTypeAccelerators.Keys) {
-    throw [System.Management.Automation.ErrorRecord]::new(
-      [InvalidOperationException]::new("Unable to register type accelerator '$($Type.FullName)' - Accelerator already exists."),
-      'TypeAcceleratorAlreadyExists',
-      [System.Management.Automation.ErrorCategory]::InvalidOperation,
-      $Type.FullName
-    )
-  }
-}
-foreach ($Type in $ExportableTypes) {
-  $TypeAcceleratorsClass::Add($Type.FullName, $Type)
-}
-$MyInvocation.MyCommand.ScriptBlock.Module.OnRemove = {
-  foreach ($Type in $ExportableTypes) {
-    $TypeAcceleratorsClass::Remove($Type.FullName)
-  }
-}.GetNewClosure()

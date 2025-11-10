@@ -8,7 +8,9 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
   [string] $Type
   [bool] $Flat
 
-  PathCompletionsAttribute([string] $root) {
+  PathCompletionsAttribute(
+    [string] $root
+  ) {
     $this.Root = $root
     $this.Type = ""
     $this.Flat = $false
