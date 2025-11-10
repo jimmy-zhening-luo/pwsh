@@ -9,9 +9,9 @@ https://learn.microsoft.com/en-us/windows/package-manager/winget/install
 #>
 function Add-WinGetPackage {
   if ($args.Count -eq 0) {
-    winget upgrade
+    & winget upgrade
   }
   else {
-    winget install @args
+    & winget install @args
   }
 }

@@ -13,5 +13,5 @@ function Edit-Path {
     throw 'Cannot launch Control Panel dialog during SSH session'
   }
 
-  rundll32 sysdm.cpl, EditEnvironmentVariables
+  [void](Start-Process -FilePath rundll32 -ArgumentList sysdm.cpl, EditEnvironmentVariables)
 }

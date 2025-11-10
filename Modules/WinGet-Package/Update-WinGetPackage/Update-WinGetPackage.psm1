@@ -11,5 +11,5 @@ function Update-WinGetPackage {
   [OutputType([string[]])]
   param()
 
-  winget upgrade @args
+  & winget upgrade @args
 }

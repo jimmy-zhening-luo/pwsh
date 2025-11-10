@@ -20,6 +20,5 @@ function Copy-Guid {
     $Guid
   }
 
-  $Guid |
-    Set-Clipboard
+  [void]($Guid | Set-Clipboard)
 }

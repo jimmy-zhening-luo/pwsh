@@ -18,13 +18,15 @@ function Open-Url {
   )
 
   if (-not $env:SSH_CLIENT) {
-    Start-Process -FilePath "C:\Program Files\Google\Chrome\Application\chrome.exe" (
-      (
-        $PSCmdlet.ParameterSetName -eq "Uri"
-      ) ? (
-        $Uri
-      ) : (
-        (Test-Path $Path) ? (Resolve-Path $Path) : ($Path)
+    [void](
+      Start-Process -FilePath "C:\Program Files\Google\Chrome\Application\chrome.exe" -ArgumentList (
+        (
+          $PSCmdlet.ParameterSetName -eq "Uri"
+        ) ? (
+          $Uri
+        ) : (
+          (Test-Path $Path) ? (Resolve-Path $Path) : ($Path)
+        )
       )
     )
   }

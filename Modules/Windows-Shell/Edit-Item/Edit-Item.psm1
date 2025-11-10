@@ -36,14 +36,14 @@ function Edit-Item {
 
   if ($Path) {
     if (Test-Path -Path $FullPath) {
-      $CommandArguments = , $FullPath + $CommandArguments
+      $CommandArguments = , (Resolve-Path -Path $FullPath) + $CommandArguments
     }
     else {
       if (-not $Path.StartsWith("-")) {
         throw "Path '$FullPath' does not exist."
       }
 
-      $FullPath = ($RootPath ? $RootPath : ".")
+      $FullPath = ($RootPath ? (Resolve-Path -Path $RootPath -) : ".")
       $CommandArguments = $FullPath, $Path + $CommandArguments
     }
   }
@@ -80,10 +80,10 @@ function Edit-Item {
     }
 
     if ($CommandArguments) {
-      code.cmd $CommandArguments @args
+      & code.cmd $CommandArguments @args
     }
     else {
-      code.cmd @args
+      & code.cmd @args
     }
   }
 }

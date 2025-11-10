@@ -18,10 +18,13 @@ function Test-Host {
     [uint16]$Port
   )
 
+  $Target = @{
+    ComputerName = $HostName
+  }
+
   if ($Port) {
-    Test-NetConnection -ComputerName $HostName -Port $Port
+    $Target.Port = $Port
   }
-  else {
-    Test-NetConnection -ComputerName $HostName
-  }
+
+  Test-NetConnection @Target
 }

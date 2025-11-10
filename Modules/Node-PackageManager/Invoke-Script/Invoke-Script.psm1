@@ -17,10 +17,10 @@ function Invoke-Script {
     throw 'No script name provided'
   }
 
-  $NpmOption = $()
+  $NpmOption = ''
 
   if ($Path.StartsWith(('-'))) {
-    $NpmOption += $Path
+    $NpmOption = $Path
     $Path = $null
   }
 
@@ -28,13 +28,23 @@ function Invoke-Script {
     $AbsolutePath = Resolve-NodeProject $Path
 
     if ($AbsolutePath) {
-      npm run $Script --prefix $AbsolutePath $NpmOption @args
+      if ($NpmOption) {
+        & npm run $Script --prefix $AbsolutePath $NpmOption @args
+      }
+      else {
+        & npm run $Script --prefix $AbsolutePath @args
+      }
     }
     else {
       throw "Path '$Path' is not a Node project directory."
     }
   }
   else {
-    npm run $Script $NpmOption @args
+    if ($NpmOption) {
+      & npm run $Script $NpmOption @args
+    }
+    else {
+      & npm run $Script @args
+    }
   }
 }

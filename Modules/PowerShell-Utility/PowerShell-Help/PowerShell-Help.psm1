@@ -1,12 +1,12 @@
 New-Alias upman Update-Help
 
-$CUSTOM_HELP_ARTICLE_PATH = @{
+$CUSTOM_LINKS_PATH = @{
   Path = Join-Path $PSScriptRoot 'PowerShell-HelpArticle.psd1'
 }
-$CUSTOM_HELP_ARTICLE = (
-  Test-Path @CUSTOM_HELP_ARTICLE_PATH -Type Leaf
-) ? (Import-PowerShellDataFile @CUSTOM_HELP_ARTICLE_PATH) : @{}
-$ONLINE_HELP_ROOT = 'https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about'
+$CUSTOM_LINKS = (
+  Test-Path @CUSTOM_LINKS_PATH -Type Leaf
+) ? (Import-PowerShellDataFile @CUSTOM_LINKS_PATH) : @{}
+$ABOUT_ARTICLE_ROOT = 'https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about'
 
 New-Alias m Get-HelpOnline
 <#
@@ -30,55 +30,85 @@ function Get-HelpOnline {
     return
   }
 
+  $Topic = $Name -join '_'
   $Help = $null
-  $HelpUri = $null
+  $HelpLink = $null
   $Articles = @()
-  $Suppress = @{
-    ErrorAction = 'SilentlyContinue'
-  }
 
-  $FullName = $Name -join '_'
+  if ($CUSTOM_LINKS.Contains($Topic)) {
+    $CustomLink = $CUSTOM_LINKS[$Topic]
 
-  if ($CUSTOM_HELP_ARTICLE.Contains($FullName)) {
-    $Record = $CUSTOM_HELP_ARTICLE[$FullName]
-
-    if ($Record -is [string] -and -not $Record.Contains(':')) {
-      $Record = $CUSTOM_HELP_ARTICLE[$Record]
+    if ($CustomLink -is [string] -and -not $CustomLink.Contains(':')) {
+      $CustomLink = $CUSTOM_LINKS[$CustomLink]
     }
 
-    if ($Record) { $Articles += $Record }
+    if ($CustomLink) {
+      $Articles += $CustomLink
+    }
   }
   else {
-    $Help = Get-Help -Name $FullName @Suppress
-    $HelpUri = $Help.relatedLinks.navigationLink.Uri |
+    $Suppress = @{
+      ErrorAction = 'SilentlyContinue'
+    }
+    $Help = Get-Help -Name $Topic @Suppress
+    $HelpLink = $Help.relatedLinks.navigationLink.Uri |
       ? { -not [string]::IsNullOrEmpty($_) } |
       % { $_ -replace '\?.*$', '' } |
       ? { $_ -ne '' }
 
     if ($Help -and $Parameter) {
-      $ParameterHelp = Get-Help -Name $FullName -Parameter $Parameter @Suppress
+      $ParameterHelp = Get-Help -Name $Topic -Parameter $Parameter @Suppress
 
       if ($ParameterHelp) {
         $Help = $ParameterHelp
 
-        if ($HelpUri -and $Parameter.Count -eq 1) {
-          $HelpUri = $HelpUri + "#-$Parameter".ToLowerInvariant()
+        if ($HelpLink -and $Parameter.Count -eq 1) {
+          $HelpLink = $HelpLink + "#-$Parameter".ToLowerInvariant()
         }
       }
     }
 
-    if ($HelpUri) {
-      $Articles += $HelpUri
+    if ($HelpLink) {
+      $Articles += $HelpLink
     }
     else {
-      $about_Name = $FullName -replace '[-_ :]+', '_' -replace '^(?:about)?_?', 'about_'
-      $about_Article = "$ONLINE_HELP_ROOT/$about_Name"
+      $about_Article = ''
 
-      if (Test-Url $about_Article) {
-        $Articles += $about_Article
+      if ($Help) {
+        $about_Article = "$ABOUT_ARTICLE_ROOT/$($Help.name)"
       }
-      elseif ($about_Name -notmatch 's$' -and (Test-Url ($about_Article + 's'))) {
-        $Articles += $about_Article + 's'
+      else {
+        $about_Topic = $Topic -replace '[-_ :]+', '_' -replace '^(?:about)?_?', 'about_'
+
+        function Resolve-AboutArticle {
+          [OutputType([string])]
+          param([string]$about_Topic)
+
+          $about_Article = "$ABOUT_ARTICLE_ROOT/$about_Topic"
+
+          if (Test-Url $about_Article) {
+            return $about_Article
+          }
+
+          return ''
+        }
+
+        $about_Article = Resolve-AboutArticle $about_Topic
+
+        if (-not $about_Article) {
+          if ($about_Topic -notmatch 's$') {
+            $about_Topic = $about_Topic + 's'
+            $about_Article = Resolve-AboutArticle $about_Topic
+          }
+        }
+
+        if ($about_Article) {
+          $Help = Get-Help -Name $about_Topic @Suppress
+        }
+      }
+
+      if ($about_Article) {
+        $Articles += $about_Article
       }
     }
   }
@@ -100,7 +130,7 @@ function Get-HelpOnline {
     }
     else {
       if ($Help) {
-        [void](Get-Help -Name $FullName -Online 2>&1)
+        [void](Get-Help -Name $Topic -Online 2>&1)
       }
     }
   }

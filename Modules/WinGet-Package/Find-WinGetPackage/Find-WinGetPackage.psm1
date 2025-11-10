@@ -11,10 +11,10 @@ function Find-WinGetPackage {
   [OutputType([string[]])]
   param()
 
-  if ($args.Count -eq 0) {
-    winget list
+  if ($args) {
+    & winget search @args
   }
   else {
-    winget search @args
+    & winget list
   }
 }

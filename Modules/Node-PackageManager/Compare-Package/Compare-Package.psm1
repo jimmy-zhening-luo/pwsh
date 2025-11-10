@@ -14,13 +14,13 @@ function Compare-Package {
     $AbsolutePath = Resolve-NodeProject $Path
 
     if ($AbsolutePath) {
-      npm outdated --prefix $AbsolutePath
+      & npm outdated --prefix $AbsolutePath
     }
     else {
       throw "Path '$Path' is not a Node project directory."
     }
   }
   else {
-    npm outdated
+    & npm outdated
   }
 }

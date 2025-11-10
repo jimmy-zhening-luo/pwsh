@@ -23,9 +23,9 @@ function Test-Url {
     MaximumRetryCount            = 0
     ErrorAction                  = "Stop"
   }
-  try {
 
-    $Response = Invoke-WebRequest @Request
+  try {
+    $Status = (Invoke-WebRequest @Request).StatusCode
     $Status = $Response.StatusCode
   }
   catch {
