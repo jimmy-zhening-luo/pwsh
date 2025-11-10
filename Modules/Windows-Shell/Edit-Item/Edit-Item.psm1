@@ -96,7 +96,15 @@ function Edit-Sibling {
     [switch]$ReuseWindow
   )
 
-  Edit-Item @PSBoundParameters -RootPath ".."
+    $Splat = @{
+    Path        = $Path
+    ProfileName = $ProfileName
+    CreateWindow= $CreateWindow
+    ReuseWindow = $ReuseWindow
+    RootPath = ".."
+  }
+
+  Edit-Item @Splat
 }
 
 New-Alias i.. Edit-Relative
@@ -112,7 +120,15 @@ function Edit-Relative {
     [switch]$ReuseWindow
   )
 
-  Edit-Item @PSBoundParameters -RootPath "..\.."
+    $Splat = @{
+    Path        = $Path
+    ProfileName = $ProfileName
+    CreateWindow= $CreateWindow
+    ReuseWindow = $ReuseWindow
+    RootPath = "..\.."
+  }
+
+  Edit-Item @Splat
 }
 
 New-Alias i~ Edit-Home
@@ -128,7 +144,15 @@ function Edit-Home {
     [switch]$ReuseWindow
   )
 
-  Edit-Item @PSBoundParameters -RootPath "~"
+    $Splat = @{
+    Path        = $Path
+    ProfileName = $ProfileName
+    CreateWindow= $CreateWindow
+    ReuseWindow = $ReuseWindow
+    RootPath = '~'
+  }
+
+  Edit-Item @Splat
 }
 
 New-Alias ic Edit-Code
@@ -144,7 +168,15 @@ function Edit-Code {
     [switch]$ReuseWindow
   )
 
-  Edit-Item @PSBoundParameters -RootPath "~\code"
+  $Splat = @{
+    Path        = $Path
+    ProfileName = $ProfileName
+    CreateWindow= $CreateWindow
+    ReuseWindow = $ReuseWindow
+    RootPath = '~\code'
+  }
+
+  Edit-Item @Splat
 }
 
 New-Alias i\ Edit-Drive
@@ -161,5 +193,13 @@ function Edit-Drive {
     [switch]$ReuseWindow
   )
 
-  Edit-Item @PSBoundParameters -RootPath "\"
+  $Splat = @{
+    Path        = $Path
+    ProfileName = $ProfileName
+    CreateWindow= $CreateWindow
+    ReuseWindow = $ReuseWindow
+    RootPath = '\'
+  }
+
+  Edit-Item @Splat
 }
