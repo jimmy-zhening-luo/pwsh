@@ -14,7 +14,7 @@ function Edit-Item {
     [string]$Path,
     [Alias("Name", "pn")]
     [string]$ProfileName,
-    [switch]$Window,
+    [switch]$CreateWindow,
     [Alias("rw")]
     [switch]$ReuseWindow,
     [string]$RootPath
@@ -37,7 +37,7 @@ function Edit-Item {
   if ($Path) {
     if (Test-Path -Path $FullPath) {
       $ArgumentList = , (
-        Resolve-Path -Path $FullPath |
+          Resolve-Path -Path $FullPath |
           Select-Object -ExpandProperty Path
       ) + $ArgumentList
     }
@@ -67,7 +67,7 @@ function Edit-Item {
   else {
     if ($ProfileName) {
       if (-not $ProfileName.StartsWith("-")) {
-        $Window = $true
+        $CreateWindow = $true
 
         $ArgumentList += "--profile"
       }
@@ -75,7 +75,7 @@ function Edit-Item {
       $ArgumentList += $ProfileName
     }
 
-    if ($Window) {
+    if ($CreateWindow) {
       $ArgumentList += "--new-window"
     }
     elseif ($ReuseWindow) {
@@ -99,7 +99,7 @@ function Edit-Sibling {
     [Alias("Name", "pn")]
     [string]$ProfileName,
     [Alias("Window")]
-    [switch]$Window,
+    [switch]$CreateWindow,
     [Alias("rw")]
     [switch]$ReuseWindow
   )
@@ -115,7 +115,7 @@ function Edit-Relative {
     [Alias("Name", "pn")]
     [string]$ProfileName,
     [Alias("Window")]
-    [switch]$Window,
+    [switch]$CreateWindow,
     [Alias("rw")]
     [switch]$ReuseWindow
   )
@@ -131,7 +131,7 @@ function Edit-Home {
     [Alias("Name", "pn")]
     [string]$ProfileName,
     [Alias("Window")]
-    [switch]$Window,
+    [switch]$CreateWindow,
     [Alias("rw")]
     [switch]$ReuseWindow
   )
@@ -147,7 +147,7 @@ function Edit-Code {
     [Alias("Name", "pn")]
     [string]$ProfileName,
     [Alias("Window")]
-    [switch]$Window,
+    [switch]$CreateWindow,
     [Alias("rw")]
     [switch]$ReuseWindow
   )
@@ -164,7 +164,7 @@ function Edit-Drive {
     [Alias("Name", "pn")]
     [string]$ProfileName,
     [Alias("Window")]
-    [switch]$Window,
+    [switch]$CreateWindow,
     [Alias("rw")]
     [switch]$ReuseWindow
   )

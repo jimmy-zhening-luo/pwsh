@@ -3,5 +3,5 @@ function Edit-History {
   [OutputType([void])]
   param()
 
-  Edit-Item -Path (Get-PSReadLineOption).HistorySavePath -ProfileName PowerShell -Window @args
+  Edit-Item -Path (Get-PSReadLineOption).HistorySavePath -ProfileName PowerShell -CreateWindow @args
 }
