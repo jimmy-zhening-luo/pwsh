@@ -66,7 +66,7 @@ function Read-Sibling {
     [string]$Path
   )
 
-  Read-Item @PSBoundParameters -RootPath ".." @args
+  Read-Item -Path $Path -RootPath ".." @args
 }
 
 New-Alias p.. Read-Relative
@@ -76,7 +76,7 @@ function Read-Relative {
     [string]$Path
   )
 
-  Read-Item @PSBoundParameters -RootPath "..\.." @args
+  Read-Item -Path $Path -RootPath "..\.." @args
 }
 
 New-Alias p~ Read-Home
@@ -86,7 +86,7 @@ function Read-Home {
     [string]$Path
   )
 
-  Read-Item @PSBoundParameters -RootPath "~" @args
+  Read-Item -Path $Path -RootPath "~" @args
 }
 
 New-Alias pc Read-Code
@@ -97,7 +97,7 @@ function Read-Code {
     [string]$Path
   )
 
-  Read-Item @PSBoundParameters -RootPath "~\code" @args
+  Read-Item -Path $Path -RootPath "~\code" @args
 }
 
 New-Alias p\ Read-Drive
@@ -108,5 +108,5 @@ function Read-Drive {
     [string]$Path
   )
 
-  Read-Item @PSBoundParameters -RootPath "\" @args
+  Read-Item -Path $Path -RootPath "\" @args
 }
