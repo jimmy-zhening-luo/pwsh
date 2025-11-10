@@ -56,7 +56,7 @@ function Get-Home {
     [string]$Path
   )
 
-  Get-ChildItem -Path (Join-Path $HOME $Path) @args
+  Get-ChildItem -Path (Join-Path "~" $Path) @args
 }
 
 New-Alias lc Get-Code
