@@ -42,77 +42,77 @@ class PathCompleter : IArgumentCompleter {
     [IDictionary] $fakeBoundParameters) {
 
     $Local:root = $this.Root
-    $query = @{
+    $Local:query = @{
       Path      = $Local:root
       Directory = $this.Type -eq 'Directory'
       File      = $this.Type -eq 'File'
     }
-    $word = $wordToComplete
+    $Local:word = $wordToComplete
 
-    if ($word) {
-      $word = $word -replace '[\\\/]+', '\' -replace '^\\', ''
+    if ($Local:word) {
+      $Local:word = $Local:word -replace '[\\\/]+', '\' -replace '^\\', ''
     }
 
-    $subpath = ''
-    $leaves = @()
-    $completions = [List[CompletionResult]]::new()
+    $Local:subpath = ''
+    $Local:leaves = @()
+    $resultList = [List[CompletionResult]]::new()
 
-    if ($word) {
-      if ($word.EndsWith('\')) {
-        $word += '*'
+    if ($Local:word) {
+      if ($Local:word.EndsWith('\')) {
+        $Local:word += '*'
       }
 
-      $subpath = Split-Path $word
-      $fragment = Split-Path $word -Leaf
+      $Local:subpath = Split-Path $Local:word
+      $Local:fragment = Split-Path $Local:word -Leaf
 
-      if ($fragment -eq '*') {
-        $fragment = ''
+      if ($Local:fragment -eq '*') {
+        $Local:fragment = ''
       }
 
-      $Local:path = Join-Path $Local:root $subpath
+      $Local:path = Join-Path $Local:root $Local:subpath
 
       if (Test-Path -Path $Local:path -PathType Container) {
-        $query.Path = $Local:path
-        $query["Filter"] = "$Local:fragment*"
-        $leaves = Get-ChildItem @query
+        $Local:query.Path = $Local:path
+        $Local:query["Filter"] = "$Local:fragment*"
+        $Local:leaves = Get-ChildItem @Local:query
       }
     }
     else {
-      $leaves = Get-ChildItem @query
+      $Local:leaves = Get-ChildItem @Local:query
     }
 
-    $directories = $leaves |
+    $Local:directories = $Local:leaves |
       ? { $_.PSIsContainer }
-    $files = $leaves |
+    $Local:files = $Local:leaves |
       ? { -not $_.PSIsContainer }
 
-    $directories = $directories |
+    $Local:directories = $Local:directories |
       Select-Object -ExpandProperty Name
-    $files = $files |
+    $Local:files = $Local:files |
       Select-Object -ExpandProperty Name
 
-    if ($subpath) {
-      $directories = $directories |
-        % { Join-Path $subpath $_ }
-      $files = $files |
-        % { Join-Path $subpath $_ }
+    if ($Local:subpath) {
+      $Local:directories = $Local:directories |
+        % { Join-Path $Local:subpath $_ }
+      $Local:files = $Local:files |
+        % { Join-Path $Local:subpath $_ }
     }
 
-    $directories = $directories |
+    $Local:directories = $Local:directories |
       % { $_ + "\" }
-    $directories = $directories |
+    $Local:directories = $Local:directories |
       % { $_ -replace '[\\]+', '/' }
-    $files = $files |
+    $Local:files = $Local:files |
       % { $_ -replace '[\\]+', '/' }
 
-    foreach ($directory in $directories) {
-      $completions.Add([CompletionResult]::new($directory))
+    foreach ($directory in $Local:directories) {
+      $resultList.Add([CompletionResult]::new($directory))
     }
-    foreach ($file in $files) {
-      $completions.Add([CompletionResult]::new($file))
+    foreach ($file in $Local:files) {
+      $resultList.Add([CompletionResult]::new($file))
     }
 
-    return $completions
+    return $resultList
   }
 }
 
