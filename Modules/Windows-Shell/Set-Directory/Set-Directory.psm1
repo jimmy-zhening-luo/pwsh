@@ -44,7 +44,7 @@ function Set-Home {
     [string]$Path
   )
 
-  Set-Location -Path (Join-Path $HOME $Path)
+  Set-Location -Path (Join-Path "~" $Path)
 }
 
 New-Alias cc Set-Code

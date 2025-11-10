@@ -50,7 +50,7 @@ function Invoke-Home {
     [string]$Path
   )
 
-  Invoke-Directory -Path (Join-Path $HOME $Path) @args
+  Invoke-Directory -Path (Join-Path "~" $Path) @args
 }
 
 New-Alias ec Invoke-Code
