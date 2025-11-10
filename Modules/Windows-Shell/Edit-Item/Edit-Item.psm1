@@ -12,7 +12,6 @@ function Edit-Item {
   param(
     [PathCompletions(".", "")]
     [string]$Path,
-    [Parameter(Position = 1)]
     [Alias("Name", "pn")]
     [string]$ProfileName,
     [switch]$Window,
