@@ -75,10 +75,10 @@ function Edit-Item {
     }
 
     if ($ArgumentList) {
-      & code.cmd $ArgumentList @args
+      & code.cmd $ArgumentList
     }
     else {
-      & code.cmd @args
+      & code.cmd
     }
   }
 }
@@ -96,7 +96,7 @@ function Edit-Sibling {
     [switch]$ReuseWindow
   )
 
-  Edit-Item @PSBoundParameters -RootPath ".." @args
+  Edit-Item @PSBoundParameters -RootPath ".."
 }
 
 New-Alias i.. Edit-Relative
@@ -112,7 +112,7 @@ function Edit-Relative {
     [switch]$ReuseWindow
   )
 
-  Edit-Item @PSBoundParameters -RootPath "..\.." @args
+  Edit-Item @PSBoundParameters -RootPath "..\.."
 }
 
 New-Alias i~ Edit-Home
@@ -128,7 +128,7 @@ function Edit-Home {
     [switch]$ReuseWindow
   )
 
-  Edit-Item @PSBoundParameters -RootPath "~" @args
+  Edit-Item @PSBoundParameters -RootPath "~"
 }
 
 New-Alias ic Edit-Code
@@ -144,7 +144,7 @@ function Edit-Code {
     [switch]$ReuseWindow
   )
 
-  Edit-Item @PSBoundParameters -RootPath "~\code" @args
+  Edit-Item @PSBoundParameters -RootPath "~\code"
 }
 
 New-Alias i\ Edit-Drive
@@ -161,5 +161,5 @@ function Edit-Drive {
     [switch]$ReuseWindow
   )
 
-  Edit-Item @PSBoundParameters -RootPath "\" @args
+  Edit-Item @PSBoundParameters -RootPath "\"
 }

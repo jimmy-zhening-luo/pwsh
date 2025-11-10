@@ -11,14 +11,14 @@ function Invoke-Directory {
   else {
     if ($Path) {
       if (Test-Path -Path $Path -PathType Leaf) {
-        Edit-Item -Path $Path @args
+        Edit-Item -Path $Path
       }
       else {
-        Invoke-Item -Path $Path @args
+        Invoke-Item -Path $Path
       }
     }
     else {
-      Invoke-Item -Path "." @args
+      Invoke-Item -Path "."
     }
   }
 }
@@ -30,7 +30,7 @@ function Invoke-Sibling {
     [string]$Path
   )
 
-  Invoke-Directory -Path (Join-Path (Split-Path $PWD.Path) $Path) @args
+  Invoke-Directory -Path (Join-Path (Split-Path $PWD.Path) $Path)
 }
 
 New-Alias e.. Invoke-Relative
@@ -40,7 +40,7 @@ function Invoke-Relative {
     [string]$Path
   )
 
-  Invoke-Directory -Path (Join-Path (Split-Path (Split-Path $PWD.Path)) $Path) @args
+  Invoke-Directory -Path (Join-Path (Split-Path (Split-Path $PWD.Path)) $Path)
 }
 
 New-Alias e~ Invoke-Home
@@ -50,7 +50,7 @@ function Invoke-Home {
     [string]$Path
   )
 
-  Invoke-Directory -Path (Join-Path "~" $Path) @args
+  Invoke-Directory -Path (Join-Path "~" $Path)
 }
 
 New-Alias ec Invoke-Code
@@ -60,7 +60,7 @@ function Invoke-Code {
     [string]$Path
   )
 
-  Invoke-Directory -Path (Join-Path "~\code" $Path) @args
+  Invoke-Directory -Path (Join-Path "~\code" $Path)
 }
 
 New-Alias e\ Invoke-Drive
@@ -71,5 +71,5 @@ function Invoke-Drive {
     [string]$Path
   )
 
-  Invoke-Directory -Path (Join-Path "\" $Path) @args
+  Invoke-Directory -Path (Join-Path "\" $Path)
 }

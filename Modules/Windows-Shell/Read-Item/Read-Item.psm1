@@ -25,18 +25,18 @@ function Read-Item {
     if (Test-Path -Path $FullPath) {
       if (Test-Path -Path $FullPath -PathType Container) {
         if ($Argument) {
-          Get-ChildItem -Path $FullPath $Argument @args
+          Get-ChildItem -Path $FullPath $Argument
         }
         else {
-          Get-ChildItem -Path $FullPath @args
+          Get-ChildItem -Path $FullPath
         }
       }
       else {
         if ($Argument) {
-          Get-Content -Path $FullPath $Argument @args
+          Get-Content -Path $FullPath $Argument
         }
         else {
-          Get-Content -Path $FullPath @args
+          Get-Content -Path $FullPath
         }
       }
     }
@@ -47,14 +47,14 @@ function Read-Item {
   else {
     if ($FullPath) {
       if ($Argument) {
-        Get-ChildItem -Path $FullPath $Argument @args
+        Get-ChildItem -Path $FullPath $Argument
       }
       else {
-        Get-ChildItem -Path $FullPath @args
+        Get-ChildItem -Path $FullPath
       }
     }
     else {
-      Get-ChildItem @args
+      Get-ChildItem
     }
   }
 }
@@ -66,7 +66,7 @@ function Read-Sibling {
     [string]$Path
   )
 
-  Read-Item -Path $Path -RootPath ".." @args
+  Read-Item -Path $Path -RootPath ".."
 }
 
 New-Alias p.. Read-Relative
@@ -76,7 +76,7 @@ function Read-Relative {
     [string]$Path
   )
 
-  Read-Item -Path $Path -RootPath "..\.." @args
+  Read-Item -Path $Path -RootPath "..\.."
 }
 
 New-Alias p~ Read-Home
@@ -86,7 +86,7 @@ function Read-Home {
     [string]$Path
   )
 
-  Read-Item -Path $Path -RootPath "~" @args
+  Read-Item -Path $Path -RootPath "~"
 }
 
 New-Alias pc Read-Code
@@ -97,7 +97,7 @@ function Read-Code {
     [string]$Path
   )
 
-  Read-Item -Path $Path -RootPath "~\code" @args
+  Read-Item -Path $Path -RootPath "~\code"
 }
 
 New-Alias p\ Read-Drive
@@ -105,8 +105,8 @@ New-Alias p/ Read-Drive
 function Read-Drive {
   param (
     [PathCompletions("\", "")]
-    [string]$Path
+      [string]$Path
   )
 
-  Read-Item -Path $Path -RootPath "\" @args
+  Read-Item -Path $Path -RootPath "\"
 }
