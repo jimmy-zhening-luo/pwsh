@@ -115,9 +115,12 @@ class PathCompleter : IArgumentCompleter {
       $Local:leaves = Get-ChildItem @Local:query
     }
 
-    $Local:directories = $Local:leaves |
+    $Local:directories = @()
+    $Local:files = @()
+
+    $Local:directories += $Local:leaves |
       ? { $_.PSIsContainer }
-    $Local:files = $Local:leaves |
+    $Local:files += $Local:leaves |
       ? { -not $_.PSIsContainer }
 
     $Local:directories = $Local:directories |
