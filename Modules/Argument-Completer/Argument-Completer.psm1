@@ -47,7 +47,11 @@ class PathCompleter : IArgumentCompleter {
   [string] $Type
   [bool] $Flat
 
-  PathCompleter([string] $root, [string] $type) {
+  PathCompleter(
+    [string] $root,
+    [string] $type,
+    [bool] $flat
+  ) {
     if (-not $root -or -not (Test-Path -Path $root -PathType Container)) {
       throw [ArgumentException]::new("root")
     }
