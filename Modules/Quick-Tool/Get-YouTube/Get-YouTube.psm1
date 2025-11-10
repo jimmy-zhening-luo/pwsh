@@ -3,7 +3,7 @@ New-Alias yt Get-YouTube
 .SYNOPSIS
 Use yt-dlp to download YouTube videos.
 .DESCRIPTION
-This function is an alias for `yt-dlp` and allows you to download YouTube videos or extract audio from them.
+This function is an alias for 'yt-dlp' and allows you to download YouTube videos or extract audio from them.
 .LINK
 https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#usage-and-options
 #>
@@ -38,7 +38,7 @@ New-Alias yta Get-YouTubeAudio
 .SYNOPSIS
 Use yt-dlp to extract audio from a YouTube video.
 .DESCRIPTION
-This function is an alias for `yt-dlp` and extracts audio from a YouTube video.
+This function is an alias for 'yt-dlp' and extracts audio from a YouTube video.
 .LINK
 https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#video-format-options
 #>
@@ -53,7 +53,7 @@ New-Alias ytf Get-YouTubeFormat
 .SYNOPSIS
 Use yt-dlp to get available formats for a YouTube video.
 .DESCRIPTION
-This function is an alias for `yt-dlp -F` and lists all available formats for a YouTube video.
+This function is an alias for 'yt-dlp -F' and lists all available formats for a YouTube video.
 .LINK
 https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#video-format-options
 #>

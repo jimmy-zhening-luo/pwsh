@@ -23,7 +23,7 @@ function Invoke-Directory {
       }
     }
     else {
-      Invoke-Item -Path $PWD.Path @args
+      Invoke-Item -Path "." @args
     }
   }
 }
@@ -81,7 +81,7 @@ function Invoke-Code {
     [string]$Path
   )
 
-  Invoke-Directory -Path (Join-Path ~\code $Path) @args
+  Invoke-Directory -Path (Join-Path "~\code" $Path) @args
 }
 
 New-Alias e\ Invoke-Drive
@@ -96,5 +96,5 @@ function Invoke-Drive {
     [string]$Path
   )
 
-  Invoke-Directory -Path (Join-Path $PWD.Drive.Root $Path) @args
+  Invoke-Directory -Path (Join-Path "\" $Path) @args
 }

@@ -51,7 +51,6 @@ function Set-Relative {
 }
 
 New-Alias c~ Set-Home
-New-Alias ~ Set-Home
 <#
 .FORWARDHELPTARGETNAME Set-Location
 .FORWARDHELPCATEGORY Function
@@ -78,7 +77,7 @@ function Set-Code {
     [string]$Path
   )
 
-  Set-Location -Path (Join-Path ~\code $Path)
+  Set-Location -Path (Join-Path "~\code" $Path)
 }
 
 New-Alias c\ Set-Drive
@@ -94,7 +93,7 @@ function Set-Drive {
     [string]$Path
   )
 
-  Set-Location -Path (Join-Path $PWD.Drive.Root $Path)
+  Set-Location -Path (Join-Path "\" $Path)
 }
 
 New-Alias d\ Set-DriveD

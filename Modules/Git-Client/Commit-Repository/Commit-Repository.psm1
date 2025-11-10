@@ -4,7 +4,7 @@ New-Alias ggm Write-Repository
 .SYNOPSIS
 Commit changes to a Git repository.
 .DESCRIPTION
-This function commits changes to a Git repository using the `git commit` command.
+This function commits changes to a Git repository using the 'git commit' command.
 .LINK
 https://git-scm.com/docs/git-commit
 #>

@@ -56,7 +56,7 @@ function Invoke-Repository {
       $GitArguments += (Resolve-Repository $Path), 'status'
     }
     else {
-      throw "'git status' requires an existing repository. The current directory '$($PWD.Path)' is not a repository, and no other path was provided."
+      throw "'git status' requires an existing repository. The current directory is not a repository, and no other path was provided."
     }
   }
   elseif (-not $Path) {
@@ -72,7 +72,7 @@ function Invoke-Repository {
         $GitArguments += (Resolve-Repository @Resolve), $Verb
       }
       else {
-        throw "'git $Verb' requires an existing repository. '$($PWD.Path)' is not a repository, and no other path was provided."
+        throw "'git $Verb' requires an existing repository. The current directory is not a repository, and no other path was provided."
       }
     }
     else {
@@ -96,7 +96,7 @@ function Invoke-Repository {
         $GitArguments += (Resolve-Repository @Resolve), $Verb
       }
       else {
-        throw "'git $Verb' requires an existing repository. '$($PWD.Path)' is not a repository, and no other path was provided."
+        throw "'git $Verb' requires an existing repository. The current directory is not a repository, and no other path was provided."
       }
     }
     else {
@@ -132,7 +132,7 @@ function Invoke-Repository {
         $GitArguments += (Resolve-Repository @Resolve), $Verb
       }
       else {
-        throw "'git $Verb' requires an existing repository. '$($PWD.Path)' is not a repository, and no other path was provided."
+        throw "'git $Verb' requires an existing repository. The current directory is not a repository, and no other path was provided."
       }
     }
     else {
@@ -166,7 +166,7 @@ function Resolve-Repository {
   )
 
   function Get-CodeRelativePath([string]$Path) {
-    Join-Path ~\code ($Path -replace "^\.[\/\\]+", '')
+    Join-Path "~\code" ($Path -replace "^\.[\/\\]+", '')
   }
 
   function Add-Git([string]$Path) {
@@ -199,7 +199,7 @@ function Resolve-Repository {
       }
     }
     else {
-      Select-ResolvedPath ~\code
+      Select-ResolvedPath "~\code"
     }
   }
   else {
@@ -220,8 +220,8 @@ function Resolve-Repository {
         ''
       }
     }
-    elseif (Test-Path -Path (Add-Git $PWD.Path) @Container) {
-      Select-ResolvedPath $PWD.Path
+    elseif (Test-Path -Path (Add-Git '.') @Container) {
+      Select-ResolvedPath '.'
     }
     else {
       ''

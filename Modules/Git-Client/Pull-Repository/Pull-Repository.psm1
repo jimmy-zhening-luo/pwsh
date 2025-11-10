@@ -4,7 +4,7 @@ New-Alias ggp Get-Repository
 .SYNOPSIS
 Use Git to pull changes from a repository.
 .DESCRIPTION
-This function is an alias for `git pull`.
+This function is an alias for 'git pull'.
 .LINK
 https://git-scm.com/docs/git-pull
 #>
@@ -29,7 +29,7 @@ New-Alias gpa Get-ChildRepository
 .SYNOPSIS
 Use Git to pull changes from all child repositories.
 .DESCRIPTION
-This function retrieves all child repositories in `~\code\` and pulls changes from each one.
+This function retrieves all child repositories in '~\code\' and pulls changes from each one.
 .LINK
 https://git-scm.com/docs/git-pull
 #>
@@ -38,7 +38,7 @@ function Get-ChildRepository {
     Verb = "pull"
   }
 
-  $Repositories = Get-ChildItem -Path ~\code -Directory |
+  $Repositories = Get-ChildItem -Path "~\code" -Directory |
     ? { Resolve-Repository -Path $_.FullName } |
     ? { -not [string]::IsNullOrEmpty($_) }
 

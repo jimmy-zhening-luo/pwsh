@@ -3,6 +3,19 @@ using namespace System.Collections.Generic
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
 
+
+class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory {
+  [string] $Root
+  [string] $Type
+
+  PathCompletionsAttribute([string] $root, [string] $type) {
+    $this.Root = $root
+    $this.Type = $type
+  }
+
+  [IArgumentCompleter] Create() { return [PathCompleter]::new($this.Root, $this.Type) }
+}
+
 class PathCompleter : IArgumentCompleter {
   [string] $Root
   [string] $Type
@@ -16,7 +29,8 @@ class PathCompleter : IArgumentCompleter {
       throw [ArgumentException]::new("type")
     }
 
-    $this.Root = Resolve-Path -Path $root
+    $this.Root = Resolve-Path -Path $root |
+      Select-Object -ExpandProperty Path
     $this.Type = $type
   }
 
@@ -40,7 +54,7 @@ class PathCompleter : IArgumentCompleter {
     }
 
     $subpath = ''
-    $leaves = $();
+    $leaves = $()
     $completions = [List[CompletionResult]]::new()
 
     if ($word) {
@@ -102,21 +116,9 @@ class PathCompleter : IArgumentCompleter {
   }
 }
 
-class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory {
-  [string] $Root
-  [string] $Type
-
-  PathCompletionsAttribute([string] $root, [string] $type) {
-    $this.Root = $root
-    $this.Type = $type
-  }
-
-  [IArgumentCompleter] Create() { return [PathCompleter]::new($this.Root, $this.Type) }
-}
-
 $ExportableTypes = @(
-  [PathCompleter]
   [PathCompletionsAttribute]
+  [PathCompleter]
 )
 $TypeAcceleratorsClass = [PSObject].Assembly.GetType(
   'System.Management.Automation.TypeAccelerators'
