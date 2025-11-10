@@ -31,8 +31,8 @@ function Get-HelpOnline {
   }
 
   $Topic = $Name -join '_'
-  $Help = $null
-  $HelpLink = $null
+  $Help = ''
+  $HelpLink = ''
   $Articles = @()
 
   if ($CUSTOM_LINKS.Contains($Topic)) {
@@ -51,10 +51,17 @@ function Get-HelpOnline {
       ErrorAction = 'SilentlyContinue'
     }
     $Help = Get-Help -Name $Topic @Suppress
-    $HelpLink = $Help.relatedLinks.navigationLink.Uri |
-      ? { -not [string]::IsNullOrEmpty($_) } |
-      % { $_ -replace '\?.*$', '' } |
-      ? { $_ -ne '' }
+
+    if ($Help -and $Help.Count -gt 1) {
+      $Help = ''
+    }
+
+    if ($Help) {
+      $HelpLink = $Help.relatedLinks.navigationLink.Uri |
+        ? { -not [string]::IsNullOrEmpty($_) } |
+        % { $_ -replace '\?.*$', '' } |
+        ? { $_ -ne '' }
+    }
 
     if ($Help -and $Parameter) {
       $ParameterHelp = Get-Help -Name $Topic -Parameter $Parameter @Suppress
