@@ -1,7 +1,7 @@
 New-Alias e Invoke-Directory
 function Invoke-Directory {
   param(
-    [PathCompletions(".", "")]
+    [PathCompletions(".")]
     [string]$Path
   )
 
@@ -26,7 +26,7 @@ function Invoke-Directory {
 New-Alias e. Invoke-Sibling
 function Invoke-Sibling {
   param (
-    [PathCompletions("..", "")]
+    [PathCompletions("..")]
     [string]$Path
   )
 
@@ -36,7 +36,7 @@ function Invoke-Sibling {
 New-Alias e.. Invoke-Relative
 function Invoke-Relative {
   param (
-    [PathCompletions("..\..", "")]
+    [PathCompletions("..\..")]
     [string]$Path
   )
 
@@ -46,7 +46,7 @@ function Invoke-Relative {
 New-Alias e~ Invoke-Home
 function Invoke-Home {
   param (
-    [PathCompletions("~", "")]
+    [PathCompletions("~")]
     [string]$Path
   )
 
@@ -56,7 +56,7 @@ function Invoke-Home {
 New-Alias ec Invoke-Code
 function Invoke-Code {
   param (
-    [PathCompletions("~\code", "")]
+    [PathCompletions("~\code")]
     [string]$Path
   )
 
@@ -67,7 +67,7 @@ New-Alias e\ Invoke-Drive
 New-Alias e/ Invoke-Drive
 function Invoke-Drive {
   param (
-    [PathCompletions("\", "")]
+    [PathCompletions("\")]
     [string]$Path
   )
 

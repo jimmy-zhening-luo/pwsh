@@ -6,7 +6,7 @@ function Remove-Directory {
       Mandatory,
       Position = 0
     )]
-    [PathCompletions(".", "")]
+    [PathCompletions(".")]
     [string]$Path
   )
 

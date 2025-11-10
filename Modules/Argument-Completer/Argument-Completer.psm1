@@ -7,12 +7,25 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
   [string] $Root
   [string] $Type
 
-  PathCompletionsAttribute([string] $root, [string] $type) {
+  PathCompletionsAttribute([string] $root) {
+    $this.Root = $root
+    $this.Type = ""
+  }
+
+  PathCompletionsAttribute(
+    [string] $root,
+    [string] $type
+  ) {
     $this.Root = $root
     $this.Type = $type
   }
 
-  [IArgumentCompleter] Create() { return [PathCompleter]::new($this.Root, $this.Type) }
+  [IArgumentCompleter] Create() {
+    return [PathCompleter]::new(
+      $this.Root,
+      $this.Type
+    )
+  }
 }
 
 class PathCompleter : IArgumentCompleter {

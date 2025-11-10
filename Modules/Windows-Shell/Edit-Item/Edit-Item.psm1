@@ -2,7 +2,7 @@ New-Alias i Edit-Item
 function Edit-Item {
   [OutputType([void])]
   param(
-    [PathCompletions(".", "")]
+    [PathCompletions(".")]
     [string]$Path,
     [Alias("Name", "pn")]
     [string]$ProfileName,
@@ -86,7 +86,7 @@ function Edit-Item {
 New-Alias i. Edit-Sibling
 function Edit-Sibling {
   param (
-    [PathCompletions("..", "")]
+    [PathCompletions("..")]
     [string]$Path,
     [Alias("Name", "pn")]
     [string]$ProfileName,
@@ -110,7 +110,7 @@ function Edit-Sibling {
 New-Alias i.. Edit-Relative
 function Edit-Relative {
   param (
-    [PathCompletions("..\..", "")]
+    [PathCompletions("..\..")]
     [string]$Path,
     [Alias("Name", "pn")]
     [string]$ProfileName,
@@ -134,7 +134,7 @@ function Edit-Relative {
 New-Alias i~ Edit-Home
 function Edit-Home {
   param (
-    [PathCompletions("~", "")]
+    [PathCompletions("~")]
     [string]$Path,
     [Alias("Name", "pn")]
     [string]$ProfileName,
@@ -158,7 +158,7 @@ function Edit-Home {
 New-Alias ic Edit-Code
 function Edit-Code {
   param (
-    [PathCompletions("~\code", "")]
+    [PathCompletions("~\code")]
     [string]$Path,
     [Alias("Name", "pn")]
     [string]$ProfileName,
@@ -183,7 +183,7 @@ New-Alias i\ Edit-Drive
 New-Alias i/ Edit-Drive
 function Edit-Drive {
   param (
-    [PathCompletions("\", "")]
+    [PathCompletions("\")]
     [string]$Path,
     [Alias("Name", "pn")]
     [string]$ProfileName,
