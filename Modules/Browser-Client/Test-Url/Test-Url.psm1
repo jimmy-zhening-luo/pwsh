@@ -26,7 +26,6 @@ function Test-Url {
 
   try {
     $Status = (Invoke-WebRequest @Request).StatusCode
-    $Status = $Response.StatusCode
   }
   catch {
     $Status = $_.Exception.Response.StatusCode.value__
