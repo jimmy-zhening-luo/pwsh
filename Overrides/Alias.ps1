@@ -12,7 +12,6 @@ $ReadOnlyAll = @{
   )
 }
 
-New-Alias ^ Select-Object # dangerous: special character in `cmd`
 New-Alias clip Set-Clipboard @ReadOnly # default: clip.exe
 New-Alias verb Get-VerbPowerShell @ReadOnly # default: implicit Get-Verb
 New-Alias run Invoke-CommandPrompt @ReadOnlyAll # conflict: nvm/run.cmd
