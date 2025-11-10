@@ -123,16 +123,26 @@ class PathCompleter : IArgumentCompleter {
     $Local:files += $Local:leaves |
       ? { -not $_.PSIsContainer }
 
-    $Local:directories = $Local:directories |
-      Select-Object -ExpandProperty Name
-    $Local:files = $Local:files |
-      Select-Object -ExpandProperty Name
+    if ($Local:directories) {
+      $Local:directories = $Local:directories |
+        Select-Object -ExpandProperty Name
+    }
+    if ($Local:files) {
+      $Local:files = $Local:files |
+        Select-Object -ExpandProperty Name
+    }
+
+    $Local:directories += "";
 
     if ($Local:subpath) {
-      $Local:directories = $Local:directories |
-        % { Join-Path $Local:subpath $_ }
-      $Local:files = $Local:files |
-        % { Join-Path $Local:subpath $_ }
+      if ($Local:directories) {
+        $Local:directories = $Local:directories |
+          % { Join-Path $Local:subpath $_ }
+      }
+      if ($Local:files) {
+        $Local:files = $Local:files |
+          % { Join-Path $Local:subpath $_ }
+      }
     }
 
     if (-not $this.Flat) {
