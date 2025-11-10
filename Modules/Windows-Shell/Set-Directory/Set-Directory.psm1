@@ -15,6 +15,7 @@ function Set-Directory {
 }
 
 New-Alias c. Set-Sibling
+New-Alias .. Set-Relative
 function Set-Sibling {
   [OutputType([void])]
   param (
@@ -26,6 +27,7 @@ function Set-Sibling {
 }
 
 New-Alias c.. Set-Relative
+New-Alias ... Set-Relative
 function Set-Relative {
   [OutputType([void])]
   param (
