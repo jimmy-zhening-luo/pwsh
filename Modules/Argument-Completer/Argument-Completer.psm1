@@ -6,10 +6,12 @@ using namespace System.Management.Automation.Language
 class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory {
   [string] $Root
   [string] $Type
+  [bool] $Flat
 
   PathCompletionsAttribute([string] $root) {
     $this.Root = $root
     $this.Type = ""
+    $this.Flat = $false
   }
 
   PathCompletionsAttribute(
@@ -18,12 +20,24 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
   ) {
     $this.Root = $root
     $this.Type = $type
+    $this.Flat = $false
+  }
+
+  PathCompletionsAttribute(
+    [string] $root,
+    [string] $type,
+    [bool] $flat
+  ) {
+    $this.Root = $root
+    $this.Type = $type
+    $this.Flat = $flat
   }
 
   [IArgumentCompleter] Create() {
     return [PathCompleter]::new(
       $this.Root,
-      $this.Type
+      $this.Type,
+      $this.Flat
     )
   }
 }
@@ -31,6 +45,7 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
 class PathCompleter : IArgumentCompleter {
   [string] $Root
   [string] $Type
+  [bool] $Flat
 
   PathCompleter([string] $root, [string] $type) {
     if (-not $root -or -not (Test-Path -Path $root -PathType Container)) {
@@ -44,6 +59,7 @@ class PathCompleter : IArgumentCompleter {
     $this.Root = Resolve-Path -Path $root |
       Select-Object -ExpandProperty Path
     $this.Type = $type
+    $this.Flat = $flat
   }
 
   [IEnumerable[CompletionResult]] CompleteArgument(
@@ -110,8 +126,11 @@ class PathCompleter : IArgumentCompleter {
         % { Join-Path $Local:subpath $_ }
     }
 
-    $Local:directories = $Local:directories |
-      % { $_ + "\" }
+    if (-not $Flat) {
+      $Local:directories = $Local:directories |
+        % { $_ + "\" }
+    }
+
     $Local:directories = $Local:directories |
       % { $_ -replace '[\\]+', '/' }
     $Local:files = $Local:files |
