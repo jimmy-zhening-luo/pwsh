@@ -132,7 +132,9 @@ class PathCompleter : IArgumentCompleter {
         Select-Object -ExpandProperty Name
     }
 
-    $Local:directories += "";
+    if ($Local:subpath -and -not $this.Flat) {
+      $Local:directories += ""
+    }
 
     if ($Local:subpath) {
       if ($Local:directories) {
