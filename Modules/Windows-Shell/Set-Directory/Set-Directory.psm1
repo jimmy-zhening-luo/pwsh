@@ -78,7 +78,7 @@ function Set-Code {
     [string]$Path
   )
 
-  Set-Location -Path (Join-Path $CODE $Path)
+  Set-Location -Path (Join-Path ~\code $Path)
 }
 
 New-Alias c\ Set-Drive

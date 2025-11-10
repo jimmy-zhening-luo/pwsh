@@ -38,7 +38,7 @@ function Get-ChildRepository {
     Verb = "pull"
   }
 
-  $Repositories = Get-ChildItem -Path $CODE -Directory |
+  $Repositories = Get-ChildItem -Path ~\code -Directory |
     ? { Resolve-Repository -Path $_.FullName } |
     ? { -not [string]::IsNullOrEmpty($_) }
 

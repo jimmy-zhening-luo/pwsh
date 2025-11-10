@@ -165,7 +165,7 @@ function Edit-Code {
     [switch]$ReuseWindow
   )
 
-  Edit-Item @PSBoundParameters -RootPath $CODE @args
+  Edit-Item @PSBoundParameters -RootPath ~\code @args
 }
 
 New-Alias i\ Edit-Drive

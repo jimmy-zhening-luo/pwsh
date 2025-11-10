@@ -81,7 +81,7 @@ function Invoke-Code {
     [string]$Path
   )
 
-  Invoke-Directory -Path (Join-Path $CODE $Path) @args
+  Invoke-Directory -Path (Join-Path ~\code $Path) @args
 }
 
 New-Alias e\ Invoke-Drive

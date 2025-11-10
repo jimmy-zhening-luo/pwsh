@@ -2,5 +2,5 @@ function Sync-Linter {
   [OutputType([void])]
   param()
 
-  Copy-Item $PROFILE_SRC\PSScriptAnalyzerSettings.psd1 $DEV_DRIVE\PSScriptAnalyzerSettings.psd1
+  Copy-Item ~\code\pwsh\PSScriptAnalyzerSettings.psd1 ~\PSScriptAnalyzerSettings.psd1
 }

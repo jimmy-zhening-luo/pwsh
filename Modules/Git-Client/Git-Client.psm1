@@ -166,7 +166,7 @@ function Resolve-Repository {
   )
 
   function Get-CodeRelativePath([string]$Path) {
-    Join-Path $CODE ($Path -replace "^\.[\/\\]+", '')
+    Join-Path ~\code ($Path -replace "^\.[\/\\]+", '')
   }
 
   function Add-Git([string]$Path) {
@@ -199,7 +199,7 @@ function Resolve-Repository {
       }
     }
     else {
-      Select-ResolvedPath $CODE
+      Select-ResolvedPath ~\code
     }
   }
   else {

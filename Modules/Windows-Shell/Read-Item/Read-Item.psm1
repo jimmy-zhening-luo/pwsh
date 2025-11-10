@@ -127,7 +127,7 @@ function Read-Code {
     [string]$Path
   )
 
-  Read-Item @PSBoundParameters -RootPath $CODE @args
+  Read-Item @PSBoundParameters -RootPath ~\code @args
 }
 
 New-Alias p\ Read-Drive

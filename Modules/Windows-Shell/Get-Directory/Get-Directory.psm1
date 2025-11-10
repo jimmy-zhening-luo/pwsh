@@ -86,7 +86,7 @@ function Get-Code {
     [string]$Path
   )
 
-  Get-ChildItem -Path (Join-Path $CODE $Path) @args
+  Get-ChildItem -Path (Join-Path ~\code $Path) @args
 }
 
 New-Alias l\ Get-Drive
