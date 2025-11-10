@@ -23,7 +23,7 @@ function Invoke-Repository {
   param(
     [string]$Path,
     [string]$Verb,
-    [Alias("Stop", "es")]
+    [Alias("Stop")]
     [switch]$ErrorStop
   )
 

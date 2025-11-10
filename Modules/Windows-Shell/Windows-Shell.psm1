@@ -3,7 +3,6 @@ using namespace System.Collections.Generic
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
 
-
 class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory {
   [string] $Root
   [string] $Type

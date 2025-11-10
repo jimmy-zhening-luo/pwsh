@@ -12,7 +12,7 @@ function Resolve-NodeProject {
   else { '' }
 }
 
-class Repository : System.Management.Automation.IValidateSetValuesGenerator {
+class NodeProject : System.Management.Automation.IValidateSetValuesGenerator {
   [string[]] GetValidValues() {
     return [string[]] (
       Get-ChildItem -Path $Script:CODE -Directory |
@@ -22,7 +22,7 @@ class Repository : System.Management.Automation.IValidateSetValuesGenerator {
 }
 
 $ExportableTypes = @(
-  [Repository]
+  [NodeProject]
 )
 $TypeAcceleratorsClass = [PSObject].Assembly.GetType(
   'System.Management.Automation.TypeAccelerators'
