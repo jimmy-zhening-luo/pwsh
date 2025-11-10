@@ -126,7 +126,7 @@ class PathCompleter : IArgumentCompleter {
         % { Join-Path $Local:subpath $_ }
     }
 
-    if (-not $Flat) {
+    if (-not $this.Flat) {
       $Local:directories = $Local:directories |
         % { $_ + "\" }
     }
