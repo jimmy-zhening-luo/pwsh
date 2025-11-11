@@ -1,24 +1,24 @@
 @{
-  RootModule        = ".\Node-PackageManager.psm1"
-  ModuleVersion     = "1.0.0.0"
-  GUID              = "7e838ead-1871-47f2-a845-3ce3725b7781"
+  RootModule        = '.\Node-PackageManager.psm1'
+  ModuleVersion     = '1.0.0.0'
+  GUID              = '7e838ead-1871-47f2-a845-3ce3725b7781'
   RequiredModules   = @(
-    "Argument-Completer"
+    'Argument-Completer'
   )
   NestedModules     = @(
-    ".\Clear-PackageCache"
-    ".\Compare-Package"
-    ".\Invoke-Script"
+    '.\Clear-PackageCache'
+    '.\Compare-Package'
+    '.\Invoke-Script'
   )
   FunctionsToExport = @(
-    "Resolve-NodeProject"
-    "Clear-PackageCache"
-    "Compare-Package"
-    "Invoke-Script"
+    'Resolve-NodeProject'
+    'Clear-PackageCache'
+    'Compare-Package'
+    'Invoke-Script'
   )
   AliasesToExport   = @(
-    "npc"
-    "npo"
-    "nr"
+    'npc'
+    'npo'
+    'nr'
   )
 }
