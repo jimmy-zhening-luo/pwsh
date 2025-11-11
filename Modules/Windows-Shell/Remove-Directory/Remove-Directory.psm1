@@ -6,14 +6,14 @@ function Remove-Directory {
       Mandatory,
       Position = 0
     )]
-    [PathCompletions(".")]
+    [PathCompletions('.')]
     [string]$Path
   )
 
   if (
     $PSCmdlet.ShouldProcess(
       $Path,
-      "Remove-Item -Recurse -Force"
+      'Remove-Item -Recurse -Force'
     )
   ) {
     Remove-Item -Path $Path -Recurse -Force

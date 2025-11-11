@@ -4,16 +4,16 @@ function Stop-Task {
   [OutputType([void], [System.Diagnostics.Process[]])]
   [CmdletBinding(
     SupportsShouldProcess,
-    DefaultParameterSetName = "Name"
+    DefaultParameterSetName = 'Name'
   )]
   param(
     [Parameter(
-      ParameterSetName = "Name",
+      ParameterSetName = 'Name',
       Position = 0
     )]
-    [string]$Name = "explorer",
+    [string]$Name = 'explorer',
     [Parameter(
-      ParameterSetName = "Id",
+      ParameterSetName = 'Id',
       Mandatory,
       Position = 0
     )]
@@ -23,14 +23,14 @@ function Stop-Task {
   if (
     $PSCmdlet.ShouldProcess(
       "Name:$Name or Id:$Id",
-      "Stop-Process"
+      'Stop-Process'
     )
   ) {
     switch ($PSCmdlet.ParameterSetName) {
-      "Name" {
+      'Name' {
         Stop-Process -Name $Name -Force
       }
-      "Id" {
+      'Id' {
         Stop-Process -Id $Id -Force
       }
     }

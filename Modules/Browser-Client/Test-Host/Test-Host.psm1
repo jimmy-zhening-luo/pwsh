@@ -6,11 +6,11 @@ function Test-Host {
       Mandatory,
       Position = 0
     )]
-    [Alias("ComputerName", "RemoteAddress", "cn")]
+    [Alias('ComputerName', 'RemoteAddress', 'cn')]
     [Parameter(Position = 1)]
     [string]$HostName,
     [Parameter(Position = 2)]
-    [Alias("RemotePort", "p")]
+    [Alias('RemotePort', 'p')]
     [uint16]$Port
   )
 

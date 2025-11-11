@@ -20,7 +20,7 @@ Get-Verb
 #>
 function Get-VerbPowerShell {
   [OutputType([string[]])]
-  param([string]$Verb = "*")
+  param([string]$Verb = '*')
 
   Get-Verb -Verb (
     $Verb.Contains('*') ? $Verb : (

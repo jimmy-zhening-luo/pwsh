@@ -9,7 +9,7 @@ https://docs.npmjs.com/cli/commands/npm-outdated
 #>
 function Compare-Package {
   param(
-    [PathCompletions("~\code", "Directory", $true)]
+    [PathCompletions('~\code', 'Directory', $true)]
     [string]$Path
   )
 

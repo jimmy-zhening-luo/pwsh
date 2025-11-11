@@ -5,7 +5,7 @@ function Get-Directory {
     [System.IO.FileInfo[]])
   ]
   param (
-    [PathCompletions(".", "Directory")]
+    [PathCompletions('.', 'Directory')]
     [string]$Path
   )
 
@@ -24,7 +24,7 @@ function Get-Sibling {
     [System.IO.FileInfo[]])
   ]
   param (
-    [PathCompletions("..", "Directory")]
+    [PathCompletions('..', 'Directory')]
     [string]$Path
   )
 
@@ -38,7 +38,7 @@ function Get-Relative {
     [System.IO.FileInfo[]])
   ]
   param (
-    [PathCompletions("..\..", "Directory")]
+    [PathCompletions('..\..', 'Directory')]
     [string]$Path
   )
 
@@ -52,21 +52,21 @@ function Get-Home {
     [System.IO.FileInfo[]])
   ]
   param (
-    [PathCompletions("~", "Directory")]
+    [PathCompletions('~', 'Directory')]
     [string]$Path
   )
 
-  Get-ChildItem -Path (Join-Path "~" $Path) @args
+  Get-ChildItem -Path (Join-Path '~' $Path) @args
 }
 
 New-Alias lc Get-Code
 function Get-Code {
   param (
-    [PathCompletions("~\code", "Directory")]
+    [PathCompletions('~\code', 'Directory')]
     [string]$Path
   )
 
-  Get-ChildItem -Path (Join-Path "~\code" $Path) @args
+  Get-ChildItem -Path (Join-Path '~\code' $Path) @args
 }
 
 New-Alias l\ Get-Drive
@@ -77,9 +77,9 @@ function Get-Drive {
     [System.IO.FileInfo[]])
   ]
   param (
-    [PathCompletions("\", "Directory")]
+    [PathCompletions('\', 'Directory')]
     [string]$Path
   )
 
-  Get-ChildItem -Path (Join-Path "\" $Path) @args
+  Get-ChildItem -Path (Join-Path '\' $Path) @args
 }

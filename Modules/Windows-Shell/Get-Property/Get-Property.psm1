@@ -11,13 +11,13 @@ function Get-FileSize {
       ValueFromPipeline,
       Position = 0
     )]
-    [PathCompletions(".")]
+    [PathCompletions('.')]
     [string]$Path,
     [ArgumentCompletions(
-      "B",
-      "KB",
-      "MB",
-      "GB"
+      'B',
+      'KB',
+      'MB',
+      'GB'
     )]
     [string]$Unit
   )
@@ -32,8 +32,8 @@ function Get-FileSize {
       M  = 1MB
       G  = 1GB
     }
-    $DEFAULT_UNIT = "KB"
-    $DEFAULT_PATH = ".\"
+    $DEFAULT_UNIT = 'KB'
+    $DEFAULT_PATH = '.\'
 
     if ($Path) {
       if ($Unit) {

@@ -1,8 +1,8 @@
 function Resolve-NodeProject {
   [OutputType([string])]
-  param([string]$Path = ".")
+  param([string]$Path = '.')
 
-  $PKG = "package.json"
+  $PKG = 'package.json'
   $PkgPath = (Join-Path $Path $PKG)
 
   if (Test-Path $PkgPath -PathType Leaf) {

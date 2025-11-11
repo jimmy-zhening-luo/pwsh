@@ -12,7 +12,7 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
     [string] $root
   ) {
     $this.Root = $root
-    $this.Type = ""
+    $this.Type = ''
     $this.Flat = $false
   }
 
@@ -55,11 +55,11 @@ class PathCompleter : IArgumentCompleter {
     [bool] $flat
   ) {
     if (-not $root -or -not (Test-Path -Path $root -PathType Container)) {
-      throw [ArgumentException]::new("root")
+      throw [ArgumentException]::new('root')
     }
 
     if ($type -and -not ($type -eq 'File' -or $type -eq 'Directory')) {
-      throw [ArgumentException]::new("type")
+      throw [ArgumentException]::new('type')
     }
 
     $this.Root = Resolve-Path -Path $root |
@@ -107,7 +107,7 @@ class PathCompleter : IArgumentCompleter {
 
       if (Test-Path -Path $Local:path -PathType Container) {
         $Local:query.Path = $Local:path
-        $Local:query["Filter"] = "$Local:fragment*"
+        $Local:query['Filter'] = "$Local:fragment*"
         $Local:leaves = Get-ChildItem @Local:query
       }
     }
@@ -125,7 +125,7 @@ class PathCompleter : IArgumentCompleter {
       Select-Object -ExpandProperty Name
 
     if ($Local:subpath -and -not $this.Flat) {
-      $Local:directories += ""
+      $Local:directories += ''
     }
 
     if ($Local:subpath) {
@@ -137,7 +137,7 @@ class PathCompleter : IArgumentCompleter {
 
     if (-not $this.Flat) {
       $Local:directories = $Local:directories |
-        % { $_ + "\" }
+        % { $_ + '\' }
     }
 
     $Local:directories = $Local:directories |

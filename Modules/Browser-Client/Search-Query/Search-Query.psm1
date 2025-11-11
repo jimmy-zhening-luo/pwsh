@@ -26,10 +26,10 @@ function Search-Query {
 
   $QueryString = Expand-Query -Terms $Terms
   $QueryUri = [System.UriBuilder]::new(
-    "https",
-    "www.google.com",
+    'https',
+    'www.google.com',
     -1,
-    "/search",
+    '/search',
     "?q=$QueryString"
   ).Uri
 
@@ -51,8 +51,8 @@ function Search-Map {
 
   $QueryString = Expand-Query -Terms $Terms
   $QueryUri = [System.UriBuilder]::new(
-    "https",
-    "www.google.com",
+    'https',
+    'www.google.com',
     -1,
     "/maps/search/$QueryString/"
   ).Uri

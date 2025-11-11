@@ -10,7 +10,7 @@ https://docs.npmjs.com/cli/commands/npm-outdated
 function Invoke-Script {
   param(
     [string]$Script,
-    [PathCompletions("~\code", "Directory", $true)]
+    [PathCompletions('~\code', 'Directory', $true)]
     [string]$Path
   )
 

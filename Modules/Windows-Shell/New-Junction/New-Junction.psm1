@@ -16,7 +16,7 @@ function New-Junction {
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
-    [Alias("Target")]
+    [Alias('Target')]
     [Object]${Value}
   )
   begin {
@@ -46,8 +46,8 @@ function New-Junction {
   end {
     if (
       $PSCmdlet.ShouldProcess(
-        "Transaction",
-        "Close"
+        'Transaction',
+        'Close'
       )
     ) {
       $steppablePipeline.End()

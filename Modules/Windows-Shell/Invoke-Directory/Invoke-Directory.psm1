@@ -1,7 +1,7 @@
 New-Alias e Invoke-Directory
 function Invoke-Directory {
   param(
-    [PathCompletions(".")]
+    [PathCompletions('.')]
     [string]$Path
   )
 
@@ -18,7 +18,7 @@ function Invoke-Directory {
       }
     }
     else {
-      Invoke-Item -Path "."
+      Invoke-Item -Path '.'
     }
   }
 }
@@ -26,7 +26,7 @@ function Invoke-Directory {
 New-Alias e. Invoke-Sibling
 function Invoke-Sibling {
   param (
-    [PathCompletions("..")]
+    [PathCompletions('..')]
     [string]$Path
   )
 
@@ -36,7 +36,7 @@ function Invoke-Sibling {
 New-Alias e.. Invoke-Relative
 function Invoke-Relative {
   param (
-    [PathCompletions("..\..")]
+    [PathCompletions('..\..')]
     [string]$Path
   )
 
@@ -46,30 +46,30 @@ function Invoke-Relative {
 New-Alias e~ Invoke-Home
 function Invoke-Home {
   param (
-    [PathCompletions("~")]
+    [PathCompletions('~')]
     [string]$Path
   )
 
-  Invoke-Directory -Path (Join-Path "~" $Path)
+  Invoke-Directory -Path (Join-Path '~' $Path)
 }
 
 New-Alias ec Invoke-Code
 function Invoke-Code {
   param (
-    [PathCompletions("~\code")]
+    [PathCompletions('~\code')]
     [string]$Path
   )
 
-  Invoke-Directory -Path (Join-Path "~\code" $Path)
+  Invoke-Directory -Path (Join-Path '~\code' $Path)
 }
 
 New-Alias e\ Invoke-Drive
 New-Alias e/ Invoke-Drive
 function Invoke-Drive {
   param (
-    [PathCompletions("\")]
+    [PathCompletions('\')]
     [string]$Path
   )
 
-  Invoke-Directory -Path (Join-Path "\" $Path)
+  Invoke-Directory -Path (Join-Path '\' $Path)
 }

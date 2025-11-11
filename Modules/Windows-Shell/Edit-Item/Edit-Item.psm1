@@ -2,12 +2,12 @@ New-Alias i Edit-Item
 function Edit-Item {
   [OutputType([void])]
   param(
-    [PathCompletions(".")]
+    [PathCompletions('.')]
     [string]$Path,
-    [Alias("Name", "pn")]
+    [Alias('Name', 'pn')]
     [string]$ProfileName,
     [switch]$CreateWindow,
-    [Alias("rw")]
+    [Alias('rw')]
     [switch]$ReuseWindow,
     [string]$RootPath
   )
@@ -34,11 +34,11 @@ function Edit-Item {
       ) + $ArgumentList
     }
     else {
-      if (-not $Path.StartsWith("-")) {
+      if (-not $Path.StartsWith('-')) {
         throw "Path '$FullPath' does not exist."
       }
 
-      $FullPath = ($RootPath ? ($RootPath) : ".")
+      $FullPath = ($RootPath ? ($RootPath) : '.')
       $ArgumentList = $FullPath, $Path + $ArgumentList
     }
   }
@@ -58,20 +58,20 @@ function Edit-Item {
   }
   else {
     if ($ProfileName) {
-      if (-not $ProfileName.StartsWith("-")) {
+      if (-not $ProfileName.StartsWith('-')) {
         $CreateWindow = $true
 
-        $ArgumentList += "--profile"
+        $ArgumentList += '--profile'
       }
 
       $ArgumentList += $ProfileName
     }
 
     if ($CreateWindow) {
-      $ArgumentList += "--new-window"
+      $ArgumentList += '--new-window'
     }
     elseif ($ReuseWindow) {
-          $ArgumentList += "--reuse-window"
+          $ArgumentList += '--reuse-window'
     }
 
     if ($ArgumentList) {
@@ -86,13 +86,13 @@ function Edit-Item {
 New-Alias i. Edit-Sibling
 function Edit-Sibling {
   param (
-    [PathCompletions("..")]
+    [PathCompletions('..')]
     [string]$Path,
-    [Alias("Name", "pn")]
+    [Alias('Name', 'pn')]
     [string]$ProfileName,
-    [Alias("Window")]
+    [Alias('Window')]
     [switch]$CreateWindow,
-    [Alias("rw")]
+    [Alias('rw')]
     [switch]$ReuseWindow
   )
 
@@ -101,7 +101,7 @@ function Edit-Sibling {
     ProfileName = $ProfileName
     CreateWindow= $CreateWindow
     ReuseWindow = $ReuseWindow
-    RootPath = ".."
+    RootPath = '..'
   }
 
   Edit-Item @Splat
@@ -110,13 +110,13 @@ function Edit-Sibling {
 New-Alias i.. Edit-Relative
 function Edit-Relative {
   param (
-    [PathCompletions("..\..")]
+    [PathCompletions('..\..')]
     [string]$Path,
-    [Alias("Name", "pn")]
+    [Alias('Name', 'pn')]
     [string]$ProfileName,
-    [Alias("Window")]
+    [Alias('Window')]
     [switch]$CreateWindow,
-    [Alias("rw")]
+    [Alias('rw')]
     [switch]$ReuseWindow
   )
 
@@ -125,7 +125,7 @@ function Edit-Relative {
     ProfileName = $ProfileName
     CreateWindow= $CreateWindow
     ReuseWindow = $ReuseWindow
-    RootPath = "..\.."
+    RootPath = '..\..'
   }
 
   Edit-Item @Splat
@@ -134,13 +134,13 @@ function Edit-Relative {
 New-Alias i~ Edit-Home
 function Edit-Home {
   param (
-    [PathCompletions("~")]
+    [PathCompletions('~')]
     [string]$Path,
-    [Alias("Name", "pn")]
+    [Alias('Name', 'pn')]
     [string]$ProfileName,
-    [Alias("Window")]
+    [Alias('Window')]
     [switch]$CreateWindow,
-    [Alias("rw")]
+    [Alias('rw')]
     [switch]$ReuseWindow
   )
 
@@ -158,13 +158,13 @@ function Edit-Home {
 New-Alias ic Edit-Code
 function Edit-Code {
   param (
-    [PathCompletions("~\code")]
+    [PathCompletions('~\code')]
     [string]$Path,
-    [Alias("Name", "pn")]
+    [Alias('Name', 'pn')]
     [string]$ProfileName,
-    [Alias("Window")]
+    [Alias('Window')]
     [switch]$CreateWindow,
-    [Alias("rw")]
+    [Alias('rw')]
     [switch]$ReuseWindow
   )
 
@@ -183,13 +183,13 @@ New-Alias i\ Edit-Drive
 New-Alias i/ Edit-Drive
 function Edit-Drive {
   param (
-    [PathCompletions("\")]
+    [PathCompletions('\')]
     [string]$Path,
-    [Alias("Name", "pn")]
+    [Alias('Name', 'pn')]
     [string]$ProfileName,
-    [Alias("Window")]
+    [Alias('Window')]
     [switch]$CreateWindow,
-    [Alias("rw")]
+    [Alias('rw')]
     [switch]$ReuseWindow
   )
 

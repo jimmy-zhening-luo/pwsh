@@ -1,7 +1,7 @@
 New-Alias p Read-Item
 function Read-Item {
   param(
-    [PathCompletions(".")]
+    [PathCompletions('.')]
     [string]$Path,
     [string]$RootPath
   )
@@ -62,51 +62,51 @@ function Read-Item {
 New-Alias p. Read-Sibling
 function Read-Sibling {
   param (
-    [PathCompletions("..")]
+    [PathCompletions('..')]
     [string]$Path
   )
 
-  Read-Item -Path $Path -RootPath ".."
+  Read-Item -Path $Path -RootPath '..'
 }
 
 New-Alias p.. Read-Relative
 function Read-Relative {
   param (
-    [PathCompletions("..\..")]
+    [PathCompletions('..\..')]
     [string]$Path
   )
 
-  Read-Item -Path $Path -RootPath "..\.."
+  Read-Item -Path $Path -RootPath '..\..'
 }
 
 New-Alias p~ Read-Home
 function Read-Home {
   param (
-    [PathCompletions("~")]
+    [PathCompletions('~')]
     [string]$Path
   )
 
-  Read-Item -Path $Path -RootPath "~"
+  Read-Item -Path $Path -RootPath '~'
 }
 
 New-Alias pc Read-Code
 function Read-Code {
   [OutputType([void])]
   param (
-    [PathCompletions("~\code")]
+    [PathCompletions('~\code')]
     [string]$Path
   )
 
-  Read-Item -Path $Path -RootPath "~\code"
+  Read-Item -Path $Path -RootPath '~\code'
 }
 
 New-Alias p\ Read-Drive
 New-Alias p/ Read-Drive
 function Read-Drive {
   param (
-    [PathCompletions("\")]
+    [PathCompletions('\')]
       [string]$Path
   )
 
-  Read-Item -Path $Path -RootPath "\"
+  Read-Item -Path $Path -RootPath '\'
 }

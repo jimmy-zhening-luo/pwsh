@@ -19,7 +19,7 @@ function Get-YouTube {
       $Rest = $args[1..$args.Count]
     }
     else {
-      throw Write-Error "No video specified."
+      throw Write-Error 'No video specified.'
     }
   }
 
@@ -45,7 +45,7 @@ https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#video-format-options
 function Get-YouTubeAudio {
   param([string]$Video)
 
-  Get-YouTube -Video $Video @args --format "bestaudio" --extract-audio --audio-format "mp3" --audio-quality 0 --audio-quality 0 --postprocessor-args "-ar 44100"
+  Get-YouTube -Video $Video @args --format 'bestaudio' --extract-audio --audio-format 'mp3' --audio-quality 0 --audio-quality 0 --postprocessor-args '-ar 44100'
 }
 
 New-Alias ytf Get-YouTubeFormat
@@ -60,5 +60,5 @@ https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#video-format-options
 function Get-YouTubeFormat {
   param([string]$Video)
 
-  Get-YouTube -Video $Video @args "-F"
+  Get-YouTube -Video $Video @args '-F'
 }

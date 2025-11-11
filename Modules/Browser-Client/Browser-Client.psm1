@@ -2,15 +2,15 @@ New-Alias open Open-Url
 New-Alias go Open-Url
 function Open-Url {
   [OutputType([void])]
-  [CmdletBinding(DefaultParameterSetName = "Path")]
+  [CmdletBinding(DefaultParameterSetName = 'Path')]
   param(
     [Parameter(
-      ParameterSetName = "Path",
+      ParameterSetName = 'Path',
       Position = 0
     )]
-    [string]$Path = ".",
+    [string]$Path = '.',
     [Parameter(
-      ParameterSetName = "Uri",
+      ParameterSetName = 'Uri',
       Position = 0,
       Mandatory
     )]
@@ -19,7 +19,7 @@ function Open-Url {
 
   $Argument = (
     (
-      $PSCmdlet.ParameterSetName -eq "Uri"
+      $PSCmdlet.ParameterSetName -eq 'Uri'
     ) ? (
       $Uri
     ) : (
@@ -35,7 +35,7 @@ function Open-Url {
   )
 
   $Browser = @{
-    FilePath     = "C:\Program Files\Google\Chrome\Application\chrome.exe"
+    FilePath     = 'C:\Program Files\Google\Chrome\Application\chrome.exe'
     ArgumentList = $Argument
   }
 
@@ -62,12 +62,12 @@ function Test-Url {
 
   $Request = @{
     Uri                          = $Uri
-    Method                       = "HEAD"
+    Method                       = 'HEAD'
     PreserveHttpMethodOnRedirect = $true
     DisableKeepAlive             = $true
     ConnectionTimeoutSeconds     = 1
     MaximumRetryCount            = 0
-    ErrorAction                  = "Stop"
+    ErrorAction                  = 'Stop'
   }
 
   try {

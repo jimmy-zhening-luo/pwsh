@@ -8,7 +8,7 @@ function Format-Count {
   )
 
   if (-not $Noun) {
-    throw "Noun parameter is required."
+    throw 'Noun parameter is required.'
   }
 
   if ($Noun -as [int]) {
@@ -17,15 +17,15 @@ function Format-Count {
     }
     else {
       $Count = , $Noun
-      $Noun = "item"
+      $Noun = 'item'
     }
   }
 
   if ($Noun -as [int]) {
-    throw "Noun parameter must be a string representing a noun."
+    throw 'Noun parameter must be a string representing a noun.'
   }
 
-  $Nouns = $Noun.Contains("/") ? $Noun.Split("/", 2) : @(
+  $Nouns = $Noun.Contains('/') ? $Noun.Split('/', 2) : @(
     $Noun,
     "$($Noun)s"
   )

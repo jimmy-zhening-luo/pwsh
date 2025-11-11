@@ -14,10 +14,10 @@ function Edit-Path {
   }
 
   $ControlPanel = @{
-    FilePath     = "rundll32"
+    FilePath     = 'rundll32'
     ArgumentList = @(
-      "sysdm.cpl"
-      "EditEnvironmentVariables"
+      'sysdm.cpl'
+      'EditEnvironmentVariables'
     )
   }
 
