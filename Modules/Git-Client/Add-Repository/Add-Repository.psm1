@@ -25,8 +25,9 @@ function Add-Repository {
   $GitArguments = $()
   $GitArguments += $args
 
-  if ('.' -notin $args)
+  if ('.' -notin $args) {
     $GitArguments = , "." + $GitArguments
+  }
 
   $RenormalizeFlag = "--renormalize"
 
