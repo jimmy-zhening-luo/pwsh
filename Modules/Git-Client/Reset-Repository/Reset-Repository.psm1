@@ -17,52 +17,49 @@ function Reset-Repository {
 
   if (
     $Path -and -not $Tree -and (
-      (
-        $Path -eq '~'
-      ) -or (
-        -not (Resolve-Repository -Path $Path)
+      $Path -eq '~' -or -not (
+        Resolve-Repository -Path $Path
       )
     )
   ) {
-    $Tree = $Path
-    $Path = ''
+    $Path, $Tree = '', $Path
   }
 
   if ($Tree) {
     if ($Tree -as [uint32]) {
       $Tree = "HEAD~$($Tree -as [uint32])"
     }
-    elseif ($Tree.StartsWith("~")) {
-      if ($Tree -eq "~") {
-        $Tree = "HEAD~"
+    elseif ($Tree.StartsWith('~')) {
+      if ($Tree -eq '~') {
+        $Tree = 'HEAD~'
       }
       elseif ($Tree.Substring(1) -as [uint32]) {
         $Tree = "HEAD~$($Tree.Substring(1) -as [uint32])"
       }
     }
-    elseif ($Tree.StartsWith("^")) {
-      if ($Tree -eq "^") {
-        $Tree = "HEAD^"
+    elseif ($Tree.StartsWith('^')) {
+      if ($Tree -eq '^') {
+        $Tree = 'HEAD^'
       }
       elseif ($Tree.Substring(1) -as [uint32]) {
         $Tree = "HEAD^$($Tree.Substring(1) -as [uint32])"
       }
     }
-    elseif ($Tree.ToUpperInvariant().StartsWith("HEAD")) {
+    elseif ($Tree.ToUpperInvariant().StartsWith('HEAD')) {
       if ($Tree.Length -eq 4) {
-        $Tree = ""
+        $Tree = ''
       }
-      elseif ($Tree[4] -eq "~") {
+      elseif ($Tree[4] -eq '~') {
         if ($Tree.Length -eq 5) {
-          $Tree = "HEAD~"
+          $Tree = 'HEAD~'
         }
         elseif ($Tree.Substring(5) -as [uint32]) {
           $Tree = "HEAD~$($Tree.Substring(5) -as [uint32])"
         }
       }
-      elseif ($Tree[4] -eq "^") {
+      elseif ($Tree[4] -eq '^') {
         if ($Tree.Length -eq 5) {
-          $Tree = "HEAD^"
+          $Tree = 'HEAD^'
         }
         elseif ($Tree.Substring(5) -as [uint32]) {
           $Tree = "HEAD^$($Tree.Substring(5) -as [uint32])"
@@ -80,16 +77,18 @@ function Reset-Repository {
   }
   $Reset = @{
     Path      = $Path
-    Verb      = "reset"
+    Verb      = 'reset'
     StopError = $StopError
   }
-  $GitArguments = , "--hard"
+  $ResetArguments = , '--hard'
 
   if ($Tree) {
-    $GitArguments += $Tree
+    $ResetArguments += $Tree
   }
 
-  (Add-Repository @Add) && (Invoke-Repository @Reset $GitArguments @args)
+  $ResetArguments += $args
+
+  (Add-Repository @Add) && (Invoke-Repository @Reset @ResetArguments)
 }
 
 New-Alias gitrp Restore-Repository
@@ -119,5 +118,5 @@ function Restore-Repository {
     StopError = $StopError
   }
 
-  (Reset-Repository @Reset) && (Get-Repository @Pull)
+  (Reset-Repository @Reset @args) && (Get-Repository @Pull)
 }

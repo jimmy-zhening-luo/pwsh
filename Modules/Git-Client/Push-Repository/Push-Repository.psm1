@@ -16,7 +16,7 @@ function Push-Repository {
 
   $Push = @{
     Path      = $Path
-    Verb      = "push"
+    Verb      = 'push'
     StopError = $StopError
   }
 

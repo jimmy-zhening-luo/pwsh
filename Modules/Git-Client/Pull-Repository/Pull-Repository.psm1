@@ -16,7 +16,7 @@ function Get-Repository {
 
   $Pull = @{
     Path      = $Path
-    Verb      = "pull"
+    Verb      = 'pull'
     StopError = $StopError
   }
 
@@ -34,15 +34,14 @@ https://git-scm.com/docs/git-pull
 #>
 function Get-ChildRepository {
   $Pull = @{
-    Verb = "pull"
+    Verb = 'pull'
   }
-
-  $Repositories = Get-ChildItem -Path "~\code" -Directory |
+  $Repositories = Get-ChildItem -Path '~\code' -Directory |
     ? { Resolve-Repository -Path $_.FullName } |
     ? { -not [string]::IsNullOrEmpty($_) }
 
   $Repositories |
     % { Invoke-Repository -Path $_.FullName @Pull @args }
 
-  Write-Output "`nPulled $(Format-Count repository/repositories $Repositories.Count)."
+  "`nPulled $(Format-Count repository/repositories $Repositories.Count)."
 }

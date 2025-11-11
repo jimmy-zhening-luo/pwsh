@@ -1,21 +1,8 @@
 $GIT_VERB =
 Import-PowerShellDataFile (
-  Join-Path $PSScriptRoot "Git-Verb.psd1" -Resolve
+  Join-Path $PSScriptRoot 'Git-Verb.psd1' -Resolve
 ) -ErrorAction Stop |
   Select-Object -ExpandProperty GIT_VERB
-$GitVerbArgumentCompleter = {
-  param (
-    $commandName,
-    $parameterName,
-    $wordToComplete,
-    $commandAst,
-    $fakeBoundParameters
-  )
-
-  $GIT_VERB |
-    ? { $_ -like "$wordToComplete*" }
-}
-Register-ArgumentCompleter -CommandName Invoke-Repository -ParameterName Verb -ScriptBlock $GitVerbArgumentCompleter
 
 New-Alias gitc Invoke-Repository
 New-Alias gg Invoke-Repository
@@ -144,7 +131,7 @@ function Invoke-Repository {
   if ($StopError) {
     $GitOutput = & git $GitArguments @args 2>&1
 
-    if (($GitOutput -as [string]).StartsWith("fatal:")) {
+    if (($GitOutput -as [string]).StartsWith('fatal:')) {
       throw $GitOutput
     }
     else {
@@ -160,12 +147,12 @@ function Resolve-Repository {
   [OutputType([string])]
   param(
     [string]$Path,
-    [Alias("Clone")]
+    [Alias('Clone')]
     [switch]$Initialize
   )
 
   function Get-CodeRelativePath([string]$Path) {
-    Join-Path "~\code" ($Path -replace "^\.[\/\\]+", '')
+    Join-Path '~\code' ($Path -replace '^\.[\/\\]+', '')
   }
 
   function Add-Git([string]$Path) {
@@ -198,7 +185,7 @@ function Resolve-Repository {
       }
     }
     else {
-      Select-ResolvedPath "~\code"
+      Select-ResolvedPath '~\code'
     }
   }
   else {

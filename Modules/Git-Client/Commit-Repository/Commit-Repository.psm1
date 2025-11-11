@@ -77,7 +77,6 @@ function Write-Repository {
     Verb      = 'commit'
     StopError = $StopError
   }
-
   $MessageString = $Messages -join ' '
 
   (

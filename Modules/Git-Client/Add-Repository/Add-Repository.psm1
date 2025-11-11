@@ -22,7 +22,7 @@ function Add-Repository {
     StopError = $StopError
   }
 
-  $GitArguments = $()
+  $GitArguments = @()
   $GitArguments += $args
 
   if ('.' -notin $args) {

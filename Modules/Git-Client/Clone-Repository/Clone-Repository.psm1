@@ -29,7 +29,6 @@ function Import-Repository {
   }
 
   $Scheme = $ForceSsh ? 'git@github.com:' : 'https://github.com/'
-
   $GitArguments = , ($Scheme + ($RepositoryPath -join '/'))
 
   if ($Path -and $Path.StartsWith('-')) {
