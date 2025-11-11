@@ -1,0 +1,66 @@
+function Expand-Query {
+  param([string[]]$Terms)
+
+  $Terms += $args
+  $Tokens = @()
+
+  foreach ($Term in $Terms) {
+    $Tokens += (
+      $Term -split '\s+' |
+        ? { -not [string]::IsNullOrWhiteSpace($_) } |
+        % { [System.Net.WebUtility]::UrlEncode($_) }
+    )
+  }
+
+  return $Tokens -join '+'
+}
+
+
+New-Alias search Search-Query
+New-Alias g Search-Query
+
+function Search-Query {
+  [OutputType([void], [string])]
+  param([string[]]$Terms)
+  $Terms += $args
+
+  $QueryString = Expand-Query -Terms $Terms
+  $QueryUri = [System.UriBuilder]::new(
+    "https",
+    "www.google.com",
+    -1,
+    "/search",
+    "?q=$QueryString"
+  ).Uri
+
+  if ($env:SSH_CLIENT) {
+    $QueryUri.AbsoluteUri
+  }
+  else {
+    Open-Url -Uri $QueryUri
+  }
+}
+
+New-Alias maps Search-Map
+New-Alias map Search-Map
+
+function Search-Map {
+  [OutputType([void], [string])]
+  param([string[]]$Terms)
+  $Terms += $args
+
+  $QueryString = Expand-Query -Terms $Terms
+  $QueryUri = [System.UriBuilder]::new(
+    "https",
+    "www.google.com",
+    -1,
+    "/maps/search/$QueryString/"
+  ).Uri
+
+  if ($env:SSH_CLIENT) {
+    $QueryUri.AbsoluteUri
+  }
+  else {
+    Open-Url -Uri $QueryUri
+  }
+}
