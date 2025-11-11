@@ -11,14 +11,14 @@ https://git-scm.com/docs/git-add
 function Add-Repository {
   param(
     [string]$Path,
-    [Alias("r")]
+    [Alias('r')]
     [switch]$Renormalize,
     [switch]$StopError
   )
 
   $Add = @{
     Path      = $Path
-    Verb      = "add"
+    Verb      = 'add'
     StopError = $StopError
   }
 
@@ -26,13 +26,13 @@ function Add-Repository {
   $GitArguments += $args
 
   if ('.' -notin $args) {
-    $GitArguments = , "." + $GitArguments
+    $GitArguments = , '.' + $GitArguments
   }
 
-  $RenormalizeFlag = "--renormalize"
+  $RenormalizeFlag = '--renormalize'
 
   if ($Renormalize -and $RenormalizeFlag -notin $GitArguments) {
-    $GitArguments += "--renormalize"
+    $GitArguments += '--renormalize'
   }
 
   Invoke-Repository @Add @GitArguments
