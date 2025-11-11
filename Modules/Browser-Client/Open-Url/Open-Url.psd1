@@ -7,6 +7,6 @@
   )
   AliasesToExport   = @(
     "open"
-    "o"
+    "go"
   )
 }
