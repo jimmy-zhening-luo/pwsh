@@ -46,15 +46,15 @@ function Write-Repository {
     }
   }
 
-  $AllowEmptyFull = '--allow-empty'
+  $AllowEmptyFlag = '--allow-empty'
 
   if ($AllowEmpty) {
-    if ($AllowEmptyFull -notin $CommitArguments) {
-      $CommitArguments += $AllowEmptyFull
+    if ($AllowEmptyFlag -notin $CommitArguments) {
+      $CommitArguments += $AllowEmptyFlag
     }
   }
   else {
-    if ($AllowEmptyFull -in $CommitArguments) {
+    if ($AllowEmptyFlag -in $CommitArguments) {
       $AllowEmpty = $true
     }
   }
