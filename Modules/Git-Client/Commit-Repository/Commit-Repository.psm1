@@ -12,34 +12,60 @@ function Write-Repository {
   param(
     [string]$Path,
     [string]$Message,
-    [Alias("empty", "ae")]
+    [Alias('empty', 'ae')]
     [switch]$AllowEmpty,
-    [Alias("Stop", "es")]
+    [Alias('Stop', 'es')]
     [switch]$ErrorStop
   )
 
+  $Messages, $CommitArguments = $args.Where(
+    { $_ -and $_ -is [string] }
+  ).Where(
+    { $_.StartsWith('--') },
+    'Split'
+  )
+
+  if ($Message) {
+    if ($Message.StartsWith('--')) {
+      $CommitArguments = , $Message + $CommitArguments
+    }
+    else {
+      $Messages = , $Message + $Messages
+    }
+  }
+
   if ($Path) {
-    if (-not $Message) {
-      if (-not (Resolve-Repository -Path $Path)) {
-        $Message = $Path
-        $Path = ""
-      }
-      elseif ($AllowEmpty) {
-        $Message = "-"
+    if (-not (Resolve-Repository -Path $Path)) {
+      if ($Path.StartsWith('--')) {
+        $CommitArguments = , $Path + $CommitArguments
       }
       else {
-        throw "Missing commit message."
+        $Messages = , $Path + $Messages
       }
+
+      $Path = ''
+    }
+  }
+
+  $AllowEmptyFull = '--allow-empty'
+
+  if ($AllowEmpty) {
+    if ($AllowEmptyFull -notin $CommitArguments) {
+      $CommitArguments += $AllowEmptyFull
     }
   }
   else {
-    if (-not $Message) {
-      if ($AllowEmpty) {
-        $Message = "-"
-      }
-      else {
-        throw "Missing commit message."
-      }
+    if ($AllowEmptyFull -in $CommitArguments) {
+      $AllowEmpty = $true
+    }
+  }
+
+  if (-not $Messages) {
+    if ($AllowEmpty) {
+      $Messages += 'No message.'
+    }
+    else {
+      throw 'Missing commit message.'
     }
   }
 
@@ -49,17 +75,15 @@ function Write-Repository {
   }
   $Commit = @{
     Path      = $Path
-    Verb      = "commit"
+    Verb      = 'commit'
     ErrorStop = $ErrorStop
   }
 
-  (Add-Repository @Add) && (
-    (
-      $AllowEmpty
-    ) ? (
-      Invoke-Repository @Commit -m $Message --allow-empty @args
-    ) : (
-      Invoke-Repository @Commit -m $Message @args
-    )
+  $MessageString = $Messages -join ' '
+
+  (
+    Add-Repository @Add
+  ) && (
+    Invoke-Repository @Commit -m $MessageString @CommitArguments
   )
 }
