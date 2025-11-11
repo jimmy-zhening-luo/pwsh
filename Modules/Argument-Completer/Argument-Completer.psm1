@@ -115,36 +115,24 @@ class PathCompleter : IArgumentCompleter {
       $Local:leaves = Get-ChildItem @Local:query
     }
 
-    $Local:directories = @()
-    $Local:files = @()
-
-    $Local:directories += $Local:leaves |
-      ? { $_.PSIsContainer }
-    $Local:files += $Local:leaves |
-      ? { -not $_.PSIsContainer }
-
-    if ($Local:directories) {
-      $Local:directories = $Local:directories |
-        Select-Object -ExpandProperty Name
-    }
-    if ($Local:files) {
-      $Local:files = $Local:files |
-        Select-Object -ExpandProperty Name
-    }
+    $Local:directories, $Local:files = $Local:leaves.Where(
+      { $_.PSIsContainer },
+      'Split'
+    )
+    $Local:directories = $Local:directories |
+      Select-Object -ExpandProperty Name
+    $Local:files = $Local:files |
+      Select-Object -ExpandProperty Name
 
     if ($Local:subpath -and -not $this.Flat) {
       $Local:directories += ""
     }
 
     if ($Local:subpath) {
-      if ($Local:directories) {
-        $Local:directories = $Local:directories |
-          % { Join-Path $Local:subpath $_ }
-      }
-      if ($Local:files) {
-        $Local:files = $Local:files |
-          % { Join-Path $Local:subpath $_ }
-      }
+      $Local:directories = $Local:directories |
+        % { Join-Path $Local:subpath $_ }
+      $Local:files = $Local:files |
+        % { Join-Path $Local:subpath $_ }
     }
 
     if (-not $this.Flat) {
