@@ -21,11 +21,18 @@ function Add-Repository {
     Verb      = "add"
     StopError = $StopError
   }
-  $GitArguments = , "."
 
-  if ($Renormalize) {
+  $GitArguments = $()
+  $GitArguments += $args
+
+  if ('.' -notin $args)
+    $GitArguments = , "." + $GitArguments
+
+  $RenormalizeFlag = "--renormalize"
+
+  if ($Renormalize -and $RenormalizeFlag -notin $GitArguments) {
     $GitArguments += "--renormalize"
   }
 
-  Invoke-Repository @Add $GitArguments @args
+  Invoke-Repository @Add @GitArguments
 }
