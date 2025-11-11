@@ -11,36 +11,33 @@ function Import-Repository {
   param(
     [string]$Repository,
     [string]$Path,
-    [Alias("fs", "ssh", "sh", "git")]
+    [Alias('fs', 'ssh', 'sh')]
     [switch]$ForceSsh,
     [switch]$StopError
   )
-  if (-not $Repository) {
-    throw "No repository name provided."
-  }
 
-  $RepoParts = $Repository.Trim() -split '/' |
+  $RepositoryPath = $Repository -split '/' |
     % { $_.Trim() } |
-    ? { $_ -ne '' }
+    ? { -not [string]::IsNullOrEmpty($_) }
 
-  if (-not $RepoParts) {
-    throw "No repository name provided."
+  if (-not $RepositoryPath) {
+    throw 'No repository name given.'
   }
 
-  $OrgRepoParts = @()
-
-  if ($RepoParts.Count -eq 1) {
-    $OrgRepoParts += 'jimmy-zhening-luo'
+  if ($RepositoryPath.Count -eq 1) {
+    $RepositoryPath = , 'jimmy-zhening-luo' + $RepositoryPath
   }
 
-  $OrgRepoParts += $RepoParts
+  $Scheme = $ForceSsh ? 'git@github.com:' : 'https://github.com/'
 
-  $GitArguments = , (($ForceSsh ? "git@github.com:" : "https://github.com/") + ($OrgRepoParts -join '/'))
+  $GitArguments = , ($Scheme + ($RepositoryPath -join '/'))
 
   if ($Path -and $Path.StartsWith('-')) {
     $GitArguments += $Path
-    $Path = ""
+    $Path = ''
   }
+
+  $GitArguments += $args
 
   $Clone = @{
     Path      = $Path
@@ -48,5 +45,5 @@ function Import-Repository {
     StopError = $StopError
   }
 
-  Invoke-Repository @Clone $GitArguments @args
+  Invoke-Repository @Clone @GitArguments
 }
