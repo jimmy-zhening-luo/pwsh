@@ -11,14 +11,13 @@ https://git-scm.com/docs/git-pull
 function Get-Repository {
   param(
     [string]$Path,
-    [Alias("Stop", "es")]
-    [switch]$ErrorStop
+    [switch]$StopError
   )
 
   $Pull = @{
     Path      = $Path
     Verb      = "pull"
-    ErrorStop = $ErrorStop
+    StopError = $StopError
   }
 
   Invoke-Repository @Pull @args

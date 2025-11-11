@@ -11,14 +11,13 @@ https://git-scm.com/docs/git-push
 function Push-Repository {
   param(
     [string]$Path,
-    [Alias("Stop", "es")]
-    [switch]$ErrorStop
+    [switch]$StopError
   )
 
   $Push = @{
     Path      = $Path
     Verb      = "push"
-    ErrorStop = $ErrorStop
+    StopError = $StopError
   }
 
   Invoke-Repository @Push @args

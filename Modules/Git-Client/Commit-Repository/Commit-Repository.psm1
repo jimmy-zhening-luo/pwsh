@@ -14,8 +14,7 @@ function Write-Repository {
     [string]$Message,
     [Alias('empty', 'ae')]
     [switch]$AllowEmpty,
-    [Alias('Stop', 'es')]
-    [switch]$ErrorStop
+    [switch]$StopError
   )
 
   $CommitArguments, $Messages = $args.Where(
@@ -71,12 +70,12 @@ function Write-Repository {
 
   $Add = @{
     Path      = $Path
-    ErrorStop = $true
+    StopError = $true
   }
   $Commit = @{
     Path      = $Path
     Verb      = 'commit'
-    ErrorStop = $ErrorStop
+    StopError = $StopError
   }
 
   $MessageString = $Messages -join ' '

@@ -12,8 +12,7 @@ function Reset-Repository {
   param(
     [string]$Path,
     [string]$Tree,
-    [Alias("Stop", "es")]
-    [switch]$ErrorStop
+    [switch]$StopError
   )
 
   if (
@@ -77,12 +76,12 @@ function Reset-Repository {
 
   $Add = @{
     Path      = $Path
-    ErrorStop = $true
+    StopError = $true
   }
   $Reset = @{
     Path      = $Path
     Verb      = "reset"
-    ErrorStop = $ErrorStop
+    StopError = $StopError
   }
   $GitArguments = , "--hard"
 
@@ -108,17 +107,16 @@ https://git-scm.com/docs/git-pull
 function Restore-Repository {
   param(
     [string]$Path,
-    [Alias("Stop", "es")]
-    [switch]$ErrorStop
+    [switch]$StopError
   )
 
   $Reset = @{
     Path      = $Path
-    ErrorStop = $true
+    StopError = $true
   }
   $Pull = @{
     Path      = $Path
-    ErrorStop = $ErrorStop
+    StopError = $StopError
   }
 
   (Reset-Repository @Reset) && (Get-Repository @Pull)

@@ -13,8 +13,7 @@ function Import-Repository {
     [string]$Path,
     [Alias("fs", "ssh", "sh", "git")]
     [switch]$ForceSsh,
-    [Alias("Stop", "es")]
-    [switch]$ErrorStop
+    [switch]$StopError
   )
   if (-not $Repository) {
     throw "No repository name provided."
@@ -46,7 +45,7 @@ function Import-Repository {
   $Clone = @{
     Path      = $Path
     Verb      = 'clone'
-    ErrorStop = $ErrorStop
+    StopError = $StopError
   }
 
   Invoke-Repository @Clone $GitArguments @args
