@@ -18,7 +18,7 @@ function Write-Repository {
     [switch]$ErrorStop
   )
 
-  $Messages, $CommitArguments = $args.Where(
+  $CommitArguments, $Messages = $args.Where(
     { $_ -and $_ -is [string] }
   ).Where(
     { $_.StartsWith('--') },
