@@ -6,11 +6,13 @@ function New-Junction {
   )]
   [OutputType([System.IO.DirectoryInfo])]
   param(
+    [PathCompletions('.')]
     [Parameter(
       Mandatory,
       ValueFromPipelineByPropertyName
     )]
     [string[]]${Path},
+    [PathCompletions('.')]
     [Parameter(
       Mandatory,
       ValueFromPipeline,
