@@ -58,10 +58,6 @@ class PathCompleter : IArgumentCompleter {
       throw [ArgumentException]::new('root')
     }
 
-    if ($type -and -not ($type -eq 'File' -or $type -eq 'Directory')) {
-      throw [ArgumentException]::new('type')
-    }
-
     $this.Root = Resolve-Path -Path $root |
       Select-Object -ExpandProperty Path
     $this.Type = $type
@@ -81,14 +77,7 @@ class PathCompleter : IArgumentCompleter {
       Directory = $this.Type -eq 'Directory'
       File      = $this.Type -eq 'File'
     }
-    $Local:word = $wordToComplete
-
-    if ($Local:word) {
-      $Local:word = $Local:word -replace '[\\\/]+', '\' -replace '^\\', ''
-    }
-
-    $Local:subpath = ''
-    $Local:leaves = @()
+    $Local:word = $wordToComplete -replace '[\\\/]+', '\' -replace '^\\', ''
     $resultList = [List[CompletionResult]]::new()
 
     if ($Local:word) {
