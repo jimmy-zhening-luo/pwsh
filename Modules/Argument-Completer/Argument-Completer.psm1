@@ -69,75 +69,79 @@ class PathCompleter : IArgumentCompleter {
     [string] $parameterName,
     [string] $wordToComplete,
     [CommandAst] $commandAst,
-    [IDictionary] $fakeBoundParameters) {
+    [IDictionary] $fakeBoundParameters
+  ) {
 
     $Local:root = $this.Root
-    $Local:query = @{
+    $query = @{
       Path      = $Local:root
       Directory = $this.Type -eq 'Directory'
       File      = $this.Type -eq 'File'
     }
-    $Local:word = $wordToComplete -replace '[\\\/]+', '\' -replace '^\\', ''
+    $word = $wordToComplete -replace '[\\\/]+', '\' -replace '^\\', ''
+    $leaves = @()
+    $subpath = ''
     $resultList = [List[CompletionResult]]::new()
 
-    if ($Local:word) {
-      if ($Local:word.EndsWith('\')) {
-        $Local:word += '*'
+
+    if ($word) {
+      if ($word.EndsWith('\')) {
+        $word += '*'
       }
 
-      $Local:subpath = Split-Path $Local:word
-      $Local:fragment = Split-Path $Local:word -Leaf
+      $subpath = Split-Path $word
+      $fragment = Split-Path $word -Leaf
 
-      if ($Local:fragment -eq '*') {
-        $Local:fragment = ''
+      if ($fragment -eq '*') {
+        $fragment = ''
       }
 
-      $Local:path = Join-Path $Local:root $Local:subpath
+      $path = Join-Path $Local:root $subpath
 
-      if (Test-Path -Path $Local:path -PathType Container) {
-        $Local:query.Path = $Local:path
-        $Local:query['Filter'] = "$Local:fragment*"
-        $Local:leaves = Get-ChildItem @Local:query
+      if (Test-Path -Path $path -PathType Container) {
+        $query.Path = $path
+        $query['Filter'] = "$fragment*"
+        $leaves = Get-ChildItem @query
       }
     }
     else {
-      $Local:leaves = Get-ChildItem @Local:query
+      $leaves = Get-ChildItem @query
     }
 
-    $Local:directories, $Local:files = $Local:leaves.Where(
+    $directories, $files = $leaves.Where(
       { $_.PSIsContainer },
       'Split'
     )
-    $Local:directories = $Local:directories |
+    $directories = $directories |
       Select-Object -ExpandProperty Name
-    $Local:files = $Local:files |
+    $files = $files |
       Select-Object -ExpandProperty Name
 
-    if ($Local:subpath -and -not $this.Flat) {
-      $Local:directories += ''
+    if ($subpath -and -not $this.Flat) {
+      $directories += ''
     }
 
-    if ($Local:subpath) {
-      $Local:directories = $Local:directories |
-        % { Join-Path $Local:subpath $_ }
-      $Local:files = $Local:files |
-        % { Join-Path $Local:subpath $_ }
+    if ($subpath) {
+      $directories = $directories |
+        % { Join-Path $subpath $_ }
+      $files = $files |
+        % { Join-Path $subpath $_ }
     }
 
     if (-not $this.Flat) {
-      $Local:directories = $Local:directories |
+      $directories = $directories |
         % { $_ + '\' }
     }
 
-    $Local:directories = $Local:directories |
+    $directories = $directories |
       % { $_ -replace '[\\]+', '/' }
-    $Local:files = $Local:files |
+    $files = $files |
       % { $_ -replace '[\\]+', '/' }
 
-    foreach ($directory in $Local:directories) {
+    foreach ($directory in $directories) {
       $resultList.Add([CompletionResult]::new($directory))
     }
-    foreach ($file in $Local:files) {
+    foreach ($file in $files) {
       $resultList.Add([CompletionResult]::new($file))
     }
 
@@ -167,14 +171,16 @@ class UnitCompleter : IArgumentCompleter {
   UnitCompleter(
     [string[]] $units
   ) {
-    if (-not $root -or -not (Test-Path -Path $root -PathType Container)) {
-      throw [ArgumentException]::new('root')
+    $uniqueUnits = $units |
+      Get-Unique |
+      ? { -not [string]::IsNullOrWhiteSpace($_) } |
+      % { $_.ToLowerInvariant() }
+
+    if (-not $uniqueUnits) {
+      throw [ArgumentException]::new('units')
     }
 
-    $this.Root = Resolve-Path -Path $root |
-      Select-Object -ExpandProperty Path
-    $this.Type = $type
-    $this.Flat = $flat
+    $this.Units = $uniqueUnits
   }
 
   [IEnumerable[CompletionResult]] CompleteArgument(
@@ -182,71 +188,24 @@ class UnitCompleter : IArgumentCompleter {
     [string] $parameterName,
     [string] $wordToComplete,
     [CommandAst] $commandAst,
-    [IDictionary] $fakeBoundParameters) {
+    [IDictionary] $fakeBoundParameters
+  ) {
 
-    $Local:units = [System.Collections.Generic.HashSet[string]]::new($this.Units)
-    $Local:word = $wordToComplete
+    $Local:units = $this.Units
+    $unitMatches = @()
     $resultList = [List[CompletionResult]]::new()
 
-    if ($Local:word) {
-      if ($Local:word.EndsWith('\')) {
-        $Local:word += '*'
-      }
-
-      $Local:subpath = Split-Path $Local:word
-      $Local:fragment = Split-Path $Local:word -Leaf
-
-      if ($Local:fragment -eq '*') {
-        $Local:fragment = ''
-      }
-
-      $Local:path = Join-Path $Local:root $Local:subpath
-
-      if (Test-Path -Path $Local:path -PathType Container) {
-        $Local:query.Path = $Local:path
-        $Local:query['Filter'] = "$Local:fragment*"
-        $Local:leaves = Get-ChildItem @Local:query
-      }
-    }
-    else {
-      $Local:leaves = Get-ChildItem @Local:query
+    if ($wordToComplete) {
+      $unitMatches += $Local:units |
+        % { $_ -like "$wordToComplete*" }
     }
 
-    $Local:directories, $Local:files = $Local:leaves.Where(
-      { $_.PSIsContainer },
-      'Split'
-    )
-    $Local:directories = $Local:directories |
-      Select-Object -ExpandProperty Name
-    $Local:files = $Local:files |
-      Select-Object -ExpandProperty Name
-
-    if ($Local:subpath -and -not $this.Flat) {
-      $Local:directories += ''
+    if (-not $unitMatches) {
+      $unitMatches = $Local:units
     }
 
-    if ($Local:subpath) {
-      $Local:directories = $Local:directories |
-        % { Join-Path $Local:subpath $_ }
-      $Local:files = $Local:files |
-        % { Join-Path $Local:subpath $_ }
-    }
-
-    if (-not $this.Flat) {
-      $Local:directories = $Local:directories |
-        % { $_ + '\' }
-    }
-
-    $Local:directories = $Local:directories |
-      % { $_ -replace '[\\]+', '/' }
-    $Local:files = $Local:files |
-      % { $_ -replace '[\\]+', '/' }
-
-    foreach ($directory in $Local:directories) {
-      $resultList.Add([CompletionResult]::new($directory))
-    }
-    foreach ($file in $Local:files) {
-      $resultList.Add([CompletionResult]::new($file))
+    foreach ($unit in $unitMatches) {
+      $resultList.Add([CompletionResult]::new($unit))
     }
 
     return $resultList
