@@ -167,22 +167,16 @@ class UnitCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
 }
 
 class UnitCompleter : IArgumentCompleter {
-  [string[]] $Units
+  [string] $Units
 
   UnitCompleter(
     [string] $units
   ) {
-    $uniqueUnits = $units -split ',' |
-      % { $_.Trim() } |
-      % { $_.ToLowerInvariant() } |
-      ? { $_ } |
-      Get-Unique
-
-    if (-not $uniqueUnits) {
+    if (-not $units) {
       throw [ArgumentException]::new('units')
     }
 
-    $this.Units = $uniqueUnits
+    $this.Units = $units
   }
 
   [IEnumerable[CompletionResult]] CompleteArgument(
@@ -193,7 +187,11 @@ class UnitCompleter : IArgumentCompleter {
     [IDictionary] $fakeBoundParameters
   ) {
 
-    $Local:units = $this.Units
+    $Local:units = $this.Units -split ',' |
+      % { $_.Trim() } |
+      % { $_.ToLowerInvariant() } |
+      ? { $_ } |
+      Get-Unique
     $unitMatches = @()
     $resultList = [List[CompletionResult]]::new()
 
