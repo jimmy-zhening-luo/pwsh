@@ -37,6 +37,7 @@
     'Get-Code'
     'Get-Drive'
     'Get-FileSize'
+    'New-Directory'
     'New-Junction'
     'Invoke-Directory'
     'Invoke-Sibling'
