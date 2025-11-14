@@ -189,14 +189,13 @@ class UnitCompleter : IArgumentCompleter {
     $Local:units = $this.Units -split ',' |
       % { $_.Trim() } |
       % { $_.ToLowerInvariant() } |
-      ? { $_ } |
       Get-Unique
     $unitMatches = @()
     $resultList = [List[CompletionResult]]::new()
 
     if ($wordToComplete) {
       $unitMatches += $Local:units |
-        % { $_ -like "$wordToComplete*" }
+        ? { $_ -like "$wordToComplete*" }
     }
 
     if (-not $unitMatches) {
