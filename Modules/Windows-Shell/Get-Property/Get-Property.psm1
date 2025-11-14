@@ -13,13 +13,15 @@ function Get-FileSize {
     )]
     [PathCompletions('.')]
     [string]$Path,
-    [ArgumentCompletions(
+    [UnitCompletions(
       'B',
       'KB',
       'MB',
       'GB'
     )]
-    [string]$Unit
+    [string]$Unit,
+    [Alias('qo', 'Number')]
+    [switch]$QuantityOnly
   )
 
   process {
@@ -73,8 +75,7 @@ function Get-FileSize {
     }
 
     $Item = Get-Item $Path
-
-    [math]::Round(
+    $Quantity = [math]::Round(
       (
         (
           $Item.PSIsContainer
@@ -88,5 +89,12 @@ function Get-FileSize {
       ) / $UNITS[$Unit],
       3
     )
+
+    if ($QuantityOnly) {
+      $Quantity
+    }
+    else {
+      "$Quantity $Unit"
+    }
   }
 }
