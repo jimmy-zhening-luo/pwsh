@@ -22,13 +22,19 @@ function Get-FileSize {
 
   process {
     $UNITS = @{
+      B  = 'B'
+      KB = 'KB'
+      MB = 'MB'
+      GB = 'GB'
+      K  = 'KB'
+      M  = 'MB'
+      G  = 'GB'
+    }
+    $FACTORS = @{
       B  = 1
       KB = 1KB
       MB = 1MB
       GB = 1GB
-      K  = 1KB
-      M  = 1MB
-      G  = 1GB
     }
     $DEFAULT_UNIT = 'KB'
     $DEFAULT_PATH = '.'
@@ -36,7 +42,7 @@ function Get-FileSize {
     if ($Path) {
       if ($Unit) {
         if (-not ($UNITS.Contains($Unit))) {
-          throw "Unknown unit '$Unit'. Allowed units: $($UNITS.Keys -join ', ')."
+          throw "Unknown unit '$Unit'. Allowed units: $($FACTORS.Keys -join ', ')."
         }
       }
       else {
@@ -60,7 +66,7 @@ function Get-FileSize {
           $Path = $DEFAULT_PATH
         }
         else {
-          throw "Unknown unit '$Unit'. Allowed units: $($UNITS.Keys -join ', ')."
+          throw "Unknown unit '$Unit'. Allowed units: $($FACTORS.Keys -join ', ')."
         }
       }
       else {
@@ -70,6 +76,7 @@ function Get-FileSize {
       }
     }
 
+    $UnitCanonical = $UNITS[$Unit]
     $Item = Get-Item $Path
     $Quantity = [math]::Round(
       (
@@ -82,7 +89,7 @@ function Get-FileSize {
         ) : (
           $Item.Length
         )
-      ) / $UNITS[$Unit],
+      ) / $FACTORS[$UnitCanonical],
       3
     )
 
@@ -90,7 +97,7 @@ function Get-FileSize {
       $Quantity
     }
     else {
-      "$Quantity $Unit"
+      "$Quantity $UnitCanonical"
     }
   }
 }
