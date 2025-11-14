@@ -156,7 +156,12 @@ class UnitCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
     [string] $units
   ) {
     $this.Units = $units
-      
+  }
+
+  UnitCompletionsAttribute(
+    [string[]] $units
+  ) {
+    $this.Units = $units -join ","
   }
 
   [IArgumentCompleter] Create() {
