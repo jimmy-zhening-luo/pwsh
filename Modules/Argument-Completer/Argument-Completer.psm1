@@ -195,7 +195,7 @@ class UnitCompleter : IArgumentCompleter {
 
     if ($wordToComplete) {
       $unitMatches = $Local:units |
-        ? { $_ -match "$wordToComplete*" }
+        ? { $_ -like "$wordToComplete*" }
     }
 
     if (-not $unitMatches) {
