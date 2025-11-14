@@ -13,6 +13,7 @@ function Get-FileSize {
     )]
     [PathCompletions('.')]
     [string]$Path,
+    [Parameter(Position = 1)]
     [UnitCompletions('B,KB,MB,GB')]
     [string]$Unit,
     [Alias('qo', 'Number')]
@@ -30,7 +31,7 @@ function Get-FileSize {
       G  = 1GB
     }
     $DEFAULT_UNIT = 'KB'
-    $DEFAULT_PATH = '.\'
+    $DEFAULT_PATH = '.'
 
     if ($Path) {
       if ($Unit) {
