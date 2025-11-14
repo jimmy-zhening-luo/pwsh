@@ -14,7 +14,7 @@ function Get-FileSize {
     [PathCompletions('.')]
     [string]$Path,
     [UnitCompletions(
-      'B', 'KB', 'MB', 'GB'
+      'B,KB,MB,GB'
     )]
     [string]$Unit,
     [Alias($Units)]
