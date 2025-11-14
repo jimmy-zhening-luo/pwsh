@@ -135,10 +135,10 @@ class PathCompleter : IArgumentCompleter {
 
     $directories = $directories |
       % { $_ -replace '[\\]+', '/' }
-      % { ($_ -match '\s') ? "'$_'" : $_ }
+      % { ($_ -replace '(\s)', '`$1' }
     $files = $files |
       % { $_ -replace '[\\]+', '/' }
-      % { ($_ -match '\s') ? "'$_'" : $_ }
+      % { ($_ -replace '(\s)', '`$1' }
 
     foreach ($directory in $directories) {
       $resultList.Add([CompletionResult]::new($directory))
