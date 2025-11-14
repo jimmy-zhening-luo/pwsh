@@ -3,10 +3,6 @@ New-Alias parent Split-Path
 
 New-Alias hash Get-FileHash
 
-$Units = @(
-  'B', 'KB', 'MB', 'GB'
-)
-
 New-Alias size Get-FileSize
 function Get-FileSize {
   [OutputType([double])]
@@ -18,6 +14,7 @@ function Get-FileSize {
     [PathCompletions('.')]
     [string]$Path,
     [UnitCompletions(
+      'B', 'KB', 'MB', 'GB'
     )]
     [string]$Unit,
     [Alias($Units)]
