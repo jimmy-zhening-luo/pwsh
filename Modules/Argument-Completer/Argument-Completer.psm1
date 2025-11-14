@@ -150,12 +150,13 @@ class PathCompleter : IArgumentCompleter {
 }
 
 class UnitCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory {
-  [string[]] $Units
+  [string] $Units
 
   UnitCompletionsAttribute(
-    [string[]] $units
+    [string] $units
   ) {
     $this.Units = $units
+      
   }
 
   [IArgumentCompleter] Create() {
@@ -169,12 +170,13 @@ class UnitCompleter : IArgumentCompleter {
   [string[]] $Units
 
   UnitCompleter(
-    [string[]] $units
+    [string] $units
   ) {
-    $uniqueUnits = $units |
-      Get-Unique |
-      ? { -not [string]::IsNullOrWhiteSpace($_) } |
-      % { $_.ToLowerInvariant() }
+    $uniqueUnits = $units -split |
+      % { $_.Trim() } |
+      % { $_.ToLowerInvariant() } |
+      ? { $_ } |
+      Get-Unique
 
     if (-not $uniqueUnits) {
       throw [ArgumentException]::new('units')
