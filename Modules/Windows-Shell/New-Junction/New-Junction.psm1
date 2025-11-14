@@ -6,30 +6,32 @@ function New-Junction {
   )]
   [OutputType([System.IO.DirectoryInfo])]
   param(
-    [PathCompletions('.')]
     [Parameter(
+      ParameterSetName='pathSet',
       Mandatory,
+      Position=0,
       ValueFromPipelineByPropertyName
     )]
-    [string[]]${Path},
     [PathCompletions('.')]
+    [string[]]${Path},
     [Parameter(
       Mandatory,
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
     [Alias('Target')]
+    [PathCompletions('.')]
     [Object]${Value}
   )
   begin {
     $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [System.Management.Automation.CommandTypes]::Cmdlet)
-    $scriptCmd = { & $wrappedCmd -Force -ItemType Junction @PSBoundParameters }
+    $scriptCmd = { & $wrappedCmd -Force -ItemType Junction @PSBoundParameters @args }
     $steppablePipeline = $scriptCmd.GetSteppablePipeline()
 
     if (
       $PSCmdlet.ShouldProcess(
         $Value,
-        "Open Transaction: Create $($Path.Count) junction(s) [[$Path]]"
+        "Open Transaction: Create junction [$Path] with target [$Value]"
       )
     ) {
       $steppablePipeline.Begin($PSCmdlet)
@@ -39,7 +41,7 @@ function New-Junction {
     if (
       $PSCmdlet.ShouldProcess(
         $Value,
-        "> Step: New-Item -Force -ItemType Junction -Path [$Path]"
+        "> Step: New-Item -Force -ItemType Junction -Path [$Path] -Value [$Value] -- $args"
       )
     ) {
       $steppablePipeline.Process($_)
