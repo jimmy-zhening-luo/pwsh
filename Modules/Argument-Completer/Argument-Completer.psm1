@@ -172,7 +172,7 @@ class UnitCompleter : IArgumentCompleter {
   UnitCompleter(
     [string] $units
   ) {
-    $uniqueUnits = $units -split |
+    $uniqueUnits = $units -split ',' |
       % { $_.Trim() } |
       % { $_.ToLowerInvariant() } |
       ? { $_ } |
