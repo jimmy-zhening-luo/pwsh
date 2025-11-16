@@ -8,44 +8,32 @@ function Read-Item {
 
   $Argument = ''
 
-  if ($RootPath) {
-    if (Test-Path -Path $RootPath -PathType Container) {
-      $RootPath = Resolve-Path -Path $RootPath |
-        Select-Object -ExpandProperty Path
-    }
-    else {
-      $Argument = $RootPath
-      $RootPath = ''
-    }
+  if (
+    $RootPath -and -not (
+      Test-Path -Path $RootPath -PathType Container
+    )
+  ) {
+    $Argument = $RootPath
+    $RootPath = ''
   }
 
-  $FullPath = ($RootPath ? (Join-Path $RootPath $Path) : ($Path ? $Path : ''))
+  if (-not $RootPath) {
+    $RootPath = '.'
+  }
+
+  $RootPath = Resolve-Path -Path $RootPath |
+    Select-Object -ExpandProperty Path
+  $Target = Join-Path $RootPath $Path
 
   if ($Path) {
-    if (Test-Path -Path $FullPath) {
-      if (Test-Path -Path $FullPath -PathType Container) {
-        if ($Argument) {
-          Get-ChildItem -Path $FullPath $Argument
-        }
-        else {
-          Get-ChildItem -Path $FullPath
-        }
-      }
-      else {
-        if ($Argument) {
-          Get-Content -Path $FullPath $Argument
-        }
-        else {
-          Get-Content -Path $FullPath
-        }
-      }
+    if (-not (Test-Path -Path $Target)) {
+      throw "Path '$Target' does not exist."
     }
-    else {
-      throw "Path '$FullPath' does not exist."
-    }
-  }
-  else {
-    if ($FullPath) {
+
+    $FullPath = Resolve-Path -Path $Target |
+      Select-Object -ExpandProperty Path
+
+    if (Test-Path -Path $FullPath -PathType Container) {
       if ($Argument) {
         Get-ChildItem -Path $FullPath $Argument
       }
@@ -54,7 +42,20 @@ function Read-Item {
       }
     }
     else {
-      Get-ChildItem
+      if ($Argument) {
+        Get-Content -Path $FullPath $Argument
+      }
+      else {
+        Get-Content -Path $FullPath
+      }
+    }
+  }
+  else {
+    if ($Argument) {
+      Get-ChildItem -Path $RootPath $Argument
+    }
+    else {
+      Get-ChildItem -Path $RootPath
     }
   }
 }
@@ -66,7 +67,7 @@ function Read-Sibling {
     [string]$Path
   )
 
-  Read-Item -Path $Path -RootPath '..'
+  Read-Item @PSBoundParameters -RootPath '..' @args
 }
 
 New-Alias p.. Read-Relative
@@ -76,7 +77,7 @@ function Read-Relative {
     [string]$Path
   )
 
-  Read-Item -Path $Path -RootPath '..\..'
+  Read-Item @PSBoundParameters -RootPath '..\..' @args
 }
 
 New-Alias p~ Read-Home
@@ -86,7 +87,7 @@ function Read-Home {
     [string]$Path
   )
 
-  Read-Item -Path $Path -RootPath '~'
+  Read-Item @PSBoundParameters -RootPath '~' @args
 }
 
 New-Alias pc Read-Code
@@ -97,7 +98,7 @@ function Read-Code {
     [string]$Path
   )
 
-  Read-Item -Path $Path -RootPath '~\code'
+  Read-Item @PSBoundParameters -RootPath '~\code' @args
 }
 
 New-Alias p\ Read-Drive
@@ -108,5 +109,5 @@ function Read-Drive {
       [string]$Path
   )
 
-  Read-Item -Path $Path -RootPath '\'
+  Read-Item @PSBoundParameters -RootPath '\' @args
 }

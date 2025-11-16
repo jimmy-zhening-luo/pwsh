@@ -14,72 +14,67 @@ function Edit-Item {
 
   $ArgumentList = @()
 
-  if ($RootPath) {
-    if (Test-Path -Path $RootPath -PathType Container) {
-        $RootPath = Resolve-Path -Path $RootPath |
-        Select-Object -ExpandProperty Path
-    }
-    else {
-      $ArgumentList += $RootPath
-      $RootPath = ''
-    }
+  if (
+    $RootPath -and -not (
+      Test-Path -Path $RootPath -PathType Container
+    )
+  ) {
+    $ArgumentList += $RootPath
+    $RootPath = ''
   }
-  $FullPath = ($RootPath ? (Join-Path $RootPath $Path) : ($Path ? $Path : ''))
+
+  if (-not $RootPath) {
+    $RootPath = '.'
+  }
+
+  $RootPath = Resolve-Path -Path $RootPath |
+    Select-Object -ExpandProperty Path
+  $Target = Join-Path $RootPath $Path
 
   if ($Path) {
-    if (Test-Path -Path $FullPath) {
-      $ArgumentList = , (
-          Resolve-Path -Path $FullPath |
-          Select-Object -ExpandProperty Path
-      ) + $ArgumentList
+    if (Test-Path -Path $Target) {
+      $FullPath = Resolve-Path $Target |
+        Select-Object -ExpandProperty Path
+      $ArgumentList = , $FullPath + $ArgumentList
     }
     else {
       if (-not $Path.StartsWith('-')) {
-        throw "Path '$FullPath' does not exist."
+        throw "Path '$Target' does not exist."
       }
 
-      $FullPath = ($RootPath ? ($RootPath) : '.')
-      $ArgumentList = $FullPath, $Path + $ArgumentList
+      $ArgumentList = $RootPath, $Path + $ArgumentList
     }
   }
   else {
-    if ($FullPath) {
-      $ArgumentList = , $FullPath + $ArgumentList
-    }
+    $ArgumentList = , $RootPath + $ArgumentList
   }
 
   if ($env:SSH_CLIENT) {
-    if ($FullPath -and (Test-Path -Path $FullPath -PathType   Container)) {
-      Set-Location -Path $FullPath
+    throw "Cannot open VSCode from SSH session"
+  }
+
+  if ($ProfileName) {
+    if (-not $ProfileName.StartsWith('-')) {
+      $CreateWindow = $true
+
+      $ArgumentList += '--profile'
     }
-    else {
-      Read-Item -Path $FullPath
-    }
+
+    $ArgumentList += $ProfileName
+  }
+
+  if ($CreateWindow) {
+    $ArgumentList += '--new-window'
+  }
+  elseif ($ReuseWindow) {
+        $ArgumentList += '--reuse-window'
+  }
+
+  if ($ArgumentList) {
+    & code.cmd $ArgumentList
   }
   else {
-    if ($ProfileName) {
-      if (-not $ProfileName.StartsWith('-')) {
-        $CreateWindow = $true
-
-        $ArgumentList += '--profile'
-      }
-
-      $ArgumentList += $ProfileName
-    }
-
-    if ($CreateWindow) {
-      $ArgumentList += '--new-window'
-    }
-    elseif ($ReuseWindow) {
-          $ArgumentList += '--reuse-window'
-    }
-
-    if ($ArgumentList) {
-      & code.cmd $ArgumentList
-    }
-    else {
-      & code.cmd
-    }
+    & code.cmd
   }
 }
 
@@ -96,15 +91,7 @@ function Edit-Sibling {
     [switch]$ReuseWindow
   )
 
-    $Splat = @{
-    Path        = $Path
-    ProfileName = $ProfileName
-    CreateWindow= $CreateWindow
-    ReuseWindow = $ReuseWindow
-    RootPath = '..'
-  }
-
-  Edit-Item @Splat
+  Edit-Item @PSBoundParameters -RootPath '..' @args
 }
 
 New-Alias i.. Edit-Relative
@@ -120,15 +107,7 @@ function Edit-Relative {
     [switch]$ReuseWindow
   )
 
-    $Splat = @{
-    Path        = $Path
-    ProfileName = $ProfileName
-    CreateWindow= $CreateWindow
-    ReuseWindow = $ReuseWindow
-    RootPath = '..\..'
-  }
-
-  Edit-Item @Splat
+  Edit-Item @PSBoundParameters -RootPath '..\..' @args
 }
 
 New-Alias i~ Edit-Home
@@ -144,15 +123,7 @@ function Edit-Home {
     [switch]$ReuseWindow
   )
 
-    $Splat = @{
-    Path        = $Path
-    ProfileName = $ProfileName
-    CreateWindow= $CreateWindow
-    ReuseWindow = $ReuseWindow
-    RootPath = '~'
-  }
-
-  Edit-Item @Splat
+  Edit-Item @PSBoundParameters -RootPath '~' @args
 }
 
 New-Alias ic Edit-Code
@@ -168,15 +139,7 @@ function Edit-Code {
     [switch]$ReuseWindow
   )
 
-  $Splat = @{
-    Path        = $Path
-    ProfileName = $ProfileName
-    CreateWindow= $CreateWindow
-    ReuseWindow = $ReuseWindow
-    RootPath = '~\code'
-  }
-
-  Edit-Item @Splat
+  Edit-Item @PSBoundParameters -RootPath '~\code' @args
 }
 
 New-Alias i\ Edit-Drive
@@ -193,13 +156,5 @@ function Edit-Drive {
     [switch]$ReuseWindow
   )
 
-  $Splat = @{
-    Path        = $Path
-    ProfileName = $ProfileName
-    CreateWindow= $CreateWindow
-    ReuseWindow = $ReuseWindow
-    RootPath = '\'
-  }
-
-  Edit-Item @Splat
+  Edit-Item @PSBoundParameters -RootPath '\' @args
 }

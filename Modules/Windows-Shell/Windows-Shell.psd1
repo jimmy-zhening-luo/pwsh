@@ -13,6 +13,7 @@
     '.\New-Junction'
     '.\Invoke-Directory'
     '.\Edit-Item'
+    '.\Write-Item'
     '.\Clear-Line'
     '.\Remove-Directory'
   )
@@ -51,6 +52,12 @@
     'Edit-Home'
     'Edit-Code'
     'Edit-Drive'
+    'Write-Item'
+    'Write-Sibling'
+    'Write-Relative'
+    'Write-Home'
+    'Write-Code'
+    'Write-Drive'
     'Clear-Line'
     'Remove-Directory'
   )
@@ -101,6 +108,13 @@
     'ic'
     'i\'
     'i/'
+    'w'
+    'w.'
+    'w..'
+    'w~'
+    'wc'
+    'w\'
+    'w/'
     'cl'
   )
 }
