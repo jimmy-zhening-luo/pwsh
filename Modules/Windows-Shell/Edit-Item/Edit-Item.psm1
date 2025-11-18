@@ -6,6 +6,7 @@ function Edit-Item {
     [string]$Path,
     [Alias('Name', 'pn')]
     [string]$ProfileName,
+    [Alias('w')]
     [switch]$CreateWindow,
     [Alias('rw')]
     [switch]$ReuseWindow,
@@ -23,15 +24,9 @@ function Edit-Item {
     $RootPath = ''
   }
 
-  if (-not $RootPath) {
-    $RootPath = '.'
-  }
-
-  $RootPath = Resolve-Path -Path $RootPath |
-    Select-Object -ExpandProperty Path
-  $Target = Join-Path $RootPath $Path
-
   if ($Path) {
+    $Target = $RootPath ? (Join-Path $RootPath $Path) : $Path
+
     if (Test-Path -Path $Target) {
       $FullPath = Resolve-Path $Target |
         Select-Object -ExpandProperty Path
@@ -42,10 +37,18 @@ function Edit-Item {
         throw "Path '$Target' does not exist."
       }
 
+      if (-not $RootPath) {
+        $RootPath = '.'
+      }
+
       $ArgumentList = $RootPath, $Path + $ArgumentList
     }
   }
   else {
+    if (-not $RootPath) {
+      $RootPath = '.'
+    }
+
     $ArgumentList = , $RootPath + $ArgumentList
   }
 
