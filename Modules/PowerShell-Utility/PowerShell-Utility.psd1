@@ -22,14 +22,15 @@
     'Sync-Linter'
   )
   AliasesToExport   = @(
-    'count'
-    'n'
     'k'
     'key'
     'keys'
+    '^'
+    'pick'
     'z'
+    'n'
+    'count'
     'format'
-    'table'
     'galc'
     'm'
     'upman'
