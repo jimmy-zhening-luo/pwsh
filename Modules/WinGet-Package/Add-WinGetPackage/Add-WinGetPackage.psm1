@@ -8,10 +8,17 @@ This function is an alias for 'winget install', unless no arguments are provided
 https://learn.microsoft.com/en-us/windows/package-manager/winget/install
 #>
 function Add-WinGetPackage {
-  if ($args.Count -eq 0) {
-    & winget upgrade
+  param(
+    [Parameter(
+      ValueFromRemainingArguments
+    )]
+    [string[]]$Arguments
+  )
+
+  if ($Arguments -or $args) {
+    & winget install @Arguments @args
   }
   else {
-    & winget install @args
+    & winget upgrade
   }
 }
