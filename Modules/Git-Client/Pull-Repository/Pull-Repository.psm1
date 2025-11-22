@@ -43,5 +43,7 @@ function Get-ChildRepository {
   $Repositories |
     % { Invoke-Repository -Path $_.FullName @Pull @args }
 
-  "`nPulled $(Format-Count repository/repositories $Repositories.Count)."
+  "`nPulled $(
+    Format-Count -Noun repository/repositories -Count $Repositories.Count
+  )."
 }

@@ -2,14 +2,15 @@ New-Alias guid Copy-Guid
 function Copy-Guid {
   [OutputType([void], [string])]
   param(
-    [switch]$Upper,
+    [Alias('Case', 'uc')]
+    [switch]$Uppercase,
     [switch]$Silent
   )
 
   $Guid = New-Guid |
     Select-Object -ExpandProperty Guid
 
-  if ($Upper) {
+  if ($Uppercase) {
     $Guid = $Guid.ToUpperInvariant()
   }
 
