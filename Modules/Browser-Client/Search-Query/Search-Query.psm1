@@ -7,7 +7,7 @@ function Expand-Query {
   foreach ($Term in $Terms) {
     $Tokens += (
       $Term -split '\s+' |
-        ? { -not [string]::IsNullOrWhiteSpace($_) } |
+        ? { $_ } |
         % { [System.Net.WebUtility]::UrlEncode($_) }
     )
   }
@@ -22,6 +22,7 @@ New-Alias g Search-Query
 function Search-Query {
   [OutputType([void], [string])]
   param([string[]]$Terms)
+
   $Terms += $args
 
   $QueryString = Expand-Query -Terms $Terms
@@ -47,6 +48,7 @@ New-Alias map Search-Map
 function Search-Map {
   [OutputType([void], [string])]
   param([string[]]$Terms)
+
   $Terms += $args
 
   $QueryString = Expand-Query -Terms $Terms

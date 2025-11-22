@@ -71,7 +71,8 @@ function Test-Url {
   }
 
   try {
-    $Status = (Invoke-WebRequest @Request).StatusCode
+    $Status = Invoke-WebRequest @Request |
+      Select-Object -ExpandProperty StatusCode
   }
   catch {
     $Status = $_.Exception.Response.StatusCode.value__

@@ -2,25 +2,40 @@ New-Alias tn Test-Host
 function Test-Host {
   [OutputType([Object])]
   param(
-    [Parameter(
-      Mandatory,
-      Position = 0
-    )]
+    [Parameter(Mandatory)]
     [Alias('ComputerName', 'RemoteAddress', 'cn')]
-    [Parameter(Position = 1)]
     [string]$HostName,
-    [Parameter(Position = 2)]
     [Alias('RemotePort', 'p')]
-    [uint16]$Port
+    [string]$Port
   )
+
+  if ($Hostname -match '^\s*\d{1,5}\s*$' -and $Hostname -as [uint16]) {
+    if ($Port) {
+      $Hostname, $Port = $Port, $Hostname
+    }
+    else {
+      throw 'No hostname provided'
+    }
+  }
 
   $Target = @{
     ComputerName = $HostName
   }
+  $Argument = ''
 
   if ($Port) {
-    $Target.Port = $Port
+    if ($Port -as [uint16]) {
+      $Target.Port = [uint16]$Port
+    }
+    else {
+      $Argument = $Port
+    }
   }
 
-  Test-NetConnection @Target
+  if ($Argument) {
+    Test-NetConnection @Target $Argument @args
+  }
+  else {
+    Test-NetConnection @Target @args
+  }
 }
