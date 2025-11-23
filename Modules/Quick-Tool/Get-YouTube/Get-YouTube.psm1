@@ -26,7 +26,7 @@ function Get-YouTube {
   $VideoUrl = ($Video.StartsWith('http://') -or $Video.StartsWith('https://')) ? $Video : ($Video -match '^(?:(?:www|m)\.)?youtube\.com/watch\?v=(?<video>[-\w]+).*$') ? "https://www.youtube.com/watch?v=$($Matches.video)" : "https://www.youtube.com/watch?v=$Video"
 
   if (Test-Url $VideoUrl) {
-    & yt-dlp @Rest -- $VideoUrl
+    & yt-dlp $Rest -- $VideoUrl
   }
   else {
     throw Write-Error "The specified YouTube video URL is not reachable: $VideoUrl"
@@ -45,7 +45,21 @@ https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#video-format-options
 function Get-YouTubeAudio {
   param([string]$Video)
 
-  Get-YouTube -Video $Video @args --format 'bestaudio' --extract-audio --audio-format 'mp3' --audio-quality 0 --audio-quality 0 --postprocessor-args '-ar 44100'
+  $YtArguments = @(
+    '--format'
+    'bestaudio'
+    '--extract-audio'
+    '--audio-format'
+    'mp3'
+    '--audio-quality'
+    0
+    '--audio-quality'
+    0
+    '--postprocessor-args'
+    '-ar 44100'
+  )
+
+  Get-YouTube @PSBoundParameters @args @YtArguments
 }
 
 New-Alias ytf Get-YouTubeFormat
@@ -60,5 +74,9 @@ https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#video-format-options
 function Get-YouTubeFormat {
   param([string]$Video)
 
-  Get-YouTube -Video $Video @args '-F'
+  $YtArguments = @(
+    '-F'
+  )
+
+  Get-YouTube @PSBoundParameters @args @YTArguments
 }
