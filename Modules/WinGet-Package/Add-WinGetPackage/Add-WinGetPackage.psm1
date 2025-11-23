@@ -9,7 +9,7 @@ https://learn.microsoft.com/en-us/windows/package-manager/winget/install
 #>
 function Add-WinGetPackage {
   if ($args) {
-    & winget install @args
+    & (winget install $args)
   }
   else {
     & winget upgrade
