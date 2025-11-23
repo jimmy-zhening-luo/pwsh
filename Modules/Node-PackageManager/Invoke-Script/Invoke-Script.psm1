@@ -27,7 +27,7 @@ function Invoke-Script {
     $AbsolutePath = Resolve-NodeProject -Path $Path
 
     if ($AbsolutePath) {
-      & npm run $Script --prefix $AbsolutePath $args
+      & npm --prefix $AbsolutePath run $Script $args
     }
     else {
       throw "Path '$Path' is not a Node project directory"
