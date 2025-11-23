@@ -23,7 +23,7 @@
     'PSAvoidUsingComputerNameHardcoded'
     'PSAvoidUsingConvertToSecureStringWithPlainText'
     'PSAvoidUsingDeprecatedManifestFields'
-    # 'PSAvoidUsingDoubleQuotesForConstantString' # VSCode
+    'PSAvoidUsingDoubleQuotesForConstantString'
     'PSAvoidUsingEmptyCatchBlock'
     'PSAvoidUsingInvokeExpression'
     'PSAvoidUsingPlainTextForPassword'
@@ -33,8 +33,8 @@
     'PSAvoidUsingWriteHost'
     'PSMisleadingBacktick'
     'PSMissingModuleManifestField'
-    # 'PSPlaceCloseBrace' # VSCode
-    # 'PSPlaceOpenBrace' # VSCode
+    'PSPlaceCloseBrace'
+    'PSPlaceOpenBrace'
     'PSPossibleIncorrectComparisonWithNull'
     'PSPossibleIncorrectUsageOfAssignmentOperator'
     'PSPossibleIncorrectUsageOfRedirectionOperator'
@@ -50,9 +50,9 @@
     'PSUseCompatibleCommands'
     'PSUseCompatibleSyntax'
     'PSUseCompatibleTypes'
-    # 'PSUseConsistentIndentation'
-    # 'PSUseConsistentWhitespace'
-    # 'PSUseCorrectCasing'
+    'PSUseConsistentIndentation'
+    'PSUseConsistentWhitespace'
+    'PSUseCorrectCasing'
     'PSUseDeclaredVarsMoreThanAssignments'
     'PSUseLiteralInitializerForHashtable'
     'PSUseOutputTypeCorrectly'
