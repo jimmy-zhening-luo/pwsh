@@ -12,7 +12,7 @@ function Measure-Profile {
 
   $StartupTime = Measure-Command { pwsh -NoProfile @Command } |
     Select-Object @Unit
-  $StartupTimeWithProfile = Measure-Command { @Command } |
+  $StartupTimeWithProfile = Measure-Command { pwsh @Command } |
     Select-Object @Unit
   $ProfileLoadTime = [math]::Round($StartupTimeWithProfile - $StartupTime)
 
