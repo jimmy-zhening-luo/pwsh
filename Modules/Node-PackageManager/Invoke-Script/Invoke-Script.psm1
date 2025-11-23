@@ -9,7 +9,7 @@ https://docs.npmjs.com/cli/commands/npm-outdated
 #>
 function Invoke-Script {
   param(
-    [Alias(Run)]
+    [Alias('Run')]
     [string]$Script,
     [PathCompletions('~\code', 'Directory', $true)]
     [string]$Path
