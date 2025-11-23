@@ -109,14 +109,9 @@ function Restore-Repository {
     [switch]$StopError
   )
 
-  $Reset = @{
-    Path      = $Path
-    StopError = $true
-  }
-  $Pull = @{
-    Path      = $Path
-    StopError = $StopError
-  }
-
-  (Reset-Repository @Reset @args) && (Get-Repository @Pull)
+  (
+    Reset-Repository @PSBoundParameters @args -StopError
+  ) && (
+    Get-Repository @PSBoundParameters
+  )
 }

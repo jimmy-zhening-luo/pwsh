@@ -14,9 +14,7 @@ function Get-Repository {
     [switch]$StopError
   )
 
-  $Pull = @{
-    Verb = 'pull'
-  }
+  $Pull = @{ Verb = 'pull' }
 
   Invoke-Repository @Pull @PSBoundParameters @args
 }
@@ -31,17 +29,18 @@ This function retrieves all child repositories in '~\code\' and pulls changes fr
 https://git-scm.com/docs/git-pull
 #>
 function Get-ChildRepository {
-  $Pull = @{
-    Verb = 'pull'
-  }
-  $Repositories = Get-ChildItem -Path '~\code' -Directory |
-    ? { Resolve-Repository -Path $_.FullName } |
-    ? { -not [string]::IsNullOrEmpty($_) }
+  $Pull = @{ Verb = 'pull' }
+  $Repositories = Get-ChildItem -Path "$HOME\code" -Directory |
+    Select-Object -ExpandProperty FullName
+    ? { Resolve-Repository -Path $_ } |
+    ? { $_ }
 
   $Repositories |
-    % { Invoke-Repository -Path $_.FullName @Pull @args }
+    % { Invoke-Repository -Path $_ @Pull @args }
+  $Print = @{
+    Noun = 'repository/repositories'
+    Count = $Repositories.Count
+  }
 
-  "`nPulled $(
-    Format-Count -Noun repository/repositories -Count $Repositories.Count
-  )."
+  "`nPulled $(Format-Count @Print)."
 }

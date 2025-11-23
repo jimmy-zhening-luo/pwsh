@@ -16,25 +16,26 @@ function Import-Repository {
     [switch]$StopError
   )
 
-  $RepositoryPath = $Repository -split '/' |
-    % { $_.Trim() } |
-    ? { -not [string]::IsNullOrEmpty($_) }
+  if ($Path -and $Path.StartsWith('-')) {
+    $args = , $Path + $args
+    $Path = ''
+  }
 
-  if (-not $RepositoryPath) {
+  $RepositoryPathParts = $Repository -split '/' |
+    ? { -not [string]::IsNullOrWhiteSpace($_) }
+
+  if (-not $RepositoryPathParts) {
     throw 'No repository name given.'
   }
 
-  if ($RepositoryPath.Count -eq 1) {
-    $RepositoryPath = , 'jimmy-zhening-luo' + $RepositoryPath
+  if ($RepositoryPathParts.Count -eq 1) {
+    $RepositoryPathParts = , 'jimmy-zhening-luo' + $RepositoryPathParts
   }
 
-  $Scheme = $ForceSsh ? 'git@github.com:' : 'https://github.com/'
-  $args = , ($Scheme + ($RepositoryPath -join '/')) + $args
+  $Protocol = $ForceSsh ? 'git@github.com:' : 'https://github.com/'
+  $Origin = $Protocol + ($RepositoryPathParts -join '/')
+  $args = , $Origin + $args
 
-  if ($Path -and $Path.StartsWith('-')) {
-    $args += $Path
-    $Path = ''
-  }
 
   $Clone = @{
     Path      = $Path

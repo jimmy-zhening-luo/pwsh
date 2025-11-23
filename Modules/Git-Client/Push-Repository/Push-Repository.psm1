@@ -14,11 +14,7 @@ function Push-Repository {
     [switch]$StopError
   )
 
-  $Push = @{
-    Path      = $Path
-    Verb      = 'push'
-    StopError = $StopError
-  }
+  $Push = @{ Verb = 'push' }
 
-  Invoke-Repository @Push @args
+  Invoke-Repository @Push @PSBoundParameters @args
 }
