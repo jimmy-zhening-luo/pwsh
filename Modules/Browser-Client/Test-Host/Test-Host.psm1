@@ -2,13 +2,10 @@ New-Alias tn Test-Host
 function Test-Host {
   [OutputType([Object])]
   param(
-    [Parameter(Mandatory)]
     [Alias('ComputerName', 'RemoteAddress', 'cn')]
     [string]$HostName,
     [Alias('RemotePort', 'p')]
-    [string]$Port,
-    [Parameter(ValueFromRemainingArguments)]
-    [string[]]$Arguments
+    [string]$Port
   )
 
   if ($Hostname -match '^\s*\d{1,5}\s*$' -and $Hostname -as [uint16]) {
@@ -29,9 +26,9 @@ function Test-Host {
       $Target.Port = [uint16]$Port
     }
     else {
-      $Arguments = , $Port + $Arguments
+      $args = , $Port + $args
     }
   }
 
-  Test-NetConnection @Target @Arguments
+  Test-NetConnection @Target @args
 }
