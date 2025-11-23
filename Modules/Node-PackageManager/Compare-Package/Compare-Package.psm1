@@ -14,7 +14,7 @@ function Compare-Package {
   )
 
   if ($Path) {
-    $AbsolutePath = Resolve-NodeProject $Path
+    $AbsolutePath = Resolve-NodeProject @PSBoundParameters
 
     if ($AbsolutePath) {
       & npm outdated --prefix $AbsolutePath

@@ -29,14 +29,12 @@ function Import-Repository {
   }
 
   $Scheme = $ForceSsh ? 'git@github.com:' : 'https://github.com/'
-  $GitArguments = , ($Scheme + ($RepositoryPath -join '/'))
+  $args = , ($Scheme + ($RepositoryPath -join '/')) + $args
 
   if ($Path -and $Path.StartsWith('-')) {
-    $GitArguments += $Path
+    $args += $Path
     $Path = ''
   }
-
-  $GitArguments += $args
 
   $Clone = @{
     Path      = $Path
@@ -44,5 +42,5 @@ function Import-Repository {
     StopError = $StopError
   }
 
-  Invoke-Repository @Clone @GitArguments
+  Invoke-Repository @Clone @args
 }

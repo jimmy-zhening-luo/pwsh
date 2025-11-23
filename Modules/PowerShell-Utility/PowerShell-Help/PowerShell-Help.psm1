@@ -27,6 +27,10 @@ function Get-HelpOnline {
   }
 
   $Topic = $Name -join '_'
+  $Query = @{
+    Name = $Topic
+    ErrorAction = 'SilentlyContinue'
+  }
   $Help = ''
   $HelpLink = ''
   $Articles = @()
@@ -43,10 +47,7 @@ function Get-HelpOnline {
     }
   }
   else {
-    $Suppress = @{
-      ErrorAction = 'SilentlyContinue'
-    }
-    $Help = Get-Help -Name $Topic @Suppress
+    $Help = Get-Help @Query
 
     if ($Help -and $Help.Count -gt 1) {
       $Help = ''
@@ -60,7 +61,7 @@ function Get-HelpOnline {
     }
 
     if ($Help -and $Parameter) {
-      $ParameterHelp = Get-Help -Name $Topic -Parameter $Parameter @Suppress
+      $ParameterHelp = Get-Help @Query -Parameter $Parameter
 
       if ($ParameterHelp) {
         $Help = $ParameterHelp
@@ -106,7 +107,7 @@ function Get-HelpOnline {
         }
 
         if ($about_Article) {
-          $Help = Get-Help -Name $about_Topic @Suppress
+          $Help = Get-Help @Query -Name $about_Topic
         }
       }
 
@@ -133,7 +134,7 @@ function Get-HelpOnline {
     }
     else {
       if ($Help) {
-        [void](Get-Help -Name $Topic -Online 2>&1)
+        [void](Get-Help @Query 2>&1)
       }
     }
   }

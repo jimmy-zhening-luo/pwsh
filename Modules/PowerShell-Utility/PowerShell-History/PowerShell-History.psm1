@@ -3,5 +3,12 @@ function Edit-History {
   [OutputType([void])]
   param()
 
-  Edit-Item -Path (Get-PSReadLineOption).HistorySavePath -ProfileName PowerShell -CreateWindow @args
+  $File = @{
+    Path = Get-PSReadLineOption |
+      Select-Object -ExpandProperty HistorySavePath
+    ProfileName = 'PowerShell'
+    CreateWindow = $true
+  }
+
+  Edit-Item @File
 }

@@ -35,7 +35,7 @@ function Open-Url {
   )
 
   $Browser = @{
-    FilePath     = 'C:\Program Files\Google\Chrome\Application\chrome.exe'
+    FilePath = 'C:\Program Files\Google\Chrome\Application\chrome.exe'
     ArgumentList = $Argument
   }
 

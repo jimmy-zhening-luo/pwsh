@@ -15,12 +15,10 @@ function Get-Repository {
   )
 
   $Pull = @{
-    Path      = $Path
-    Verb      = 'pull'
-    StopError = $StopError
+    Verb = 'pull'
   }
 
-  Invoke-Repository @Pull @args
+  Invoke-Repository @Pull @PSBoundParameters @args
 }
 
 New-Alias gpa Get-ChildRepository

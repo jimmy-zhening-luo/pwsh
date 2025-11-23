@@ -14,9 +14,7 @@ function ConvertTo-Hex {
     $Hex | % { $_.ToLower() }
   }
 
-  if ($Hex) {
-    $Hex
-  }
+  if ($Hex) { $Hex }
 }
 
 New-Alias hexl ConvertTo-HexLower

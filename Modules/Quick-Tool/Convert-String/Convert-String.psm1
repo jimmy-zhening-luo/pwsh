@@ -27,7 +27,7 @@ function Format-Count {
 
   $Nouns = $Noun.Contains('/') ? $Noun.Split('/', 2) : @(
     $Noun,
-    "$($Noun)s"
+    $Noun + "s"
   )
 
   $Count = $Count |
