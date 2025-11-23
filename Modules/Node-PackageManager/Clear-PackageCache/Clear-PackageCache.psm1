@@ -8,5 +8,5 @@ This function is an alias for 'npm cache clean --force [--prefix=$Path]'.
 https://docs.npmjs.com/cli/commands/npm-cache
 #>
 function Clear-PackageCache {
-  & npm cache clean --force $args
+  & npm cache clean --force @args
 }
