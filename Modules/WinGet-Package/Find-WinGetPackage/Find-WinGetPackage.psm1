@@ -12,7 +12,7 @@ function Find-WinGetPackage {
   param()
 
   if ($args) {
-    & winget search @args
+    & winget search $args
   }
   else {
     & winget list

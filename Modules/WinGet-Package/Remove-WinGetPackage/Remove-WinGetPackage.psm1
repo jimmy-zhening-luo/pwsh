@@ -11,5 +11,5 @@ function Remove-WinGetPackage {
   [OutputType([string[]])]
   param()
 
-  & winget uninstall @args
+  & winget uninstall $args
 }
