@@ -76,7 +76,6 @@ function Test-Url {
   }
   catch {
     $Status = $_.Exception.Response.StatusCode.value__
-    $Status
   }
 
   $Status -ge 200 -and $Status -lt 300
