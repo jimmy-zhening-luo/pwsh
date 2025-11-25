@@ -12,9 +12,8 @@ function Expand-Query {
     )
   }
 
-  return $Tokens -join '+'
+  $Tokens -join '+'
 }
-
 
 New-Alias search Search-Query
 New-Alias g Search-Query
@@ -23,9 +22,8 @@ function Search-Query {
   [OutputType([void], [string])]
   param([string[]]$Terms)
 
-  $Terms += $args
-
-  $QueryString = Expand-Query -Terms $Terms
+  $PSBoundParameters.Terms += $args
+  $QueryString = Expand-Query @PSBoundParameters
   $QueryUri = [System.UriBuilder]::new(
     'https',
     'www.google.com',
@@ -49,9 +47,8 @@ function Search-Map {
   [OutputType([void], [string])]
   param([string[]]$Terms)
 
-  $Terms += $args
-
-  $QueryString = Expand-Query -Terms $Terms
+  $PSBoundParameters.Terms += $args
+  $QueryString = Expand-Query @PSBoundParameters
   $QueryUri = [System.UriBuilder]::new(
     'https',
     'www.google.com',

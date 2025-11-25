@@ -10,7 +10,7 @@ function Invoke-Repository {
   param(
     [string]$Path,
     [string]$Verb,
-    [switch]$StopError
+    [switch]$Throw
   )
 
   $GitArguments = , '-C'
@@ -128,8 +128,8 @@ function Invoke-Repository {
 
   $GitArguments += $GitOptions
 
-  if ($StopError) {
-    $GitOutput = & git $GitArguments $args 2>&1
+  if ($Throw) {
+    $GitOutput = & git $GitArguments @args 2>&1
 
     if (($GitOutput -as [string]).StartsWith('fatal:')) {
       throw $GitOutput
@@ -139,7 +139,7 @@ function Invoke-Repository {
     }
   }
   else {
-    & git $GitArguments $args
+    & git $GitArguments @args
   }
 }
 

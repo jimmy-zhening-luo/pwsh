@@ -90,11 +90,7 @@ function Get-HelpOnline {
 
           $about_Article = "$ABOUT_ARTICLE_ROOT/$about_Topic"
 
-          if (Test-Url $about_Article) {
-            return $about_Article
-          }
-
-          return ''
+          (Test-Url $about_Article) ? $about_Article : ''
         }
 
         $about_Article = Resolve-AboutArticle $about_Topic

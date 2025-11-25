@@ -11,7 +11,7 @@ https://git-scm.com/docs/git-push
 function Push-Repository {
   param(
     [string]$Path,
-    [switch]$StopError
+    [switch]$Throw
   )
 
   $Push = @{ Verb = 'push' }

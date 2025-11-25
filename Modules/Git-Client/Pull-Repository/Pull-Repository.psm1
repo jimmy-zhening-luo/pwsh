@@ -11,7 +11,7 @@ https://git-scm.com/docs/git-pull
 function Get-Repository {
   param(
     [string]$Path,
-    [switch]$StopError
+    [switch]$Throw
   )
 
   $Pull = @{ Verb = 'pull' }

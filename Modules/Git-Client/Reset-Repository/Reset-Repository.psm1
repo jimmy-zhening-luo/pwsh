@@ -12,7 +12,7 @@ function Reset-Repository {
   param(
     [string]$Path,
     [string]$Tree,
-    [switch]$StopError
+    [switch]$Throw
   )
 
   if (
@@ -26,69 +26,27 @@ function Reset-Repository {
   }
 
   if ($Tree) {
-    if ($Tree -as [uint32]) {
-      $Tree = "HEAD~$($Tree -as [uint32])"
+    if (
+      $Tree -match '^(?>head)?(?<Branching>\^|~|)(?<Step>\d{0,10})' -and (
+        -not $Matches.Step -or $Matches.Step -as [uint32]
+      )
+    ) {
+      $Tree = 'HEAD' + $Matches.Branching + $Matches.Step
     }
-    elseif ($Tree.StartsWith('~')) {
-      if ($Tree -eq '~') {
-        $Tree = 'HEAD~'
-      }
-      elseif ($Tree.Substring(1) -as [uint32]) {
-        $Tree = "HEAD~$($Tree.Substring(1) -as [uint32])"
-      }
-    }
-    elseif ($Tree.StartsWith('^')) {
-      if ($Tree -eq '^') {
-        $Tree = 'HEAD^'
-      }
-      elseif ($Tree.Substring(1) -as [uint32]) {
-        $Tree = "HEAD^$($Tree.Substring(1) -as [uint32])"
-      }
-    }
-    elseif ($Tree.ToUpperInvariant().StartsWith('HEAD')) {
-      if ($Tree.Length -eq 4) {
-        $Tree = ''
-      }
-      elseif ($Tree[4] -eq '~') {
-        if ($Tree.Length -eq 5) {
-          $Tree = 'HEAD~'
-        }
-        elseif ($Tree.Substring(5) -as [uint32]) {
-          $Tree = "HEAD~$($Tree.Substring(5) -as [uint32])"
-        }
-      }
-      elseif ($Tree[4] -eq '^') {
-        if ($Tree.Length -eq 5) {
-          $Tree = 'HEAD^'
-        }
-        elseif ($Tree.Substring(5) -as [uint32]) {
-          $Tree = "HEAD^$($Tree.Substring(5) -as [uint32])"
-        }
-      }
-      elseif ($Tree.Substring(4) -as [uint32]) {
-        $Tree = "HEAD~$($Tree.Substring(4) -as [uint32])"
-      }
+    else {
+      $args = , $Tree + $args
+      $Tree = ''
     }
   }
 
-  $Add = @{
-    Path      = $Path
-    StopError = $true
+  $args = , '--hard' + $args
+  $Parameters = @{
+    Path = $Path
+    Throw = $Throw
   }
-  $Reset = @{
-    Path      = $Path
-    Verb      = 'reset'
-    StopError = $StopError
-  }
-  $ResetArguments = , '--hard'
+  $Reset = @{ Verb = 'reset' }
 
-  if ($Tree) {
-    $ResetArguments += $Tree
-  }
-
-  $ResetArguments += $args
-
-  (Add-Repository @Add) && (Invoke-Repository @Reset @ResetArguments)
+  Add-Repository @Parameters -Throw && Invoke-Repository @Parameters @Reset @args
 }
 
 New-Alias gitrp Restore-Repository
@@ -106,12 +64,8 @@ https://git-scm.com/docs/git-pull
 function Restore-Repository {
   param(
     [string]$Path,
-    [switch]$StopError
+    [switch]$Throw
   )
 
-  (
-    Reset-Repository @PSBoundParameters @args -StopError
-  ) && (
-    Get-Repository @PSBoundParameters
-  )
+  Reset-Repository @PSBoundParameters -Throw @args && Get-Repository @PSBoundParameters
 }

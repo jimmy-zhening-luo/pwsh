@@ -8,8 +8,5 @@ This function is an alias for 'winget upgrade'.
 https://learn.microsoft.com/en-us/windows/package-manager/winget/upgrade
 #>
 function Update-WinGetPackage {
-  [OutputType([string[]])]
-  param()
-
-  & winget upgrade $args
+  & winget upgrade @args
 }

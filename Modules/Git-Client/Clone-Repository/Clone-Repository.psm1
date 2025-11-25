@@ -11,12 +11,11 @@ function Import-Repository {
   param(
     [string]$Repository,
     [string]$Path,
-    [Alias('fs', 'ssh', 'sh')]
-    [switch]$ForceSsh,
-    [switch]$StopError
+    [switch]$Throw,
+    [switch]$ForceSsh
   )
 
-  if ($Path -and $Path.StartsWith('-')) {
+  if ($Path.StartsWith('-')) {
     $args = , $Path + $args
     $Path = ''
   }
@@ -38,9 +37,9 @@ function Import-Repository {
 
 
   $Clone = @{
-    Path      = $Path
-    Verb      = 'clone'
-    StopError = $StopError
+    Path = $Path
+    Verb = 'clone'
+    Throw = $Throw
   }
 
   Invoke-Repository @Clone @args

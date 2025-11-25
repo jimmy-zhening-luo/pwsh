@@ -12,30 +12,24 @@ function Write-Repository {
   param(
     [string]$Path,
     [string]$Message,
-    [Alias('empty', 'ae')]
-    [switch]$AllowEmpty,
-    [switch]$StopError
+    [switch]$Throw,
+    [switch]$AllowEmpty
   )
+
+  if ($Message) {
+    $args = , $Message + $args
+  }
 
   $CommitArguments, $Messages = $args.Where(
     { $_ -and $_ -is [string] }
   ).Where(
-    { $_.StartsWith('--') },
+    { $_ -match '^-(?>\w|-\w+)$' },
     'Split'
   )
 
-  if ($Message) {
-    if ($Message.StartsWith('--')) {
-      $CommitArguments = , $Message + $CommitArguments
-    }
-    else {
-      $Messages = , $Message + $Messages
-    }
-  }
-
   if ($Path) {
     if (-not (Resolve-Repository -Path $Path)) {
-      if ($Path.StartsWith('--')) {
+      if ($Path -match '^-(?>\w|-\w+)$') {
         $CommitArguments = , $Path + $CommitArguments
       }
       else {
@@ -46,15 +40,15 @@ function Write-Repository {
     }
   }
 
-  $AllowEmptyFlag = '--allow-empty'
+  $fAllowEmpty = '--allow-empty'
 
   if ($AllowEmpty) {
-    if ($AllowEmptyFlag -notin $CommitArguments) {
-      $CommitArguments += $AllowEmptyFlag
+    if ($fAllowEmpty -notin $CommitArguments) {
+      $CommitArguments += $fAllowEmpty
     }
   }
   else {
-    if ($AllowEmptyFlag -in $CommitArguments) {
+    if ($fAllowEmpty -in $CommitArguments) {
       $AllowEmpty = $true
     }
   }
@@ -68,20 +62,12 @@ function Write-Repository {
     }
   }
 
-  $Add = @{
-    Path      = $Path
-    StopError = $true
+  $Parameters = @{
+    Path = $Path
+    Throw = $Throw
   }
-  $Commit = @{
-    Path      = $Path
-    Verb      = 'commit'
-    StopError = $StopError
-  }
-  $MessageString = $Messages -join ' '
+  $Commit = @{ Verb = 'commit' }
+  $CommitArguments = '-m', ($Messages -join ' ') + $CommitArguments
 
-  (
-    Add-Repository @Add
-  ) && (
-    Invoke-Repository @Commit -m $MessageString @CommitArguments
-  )
+  Add-Repository @Parameters -Throw && Invoke-Repository @Parameters @Commit @CommitArguments
 }
