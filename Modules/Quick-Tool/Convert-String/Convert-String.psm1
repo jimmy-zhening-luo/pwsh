@@ -14,7 +14,8 @@ function Format-Count {
 
   if ($Noun -as [int]) {
     if ($Count) {
-      $Noun, $Count = $Count[-1], (, $Noun + $Count[0..($Count.Count - 2)])
+      $Count = , $Noun + $Count
+      $Noun, $Count = $Count[-1], $Count[0..($Count.Count - 2)]
     }
     else {
       $Noun, $Count = 'item', (, $Noun)
@@ -27,7 +28,7 @@ function Format-Count {
 
   $Nouns = $Noun.Contains('/') ? $Noun.Split('/', 2) : @(
     $Noun
-    ($Noun + "s")
+    ($Noun + 's')
   )
 
   $Count = $Count |
