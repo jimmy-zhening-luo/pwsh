@@ -19,15 +19,17 @@ function Invoke-Script {
     throw 'No script name provided'
   }
 
+  $Local:args = $args
+
   if ($Path.StartsWith(('-'))) {
-    $Path, $args = '', (, $Path + $args)
+    $Path, $Local:args = '', (, $Path + $Local:args)
   }
 
   $Prefix = Resolve-NodeProject @PSBoundParameters -ErrorAction Stop
 
   if ($Prefix) {
-    $args = '--prefix', $Prefix + $args
+    $Local:args = '--prefix', $Prefix + $Local:args
   }
 
-  & npm run $Script @args
+  & npm run $Script @Local:args
 }

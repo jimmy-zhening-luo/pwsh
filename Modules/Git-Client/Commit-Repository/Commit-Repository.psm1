@@ -16,11 +16,13 @@ function Write-Repository {
     [switch]$AllowEmpty
   )
 
+  $Local:args = $args
+
   if ($Message) {
-    $args = , $Message + $args
+    $Local:args = , $Message + $Local:args
   }
 
-  $CommitArguments, $Messages = $args.Where(
+  $CommitArguments, $Messages = $Local:args.Where(
     { $_ -and $_ -is [string] }
   ).Where(
     { $_ -match '^-(?>\w|-\w+)$' },

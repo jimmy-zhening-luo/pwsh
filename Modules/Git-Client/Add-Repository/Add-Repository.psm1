@@ -16,15 +16,16 @@ function Add-Repository {
     [switch]$Renormalize
   )
 
+  $Local:args = $args
   $All = '.'
   $fRenormalize = '--renormalize'
 
   if ($All -notin $args) {
-    $args = , $All + $args
+    $Local:args = , $All + $Local:args
   }
 
   if ($Renormalize -and $fRenormalize -notin $args) {
-    $args += $fRenormalize
+    $Local:args += $fRenormalize
   }
 
   $Add = @{
@@ -33,5 +34,5 @@ function Add-Repository {
     Throw = $Throw
   }
 
-  Invoke-Repository @Add @args
+  Invoke-Repository @Add @Local:args
 }

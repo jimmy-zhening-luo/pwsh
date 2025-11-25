@@ -25,6 +25,8 @@ function Reset-Repository {
     $Path, $Tree = '', $Path
   }
 
+  $Local:args = $args
+
   if ($Tree) {
     if (
       $Tree -match '^(?>head)?(?<Branching>\^|~|)(?<Step>\d{0,10})' -and (
@@ -36,17 +38,17 @@ function Reset-Repository {
       $Tree = 'HEAD' + $Branching + $Step
     }
 
-    $args = , $Tree + $args
+    $Local:args = , $Tree + $Local:args
   }
 
-  $args = , '--hard' + $args
+  $Local:args = , '--hard' + $Local:args
   $Parameters = @{
     Path  = $Path
     Throw = $Throw
   }
   $Reset = @{ Verb = 'reset' }
 
-  Add-Repository @Parameters -Throw && Invoke-Repository @Parameters @Reset @args
+  Add-Repository @Parameters -Throw && Invoke-Repository @Parameters @Reset @Local:args
 }
 
 New-Alias gitrp Restore-Repository

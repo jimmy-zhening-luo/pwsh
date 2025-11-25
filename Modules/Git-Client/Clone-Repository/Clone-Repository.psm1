@@ -15,8 +15,10 @@ function Import-Repository {
     [switch]$ForceSsh
   )
 
+  $Local:args = $args
+
   if ($Path.StartsWith('-')) {
-    $args = , $Path + $args
+    $Local:args = , $Path + $Local:args
     $Path = ''
   }
 
@@ -33,7 +35,7 @@ function Import-Repository {
 
   $Protocol = $ForceSsh ? 'git@github.com:' : 'https://github.com/'
   $Origin = $Protocol + ($RepositoryPathParts -join '/')
-  $args = , $Origin + $args
+  $Local:args = , $Origin + $Local:args
 
 
   $Clone = @{
@@ -42,5 +44,5 @@ function Import-Repository {
     Throw = $Throw
   }
 
-  Invoke-Repository @Clone @args
+  Invoke-Repository @Clone @Local:args
 }

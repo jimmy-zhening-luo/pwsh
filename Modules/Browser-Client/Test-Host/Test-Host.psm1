@@ -20,14 +20,16 @@ function Test-Host {
     ComputerName = $HostName
   }
 
+  $Local:args = $args
+
   if ($Port) {
     if ($Port -as [uint16]) {
       $Target.Port = [uint16]$Port
     }
     else {
-      $args = , $Port + $args
+      $Local:args = , $Port + $Local:args
     }
   }
 
-  Test-NetConnection @Target @args
+  Test-NetConnection @Target @Local:args
 }

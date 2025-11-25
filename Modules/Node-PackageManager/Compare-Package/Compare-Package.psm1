@@ -13,11 +13,12 @@ function Compare-Package {
     [string]$Path
   )
 
+  $Local:args = $args
   $Prefix = Resolve-NodeProject @PSBoundParameters -ErrorAction Stop
 
   if ($Prefix) {
-    $args = '--prefix', $Prefix + $args
+    $Local:args = '--prefix', $Prefix + $Local:args
   }
 
-  & npm outdated @args
+  & npm outdated @Local:args
 }
