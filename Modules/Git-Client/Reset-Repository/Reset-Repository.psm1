@@ -33,10 +33,8 @@ function Reset-Repository {
     ) {
       $Tree = 'HEAD' + $Matches.Branching + $Matches.Step
     }
-    else {
-      $args = , $Tree + $args
-      $Tree = ''
-    }
+
+    $args = , $Tree + $args
   }
 
   $args = , '--hard' + $args
