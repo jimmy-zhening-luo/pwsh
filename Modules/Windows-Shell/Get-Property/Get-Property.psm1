@@ -5,7 +5,6 @@ New-Alias hash Get-FileHash
 
 New-Alias size Get-FileSize
 function Get-FileSize {
-  [OutputType([double])]
   param(
     [Parameter(
       ValueFromPipeline,

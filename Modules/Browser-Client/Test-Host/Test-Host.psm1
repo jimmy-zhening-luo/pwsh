@@ -1,6 +1,5 @@
 New-Alias tn Test-Host
 function Test-Host {
-  [OutputType([Object])]
   param(
     [Alias('ComputerName', 'RemoteAddress', 'cn')]
     [string]$HostName,

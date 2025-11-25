@@ -10,11 +10,6 @@ $ABOUT_ARTICLE_ROOT = 'https://learn.microsoft.com/powershell/module/microsoft.p
 
 New-Alias m Get-HelpOnline
 function Get-HelpOnline {
-  [OutputType(
-    [void],
-    [string[]],
-    [Object[]]
-  )]
   param(
     [string[]]$Name,
     [Alias('params', 'args', 'Argument')]
@@ -85,7 +80,6 @@ function Get-HelpOnline {
         $about_Topic = $Topic -replace '[-_ :]+', '_' -replace '^(?:about)?_?', 'about_'
 
         function Resolve-AboutArticle {
-          [OutputType([string])]
           param([string]$about_Topic)
 
           $about_Article = "$ABOUT_ARTICLE_ROOT/$about_Topic"

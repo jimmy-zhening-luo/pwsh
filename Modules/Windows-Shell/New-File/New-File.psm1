@@ -6,7 +6,6 @@ function New-Directory {
     SupportsShouldProcess,
     SupportsTransactions
   )]
-  [OutputType([System.IO.DirectoryInfo])]
   param(
     [Parameter(
       ParameterSetName = 'nameSet',

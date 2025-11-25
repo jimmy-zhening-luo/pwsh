@@ -1,6 +1,5 @@
 New-Alias cl Clear-Line
 function Clear-Line {
-  [OutputType([void])]
   param(
     [PathCompletions('.')]
     [string]$Path

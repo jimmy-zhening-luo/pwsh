@@ -1,8 +1,5 @@
 New-Alias op Edit-Profile
 function Edit-Profile {
-  [OutputType([void])]
-  param()
-
   Edit-Code -Path 'pwsh' -ProfileName PowerShell @args
 }
 

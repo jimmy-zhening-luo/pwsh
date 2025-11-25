@@ -77,7 +77,6 @@ function Write-Home {
 
 New-Alias wc Write-Code
 function Write-Code {
-  [OutputType([void])]
   param (
     [PathCompletions('~\code')]
     [string[]]$Path,

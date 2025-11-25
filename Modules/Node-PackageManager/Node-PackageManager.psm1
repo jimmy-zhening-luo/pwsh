@@ -1,5 +1,4 @@
 function Resolve-NodeProject {
-  [OutputType([string])]
   param([string]$Path)
 
   if (-not $Path) {

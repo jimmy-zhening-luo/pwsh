@@ -1,7 +1,6 @@
 New-Alias open Open-Url
 New-Alias go Open-Url
 function Open-Url {
-  [OutputType([void])]
   [CmdletBinding(DefaultParameterSetName = 'Path')]
   param(
     [Parameter(

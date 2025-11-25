@@ -144,7 +144,6 @@ function Invoke-Repository {
 }
 
 function Resolve-Repository {
-  [OutputType([string])]
   param(
     [string]$Path,
     [Alias('Clone')]

@@ -1,5 +1,4 @@
 function Remove-Directory {
-  [OutputType([void])]
   [CmdletBinding(SupportsShouldProcess)]
   param(
     [Parameter(

@@ -1,6 +1,5 @@
 New-Alias i Edit-Item
 function Edit-Item {
-  [OutputType([void])]
   param(
     [PathCompletions('.')]
     [string]$Path,

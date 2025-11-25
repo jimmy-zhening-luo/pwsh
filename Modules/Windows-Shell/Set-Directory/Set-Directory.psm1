@@ -1,6 +1,5 @@
 New-Alias c Set-Directory
 function Set-Directory {
-  [OutputType([void])]
   param (
     [PathCompletions('.', 'Directory')]
     [string]$Path
@@ -17,7 +16,6 @@ function Set-Directory {
 New-Alias c. Set-Sibling
 New-Alias .. Set-Sibling
 function Set-Sibling {
-  [OutputType([void])]
   param (
     [PathCompletions('..', 'Directory')]
     [string]$Path
@@ -29,7 +27,6 @@ function Set-Sibling {
 New-Alias c.. Set-Relative
 New-Alias ... Set-Relative
 function Set-Relative {
-  [OutputType([void])]
   param (
     [PathCompletions('..\..', 'Directory')]
     [string]$Path
@@ -40,7 +37,6 @@ function Set-Relative {
 
 New-Alias c~ Set-Home
 function Set-Home {
-  [OutputType([void])]
   param (
     [PathCompletions('~', 'Directory')]
     [string]$Path
@@ -51,7 +47,6 @@ function Set-Home {
 
 New-Alias cc Set-Code
 function Set-Code {
-  [OutputType([void])]
   param (
     [PathCompletions('~\code', 'Directory')]
     [string]$Path
@@ -63,7 +58,6 @@ function Set-Code {
 New-Alias c\ Set-Drive
 New-Alias c/ Set-Drive
 function Set-Drive {
-  [OutputType([void])]
   param (
     [PathCompletions('\', 'Directory')]
     [string]$Path
@@ -75,7 +69,6 @@ function Set-Drive {
 New-Alias d\ Set-DriveD
 New-Alias d/ Set-DriveD
 function Set-DriveD {
-  [OutputType([void])]
   param (
     [PathCompletions('D:\', 'Directory')]
     [string]$Path

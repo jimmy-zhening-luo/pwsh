@@ -92,7 +92,6 @@ function Read-Home {
 
 New-Alias pc Read-Code
 function Read-Code {
-  [OutputType([void])]
   param (
     [PathCompletions('~\code')]
     [string]$Path

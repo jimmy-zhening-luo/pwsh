@@ -1,6 +1,5 @@
 New-Alias guid Copy-Guid
 function Copy-Guid {
-  [OutputType([void], [string])]
   param(
     [Alias('Case', 'uc')]
     [switch]$Uppercase,

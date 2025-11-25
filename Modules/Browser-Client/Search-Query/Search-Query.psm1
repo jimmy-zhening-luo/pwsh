@@ -19,7 +19,6 @@ New-Alias search Search-Query
 New-Alias g Search-Query
 
 function Search-Query {
-  [OutputType([void], [string])]
   param([string[]]$Terms)
 
   $PSBoundParameters.Terms += $args
@@ -44,7 +43,6 @@ New-Alias maps Search-Map
 New-Alias map Search-Map
 
 function Search-Map {
-  [OutputType([void], [string])]
   param([string[]]$Terms)
 
   $PSBoundParameters.Terms += $args

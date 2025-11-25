@@ -1,9 +1,5 @@
 New-Alias l Get-Directory
 function Get-Directory {
-  [OutputType(
-    [System.IO.DirectoryInfo[]],
-    [System.IO.FileInfo[]])
-  ]
   param (
     [PathCompletions('.', 'Directory')]
     [string]$Path
@@ -19,10 +15,6 @@ function Get-Directory {
 
 New-Alias l. Get-Sibling
 function Get-Sibling {
-  [OutputType(
-    [System.IO.DirectoryInfo[]],
-    [System.IO.FileInfo[]])
-  ]
   param (
     [PathCompletions('..', 'Directory')]
     [string]$Path
@@ -33,10 +25,6 @@ function Get-Sibling {
 
 New-Alias l.. Get-Relative
 function Get-Relative {
-  [OutputType(
-    [System.IO.DirectoryInfo[]],
-    [System.IO.FileInfo[]])
-  ]
   param (
     [PathCompletions('..\..', 'Directory')]
     [string]$Path
@@ -47,10 +35,6 @@ function Get-Relative {
 
 New-Alias l~ Get-Home
 function Get-Home {
-  [OutputType(
-    [System.IO.DirectoryInfo[]],
-    [System.IO.FileInfo[]])
-  ]
   param (
     [PathCompletions('~', 'Directory')]
     [string]$Path
@@ -72,10 +56,6 @@ function Get-Code {
 New-Alias l\ Get-Drive
 New-Alias l/ Get-Drive
 function Get-Drive {
-  [OutputType(
-    [System.IO.DirectoryInfo[]],
-    [System.IO.FileInfo[]])
-  ]
   param (
     [PathCompletions('\', 'Directory')]
     [string]$Path

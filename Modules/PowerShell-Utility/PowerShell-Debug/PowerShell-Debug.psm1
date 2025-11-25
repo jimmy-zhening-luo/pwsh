@@ -1,8 +1,5 @@
 New-Alias mc Measure-Profile
 function Measure-Profile {
-  [OutputType([string])]
-  param()
-
   $Command = @{
     Command = '1'
   }

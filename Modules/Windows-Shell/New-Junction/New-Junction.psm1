@@ -4,7 +4,6 @@ function New-Junction {
     SupportsShouldProcess,
     SupportsTransactions
   )]
-  [OutputType([System.IO.DirectoryInfo])]
   param(
     [Parameter(
       ParameterSetName = 'pathSet',

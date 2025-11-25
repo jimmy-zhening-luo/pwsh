@@ -1,6 +1,5 @@
 New-Alias galc Get-AliasCommand
 function Get-AliasCommand {
-  [OutputType([System.Management.Automation.AliasInfo[]])]
   param(
     [Alias('Command')]
     [string]$Definition = '*'
