@@ -19,28 +19,28 @@ function Stop-Task {
     [string]$Id
   )
 
-  $Parameters = @{
+  $Task = @{
     Force = $true
   }
 
   if ($Id) {
-    $Parameters.Id = $Id -as [uint32]
+    $Task.Id = $Id -as [uint32]
   }
   else {
     if ($Name -match '^\s*\d{1,10}\s*$' -and $Name -as [uint32]) {
-      $Parameters.Id = $Name -as [uint32]
+      $Task.Id = $Name -as [uint32]
     }
     else {
-      $Parameters.Name = $Name
+      $Task.Name = $Name
     }
   }
 
   if (
     $PSCmdlet.ShouldProcess(
-      "Name:$($Parameters.Name) or Id:$($Parameters.Id)",
+      "Name:$($Task.Name) or Id:$($Task.Id)",
       'Stop-Process'
     )
   ) {
-    Stop-Process @Parameters
+    Stop-Process @Task
   }
 }

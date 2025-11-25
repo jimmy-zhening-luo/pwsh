@@ -5,10 +5,10 @@ function Get-AliasCommand {
     [string]$Definition = '*'
   )
 
-  $Parameters = @{
+  $Commands = @{
     Definition = $Definition.Contains('*') ? $Definition : $Definition.Length -lt 3 ? "$Definition*" : "*$Definition*"
   }
 
-  Get-Alias @Parameters @args |
+  Get-Alias @Commands @args |
     Select-Object DisplayName, Options, Source
 }

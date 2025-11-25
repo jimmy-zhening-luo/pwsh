@@ -21,11 +21,11 @@ Get-Verb
 function Get-VerbPowerShell {
   param([string]$Verb = '*')
 
-  $Parameters = @{
+  $Verbs = @{
     Verb = $Verb.Contains('*') ? $Verb : $Verb.Length -lt 3 ? "$Verb*" : "*$Verb*"
   }
 
-  Get-Verb @Parameters @args |
+  Get-Verb @Verbs @args |
     Sort-Object -Property Verb |
     Select-Object -ExpandProperty Verb
 }
