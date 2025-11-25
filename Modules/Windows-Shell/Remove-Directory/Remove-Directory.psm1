@@ -15,6 +15,6 @@ function Remove-Directory {
       'Remove-Item -Recurse -Force'
     )
   ) {
-    Remove-Item -Path $Path -Recurse -Force
+    Remove-Item @PSBoundParameters -Recurse -Force
   }
 }

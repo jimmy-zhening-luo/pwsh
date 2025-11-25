@@ -12,14 +12,14 @@ function Edit-Item {
     [string]$Location
   )
 
-  $ArgumentList = @()
+  $Local:args = $args
 
   if (
     $Location -and -not (
       Test-Path -Path $Location -PathType Container
     )
   ) {
-    $ArgumentList += $Location
+    $Local:args = , $Location + $Local:args
     $Location = ''
   }
 
@@ -29,7 +29,7 @@ function Edit-Item {
     if (Test-Path -Path $Target) {
       $FullPath = Resolve-Path $Target |
         Select-Object -ExpandProperty Path
-      $ArgumentList = , $FullPath + $ArgumentList
+      $Local:args = , $FullPath + $Local:args
     }
     else {
       if (-not $Path.StartsWith('-')) {
@@ -40,7 +40,7 @@ function Edit-Item {
         $Location = '.'
       }
 
-      $ArgumentList = $Location, $Path + $ArgumentList
+      $Local:args = $Location, $Path + $Local:args
     }
   }
   else {
@@ -48,7 +48,7 @@ function Edit-Item {
       $Location = '.'
     }
 
-    $ArgumentList = , $Location + $ArgumentList
+    $Local:args = , $Location + $Local:args
   }
 
   if ($env:SSH_CLIENT) {
@@ -59,25 +59,20 @@ function Edit-Item {
     if (-not $ProfileName.StartsWith('-')) {
       $Window = $true
 
-      $ArgumentList += '--profile'
+      $Local:args += '--profile'
     }
 
-    $ArgumentList += $ProfileName
+    $Local:args += $ProfileName
   }
 
   if ($Window) {
-    $ArgumentList += '--new-window'
+    $Local:args += '--new-window'
   }
   elseif ($ReuseWindow) {
-    $ArgumentList += '--reuse-window'
+    $Local:args += '--reuse-window'
   }
 
-  if ($ArgumentList) {
-    & code.cmd $ArgumentList
-  }
-  else {
-    & code.cmd
-  }
+  & code.cmd @Local:args
 }
 
 New-Alias i. Edit-Sibling
@@ -89,13 +84,16 @@ function Edit-Sibling {
     [Parameter(Position = 1)]
     [Alias('Name', 'pn')]
     [string]$ProfileName,
-    [Alias('Window')]
     [switch]$Window,
     [Alias('rw')]
     [switch]$ReuseWindow
   )
 
-  Edit-Item @PSBoundParameters -Location '..' @args
+  $Location = @{
+    Location = '..'
+  }
+
+  Edit-Item @PSBoundParameters @Location @args
 }
 
 New-Alias i.. Edit-Relative
@@ -107,13 +105,16 @@ function Edit-Relative {
     [Parameter(Position = 1)]
     [Alias('Name', 'pn')]
     [string]$ProfileName,
-    [Alias('Window')]
     [switch]$Window,
     [Alias('rw')]
     [switch]$ReuseWindow
   )
 
-  Edit-Item @PSBoundParameters -Location '..\..' @args
+  $Location = @{
+    Location = '..\..'
+  }
+
+  Edit-Item @PSBoundParameters @Location @args
 }
 
 New-Alias i~ Edit-Home
@@ -125,13 +126,16 @@ function Edit-Home {
     [Parameter(Position = 1)]
     [Alias('Name', 'pn')]
     [string]$ProfileName,
-    [Alias('Window')]
     [switch]$Window,
     [Alias('rw')]
     [switch]$ReuseWindow
   )
 
-  Edit-Item @PSBoundParameters -Location '~' @args
+  $Location = @{
+    Location = '~'
+  }
+
+  Edit-Item @PSBoundParameters @Location @args
 }
 
 New-Alias ic Edit-Code
@@ -143,13 +147,16 @@ function Edit-Code {
     [Parameter(Position = 1)]
     [Alias('Name', 'pn')]
     [string]$ProfileName,
-    [Alias('Window')]
     [switch]$Window,
     [Alias('rw')]
     [switch]$ReuseWindow
   )
 
-  Edit-Item @PSBoundParameters -Location '~\code' @args
+  $Location = @{
+    Location = '~\code'
+  }
+
+  Edit-Item @PSBoundParameters @Location @args
 }
 
 New-Alias i\ Edit-Drive
@@ -162,11 +169,14 @@ function Edit-Drive {
     [Parameter(Position = 1)]
     [Alias('Name', 'pn')]
     [string]$ProfileName,
-    [Alias('Window')]
     [switch]$Window,
     [Alias('rw')]
     [switch]$ReuseWindow
   )
 
-  Edit-Item @PSBoundParameters -Location '\' @args
+  $Location = @{
+    Location = '\'
+  }
+
+  Edit-Item @PSBoundParameters @Location @args
 }

@@ -6,7 +6,7 @@ function Set-Directory {
   )
 
   if ($Path) {
-    Set-Location -Path $Path @args
+    Set-Location @PSBoundParameters @args
   }
   else {
     Set-Location @args
@@ -21,7 +21,11 @@ function Set-Sibling {
     [string]$Path
   )
 
-  Set-Location -Path (Join-Path (Split-Path $PWD.Path) $Path)
+  $FullPath = @{
+    Path = Join-Path (Split-Path $PWD.Path) $Path
+  }
+
+  Set-Location @FullPath @args
 }
 
 New-Alias c.. Set-Relative
@@ -32,7 +36,11 @@ function Set-Relative {
     [string]$Path
   )
 
-  Set-Location -Path (Join-Path (Split-Path (Split-Path $PWD.Path)) $Path)
+  $FullPath = @{
+    Path = Join-Path (Split-Path (Split-Path $PWD.Path)) $Path
+  }
+
+  Set-Location @FullPath @args
 }
 
 New-Alias c~ Set-Home
@@ -42,7 +50,11 @@ function Set-Home {
     [string]$Path
   )
 
-  Set-Location -Path (Join-Path '~' $Path)
+  $FullPath = @{
+    Path = Join-Path '~' $Path
+  }
+
+  Set-Location @FullPath @args
 }
 
 New-Alias cc Set-Code
@@ -52,7 +64,11 @@ function Set-Code {
     [string]$Path
   )
 
-  Set-Location -Path (Join-Path '~\code' $Path)
+  $FullPath = @{
+    Path = Join-Path '~\code' $Path
+  }
+
+  Set-Location @FullPath @args
 }
 
 New-Alias c\ Set-Drive
@@ -63,7 +79,11 @@ function Set-Drive {
     [string]$Path
   )
 
-  Set-Location -Path (Join-Path '\' $Path)
+  $FullPath = @{
+    Path = Join-Path '\' $Path
+  }
+
+  Set-Location @FullPath @args
 }
 
 New-Alias d\ Set-DriveD
@@ -74,5 +94,9 @@ function Set-DriveD {
     [string]$Path
   )
 
-  Set-Location -Path (Join-Path 'D:\' $Path)
+  $FullPath = @{
+    Path = Join-Path 'D:\' $Path
+  }
+
+  Set-Location @FullPath @args
 }

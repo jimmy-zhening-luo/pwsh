@@ -6,7 +6,7 @@ function Get-Directory {
   )
 
   if ($Path) {
-    Get-ChildItem -Path $Path @args
+    Get-ChildItem @PSBoundParameters @args
   }
   else {
     Get-ChildItem @args
@@ -20,7 +20,11 @@ function Get-Sibling {
     [string]$Path
   )
 
-  Get-ChildItem -Path (Join-Path (Split-Path $PWD.Path) $Path) @args
+  $FullPath = @{
+    Path = Join-Path (Split-Path $PWD.Path) $Path
+  }
+
+  Get-ChildItem @FullPath @args
 }
 
 New-Alias l.. Get-Relative
@@ -30,7 +34,11 @@ function Get-Relative {
     [string]$Path
   )
 
-  Get-ChildItem -Path (Join-Path (Split-Path (Split-Path $PWD.Path)) $Path) @args
+  $FullPath = @{
+    Path = Join-Path (Split-Path (Split-Path $PWD.Path)) $Path
+  }
+
+  Get-ChildItem @FullPath @args
 }
 
 New-Alias l~ Get-Home
@@ -40,7 +48,11 @@ function Get-Home {
     [string]$Path
   )
 
-  Get-ChildItem -Path (Join-Path '~' $Path) @args
+  $FullPath = @{
+    Path = Join-Path '~' $Path
+  }
+
+  Get-ChildItem @FullPath @args
 }
 
 New-Alias lc Get-Code
@@ -50,7 +62,11 @@ function Get-Code {
     [string]$Path
   )
 
-  Get-ChildItem -Path (Join-Path '~\code' $Path) @args
+  $FullPath = @{
+    Path = Join-Path '~\code' $Path
+  }
+
+  Get-ChildItem @FullPath @args
 }
 
 New-Alias l\ Get-Drive
@@ -61,5 +77,9 @@ function Get-Drive {
     [string]$Path
   )
 
-  Get-ChildItem -Path (Join-Path '\' $Path) @args
+  $FullPath = @{
+    Path = Join-Path '\' $Path
+  }
+
+  Get-ChildItem @FullPath @args
 }

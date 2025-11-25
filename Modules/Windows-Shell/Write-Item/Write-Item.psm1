@@ -58,7 +58,11 @@ function Write-Sibling {
     [Object[]]$Value
   )
 
-  Write-Item @PSBoundParameters -Location '..' @args
+  $Location = @{
+    Location = '..'
+  }
+
+  Write-Item @PSBoundParameters @Location @args
 }
 
 New-Alias w.. Write-Relative
@@ -77,7 +81,11 @@ function Write-Relative {
     [Object[]]$Value
   )
 
-  Write-Item @PSBoundParameters -Location '..\..' @args
+  $Location = @{
+    Location = '..\..'
+  }
+
+  Write-Item @PSBoundParameters @Location @args
 }
 
 New-Alias w~ Write-Home
@@ -96,7 +104,11 @@ function Write-Home {
     [Object[]]$Value
   )
 
-  Write-Item @PSBoundParameters -Location '~' @args
+  $Location = @{
+    Location = '~'
+  }
+
+  Write-Item @PSBoundParameters @Location @args
 }
 
 New-Alias wc Write-Code
@@ -115,7 +127,11 @@ function Write-Code {
     [Object[]]$Value
   )
 
-  Write-Item @PSBoundParameters -Location '~\code' @args
+  $Location = @{
+    Location = '~\code'
+  }
+
+  Write-Item @PSBoundParameters @Location @args
 }
 
 New-Alias w\ Write-Drive
@@ -135,5 +151,9 @@ function Write-Drive {
     [Object[]]$Value
   )
 
-  Write-Item @PSBoundParameters -Location '\' @args
+  $Location = @{
+    Location = '\'
+  }
+
+  Write-Item @PSBoundParameters @Location @args
 }

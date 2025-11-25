@@ -6,15 +6,15 @@ function Invoke-Directory {
   )
 
   if ($env:SSH_CLIENT) {
-    Read-Item -Path $Path
+    Read-Item @PSBoundParameters
   }
   else {
     if ($Path) {
-      if (Test-Path -Path $Path -PathType Leaf) {
-        Edit-Item -Path $Path
+      if (Test-Path @PSBoundParameters -PathType Leaf) {
+        Edit-Item @PSBoundParameters
       }
       else {
-        Invoke-Item -Path $Path
+        Invoke-Item @PSBoundParameters
       }
     }
     else {
@@ -30,7 +30,11 @@ function Invoke-Sibling {
     [string]$Path
   )
 
-  Invoke-Directory -Path (Join-Path (Split-Path $PWD.Path) $Path)
+  $FullPath = @{
+    Path = Join-Path (Split-Path $PWD.Path) $Path
+  }
+
+  Invoke-Directory @FullPath @args
 }
 
 New-Alias e.. Invoke-Relative
@@ -40,7 +44,12 @@ function Invoke-Relative {
     [string]$Path
   )
 
-  Invoke-Directory -Path (Join-Path (Split-Path (Split-Path $PWD.Path)) $Path)
+  $FullPath = @{
+    Path = Join-Path (Split-Path (Split-Path $PWD.Path)) $Path
+  }
+
+  Invoke-Directory @FullPath @args
+
 }
 
 New-Alias e~ Invoke-Home
@@ -50,7 +59,11 @@ function Invoke-Home {
     [string]$Path
   )
 
-  Invoke-Directory -Path (Join-Path '~' $Path)
+  $FullPath = @{
+    Path = Join-Path '~' $Path
+  }
+
+  Invoke-Directory @FullPath @args
 }
 
 New-Alias ec Invoke-Code
@@ -60,7 +73,11 @@ function Invoke-Code {
     [string]$Path
   )
 
-  Invoke-Directory -Path (Join-Path '~\code' $Path)
+  $FullPath = @{
+    Path = Join-Path '~\code' $Path
+  }
+
+  Invoke-Directory @FullPath @args
 }
 
 New-Alias e\ Invoke-Drive
@@ -71,5 +88,9 @@ function Invoke-Drive {
     [string]$Path
   )
 
-  Invoke-Directory -Path (Join-Path '\' $Path)
+  $FullPath = @{
+    Path = Join-Path '\' $Path
+  }
+
+  Invoke-Directory @FullPath @args
 }
