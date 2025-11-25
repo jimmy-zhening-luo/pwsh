@@ -4,9 +4,9 @@ function Edit-History {
   param()
 
   $File = @{
-    Path = Get-PSReadLineOption |
+    Path         = Get-PSReadLineOption |
       Select-Object -ExpandProperty HistorySavePath
-    ProfileName = 'PowerShell'
+    ProfileName  = 'PowerShell'
     CreateWindow = $true
   }
 

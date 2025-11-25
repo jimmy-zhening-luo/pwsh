@@ -106,7 +106,7 @@ New-Alias p/ Read-Drive
 function Read-Drive {
   param (
     [PathCompletions('\')]
-      [string]$Path
+    [string]$Path
   )
 
   Read-Item @PSBoundParameters -RootPath '\' @args
