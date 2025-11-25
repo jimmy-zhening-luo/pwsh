@@ -3,27 +3,27 @@ function Read-Item {
   param(
     [PathCompletions('.')]
     [string]$Path,
-    [string]$RootPath
+    [string]$Location
   )
 
   $Argument = ''
 
   if (
-    $RootPath -and -not (
-      Test-Path -Path $RootPath -PathType Container
+    $Location -and -not (
+      Test-Path -Path $Location -PathType Container
     )
   ) {
-    $Argument = $RootPath
-    $RootPath = ''
+    $Argument = $Location
+    $Location = ''
   }
 
-  if (-not $RootPath) {
-    $RootPath = '.'
+  if (-not $Location) {
+    $Location = '.'
   }
 
-  $RootPath = Resolve-Path -Path $RootPath |
+  $Location = Resolve-Path -Path $Location |
     Select-Object -ExpandProperty Path
-  $Target = Join-Path $RootPath $Path
+  $Target = Join-Path $Location $Path
 
   if ($Path) {
     if (-not (Test-Path -Path $Target)) {
@@ -52,10 +52,10 @@ function Read-Item {
   }
   else {
     if ($Argument) {
-      Get-ChildItem -Path $RootPath $Argument
+      Get-ChildItem -Path $Location $Argument
     }
     else {
-      Get-ChildItem -Path $RootPath
+      Get-ChildItem -Path $Location
     }
   }
 }
@@ -67,7 +67,7 @@ function Read-Sibling {
     [string]$Path
   )
 
-  Read-Item @PSBoundParameters -RootPath '..' @args
+  Read-Item @PSBoundParameters -Location '..' @args
 }
 
 New-Alias p.. Read-Relative
@@ -77,7 +77,7 @@ function Read-Relative {
     [string]$Path
   )
 
-  Read-Item @PSBoundParameters -RootPath '..\..' @args
+  Read-Item @PSBoundParameters -Location '..\..' @args
 }
 
 New-Alias p~ Read-Home
@@ -87,7 +87,7 @@ function Read-Home {
     [string]$Path
   )
 
-  Read-Item @PSBoundParameters -RootPath '~' @args
+  Read-Item @PSBoundParameters -Location '~' @args
 }
 
 New-Alias pc Read-Code
@@ -97,7 +97,7 @@ function Read-Code {
     [string]$Path
   )
 
-  Read-Item @PSBoundParameters -RootPath '~\code' @args
+  Read-Item @PSBoundParameters -Location '~\code' @args
 }
 
 New-Alias p\ Read-Drive
@@ -108,5 +108,5 @@ function Read-Drive {
     [string]$Path
   )
 
-  Read-Item @PSBoundParameters -RootPath '\' @args
+  Read-Item @PSBoundParameters -Location '\' @args
 }

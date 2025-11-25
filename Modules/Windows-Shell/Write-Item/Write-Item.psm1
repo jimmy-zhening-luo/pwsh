@@ -12,27 +12,27 @@ function Write-Item {
       Position = 1
     )]
     [Object[]]$Value,
-    [string]$RootPath
+    [string]$Location
   )
 
   $Argument = ''
 
   if (
-    $RootPath -and -not (
-      Test-Path -Path $RootPath -PathType Container
+    $Location -and -not (
+      Test-Path -Path $Location -PathType Container
     )
   ) {
-    $Argument = $RootPath
-    $RootPath = ''
+    $Argument = $Location
+    $Location = ''
   }
 
-  if (-not $RootPath) {
-    $RootPath = '.'
+  if (-not $Location) {
+    $Location = '.'
   }
 
-  $RootPath = Resolve-Path -Path $RootPath |
+  $Location = Resolve-Path -Path $Location |
     Select-Object -ExpandProperty Path
-  $Target = Join-Path $RootPath $Path
+  $Target = Join-Path $Location $Path
 
   if ($Argument) {
     Set-Content -Path $Target -Value $Value $Argument @args
@@ -50,7 +50,7 @@ function Write-Sibling {
     [Object[]]$Value
   )
 
-  Write-Item @PSBoundParameters -RootPath '..' @args
+  Write-Item @PSBoundParameters -Location '..' @args
 }
 
 New-Alias w.. Write-Relative
@@ -61,7 +61,7 @@ function Write-Relative {
     [Object[]]$Value
   )
 
-  Write-Item @PSBoundParameters -RootPath '..\..' @args
+  Write-Item @PSBoundParameters -Location '..\..' @args
 }
 
 New-Alias w~ Write-Home
@@ -72,7 +72,7 @@ function Write-Home {
     [Object[]]$Value
   )
 
-  Write-Item @PSBoundParameters -RootPath '~' @args
+  Write-Item @PSBoundParameters -Location '~' @args
 }
 
 New-Alias wc Write-Code
@@ -83,7 +83,7 @@ function Write-Code {
     [Object[]]$Value
   )
 
-  Write-Item @PSBoundParameters -RootPath '~\code' @args
+  Write-Item @PSBoundParameters -Location '~\code' @args
 }
 
 New-Alias w\ Write-Drive
@@ -95,5 +95,5 @@ function Write-Drive {
     [Object[]]$Value
   )
 
-  Write-Item @PSBoundParameters -RootPath '\' @args
+  Write-Item @PSBoundParameters -Location '\' @args
 }
