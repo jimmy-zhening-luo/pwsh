@@ -63,7 +63,7 @@ function Write-Repository {
   }
 
   $Parameters = @{
-    Path = $Path
+    Path  = $Path
     Throw = $Throw
   }
   $Commit = @{ Verb = 'commit' }

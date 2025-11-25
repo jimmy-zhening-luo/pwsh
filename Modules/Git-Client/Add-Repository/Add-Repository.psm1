@@ -28,8 +28,8 @@ function Add-Repository {
   }
 
   $Add = @{
-    Path = $Path
-    Verb = 'add'
+    Path  = $Path
+    Verb  = 'add'
     Throw = $Throw
   }
 

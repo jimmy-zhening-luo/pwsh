@@ -32,13 +32,13 @@ function Get-ChildRepository {
   $Pull = @{ Verb = 'pull' }
   $Repositories = Get-ChildItem -Path "$HOME\code" -Directory |
     Select-Object -ExpandProperty FullName
-    ? { Resolve-Repository -Path $_ } |
+  ? { Resolve-Repository -Path $_ } |
     ? { $_ }
 
   $Repositories |
     % { Invoke-Repository -Path $_ @Pull @args }
   $Print = @{
-    Noun = 'repository/repositories'
+    Noun  = 'repository/repositories'
     Count = $Repositories.Count
   }
 

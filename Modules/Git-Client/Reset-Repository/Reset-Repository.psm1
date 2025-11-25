@@ -41,7 +41,7 @@ function Reset-Repository {
 
   $args = , '--hard' + $args
   $Parameters = @{
-    Path = $Path
+    Path  = $Path
     Throw = $Throw
   }
   $Reset = @{ Verb = 'reset' }

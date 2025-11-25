@@ -3,7 +3,7 @@ function Sync-Linter {
   param()
 
   $Copy = @{
-    Path = '~/code/pwsh/PSScriptAnalyzerSettings.psd1'
+    Path        = '~/code/pwsh/PSScriptAnalyzerSettings.psd1'
     Destination = '~'
   }
 

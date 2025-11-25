@@ -9,20 +9,20 @@ function New-Directory {
   [OutputType([System.IO.DirectoryInfo])]
   param(
     [Parameter(
-      ParameterSetName='nameSet',
-      Position=0,
+      ParameterSetName = 'nameSet',
+      Position = 0,
       ValueFromPipelineByPropertyName
     )]
     [Parameter(
-      ParameterSetName='pathSet',
+      ParameterSetName = 'pathSet',
       Mandatory,
-      Position=0,
+      Position = 0,
       ValueFromPipelineByPropertyName
     )]
     [PathCompletions('.')]
     [string[]]$Path,
     [Parameter(
-      ParameterSetName='nameSet',
+      ParameterSetName = 'nameSet',
       Mandatory,
       ValueFromPipelineByPropertyName
     )]

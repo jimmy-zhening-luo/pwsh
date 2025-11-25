@@ -7,9 +7,9 @@ function New-Junction {
   [OutputType([System.IO.DirectoryInfo])]
   param(
     [Parameter(
-      ParameterSetName='pathSet',
+      ParameterSetName = 'pathSet',
       Mandatory,
-      Position=0,
+      Position = 0,
       ValueFromPipelineByPropertyName
     )]
     [PathCompletions('.')]

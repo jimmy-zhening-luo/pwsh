@@ -13,7 +13,7 @@
     # 'PSAvoidLongLines'
     'PSAvoidMultipleTypeAttributes'
     'PSAvoidNullOrEmptyHelpMessageAttribute'
-    # 'PSAvoidOverwritingBuiltInCmdlets'
+    'PSAvoidOverwritingBuiltInCmdlets'
     'PSAvoidSemicolonsAsLineTerminators'
     'PSAvoidShouldContinueWithoutForce'
     'PSAvoidTrailingWhitespace'

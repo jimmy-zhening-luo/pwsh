@@ -37,8 +37,8 @@ function Import-Repository {
 
 
   $Clone = @{
-    Path = $Path
-    Verb = 'clone'
+    Path  = $Path
+    Verb  = 'clone'
     Throw = $Throw
   }
 

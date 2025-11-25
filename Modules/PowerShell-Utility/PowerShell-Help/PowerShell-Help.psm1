@@ -28,7 +28,7 @@ function Get-HelpOnline {
 
   $Topic = $Name -join '_'
   $Query = @{
-    Name = $Topic
+    Name        = $Topic
     ErrorAction = 'SilentlyContinue'
   }
   $Help = ''

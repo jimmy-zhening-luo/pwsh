@@ -7,7 +7,7 @@ function Resolve-NodeProject {
   }
 
   $IsNode = @{
-    Path = Join-Path $Path 'package.json'
+    Path     = Join-Path $Path 'package.json'
     PathType = 'Leaf'
   }
 
@@ -21,4 +21,3 @@ function Resolve-NodeProject {
     throw "Path '$Path' is not a Node project directory."
   }
 }
-
