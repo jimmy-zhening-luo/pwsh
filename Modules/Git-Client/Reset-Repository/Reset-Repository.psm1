@@ -31,7 +31,9 @@ function Reset-Repository {
         -not $Matches.Step -or $Matches.Step -as [uint32]
       )
     ) {
-      $Tree = 'HEAD' + $Matches.Branching + $Matches.Step
+      $Branching = $Matches.Branching ? $Matches.Branching : '~'
+      $Step = $Matches.Step
+      $Tree = 'HEAD' + $Branching + $Step
     }
 
     $args = , $Tree + $args
