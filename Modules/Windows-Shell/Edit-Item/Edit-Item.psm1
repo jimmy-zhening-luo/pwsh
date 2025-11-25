@@ -53,7 +53,7 @@ function Edit-Item {
   }
 
   if ($env:SSH_CLIENT) {
-    throw "Cannot open VSCode from SSH session"
+    throw 'Cannot open VSCode from SSH session'
   }
 
   if ($ProfileName) {
@@ -70,7 +70,7 @@ function Edit-Item {
     $ArgumentList += '--new-window'
   }
   elseif ($ReuseWindow) {
-        $ArgumentList += '--reuse-window'
+    $ArgumentList += '--reuse-window'
   }
 
   if ($ArgumentList) {
