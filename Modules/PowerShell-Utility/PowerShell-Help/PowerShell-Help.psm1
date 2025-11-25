@@ -12,7 +12,7 @@ New-Alias m Get-HelpOnline
 function Get-HelpOnline {
   param(
     [string[]]$Name,
-    [Alias('params', 'args', 'Argument')]
+    [Alias('params')]
     [string[]]$Parameter
   )
 
