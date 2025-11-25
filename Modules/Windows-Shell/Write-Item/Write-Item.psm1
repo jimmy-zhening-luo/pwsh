@@ -4,7 +4,7 @@ function Write-Item {
     [Parameter(
       Mandatory,
       Position = 0
-      )]
+    )]
     [PathCompletions('.')]
     [string]$Path,
     [Parameter(
@@ -15,31 +15,32 @@ function Write-Item {
     [string]$Location
   )
 
-  $Argument = ''
+  $Local:args = $args
 
   if (
     $Location -and -not (
       Test-Path -Path $Location -PathType Container
     )
   ) {
-    $Argument = $Location
+    $Local:args = , $Location + $Local:args
     $Location = ''
   }
 
-  if (-not $Location) {
-    $Location = '.'
+  $Target = $Location ? (
+    Join-Path (
+      Resolve-Path -Path $Location |
+        Select-Object -ExpandProperty Path
+    ) $Path
+  ) : (
+    $Path ? $Path : $PWD.Path
+  )
+
+  $Write = @{
+    Path = $Target
+    Value = $Value
   }
 
-  $Location = Resolve-Path -Path $Location |
-    Select-Object -ExpandProperty Path
-  $Target = Join-Path $Location $Path
-
-  if ($Argument) {
-    Set-Content -Path $Target -Value $Value $Argument @args
-  }
-  else {
-    Set-Content -Path $Target -Value $Value @args
-  }
+  Set-Content @Write @Local:args
 }
 
 New-Alias w. Write-Sibling
@@ -48,7 +49,7 @@ function Write-Sibling {
     [Parameter(
       Mandatory,
       Position = 0
-      )]
+    )]
     [PathCompletions('..')]
     [string]$Path,
     [Parameter(
@@ -71,7 +72,7 @@ function Write-Relative {
     [Parameter(
       Mandatory,
       Position = 0
-      )]
+    )]
     [PathCompletions('..\..')]
     [string]$Path,
     [Parameter(
@@ -94,7 +95,7 @@ function Write-Home {
     [Parameter(
       Mandatory,
       Position = 0
-      )]
+    )]
     [PathCompletions('~')]
     [string]$Path,
     [Parameter(
@@ -117,7 +118,7 @@ function Write-Code {
     [Parameter(
       Mandatory,
       Position = 0
-      )]
+    )]
     [PathCompletions('~\code')]
     [string]$Path,
     [Parameter(
