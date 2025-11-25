@@ -1,8 +1,10 @@
 New-Alias i Edit-Item
 function Edit-Item {
   param(
+    [Parameter(Position = 0)]
     [PathCompletions('.')]
     [string]$Path,
+    [Parameter(Position = 1)]
     [Alias('Name')]
     [string]$ProfileName,
     [switch]$Window,
@@ -81,8 +83,10 @@ function Edit-Item {
 New-Alias i. Edit-Sibling
 function Edit-Sibling {
   param (
+    [Parameter(Position = 0)]
     [PathCompletions('..')]
     [string]$Path,
+    [Parameter(Position = 1)]
     [Alias('Name', 'pn')]
     [string]$ProfileName,
     [Alias('Window')]
@@ -97,8 +101,10 @@ function Edit-Sibling {
 New-Alias i.. Edit-Relative
 function Edit-Relative {
   param (
+    [Parameter(Position = 0)]
     [PathCompletions('..\..')]
     [string]$Path,
+    [Parameter(Position = 1)]
     [Alias('Name', 'pn')]
     [string]$ProfileName,
     [Alias('Window')]
@@ -113,8 +119,10 @@ function Edit-Relative {
 New-Alias i~ Edit-Home
 function Edit-Home {
   param (
+    [Parameter(Position = 0)]
     [PathCompletions('~')]
     [string]$Path,
+    [Parameter(Position = 1)]
     [Alias('Name', 'pn')]
     [string]$ProfileName,
     [Alias('Window')]
@@ -129,8 +137,10 @@ function Edit-Home {
 New-Alias ic Edit-Code
 function Edit-Code {
   param (
+    [Parameter(Position = 0)]
     [PathCompletions('~\code')]
     [string]$Path,
+    [Parameter(Position = 1)]
     [Alias('Name', 'pn')]
     [string]$ProfileName,
     [Alias('Window')]
@@ -146,8 +156,10 @@ New-Alias i\ Edit-Drive
 New-Alias i/ Edit-Drive
 function Edit-Drive {
   param (
+    [Parameter(Position = 0)]
     [PathCompletions('\')]
     [string]$Path,
+    [Parameter(Position = 1)]
     [Alias('Name', 'pn')]
     [string]$ProfileName,
     [Alias('Window')]

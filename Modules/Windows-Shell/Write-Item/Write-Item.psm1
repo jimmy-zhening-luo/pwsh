@@ -1,11 +1,11 @@
 New-Alias w Write-Item
 function Write-Item {
   param(
-    [PathCompletions('.')]
     [Parameter(
       Mandatory,
       Position = 0
-    )]
+      )]
+    [PathCompletions('.')]
     [string]$Path,
     [Parameter(
       Mandatory,
@@ -45,8 +45,16 @@ function Write-Item {
 New-Alias w. Write-Sibling
 function Write-Sibling {
   param (
+    [Parameter(
+      Mandatory,
+      Position = 0
+      )]
     [PathCompletions('..')]
-    [string[]]$Path,
+    [string]$Path,
+    [Parameter(
+      Mandatory,
+      Position = 1
+    )]
     [Object[]]$Value
   )
 
@@ -56,8 +64,16 @@ function Write-Sibling {
 New-Alias w.. Write-Relative
 function Write-Relative {
   param (
+    [Parameter(
+      Mandatory,
+      Position = 0
+      )]
     [PathCompletions('..\..')]
-    [string[]]$Path,
+    [string]$Path,
+    [Parameter(
+      Mandatory,
+      Position = 1
+    )]
     [Object[]]$Value
   )
 
@@ -67,8 +83,16 @@ function Write-Relative {
 New-Alias w~ Write-Home
 function Write-Home {
   param (
+    [Parameter(
+      Mandatory,
+      Position = 0
+      )]
     [PathCompletions('~')]
-    [string[]]$Path,
+    [string]$Path,
+    [Parameter(
+      Mandatory,
+      Position = 1
+    )]
     [Object[]]$Value
   )
 
@@ -78,8 +102,16 @@ function Write-Home {
 New-Alias wc Write-Code
 function Write-Code {
   param (
+    [Parameter(
+      Mandatory,
+      Position = 0
+      )]
     [PathCompletions('~\code')]
-    [string[]]$Path,
+    [string]$Path,
+    [Parameter(
+      Mandatory,
+      Position = 1
+    )]
     [Object[]]$Value
   )
 
@@ -90,8 +122,16 @@ New-Alias w\ Write-Drive
 New-Alias w/ Write-Drive
 function Write-Drive {
   param (
+    [Parameter(
+      Mandatory,
+      Position = 0
+    )]
     [PathCompletions('\')]
-    [string[]]$Path,
+    [string]$Path,
+    [Parameter(
+      Mandatory,
+      Position = 1
+    )]
     [Object[]]$Value
   )
 

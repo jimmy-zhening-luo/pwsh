@@ -1,6 +1,7 @@
 New-Alias p Read-Item
 function Read-Item {
   param(
+    [Parameter(Position = 0)]
     [PathCompletions('.')]
     [string]$Path,
     [string]$Location
@@ -63,6 +64,7 @@ function Read-Item {
 New-Alias p. Read-Sibling
 function Read-Sibling {
   param (
+    [Parameter(Position = 0)]
     [PathCompletions('..')]
     [string]$Path
   )
@@ -73,6 +75,7 @@ function Read-Sibling {
 New-Alias p.. Read-Relative
 function Read-Relative {
   param (
+    [Parameter(Position = 0)]
     [PathCompletions('..\..')]
     [string]$Path
   )
@@ -83,6 +86,7 @@ function Read-Relative {
 New-Alias p~ Read-Home
 function Read-Home {
   param (
+    [Parameter(Position = 0)]
     [PathCompletions('~')]
     [string]$Path
   )
@@ -93,6 +97,7 @@ function Read-Home {
 New-Alias pc Read-Code
 function Read-Code {
   param (
+    [Parameter(Position = 0)]
     [PathCompletions('~\code')]
     [string]$Path
   )
@@ -104,6 +109,7 @@ New-Alias p\ Read-Drive
 New-Alias p/ Read-Drive
 function Read-Drive {
   param (
+    [Parameter(Position = 0)]
     [PathCompletions('\')]
     [string]$Path
   )
