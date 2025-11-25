@@ -31,8 +31,8 @@ https://git-scm.com/docs/git-pull
 function Get-ChildRepository {
   $Pull = @{ Verb = 'pull' }
   $Repositories = Get-ChildItem -Path "$HOME\code" -Directory |
-    Select-Object -ExpandProperty FullName
-  ? { Resolve-Repository -Path $_ } |
+    Select-Object -ExpandProperty FullName |
+    ? { Resolve-Repository -Path $_ } |
     ? { $_ }
 
   $Repositories |
