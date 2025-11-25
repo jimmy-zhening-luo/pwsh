@@ -13,17 +13,11 @@ function Compare-Package {
     [string]$Path
   )
 
-  if ($Path) {
-    $AbsolutePath = Resolve-NodeProject @PSBoundParameters
+  $Prefix = Resolve-NodeProject @PSBoundParameters -ErrorAction Stop
 
-    if ($AbsolutePath) {
-      & npm --prefix $AbsolutePath outdated $args
-    }
-    else {
-      throw "Path '$Path' is not a Node project directory."
-    }
+  if ($Prefix) {
+    $args = '--prefix', $Prefix + $args
   }
-  else {
-    & npm outdated $args
-  }
+
+  & npm outdated @args
 }

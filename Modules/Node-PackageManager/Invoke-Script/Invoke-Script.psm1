@@ -23,17 +23,11 @@ function Invoke-Script {
     $Path, $args = '', (, $Path + $args)
   }
 
-  if ($Path) {
-    $AbsolutePath = Resolve-NodeProject -Path $Path
+  $Prefix = Resolve-NodeProject @PSBoundParameters -ErrorAction Stop
 
-    if ($AbsolutePath) {
-      & npm --prefix $AbsolutePath run $Script @args
-    }
-    else {
-      throw "Path '$Path' is not a Node project directory"
-    }
+  if ($Prefix) {
+    $args = '--prefix', $Prefix + $args
   }
-  else {
-    & npm run $Script @args
-  }
+
+  & npm run $Script @args
 }

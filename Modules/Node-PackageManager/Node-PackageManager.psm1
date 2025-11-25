@@ -6,15 +6,19 @@ function Resolve-NodeProject {
     $Path = $PWD.Path
   }
 
-  $Criteria = @{
+  $IsNode = @{
     Path = Join-Path $Path 'package.json'
     PathType = 'Leaf'
   }
 
-  if (Test-Path @Criteria) {
-    Resolve-Path $Path |
+  if (Test-Path @IsNode) {
+    $Prefix = Resolve-Path $Path |
       Select-Object -ExpandProperty Path
+
+    $Prefix -eq $PWD.Path ? '' : $Prefix
   }
-  else { '' }
+  else {
+    throw "Path '$Path' is not a Node project directory."
+  }
 }
 
