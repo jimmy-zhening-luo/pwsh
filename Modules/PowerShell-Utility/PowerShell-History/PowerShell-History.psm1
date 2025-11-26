@@ -7,5 +7,5 @@ function Edit-History {
     CreateWindow = $true
   }
 
-  Bingo-Bong @File
+  Edit-ShellItem @File
 }

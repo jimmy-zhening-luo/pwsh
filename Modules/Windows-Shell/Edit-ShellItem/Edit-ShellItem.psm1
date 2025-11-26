@@ -1,4 +1,4 @@
-New-Alias i Bingo-Bong
+New-Alias i Edit-ShellItem
 function Edit-ShellItem {
   param(
     [Parameter(Position = 0)]
