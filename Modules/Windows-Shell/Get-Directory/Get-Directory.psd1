@@ -2,6 +2,9 @@
   RootModule        = 'Get-Directory.psm1'
   ModuleVersion     = '1.0.0.0'
   GUID              = 'b04dc21c-3d93-42fb-bafc-3ab15860ad95'
+  RequiredModules   = @(
+    'Argument-Completer'
+  )
   FunctionsToExport = @(
     'Get-Directory'
     'Get-Sibling'

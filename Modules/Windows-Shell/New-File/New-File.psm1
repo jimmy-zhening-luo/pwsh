@@ -18,7 +18,6 @@ function New-Directory {
       Position = 0,
       ValueFromPipelineByPropertyName
     )]
-    [PathCompletions('.')]
     [string[]]$Path,
     [Parameter(
       ParameterSetName = 'nameSet',

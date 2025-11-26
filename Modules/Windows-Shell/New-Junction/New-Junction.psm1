@@ -11,7 +11,6 @@ function New-Junction {
       Position = 0,
       ValueFromPipelineByPropertyName
     )]
-    [PathCompletions('.')]
     [string[]]${Path},
     [Parameter(
       Mandatory,
