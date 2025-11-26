@@ -75,8 +75,8 @@ function Edit-ShellItem {
   & code.cmd @Local:args
 }
 
-New-Alias i. Edit-Sibling
-function Edit-Sibling {
+New-Alias i. Edit-ShellSibling
+function Edit-ShellSibling {
   param (
     [Parameter(Position = 0)]
     [PathCompletions('..')]
@@ -96,8 +96,8 @@ function Edit-Sibling {
   Edit-ShellItem @PSBoundParameters @Location @args
 }
 
-New-Alias i.. Edit-Relative
-function Edit-Relative {
+New-Alias i.. Edit-ShellRelative
+function Edit-ShellRelative {
   param (
     [Parameter(Position = 0)]
     [PathCompletions('..\..')]
@@ -117,8 +117,8 @@ function Edit-Relative {
   Edit-ShellItem @PSBoundParameters @Location @args
 }
 
-New-Alias i~ Edit-Home
-function Edit-Home {
+New-Alias i~ Edit-ShellHome
+function Edit-ShellHome {
   param (
     [Parameter(Position = 0)]
     [PathCompletions('~')]
@@ -138,8 +138,8 @@ function Edit-Home {
   Edit-ShellItem @PSBoundParameters @Location @args
 }
 
-New-Alias ic Edit-Code
-function Edit-Code {
+New-Alias ic Edit-ShellCode
+function Edit-ShellCode {
   param (
     [Parameter(Position = 0)]
     [PathCompletions('~\code')]
@@ -159,9 +159,9 @@ function Edit-Code {
   Edit-ShellItem @PSBoundParameters @Location @args
 }
 
-New-Alias i\ Edit-Drive
-New-Alias i/ Edit-Drive
-function Edit-Drive {
+New-Alias i\ Edit-ShellDrive
+New-Alias i/ Edit-ShellDrive
+function Edit-ShellDrive {
   param (
     [Parameter(Position = 0)]
     [PathCompletions('\')]
