@@ -36,7 +36,7 @@ function Write-Item {
   )
 
   $Write = @{
-    Path = $Target
+    Path  = $Target
     Value = $Value
   }
 

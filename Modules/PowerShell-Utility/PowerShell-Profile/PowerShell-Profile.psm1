@@ -1,6 +1,6 @@
 New-Alias op Edit-Profile
 function Edit-Profile {
-  Edit-Code -Path 'pwsh' -ProfileName PowerShell @args
+  # Edit-Code -Path 'pwsh' -ProfileName PowerShell @args
 }
 
 New-Alias up Sync-Profile

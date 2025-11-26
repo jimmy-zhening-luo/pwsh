@@ -1,5 +1,5 @@
-New-Alias i Edit-Item
-function Edit-Item {
+New-Alias i Bingo-Bong
+function Edit-ShellItem {
   param(
     [Parameter(Position = 0)]
     [PathCompletions('.')]
@@ -93,7 +93,7 @@ function Edit-Sibling {
     Location = '..'
   }
 
-  Edit-Item @PSBoundParameters @Location @args
+  Edit-ShellItem @PSBoundParameters @Location @args
 }
 
 New-Alias i.. Edit-Relative
@@ -114,7 +114,7 @@ function Edit-Relative {
     Location = '..\..'
   }
 
-  Edit-Item @PSBoundParameters @Location @args
+  Edit-ShellItem @PSBoundParameters @Location @args
 }
 
 New-Alias i~ Edit-Home
@@ -135,7 +135,7 @@ function Edit-Home {
     Location = '~'
   }
 
-  Edit-Item @PSBoundParameters @Location @args
+  Edit-ShellItem @PSBoundParameters @Location @args
 }
 
 New-Alias ic Edit-Code
@@ -156,7 +156,7 @@ function Edit-Code {
     Location = '~\code'
   }
 
-  Edit-Item @PSBoundParameters @Location @args
+  Edit-ShellItem @PSBoundParameters @Location @args
 }
 
 New-Alias i\ Edit-Drive
@@ -178,5 +178,5 @@ function Edit-Drive {
     Location = '\'
   }
 
-  Edit-Item @PSBoundParameters @Location @args
+  Edit-ShellItem @PSBoundParameters @Location @args
 }
