@@ -22,7 +22,6 @@
     'remsv'
     'cmd'
     'tkill'
-    'tkillx'
     'wu'
     'su'
   )

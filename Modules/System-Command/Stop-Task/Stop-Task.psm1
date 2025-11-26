@@ -1,5 +1,4 @@
 New-Alias tkill Stop-Task
-New-Alias tkillx Stop-Task
 function Stop-Task {
   [CmdletBinding(
     SupportsShouldProcess,

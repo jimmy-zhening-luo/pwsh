@@ -7,6 +7,5 @@
   )
   AliasesToExport   = @(
     'tkill'
-    'tkillx'
   )
 }
