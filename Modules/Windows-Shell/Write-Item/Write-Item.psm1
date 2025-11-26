@@ -15,12 +15,7 @@ function Write-Item {
     [string]$Location
   )
 
-  $PSCmdlet
-
-  $PSBoundParameters
-  $Local:args
-
-  return
+  $Local:args = $args
 
   if (
     $Location -and -not (
