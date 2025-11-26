@@ -11,7 +11,7 @@ function Invoke-Directory {
   else {
     if ($Path) {
       if (Test-Path @PSBoundParameters -PathType Leaf) {
-        # Edit-ShellItem @PSBoundParameters
+        Edit-ShellItem @PSBoundParameters
       }
       else {
         Invoke-Item @PSBoundParameters
