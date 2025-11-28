@@ -72,7 +72,13 @@ function Invoke-Workspace {
     $Local:args += '--reuse-window'
   }
 
-  & code.cmd @Local:args
+  $Process = @{
+    FilePath = 'code.cmd'
+    ArgumentList = $Local:args
+    NoNewWindow = $true
+  }
+
+  Start-Process @Process
 }
 
 New-Alias i. Invoke-WorkspaceSibling
