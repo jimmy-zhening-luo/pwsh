@@ -1,7 +1,7 @@
 @{
   RootModule        = 'Edit-System.psm1'
   ModuleVersion     = '1.0.0.0'
-  GUID              = '6c41aa88-170e-4583-90ab-d06b156cb6c5'
+  GUID              = '8a090f03-f3bc-4671-bfe2-8134f472c3db'
   FunctionsToExport = @(
     'Edit-Path'
   )

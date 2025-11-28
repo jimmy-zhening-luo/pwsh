@@ -6,8 +6,13 @@ Opens the 'Environment Variables' dialog as a standalone window.
 This function invokes 'rundll32' on 'sysdm.cpl' ('System Properties' control panel) with the 'EditEnvironmentVariables' argument, which opens the 'Environment Variables' dialog directly.
 #>
 function Edit-Path {
+  param(
+    # Launch Environment Variables control panel as administrator to edit system variables
+    [switch]$Administrator
+  )
+
   if ($env:SSH_CLIENT) {
-    throw 'Cannot launch Control Panel dialog during SSH session'
+    throw 'Cannot present Control Panel during SSH session'
   }
 
   $ControlPanel = @{
@@ -16,6 +21,10 @@ function Edit-Path {
       'sysdm.cpl'
       'EditEnvironmentVariables'
     )
+  }
+
+  if ($Administrator) {
+    $ControlPanel.Verb = 'RunAs'
   }
 
   [void](Start-Process @ControlPanel)

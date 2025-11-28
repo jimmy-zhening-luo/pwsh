@@ -1,13 +1,11 @@
 @{
   RootModule        = 'Update-System.psm1'
   ModuleVersion     = '1.0.0.0'
-  GUID              = 'b0c68601-a772-401b-b0c2-63629bfe32f2'
+  GUID              = '6b66eb61-90b5-4c5f-a6e8-4aceec56a873'
   FunctionsToExport = @(
     'Update-Windows'
-    'Update-StoreApp'
   )
   AliasesToExport   = @(
     'wu'
-    'su'
   )
 }

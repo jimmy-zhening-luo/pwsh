@@ -1,4 +1,4 @@
-New-Alias wga Add-WinGetPackage
+New-Alias wga Add-WinGetApp
 <#
 .SYNOPSIS
 Use WinGet to install a new package or upgrade an existing package.
@@ -7,7 +7,7 @@ This function is an alias for 'winget install', unless no arguments are provided
 .LINK
 https://learn.microsoft.com/en-us/windows/package-manager/winget/install
 #>
-function Add-WinGetPackage {
+function Add-WinGetApp {
   if ($args) {
     & winget install @args
   }

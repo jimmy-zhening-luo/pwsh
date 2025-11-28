@@ -1,28 +1,38 @@
 @{
   RootModule        = 'System-Command.psm1'
   ModuleVersion     = '1.0.0.0'
-  GUID              = '9560b44f-3980-45d7-80f3-0c0f7d2ac2c4'
+  GUID              = 'b047ad82-dcbf-48cc-876a-78c6334900af'
   NestedModules     = @(
-    '.\Edit-System'
     '.\Invoke-CommandPrompt'
-    '.\Stop-Task'
-    '.\Update-System'
+    '.\Set-System'
+    '.\Set-Task'
+    '.\Set-App'
   )
   FunctionsToExport = @(
-    'Edit-Path'
     'Invoke-CommandPrompt'
-    'Stop-Task'
     'Update-Windows'
+    'Edit-Path'
+    'Stop-Task'
     'Update-StoreApp'
+    'Add-WinGetApp'
+    'Update-WinGetApp'
+    'Remove-WinGetApp'
+    'Find-WinGetApp'
   )
   AliasesToExport   = @(
-    'path'
     'restart'
+    'wu'
+    'path'
     'sesv'
     'remsv'
-    'cmd'
     'tkill'
-    'wu'
+    'gapx'
+    'remapx'
     'su'
+    'wget'
+    'wga'
+    'wgu'
+    'wgr'
+    'wgf'
   )
 }

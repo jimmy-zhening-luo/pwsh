@@ -1,4 +1,4 @@
-New-Alias wgr Remove-WinGetPackage
+New-Alias wgr Remove-WinGetApp
 <#
 .SYNOPSIS
 Use WinGet to uninstall a package.
@@ -7,6 +7,6 @@ This function is an alias for 'winget uninstall'.
 .LINK
 https://learn.microsoft.com/en-us/windows/package-manager/winget/uninstall
 #>
-function Remove-WinGetPackage {
+function Remove-WinGetApp {
   & winget uninstall @args
 }
