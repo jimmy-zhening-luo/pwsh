@@ -1,4 +1,4 @@
-New-Alias wgf Find-App
+New-Alias wgf Find-WinGetApp
 <#
 .SYNOPSIS
 Use WinGet to search WinGet repositories for a package.
@@ -7,7 +7,7 @@ This function is an alias for 'winget search', unless no arguments are provided,
 .LINK
 https://learn.microsoft.com/en-us/windows/package-manager/winget/search
 #>
-function Find-App {
+function Find-WinGetApp {
   if ($args) {
     & winget search @args
   }

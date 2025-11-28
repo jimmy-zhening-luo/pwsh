@@ -7,10 +7,10 @@
   )
   FunctionsToExport = @(
     'Update-StoreApp'
-    'Add-App'
-    'Update-App'
-    'Remove-App'
-    'Find-App'
+    'Add-WinGetApp'
+    'Update-WinGetApp'
+    'Remove-WinGetApp'
+    'Find-WinGetApp'
   )
   AliasesToExport   = @(
     'su'
