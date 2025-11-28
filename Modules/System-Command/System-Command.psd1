@@ -14,10 +14,10 @@
     'Edit-Path'
     'Stop-Task'
     'Update-StoreApp'
-    'Add-WinGetApp'
-    'Update-WinGetApp'
-    'Remove-WinGetApp'
-    'Find-WinGetApp'
+    'Add-App'
+    'Update-App'
+    'Remove-App'
+    'Find-App'
   )
   AliasesToExport   = @(
     'restart'
