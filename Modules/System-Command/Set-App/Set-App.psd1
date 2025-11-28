@@ -13,9 +13,9 @@
     'Find-WinGetApp'
   )
   AliasesToExport   = @(
+    'su'
     'gapx'
     'remapx'
-    'su'
     'wget'
     'wga'
     'wgu'
