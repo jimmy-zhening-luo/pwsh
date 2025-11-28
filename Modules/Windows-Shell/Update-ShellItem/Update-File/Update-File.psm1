@@ -1,5 +1,5 @@
-New-Alias w Write-Item
-function Write-Item {
+New-Alias w Update-File
+function Update-File {
   param(
     [Parameter(
       Mandatory,
@@ -43,8 +43,8 @@ function Write-Item {
   Set-Content @Write @Local:args
 }
 
-New-Alias w. Write-Sibling
-function Write-Sibling {
+New-Alias w. Update-FileSibling
+function Update-FileSibling {
   param (
     [Parameter(
       Mandatory,
@@ -63,11 +63,11 @@ function Write-Sibling {
     Location = '..'
   }
 
-  Write-Item @PSBoundParameters @Location @args
+  Update-File @PSBoundParameters @Location @args
 }
 
-New-Alias w.. Write-Relative
-function Write-Relative {
+New-Alias w.. Update-FileRelative
+function Update-FileRelative {
   param (
     [Parameter(
       Mandatory,
@@ -86,11 +86,11 @@ function Write-Relative {
     Location = '..\..'
   }
 
-  Write-Item @PSBoundParameters @Location @args
+  Update-File @PSBoundParameters @Location @args
 }
 
-New-Alias w~ Write-Home
-function Write-Home {
+New-Alias w~ Update-FileHome
+function Update-FileHome {
   param (
     [Parameter(
       Mandatory,
@@ -109,11 +109,11 @@ function Write-Home {
     Location = '~'
   }
 
-  Write-Item @PSBoundParameters @Location @args
+  Update-File @PSBoundParameters @Location @args
 }
 
-New-Alias wc Write-Code
-function Write-Code {
+New-Alias wc Update-FileCode
+function Update-FileCode {
   param (
     [Parameter(
       Mandatory,
@@ -132,12 +132,11 @@ function Write-Code {
     Location = '~\code'
   }
 
-  Write-Item @PSBoundParameters @Location @args
+  Update-File @PSBoundParameters @Location @args
 }
 
-New-Alias w\ Write-Drive
-New-Alias w/ Write-Drive
-function Write-Drive {
+New-Alias w/ Update-FileDrive
+function Update-FileDrive {
   param (
     [Parameter(
       Mandatory,
@@ -156,5 +155,5 @@ function Write-Drive {
     Location = '\'
   }
 
-  Write-Item @PSBoundParameters @Location @args
+  Update-File @PSBoundParameters @Location @args
 }

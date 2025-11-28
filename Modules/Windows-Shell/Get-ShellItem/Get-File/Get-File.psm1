@@ -1,5 +1,5 @@
-New-Alias p Read-Item
-function Read-Item {
+New-Alias p Get-File
+function Get-File {
   param(
     [Parameter(Position = 0)]
     [PathCompletions('.')]
@@ -48,8 +48,8 @@ function Read-Item {
   }
 }
 
-New-Alias p. Read-Sibling
-function Read-Sibling {
+New-Alias p. Get-FileSibling
+function Get-FileSibling {
   param (
     [Parameter(Position = 0)]
     [PathCompletions('..')]
@@ -60,11 +60,11 @@ function Read-Sibling {
     Location = '..'
   }
 
-  Read-Item @PSBoundParameters @Location @args
+  Get-File @PSBoundParameters @Location @args
 }
 
-New-Alias p.. Read-Relative
-function Read-Relative {
+New-Alias p.. Get-FileRelative
+function Get-FileRelative {
   param (
     [Parameter(Position = 0)]
     [PathCompletions('..\..')]
@@ -75,11 +75,11 @@ function Read-Relative {
     Location = '..\..'
   }
 
-  Read-Item @PSBoundParameters @Location @args
+  Get-File @PSBoundParameters @Location @args
 }
 
-New-Alias p~ Read-Home
-function Read-Home {
+New-Alias p~ Get-FileHome
+function Get-FileHome {
   param (
     [Parameter(Position = 0)]
     [PathCompletions('~')]
@@ -90,11 +90,11 @@ function Read-Home {
     Location = '~'
   }
 
-  Read-Item @PSBoundParameters @Location @args
+  Get-File @PSBoundParameters @Location @args
 }
 
-New-Alias pc Read-Code
-function Read-Code {
+New-Alias pc Get-FileCode
+function Get-FileCode {
   param (
     [Parameter(Position = 0)]
     [PathCompletions('~\code')]
@@ -105,12 +105,11 @@ function Read-Code {
     Location = '~\code'
   }
 
-  Read-Item @PSBoundParameters @Location @args
+  Get-File @PSBoundParameters @Location @args
 }
 
-New-Alias p\ Read-Drive
-New-Alias p/ Read-Drive
-function Read-Drive {
+New-Alias p/ Get-FileDrive
+function Get-FileDrive {
   param (
     [Parameter(Position = 0)]
     [PathCompletions('\')]
@@ -121,5 +120,5 @@ function Read-Drive {
     Location = '\'
   }
 
-  Read-Item @PSBoundParameters @Location @args
+  Get-File @PSBoundParameters @Location @args
 }

@@ -1,5 +1,5 @@
-New-Alias galc Get-AliasCommand
-function Get-AliasCommand {
+New-Alias galc Get-CommandAlias
+function Get-CommandAlias {
   param(
     [Alias('Command')]
     [string]$Definition = '*'

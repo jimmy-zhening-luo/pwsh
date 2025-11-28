@@ -1,5 +1,5 @@
-New-Alias i Edit-ShellItem
-function Edit-ShellItem {
+New-Alias i Invoke-Workspace
+function Invoke-Workspace {
   param(
     [Parameter(Position = 0)]
     [PathCompletions('.')]
@@ -75,8 +75,8 @@ function Edit-ShellItem {
   & code.cmd @Local:args
 }
 
-New-Alias i. Edit-ShellSibling
-function Edit-ShellSibling {
+New-Alias i. Invoke-WorkspaceSibling
+function Invoke-WorkspaceSibling {
   param (
     [Parameter(Position = 0)]
     [PathCompletions('..')]
@@ -93,11 +93,11 @@ function Edit-ShellSibling {
     Location = '..'
   }
 
-  Edit-ShellItem @PSBoundParameters @Location @args
+  Invoke-Workspace @PSBoundParameters @Location @args
 }
 
-New-Alias i.. Edit-ShellRelative
-function Edit-ShellRelative {
+New-Alias i.. Invoke-WorkspaceRelative
+function Invoke-WorkspaceRelative {
   param (
     [Parameter(Position = 0)]
     [PathCompletions('..\..')]
@@ -114,11 +114,11 @@ function Edit-ShellRelative {
     Location = '..\..'
   }
 
-  Edit-ShellItem @PSBoundParameters @Location @args
+  Invoke-Workspace @PSBoundParameters @Location @args
 }
 
-New-Alias i~ Edit-ShellHome
-function Edit-ShellHome {
+New-Alias i~ Invoke-WorkspaceHome
+function Invoke-WorkspaceHome {
   param (
     [Parameter(Position = 0)]
     [PathCompletions('~')]
@@ -135,11 +135,11 @@ function Edit-ShellHome {
     Location = '~'
   }
 
-  Edit-ShellItem @PSBoundParameters @Location @args
+  Invoke-Workspace @PSBoundParameters @Location @args
 }
 
-New-Alias ic Edit-ShellCode
-function Edit-ShellCode {
+New-Alias ic Invoke-WorkspaceCode
+function Invoke-WorkspaceCode {
   param (
     [Parameter(Position = 0)]
     [PathCompletions('~\code')]
@@ -156,12 +156,11 @@ function Edit-ShellCode {
     Location = '~\code'
   }
 
-  Edit-ShellItem @PSBoundParameters @Location @args
+  Invoke-Workspace @PSBoundParameters @Location @args
 }
 
-New-Alias i\ Edit-ShellDrive
-New-Alias i/ Edit-ShellDrive
-function Edit-ShellDrive {
+New-Alias i/ Invoke-WorkspaceDrive
+function Invoke-WorkspaceDrive {
   param (
     [Parameter(Position = 0)]
     [PathCompletions('\')]
@@ -178,5 +177,5 @@ function Edit-ShellDrive {
     Location = '\'
   }
 
-  Edit-ShellItem @PSBoundParameters @Location @args
+  Invoke-Workspace @PSBoundParameters @Location @args
 }

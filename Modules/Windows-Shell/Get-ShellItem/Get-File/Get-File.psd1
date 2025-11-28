@@ -1,0 +1,21 @@
+@{
+  RootModule        = 'Get-File.psm1'
+  ModuleVersion     = '1.0.0.0'
+  GUID              = '6212672b-6168-4bcb-a3bf-38291446571a'
+  FunctionsToExport = @(
+    'Get-File'
+    'Get-FileSibling'
+    'Get-FileRelative'
+    'Get-FileHome'
+    'Get-FileCode'
+    'Get-FileDrive'
+  )
+  AliasesToExport   = @(
+    'p'
+    'p.'
+    'p..'
+    'p~'
+    'pc'
+    'p/'
+  )
+}

@@ -1,5 +1,3 @@
-New-Alias touch New-Item
-
 New-Alias mk New-Directory
 function New-Directory {
   [CmdletBinding(

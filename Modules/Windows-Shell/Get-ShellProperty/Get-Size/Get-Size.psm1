@@ -1,10 +1,6 @@
-New-Alias split Split-Path
-New-Alias parent Split-Path
 
-New-Alias hash Get-FileHash
-
-New-Alias size Get-FileSize
-function Get-FileSize {
+New-Alias size Get-Size
+function Get-Size {
   param(
     [Parameter(
       ValueFromPipeline,

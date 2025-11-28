@@ -9,20 +9,20 @@
     '.\PowerShell-Alias'
     '.\PowerShell-Help'
     '.\PowerShell-Verb'
-    '.\PowerShell-Profile'
     '.\PowerShell-History'
+    '.\PowerShell-Profile'
     '.\PowerShell-Debug'
     '.\Lint-PowerShell'
   )
   FunctionsToExport = @(
-    'Get-AliasCommand'
+    'Get-CommandAlias'
     'Get-HelpOnline'
-    'Get-VerbPowerShell'
-    'Edit-Profile'
-    'Sync-Profile'
-    'Edit-History'
-    'Measure-Profile'
-    'Sync-Linter'
+    'Get-VerbList'
+    'Invoke-PSHistory'
+    'Invoke-PSProfile'
+    'Update-PSProfile'
+    'Measure-PSProfile'
+    'Update-PSLinter'
   )
   AliasesToExport   = @(
     'k'
@@ -37,9 +37,9 @@
     'galc'
     'm'
     'upman'
+    'oc'
     'op'
     'up'
-    'oc'
     'mc'
   )
 }

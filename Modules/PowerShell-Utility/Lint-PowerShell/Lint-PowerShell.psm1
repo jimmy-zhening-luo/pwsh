@@ -1,4 +1,4 @@
-function Sync-Linter {
+function Update-PSLinter {
   $Copy = @{
     Path        = '~/code/pwsh/PSScriptAnalyzerSettings.psd1'
     Destination = '~'

@@ -6,12 +6,12 @@ function Invoke-Directory {
   )
 
   if ($env:SSH_CLIENT) {
-    Read-Item @PSBoundParameters
+    Get-File @PSBoundParameters
   }
   else {
     if ($Path) {
       if (Test-Path @PSBoundParameters -PathType Leaf) {
-        Edit-ShellItem @PSBoundParameters
+        Invoke-Workspace @PSBoundParameters
       }
       else {
         Invoke-Item @PSBoundParameters
@@ -23,8 +23,8 @@ function Invoke-Directory {
   }
 }
 
-New-Alias e. Invoke-Sibling
-function Invoke-Sibling {
+New-Alias e. Invoke-DirectorySibling
+function Invoke-DirectorySibling {
   param (
     [PathCompletions('..')]
     [string]$Path
@@ -37,8 +37,8 @@ function Invoke-Sibling {
   Invoke-Directory @FullPath @args
 }
 
-New-Alias e.. Invoke-Relative
-function Invoke-Relative {
+New-Alias e.. Invoke-DirectoryRelative
+function Invoke-DirectoryRelative {
   param (
     [PathCompletions('..\..')]
     [string]$Path
@@ -52,8 +52,8 @@ function Invoke-Relative {
 
 }
 
-New-Alias e~ Invoke-Home
-function Invoke-Home {
+New-Alias e~ Invoke-DirectoryHome
+function Invoke-DirectoryHome {
   param (
     [PathCompletions('~')]
     [string]$Path
@@ -66,8 +66,8 @@ function Invoke-Home {
   Invoke-Directory @FullPath @args
 }
 
-New-Alias ec Invoke-Code
-function Invoke-Code {
+New-Alias ec Invoke-DirectoryCode
+function Invoke-DirectoryCode {
   param (
     [PathCompletions('~\code')]
     [string]$Path
@@ -80,9 +80,8 @@ function Invoke-Code {
   Invoke-Directory @FullPath @args
 }
 
-New-Alias e\ Invoke-Drive
-New-Alias e/ Invoke-Drive
-function Invoke-Drive {
+New-Alias e/ Invoke-DirectoryDrive
+function Invoke-DirectoryDrive {
   param (
     [PathCompletions('\')]
     [string]$Path

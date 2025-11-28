@@ -1,9 +1,9 @@
-New-Alias op Edit-Profile
-function Edit-Profile {
-  Edit-ShellCode -Path 'pwsh' -ProfileName PowerShell @args
+New-Alias op Invoke-PSProfile
+function Invoke-PSProfile {
+  Invoke-WorkspaceCode -Path 'pwsh' -ProfileName PowerShell @args
 }
 
-New-Alias up Sync-Profile
-function Sync-Profile {
-  Get-Repository -Path '~\code\pwsh' && Sync-Linter
+New-Alias up Update-PSProfile
+function Update-PSProfile {
+  Get-Repository -Path '~\code\pwsh' && Update-PSLinter
 }

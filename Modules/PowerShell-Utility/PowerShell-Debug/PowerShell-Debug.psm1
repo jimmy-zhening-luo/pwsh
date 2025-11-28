@@ -1,5 +1,5 @@
-New-Alias mc Measure-Profile
-function Measure-Profile {
+New-Alias mc Measure-PSProfile
+function Measure-PSProfile {
   $Command = @{
     Command = '1'
   }

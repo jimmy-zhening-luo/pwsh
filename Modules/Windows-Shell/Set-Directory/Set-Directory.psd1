@@ -4,10 +4,10 @@
   GUID              = 'b6522962-e911-4dc4-bfbe-0181264ad7d2'
   FunctionsToExport = @(
     'Set-Directory'
-    'Set-Sibling'
-    'Set-Relative'
-    'Set-Home'
-    'Set-Code'
+    'Set-DirectorySibling'
+    'Set-DirectoryRelative'
+    'Set-DirectoryHome'
+    'Set-DirectoryCode'
     'Set-Drive'
     'Set-DriveD'
   )
@@ -19,9 +19,7 @@
     '...'
     'c~'
     'cc'
-    'c\'
     'c/'
-    'd\'
     'd/'
   )
 }

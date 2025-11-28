@@ -1,12 +1,11 @@
 @{
-  RootModule        = 'New-File.psm1'
+  RootModule        = 'New-Directory.psm1'
   ModuleVersion     = '1.0.0.0'
-  GUID              = 'beadc1ed-0c18-4af4-a801-bcfdd5bdf48c'
+  GUID              = '35c69a7e-7cbf-4f7d-95c7-16aaf3024e8b'
   FunctionsToExport = @(
     'New-Directory'
   )
   AliasesToExport   = @(
-    'touch'
     'mk'
   )
 }

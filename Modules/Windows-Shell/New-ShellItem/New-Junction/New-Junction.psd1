@@ -1,7 +1,7 @@
 @{
   RootModule        = 'New-Junction.psm1'
   ModuleVersion     = '1.0.0.0'
-  GUID              = '063f9f99-7333-4c94-aa27-fcfe72a6af65'
+  GUID              = '7f4ce4ac-f5b7-4d8b-84f8-2983cb439699'
   FunctionsToExport = @(
     'New-Junction'
   )

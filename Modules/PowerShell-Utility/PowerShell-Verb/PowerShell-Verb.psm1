@@ -3,7 +3,7 @@
 Gets a list of approved PowerShell verbs.
 
 .DESCRIPTION
-The 'Get-VerbPowerShell' function gets verbs that are approved for use in PowerShell commands.
+The 'Get-VerbList' function gets verbs that are approved for use in PowerShell commands.
 
 It invokes 'Get-Verb', sorts the returned verbs alphabetically, and returns only the 'Verb' field as a 'String' array.
 
@@ -18,7 +18,7 @@ http://learn.microsoft.com/powershell/module/microsoft.powershell.utility/get-ve
 .LINK
 Get-Verb
 #>
-function Get-VerbPowerShell {
+function Get-VerbList {
   param([string]$Verb = '*')
 
   $Verbs = @{

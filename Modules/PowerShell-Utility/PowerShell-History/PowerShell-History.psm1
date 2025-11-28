@@ -1,5 +1,5 @@
-New-Alias oc Edit-History
-function Edit-History {
+New-Alias oc Invoke-PSHistory
+function Invoke-PSHistory {
   $File = @{
     Path        = Get-PSReadLineOption |
       Select-Object -ExpandProperty HistorySavePath
@@ -7,5 +7,5 @@ function Edit-History {
     Window      = $true
   }
 
-  Edit-ShellItem @File
+  Invoke-Workspace @File
 }

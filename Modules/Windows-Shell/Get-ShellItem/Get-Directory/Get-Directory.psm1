@@ -13,8 +13,8 @@ function Get-Directory {
   }
 }
 
-New-Alias l. Get-Sibling
-function Get-Sibling {
+New-Alias l. Get-DirectorySibling
+function Get-DirectorySibling {
   param (
     [PathCompletions('..', 'Directory')]
     [string]$Path
@@ -27,8 +27,8 @@ function Get-Sibling {
   Get-ChildItem @FullPath @args
 }
 
-New-Alias l.. Get-Relative
-function Get-Relative {
+New-Alias l.. Get-DirectoryRelative
+function Get-DirectoryRelative {
   param (
     [PathCompletions('..\..', 'Directory')]
     [string]$Path
@@ -41,8 +41,8 @@ function Get-Relative {
   Get-ChildItem @FullPath @args
 }
 
-New-Alias l~ Get-Home
-function Get-Home {
+New-Alias l~ Get-DirectoryHome
+function Get-DirectoryHome {
   param (
     [PathCompletions('~', 'Directory')]
     [string]$Path
@@ -55,8 +55,8 @@ function Get-Home {
   Get-ChildItem @FullPath @args
 }
 
-New-Alias lc Get-Code
-function Get-Code {
+New-Alias lc Get-DirectoryCode
+function Get-DirectoryCode {
   param (
     [PathCompletions('~\code', 'Directory')]
     [string]$Path
@@ -69,9 +69,8 @@ function Get-Code {
   Get-ChildItem @FullPath @args
 }
 
-New-Alias l\ Get-Drive
-New-Alias l/ Get-Drive
-function Get-Drive {
+New-Alias l/ Get-DirectoryDrive
+function Get-DirectoryDrive {
   param (
     [PathCompletions('\', 'Directory')]
     [string]$Path
