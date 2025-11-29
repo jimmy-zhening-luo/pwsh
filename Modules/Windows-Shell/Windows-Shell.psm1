@@ -1,11 +1,15 @@
 function Test-Item {
   param(
     [string]$Path,
-    [string]$Location = $PWD.Path,
+    [string]$Location,
     [switch]$File,
     [switch]$New,
     [switch]$RequireSubpath
   )
+
+  if (-not Location) {
+    $Location = $Path -match '^~[\/\\]' ? $HOME : $PWD.Path
+  }
 
   if (-not (Test-Path -Path $Location -PathType Container)) {
     return $False
@@ -61,7 +65,7 @@ function Resolve-Item {
     [switch]$RequireSubpath
   )
 
-  if (-not (Test-Path @PSBoundParameters)) {
+  if (-not (Test-Item @PSBoundParameters)) {
     throw "Path '$Path' fails to meet criteria: " + ($PSBoundParameters | ConvertTo-Json)
   }
 
