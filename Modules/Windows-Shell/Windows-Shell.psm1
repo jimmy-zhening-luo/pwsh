@@ -36,15 +36,12 @@ function Test-Item {
     PathType = $File ? 'File' : 'Container'
   }
 
-  $New ? (
-    (
-      Test-Path @Item -IsValid
-    ) -and -not (
-      Test-Path @Item
-    )
-  ) : (
+  if ($New) {
+    (Test-Path @Item -IsValid) -and -not (Test-Path @Item)
+  }
+  else {
     Test-Path @Item
-  )
+  }
 }
 
 function Resolve-Item {
