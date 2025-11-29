@@ -78,7 +78,7 @@ function Invoke-Workspace {
     NoNewWindow = $true
   }
 
-  Start-Process @Process
+  [void](Start-Process @Process)
 }
 
 New-Alias i. Invoke-WorkspaceSibling
