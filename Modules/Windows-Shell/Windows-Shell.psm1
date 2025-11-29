@@ -62,12 +62,13 @@ function Resolve-Item {
 
   $FullLocation = Resolve-Path -Path $Location |
     Select-Object -ExpandProperty Path
-  $Item = {
-    Path = Join-Path $FullLocation (
-      $Path -replace '^\.[\/\\]+', ''
-    )
-  }
+  $FullPath = Join-Path $FullLocation ($Path -replace '^\.[\/\\]+', '')
 
-  Resolve-Path @Item |
-    Select-Object -ExpandProperty Path
+  if ($New) {
+    $FullPath
+  }
+  else {
+    Resolve-Path -Path $FullPath |
+      Select-Object -ExpandProperty Path
+  }
 }
