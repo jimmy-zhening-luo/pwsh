@@ -13,18 +13,17 @@ function Test-Item {
 
   $FullLocation = Resolve-Path -Path $Location |
     Select-Object -ExpandProperty Path
-  $Subpath = $Path -replace '^\.[\/\\]+', ''
 
-  if ($Subpath.StartsWith('~')) {
-    if ($FullPath -replace '\\*$', '' -eq $HOME -replace '\\*$', '') {
-      $Subpath = $Subpath -replace '^~[\/\\]+', ''
+  if ($Path -match '^~[\/\\]') {
+    if ($FullLocation -replace '\\*$', '' -eq $HOME -replace '\\*$', '') {
+      $Path = $Path -replace '^~[\/\\]+', ''
     }
     else {
       return $False
     }
   }
 
-  $FullPath = Join-Path $FullLocation $Subpath
+  $FullPath = Join-Path $FullLocation ($Path -replace '^\.[\/\\]+', '')
   $HasSubpath = $FullPath.Substring($FullLocation.Length) -notmatch '^\\*$'
   $FileLike = $HasSubpath -and -not (
     $FullPath.EndsWith('\') -or $FullPath.EndsWith('\..')
@@ -68,7 +67,7 @@ function Resolve-Item {
 
   $FullLocation = Resolve-Path -Path $Location |
     Select-Object -ExpandProperty Path
-  $FullPath = Join-Path $FullLocation ($Path -replace '^\.[\/\\]+', '')
+  $FullPath = Join-Path $FullLocation ($Path -replace '^~[\/\\]+', '' -replace '^\.[\/\\]+')
 
   if ($New) {
     $FullPath
