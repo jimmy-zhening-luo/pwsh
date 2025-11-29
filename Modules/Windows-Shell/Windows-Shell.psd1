@@ -1,5 +1,6 @@
 @{
-  ModuleVersion     = '1.0.0.0'
+  
+  RootModule        = 'Windows-Shell.psm1'
   GUID              = '195c0492-bfd4-4873-8c2b-c88f53c9b7e8'
   RequiredModules   = @(
     'Argument-Completer'
@@ -15,6 +16,7 @@
     '.\Clear-Line'
   )
   FunctionsToExport = @(
+    'Test-ShellItem'
     'Set-Directory'
     'Set-DirectorySibling'
     'Set-DirectoryRelative'
