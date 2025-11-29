@@ -7,7 +7,7 @@ function Test-Item {
     [switch]$RequireSubpath
   )
 
-  if (-not Location) {
+  if (-not $Location) {
     $Location = $Path -match '^~[\/\\]' ? $HOME : $PWD.Path
   }
 
