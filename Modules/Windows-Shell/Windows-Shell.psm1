@@ -8,14 +8,23 @@ function Test-Item {
   )
 
   if (-not (Test-Path -Path $Location -PathType Container)) {
-    return $False;
+    return $False
   }
 
   $FullLocation = Resolve-Path -Path $Location |
     Select-Object -ExpandProperty Path
-  $FullPath = Join-Path $FullLocation (
-    $Path -replace '^\.[\/\\]+', ''
-  )
+  $Subpath = $Path -replace '^\.[\/\\]+', ''
+
+  if ($Subpath.StartsWith('~')) {
+    if ($FullPath -replace '\\*$', '' -eq $HOME -replace '\\*$', '') {
+      $Subpath = $Subpath -replace '^~[\/\\]+', ''
+    }
+    else {
+      return $False
+    }
+  }
+
+  $FullPath = Join-Path $FullLocation $Subpath
   $HasSubpath = $FullPath.Substring($FullLocation.Length) -notmatch '^\\*$'
   $FileLike = $HasSubpath -and -not (
     $FullPath.EndsWith('\') -or $FullPath.EndsWith('\..')
