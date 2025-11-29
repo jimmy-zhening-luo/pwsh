@@ -56,8 +56,9 @@ function Resolve-Item {
     [switch]$RequireSubpath
   )
 
-  if (-not (Test-Path @PSBoundParameters))
+  if (-not (Test-Path @PSBoundParameters)) {
     throw "Path '$Path' fails to meet criteria: " + ($PSBoundParameters | ConvertTo-Json)
+  }
 
   $FullLocation = Resolve-Path -Path $Location |
     Select-Object -ExpandProperty Path
