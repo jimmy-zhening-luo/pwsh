@@ -150,13 +150,12 @@ function Resolve-Repository {
   )
 
   $CODE = Join-Path $HOME 'code'
+  $Item = @{
+    Path = $Path
+  }
   $Repository = ''
 
   if ($New) {
-    $Item = @{
-      Path = $Path
-    }
-
     if (Test-Item @Item) {
       $Repository = Resolve-Item @Item
     }
@@ -170,19 +169,21 @@ function Resolve-Repository {
     }
   }
   else {
+    $GitPath = $Path ? (Join-Path $Path : '.git') : '.git'
     $Git = @{
-      Path = $Path ? (Join-Path $Path : '.git') : '.git'
+      Path = $GitPath
       RequireSubpath = $True
     }
 
     if (Test-Item @Git) {
-      $Repository = Resolve-Item -Path $Path
+      $Repository = Resolve-Item @Item
     }
     else {
+      $Item.Location = $CODE
       $Git.Location = $CODE
 
       if (Test-Item @Git) {
-        $Repository = Resolve-Item -Path $Path
+        $Repository = Resolve-Item @Item
       }
     }
   }

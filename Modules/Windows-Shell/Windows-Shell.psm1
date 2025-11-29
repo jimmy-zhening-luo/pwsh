@@ -18,7 +18,7 @@ function Test-Item {
   $FullLocation = Resolve-Path -Path $Location |
     Select-Object -ExpandProperty Path
 
-  if ($Path -match '^~[\/\\]') {
+  if ($Path -match '^~(?>[\/\\]|$)') {
     if ($FullLocation -replace '\\*$', '' -eq $HOME -replace '\\*$', '') {
       $Path = $Path -replace '^~[\/\\]+', ''
     }
@@ -70,7 +70,7 @@ function Resolve-Item {
   }
 
   if (-not $Location) {
-    $Location = $Path -match '^~[\/\\]' ? $HOME : $PWD.Path
+    $Location = $Path -match '^~(?>[\/\\]|$)' ? $HOME : $PWD.Path
   }
 
   $FullLocation = Resolve-Path -Path $Location |
