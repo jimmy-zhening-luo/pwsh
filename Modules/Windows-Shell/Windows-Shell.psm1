@@ -45,7 +45,7 @@ function Test-Item {
 
   $Item = @{
     Path = $FullPath
-    PathType = $File ? 'File' : 'Container'
+    PathType = $File ? 'Leaf' : 'Container'
   }
 
   if ($New) {
