@@ -72,6 +72,7 @@ function Resolve-Item {
   if (-not $Location) {
     $Location = $Path -match '^~[\/\\]' ? $HOME : $PWD.Path
   }
+
   $FullLocation = Resolve-Path -Path $Location |
     Select-Object -ExpandProperty Path
   $FullPath = Join-Path $FullLocation ($Path -replace '^~[\/\\]+', '' -replace '^\.[\/\\]+')
