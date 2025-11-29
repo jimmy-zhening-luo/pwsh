@@ -31,7 +31,6 @@ function Test-Item {
     return $False
   }
 
-
   $Item = @{
     Path = $FullPath
     PathType = $File ? 'File' : 'Container'
@@ -46,4 +45,27 @@ function Test-Item {
   ) : (
     Test-Path @Item
   )
+}
+
+function Resolve-Item {
+  param(
+    [string]$Path,
+    [string]$Location = $PWD.Path,
+    [switch]$File,
+    [switch]$New,
+    [switch]$RequireSubpath
+  )
+
+  if (-not (Test-Path @PSBoundParameters))
+    throw "Path '$Path' fails to meet criteria: " + ($PSBoundParameters | ConvertTo-Json)
+
+  $FullLocation = Resolve-Path -Path $Location |
+    Select-Object -ExpandProperty Path
+  $Item = {
+    Path = Join-Path $FullLocation (
+      $Path -replace '^\.[\/\\]+', ''
+    )
+  }
+
+  Resolve-Path @Item
 }

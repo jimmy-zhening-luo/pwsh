@@ -17,6 +17,7 @@
   )
   FunctionsToExport = @(
     'Test-Item'
+    'Resolve-Item'
     'Set-Directory'
     'Set-DirectorySibling'
     'Set-DirectoryRelative'
