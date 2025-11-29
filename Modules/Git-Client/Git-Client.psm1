@@ -169,7 +169,7 @@ function Resolve-Repository {
     }
   }
   else {
-    $GitPath = $Path ? (Join-Path $Path : '.git') : '.git'
+    $GitPath = $Path ? (Join-Path $Path '.git') : '.git'
     $Git = @{
       Path = $GitPath
       RequireSubpath = $True
