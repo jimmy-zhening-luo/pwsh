@@ -68,5 +68,6 @@ function Resolve-Item {
     )
   }
 
-  Resolve-Path @Item
+  Resolve-Path @Item |
+    Select-Object -ExpandProperty Path
 }
