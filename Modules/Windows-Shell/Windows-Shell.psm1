@@ -1,4 +1,4 @@
-function Test-ShellItem {
+function Test-Item {
   param(
     [string]$Path,
     [string]$Location = $PWD.Path,
@@ -13,7 +13,9 @@ function Test-ShellItem {
 
   $FullLocation = Resolve-Path -Path $Location |
     Select-Object -ExpandProperty Path
-  $FullPath = Join-Path $FullLocation $FullPath
+  $FullPath = Join-Path $FullLocation (
+    $Path -replace '^\.[\/\\]+', ''
+  )
   $HasSubpath = $FullPath.Substring($FullLocation.Length) -notmatch '^\\*$'
   $FileLike = $HasSubpath -and -not (
     $FullPath.EndsWith('\') -or $FullPath.EndsWith('\..')

@@ -16,7 +16,7 @@
     '.\Clear-Line'
   )
   FunctionsToExport = @(
-    'Test-ShellItem'
+    'Test-Item'
     'Set-Directory'
     'Set-DirectorySibling'
     'Set-DirectoryRelative'
