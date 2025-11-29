@@ -50,8 +50,8 @@ function Invoke-Repository {
       $Verb = $Verb.ToLowerInvariant()
 
       $Resolve = @{
-        Path = $Path
-        New  = $Verb -eq 'clone'
+        Path       = $Path
+        Initialize = $Verb -eq 'clone'
       }
 
       if (Resolve-Repository @Resolve) {
@@ -74,8 +74,8 @@ function Invoke-Repository {
       $Path = ''
 
       $Resolve = @{
-        Path = $Path
-        New  = $Verb -eq 'clone'
+        Path       = $Path
+        Initialize = $Verb -eq 'clone'
       }
 
       if (Resolve-Repository @Resolve) {
@@ -94,8 +94,8 @@ function Invoke-Repository {
       $Verb = $Verb.ToLowerInvariant()
 
       $Resolve = @{
-        Path = $Path
-        New  = $Verb -eq 'clone'
+        Path       = $Path
+        Initialize = $Verb -eq 'clone'
       }
 
       if (Resolve-Repository @Resolve) {
@@ -110,8 +110,8 @@ function Invoke-Repository {
       $Path = ''
 
       $Resolve = @{
-        Path = $Path
-        New  = $Verb -eq 'clone'
+        Path       = $Path
+        Initialize = $Verb -eq 'clone'
       }
 
       if (Resolve-Repository @Resolve) {
@@ -146,45 +146,70 @@ function Invoke-Repository {
 function Resolve-Repository {
   param(
     [string]$Path,
-    [switch]$New
+    [Alias('Clone')]
+    [switch]$Initialize
   )
 
-  $CODE = Join-Path $HOME 'code'
-  $Repository = ''
+  function Get-CodeRelativePath([string]$Path) {
+    Join-Path '~\code' ($Path -replace '^\.[\/\\]+', '')
+  }
 
-  if ($New) {
-    $Item = @{
-      Path = $Path
-    }
+  function Add-Git([string]$Path) {
+    Join-Path $Path '.git'
+  }
 
-    if (Test-Item @Item) {
-      $Repository = Resolve-Item @Item
+  function Select-ResolvedPath([string]$Path) {
+    Resolve-Path -Path $Path |
+      Select-Object -ExpandProperty Path
+  }
+
+  $Container = @{
+    PathType = 'Container'
+  }
+
+  if ($Initialize) {
+    if ($Path) {
+      if (Test-Path -Path $Path @Container) {
+        Select-ResolvedPath $Path
+      }
+      elseif (
+        -not $Path.contains(':') -and (
+          Test-Path -Path (Get-CodeRelativePath $Path) @Container
+        )
+      ) {
+        Select-ResolvedPath $CodeRelativePath
+      }
+      else {
+        ''
+      }
     }
     else {
-      $Item.Location = $CODE
-      $Item.New = $True
-
-      if (Test-Item @Item) {
-        $Repository = Resolve-Item @Item
-      }
+      Select-ResolvedPath '~\code'
     }
   }
   else {
-    $Git = @{
-      Path = $Path ? (Join-Path $Path : '.git') : '.git'
-    }
-
-    if (Test-Item @Git) {
-      $Repository = Resolve-Item -Path $Path
-    }
-    else {
-      $Git.Location = $CODE
-
-      if (Test-Item @Git) {
-        $Repository = Resolve-Item -Path $Path
+    if ($Path) {
+      if (Test-Path -Path (Add-Git $Path) @Container) {
+        Select-ResolvedPath $Path
+      }
+      elseif (
+        -not $Path.contains(':') -and (
+          Test-Path -Path (
+            Add-Git (Get-CodeRelativePath $Path)
+          ) @Container
+        )
+      ) {
+        Select-ResolvedPath (Get-CodeRelativePath $Path)
+      }
+      else {
+        ''
       }
     }
+    elseif (Test-Path -Path (Add-Git '.') @Container) {
+      Select-ResolvedPath '.'
+    }
+    else {
+      ''
+    }
   }
-
-  $Repository
 }
