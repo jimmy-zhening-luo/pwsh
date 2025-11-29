@@ -59,7 +59,7 @@ function Test-Item {
 function Resolve-Item {
   param(
     [string]$Path,
-    [string]$Location = $PWD.Path,
+    [string]$Location,
     [switch]$File,
     [switch]$New,
     [switch]$RequireSubpath
