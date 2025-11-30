@@ -36,10 +36,7 @@ function Get-ChildRepository {
 
   $Repositories |
     % { Invoke-Repository -Path $_ @Pull @args }
-  $Print = @{
-    Noun  = 'repository/repositories'
-    Count = $Repositories.Count
-  }
+  $Count = $Repositories.Count
 
-  "`nPulled $(Format-Count @Print)."
+  "`nPulled $Count $($Count -eq 1 ? 'repository' : 'repositories')"
 }

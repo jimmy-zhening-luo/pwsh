@@ -4,14 +4,12 @@
   NestedModules     = @(
     '.\Copy-Guid'
     '.\Convert-Number'
-    '.\Convert-String'
     '.\Get-YouTube'
   )
   FunctionsToExport = @(
     'Copy-Guid'
     'ConvertTo-Hex'
     'ConvertTo-HexLower'
-    'Format-Count'
     'Get-YouTube'
     'Get-YouTubeAudio'
     'Get-YouTubeFormat'
@@ -20,7 +18,6 @@
     'guid'
     'hex'
     'hexl'
-    'plural'
     'yt'
     'yta'
     'ytf'
