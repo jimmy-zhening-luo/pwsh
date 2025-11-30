@@ -3,14 +3,12 @@ function Measure-PSProfile {
   $Command = @{
     Command = '1'
   }
-  $Unit = @{
-    ExpandProperty = 'TotalMilliseconds'
-  }
-
-  $StartupTimeWithProfile = Measure-Command { pwsh @Command } |
-    Select-Object @Unit
-  $StartupTime = Measure-Command { pwsh -NoProfile @Command } |
-    Select-Object @Unit
+  $StartupTimeWithProfile = (
+    Measure-Command { pwsh @Command }
+  ).TotalMilliseconds
+  $StartupTime = (
+    Measure-Command { pwsh -NoProfile @Command }
+  ).TotalMilliseconds
   $ProfileLoadTime = [math]::Round($StartupTimeWithProfile - $StartupTime)
 
   "$ProfileLoadTime ms`n(Base: $([math]::Round($StartupTime)) ms)"

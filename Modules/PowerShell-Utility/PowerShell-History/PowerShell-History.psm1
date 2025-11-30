@@ -1,11 +1,10 @@
 New-Alias oc Invoke-PSHistory
 function Invoke-PSHistory {
-  $File = @{
-    Path        = Get-PSReadLineOption |
-      Select-Object -ExpandProperty HistorySavePath
+  $History = @{
+    Path        = (Get-PSReadLineOption).HistorySavePath
     ProfileName = 'PowerShell'
-    Window      = $true
+    Window      = $True
   }
 
-  Invoke-Workspace @File
+  Invoke-Workspace @History
 }

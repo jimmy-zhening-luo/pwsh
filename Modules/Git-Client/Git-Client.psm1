@@ -1,8 +1,8 @@
-$GIT_VERB =
-Import-PowerShellDataFile (
-  Join-Path $PSScriptRoot 'Git-Verb.psd1' -Resolve
-) -ErrorAction Stop |
-  Select-Object -ExpandProperty GIT_VERB
+$GIT_VERB = (
+  Import-PowerShellDataFile (
+    Join-Path $PSScriptRoot 'Git-Verb.psd1' -Resolve
+  ) -ErrorAction Stop
+).GIT_VERB
 
 New-Alias gitc Invoke-Repository
 New-Alias gg Invoke-Repository

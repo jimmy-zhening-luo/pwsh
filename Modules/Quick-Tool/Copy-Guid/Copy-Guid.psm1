@@ -6,8 +6,7 @@ function Copy-Guid {
     [switch]$Silent
   )
 
-  $Guid = New-Guid |
-    Select-Object -ExpandProperty Guid
+  $Guid = (New-Guid).Guid
 
   if ($Uppercase) {
     $Guid = $Guid.ToUpperInvariant()

@@ -75,15 +75,10 @@ function Get-Size {
     $Item = Get-Item $Path
     $Quantity = [math]::Round(
       (
-        (
-          $Item.PSIsContainer
-        ) ? (
+        $Item.PSIsContainer ? (
           Get-ChildItem -Path $Path -Recurse -File |
-            Measure-Object -Property Length -Sum |
-            Select-Object -ExpandProperty Sum
-        ) : (
-          $Item.Length
-        )
+            Measure-Object -Property Length -Sum
+        ).Sum : $Item.Length
       ) / $FACTORS[$UnitCanonical],
       3
     )

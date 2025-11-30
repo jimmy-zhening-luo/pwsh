@@ -25,7 +25,5 @@ function Get-VerbList {
     Verb = $Verb.Contains('*') ? $Verb : $Verb.Length -lt 3 ? "$Verb*" : "*$Verb*"
   }
 
-  Get-Verb @Verbs @args |
-    Sort-Object -Property Verb |
-    Select-Object -ExpandProperty Verb
+  (Get-Verb @Verbs @args | Sort-Object -Property Verb).Verb
 }
