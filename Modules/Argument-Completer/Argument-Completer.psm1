@@ -169,26 +169,26 @@ class PathCompleter : IArgumentCompleter {
   }
 }
 
-class UnitCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory {
+class GenericCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory {
   [string] $Units
 
-  UnitCompletionsAttribute(
+  GenericCompletionsAttribute(
     [string] $units
   ) {
     $this.Units = $units
   }
 
   [IArgumentCompleter] Create() {
-    return [UnitCompleter]::new(
+    return [GenericCompleter]::new(
       $this.Units
     )
   }
 }
 
-class UnitCompleter : IArgumentCompleter {
+class GenericCompleter : IArgumentCompleter {
   [string] $Units
 
-  UnitCompleter(
+  GenericCompleter(
     [string] $units
   ) {
     if (-not $units) {
@@ -233,8 +233,8 @@ class UnitCompleter : IArgumentCompleter {
 $ExportableTypes = @(
   [PathCompletionsAttribute]
   [PathCompleter]
-  [UnitCompletionsAttribute]
-  [UnitCompleter]
+  [GenericCompletionsAttribute]
+  [GenericCompleter]
 )
 $TypeAcceleratorsClass = [PSObject].Assembly.GetType(
   'System.Management.Automation.TypeAccelerators'

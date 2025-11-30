@@ -9,7 +9,7 @@ function Get-Size {
     [PathCompletions('.')]
     [string]$Path,
     [Parameter(Position = 1)]
-    [UnitCompletions('B,KB,MB,GB')]
+    [GenericCompletions('B,KB,MB,GB')]
     [string]$Unit,
     [Alias('qo', 'Number')]
     [switch]$QuantityOnly
