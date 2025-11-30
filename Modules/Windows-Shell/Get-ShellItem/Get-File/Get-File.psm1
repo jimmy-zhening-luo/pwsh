@@ -26,8 +26,7 @@ function Get-File {
     }
 
     $FullPath = @{
-      Path = Resolve-Path -Path $Target |
-        Select-Object -ExpandProperty Path
+      Path = (Resolve-Path -Path $Target).Path
     }
 
     if (Test-Path @FullPath -PathType Container) {
@@ -40,8 +39,8 @@ function Get-File {
   else {
     $Directory = @{
       Path = $Location ? (
-        Resolve-Path -Path $Location | Select-Object -ExpandProperty Path
-      ) : $PWD.Path
+        Resolve-Path -Path $Location
+      ).Path : $PWD.Path
     }
 
     Get-ChildItem @Directory @Local:args

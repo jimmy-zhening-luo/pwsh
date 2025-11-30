@@ -27,10 +27,7 @@ function Update-File {
   }
 
   $Target = $Location ? (
-    Join-Path (
-      Resolve-Path -Path $Location |
-        Select-Object -ExpandProperty Path
-    ) $Path
+    Join-Path (Resolve-Path -Path $Location).Path $Path
   ) : (
     $Path ? $Path : $PWD.Path
   )

@@ -27,8 +27,7 @@ function Invoke-Workspace {
     $Target = $Location ? (Join-Path $Location $Path) : $Path
 
     if (Test-Path -Path $Target) {
-      $FullPath = Resolve-Path $Target |
-        Select-Object -ExpandProperty Path
+      $FullPath = (Resolve-Path $Target).Path
       $Local:args = , $FullPath + $Local:args
     }
     else {

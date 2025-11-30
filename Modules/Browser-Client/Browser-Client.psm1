@@ -16,21 +16,12 @@ function Open-Url {
     [Uri]$Uri
   )
 
-  $Argument = (
+  $Argument = $PSCmdlet.ParameterSetName -eq 'Uri' ? $Uri : (
     (
-      $PSCmdlet.ParameterSetName -eq 'Uri'
+      Test-Path $Path
     ) ? (
-      $Uri
-    ) : (
-      (
-        Test-Path $Path
-      ) ? (
-        Resolve-Path $Path |
-          Select-Object -ExpandProperty Path
-      ) : (
-        $Path
-      )
-    )
+      Resolve-Path $Path
+    ).Path : $Path
   )
 
   $Browser = @{

@@ -11,8 +11,7 @@ function Resolve-NodeProject {
   }
 
   if (Test-Path @IsNode) {
-    $Prefix = Resolve-Path $Path |
-      Select-Object -ExpandProperty Path
+    $Prefix = (Resolve-Path $Path).Path
 
     $Prefix -eq $PWD.Path ? '' : $Prefix
   }
