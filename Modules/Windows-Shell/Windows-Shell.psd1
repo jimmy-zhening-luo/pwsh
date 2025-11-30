@@ -16,6 +16,7 @@
     '.\Clear-Line'
   )
   FunctionsToExport = @(
+    'Format-Path'
     'Test-Item'
     'Resolve-Item'
     'Set-Directory'
