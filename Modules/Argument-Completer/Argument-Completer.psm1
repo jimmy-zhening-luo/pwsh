@@ -7,6 +7,7 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
   [string] $Root
   [string] $Type
   [bool] $Flat
+  [bool] $UseDirectorySeparatorChar
 
   PathCompletionsAttribute(
     [string] $root
@@ -14,8 +15,8 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
     $this.Root = $root
     $this.Type = ''
     $this.Flat = $false
+    $this.UseDirectorySeparatorChar = $false
   }
-
   PathCompletionsAttribute(
     [string] $root,
     [string] $type
@@ -23,8 +24,8 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
     $this.Root = $root
     $this.Type = $type
     $this.Flat = $false
+    $this.UseDirectorySeparatorChar = $false
   }
-
   PathCompletionsAttribute(
     [string] $root,
     [string] $type,
@@ -33,13 +34,25 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
     $this.Root = $root
     $this.Type = $type
     $this.Flat = $flat
+    $this.UseDirectorySeparatorChar = $false
   }
-
+  PathCompletionsAttribute(
+    [string] $root,
+    [string] $type,
+    [bool] $flat,
+    [bool] $useDirectorySeparatorChar
+  ) {
+    $this.Root = $root
+    $this.Type = $type
+    $this.Flat = $flat
+    $this.UseDirectorySeparatorChar = $useDirectorySeparatorChar
+  }
   [IArgumentCompleter] Create() {
     return [PathCompleter]::new(
       $this.Root,
       $this.Type,
-      $this.Flat
+      $this.Flat,
+      $this.UseDirectorySeparatorChar
     )
   }
 }
@@ -48,20 +61,27 @@ class PathCompleter : IArgumentCompleter {
   [string] $Root
   [string] $Type
   [bool] $Flat
+  [bool] $UseDirectorySeparatorChar
 
   PathCompleter(
     [string] $root,
     [string] $type,
     [bool] $flat
+    [bool] $useDirectorySeparatorChar
   ) {
-    if (-not $root -or -not (Test-Path -Path $root -PathType Container)) {
+    $Container = @{
+      Path = $root
+      PathType = 'Container'
+    }
+
+    if (-not $root -or -not (Test-Path @Container)) {
       throw [ArgumentException]::new('root')
     }
 
-    $this.Root = Resolve-Path -Path $root |
-      Select-Object -ExpandProperty Path
+    $this.Root = $root
     $this.Type = $type
     $this.Flat = $flat
+    $this.UseDirectorySeparatorChar = $useDirectorySeparatorChar
   }
 
   [IEnumerable[CompletionResult]] CompleteArgument(
@@ -71,8 +91,8 @@ class PathCompleter : IArgumentCompleter {
     [CommandAst] $commandAst,
     [IDictionary] $fakeBoundParameters
   ) {
-
-    $Local:root = $this.Root
+    $Local:root = (Resolve-Path -Path $this.Root).Path
+    $separator = $this.UseDirectorySeparatorChar ? [System.IO.Path]::DirectorySeparatorChar : '/'
     $query = @{
       Path      = $Local:root
       Directory = $this.Type -eq 'Directory'
@@ -112,10 +132,8 @@ class PathCompleter : IArgumentCompleter {
       { $_.PSIsContainer },
       'Split'
     )
-    $directories = $directories |
-      Select-Object -ExpandProperty Name
-    $files = $files |
-      Select-Object -ExpandProperty Name
+    $directories = $directories.Name
+    $files = $files.Name
 
     if ($subpath -and -not $this.Flat) {
       $directories += ''
@@ -133,10 +151,12 @@ class PathCompleter : IArgumentCompleter {
         % { $_ + '\' }
     }
 
-    $directories = $directories |
-      % { $_ -replace '[\\]+', '/' }
-    $files = $files |
-      % { $_ -replace '[\\]+', '/' }
+    if ($separator -ne '/') {
+      $directories = $directories |
+        % { $_ -replace '[\\]+', $separator }
+      $files = $files |
+        % { $_ -replace '[\\]+', $separator }
+    }
 
     foreach ($directory in $directories) {
       $resultList.Add([CompletionResult]::new($directory))
