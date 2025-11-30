@@ -3,7 +3,7 @@ function Test-Host {
   param(
     [Alias('ComputerName', 'RemoteAddress', 'cn')]
     [string]$HostName,
-    [Alias('RemotePort', 'p')]
+    [Alias('RemotePort')]
     [string]$Port
   )
 
