@@ -66,11 +66,11 @@ class PathCompleter : IArgumentCompleter {
   PathCompleter(
     [string] $root,
     [string] $type,
-    [bool] $flat
+    [bool] $flat,
     [bool] $useDirectorySeparatorChar
   ) {
     $Container = @{
-      Path = $root
+      Path     = $root
       PathType = 'Container'
     }
 
