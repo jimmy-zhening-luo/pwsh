@@ -171,7 +171,7 @@ function Resolve-Repository {
   else {
     $GitPath = $Path ? (Join-Path $Path '.git') : '.git'
     $Git = @{
-      Path = $GitPath
+      Path           = $GitPath
       RequireSubpath = $True
     }
 

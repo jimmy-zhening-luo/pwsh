@@ -50,7 +50,7 @@ function Test-Item {
   if ([System.IO.Path]::IsPathRooted($Path)) {
     if ($Location) {
       $Relative = @{
-        Path = $Path
+        Path     = $Path
         Location = $Location
       }
 
@@ -70,7 +70,7 @@ function Test-Item {
 
     if ($Location) {
       $Relative = @{
-        Path = Join-Path $HOME $Path
+        Path     = Join-Path $HOME $Path
         Location = $Location
       }
 
@@ -112,7 +112,7 @@ function Test-Item {
   }
 
   $Item = @{
-    Path = $FullPath
+    Path     = $FullPath
     PathType = $File ? 'Leaf' : 'Container'
   }
 
