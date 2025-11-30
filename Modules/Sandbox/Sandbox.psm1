@@ -1,9 +1,10 @@
 New-Alias sand Test-Sandbox
 New-Alias sandbox Test-Sandbox
 function Test-Sandbox {
-  [CmdletBinding()]
-  param ()
+  param (
+    [string]$Path
+  )
 
-  # This is a placeholder function for sandbox testing.
-  Write-Output 'Sandbox test executed.'
+  "Path: $Path"
+  "Args: $args"
 }
