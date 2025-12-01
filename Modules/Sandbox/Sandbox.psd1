@@ -3,7 +3,7 @@
   ModuleVersion     = '1.0.0.0'
   GUID              = '0cd1efe3-3183-4a36-9711-93ac269ca118'
   RequiredModules   = @(
-    'Windows-Shell'
+    'Shell'
   )
   FunctionsToExport = @(
     'Test-Sandbox'
