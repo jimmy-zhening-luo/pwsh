@@ -1,4 +1,4 @@
-New-Alias cl Clear-Line
+New-Alias cl Shell\Clear-Line
 function Clear-Line {
   param(
     [PathCompletions('.')]

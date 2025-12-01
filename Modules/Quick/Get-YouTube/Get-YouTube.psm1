@@ -1,4 +1,4 @@
-New-Alias yt Get-YouTube
+New-Alias yt Quick\Get-YouTube
 <#
 .SYNOPSIS
 Use yt-dlp to download YouTube videos.
@@ -21,7 +21,7 @@ function Get-YouTube {
     $Video -match '^\s*(?:https?://)?(?:(?:www|m)\.)?youtube\.com/watch\?\S*v=(?<video>[-\w]+)' ? $Matches.video : $Video
   )
 
-  if (Browse\Test-Url $VideoUrl) {
+  if (Test-Url $VideoUrl) {
     & yt-dlp $Rest -- $VideoUrl
   }
   else {
@@ -29,7 +29,7 @@ function Get-YouTube {
   }
 }
 
-New-Alias yta Get-YouTubeAudio
+New-Alias yta Quick\Get-YouTubeAudio
 <#
 .SYNOPSIS
 Use yt-dlp to extract audio from a YouTube video.
@@ -60,7 +60,7 @@ function Get-YouTubeAudio {
   Get-YouTube @PSBoundParameters @args @YtArguments
 }
 
-New-Alias ytf Get-YouTubeFormat
+New-Alias ytf Quick\Get-YouTubeFormat
 <#
 .SYNOPSIS
 Use yt-dlp to get available formats for a YouTube video.

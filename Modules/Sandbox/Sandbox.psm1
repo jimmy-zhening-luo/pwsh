@@ -1,5 +1,5 @@
-New-Alias sand Test-Sandbox
-New-Alias sandbox Test-Sandbox
+New-Alias sand Sandbox\Test-Sandbox
+New-Alias sandbox Sandbox\Test-Sandbox
 function Test-Sandbox {
   param (
     [string]$Path

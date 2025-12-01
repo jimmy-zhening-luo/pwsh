@@ -1,4 +1,4 @@
-New-Alias p Get-File
+New-Alias p Shell\Get-File
 function Get-File {
   [OutputType([string[]])]
   param(
@@ -48,7 +48,7 @@ function Get-File {
   }
 }
 
-New-Alias p. Get-FileSibling
+New-Alias p. Shell\Get-FileSibling
 function Get-FileSibling {
   [OutputType([string[]])]
   param (
@@ -64,7 +64,7 @@ function Get-FileSibling {
   Get-File @PSBoundParameters @Location @args
 }
 
-New-Alias p.. Get-FileRelative
+New-Alias p.. Shell\Get-FileRelative
 function Get-FileRelative {
   [OutputType([string[]])]
   param (
@@ -80,7 +80,7 @@ function Get-FileRelative {
   Get-File @PSBoundParameters @Location @args
 }
 
-New-Alias p~ Get-FileHome
+New-Alias p~ Shell\Get-FileHome
 function Get-FileHome {
   [OutputType([string[]])]
   param (
@@ -96,7 +96,7 @@ function Get-FileHome {
   Get-File @PSBoundParameters @Location @args
 }
 
-New-Alias pc Get-FileCode
+New-Alias pc Shell\Get-FileCode
 function Get-FileCode {
   [OutputType([string[]])]
   param (
@@ -112,7 +112,7 @@ function Get-FileCode {
   Get-File @PSBoundParameters @Location @args
 }
 
-New-Alias p/ Get-FileDrive
+New-Alias p/ Shell\Get-FileDrive
 function Get-FileDrive {
   [OutputType([string[]])]
   param (

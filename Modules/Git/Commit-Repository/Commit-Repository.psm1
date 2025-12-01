@@ -1,5 +1,4 @@
-New-Alias gitm Write-Repository
-New-Alias ggm Write-Repository
+New-Alias ggm Git\Write-Repository
 <#
 .SYNOPSIS
 Commit changes to a Git repository.

@@ -1,7 +1,7 @@
 New-Alias gapx Get-AppxPackage
 New-Alias remapx Remove-AppxPackage
 
-New-Alias su Update-StoreApp
+New-Alias su WindowsSystem\Update-StoreApp
 <#
 .SYNOPSIS
 Opens the 'Microsoft Store' app to the 'Updates & downloads' page.

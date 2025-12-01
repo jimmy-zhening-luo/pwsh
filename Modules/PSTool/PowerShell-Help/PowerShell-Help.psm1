@@ -8,7 +8,7 @@ $CUSTOM_LINKS = (
 ) ? (Import-PowerShellDataFile @CUSTOM_LINKS_PATH) : @{}
 $ABOUT_ARTICLE_ROOT = 'https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about'
 
-New-Alias m Get-HelpOnline
+New-Alias m PSTool\Get-HelpOnline
 function Get-HelpOnline {
   param(
     [string[]]$Name,
@@ -86,7 +86,7 @@ function Get-HelpOnline {
 
           $about_Article = "$ABOUT_ARTICLE_ROOT/$about_Topic"
 
-          (Browse\Test-Url $about_Article) ? $about_Article : ''
+          (Test-Url $about_Article) ? $about_Article : ''
         }
 
         $about_Article = Resolve-AboutArticle $about_Topic

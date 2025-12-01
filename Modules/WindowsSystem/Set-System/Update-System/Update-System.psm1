@@ -1,4 +1,4 @@
-New-Alias wu Update-Windows
+New-Alias wu WindowsSystem\Update-Windows
 <#
 .SYNOPSIS
 Opens the 'Settings' app to the 'Windows Update' page.

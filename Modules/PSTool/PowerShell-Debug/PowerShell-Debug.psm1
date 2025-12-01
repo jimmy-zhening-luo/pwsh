@@ -1,4 +1,4 @@
-New-Alias mc Measure-PSProfile
+New-Alias mc PSTool\Measure-PSProfile
 function Measure-PSProfile {
   $Command = @{
     Command = '1'

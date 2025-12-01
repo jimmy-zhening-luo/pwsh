@@ -1,4 +1,4 @@
-New-Alias i Invoke-Workspace
+New-Alias i Shell\Invoke-Workspace
 function Invoke-Workspace {
   [OutputType([void])]
   param(
@@ -81,7 +81,7 @@ function Invoke-Workspace {
   [void](Start-Process @Process)
 }
 
-New-Alias i. Invoke-WorkspaceSibling
+New-Alias i. Shell\Invoke-WorkspaceSibling
 function Invoke-WorkspaceSibling {
   [OutputType([void])]
   param (
@@ -103,7 +103,7 @@ function Invoke-WorkspaceSibling {
   Invoke-Workspace @PSBoundParameters @Location @args
 }
 
-New-Alias i.. Invoke-WorkspaceRelative
+New-Alias i.. Shell\Invoke-WorkspaceRelative
 function Invoke-WorkspaceRelative {
   [OutputType([void])]
   param (
@@ -125,7 +125,7 @@ function Invoke-WorkspaceRelative {
   Invoke-Workspace @PSBoundParameters @Location @args
 }
 
-New-Alias i~ Invoke-WorkspaceHome
+New-Alias i~ Shell\Invoke-WorkspaceHome
 function Invoke-WorkspaceHome {
   [OutputType([void])]
   param (
@@ -147,7 +147,7 @@ function Invoke-WorkspaceHome {
   Invoke-Workspace @PSBoundParameters @Location @args
 }
 
-New-Alias ic Invoke-WorkspaceCode
+New-Alias ic Shell\Invoke-WorkspaceCode
 function Invoke-WorkspaceCode {
   [OutputType([void])]
   param (
@@ -169,7 +169,7 @@ function Invoke-WorkspaceCode {
   Invoke-Workspace @PSBoundParameters @Location @args
 }
 
-New-Alias i/ Invoke-WorkspaceDrive
+New-Alias i/ Shell\Invoke-WorkspaceDrive
 function Invoke-WorkspaceDrive {
   [OutputType([void])]
   param (

@@ -17,8 +17,8 @@ function Expand-Query {
   $Tokens -join '+'
 }
 
-New-Alias search Search-Query
-New-Alias g Search-Query
+New-Alias search Browse\Search-Query
+New-Alias g Browse\Search-Query
 
 function Search-Query {
   param(
@@ -43,8 +43,8 @@ function Search-Query {
   }
 }
 
-New-Alias maps Search-Map
-New-Alias map Search-Map
+New-Alias maps Browse\Search-Map
+New-Alias map Browse\Search-Map
 
 function Search-Map {
   param(

@@ -8,7 +8,6 @@
     'Get-ChildRepository'
   )
   AliasesToExport   = @(
-    'gitp'
     'ggp'
     'gpa'
   )

@@ -4,8 +4,7 @@ $GIT_VERB = (
   ) -ErrorAction Stop
 ).GIT_VERB
 
-New-Alias gitc Invoke-Repository
-New-Alias gg Invoke-Repository
+New-Alias gg Git\Invoke-Repository
 function Invoke-Repository {
   param(
     [string]$Path,

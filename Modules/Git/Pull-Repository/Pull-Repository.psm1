@@ -1,5 +1,5 @@
-New-Alias gitp Get-Repository
-New-Alias ggp Get-Repository
+New-Alias gitp Git\Get-Repository
+New-Alias ggp Git\Get-Repository
 <#
 .SYNOPSIS
 Use Git to pull changes from a repository.
@@ -19,7 +19,7 @@ function Get-Repository {
   Invoke-Repository @Pull @PSBoundParameters @args
 }
 
-New-Alias gpa Get-ChildRepository
+New-Alias gpa Git\Get-ChildRepository
 <#
 .SYNOPSIS
 Use Git to pull changes from all child repositories.

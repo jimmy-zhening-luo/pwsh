@@ -1,5 +1,4 @@
-New-Alias gitr Reset-Repository
-New-Alias gr Reset-Repository
+New-Alias gr Git\Reset-Repository
 <#
 .SYNOPSIS
 Use Git to undo changes in a repository.
@@ -51,8 +50,7 @@ function Reset-Repository {
   Add-Repository @Parameters -Throw && Invoke-Repository @Parameters @Reset @Local:args
 }
 
-New-Alias gitrp Restore-Repository
-New-Alias grp Restore-Repository
+New-Alias grp Git\Restore-Repository
 <#
 .SYNOPSIS
 Use Git to restore a repository to its previous state.

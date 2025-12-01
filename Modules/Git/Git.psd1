@@ -27,20 +27,13 @@
     'Restore-Repository'
   )
   AliasesToExport   = @(
-    'gitc'
     'gg'
-    'gita'
     'gga'
     'gitcl'
-    'gits'
     'ggs'
-    'gitr'
     'gr'
-    'gitrp'
     'grp'
-    'gitm'
     'ggm'
-    'gitp'
     'ggp'
     'gpa'
   )

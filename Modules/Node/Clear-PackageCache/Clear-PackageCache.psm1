@@ -1,4 +1,4 @@
-New-Alias npc Clear-PackageCache
+New-Alias npc Node\Clear-PackageCache
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to clear package cache.

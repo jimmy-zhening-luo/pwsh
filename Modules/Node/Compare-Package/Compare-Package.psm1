@@ -1,4 +1,4 @@
-New-Alias npo Compare-Package
+New-Alias npo Node\Compare-Package
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to check for outdated packages.

@@ -1,4 +1,4 @@
-New-Alias w Set-File
+New-Alias w Shell\Set-File
 function Set-File {
   param(
     [Parameter(
@@ -40,7 +40,7 @@ function Set-File {
   Set-Content @Write @Local:args
 }
 
-New-Alias w. Set-FileSibling
+New-Alias w. Shell\Set-FileSibling
 function Set-FileSibling {
   param (
     [Parameter(
@@ -63,7 +63,7 @@ function Set-FileSibling {
   Set-File @PSBoundParameters @Location @args
 }
 
-New-Alias w.. Set-FileRelative
+New-Alias w.. Shell\Set-FileRelative
 function Set-FileRelative {
   param (
     [Parameter(
@@ -86,7 +86,7 @@ function Set-FileRelative {
   Set-File @PSBoundParameters @Location @args
 }
 
-New-Alias w~ Set-FileHome
+New-Alias w~ Shell\Set-FileHome
 function Set-FileHome {
   param (
     [Parameter(
@@ -109,7 +109,7 @@ function Set-FileHome {
   Set-File @PSBoundParameters @Location @args
 }
 
-New-Alias wc Set-FileCode
+New-Alias wc Shell\Set-FileCode
 function Set-FileCode {
   param (
     [Parameter(
@@ -132,7 +132,7 @@ function Set-FileCode {
   Set-File @PSBoundParameters @Location @args
 }
 
-New-Alias w/ Set-FileDrive
+New-Alias w/ Shell\Set-FileDrive
 function Set-FileDrive {
   param (
     [Parameter(

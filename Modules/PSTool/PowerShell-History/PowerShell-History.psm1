@@ -1,4 +1,4 @@
-New-Alias oc Invoke-PSHistory
+New-Alias oc PSTool\Invoke-PSHistory
 function Invoke-PSHistory {
   $History = @{
     Path        = (Get-PSReadLineOption).HistorySavePath

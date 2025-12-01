@@ -7,7 +7,6 @@
     'Add-Repository'
   )
   AliasesToExport   = @(
-    'gita'
     'gga'
   )
 }

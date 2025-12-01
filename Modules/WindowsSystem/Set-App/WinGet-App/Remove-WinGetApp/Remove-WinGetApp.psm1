@@ -1,4 +1,4 @@
-New-Alias wgr Remove-WinGetApp
+New-Alias wgr WindowsSystem\Remove-WinGetApp
 <#
 .SYNOPSIS
 Use WinGet to uninstall a package.

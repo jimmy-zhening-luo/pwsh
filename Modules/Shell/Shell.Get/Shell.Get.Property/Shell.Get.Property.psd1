@@ -11,7 +11,6 @@
   )
   AliasesToExport   = @(
     'split'
-    'parent'
     'hash'
     'size'
   )

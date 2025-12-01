@@ -1,5 +1,5 @@
 
-New-Alias size Get-Size
+New-Alias size Shell\Get-Size
 function Get-Size {
   [OutputType([UInt32], [string])]
   param(

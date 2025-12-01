@@ -1,4 +1,4 @@
-New-Alias guid Copy-Guid
+New-Alias guid Quick\Copy-Guid
 function Copy-Guid {
   param(
     [Alias('Case', 'uc')]

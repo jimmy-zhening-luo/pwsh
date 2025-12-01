@@ -1,7 +1,7 @@
 using namespace System.IO
 using namespace System.Management.Automation
 
-New-Alias mk New-Directory
+New-Alias mk Shell\New-Directory
 function New-Directory {
   [CmdletBinding(
     SupportsShouldProcess,

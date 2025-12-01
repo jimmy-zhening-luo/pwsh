@@ -1,4 +1,4 @@
-New-Alias wgf Find-WinGetApp
+New-Alias wgf WindowsSystem\Find-WinGetApp
 <#
 .SYNOPSIS
 Use WinGet to search WinGet repositories for a package.

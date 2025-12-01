@@ -75,7 +75,6 @@
     'pc'
     'p/'
     'split'
-    'parent'
     'hash'
     'size'
     'c'

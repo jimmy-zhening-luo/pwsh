@@ -1,6 +1,6 @@
 using namespace System.IO
 
-New-Alias l Get-Directory
+New-Alias l Shell\Get-Directory
 function Get-Directory {
   [OutputType([DirectoryInfo[]], [FileInfo[]])]
   param (
@@ -16,7 +16,7 @@ function Get-Directory {
   }
 }
 
-New-Alias l. Get-DirectorySibling
+New-Alias l. Shell\Get-DirectorySibling
 function Get-DirectorySibling {
   [OutputType([DirectoryInfo[]], [FileInfo[]])]
   param (
@@ -31,7 +31,7 @@ function Get-DirectorySibling {
   Get-ChildItem @FullPath @args
 }
 
-New-Alias l.. Get-DirectoryRelative
+New-Alias l.. Shell\Get-DirectoryRelative
 function Get-DirectoryRelative {
   [OutputType([DirectoryInfo[]], [FileInfo[]])]
   param (
@@ -46,7 +46,7 @@ function Get-DirectoryRelative {
   Get-ChildItem @FullPath @args
 }
 
-New-Alias l~ Get-DirectoryHome
+New-Alias l~ Shell\Get-DirectoryHome
 function Get-DirectoryHome {
   [OutputType([DirectoryInfo[]], [FileInfo[]])]
   param (
@@ -61,7 +61,7 @@ function Get-DirectoryHome {
   Get-ChildItem @FullPath @args
 }
 
-New-Alias lc Get-DirectoryCode
+New-Alias lc Shell\Get-DirectoryCode
 function Get-DirectoryCode {
   [OutputType([DirectoryInfo[]], [FileInfo[]])]
   param (
@@ -76,7 +76,7 @@ function Get-DirectoryCode {
   Get-ChildItem @FullPath @args
 }
 
-New-Alias l/ Get-DirectoryDrive
+New-Alias l/ Shell\Get-DirectoryDrive
 function Get-DirectoryDrive {
   [OutputType([DirectoryInfo[]], [FileInfo[]])]
   param (

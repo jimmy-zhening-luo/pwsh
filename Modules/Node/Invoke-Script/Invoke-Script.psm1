@@ -1,4 +1,4 @@
-New-Alias nr Invoke-Script
+New-Alias nr Node\Invoke-Script
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to run a script defined in a package's 'package.json'.

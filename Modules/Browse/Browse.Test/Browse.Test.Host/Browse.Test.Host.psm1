@@ -1,4 +1,4 @@
-New-Alias tn Test-Host
+New-Alias tn Browse\Test-Host
 function Test-Host {
   param(
     [Alias('ComputerName', 'RemoteAddress', 'cn')]

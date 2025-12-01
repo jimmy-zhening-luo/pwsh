@@ -1,4 +1,4 @@
-New-Alias path Edit-Path
+New-Alias path WindowsSystem\Edit-Path
 <#
 .SYNOPSIS
 Opens the 'Environment Variables' dialog as a standalone window.

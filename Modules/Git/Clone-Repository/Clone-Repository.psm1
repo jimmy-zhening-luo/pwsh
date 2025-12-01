@@ -1,4 +1,4 @@
-New-Alias gitcl Import-Repository
+New-Alias gitcl Git\Import-Repository
 <#
 .SYNOPSIS
 Use Git to clone a repository.

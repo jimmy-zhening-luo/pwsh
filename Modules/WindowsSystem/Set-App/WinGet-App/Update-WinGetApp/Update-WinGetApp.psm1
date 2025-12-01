@@ -1,4 +1,4 @@
-New-Alias wgu Update-WinGetApp
+New-Alias wgu WindowsSystem\Update-WinGetApp
 <#
 .SYNOPSIS
 Use WinGet to check for a package upgrade or to upgrade a package.

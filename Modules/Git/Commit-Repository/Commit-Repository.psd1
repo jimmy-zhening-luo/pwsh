@@ -7,7 +7,6 @@
     'Write-Repository'
   )
   AliasesToExport   = @(
-    'gitm'
     'ggm'
   )
 }

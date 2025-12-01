@@ -8,9 +8,7 @@
     'Restore-Repository'
   )
   AliasesToExport   = @(
-    'gitr'
     'gr'
-    'gitrp'
     'grp'
   )
 }

@@ -1,7 +1,7 @@
 using namespace System.IO
 using namespace System.Management.Automation
 
-New-Alias mj New-Junction
+New-Alias mj Shell\New-Junction
 function New-Junction {
   [CmdletBinding(
     SupportsShouldProcess,

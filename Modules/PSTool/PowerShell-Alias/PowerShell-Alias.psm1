@@ -1,4 +1,4 @@
-New-Alias galc Get-CommandAlias
+New-Alias galc PSTool\Get-CommandAlias
 function Get-CommandAlias {
   param(
     [Alias('Command')]

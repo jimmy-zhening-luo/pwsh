@@ -21,7 +21,6 @@
     'Get-FileCode'
     'Get-FileDrive'
     'Get-Size'
-
   )
   AliasesToExport   = @(
     'l'
@@ -37,7 +36,6 @@
     'pc'
     'p/'
     'split'
-    'parent'
     'hash'
     'size'
   )

@@ -1,4 +1,4 @@
-New-Alias hex ConvertTo-Hex
+New-Alias hex Quick\ConvertTo-Hex
 function ConvertTo-Hex {
   param(
     [Alias('Number')]
@@ -16,7 +16,7 @@ function ConvertTo-Hex {
   if ($Hex) { $Hex }
 }
 
-New-Alias hexl ConvertTo-HexLower
+New-Alias hexl Quick\ConvertTo-HexLower
 function ConvertTo-HexLower {
   param(
     [Alias('Number')]
