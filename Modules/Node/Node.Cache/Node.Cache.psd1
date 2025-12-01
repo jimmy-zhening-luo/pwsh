@@ -1,5 +1,5 @@
 @{
-  RootModule        = 'Clear-PackageCache.psm1'
+  RootModule        = 'Node.Cache.psm1'
   ModuleVersion     = '3.0.0.0'
   PowerShellVersion = '7.5'
   GUID              = 'e44974f7-cd1f-40d4-bb80-261729649d89'

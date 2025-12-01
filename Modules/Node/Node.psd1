@@ -7,9 +7,9 @@
     'Shell'
   )
   NestedModules     = @(
-    'Clear-PackageCache'
-    'Compare-Package'
-    'Invoke-Script'
+    'Node.Cache'
+    'Node.Package'
+    'Node.Script'
   )
   FunctionsToExport = @(
     'Resolve-NodeProject'
