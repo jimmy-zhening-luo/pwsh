@@ -4,11 +4,11 @@
   PowerShellVersion = '7.5'
   GUID              = '195c0492-bfd4-4873-8c2b-c88f53c9b7e8'
   NestedModules     = @(
-    '.\Shell.New'
-    '.\Shell.Clear'
-    '.\Shell.Get'
-    '.\Shell.Set'
-    '.\Shell.Invoke'
+    'Shell.New'
+    'Shell.Clear'
+    'Shell.Get'
+    'Shell.Set'
+    'Shell.Invoke'
   )
   FunctionsToExport = @(
     'Format-Path'
