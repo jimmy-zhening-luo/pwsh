@@ -1,5 +1,5 @@
 @{
-  ModuleVersion     = '1.0.0.0'
+  ModuleVersion     = '3.0.0.0'
   GUID              = 'a733f473-0fc0-4a6c-a929-d55d3af424fd'
   NestedModules     = @(
     '.\Update-System'

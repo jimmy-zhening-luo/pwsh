@@ -1,6 +1,6 @@
 @{
   RootModule        = 'System-Command.psm1'
-  ModuleVersion     = '1.0.0.0'
+  ModuleVersion     = '3.0.0.0'
   GUID              = 'b047ad82-dcbf-48cc-876a-78c6334900af'
   NestedModules     = @(
     '.\Invoke-CommandPrompt'

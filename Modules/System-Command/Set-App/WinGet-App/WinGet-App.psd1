@@ -1,6 +1,6 @@
 @{
   RootModule        = 'WinGet-App.psm1'
-  ModuleVersion     = '1.0.0.0'
+  ModuleVersion     = '3.0.0.0'
   GUID              = 'dad9ca1b-2892-425d-8033-3fdfe61be7cd'
   NestedModules     = @(
     '.\Add-WinGetApp'

@@ -1,6 +1,6 @@
 @{
   RootModule        = 'Browse.psm1'
-  ModuleVersion     = '1.0.0.0'
+  ModuleVersion     = '3.0.0.0'
   GUID              = 'ff158ab2-d35c-450c-8086-03480d1b580e'
   NestedModules     = @(
     '.\Browse.Test'
