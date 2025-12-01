@@ -1,9 +1,13 @@
+using namespace System.IO
+using namespace System.Management.Automation
+
 New-Alias mk New-Directory
 function New-Directory {
   [CmdletBinding(
     SupportsShouldProcess,
     SupportsTransactions
   )]
+  [OutputType([DirectoryInfo])]
   param(
     [Parameter(
       ParameterSetName = 'nameSet',
@@ -36,10 +40,10 @@ function New-Directory {
     [Parameter(
       ValueFromPipelineByPropertyName
     )]
-    [System.Management.Automation.PSCredential]$Credential
+    [PSCredential]$Credential
   )
   begin {
-    $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [System.Management.Automation.CommandTypes]::Cmdlet)
+    $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [CommandTypes]::Cmdlet)
     $scriptCmd = { & $wrappedCmd -ItemType Directory @PSBoundParameters @args }
     $steppablePipeline = $scriptCmd.GetSteppablePipeline()
 

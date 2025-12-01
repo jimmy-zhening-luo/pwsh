@@ -1,5 +1,6 @@
 New-Alias i Invoke-Workspace
 function Invoke-Workspace {
+  [OutputType([void])]
   param(
     [Parameter(Position = 0)]
     [PathCompletions('.')]
@@ -72,9 +73,9 @@ function Invoke-Workspace {
   }
 
   $Process = @{
-    FilePath = 'code.cmd'
+    FilePath     = 'code.cmd'
     ArgumentList = $Local:args
-    NoNewWindow = $true
+    NoNewWindow  = $true
   }
 
   [void](Start-Process @Process)
@@ -82,6 +83,7 @@ function Invoke-Workspace {
 
 New-Alias i. Invoke-WorkspaceSibling
 function Invoke-WorkspaceSibling {
+  [OutputType([void])]
   param (
     [Parameter(Position = 0)]
     [PathCompletions('..')]
@@ -103,6 +105,7 @@ function Invoke-WorkspaceSibling {
 
 New-Alias i.. Invoke-WorkspaceRelative
 function Invoke-WorkspaceRelative {
+  [OutputType([void])]
   param (
     [Parameter(Position = 0)]
     [PathCompletions('..\..')]
@@ -124,6 +127,7 @@ function Invoke-WorkspaceRelative {
 
 New-Alias i~ Invoke-WorkspaceHome
 function Invoke-WorkspaceHome {
+  [OutputType([void])]
   param (
     [Parameter(Position = 0)]
     [PathCompletions('~')]
@@ -145,6 +149,7 @@ function Invoke-WorkspaceHome {
 
 New-Alias ic Invoke-WorkspaceCode
 function Invoke-WorkspaceCode {
+  [OutputType([void])]
   param (
     [Parameter(Position = 0)]
     [PathCompletions('~\code')]
@@ -166,6 +171,7 @@ function Invoke-WorkspaceCode {
 
 New-Alias i/ Invoke-WorkspaceDrive
 function Invoke-WorkspaceDrive {
+  [OutputType([void])]
   param (
     [Parameter(Position = 0)]
     [PathCompletions('\')]

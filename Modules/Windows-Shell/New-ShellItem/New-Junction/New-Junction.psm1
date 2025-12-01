@@ -1,9 +1,13 @@
+using namespace System.IO
+using namespace System.Management.Automation
+
 New-Alias mj New-Junction
 function New-Junction {
   [CmdletBinding(
     SupportsShouldProcess,
     SupportsTransactions
   )]
+  [OutputType([DirectoryInfo], [FileInfo])] # tmp: not sure which one lol
   param(
     [Parameter(
       ParameterSetName = 'pathSet',

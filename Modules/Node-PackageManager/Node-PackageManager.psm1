@@ -1,5 +1,7 @@
 function Resolve-NodeProject {
-  param([string]$Path)
+  param(
+    [string]$Path
+  )
 
   if (-not $Path) {
     $Path = $PWD.Path

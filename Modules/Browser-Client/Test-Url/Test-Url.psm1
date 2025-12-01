@@ -8,7 +8,9 @@ This function checks if a given URL is reachable by sending a web request and ch
 Specifies the URL to test. This parameter is mandatory and must be castable to a 'Uri' object. If the URL has no scheme, it defaults to 'http'.
 #>
 function Test-Url {
-  param([Uri]$Uri)
+  param(
+    [Uri]$Uri
+  )
 
   if (-not $Uri) {
     return $false

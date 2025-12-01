@@ -8,7 +8,9 @@ This function is an alias for 'yt-dlp' and allows you to download YouTube videos
 https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#usage-and-options
 #>
 function Get-YouTube {
-  param([string]$Video)
+  param(
+    [string]$Video
+  )
 
   if (-not $Video) {
     throw 'No video specified'
@@ -37,7 +39,9 @@ This function is an alias for 'yt-dlp' and extracts audio from a YouTube video.
 https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#video-format-options
 #>
 function Get-YouTubeAudio {
-  param([string]$Video)
+  param(
+    [string]$Video
+  )
 
   $YtArguments = @(
     '--format'
@@ -66,7 +70,9 @@ This function is an alias for 'yt-dlp -F' and lists all available formats for a 
 https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#video-format-options
 #>
 function Get-YouTubeFormat {
-  param([string]$Video)
+  param(
+    [string]$Video
+  )
 
   $YtArguments = @(
     '-F'

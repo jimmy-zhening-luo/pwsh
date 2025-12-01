@@ -80,7 +80,9 @@ function Get-HelpOnline {
         $about_Topic = $Topic -replace '[-_ :]+', '_' -replace '^(?:about)?_?', 'about_'
 
         function Resolve-AboutArticle {
-          param([string]$about_Topic)
+          param(
+            [string]$about_Topic
+          )
 
           $about_Article = "$ABOUT_ARTICLE_ROOT/$about_Topic"
 

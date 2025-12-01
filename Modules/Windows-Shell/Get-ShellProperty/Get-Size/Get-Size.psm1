@@ -1,6 +1,7 @@
 
 New-Alias size Get-Size
 function Get-Size {
+  [OutputType([UInt32], [string])]
   param(
     [Parameter(
       ValueFromPipeline,

@@ -19,7 +19,9 @@ http://learn.microsoft.com/powershell/module/microsoft.powershell.utility/get-ve
 Get-Verb
 #>
 function Get-VerbList {
-  param([string]$Verb = '*')
+  param(
+    [string]$Verb = '*'
+  )
 
   $Verbs = @{
     Verb = $Verb.Contains('*') ? $Verb : $Verb.Length -lt 3 ? "$Verb*" : "*$Verb*"

@@ -1,5 +1,7 @@
 function Expand-Query {
-  param([string[]]$Terms)
+  param(
+    [string[]]$Terms
+  )
 
   $Terms += $args
   $Tokens = @()
@@ -19,7 +21,9 @@ New-Alias search Search-Query
 New-Alias g Search-Query
 
 function Search-Query {
-  param([string[]]$Terms)
+  param(
+    [string[]]$Terms
+  )
 
   $PSBoundParameters.Terms += $args
   $QueryString = Expand-Query @PSBoundParameters
@@ -43,7 +47,9 @@ New-Alias maps Search-Map
 New-Alias map Search-Map
 
 function Search-Map {
-  param([string[]]$Terms)
+  param(
+    [string[]]$Terms
+  )
 
   $PSBoundParameters.Terms += $args
   $QueryString = Expand-Query @PSBoundParameters

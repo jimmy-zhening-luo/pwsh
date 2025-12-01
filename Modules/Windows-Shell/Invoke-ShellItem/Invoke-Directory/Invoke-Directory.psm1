@@ -18,7 +18,7 @@ function Invoke-Directory {
       }
     }
     else {
-      Invoke-Item -Path '.'
+      Invoke-Item -Path $PWD.Path
     }
   }
 }
