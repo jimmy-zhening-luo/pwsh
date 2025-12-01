@@ -329,9 +329,9 @@ class PathCompleter : IArgumentCompleter {
 
     if ($separator -ne '\') {
       $directories = $directories |
-        % { $_ -replace '\\+', '/' }
+        % { ($_ -replace '\\+', '/') }
       $files = $files |
-        % { $_ -replace '\\+', '/' }
+        % { ($_ -replace '\\+', '/') }
     }
 
     foreach ($directory in $directories) {
