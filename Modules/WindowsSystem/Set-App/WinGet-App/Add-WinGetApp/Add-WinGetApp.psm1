@@ -1,4 +1,4 @@
-New-Alias wga Add-WinGetApp
+New-Alias wga WindowsSystem\Add-WinGetApp
 <#
 .SYNOPSIS
 Use WinGet to install a new package or upgrade an existing package.

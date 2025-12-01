@@ -156,14 +156,14 @@ function Resolve-Repository {
   $Repository = ''
 
   if ($New) {
-    if (Test-Item @Item) {
+    if (Shell\Test-Item @Item) {
       $Repository = Resolve-Item @Item
     }
     else {
       $Item.Location = $CODE
       $Item.New = $True
 
-      if (Test-Item @Item) {
+      if (Shell\Test-Item @Item) {
         $Repository = Resolve-Item @Item
       }
     }
@@ -175,14 +175,14 @@ function Resolve-Repository {
       RequireSubpath = $True
     }
 
-    if (Test-Item @Git) {
+    if (Shell\Test-Item @Git) {
       $Repository = Resolve-Item @Item
     }
     else {
       $Item.Location = $CODE
       $Git.Location = $CODE
 
-      if (Test-Item @Git) {
+      if (Shell\Test-Item @Git) {
         $Repository = Resolve-Item @Item
       }
     }

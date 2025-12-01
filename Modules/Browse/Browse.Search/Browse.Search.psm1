@@ -39,7 +39,7 @@ function Search-Query {
     $QueryUri.AbsoluteUri
   }
   else {
-    Open-Url -Uri $QueryUri
+    Browse\Open-Url -Uri $QueryUri
   }
 }
 
@@ -64,6 +64,6 @@ function Search-Map {
     $QueryUri.AbsoluteUri
   }
   else {
-    Open-Url -Uri $QueryUri
+    Browse\Open-Url -Uri $QueryUri
   }
 }

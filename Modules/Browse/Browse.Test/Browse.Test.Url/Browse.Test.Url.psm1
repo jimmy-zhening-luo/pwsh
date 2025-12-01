@@ -1,4 +1,4 @@
-New-Alias tu Test-Url
+New-Alias tu Browse\Test-Url
 <#
 .SYNOPSIS
 Determine if an URL is reachable.

@@ -86,7 +86,7 @@ function Get-HelpOnline {
 
           $about_Article = "$ABOUT_ARTICLE_ROOT/$about_Topic"
 
-          (Test-Url $about_Article) ? $about_Article : ''
+          (Browse\Test-Url $about_Article) ? $about_Article : ''
         }
 
         $about_Article = Resolve-AboutArticle $about_Topic
@@ -121,7 +121,7 @@ function Get-HelpOnline {
   if (-not $env:SSH_CLIENT) {
     if ($Articles) {
       foreach ($Article in $Articles) {
-        [void](Open-Url -Uri $Article)
+        [void](Browse\Open-Url -Uri $Article)
       }
     }
     else {

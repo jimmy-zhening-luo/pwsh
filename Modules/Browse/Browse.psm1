@@ -1,5 +1,5 @@
-New-Alias go Open-Url
-New-Alias open Open-Url
+New-Alias go Browse\Open-Url
+New-Alias open Browse\Open-Url
 function Open-Url {
   [CmdletBinding(DefaultParameterSetName = 'Path')]
   param(

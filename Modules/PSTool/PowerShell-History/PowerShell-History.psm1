@@ -6,5 +6,5 @@ function Invoke-PSHistory {
     Window      = $True
   }
 
-  Invoke-Workspace @History
+  Shell\Invoke-Workspace @History
 }

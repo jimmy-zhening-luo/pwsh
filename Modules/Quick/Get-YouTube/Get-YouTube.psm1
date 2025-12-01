@@ -21,7 +21,7 @@ function Get-YouTube {
     $Video -match '^\s*(?:https?://)?(?:(?:www|m)\.)?youtube\.com/watch\?\S*v=(?<video>[-\w]+)' ? $Matches.video : $Video
   )
 
-  if (Test-Url $VideoUrl) {
+  if (Browse\Test-Url $VideoUrl) {
     & yt-dlp $Rest -- $VideoUrl
   }
   else {
