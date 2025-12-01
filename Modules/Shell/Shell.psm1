@@ -327,7 +327,7 @@ class PathCompleter : IArgumentCompleter {
         % { $_ + '\' }
     }
 
-    if ($separator -ne '/') {
+    if ($separator -ne '\') {
       $directories = $directories |
         % { $_ -replace '[\\]+', $separator }
       $files = $files |
