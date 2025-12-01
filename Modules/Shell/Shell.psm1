@@ -268,7 +268,6 @@ class PathCompleter : IArgumentCompleter {
     [IDictionary] $fakeBoundParameters
   ) {
     $Local:root = (Resolve-Path -Path $this.Root).Path
-    $separator = $this.UseDirectorySeparatorChar ? [Path]::DirectorySeparatorChar : '/'
     $query = @{
       Path      = $Local:root
       Directory = $this.Type -eq 'Directory'
