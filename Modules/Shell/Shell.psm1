@@ -327,12 +327,10 @@ class PathCompleter : IArgumentCompleter {
         % { $_ + '\' }
     }
 
-    if ($separator -ne '\') {
-      $directories = $directories |
-        % { ($_ -replace '\\+', '/') }
-      $files = $files |
-        % { ($_ -replace '\\+', '/') }
-    }
+    $directories = $directories |
+      % { $_ -replace '[\\]+', '/' }
+    $files = $files |
+      % { $_ -replace '[\\]+', '/' }
 
     foreach ($directory in $directories) {
       $resultList.Add([CompletionResult]::new($directory))
