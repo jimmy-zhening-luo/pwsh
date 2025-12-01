@@ -3,8 +3,8 @@
   PowerShellVersion = '7.5'
   GUID              = 'e740b507-c756-4684-8565-8c579344e454'
   NestedModules     = @(
-    '.\Shell.Set.Directory'
-    '.\Shell.Set.File'
+    'Shell.Set.Directory'
+    'Shell.Set.File'
   )
   FunctionsToExport = @(
     'Set-Directory'

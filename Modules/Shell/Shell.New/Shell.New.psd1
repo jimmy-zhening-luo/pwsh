@@ -4,8 +4,8 @@
   PowerShellVersion = '7.5'
   GUID              = '9a3324b2-207d-4635-a8d6-ac8261181fb1'
   NestedModules     = @(
-    '.\Shell.New.Directory'
-    '.\Shell.New.Junction'
+    'Shell.New.Directory'
+    'Shell.New.Junction'
   )
   FunctionsToExport = @(
     'New-Directory'

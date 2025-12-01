@@ -3,9 +3,9 @@
   PowerShellVersion = '7.5'
   GUID              = '83fda875-8f8c-4bce-a5da-e840d832378d'
   NestedModules     = @(
-    '.\Shell.Get.Directory'
-    '.\Shell.Get.File'
-    '.\Shell.Get.Property'
+    'Shell.Get.Directory'
+    'Shell.Get.File'
+    'Shell.Get.Property'
   )
   FunctionsToExport = @(
     'Get-Directory'

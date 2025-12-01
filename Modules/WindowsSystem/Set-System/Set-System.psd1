@@ -3,8 +3,8 @@
   PowerShellVersion = '7.5'
   GUID              = 'a733f473-0fc0-4a6c-a929-d55d3af424fd'
   NestedModules     = @(
-    '.\Update-System'
-    '.\Edit-System'
+    'Update-System'
+    'Edit-System'
   )
   FunctionsToExport = @(
     'Update-Windows'

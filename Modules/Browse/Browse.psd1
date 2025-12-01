@@ -4,8 +4,8 @@
   PowerShellVersion = '7.5'
   GUID              = 'ff158ab2-d35c-450c-8086-03480d1b580e'
   NestedModules     = @(
-    '.\Browse.Test'
-    '.\Browse.Search'
+    'Browse.Test'
+    'Browse.Search'
   )
   FunctionsToExport = @(
     'Test-Host'

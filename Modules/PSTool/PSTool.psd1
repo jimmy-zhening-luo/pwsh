@@ -3,14 +3,14 @@
   PowerShellVersion = '7.5'
   GUID              = 'c84491db-0b43-4dfc-80ea-890b16269a28'
   NestedModules     = @(
-    '.\PowerShell-Object'
-    '.\PowerShell-Alias'
-    '.\PowerShell-Help'
-    '.\PowerShell-Verb'
-    '.\PowerShell-History'
-    '.\PowerShell-Profile'
-    '.\PowerShell-Debug'
-    '.\Lint-PowerShell'
+    'PowerShell-Object'
+    'PowerShell-Alias'
+    'PowerShell-Help'
+    'PowerShell-Verb'
+    'PowerShell-History'
+    'PowerShell-Profile'
+    'PowerShell-Debug'
+    'Lint-PowerShell'
   )
   FunctionsToExport = @(
     'Get-CommandAlias'
