@@ -1,6 +1,3 @@
-using module Shell
-using module PSTool
-
 $ReadOnly = @{
   Option = 'Readonly'
 }
