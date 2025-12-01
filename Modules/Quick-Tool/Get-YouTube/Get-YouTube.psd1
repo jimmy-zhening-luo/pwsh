@@ -3,7 +3,7 @@
   ModuleVersion     = '1.0.0.0'
   GUID              = '06614306-7243-4ca6-8682-826c4fb31b11'
   RequiredModules   = @(
-    'WebBrowser'
+    'Browse'
   )
   FunctionsToExport = @(
     'Get-YouTube'
