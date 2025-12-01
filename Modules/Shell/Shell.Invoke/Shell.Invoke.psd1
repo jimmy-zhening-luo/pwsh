@@ -1,5 +1,6 @@
 @{
   ModuleVersion     = '3.0.0.0'
+  PowerShellVersion = '7.5'
   GUID              = '130b56d3-229a-4ec1-be75-d31a615147c8'
   NestedModules     = @(
     '.\Shell.Invoke.Directory'

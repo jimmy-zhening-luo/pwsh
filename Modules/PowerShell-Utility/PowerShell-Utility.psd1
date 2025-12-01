@@ -1,5 +1,6 @@
 @{
   ModuleVersion     = '3.0.0.0'
+  PowerShellVersion = '7.5'
   GUID              = 'c84491db-0b43-4dfc-80ea-890b16269a28'
   NestedModules     = @(
     '.\PowerShell-Object'

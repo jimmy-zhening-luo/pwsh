@@ -1,6 +1,7 @@
 @{
   RootModule        = 'Shell.Set.Directory.psm1'
   ModuleVersion     = '3.0.0.0'
+  PowerShellVersion = '7.5'
   GUID              = 'b6522962-e911-4dc4-bfbe-0181264ad7d2'
   FunctionsToExport = @(
     'Set-Directory'

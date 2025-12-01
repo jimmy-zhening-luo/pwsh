@@ -1,5 +1,6 @@
 @{
   ModuleVersion     = '3.0.0.0'
+  PowerShellVersion = '7.5'
   GUID              = '73ded6ab-d0a5-4d7c-a014-fa8b32a7714b'
   NestedModules     = @(
     '.\Store-App'

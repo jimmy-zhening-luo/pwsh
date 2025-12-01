@@ -1,6 +1,7 @@
 @{
   RootModule        = 'Shell.New.psm1'
   ModuleVersion     = '3.0.0.0'
+  PowerShellVersion = '7.5'
   GUID              = '9a3324b2-207d-4635-a8d6-ac8261181fb1'
   NestedModules     = @(
     '.\Shell.New.Directory'
