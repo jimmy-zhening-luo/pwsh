@@ -183,6 +183,7 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
   [string] $Root
   [string] $Type
   [bool] $Flat
+  [bool] $UseNativeDirectorySeparator
 
   PathCompletionsAttribute(
     [string] $root
@@ -190,6 +191,7 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
     $this.Root = $root
     $this.Type = ''
     $this.Flat = $false
+    $this.UseNativeDirectorySeparator = $false
   }
 
   PathCompletionsAttribute(
@@ -199,6 +201,7 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
     $this.Root = $root
     $this.Type = $type
     $this.Flat = $false
+    $this.UseNativeDirectorySeparator = $false
   }
 
   PathCompletionsAttribute(
@@ -209,13 +212,27 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
     $this.Root = $root
     $this.Type = $type
     $this.Flat = $flat
+    $this.UseNativeDirectorySeparator = $false
+  }
+
+  PathCompletionsAttribute(
+    [string] $root,
+    [string] $type,
+    [bool] $flat,
+    [bool] $useNativeDirectorySeparator
+  ) {
+    $this.Root = $root
+    $this.Type = $type
+    $this.Flat = $flat
+    $this.UseNativeDirectorySeparator = $useNativeDirectorySeparator
   }
 
   [IArgumentCompleter] Create() {
     return [PathCompleter]::new(
       $this.Root,
       $this.Type,
-      $this.Flat
+      $this.Flat,
+      $this.UseNativeDirectorySeparator
     )
   }
 }
@@ -224,19 +241,22 @@ class PathCompleter : IArgumentCompleter {
   [string] $Root
   [string] $Type
   [bool] $Flat
+  [bool] $UseNativeDirectorySeparator
 
   PathCompleter(
     [string] $root,
     [string] $type,
-    [bool] $flat
+    [bool] $flat,
+    [bool] $useNativeDirectorySeparator
   ) {
     if (-not $root -or -not (Test-Path -Path $root -PathType Container)) {
       throw [ArgumentException]::new('root')
     }
 
-    $this.Root = (Resolve-Path -Path $root).Path
+    $this.Root = $root
     $this.Type = $type
     $this.Flat = $flat
+    $this.UseNativeDirectorySeparator = $useNativeDirectorySeparator
   }
 
   [IEnumerable[CompletionResult]] CompleteArgument(
@@ -247,7 +267,8 @@ class PathCompleter : IArgumentCompleter {
     [IDictionary] $fakeBoundParameters
   ) {
 
-    $Local:root = $this.Root
+    $Local:root = (Resolve-Path -Path $this.Root).Path
+    $separator = $this.UseNativeDirectorySeparator ? [Path]::DirectorySeparatorChar : '/'
     $query = @{
       Path      = $Local:root
       Directory = $this.Type -eq 'Directory'
@@ -308,10 +329,13 @@ class PathCompleter : IArgumentCompleter {
         % { $_ + '\' }
     }
 
-    $directories = $directories |
-      % { $_ -replace '[\\]+', '/' }
-    $files = $files |
-      % { $_ -replace '[\\]+', '/' }
+
+    if ($separator -ne '\') {
+      $directories = $directories |
+        % { $_ -replace '[\\]+', '/' }
+      $files = $files |
+        % { $_ -replace '[\\]+', '/' }
+    }
 
     foreach ($directory in $directories) {
       $resultList.Add([CompletionResult]::new($directory))
