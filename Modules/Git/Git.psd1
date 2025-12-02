@@ -15,8 +15,8 @@
     'Git.Reset'
   )
   FunctionsToExport = @(
-    'Invoke-Repository'
     'Resolve-Repository'
+    'Invoke-Repository'
     'Add-Repository'
     'Import-Repository'
     'Write-Repository'
