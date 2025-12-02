@@ -21,7 +21,7 @@ function Get-YouTube {
     $Video -match '^\s*(?:https?://)?(?:(?:www|m)\.)?youtube\.com/watch\?\S*v=(?<video>[-\w]+)' ? $Matches.video : $Video
   )
 
-  if (Test-Url $VideoUrl) {
+  if (Browse\Test-Url $VideoUrl) {
     & yt-dlp @args -- $VideoUrl
   }
   else {
@@ -83,10 +83,10 @@ function Get-YouTubeFormat {
 
 New-Alias yte Quick\Invoke-YouTubeDirectory
 function Invoke-YouTubeDirectory {
-  Invoke-DirectoryHome -Path Videos\YouTube
+  Shell\Invoke-DirectoryHome -Path Videos\YouTube
 }
 
 New-Alias ytc Quick\Invoke-YouTubeConfig
 function Invoke-YouTubeConfig {
-  Invoke-WorkspaceHome -Path util\bin\yt\yt-dlp.conf -ProfileName Setting -Window @args
+  Shell\Invoke-WorkspaceHome -Path util\bin\yt\yt-dlp.conf -ProfileName Setting -Window @args
 }
