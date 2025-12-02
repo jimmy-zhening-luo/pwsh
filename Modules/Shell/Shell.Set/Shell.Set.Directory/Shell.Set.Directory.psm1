@@ -51,7 +51,7 @@ function Set-DirectoryHome {
   )
 
   $FullPath = @{
-    Path = Join-Path '~' $Path
+    Path = Join-Path $HOME $Path
   }
 
   Set-Location @FullPath @args
@@ -65,7 +65,7 @@ function Set-DirectoryCode {
   )
 
   $FullPath = @{
-    Path = Join-Path '~\code' $Path
+    Path = Join-Path "$HOME\code" $Path
   }
 
   Set-Location @FullPath @args

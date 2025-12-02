@@ -55,7 +55,7 @@ function Get-DirectoryHome {
   )
 
   $FullPath = @{
-    Path = Join-Path '~' $Path
+    Path = Join-Path $HOME $Path
   }
 
   Get-ChildItem @FullPath @args
@@ -70,7 +70,7 @@ function Get-DirectoryCode {
   )
 
   $FullPath = @{
-    Path = Join-Path '~\code' $Path
+    Path = Join-Path "$HOME\code" $Path
   }
 
   Get-ChildItem @FullPath @args

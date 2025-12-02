@@ -60,7 +60,7 @@ function Invoke-DirectoryHome {
   )
 
   $FullPath = @{
-    Path = Join-Path '~' $Path
+    Path = Join-Path $HOME $Path
   }
 
   Invoke-Directory @FullPath @args
@@ -74,7 +74,7 @@ function Invoke-DirectoryCode {
   )
 
   $FullPath = @{
-    Path = Join-Path '~\code' $Path
+    Path = Join-Path "$HOME\code" $Path
   }
 
   Invoke-Directory @FullPath @args

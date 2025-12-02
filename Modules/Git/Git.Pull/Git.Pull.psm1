@@ -24,7 +24,7 @@ New-Alias gpa Git\Get-ChildRepository
 .SYNOPSIS
 Use Git to pull changes from all child repositories.
 .DESCRIPTION
-This function retrieves all child repositories in '~\code\' and pulls changes from each one.
+This function retrieves all child repositories in %USERPROFILE%\code\' and pulls changes from each one.
 .LINK
 https://git-scm.com/docs/git-pull
 #>
