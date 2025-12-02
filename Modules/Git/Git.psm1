@@ -126,15 +126,16 @@ function Invoke-Repository {
   }
 
   $GitArguments += $GitOptions
+  $GitArguments = '-c', 'color.ui=always' + $GitArguments
 
   if ($Throw) {
-    $GitOutput = & git $GitArguments @args 2>&1
+    $GitOutput = ''
+
+    & git $GitArguments @args 2>&1 |
+      Tee-Object -Variable GitOutput
 
     if (($GitOutput -as [string]).StartsWith('fatal:')) {
       throw $GitOutput
-    }
-    else {
-      $GitOutput
     }
   }
   else {
