@@ -1,9 +1,0 @@
-New-Alias k Get-Member
-New-Alias key Get-Member
-New-Alias keys Get-Member
-New-Alias ^ Select-Object
-New-Alias pick Select-Object
-New-Alias z Sort-Object
-New-Alias n Measure-Object
-New-Alias count Measure-Object
-New-Alias format Format-Table

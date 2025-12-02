@@ -140,7 +140,7 @@ function Resolve-Item {
   )
 
   if (-not (Test-Item @PSBoundParameters)) {
-    throw "Path '$Path' fails to meet criteria: " + ($PSBoundParameters | ConvertTo-Json)
+    throw "Invalid path '$Path': " + ($PSBoundParameters | ConvertTo-Json)
   }
 
   $Location = Format-Path -Path $Location

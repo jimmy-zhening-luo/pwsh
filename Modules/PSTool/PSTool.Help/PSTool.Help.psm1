@@ -1,7 +1,7 @@
 New-Alias upman Update-Help
 
 $CUSTOM_LINKS_PATH = @{
-  Path = Join-Path $PSScriptRoot 'PowerShell-HelpArticle.psd1'
+  Path = Join-Path $PSScriptRoot 'PSHelpArticle.psd1'
 }
 $CUSTOM_LINKS = (
   Test-Path @CUSTOM_LINKS_PATH -Type Leaf
@@ -132,4 +132,51 @@ function Get-HelpOnline {
   }
 
   if ($Articles) { $Articles }
+}
+
+New-Alias galc PSTool\Get-CommandAlias
+function Get-CommandAlias {
+  param(
+    [Alias('Command')]
+    [string]$Definition = '*'
+  )
+
+  $Commands = @{
+    Definition = $Definition.Contains('*') ? $Definition : $Definition.Length -lt 3 ? "$Definition*" : "*$Definition*"
+  }
+
+  Get-Alias @Commands @args |
+    Select-Object DisplayName, Options, Source
+}
+
+<#
+.SYNOPSIS
+Gets a list of approved PowerShell verbs.
+
+.DESCRIPTION
+The 'Get-VerbList' function gets verbs that are approved for use in PowerShell commands.
+
+It invokes 'Get-Verb', sorts the returned verbs alphabetically, and returns only the 'Verb' field as a 'String' array.
+
+It supports both parameters of 'Get-Verb', '-Verb' and '-Group', but it treats '-Verb' as a wildcard search rather than an exact match.
+
+.PARAMETER Verb
+Specifies the verb to search for. The default value is '*'. If the value contains a wildcard, it is passed to 'Get-Verb' as-is. If the value is shorter than 3 characters, a wildcard is appended ('Verb*'). If the value is 3 characters or longer, wildcards are prepended and appended ('*Verb*').
+
+.LINK
+http://learn.microsoft.com/powershell/module/microsoft.powershell.utility/get-verb
+
+.LINK
+Get-Verb
+#>
+function Get-VerbList {
+  param(
+    [string]$Verb = '*'
+  )
+
+  $Verbs = @{
+    Verb = $Verb.Contains('*') ? $Verb : $Verb.Length -lt 3 ? "$Verb*" : "*$Verb*"
+  }
+
+  (Get-Verb @Verbs @args | Sort-Object -Property Verb).Verb
 }
