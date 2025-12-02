@@ -4,7 +4,6 @@
   PowerShellVersion = '7.5'
   NestedModules     = @(
     'PSTool.Help'
-    'PSTool.Object'
   )
   FunctionsToExport = @(
     'Invoke-PSHistory'
