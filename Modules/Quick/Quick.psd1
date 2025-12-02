@@ -1,7 +1,7 @@
 @{
   ModuleVersion     = '3.0.0.0'
-  PowerShellVersion = '7.5'
   GUID              = '8984f438-f595-48c1-92a1-b893106bbfe2'
+  PowerShellVersion = '7.5'
   NestedModules     = @(
     'Quick.Type'
     'Quick.YouTube'
@@ -13,6 +13,8 @@
     'Get-YouTubeAudio'
     'Get-YouTubeFormat'
   )
+  CmdletsToExport   = @()
+  VariablesToExport = @()
   AliasesToExport   = @(
     'guid'
     'hex'

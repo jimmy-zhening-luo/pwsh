@@ -1,11 +1,13 @@
 @{
   RootModule        = 'Add-WinGetApp.psm1'
   ModuleVersion     = '3.0.0.0'
-  PowerShellVersion = '7.5'
   GUID              = 'b9956e5c-0598-41fb-8397-1ce0abf91de2'
+  PowerShellVersion = '7.5'
   FunctionsToExport = @(
     'Add-WinGetApp'
   )
+  CmdletsToExport   = @()
+  VariablesToExport = @()
   AliasesToExport   = @(
     'wga'
   )

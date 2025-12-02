@@ -1,8 +1,8 @@
 @{
   RootModule        = 'Shell.psm1'
   ModuleVersion     = '3.0.0.0'
-  PowerShellVersion = '7.5'
   GUID              = '195c0492-bfd4-4873-8c2b-c88f53c9b7e8'
+  PowerShellVersion = '7.5'
   NestedModules     = @(
     'Shell.New'
     'Shell.Clear'
@@ -57,6 +57,8 @@
     'Invoke-WorkspaceCode'
     'Invoke-WorkspaceDrive'
   )
+  CmdletsToExport   = @()
+  VariablesToExport = @()
   AliasesToExport   = @(
     'touch'
     'mk'

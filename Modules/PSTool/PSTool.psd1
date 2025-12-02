@@ -1,7 +1,7 @@
 @{
   ModuleVersion     = '3.0.0.0'
-  PowerShellVersion = '7.5'
   GUID              = 'c84491db-0b43-4dfc-80ea-890b16269a28'
+  PowerShellVersion = '7.5'
   NestedModules     = @(
     'PowerShell-Object'
     'PowerShell-Alias'
@@ -22,6 +22,8 @@
     'Measure-PSProfile'
     'Update-PSLinter'
   )
+  CmdletsToExport   = @()
+  VariablesToExport = @()
   AliasesToExport   = @(
     'k'
     'key'
