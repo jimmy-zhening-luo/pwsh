@@ -22,7 +22,7 @@ function Get-YouTube {
   )
 
   if (Test-Url $VideoUrl) {
-    & yt-dlp $Rest -- $VideoUrl
+    & yt-dlp @args -- $VideoUrl
   }
   else {
     throw "The specified YouTube video URL is not reachable: $VideoUrl"
@@ -79,4 +79,14 @@ function Get-YouTubeFormat {
   )
 
   Get-YouTube @PSBoundParameters @args @YTArguments
+}
+
+New-Alias yte Quick\Invoke-YouTubeDirectory
+function Invoke-YouTubeDirectory {
+  Invoke-DirectoryHome -Path Videos\YouTube
+}
+
+New-Alias ytc Quick\Invoke-YouTubeConfig
+function Invoke-YouTubeConfig {
+  Invoke-WorkspaceHome -Path util\bin\yt\yt-dlp.conf -ProfileName Setting -Window @args
 }

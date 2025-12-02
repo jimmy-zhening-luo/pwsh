@@ -5,11 +5,14 @@
   PowerShellVersion = '7.5'
   RequiredModules   = @(
     'Browse'
+    'Shell'
   )
   FunctionsToExport = @(
     'Get-YouTube'
     'Get-YouTubeAudio'
     'Get-YouTubeFormat'
+    'Invoke-YouTubeDirectory'
+    'Invoke-YouTubeConfig'
   )
   CmdletsToExport   = @()
   VariablesToExport = @()
@@ -17,5 +20,7 @@
     'yt'
     'yta'
     'ytf'
+    'yte'
+    'ytc'
   )
 }
