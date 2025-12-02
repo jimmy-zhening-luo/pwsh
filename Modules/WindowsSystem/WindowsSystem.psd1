@@ -4,7 +4,6 @@
   GUID              = 'b047ad82-dcbf-48cc-876a-78c6334900af'
   PowerShellVersion = '7.5'
   NestedModules     = @(
-    'WindowsSystem.Run'
     'WindowsSystem.Setting'
     'WindowsSystem.Task'
     'WindowsSystem.App'
