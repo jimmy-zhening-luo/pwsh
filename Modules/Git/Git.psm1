@@ -1,3 +1,51 @@
+function Resolve-Repository {
+  param(
+    [string]$Path,
+    [switch]$New
+  )
+
+  $CODE = "$HOME\code"
+  $Item = @{
+    Path = $Path
+  }
+  $Repository = ''
+
+  if ($New) {
+    if (Shell\Test-Item @Item) {
+      $Repository = Resolve-Item @Item
+    }
+    else {
+      $Item.Location = $CODE
+      $Item.New = $True
+
+      if (Shell\Test-Item @Item) {
+        $Repository = Resolve-Item @Item
+      }
+    }
+  }
+  else {
+    $GitPath = $Path ? (Join-Path $Path .git) : '.git'
+    $Git = @{
+      Path           = $GitPath
+      RequireSubpath = $True
+    }
+
+    if (Shell\Test-Item @Git) {
+      $Repository = Resolve-Item @Item
+    }
+    else {
+      $Item.Location = $CODE
+      $Git.Location = $CODE
+
+      if (Shell\Test-Item @Git) {
+        $Repository = Resolve-Item @Item
+      }
+    }
+  }
+
+  $Repository
+}
+
 $GIT_VERB = (
   Import-PowerShellDataFile (
     Join-Path $PSScriptRoot Git-Verb.psd1 -Resolve
@@ -141,52 +189,4 @@ function Invoke-Repository {
   else {
     & git $GitArguments @args
   }
-}
-
-function Resolve-Repository {
-  param(
-    [string]$Path,
-    [switch]$New
-  )
-
-  $CODE = "$HOME\code"
-  $Item = @{
-    Path = $Path
-  }
-  $Repository = ''
-
-  if ($New) {
-    if (Shell\Test-Item @Item) {
-      $Repository = Resolve-Item @Item
-    }
-    else {
-      $Item.Location = $CODE
-      $Item.New = $True
-
-      if (Shell\Test-Item @Item) {
-        $Repository = Resolve-Item @Item
-      }
-    }
-  }
-  else {
-    $GitPath = $Path ? (Join-Path $Path .git) : '.git'
-    $Git = @{
-      Path           = $GitPath
-      RequireSubpath = $True
-    }
-
-    if (Shell\Test-Item @Git) {
-      $Repository = Resolve-Item @Item
-    }
-    else {
-      $Item.Location = $CODE
-      $Git.Location = $CODE
-
-      if (Shell\Test-Item @Git) {
-        $Repository = Resolve-Item @Item
-      }
-    }
-  }
-
-  $Repository
 }
