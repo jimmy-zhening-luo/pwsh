@@ -7,12 +7,12 @@
     'Shell'
   )
   NestedModules     = @(
-    'Add-Repository'
-    'Clone-Repository'
-    'Commit-Repository'
-    'Pull-Repository'
-    'Push-Repository'
-    'Reset-Repository'
+    'Git.Add'
+    'Git.Clone'
+    'Git.Commit'
+    'Git.Pull'
+    'Git.Push'
+    'Git.Reset'
   )
   FunctionsToExport = @(
     'Invoke-Repository'
