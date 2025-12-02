@@ -4,7 +4,6 @@
   GUID              = 'ff158ab2-d35c-450c-8086-03480d1b580e'
   PowerShellVersion = '7.5'
   NestedModules     = @(
-    'Browse.Test'
     'Browse.Search'
   )
   FunctionsToExport = @(
@@ -18,10 +17,10 @@
   CmdletsToExport   = @()
   VariablesToExport = @()
   AliasesToExport   = @(
-    'go'
-    'open'
     'tn'
     'tu'
+    'go'
+    'open'
     'search'
     'g'
     'maps'
