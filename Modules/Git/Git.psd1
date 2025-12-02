@@ -5,6 +5,7 @@
   PowerShellVersion = '7.5'
   RequiredModules   = @(
     'Shell'
+    'GenericArgumentCompleter'
   )
   NestedModules     = @(
     'Git.Add'
