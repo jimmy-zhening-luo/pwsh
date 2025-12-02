@@ -15,10 +15,10 @@
     'Edit-Path'
     'Stop-Task'
     'Update-StoreApp'
-    'Add-WinGetApp'
     'Update-WinGetApp'
-    'Remove-WinGetApp'
+    'Add-WinGetApp'
     'Find-WinGetApp'
+    'Remove-WinGetApp'
   )
   CmdletsToExport   = @()
   VariablesToExport = @()
@@ -33,9 +33,9 @@
     'gapx'
     'remapx'
     'wget'
-    'wga'
     'wgu'
-    'wgr'
+    'wga'
     'wgf'
+    'wgr'
   )
 }
