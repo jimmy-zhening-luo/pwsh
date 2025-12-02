@@ -1,28 +1,21 @@
 @{
+  RootModule        = 'WindowsSystem.App.WinGet.psm1'
   ModuleVersion     = '3.0.0.0'
-  GUID              = '73ded6ab-d0a5-4d7c-a014-fa8b32a7714b'
+  GUID              = 'dad9ca1b-2892-425d-8033-3fdfe61be7cd'
   PowerShellVersion = '7.5'
-  NestedModules     = @(
-    'Store-App'
-    'WinGet-App'
-  )
   FunctionsToExport = @(
-    'Update-StoreApp'
-    'Add-WinGetApp'
     'Update-WinGetApp'
-    'Remove-WinGetApp'
+    'Add-WinGetApp'
     'Find-WinGetApp'
+    'Remove-WinGetApp'
   )
   CmdletsToExport   = @()
   VariablesToExport = @()
   AliasesToExport   = @(
-    'su'
-    'gapx'
-    'remapx'
     'wget'
-    'wga'
     'wgu'
-    'wgr'
+    'wga'
     'wgf'
+    'wgr'
   )
 }

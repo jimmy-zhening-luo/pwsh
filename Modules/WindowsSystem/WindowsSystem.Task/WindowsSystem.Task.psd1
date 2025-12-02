@@ -1,14 +1,16 @@
 @{
-  RootModule        = 'Update-WinGetApp.psm1'
+  RootModule        = 'WindowsSystem.Task.psm1'
   ModuleVersion     = '3.0.0.0'
-  GUID              = '44ab0ac5-419e-47cc-b39c-6fec26bc00ca'
+  GUID              = '60e5aa07-6ab2-4f40-9f92-9d8fca12da66'
   PowerShellVersion = '7.5'
   FunctionsToExport = @(
-    'Update-WinGetApp'
+    'Stop-Task'
   )
   CmdletsToExport   = @()
   VariablesToExport = @()
   AliasesToExport   = @(
-    'wgu'
+    'sesv'
+    'remsv'
+    'tkill'
   )
 }

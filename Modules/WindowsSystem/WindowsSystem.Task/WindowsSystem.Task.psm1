@@ -1,3 +1,6 @@
+New-Alias sesv Set-Service
+New-Alias remsv Remove-Service
+
 New-Alias tkill WindowsSystem\Stop-Task
 function Stop-Task {
   [CmdletBinding(

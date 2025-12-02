@@ -5,9 +5,9 @@
   PowerShellVersion = '7.5'
   NestedModules     = @(
     'WindowsSystem.Run'
-    'Set-System'
-    'Set-Task'
-    'Set-App'
+    'WindowsSystem.Setting'
+    'WindowsSystem.Task'
+    'WindowsSystem.App'
   )
   FunctionsToExport = @(
     'Invoke-CommandPrompt'
