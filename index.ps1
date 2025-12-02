@@ -6,5 +6,5 @@ try {
   [void](. $PSScriptRoot\Overrides\Alias.ps1)
 }
 catch {
-  throw "Failed to initialize PowerShell profile.`n$($_.Exception.Message)"
+  throw "Failed to initialize PowerShell profile.`n" + $_.Exception.Message
 }

@@ -37,7 +37,7 @@ function Invoke-Workspace {
       }
 
       if (-not $Location) {
-        $Location = '.'
+        $Location = $PWD.Path
       }
 
       $Local:args = $Location, $Path + $Local:args
@@ -45,7 +45,7 @@ function Invoke-Workspace {
   }
   else {
     if (-not $Location) {
-      $Location = '.'
+      $Location = $PWD.Path
     }
 
     $Local:args = , $Location + $Local:args
@@ -97,7 +97,7 @@ function Invoke-WorkspaceSibling {
   )
 
   $Location = @{
-    Location = '..'
+    Location = $PWD | Split-Path
   }
 
   Invoke-Workspace @PSBoundParameters @Location @args
@@ -119,7 +119,7 @@ function Invoke-WorkspaceRelative {
   )
 
   $Location = @{
-    Location = '..\..'
+    Location = $PWD | Split-Path | Split-Path
   }
 
   Invoke-Workspace @PSBoundParameters @Location @args
@@ -141,7 +141,7 @@ function Invoke-WorkspaceHome {
   )
 
   $Location = @{
-    Location = '~'
+    Location = $HOME
   }
 
   Invoke-Workspace @PSBoundParameters @Location @args
@@ -163,7 +163,7 @@ function Invoke-WorkspaceCode {
   )
 
   $Location = @{
-    Location = '~\code'
+    Location = "$HOME\code"
   }
 
   Invoke-Workspace @PSBoundParameters @Location @args
@@ -185,7 +185,7 @@ function Invoke-WorkspaceDrive {
   )
 
   $Location = @{
-    Location = '\'
+    Location = $PWD.Drive.Root
   }
 
   Invoke-Workspace @PSBoundParameters @Location @args

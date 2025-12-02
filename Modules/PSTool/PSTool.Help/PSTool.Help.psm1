@@ -1,7 +1,7 @@
 New-Alias upman Update-Help
 
 $CUSTOM_LINKS_PATH = @{
-  Path = Join-Path $PSScriptRoot 'PSHelpArticle.psd1'
+  Path = "$PSScriptRoot\PSHelpArticle.psd1"
 }
 $CUSTOM_LINKS = (
   Test-Path @CUSTOM_LINKS_PATH -Type Leaf

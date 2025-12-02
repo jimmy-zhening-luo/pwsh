@@ -1,4 +1,4 @@
 @{
-  'Format-Table:Wrap' = $true
-  'Remove-Item:Force' = $true
+  'Format-Table:Wrap' = $True
+  'Remove-Item:Force' = $True
 }

@@ -1,6 +1,6 @@
 $GIT_VERB = (
   Import-PowerShellDataFile (
-    Join-Path $PSScriptRoot 'Git-Verb.psd1' -Resolve
+    Join-Path $PSScriptRoot Git-Verb.psd1 -Resolve
   ) -ErrorAction Stop
 ).GIT_VERB
 
@@ -149,7 +149,7 @@ function Resolve-Repository {
     [switch]$New
   )
 
-  $CODE = Join-Path $HOME 'code'
+  $CODE = "$HOME\code"
   $Item = @{
     Path = $Path
   }
@@ -169,7 +169,7 @@ function Resolve-Repository {
     }
   }
   else {
-    $GitPath = $Path ? (Join-Path $Path '.git') : '.git'
+    $GitPath = $Path ? (Join-Path $Path .git) : '.git'
     $Git = @{
       Path           = $GitPath
       RequireSubpath = $True

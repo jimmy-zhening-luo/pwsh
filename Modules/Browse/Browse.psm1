@@ -82,7 +82,7 @@ function Open-Url {
       ParameterSetName = 'Path',
       Position = 0
     )]
-    [string]$Path = '.',
+    [string]$Path = $PWD.Path,
     [Parameter(
       ParameterSetName = 'Uri',
       Position = 0,

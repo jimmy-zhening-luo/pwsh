@@ -22,7 +22,7 @@ function Set-DirectorySibling {
   )
 
   $FullPath = @{
-    Path = Join-Path (Split-Path $PWD.Path) $Path
+    Path = Join-Path ($PWD | Split-Path) $Path
   }
 
   Set-Location @FullPath @args
@@ -37,7 +37,7 @@ function Set-DirectoryRelative {
   )
 
   $FullPath = @{
-    Path = Join-Path (Split-Path (Split-Path $PWD.Path)) $Path
+    Path = Join-Path ($PWD | Split-Path | Split-Path) $Path
   }
 
   Set-Location @FullPath @args
@@ -65,7 +65,7 @@ function Set-DirectoryCode {
   )
 
   $FullPath = @{
-    Path = Join-Path "$HOME\code" $Path
+    Path = Join-Path $HOME\code $Path
   }
 
   Set-Location @FullPath @args
@@ -79,7 +79,7 @@ function Set-Drive {
   )
 
   $FullPath = @{
-    Path = Join-Path '\' $Path
+    Path = Join-Path $PWD.Drive.Root $Path
   }
 
   Set-Location @FullPath @args
@@ -88,12 +88,12 @@ function Set-Drive {
 New-Alias d/ Shell\Set-DriveD
 function Set-DriveD {
   param (
-    [PathCompletions('D:\', 'Directory')]
+    [PathCompletions('D:', 'Directory')]
     [string]$Path
   )
 
   $FullPath = @{
-    Path = Join-Path 'D:\' $Path
+    Path = Join-Path D: $Path
   }
 
   Set-Location @FullPath @args

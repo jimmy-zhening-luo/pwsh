@@ -30,7 +30,7 @@ https://git-scm.com/docs/git-pull
 #>
 function Get-ChildRepository {
   $Pull = @{ Verb = 'pull' }
-  $Repositories = (Get-ChildItem -Path "$HOME\code" -Directory).FullName |
+  $Repositories = (Get-ChildItem -Path $HOME\code -Directory).FullName |
     ? { Resolve-Repository -Path $_ } |
     ? { $_ }
 
@@ -38,5 +38,5 @@ function Get-ChildRepository {
     % { Invoke-Repository -Path $_ @Pull @args }
   $Count = $Repositories.Count
 
-  "`nPulled $Count $($Count -eq 1 ? 'repository' : 'repositories')"
+  "`nPulled $Count " + ($Count -eq 1 ? 'repository' : 'repositories')
 }

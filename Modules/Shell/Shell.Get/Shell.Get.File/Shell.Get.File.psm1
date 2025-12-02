@@ -58,7 +58,7 @@ function Get-FileSibling {
   )
 
   $Location = @{
-    Location = '..'
+    Location = $PWD | Split-Path
   }
 
   Get-File @PSBoundParameters @Location @args
@@ -74,7 +74,7 @@ function Get-FileRelative {
   )
 
   $Location = @{
-    Location = '..\..'
+    Location = $PWD | Split-Path | Split-Path
   }
 
   Get-File @PSBoundParameters @Location @args
@@ -90,7 +90,7 @@ function Get-FileHome {
   )
 
   $Location = @{
-    Location = '~'
+    Location = $HOME
   }
 
   Get-File @PSBoundParameters @Location @args
@@ -106,7 +106,7 @@ function Get-FileCode {
   )
 
   $Location = @{
-    Location = '~\code'
+    Location = "$HOME\code"
   }
 
   Get-File @PSBoundParameters @Location @args
@@ -122,7 +122,7 @@ function Get-FileDrive {
   )
 
   $Location = @{
-    Location = '\'
+    Location = $PWD.Drive.Root
   }
 
   Get-File @PSBoundParameters @Location @args

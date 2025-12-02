@@ -31,7 +31,7 @@ function Invoke-DirectorySibling {
   )
 
   $FullPath = @{
-    Path = Join-Path (Split-Path $PWD.Path) $Path
+    Path = Join-Path ($PWD | Split-Path) $Path
   }
 
   Invoke-Directory @FullPath @args
@@ -45,7 +45,7 @@ function Invoke-DirectoryRelative {
   )
 
   $FullPath = @{
-    Path = Join-Path (Split-Path (Split-Path $PWD.Path)) $Path
+    Path = Join-Path ($PWD | Split-Path | Split-Path) $Path
   }
 
   Invoke-Directory @FullPath @args
@@ -74,7 +74,7 @@ function Invoke-DirectoryCode {
   )
 
   $FullPath = @{
-    Path = Join-Path "$HOME\code" $Path
+    Path = Join-Path $HOME\code $Path
   }
 
   Invoke-Directory @FullPath @args
@@ -88,7 +88,7 @@ function Invoke-DirectoryDrive {
   )
 
   $FullPath = @{
-    Path = Join-Path '\' $Path
+    Path = Join-Path $PWD.Drive.Root $Path
   }
 
   Invoke-Directory @FullPath @args

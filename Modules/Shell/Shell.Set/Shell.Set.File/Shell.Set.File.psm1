@@ -57,7 +57,7 @@ function Set-FileSibling {
   )
 
   $Location = @{
-    Location = '..'
+    Location = $PWD | Split-Path
   }
 
   Set-File @PSBoundParameters @Location @args
@@ -80,7 +80,7 @@ function Set-FileRelative {
   )
 
   $Location = @{
-    Location = '..\..'
+    Location = $PWD | Split-Path | Split-Path
   }
 
   Set-File @PSBoundParameters @Location @args
@@ -103,7 +103,7 @@ function Set-FileHome {
   )
 
   $Location = @{
-    Location = '~'
+    Location = $HOME
   }
 
   Set-File @PSBoundParameters @Location @args
@@ -126,7 +126,7 @@ function Set-FileCode {
   )
 
   $Location = @{
-    Location = '~\code'
+    Location = "$HOME\code"
   }
 
   Set-File @PSBoundParameters @Location @args
@@ -149,7 +149,7 @@ function Set-FileDrive {
   )
 
   $Location = @{
-    Location = '\'
+    Location = $PWD.Drive.Root
   }
 
   Set-File @PSBoundParameters @Location @args

@@ -20,12 +20,12 @@ function Invoke-PSHistory {
 
 New-Alias op PSTool\Invoke-PSProfile
 function Invoke-PSProfile {
-  Shell\Invoke-WorkspaceCode -Path 'pwsh' -ProfileName PowerShell @args
+  Shell\Invoke-WorkspaceCode -Path pwsh -ProfileName PowerShell @args
 }
 
 New-Alias up PSTool\Update-PSProfile
 function Update-PSProfile {
-  Git\Get-Repository -Path "$HOME\code\pwsh" && Update-PSLinter
+  Git\Get-Repository -Path $HOME\code\pwsh && Update-PSLinter
 }
 
 function Update-PSLinter {

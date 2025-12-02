@@ -8,7 +8,7 @@ function Resolve-NodeProject {
   }
 
   $IsNode = @{
-    Path     = Join-Path $Path 'package.json'
+    Path     = Join-Path $Path package.json
     PathType = 'Leaf'
   }
 
