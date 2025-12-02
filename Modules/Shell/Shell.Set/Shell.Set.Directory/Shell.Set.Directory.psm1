@@ -14,7 +14,6 @@ function Set-Directory {
 }
 
 New-Alias c. Shell\Set-DirectorySibling
-New-Alias .. Shell\Set-DirectorySibling
 function Set-DirectorySibling {
   param (
     [PathCompletions('..', 'Directory')]
@@ -29,7 +28,6 @@ function Set-DirectorySibling {
 }
 
 New-Alias c.. Shell\Set-DirectoryRelative
-New-Alias ... Shell\Set-DirectoryRelative
 function Set-DirectoryRelative {
   param (
     [PathCompletions('..\..', 'Directory')]
