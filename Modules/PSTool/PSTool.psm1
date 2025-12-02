@@ -25,12 +25,12 @@ function Invoke-PSProfile {
 
 New-Alias up PSTool\Update-PSProfile
 function Update-PSProfile {
-  Git\Get-Repository -Path '~\code\pwsh' && Update-PSLinter
+  Git\Get-Repository -Path "$HOME\code\pwsh" && Update-PSLinter
 }
 
 function Update-PSLinter {
   $Copy = @{
-    Path        = Join-Path $HOME 'code\pwsh\PSScriptAnalyzerSettings.psd1'
+    Path        = "$HOME\code\pwsh\PSScriptAnalyzerSettings.psd1"
     Destination = $HOME
   }
 
