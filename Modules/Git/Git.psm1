@@ -106,7 +106,7 @@ function Invoke-Repository {
       $Verb = $Verb.ToLowerInvariant()
     }
     elseif ($Path -in $GIT_VERB) {
-      $Verb, $Path = $Path.ToLowerInvariant(), $PWD.Path
+      $Verb, $Path = $Path.ToLowerInvariant(), ''
     }
     else {
       throw "Unknown git verb '$Verb' or '$Path'. Allowed git verbs: $($GIT_VERB -join ', ')."
@@ -128,7 +128,7 @@ function Invoke-Repository {
       $Verb = 'status'
     }
     elseif ($Path -in $GIT_VERB) {
-      $Verb, $Path = $Path.ToLowerInvariant(), $PWD.Path
+      $Verb, $Path = $Path.ToLowerInvariant(), ''
 
       $Resolve = @{
         Path = $Path
@@ -143,16 +143,17 @@ function Invoke-Repository {
       throw "Unknown git verb '$Verb'. Allowed git verbs: $($GIT_VERB -join ', ')."
     }
 
-    $Verb = $Verb.ToLowerInvariant()
+    $Path, $Verb = '', $Verb.ToLowerInvariant()
     $Resolve = @{
-      Path = $PWD.Path
+      Path = $Path
       New  = $Verb -eq 'clean'
     }
     $Repository = Resolve-Repository @Resolve
   }
   else {
+    $Path = ''
     $Resolve = @{
-      Path = $PWD.Path
+      Path = $Path
     }
     $Repository = Resolve-Repository @Resolve
 
