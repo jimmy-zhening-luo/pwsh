@@ -24,6 +24,12 @@ function Reset-Repository {
     $Path, $Tree = '', $Path
   }
 
+  $Parameters = @{
+    Path  = $Path
+    Throw = $Throw
+  }
+  Add-Repository @Parameters -Throw
+
   $Local:args = $args
 
   if ($Tree) {
@@ -41,13 +47,10 @@ function Reset-Repository {
   }
 
   $Local:args = , '--hard' + $Local:args
-  $Parameters = @{
-    Path  = $Path
-    Throw = $Throw
+  $Reset = @{
+    Verb = 'reset'
   }
-  $Reset = @{ Verb = 'reset' }
-
-  Add-Repository @Parameters -Throw && Invoke-Repository @Parameters @Reset @Local:args
+  Invoke-Repository @Reset @Parameters @Local:args
 }
 
 New-Alias grp Git\Restore-Repository
@@ -67,5 +70,6 @@ function Restore-Repository {
     [switch]$Throw
   )
 
-  Reset-Repository @PSBoundParameters -Throw @args && Get-Repository @PSBoundParameters
+  Reset-Repository @PSBoundParameters -Throw @args
+  Get-Repository @PSBoundParameters
 }

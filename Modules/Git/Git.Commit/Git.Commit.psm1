@@ -67,8 +67,11 @@ function Write-Repository {
     Path  = $Path
     Throw = $Throw
   }
-  $Commit = @{ Verb = 'commit' }
-  $CommitArguments = '-m', ($Messages -join ' ') + $CommitArguments
+  Add-Repository @Parameters -Throw
 
-  Add-Repository @Parameters -Throw && Invoke-Repository @Parameters @Commit @CommitArguments
+  $CommitArguments = '-m', ($Messages -join ' ') + $CommitArguments
+  $Commit = @{
+    Verb = 'commit'
+  }
+  Invoke-Repository @Commit @Parameters @CommitArguments
 }
