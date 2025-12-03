@@ -29,7 +29,7 @@ function Invoke-PSProfile {
 New-Alias up PSTool\Update-PSProfile
 function Update-PSProfile {
   $ProfileRepository = @{
-    Path  = Join-Path $HOME code\pwsh -Resolve
+    Path = Join-Path $HOME code\pwsh -Resolve
   }
   Git\Get-Repository @ProfileRepository
   Update-PSLinter
