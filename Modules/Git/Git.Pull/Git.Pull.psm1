@@ -30,7 +30,6 @@ This function retrieves all child repositories in %USERPROFILE%\code\' and pulls
 https://git-scm.com/docs/git-pull
 #>
 function Get-ChildRepository {
-  $Pull = @{ Verb = 'pull' }
   $Repositories = (Get-ChildItem -Path $HOME\code -Directory).FullName |
     ? { Resolve-Repository -Path $_ } |
     ? { $_ }
@@ -38,6 +37,9 @@ function Get-ChildRepository {
   $Repositories |
     % { Invoke-Repository -Path $_ @Pull @args }
   $Count = $Repositories.Count
+  $Pull = @{
+    Verb = 'pull'
+  }
 
   "`nPulled $Count repositor" + ($Count -eq 1 ? 'y' : 'ies')
 }
