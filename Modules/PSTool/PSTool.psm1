@@ -36,7 +36,6 @@ function Update-PSProfile {
 }
 
 function Update-PSLinter {
-  $LINTER_CONFIG = 
   $Linter = @{
     Path     = "$HOME\code\pwsh\PSScriptAnalyzerSettings.psd1"
     PathType = 'Leaf'
