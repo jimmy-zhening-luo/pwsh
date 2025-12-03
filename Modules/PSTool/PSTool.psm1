@@ -30,18 +30,24 @@ New-Alias up PSTool\Update-PSProfile
 function Update-PSProfile {
   $ProfileRepository = @{
     Path  = Join-Path $HOME code\pwsh -Resolve
-    Throw = $True
   }
   Git\Get-Repository @ProfileRepository
   Update-PSLinter
 }
 
 function Update-PSLinter {
-  $Copy = @{
-    Path        = "$HOME\code\pwsh\PSScriptAnalyzerSettings.psd1"
-    Destination = $HOME
+  $LINTER_CONFIG = 
+  $Linter = @{
+    Path     = "$HOME\code\pwsh\PSScriptAnalyzerSettings.psd1"
+    PathType = 'Leaf'
   }
-  Copy-Item @Copy
+  if (Test-Path @Linter) {
+    $Copy = @{
+      Path        = $Linter.Path
+      Destination = $HOME
+    } 
+    Copy-Item @Copy
+  }
 }
 
 New-Alias mc PSTool\Measure-PSProfile
