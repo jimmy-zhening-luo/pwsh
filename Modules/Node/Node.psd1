@@ -6,11 +6,6 @@
   RequiredModules   = @(
     'Shell'
   )
-  NestedModules     = @(
-    'Node.Cache'
-    'Node.Package'
-    'Node.Script'
-  )
   FunctionsToExport = @(
     'Resolve-NodeProject'
     'Clear-PackageCache'
