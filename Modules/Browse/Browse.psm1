@@ -7,12 +7,12 @@ function Test-Host {
     [string]$Port
   )
 
-  if ($Hostname -match '^\s*\d{1,5}\s*$' -and $Hostname -as [UInt16]) {
+  if ($Hostname -match '^(?>\d{1,5})$' -and $Hostname -as [UInt16]) {
     if ($Port) {
       $Hostname, $Port = $Port, $Hostname
     }
     else {
-      throw 'No hostname provided'
+      throw 'No hostname specified'
     }
   }
 
