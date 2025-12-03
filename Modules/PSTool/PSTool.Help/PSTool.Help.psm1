@@ -135,9 +135,10 @@ function Get-HelpOnline {
 
   if ($Articles) {
     $ShowArticles = @{
-      MessageData = $Articles -join "`n"
+      MessageData       = $Articles -join "`n"
+      InformationAction = 'Continue'
     }
-    Write-Information @ShowArticles 
+    Write-Information @ShowArticles
   }
 }
 
