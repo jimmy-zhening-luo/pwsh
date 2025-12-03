@@ -39,5 +39,5 @@ function Get-ChildRepository {
     % { Invoke-Repository -Path $_ @Pull @args }
   $Count = $Repositories.Count
 
-  "`nPulled $Count " + ($Count -eq 1 ? 'repository' : 'repositories')
+  "`nPulled $Count repositor" + ($Count -eq 1 ? 'y' : 'ies')
 }
