@@ -2,50 +2,65 @@ function Resolve-Repository {
   [OutputType([string[]])]
   [CmdletBinding()]
   param(
-    [string]$Path,
+    [Parameter(
+      Mandatory,
+      Position = 0,
+      ValueFromPipeline
+    )]
+    [string[]]$Path,
     [switch]$New
   )
 
-  $CODE = "$HOME\code"
-  $Item = @{
-    Path = $Path
+  begin {
+    $CODE = "$HOME\code"
+    $Repositories = @()
   }
-  $Repository = ''
 
-  if ($New) {
-    if (Shell\Test-Item @Item) {
-      $Repository = Resolve-Item @Item
+  process {
+    $RepoPath = @{
+      Path = $Path
     }
-    else {
-      $Item.Location = $CODE
-      $Item.New = $True
+    $Repository = ''
 
-      if (Shell\Test-Item @Item) {
-        $Repository = Resolve-Item @Item
+    if ($New) {
+      if (Shell\Test-Item @RepoPath) {
+        $Repository = Shell\Resolve-Item @RepoPath
+      }
+      else {
+        $RepoPath.Location = $CODE
+        $RepoPath.New = $True
+
+        if (Shell\Test-Item @RepoPath) {
+          $Repository = Shell\Resolve-Item @RepoPath
+        }
       }
     }
-  }
-  else {
-    $GitPath = $Path ? (Join-Path $Path .git) : '.git'
-    $Git = @{
-      Path           = $GitPath
-      RequireSubpath = $True
-    }
-
-    if (Shell\Test-Item @Git) {
-      $Repository = Resolve-Item @Item
-    }
     else {
-      $Item.Location = $CODE
-      $Git.Location = $CODE
+      $RepoGitPath = @{
+        Path           = $Path ? (Join-Path $Path .git) : '.git'
+        RequireSubpath = $True
+      }
 
-      if (Shell\Test-Item @Git) {
-        $Repository = Resolve-Item @Item
+      if (Shell\Test-Item @RepoGitPath) {
+        $Repository = Shell\Resolve-Item @RepoPath
+      }
+      else {
+        $RepoGitPath.Location = $RepoPath.Location = $CODE
+
+        if (Shell\Test-Item @RepoGitPath) {
+          $Repository = Shell\Resolve-Item @RepoPath
+        }
       }
     }
+
+    if ($Repository) {
+      $Repositories += $Repository
+    }
   }
 
-  $Repository
+  end {
+    $Repositories
+  }
 }
 
 $GIT_VERB_FILE = @{
@@ -63,126 +78,93 @@ function Invoke-Repository {
     [switch]$Throw
   )
 
-  $GitArguments = , '-C'
-  $GitOptions = @()
+  $Local:args = $args
+  $GitArguments = @(
+    '-c'
+    'color.ui=always'
+    '-C'
+  )
 
   if ($Path.StartsWith('-')) {
-    $GitOptions += $Path
+    $Local:args = , $Path + $Local:args
     $Path = ''
 
-    if ($Verb) {
-      if ($Verb.StartsWith('-')) {
-        $GitOptions += $Verb
-        $Verb = ''
-      }
-      else {
-        $Path = $Verb
-        $Verb = ''
-      }
+    if ($Verb -and -not $Verb.StartsWith('-')) {
+      $Path, $Verb = $Verb, ''
     }
   }
 
   if ($Verb.StartsWith('-')) {
-    $GitOptions += $Verb
+    $Local:args = , $Verb + $Local:args
     $Verb = ''
   }
 
-  if (-not $Path -and -not $Verb) {
-    if (Resolve-Repository $Path) {
-      $GitArguments += (Resolve-Repository $Path), 'status'
-    }
-    else {
-      throw "'git status' requires an existing repository. The current directory is not a repository, and no other path was provided."
-    }
-  }
-  elseif (-not $Path) {
+  if ($Path -and $Verb) {
     if ($Verb -in $GIT_VERB) {
       $Verb = $Verb.ToLowerInvariant()
-
-      $Resolve = @{
-        Path = $Path
-        New  = $Verb -eq 'clone'
-      }
-
-      if (Resolve-Repository @Resolve) {
-        $GitArguments += (Resolve-Repository @Resolve), $Verb
-      }
-      else {
-        throw "'git $Verb' requires an existing repository. The current directory is not a repository, and no other path was provided."
-      }
-    }
-    else {
-      throw "Unknown git verb '$Verb'. Allowed git verbs: $($GIT_VERB -join ', ')."
-    }
-  }
-  elseif (-not $Verb) {
-    if (Resolve-Repository -Path $Path) {
-      $GitArguments += (Resolve-Repository -Path $Path), 'status'
     }
     elseif ($Path -in $GIT_VERB) {
-      $Verb = $Path.ToLowerInvariant()
-      $Path = ''
-
-      $Resolve = @{
-        Path = $Path
-        New  = $Verb -eq 'clone'
-      }
-
-      if (Resolve-Repository @Resolve) {
-        $GitArguments += (Resolve-Repository @Resolve), $Verb
-      }
-      else {
-        throw "'git $Verb' requires an existing repository. The current directory is not a repository, and no other path was provided."
-      }
-    }
-    else {
-      throw "'git status' requires an existing repository. Neither '$Path' nor '$code\$path' is a repository."
-    }
-  }
-  else {
-    if ($Verb -in $GIT_VERB) {
-      $Verb = $Verb.ToLowerInvariant()
-
-      $Resolve = @{
-        Path = $Path
-        New  = $Verb -eq 'clone'
-      }
-
-      if (Resolve-Repository @Resolve) {
-        $GitArguments += (Resolve-Repository @Resolve), $Verb
-      }
-      else {
-        throw "Path '$Path' is not a valid target for 'git $Verb'."
-      }
-    }
-    elseif ($Path -in $GIT_VERB) {
-      $Verb = $Path.ToLowerInvariant()
-      $Path = ''
-
-      $Resolve = @{
-        Path = $Path
-        New  = $Verb -eq 'clone'
-      }
-
-      if (Resolve-Repository @Resolve) {
-        $GitArguments += (Resolve-Repository @Resolve), $Verb
-      }
-      else {
-        throw "'git $Verb' requires an existing repository. The current directory is not a repository, and no other path was provided."
-      }
+      $Verb, $Path = $Path.ToLowerInvariant(), ''
     }
     else {
       throw "Unknown git verb '$Verb' or '$Path'. Allowed git verbs: $($GIT_VERB -join ', ')."
     }
+
+    $Resolve = @{
+      Path = $Path
+      New  = $Verb -eq 'clean'
+    }
+    $Repository = Resolve-Repository @Resolve
+  }
+  elseif (-not $Verb) {
+    $Resolve = @{
+      Path = $Path
+    }
+    $Repository = Resolve-Repository @Resolve
+
+    if ($Repository) {
+      $Verb = 'status'
+    }
+    elseif ($Path -in $GIT_VERB) {
+      $Verb = $Path.ToLowerInvariant()
+      $Resolve.Path = ''
+      $Resolve.New = $Verb -eq 'clean'
+      $Repository = Resolve-Repository @Resolve
+    }
+  }
+  elseif (-not $Path) {
+    if ($Verb -notin $GIT_VERB) {
+      throw "Unknown git verb '$Verb'. Allowed git verbs: $($GIT_VERB -join ', ')."
+    }
+
+    $Verb = $Verb.ToLowerInvariant()
+    $Resolve = @{
+      Path = $Path
+      New  = $Verb -eq 'clean'
+    }
+    $Repository = Resolve-Repository @Resolve
+  }
+  else {
+    $Resolve = @{
+      Path = $PWD.Path
+    }
+    $Repository = Resolve-Repository @Resolve
+
+    if ($Repository) {
+      $Verb = 'status'
+    }
   }
 
-  $GitArguments += $GitOptions
-  $GitArguments = '-c', 'color.ui=always' + $GitArguments
+  if (-not $Repository -or -not $Verb) {
+    throw "'git $Verb' requires an existing repository. The path '$Path' could not be resolved to any repository."
+  }
+
+  $GitArguments += $Repository, $Verb
 
   if ($Throw) {
     $GitOutput = ''
 
-    & git $GitArguments @args 2>&1 |
+    & git $GitArguments @Local:args 2>&1 |
       Tee-Object -Variable GitOutput
 
     if (($GitOutput -as [string]).StartsWith('fatal:')) {
@@ -190,6 +172,6 @@ function Invoke-Repository {
     }
   }
   else {
-    & git $GitArguments @args
+    & git $GitArguments @Local:args
   }
 }
