@@ -9,12 +9,8 @@ https://docs.npmjs.com/cli/commands
 function Resolve-NodeProject {
   param(
     # Node project root path to be resolved
-    [string]$Path
+    [string]$Path = $PWD.Path
   )
-
-  if (-not $Path) {
-    $Path = $PWD.Path
-  }
 
   $IsNode = @{
     Path     = Join-Path $Path package.json
@@ -86,7 +82,7 @@ https://docs.npmjs.com/cli/commands/npm-outdated
 function Invoke-Script {
   param(
     [Alias('Run')]
-    # Name of npm script to run
+    # Name of the npm script to run
     [string]$Script,
     [PathCompletions(
       '~\code',
