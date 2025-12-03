@@ -36,8 +36,7 @@ function Get-ChildRepository {
   }
   $Repositories = Get-ChildItem @Code |
     Select-Object -ExpandProperty FullName |
-    % { Resolve-Repository $_ }
-    ? { $_ }
+    Resolve-Repository
   $Count = $Repositories.Count
 
   foreach ($Repository in $Repositories) {
