@@ -60,8 +60,8 @@ function Compare-Package {
     [string]$Path
   )
 
+  $Prefix = Resolve-NodeProject @PSBoundParameters
   $Local:args = $args
-  $Prefix = Resolve-NodeProject @PSBoundParameters -ErrorAction Stop
 
   if ($Prefix) {
     $Local:args = '--prefix', $Prefix + $Local:args
@@ -81,6 +81,7 @@ https://docs.npmjs.com/cli/commands/npm-outdated
 #>
 function Invoke-Script {
   param(
+    [Parameter(Mandatory)]
     [Alias('Run')]
     # Name of the npm script to run
     [string]$Script,
@@ -93,17 +94,14 @@ function Invoke-Script {
     [string]$Path
   )
 
-  if (-not $Script) {
-    throw 'No script name provided'
-  }
-
   $Local:args = $args
 
   if ($Path.StartsWith(('-'))) {
-    $Path, $Local:args = '', (, $Path + $Local:args)
+    $Local:args = , $Path + $Local:args
+    $Path = ''
   }
 
-  $Prefix = Resolve-NodeProject @PSBoundParameters -ErrorAction Stop
+  $Prefix = Resolve-NodeProject @PSBoundParameters
 
   if ($Prefix) {
     $Local:args = '--prefix', $Prefix + $Local:args

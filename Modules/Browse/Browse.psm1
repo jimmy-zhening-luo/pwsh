@@ -39,29 +39,31 @@ New-Alias tu Browse\Test-Url
 .SYNOPSIS
 Determine if an URL is reachable.
 .DESCRIPTION
-This function checks if a given URL is reachable by sending a web request and checking the status code of the response. It returns '$true' if the URL is reachable (status code 200) and '$false' otherwise.
-.PARAMETER Uri
-Specifies the URL to test. This parameter is mandatory and must be castable to a 'Uri' object. If the URL has no scheme, it defaults to 'http'.
+This function checks if an URL is reachable by sending a web request and checking the status code of the response.
+
+It returns true if the URL returns a status code between 200 to 300, otherwise false.
+
+The function times out if it receives no response after five (5) (lol) seconds, returning false.
 #>
 function Test-Url {
   param(
+    # The URL to test. If the URL has no scheme, it defaults to 'http'.
     [Uri]$Uri
   )
 
   if (-not $Uri) {
-    return $false
+    return $False
   }
 
   $Request = @{
     Uri                          = $Uri
     Method                       = 'HEAD'
-    PreserveHttpMethodOnRedirect = $true
-    DisableKeepAlive             = $true
+    PreserveHttpMethodOnRedirect = $True
+    DisableKeepAlive             = $True
     ConnectionTimeoutSeconds     = 5
     MaximumRetryCount            = 0
     ErrorAction                  = 'Stop'
   }
-
   try {
     $Status = Invoke-WebRequest @Request |
       Select-Object -ExpandProperty StatusCode
@@ -91,17 +93,9 @@ function Open-Url {
     [Uri]$Uri
   )
 
-  $Argument = $PSCmdlet.ParameterSetName -eq 'Uri' ? $Uri : (
-    (
-      Test-Path $Path
-    ) ? (
-      Resolve-Path $Path
-    ).Path : $Path
-  )
-
   $Browser = @{
     FilePath     = 'C:\Program Files\Google\Chrome\Application\chrome.exe'
-    ArgumentList = $Argument
+    ArgumentList = $PSCmdlet.ParameterSetName -eq 'Uri' ? $Uri : (Test-Path $Path) ? (Resolve-Path $Path).Path : $Path
   }
 
   if (-not $env:SSH_CLIENT) {

@@ -50,7 +50,7 @@ function Write-Repository {
   }
   else {
     if ($fAllowEmpty -in $CommitArguments) {
-      $AllowEmpty = $true
+      $AllowEmpty = $True
     }
   }
 

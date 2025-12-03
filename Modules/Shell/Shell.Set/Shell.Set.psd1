@@ -4,7 +4,6 @@
   PowerShellVersion = '7.5'
   NestedModules     = @(
     'Shell.Set.Directory'
-    'Shell.Set.File'
   )
   FunctionsToExport = @(
     'Set-Directory'
@@ -14,12 +13,6 @@
     'Set-DirectoryCode'
     'Set-Drive'
     'Set-DriveD'
-    'Set-File'
-    'Set-FileSibling'
-    'Set-FileRelative'
-    'Set-FileHome'
-    'Set-FileCode'
-    'Set-FileDrive'
   )
   CmdletsToExport   = @()
   VariablesToExport = @()
@@ -33,11 +26,5 @@
     'cc'
     'c/'
     'd/'
-    'w'
-    'w.'
-    'w..'
-    'w~'
-    'wc'
-    'w/'
   )
 }

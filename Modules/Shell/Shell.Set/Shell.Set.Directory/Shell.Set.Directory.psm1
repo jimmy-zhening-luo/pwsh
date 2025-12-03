@@ -23,7 +23,6 @@ function Set-DirectorySibling {
   $FullPath = @{
     Path = Join-Path ($PWD | Split-Path) $Path
   }
-
   Set-Location @FullPath @args
 }
 
@@ -37,7 +36,6 @@ function Set-DirectoryRelative {
   $FullPath = @{
     Path = Join-Path ($PWD | Split-Path | Split-Path) $Path
   }
-
   Set-Location @FullPath @args
 }
 
@@ -51,7 +49,6 @@ function Set-DirectoryHome {
   $FullPath = @{
     Path = Join-Path $HOME $Path
   }
-
   Set-Location @FullPath @args
 }
 
@@ -65,7 +62,6 @@ function Set-DirectoryCode {
   $FullPath = @{
     Path = Join-Path $HOME\code $Path
   }
-
   Set-Location @FullPath @args
 }
 
@@ -79,7 +75,6 @@ function Set-Drive {
   $FullPath = @{
     Path = Join-Path $PWD.Drive.Root $Path
   }
-
   Set-Location @FullPath @args
 }
 
@@ -93,6 +88,5 @@ function Set-DriveD {
   $FullPath = @{
     Path = Join-Path D: $Path
   }
-
   Set-Location @FullPath @args
 }

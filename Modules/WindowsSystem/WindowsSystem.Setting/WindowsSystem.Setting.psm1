@@ -10,7 +10,10 @@ function Update-Windows {
     throw 'Cannot open Settings app during SSH session'
   }
 
-  [void](Start-Process -FilePath ms-settings:windowsupdate)
+  $WindowsUpdate = @{
+    FilePath = 'ms-settings:windowsupdate'
+  }
+  [void](Start-Process @WindowsUpdate)
 }
 
 New-Alias path WindowsSystem\Edit-Path
@@ -37,10 +40,8 @@ function Edit-Path {
       'EditEnvironmentVariables'
     )
   }
-
   if ($Administrator) {
     $ControlPanel.Verb = 'RunAs'
   }
-
   [void](Start-Process @ControlPanel)
 }

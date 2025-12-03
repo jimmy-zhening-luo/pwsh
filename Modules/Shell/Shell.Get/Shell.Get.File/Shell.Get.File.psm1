@@ -27,9 +27,8 @@ function Get-File {
     }
 
     $FullPath = @{
-      Path = (Resolve-Path -Path $Target).Path
+      Path = Resolve-Path -Path $Target
     }
-
     if (Test-Path @FullPath -PathType Container) {
       Get-ChildItem @FullPath @Local:args
     }
@@ -39,11 +38,8 @@ function Get-File {
   }
   else {
     $Directory = @{
-      Path = $Location ? (
-        Resolve-Path -Path $Location
-      ).Path : $PWD.Path
+      Path = $Location ? (Resolve-Path -Path $Location) : $PWD
     }
-
     Get-ChildItem @Directory @Local:args
   }
 }
@@ -60,7 +56,6 @@ function Get-FileSibling {
   $Location = @{
     Location = $PWD | Split-Path
   }
-
   Get-File @PSBoundParameters @Location @args
 }
 
@@ -76,7 +71,6 @@ function Get-FileRelative {
   $Location = @{
     Location = $PWD | Split-Path | Split-Path
   }
-
   Get-File @PSBoundParameters @Location @args
 }
 
@@ -92,7 +86,6 @@ function Get-FileHome {
   $Location = @{
     Location = $HOME
   }
-
   Get-File @PSBoundParameters @Location @args
 }
 
@@ -108,7 +101,6 @@ function Get-FileCode {
   $Location = @{
     Location = "$HOME\code"
   }
-
   Get-File @PSBoundParameters @Location @args
 }
 
@@ -124,6 +116,5 @@ function Get-FileDrive {
   $Location = @{
     Location = $PWD.Drive.Root
   }
-
   Get-File @PSBoundParameters @Location @args
 }

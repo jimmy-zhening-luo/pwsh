@@ -18,31 +18,37 @@ function Stop-Task {
       Mandatory,
       Position = 0
     )]
-    [string]$Id
+    [UInt32]$Id
   )
 
-  $Task = @{
-    Force = $true
+  $Process = @{
+    Force = $True
+  }
+  switch ($PSCmdlet.ParameterSetName) {
+    'Id' {
+      $Process.Id = $Id
+      break
+    }
+    default {
+      if ($Name -match '^(?>\d{1,10})$' -and $Name -as [UInt32]) {
+        $Process.Id = [UInt32]$Name
+      }
+      else {
+        $Process.Name = $Name
+      }
+    }
   }
 
-  if ($Id) {
-    $Task.Id = $Id -as [uint32]
-  }
-  else {
-    if ($Name -match '^\s*\d{1,10}\s*$' -and $Name -as [uint32]) {
-      $Task.Id = $Name -as [uint32]
-    }
-    else {
-      $Task.Name = $Name
-    }
+  if (-not $Process.Id -and -not $Process.Name) {
+    throw 'Must specify a valid PID or process name'
   }
 
   if (
     $PSCmdlet.ShouldProcess(
-      "Name:$($Task.Name) or Id:$($Task.Id)",
+      $Process.Id ? "Process ID: $($Process.Id)" : "Process Name: $($Process.Name)",
       'Stop-Process'
     )
   ) {
-    Stop-Process @Task
+    Stop-Process @Process
   }
 }

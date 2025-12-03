@@ -29,6 +29,7 @@ function Trace-RelativePath {
     [string]$Path,
     [string]$Location
   )
+
   [Path]::GetRelativePath($Path, $Location) -match '^[.\\]*$'
 }
 
@@ -50,8 +51,8 @@ function Test-Item {
     [switch]$RequireSubpath
   )
 
-  $Location = Format-Path -Path $Location
   $Path = Format-Path -Path $Path -Leading
+  $Location = Format-Path -Path $Location
 
   if ([Path]::IsPathRooted($Path)) {
     if ($Location) {
@@ -59,7 +60,6 @@ function Test-Item {
         Path     = $Path
         Location = $Location
       }
-
       if (Trace-RelativePath @Relative) {
         $Path = Merge-RelativePath @Relative
       }
@@ -79,7 +79,6 @@ function Test-Item {
         Path     = Join-Path $HOME $Path
         Location = $Location
       }
-
       if (Trace-RelativePath @Relative) {
         $Path = Merge-RelativePath @Relative
       }
@@ -96,7 +95,11 @@ function Test-Item {
     $Location = $PWD.Path
   }
 
-  if (-not (Test-Path -Path $Location -PathType Container)) {
+  $Container = @{
+    Path     = $Location
+    PathType = 'Container'
+  }
+  if (-not (Test-Path @Container)) {
     return $False
   }
 
@@ -121,7 +124,6 @@ function Test-Item {
     Path     = $FullPath
     PathType = $File ? 'Leaf' : 'Container'
   }
-
   if ($New) {
     (Test-Path @Item -IsValid) -and -not (Test-Path @Item)
   }
@@ -143,8 +145,8 @@ function Resolve-Item {
     throw "Invalid path '$Path': " + ($PSBoundParameters | ConvertTo-Json)
   }
 
-  $Location = Format-Path -Path $Location
   $Path = Format-Path -Path $Path -Leading
+  $Location = Format-Path -Path $Location
 
   if ([Path]::IsPathRooted($Path)) {
     if ($Location) {
@@ -193,7 +195,6 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
     $this.Flat = $false
     $this.UseNativeDirectorySeparator = $false
   }
-
   PathCompletionsAttribute(
     [string] $root,
     [string] $type
@@ -203,7 +204,6 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
     $this.Flat = $false
     $this.UseNativeDirectorySeparator = $false
   }
-
   PathCompletionsAttribute(
     [string] $root,
     [string] $type,
@@ -214,7 +214,6 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
     $this.Flat = $flat
     $this.UseNativeDirectorySeparator = $false
   }
-
   PathCompletionsAttribute(
     [string] $root,
     [string] $type,
@@ -267,7 +266,7 @@ class PathCompleter : IArgumentCompleter {
     [IDictionary] $fakeBoundParameters
   ) {
 
-    $Local:root = (Resolve-Path -Path $this.Root).Path
+    $Local:root = Resolve-Path -Path $this.Root
     $separator = $this.UseNativeDirectorySeparator ? [Path]::DirectorySeparatorChar : '/'
     $query = @{
       Path      = $Local:root
@@ -278,7 +277,6 @@ class PathCompleter : IArgumentCompleter {
     $leaves = @()
     $subpath = ''
     $resultList = [List[CompletionResult]]::new()
-
 
     if ($word) {
       if ($word.EndsWith('\')) {

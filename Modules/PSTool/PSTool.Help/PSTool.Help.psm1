@@ -1,15 +1,15 @@
 New-Alias upman Update-Help
 
-$CUSTOM_LINKS_PATH = @{
+$CUSTOM_HELP_FILE = @{
   Path = "$PSScriptRoot\PSHelp.psd1"
 }
-$CUSTOM_LINKS = (
-  Test-Path @CUSTOM_LINKS_PATH -Type Leaf
-) ? (Import-PowerShellDataFile @CUSTOM_LINKS_PATH) : @{}
-$ABOUT_ARTICLE_ROOT = 'https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about'
+$CUSTOM_HELP = (
+  Test-Path @CUSTOM_HELP_FILE -Type Leaf
+) ? (Import-PowerShellDataFile @CUSTOM_HELP_FILE) : @{}
 
 New-Alias m PSTool\Get-HelpOnline
 function Get-HelpOnline {
+  [OutputType([ExtendedCmdletHelpInfo], [MamlCommandHelpInfo], [string])]
   param(
     [string[]]$Name,
     [Alias('params')]
@@ -17,28 +17,27 @@ function Get-HelpOnline {
   )
 
   if (-not $Name) {
-    Get-Help -Name Get-Help
-    return
+    return Get-Help -Name Get-Help
   }
 
   $Topic = $Name -join '_'
+  $Help = ''
+  $HelpLink = ''
+  $Articles = @()
   $Query = @{
     Name        = $Topic
     ErrorAction = 'SilentlyContinue'
   }
-  $Help = ''
-  $HelpLink = ''
-  $Articles = @()
 
-  if ($CUSTOM_LINKS.Contains($Topic)) {
-    $CustomLink = $CUSTOM_LINKS[$Topic]
+  if ($CUSTOM_HELP.Contains($Topic)) {
+    $CustomHelp = $CUSTOM_HELP[$Topic]
 
-    if ($CustomLink -is [string] -and -not $CustomLink.Contains(':')) {
-      $CustomLink = $CUSTOM_LINKS[$CustomLink]
+    if ($CustomHelp -and $CustomHelp -as [string] -notmatch ':') {
+      $CustomHelp = $CUSTOM_HELP[$CustomHelp]
     }
 
-    if ($CustomLink) {
-      $Articles += $CustomLink
+    if ($CustomHelp) {
+      $Articles += $CustomHelp
     }
   }
   else {
@@ -50,9 +49,9 @@ function Get-HelpOnline {
 
     if ($Help) {
       $HelpLink = $Help.relatedLinks.navigationLink.Uri |
-        ? { -not [string]::IsNullOrEmpty($_) } |
+        ? { $_ } |
         % { $_ -replace '\?.*$', '' } |
-        ? { $_ -ne '' }
+        ? { $_ }
     }
 
     if ($Help -and $Parameter) {
@@ -71,30 +70,31 @@ function Get-HelpOnline {
       $Articles += $HelpLink
     }
     else {
+      $ABOUT_BASE_URL = 'https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about'
       $about_Article = ''
 
       if ($Help) {
-        $about_Article = "$ABOUT_ARTICLE_ROOT/$($Help.name)"
+        $about_Article = "$ABOUT_BASE_URL/$($Help.name)"
       }
       else {
-        $about_Topic = $Topic -replace '[-_ :]+', '_' -replace '^(?:about)?_?', 'about_'
+        $about_Topic = $Topic -replace '[-_ :]+', '_' -replace '^(?>about)?_?', 'about_'
 
         function Resolve-AboutArticle {
           param(
-            [string]$about_Topic
+            [string]$Topic
           )
 
-          $about_Article = "$ABOUT_ARTICLE_ROOT/$about_Topic"
+          $Local:about_Article = "$ABOUT_BASE_URL/$Topic"
 
-          (Browse\Test-Url $about_Article) ? $about_Article : ''
+          (Browse\Test-Url -Uri $Local:about_Article) ? $Local:about_Article : ''
         }
 
-        $about_Article = Resolve-AboutArticle $about_Topic
+        $about_Article = Resolve-AboutArticle -Topic $about_Topic
 
         if (-not $about_Article) {
           if ($about_Topic -notmatch 's$') {
-            $about_Topic = $about_Topic + 's'
-            $about_Article = Resolve-AboutArticle $about_Topic
+            $about_Topic += 's'
+            $about_Article = Resolve-AboutArticle -Topic $about_Topic
           }
         }
 
@@ -115,8 +115,8 @@ function Get-HelpOnline {
 
   if ($Articles) {
     $Articles = $Articles |
-      % { $_ -replace '^(?:https?:\/\/)?', 'https://' } |
-      % { $_ -replace '^https:\/\/learn\.microsoft\.com\/en-us\/', 'https://learn.microsoft.com/' } |
+      % { $_ -replace '^(?>https?:\/\/)?', 'https://' } |
+      % { $_ -replace '^(?>https:\/\/learn\.microsoft\.com\/en-us\/)', 'https://learn.microsoft.com/' } |
       Select-Object -Unique
   }
 
@@ -134,11 +134,12 @@ function Get-HelpOnline {
   }
 
   if ($Articles) {
-    $ShowArticles = @{
-      MessageData       = $Articles -join "`n"
+    $ArticleList = $Articles -join "`n"
+    $ArticleInformation = @{
+      MessageData       = "$ArticleList"
       InformationAction = 'Continue'
     }
-    Write-Information @ShowArticles
+    Write-Information @ArticleInformation
   }
 }
 
@@ -152,7 +153,6 @@ function Get-CommandAlias {
   $Commands = @{
     Definition = $Definition.Contains('*') ? $Definition : $Definition.Length -lt 3 ? "$Definition*" : "*$Definition*"
   }
-
   Get-Alias @Commands @args |
     Select-Object DisplayName, Options, Source
 }
@@ -162,11 +162,11 @@ function Get-CommandAlias {
 Gets a list of approved PowerShell verbs.
 
 .DESCRIPTION
-The 'Get-VerbList' function gets verbs that are approved for use in PowerShell commands.
+This function gets verbs that are approved for use in PowerShell commands.
 
-It invokes 'Get-Verb', sorts the returned verbs alphabetically, and returns only the 'Verb' field as a 'String' array.
+It invokes Get-Verb, sorts the returned verbs alphabetically, and returns only the Verb property as a string array.
 
-It supports both parameters of 'Get-Verb', '-Verb' and '-Group', but it treats '-Verb' as a wildcard search rather than an exact match.
+It supports both parameters of Get-Verb, 'Verb' and 'Group', but it treats 'Verb' as a wildcard search rather than an exact match.
 
 .PARAMETER Verb
 Specifies the verb to search for. The default value is '*'. If the value contains a wildcard, it is passed to 'Get-Verb' as-is. If the value is shorter than 3 characters, a wildcard is appended ('Verb*'). If the value is 3 characters or longer, wildcards are prepended and appended ('*Verb*').
@@ -185,6 +185,7 @@ function Get-VerbList {
   $Verbs = @{
     Verb = $Verb.Contains('*') ? $Verb : $Verb.Length -lt 3 ? "$Verb*" : "*$Verb*"
   }
-
-  (Get-Verb @Verbs @args | Sort-Object -Property Verb).Verb
+  Get-Verb @Verbs @args |
+    Sort-Object -Property Verb |
+    Select-Object -ExpandProperty Verb
 }

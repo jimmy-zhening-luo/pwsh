@@ -14,18 +14,26 @@ function Invoke-PSHistory {
     ProfileName = 'PowerShell'
     Window      = $True
   }
-
   Shell\Invoke-Workspace @History
 }
 
 New-Alias op PSTool\Invoke-PSProfile
 function Invoke-PSProfile {
-  Shell\Invoke-WorkspaceCode -Path pwsh -ProfileName PowerShell @args
+  $ProfileRepository = @{
+    Path        = 'pwsh'
+    ProfileName = 'PowerShell'
+  }
+  Shell\Invoke-WorkspaceCode @ProfileRepository @args
 }
 
 New-Alias up PSTool\Update-PSProfile
 function Update-PSProfile {
-  Git\Get-Repository -Path $HOME\code\pwsh && Update-PSLinter
+  $ProfileRepository = @{
+    Path  = Join-Path $HOME code\pwsh -Resolve
+    Throw = $True
+  }
+  Git\Get-Repository @ProfileRepository
+  Update-PSLinter
 }
 
 function Update-PSLinter {
@@ -33,22 +41,26 @@ function Update-PSLinter {
     Path        = "$HOME\code\pwsh\PSScriptAnalyzerSettings.psd1"
     Destination = $HOME
   }
-
   Copy-Item @Copy
 }
 
 New-Alias mc PSTool\Measure-PSProfile
 function Measure-PSProfile {
-  $Command = @{
+  $Test = @{
     Command = '1'
   }
-  $StartupTimeWithProfile = (
-    Measure-Command { pwsh @Command }
+  $StartupLoadProfile = (
+    Measure-Command { pwsh @Test }
   ).TotalMilliseconds
-  $StartupTime = (
-    Measure-Command { pwsh -NoProfile @Command }
+  $NormalStartup = (
+    Measure-Command { pwsh -NoProfile @Test }
   ).TotalMilliseconds
-  $ProfileLoadTime = [math]::Round($StartupTimeWithProfile - $StartupTime)
+  $Performance = [math]::Max(
+    [math]::Round($StartupLoadProfile - $NormalStartup),
+    0
+  )
+  $Print_NormalStartup = [math]::Round($NormalStartup)
+  $Print_Performance = $Performance -lt 1 -and $Performance -gt -1 ? 0 : $Performance
 
-  "$ProfileLoadTime ms`n(Base: $([math]::Round($StartupTime)) ms)"
+  "$Print_Performance ms`n(Base: $Print_NormalStartup ms)"
 }

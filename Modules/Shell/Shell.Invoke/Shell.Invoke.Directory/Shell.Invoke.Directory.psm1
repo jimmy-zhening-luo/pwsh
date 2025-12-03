@@ -6,20 +6,22 @@ function Invoke-Directory {
   )
 
   if ($env:SSH_CLIENT) {
-    Get-File @PSBoundParameters
+    return Get-File @PSBoundParameters
   }
-  else {
-    if ($Path) {
-      if (Test-Path @PSBoundParameters -PathType Leaf) {
-        Invoke-Workspace @PSBoundParameters
-      }
-      else {
-        Invoke-Item @PSBoundParameters
-      }
+
+  if ($Path) {
+    $IsFile = @{
+      PathType = 'Leaf'
+    }
+    if (Test-Path @PSBoundParameters @IsFile) {
+      Invoke-Workspace @PSBoundParameters
     }
     else {
-      Invoke-Item -Path $PWD.Path
+      [void](Invoke-Item @PSBoundParameters)
     }
+  }
+  else {
+    [void](Invoke-Item -Path $PWD)
   }
 }
 
@@ -33,7 +35,6 @@ function Invoke-DirectorySibling {
   $FullPath = @{
     Path = Join-Path ($PWD | Split-Path) $Path
   }
-
   Invoke-Directory @FullPath @args
 }
 
@@ -47,9 +48,7 @@ function Invoke-DirectoryRelative {
   $FullPath = @{
     Path = Join-Path ($PWD | Split-Path | Split-Path) $Path
   }
-
   Invoke-Directory @FullPath @args
-
 }
 
 New-Alias e~ Shell\Invoke-DirectoryHome
@@ -62,7 +61,6 @@ function Invoke-DirectoryHome {
   $FullPath = @{
     Path = Join-Path $HOME $Path
   }
-
   Invoke-Directory @FullPath @args
 }
 
@@ -76,7 +74,6 @@ function Invoke-DirectoryCode {
   $FullPath = @{
     Path = Join-Path $HOME\code $Path
   }
-
   Invoke-Directory @FullPath @args
 }
 
@@ -90,6 +87,5 @@ function Invoke-DirectoryDrive {
   $FullPath = @{
     Path = Join-Path $PWD.Drive.Root $Path
   }
-
   Invoke-Directory @FullPath @args
 }

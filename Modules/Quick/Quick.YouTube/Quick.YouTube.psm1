@@ -16,16 +16,16 @@ function Get-YouTube {
     throw 'No video specified'
   }
 
-  $YouTube = 'https://www.youtube.com/watch?v='
-  $VideoUrl = $YouTube + (
-    $Video -match '^\s*(?:https?://)?(?:(?:www|m)\.)?youtube\.com/watch\?\S*v=(?<video>[-\w]+)' ? $Matches.video : $Video
+  $YOUTUBE = 'https://www.youtube.com/watch?v='
+  $VideoUri = $YOUTUBE + (
+    $Video -match '^(?>https?://)?(?>(?>www|m)\.)?(?>youtube\.com/watch\?)\S*v=(?<video>[-\w]+)' ? $Matches.video : $Video
   )
 
-  if (Browse\Test-Url $VideoUrl) {
-    & yt-dlp @args -- $VideoUrl
+  if (Browse\Test-Url -Uri $VideoUri) {
+    & yt-dlp @args -- $VideoUri
   }
   else {
-    throw "The specified YouTube video URL is not reachable: $VideoUrl"
+    throw 'The specified video URL is unreachable: ' + $VideoUri
   }
 }
 
@@ -51,12 +51,9 @@ function Get-YouTubeAudio {
     'mp3'
     '--audio-quality'
     0
-    '--audio-quality'
-    0
     '--postprocessor-args'
     '-ar 44100'
   )
-
   Get-YouTube @PSBoundParameters @args @YtArguments
 }
 
@@ -77,16 +74,23 @@ function Get-YouTubeFormat {
   $YtArguments = @(
     '-F'
   )
-
   Get-YouTube @PSBoundParameters @args @YTArguments
 }
 
 New-Alias yte Quick\Invoke-YouTubeDirectory
 function Invoke-YouTubeDirectory {
-  Shell\Invoke-DirectoryHome -Path Videos\YouTube
+  $YouTubeDownloads = @{
+    Path = 'Videos\YouTube'
+  }
+  Shell\Invoke-DirectoryHome @YouTubeDownloads
 }
 
 New-Alias ytc Quick\Invoke-YouTubeConfig
 function Invoke-YouTubeConfig {
-  Shell\Invoke-WorkspaceHome -Path util\bin\yt\yt-dlp.conf -ProfileName Setting -Window @args
+  $YouTubeConfig = @{
+    Path        = 'util\bin\yt\yt-dlp.conf'
+    ProfileName = 'Setting'
+    Window      = $True
+  }
+  Shell\Invoke-WorkspaceHome @YouTubeConfig @args
 }

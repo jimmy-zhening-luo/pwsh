@@ -57,7 +57,7 @@ function Invoke-Workspace {
 
   if ($ProfileName) {
     if (-not $ProfileName.StartsWith('-')) {
-      $Window = $true
+      $Window = $True
 
       $Local:args += '--profile'
     }
@@ -75,9 +75,8 @@ function Invoke-Workspace {
   $Process = @{
     FilePath     = 'code.cmd'
     ArgumentList = $Local:args
-    NoNewWindow  = $true
+    NoNewWindow  = $True
   }
-
   [void](Start-Process @Process)
 }
 
@@ -99,7 +98,6 @@ function Invoke-WorkspaceSibling {
   $Location = @{
     Location = $PWD | Split-Path
   }
-
   Invoke-Workspace @PSBoundParameters @Location @args
 }
 
@@ -121,7 +119,6 @@ function Invoke-WorkspaceRelative {
   $Location = @{
     Location = $PWD | Split-Path | Split-Path
   }
-
   Invoke-Workspace @PSBoundParameters @Location @args
 }
 
@@ -143,7 +140,6 @@ function Invoke-WorkspaceHome {
   $Location = @{
     Location = $HOME
   }
-
   Invoke-Workspace @PSBoundParameters @Location @args
 }
 
@@ -165,7 +161,6 @@ function Invoke-WorkspaceCode {
   $Location = @{
     Location = "$HOME\code"
   }
-
   Invoke-Workspace @PSBoundParameters @Location @args
 }
 
@@ -187,6 +182,5 @@ function Invoke-WorkspaceDrive {
   $Location = @{
     Location = $PWD.Drive.Root
   }
-
   Invoke-Workspace @PSBoundParameters @Location @args
 }
