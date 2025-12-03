@@ -29,7 +29,7 @@ function Write-Repository {
   )
 
   if ($Path) {
-    if (-not (Resolve-Repository -Path $Path)) {
+    if (-not ($Path | Resolve-Repository)) {
       if ($Path -match '^-(?>\w|-\w+)$') {
         $CommitArguments = , $Path + $CommitArguments
       }

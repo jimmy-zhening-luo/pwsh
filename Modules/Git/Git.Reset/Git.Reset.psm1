@@ -17,7 +17,7 @@ function Reset-Repository {
   if (
     $Path -and -not $Tree -and (
       $Path -eq '~' -or -not (
-        Resolve-Repository -Path $Path
+        $Path | Resolve-Repository
       )
     )
   ) {
