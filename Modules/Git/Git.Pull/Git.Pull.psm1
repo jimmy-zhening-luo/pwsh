@@ -34,7 +34,8 @@ function Get-ChildRepository {
     Path      = "$HOME\code"
     Directory = $True
   }
-  $Repositories = (Get-ChildItem @Code).FullName |
+  $Repositories = Get-ChildItem @Code |
+    Select-Object -ExpandProperty FullName |
     Resolve-Repository
   $Count = $Repositories.Count
 

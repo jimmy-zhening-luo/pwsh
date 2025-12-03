@@ -16,7 +16,6 @@ function Resolve-NodeProject {
     Path     = Join-Path $Path package.json
     PathType = 'Leaf'
   }
-
   if (Test-Path @IsNode) {
     $Prefix = (Resolve-Path $Path).Path
 

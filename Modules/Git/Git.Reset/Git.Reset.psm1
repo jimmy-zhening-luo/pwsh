@@ -14,13 +14,7 @@ function Reset-Repository {
     [switch]$Throw
   )
 
-  if (
-    $Path -and -not $Tree -and (
-      $Path -eq '~' -or -not (
-        $Path | Resolve-Repository
-      )
-    )
-  ) {
+  if ($Path -eq '~' -and -not $Tree -or -not ($Path | Resolve-Repository)) {
     $Path, $Tree = '', $Path
   }
 
@@ -33,14 +27,9 @@ function Reset-Repository {
   $Local:args = $args
 
   if ($Tree) {
-    if (
-      $Tree -match '^(?>head)?(?<Branching>\^|~|)(?<Step>\d{0,10})' -and (
-        -not $Matches.Step -or $Matches.Step -as [uint32]
-      )
-    ) {
+    if ($Tree -match '^(?>head)?(?<Branching>(?>~|\^)?)(?<Step>(?>\d{0,10}))' -and (-not $Matches.Step -or $Matches.Step -as [uint32])) {
       $Branching = $Matches.Branching ? $Matches.Branching : '~'
-      $Step = $Matches.Step
-      $Tree = 'HEAD' + $Branching + $Step
+      $Tree = 'HEAD' + $Branching + $Matches.Step
     }
 
     $Local:args = , $Tree + $Local:args

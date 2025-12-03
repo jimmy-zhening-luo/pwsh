@@ -13,6 +13,8 @@ function Push-Repository {
     [switch]$Throw
   )
 
+  Get-Repository @PSBoundParameters -Throw
+
   $Push = @{
     Verb = 'push'
   }
