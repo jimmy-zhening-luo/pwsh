@@ -14,8 +14,9 @@ function Get-Repository {
     [switch]$Throw
   )
 
-  $Pull = @{ Verb = 'pull' }
-
+  $Pull = @{
+    Verb = 'pull'
+  }
   Invoke-Repository @Pull @PSBoundParameters @args
 }
 
