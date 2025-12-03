@@ -36,13 +36,10 @@ function Import-Repository {
   $Protocol = $ForceSsh ? 'git@github.com:' : 'https://github.com/'
   $Origin = $Protocol + ($RepositoryPathParts -join '/')
   $Local:args = , $Origin + $Local:args
-
-
   $Clone = @{
     Path  = $Path
     Verb  = 'clone'
     Throw = $Throw
   }
-
   Invoke-Repository @Clone @Local:args
 }
