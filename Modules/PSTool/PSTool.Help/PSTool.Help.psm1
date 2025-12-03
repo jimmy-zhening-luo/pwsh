@@ -109,7 +109,9 @@ function Get-HelpOnline {
     }
   }
 
-  if ($Help) { $Help }
+  if ($Help) {
+    $Help
+  }
 
   if ($Articles) {
     $Articles = $Articles |
@@ -131,7 +133,12 @@ function Get-HelpOnline {
     }
   }
 
-  if ($Articles) { $Articles }
+  if ($Articles) {
+    $ShowArticles = @{
+      MessageData = $Articles -join "`n"
+    }
+    Write-Information @ShowArticles 
+  }
 }
 
 New-Alias galc PSTool\Get-CommandAlias
