@@ -46,11 +46,12 @@ function Resolve-Repository {
   $Repository
 }
 
-$GIT_VERB = (
-  Import-PowerShellDataFile (
-    Join-Path $PSScriptRoot Git-Verb.psd1 -Resolve
-  ) -ErrorAction Stop
-).GIT_VERB
+$GIT_VERB_FILE = @{
+  Path = Join-Path $PSScriptRoot Git-Verb.psd1 -Resolve
+  ErrorAction = 'Stop'
+}
+$GIT_VERB = Import-PowerShellDataFile @GIT_VERB_FILE |
+  Select-Object -ExpandProperty GIT_VERB
 
 New-Alias gg Git\Invoke-Repository
 function Invoke-Repository {
