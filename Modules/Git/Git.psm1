@@ -1,5 +1,5 @@
 function Resolve-Repository {
-  [OutputType(string[])]
+  [OutputType([string[]])]
   [CmdletBinding()]
   param(
     [string]$Path,
