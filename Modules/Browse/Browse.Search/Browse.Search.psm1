@@ -1,3 +1,5 @@
+using namespace System.Net;
+
 function Expand-Query {
   param(
     [string[]]$Terms
@@ -10,7 +12,7 @@ function Expand-Query {
     $Tokens += (
       $Term -split '\s+' |
         ? { $_ } |
-        % { [System.Net.WebUtility]::UrlEncode($_) }
+        % { [WebUtility]::UrlEncode($_) }
     )
   }
 
@@ -27,7 +29,7 @@ function Search-Query {
 
   $PSBoundParameters.Terms += $args
   $QueryString = Expand-Query @PSBoundParameters
-  $QueryUri = [System.UriBuilder]::new(
+  $QueryUri = [UriBuilder]::new(
     'https',
     'www.google.com',
     -1,
@@ -53,7 +55,7 @@ function Search-Map {
 
   $PSBoundParameters.Terms += $args
   $QueryString = Expand-Query @PSBoundParameters
-  $QueryUri = [System.UriBuilder]::new(
+  $QueryUri = [UriBuilder]::new(
     'https',
     'www.google.com',
     -1,
