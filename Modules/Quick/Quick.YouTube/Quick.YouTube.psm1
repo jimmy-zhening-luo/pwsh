@@ -9,23 +9,23 @@ https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#usage-and-options
 #>
 function Get-YouTube {
   param(
+    [Parameter(Mandatory)]
     [string]$Video
   )
 
-  if (-not $Video) {
-    throw 'No video specified'
-  }
-
-  $YOUTUBE = 'https://www.youtube.com/watch?v='
-  $VideoUri = $YOUTUBE + (
-    $Video -match '^(?>https?://)?(?>(?>www|m)\.)?(?>youtube\.com/watch\?)\S*v=(?<video>[-\w]+)' ? $Matches.video : $Video
-  )
+  $VideoUri = $Video -match '^(?>https?://)?(?>(?>www|m)\.)?(?>youtube\.com/watch\?)\S*v=(?<Video>[-\w]+)' ? [UriBuilder]::new(
+    'https',
+    'www.youtube.com',
+    -1,
+    '/watch',
+    '?v=' + $Matches.Video
+  ).Uri : [Uri]$Video
 
   if (Browse\Test-Url -Uri $VideoUri) {
-    & yt-dlp @args -- $VideoUri
+    & yt-dlp @args -- $VideoUri.OriginalString
   }
   else {
-    throw 'The specified video URL is unreachable: ' + $VideoUri
+    throw 'The specified video URL is unreachable: ' + $VideoUri.OriginalString
   }
 }
 
