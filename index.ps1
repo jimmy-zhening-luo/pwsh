@@ -1,7 +1,7 @@
 $Env:PSModulePath += ";$PSScriptRoot\Modules"
 
 try {
-  $PSDefaultParameterValues = Import-PowerShellDataFile -Path $PSScriptRoot\Overrides\Parameter.psd1 -ErrorAction Stop
+  $PSDefaultParameterValues = Import-PowerShellDataFile -Path $PSScriptRoot\Overrides\Parameter.psd1
 
   [void](. $PSScriptRoot\Overrides\Alias.ps1)
 }
