@@ -12,7 +12,6 @@ function Resolve-Repository {
     [string[]]$Path,
     [switch]$New
   )
-
   begin {
     $CODE = "$HOME\code"
     $Repositories = @()
