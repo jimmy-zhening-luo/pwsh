@@ -17,7 +17,6 @@ function Resolve-Repository {
     $CODE = "$HOME\code"
     $Repositories = @()
   }
-
   process {
     $RepoPath = @{
       Path = $Path
@@ -59,7 +58,6 @@ function Resolve-Repository {
       $Repositories += $Repository
     }
   }
-
   end {
     $Repositories
   }
