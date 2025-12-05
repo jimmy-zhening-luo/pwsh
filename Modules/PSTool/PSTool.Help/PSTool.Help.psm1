@@ -48,9 +48,7 @@ function Get-HelpOnline {
     }
 
     if ($Help) {
-      $HelpLink = $Help.relatedLinks.navigationLink.Uri |
-        ? { $_ } |
-        % { $_ -replace '\?.*$', '' } |
+      $HelpLink = $Help.relatedLinks.navigationLink.Uri -replace '\?.*$', '' |
         ? { $_ }
     }
 
@@ -114,9 +112,7 @@ function Get-HelpOnline {
   }
 
   if ($Articles) {
-    $Articles = $Articles |
-      % { $_ -replace '^(?>https?:\/\/)?', 'https://' } |
-      % { $_ -replace '^(?>https:\/\/learn\.microsoft\.com\/en-us\/)', 'https://learn.microsoft.com/' } |
+    $Articles = $Articles -replace '^(?>https?:\/\/)?', 'https://' -replace '^(?>https:\/\/learn\.microsoft\.com\/en-us\/)', 'https://learn.microsoft.com/' |
       Select-Object -Unique
   }
 

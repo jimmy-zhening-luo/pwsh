@@ -22,8 +22,7 @@ function Import-Repository {
     $Path = ''
   }
 
-  $RepositoryPathParts = $Repository -split '/' |
-    ? { -not [string]::IsNullOrWhiteSpace($_) }
+  $RepositoryPathParts = $Repository -split '/' -notmatch '^\s*$'
 
   if (-not $RepositoryPathParts) {
     throw 'No repository name given.'
