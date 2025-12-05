@@ -44,16 +44,36 @@ class GenericCompleter : IArgumentCompleter {
       ? { -not [string]::IsNullOrWhiteSpace($_) } |
       Select-Object -Unique
     $unitMatches = @()
+
+    if ($Local:units) {
+      if ($wordToComplete) {
+        $unitMatches += $Local:units |
+          ? { $_ -like "$wordToComplete*" }
+
+        if (-not $unitMatches) {
+          $unitMatches += $Local:units |
+            ? { $_ -like "*$wordToComplete*" }
+        }
+        elseif ($unitMatches.Count -eq 1) {
+          if ($unitMatches[0] -eq $wordToComplete) {
+            $exactMatch, $unitMatches = $unitMatches[0], @()
+            $unitMatches += (
+              $Local:units |
+                ? { $_ -like "*$wordToComplete*" }
+            ) -ne $exactMatch
+            $unitMatches += $exactMatch
+          }
+          else {
+            $unitMatches += $wordToComplete
+          }
+        }
+      }
+      else {
+        $unitMatches += $Local:units
+      }
+    }
+
     $resultList = [List[CompletionResult]]::new()
-
-    if ($wordToComplete) {
-      $unitMatches = $Local:units |
-        ? { $_ -like "$wordToComplete*" }
-    }
-
-    if (-not $unitMatches) {
-      $unitMatches = $Local:units
-    }
 
     foreach ($unit in $unitMatches) {
       $resultList.Add([CompletionResult]::new($unit))
