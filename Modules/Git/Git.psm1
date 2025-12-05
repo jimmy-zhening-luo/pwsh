@@ -114,7 +114,7 @@ function Invoke-Repository {
 
   $Resolve = @{
     Path = $Path
-    New  = $Verb -eq 'clean'
+    New  = $Verb -eq 'clone'
   }
   $Repository = Resolve-Repository @Resolve
 
