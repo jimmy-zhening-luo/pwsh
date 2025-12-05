@@ -40,10 +40,9 @@ class GenericCompleter : IArgumentCompleter {
     [IDictionary] $fakeBoundParameters
   ) {
 
-    $Local:units = $this.Units -split ',' |
-      % { $_.Trim() } |
-      % { $_.ToLowerInvariant() } |
-      Get-Unique
+    $Local:units = ($this.Units -split ',').Trim().ToLowerInvariant() |
+      ? { -not [string]::IsNullOrWhiteSpace($_) } |
+      Select-Object -Unique
     $unitMatches = @()
     $resultList = [List[CompletionResult]]::new()
 
