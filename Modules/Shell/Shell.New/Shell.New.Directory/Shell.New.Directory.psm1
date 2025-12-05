@@ -10,7 +10,8 @@ function New-Directory {
   [CmdletBinding(
     DefaultParameterSetName = 'pathSet',
     SupportsShouldProcess,
-    SupportsTransactions
+    SupportsTransactions,
+    ConfirmImpact = 'Medium'
   )]
   [OutputType([DirectoryInfo])]
   param(

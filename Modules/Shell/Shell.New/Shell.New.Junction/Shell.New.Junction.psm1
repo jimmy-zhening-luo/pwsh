@@ -10,7 +10,8 @@ function New-Junction {
   [CmdletBinding(
     DefaultParameterSetName = 'pathSet',
     SupportsShouldProcess,
-    SupportsTransactions
+    SupportsTransactions,
+    ConfirmImpact = 'Medium'
   )]
   [OutputType([DirectoryInfo], [FileInfo])] # tmp: not sure which one lol
   param(
