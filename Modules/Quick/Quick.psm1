@@ -7,7 +7,7 @@ function Copy-Guid {
     [switch]$Silent
   )
 
-  $Guid = New-Guid | Select-Object -ExpandProperty Guid
+  $Guid = (New-Guid).Guid
 
   if ($Uppercase) {
     $Guid = $Guid.ToUpperInvariant()
@@ -33,10 +33,6 @@ function ConvertTo-Hex {
   $Hex = $Decimal | % { '{0:X}' -f $_ }
 
   if ($Hex) {
-    if ($Lowercase) {
-      $Hex | % { $_.ToLower() }
-    }
-
-    $Hex
+    $Lowercase ? $Hex.ToLowerInvariant() : $Hex
   }
 }
