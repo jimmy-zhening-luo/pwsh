@@ -4,6 +4,7 @@ using namespace System.Management.Automation
 New-Alias mj Shell\New-Junction
 function New-Junction {
   [CmdletBinding(
+    DefaultParameterSetName = 'pathSet',
     SupportsShouldProcess,
     SupportsTransactions
   )]
