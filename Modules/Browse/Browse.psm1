@@ -84,6 +84,7 @@ function Open-Url {
       ParameterSetName = 'Path',
       Position = 0
     )]
+    [PathCompletions('.')]
     [string]$Path = $PWD.Path,
     [Parameter(
       ParameterSetName = 'Uri',
@@ -95,7 +96,7 @@ function Open-Url {
 
   $Browser = @{
     FilePath     = 'C:\Program Files\Google\Chrome\Application\chrome.exe'
-    ArgumentList = $PSCmdlet.ParameterSetName -eq 'Uri' ? $Uri : (Test-Path $Path) ? (Resolve-Path $Path).Path : $Path
+    ArgumentList = $PSCmdlet.ParameterSetName -eq 'Uri' ? $Uri : (Test-Path $Path) ? (Resolve-Path $Path) : [Uri]$Path
   }
   if (-not $env:SSH_CLIENT) {
     [void](Start-Process @Browser)
