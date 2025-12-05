@@ -29,8 +29,12 @@ function New-Junction {
     [Object]$Value
   )
   begin {
+    $type = @{
+      ItemType = 'Directory'
+      Force    = $True
+    }
     $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [System.Management.Automation.CommandTypes]::Cmdlet)
-    $scriptCmd = { & $wrappedCmd -Force -ItemType Junction @PSBoundParameters @args }
+    $scriptCmd = { & $wrappedCmd @type @PSBoundParameters @args }
     $steppablePipeline = $scriptCmd.GetSteppablePipeline()
 
     if (
@@ -53,12 +57,7 @@ function New-Junction {
     }
   }
   end {
-    if (
-      $PSCmdlet.ShouldProcess(
-        'Transaction',
-        'Close'
-      )
-    ) {
+    if ($PSCmdlet.ShouldProcess('Transaction', 'Close')) {
       $steppablePipeline.End()
     }
   }

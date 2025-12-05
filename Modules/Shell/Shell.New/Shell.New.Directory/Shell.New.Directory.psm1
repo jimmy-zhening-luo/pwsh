@@ -46,8 +46,11 @@ function New-Directory {
     [System.Management.Automation.PSCredential]$Credential
   )
   begin {
+    $type = @{
+      ItemType = 'Directory'
+    }
     $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [System.Management.Automation.CommandTypes]::Cmdlet)
-    $scriptCmd = { & $wrappedCmd -ItemType Directory @PSBoundParameters @args }
+    $scriptCmd = { & $wrappedCmd @type @PSBoundParameters @args }
     $steppablePipeline = $scriptCmd.GetSteppablePipeline()
 
     if (
@@ -70,12 +73,7 @@ function New-Directory {
     }
   }
   end {
-    if (
-      $PSCmdlet.ShouldProcess(
-        'Transaction',
-        'Close'
-      )
-    ) {
+    if ($PSCmdlet.ShouldProcess('Transaction', 'Close')) {
       $steppablePipeline.End()
     }
   }
