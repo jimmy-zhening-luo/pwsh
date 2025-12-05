@@ -2,6 +2,10 @@ using namespace System.IO
 using namespace System.Management.Automation
 
 New-Alias mj Shell\New-Junction
+<#
+.FORWARDHELPTARGETNAME New-Item
+.FORWARDHELPCATEGORY Cmdlet
+#>
 function New-Junction {
   [CmdletBinding(
     DefaultParameterSetName = 'pathSet',

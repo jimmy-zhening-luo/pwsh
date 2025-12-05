@@ -2,6 +2,10 @@ using namespace System.IO
 using namespace System.Management.Automation
 
 New-Alias mk Shell\New-Directory
+<#
+.FORWARDHELPTARGETNAME New-Item
+.FORWARDHELPCATEGORY Cmdlet
+#>
 function New-Directory {
   [CmdletBinding(
     DefaultParameterSetName = 'pathSet',
