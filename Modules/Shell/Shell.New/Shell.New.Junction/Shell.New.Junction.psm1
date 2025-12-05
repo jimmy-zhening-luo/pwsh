@@ -1,6 +1,3 @@
-using namespace System.IO
-using namespace System.Management.Automation
-
 New-Alias mj Shell\New-Junction
 <#
 .FORWARDHELPTARGETNAME New-Item
@@ -13,7 +10,7 @@ function New-Junction {
     SupportsTransactions,
     ConfirmImpact = 'Medium'
   )]
-  [OutputType([DirectoryInfo], [FileInfo])] # tmp: not sure which one lol
+  [OutputType([System.IO.DirectoryInfo])]
   param(
     [Parameter(
       ParameterSetName = 'pathSet',
@@ -21,7 +18,7 @@ function New-Junction {
       Position = 0,
       ValueFromPipelineByPropertyName
     )]
-    [string[]]${Path},
+    [string[]]$Path,
     [Parameter(
       Mandatory,
       ValueFromPipeline,
@@ -29,7 +26,7 @@ function New-Junction {
     )]
     [Alias('Target')]
     [PathCompletions('.')]
-    [Object]${Value}
+    [Object]$Value
   )
   begin {
     $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [System.Management.Automation.CommandTypes]::Cmdlet)

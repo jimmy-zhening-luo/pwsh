@@ -1,6 +1,3 @@
-using namespace System.IO
-using namespace System.Management.Automation
-
 New-Alias mk Shell\New-Directory
 <#
 .FORWARDHELPTARGETNAME New-Item
@@ -13,7 +10,7 @@ function New-Directory {
     SupportsTransactions,
     ConfirmImpact = 'Medium'
   )]
-  [OutputType([DirectoryInfo])]
+  [OutputType([System.IO.DirectoryInfo])]
   param(
     [Parameter(
       ParameterSetName = 'nameSet',
@@ -46,10 +43,10 @@ function New-Directory {
     [Parameter(
       ValueFromPipelineByPropertyName
     )]
-    [PSCredential]$Credential
+    [System.Management.Automation.PSCredential]$Credential
   )
   begin {
-    $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [CommandTypes]::Cmdlet)
+    $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [System.Management.Automation.CommandTypes]::Cmdlet)
     $scriptCmd = { & $wrappedCmd -ItemType Directory @PSBoundParameters @args }
     $steppablePipeline = $scriptCmd.GetSteppablePipeline()
 
