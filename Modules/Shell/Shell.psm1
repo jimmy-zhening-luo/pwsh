@@ -334,7 +334,7 @@ class PathCompleter : IArgumentCompleter {
     }
 
     foreach ($directory in $directories) {
-      $string = [CodeGeneration]::EscapeSingleQuotedStringContent($directory)
+      $string = $directory
       $completion = $string
 
       $resultList.Add(
@@ -346,7 +346,7 @@ class PathCompleter : IArgumentCompleter {
       )
     }
     foreach ($file in $files) {
-      $string = [CodeGeneration]::EscapeSingleQuotedStringContent($file)
+      $string = $file
       $completion = $string
 
       $resultList.Add(
