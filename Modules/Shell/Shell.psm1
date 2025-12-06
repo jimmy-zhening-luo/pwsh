@@ -335,7 +335,7 @@ class PathCompleter : IArgumentCompleter {
 
     foreach ($item in $directories) {
       $string = [System.Management.Automation.Language.CodeGeneration]::EscapeSingleQuotedStringContent($item)
-      $completion = $string
+      $completion = $string -match '\s' ? "'" + $string + "'" : $string
 
       $resultList.Add(
         [CompletionResult]::new(
