@@ -1,4 +1,5 @@
 @{
+  RootModule        = 'Shell.Get.Property.psm1'
   ModuleVersion     = '3.0.0.0'
   GUID              = '83fda875-8f8c-4bce-a5da-e840d832378d'
   PowerShellVersion = '7.5'
@@ -8,6 +9,7 @@
     'Shell.Get.Property'
   )
   FunctionsToExport = @(
+    'Get-Size'
     'Get-Directory'
     'Get-DirectorySibling'
     'Get-DirectoryRelative'
@@ -20,11 +22,14 @@
     'Get-FileHome'
     'Get-FileCode'
     'Get-FileDrive'
-    'Get-Size'
   )
   CmdletsToExport   = @()
   VariablesToExport = @()
   AliasesToExport   = @(
+    'split'
+    'hash'
+    'sz'
+    'size'
     'l'
     'l.'
     'l..'
@@ -37,8 +42,5 @@
     'p~'
     'pc'
     'p/'
-    'split'
-    'hash'
-    'size'
   )
 }
