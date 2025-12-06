@@ -143,6 +143,7 @@ function Get-HelpOnline {
 
 New-Alias galc PSTool\Get-CommandAlias
 function Get-CommandAlias {
+  [OutputType([System.Management.Automation.CommandInfo])]
   param(
     [Alias('Command')]
     [string]$Definition = '*'
