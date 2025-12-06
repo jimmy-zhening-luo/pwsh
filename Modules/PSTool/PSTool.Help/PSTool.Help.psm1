@@ -10,8 +10,11 @@ $CUSTOM_HELP = (
 New-Alias m PSTool\Get-HelpOnline
 function Get-HelpOnline {
   param(
+    [Parameter(
+      Position = 0,
+      ValueFromRemainingArguments
+    )]
     [string[]]$Name,
-    [Alias('params')]
     [string[]]$Parameter
   )
 
@@ -23,7 +26,7 @@ function Get-HelpOnline {
   $Help = ''
   $HelpLink = ''
   $Articles = @()
-  $Query = @{
+  $Command = @{
     Name        = $Topic
     ErrorAction = 'SilentlyContinue'
   }
@@ -31,7 +34,7 @@ function Get-HelpOnline {
   if ($CUSTOM_HELP.Contains($Topic)) {
     $CustomHelp = $CUSTOM_HELP[$Topic]
 
-    if ($CustomHelp -and $CustomHelp -as [string] -notmatch ':') {
+    if ($CustomHelp -and $CustomHelp -notmatch ':') {
       $CustomHelp = $CUSTOM_HELP[$CustomHelp]
     }
 
@@ -40,7 +43,7 @@ function Get-HelpOnline {
     }
   }
   else {
-    $Help = Get-Help @Query
+    $Help = Get-Help @Command
 
     if ($Help -and $Help.Count -gt 1) {
       $Help = ''
@@ -52,7 +55,7 @@ function Get-HelpOnline {
     }
 
     if ($Help -and $Parameter) {
-      $ParameterHelp = Get-Help @Query -Parameter $Parameter
+      $ParameterHelp = Get-Help @Command -Parameter $Parameter
 
       if ($ParameterHelp) {
         $Help = $ParameterHelp
@@ -96,7 +99,7 @@ function Get-HelpOnline {
         }
 
         if ($about_Article) {
-          $Help = Get-Help @Query -Name $about_Topic
+          $Help = Get-Help @Command -Name $about_Topic
         }
       }
 
@@ -123,7 +126,7 @@ function Get-HelpOnline {
     }
     else {
       if ($Help) {
-        [void](Get-Help @Query 2>&1)
+        [void](Get-Help @Command 2>&1)
       }
     }
   }
