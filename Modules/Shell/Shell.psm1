@@ -249,7 +249,7 @@ class PathCompleter : System.Management.Automation.IArgumentCompleter {
     [bool] $useNativeDirectorySeparator
   ) {
     if (-not $root -or -not (Test-Path -Path $root -PathType Container)) {
-      throw [System.Management.Automation.ArgumentException]::new('root')
+      throw [System.ArgumentException]::new('root')
     }
 
     $this.Root = $root

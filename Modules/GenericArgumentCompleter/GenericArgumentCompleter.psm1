@@ -44,11 +44,11 @@ class GenericCompleter : System.Management.Automation.IArgumentCompleter {
         'Preserve'
       )
     ) {
-      throw [System.Management.Automation.ArgumentException]::new('case')
+      throw [System.ArgumentException]::new('case')
     }
 
     if (-not $units) {
-      throw [System.Management.Automation.ArgumentException]::new('units')
+      throw [System.ArgumentException]::new('units')
     }
 
     $unitKeys = (
@@ -56,7 +56,7 @@ class GenericCompleter : System.Management.Automation.IArgumentCompleter {
     ).Trim().ToLowerInvariant() -notmatch '^\s*$'
 
     if (-not $unitKeys) {
-      throw [System.Management.Automation.ArgumentException]::new('units')
+      throw [System.ArgumentException]::new('units')
     }
 
     $unique = @()
@@ -64,7 +64,7 @@ class GenericCompleter : System.Management.Automation.IArgumentCompleter {
       Select-Object -Unique
 
     if (-not $unique -or $unique.Count -ne $unitKeys.Count) {
-      throw [System.Management.Automation.ArgumentException]::new('units')
+      throw [System.ArgumentException]::new('units')
     }
 
     $this.Units = $units
