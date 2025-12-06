@@ -1,8 +1,6 @@
-using namespace System.IO
-
 New-Alias l Shell\Get-Directory
 function Get-Directory {
-  [OutputType([DirectoryInfo[]], [FileInfo[]])]
+  [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param (
     [PathCompletions('.', 'Directory')]
     [string]$Path
@@ -18,7 +16,7 @@ function Get-Directory {
 
 New-Alias l. Shell\Get-DirectorySibling
 function Get-DirectorySibling {
-  [OutputType([DirectoryInfo[]], [FileInfo[]])]
+  [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param (
     [PathCompletions('..', 'Directory')]
     [string]$Path
@@ -32,7 +30,7 @@ function Get-DirectorySibling {
 
 New-Alias l.. Shell\Get-DirectoryRelative
 function Get-DirectoryRelative {
-  [OutputType([DirectoryInfo[]], [FileInfo[]])]
+  [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param (
     [PathCompletions('..\..', 'Directory')]
     [string]$Path
@@ -46,7 +44,7 @@ function Get-DirectoryRelative {
 
 New-Alias l~ Shell\Get-DirectoryHome
 function Get-DirectoryHome {
-  [OutputType([DirectoryInfo[]], [FileInfo[]])]
+  [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param (
     [PathCompletions('~', 'Directory')]
     [string]$Path
@@ -60,7 +58,7 @@ function Get-DirectoryHome {
 
 New-Alias lc Shell\Get-DirectoryCode
 function Get-DirectoryCode {
-  [OutputType([DirectoryInfo[]], [FileInfo[]])]
+  [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param (
     [PathCompletions('~\code', 'Directory')]
     [string]$Path
@@ -74,7 +72,7 @@ function Get-DirectoryCode {
 
 New-Alias l/ Shell\Get-DirectoryDrive
 function Get-DirectoryDrive {
-  [OutputType([DirectoryInfo[]], [FileInfo[]])]
+  [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param (
     [PathCompletions('\', 'Directory')]
     [string]$Path

@@ -60,11 +60,11 @@ function Measure-PSProfile {
   $NormalStartup = (
     Measure-Command { pwsh -NoProfile @Test }
   ).TotalMilliseconds
-  $Performance = [math]::Max(
-    [math]::Round($StartupLoadProfile - $NormalStartup),
+  $Performance = [Math]::Max(
+    [Math]::Round($StartupLoadProfile - $NormalStartup),
     0
   )
-  $Print_NormalStartup = [math]::Round($NormalStartup)
+  $Print_NormalStartup = [Math]::Round($NormalStartup)
   $Print_Performance = $Performance -lt 1 -and $Performance -gt -1 ? 0 : $Performance
 
   "$Print_Performance ms`n(Base: $Print_NormalStartup ms)"

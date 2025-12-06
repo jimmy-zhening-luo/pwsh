@@ -73,7 +73,7 @@ function Get-Size {
 
     $UnitCanonical = $UNITS[$Unit]
     $Item = Get-Item $Path
-    $Quantity = [math]::Round(
+    $Quantity = [Math]::Round(
       (
         $Item.PSIsContainer ? (
           Get-ChildItem -Path $Path -Recurse -File |
