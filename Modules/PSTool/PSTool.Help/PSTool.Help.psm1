@@ -177,6 +177,7 @@ http://learn.microsoft.com/powershell/module/microsoft.powershell.utility/get-ve
 Get-Verb
 #>
 function Get-VerbList {
+  [OutputType([string[]])]
   param(
     [string]$Verb = '*'
   )
