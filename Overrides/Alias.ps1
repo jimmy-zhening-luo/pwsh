@@ -1,19 +1,19 @@
 $Readonly = @{
   Option = 'ReadOnly'
 }
-$ReadonlyConstant = @{
-  Option = 'ReadOnly', 'Constant'
-}
 $ReadonlyAllScope = @{
   Option = 'ReadOnly', 'AllScope'
+}
+$ReadonlyAllScopeConstant = @{
+  Option = 'ReadOnly', 'AllScope', 'Constant'
 }
 
 # Reassign PS alias
 Set-Alias clear Shell\Clear-Line # was: Clear-Host
 Set-Alias rd Shell\Remove-Directory # was: Remove-Item
 Set-Alias man PSTool\Get-HelpOnline # was: Get-Help
-Set-Alias gp Git\Get-Repository @ReadonlyAllScope # was: Get-ItemProperty
-Set-Alias gm Git\Write-Repository @ReadonlyAllScope # was: Get-Member
+Set-Alias gp Git\Get-Repository @ReadonlyAllScopeConstant # was: Get-ItemProperty
+Set-Alias gm Git\Write-Repository @ReadonlyAllScopeConstant # was: Get-Member
 
 # Mask implicit PS alias
 New-Alias verb PSTool\Get-VerbList @Readonly # implicit Get-*
