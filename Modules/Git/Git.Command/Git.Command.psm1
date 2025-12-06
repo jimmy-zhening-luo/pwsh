@@ -48,8 +48,6 @@ function Import-Repository {
   Invoke-Repository @Clone @Local:args
 }
 
-New-Alias gitp Git\Get-Repository
-New-Alias ggp Git\Get-Repository
 <#
 .SYNOPSIS
 Use Git to pull changes from a repository.
@@ -98,7 +96,7 @@ function Get-ChildRepository {
   "`nPulled $Count repositor" + ($Count -eq 1 ? 'y' : 'ies')
 }
 
-New-Alias gga Git\Add-Repository
+New-Alias ga Git\Add-Repository
 <#
 .SYNOPSIS
 Use Git to stage all changes in a repository.
@@ -135,7 +133,6 @@ function Add-Repository {
   Invoke-Repository @Add @Local:args
 }
 
-New-Alias ggm Git\Write-Repository
 <#
 .SYNOPSIS
 Commit changes to a Git repository.

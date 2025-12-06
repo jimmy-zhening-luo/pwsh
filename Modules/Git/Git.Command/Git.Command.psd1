@@ -17,10 +17,8 @@
   VariablesToExport = @()
   AliasesToExport   = @(
     'gitcl'
-    'ggp'
     'gpp'
-    'gga'
-    'ggm'
+    'ga'
     'gs'
     'gr'
     'grp'

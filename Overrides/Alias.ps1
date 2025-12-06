@@ -9,6 +9,8 @@ $ReadOnlyAllScope = @{
 Set-Alias clear Shell\Clear-Line # was: Clear-Host
 Set-Alias rd Shell\Remove-Directory # was: Remove-Item
 Set-Alias man PSTool\Get-HelpOnline # was: Get-Help
+Set-Alias gp Git\Get-Repository # was: Get-Member
+Set-Alias gm Git\Write-Repository # was: Get-Member
 
 # Mask implicit PS alias
 New-Alias verb PSTool\Get-VerbList @ReadOnly # implicit Get-*
