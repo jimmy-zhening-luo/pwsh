@@ -327,7 +327,6 @@ class PathCompleter : IArgumentCompleter {
         % { $_ + '\' }
     }
 
-
     if ($separator -ne '\') {
       $directories = $directories -replace '[\\]+', '/'
       $files = $files -replace '[\\]+', '/'
@@ -345,7 +344,7 @@ class PathCompleter : IArgumentCompleter {
     }
     foreach ($item in $files) {
       $string = [System.Management.Automation.Language.CodeGeneration]::EscapeSingleQuotedStringContent($item)
-      $completion = $string
+      $completion = $string -match '\s' ? "'" + $string + "'" : $string
 
       $resultList.Add(
         [CompletionResult]::new(
