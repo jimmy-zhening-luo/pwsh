@@ -217,7 +217,7 @@ function Write-Repository {
   Invoke-Repository @Commit @Parameters @CommitArguments
 }
 
-New-Alias ggs Git\Push-Repository
+New-Alias gs Git\Push-Repository
 <#
 .SYNOPSIS
 Use Git to push changes to a repository.

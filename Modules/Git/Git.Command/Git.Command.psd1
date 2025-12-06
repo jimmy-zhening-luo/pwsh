@@ -21,7 +21,7 @@
     'gpp'
     'gga'
     'ggm'
-    'ggs'
+    'gs'
     'gr'
     'grp'
   )
