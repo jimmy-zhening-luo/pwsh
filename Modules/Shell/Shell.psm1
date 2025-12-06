@@ -334,22 +334,24 @@ class PathCompleter : IArgumentCompleter {
     }
 
     foreach ($directory in $directories) {
-      $string = $directory -match '\s' ? ("'" + $directory + "'") : $directory
+      $string = [CodeGeneration]::EscapeSingleQuotedStringContent($directory)
+      $completion = $string -match '\s' ? ("'" + $string + "'") : $string
 
       $resultList.Add(
         [CompletionResult]::new(
-          $string,
+          $completion,
           $directory,
           [CompletionResultType]::ParameterValue
         )
       )
     }
     foreach ($file in $files) {
-      $string = $file -match '\s' ? ("'" + $file + "'") : $file
+      $string = [CodeGeneration]::EscapeSingleQuotedStringContent($file)
+      $completion = $string -match '\s' ? ("'" + $string + "'") : $string
 
       $resultList.Add(
         [CompletionResult]::new(
-          $string,
+          $completion,
           $file,
           [CompletionResultType]::ParameterValue
         )
