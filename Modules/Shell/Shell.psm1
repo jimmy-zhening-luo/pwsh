@@ -326,22 +326,20 @@ class PathCompleter : System.Management.Automation.IArgumentCompleter {
         % { $_ + '\' }
     }
 
+    $items = @()
+
+    if ($directories) {
+      $items += $directories
+    }
+    if ($files) {
+      $items += $files
+    }
+
     if ($separator -ne '\') {
-      $directories = $directories -replace '[\\]+', '/'
-      $files = $files -replace '[\\]+', '/'
+      $items = $items -replace '[\\]+', '/'
     }
 
-    foreach ($item in $directories) {
-      $string = [System.Management.Automation.Language.CodeGeneration]::EscapeSingleQuotedStringContent($item)
-      $completion = $string -match '\s' ? "'" + $string + "'" : $string
-
-      $resultList.Add(
-        [System.Management.Automation.CompletionResult]::new(
-          $completion
-        )
-      )
-    }
-    foreach ($item in $files) {
+    foreach ($item in $items) {
       $string = [System.Management.Automation.Language.CodeGeneration]::EscapeSingleQuotedStringContent($item)
       $completion = $string -match '\s' ? "'" + $string + "'" : $string
 
