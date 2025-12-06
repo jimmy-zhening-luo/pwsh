@@ -60,6 +60,15 @@ function Update-PSLinter {
 
 New-Alias mc PSTool\Measure-PSProfile
 function Measure-PSProfile {
+  [OutputType([string])]
+  [OutputType([int], ParameterSetName='Number')]
+  param(
+    [Parameter(
+      ParameterSetName = 'Number'
+    )]
+    [switch]$Number
+  )
+
   $Test = @{
     Command = '1'
   }
@@ -86,5 +95,5 @@ function Measure-PSProfile {
   )
   $MeanNormalStartup = [int][Math]::Round($NormalStartup / $Iterations)
 
-  "$Performance ms`n(Base: $MeanNormalStartup ms)"
+  $Number ? $Performance : "$Performance ms`n(Base: $MeanNormalStartup ms)"
 }
