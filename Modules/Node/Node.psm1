@@ -7,6 +7,7 @@ This function resolves the supplied path to a qualified, rooted path if it is a 
 https://docs.npmjs.com/cli/commands
 #>
 function Resolve-NodeProject {
+  [OutputType([string])]
   param(
     # Node project root path to be resolved
     [string]$Path = $PWD.Path

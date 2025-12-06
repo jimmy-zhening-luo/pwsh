@@ -9,21 +9,27 @@ New-Alias format Format-Table
 
 New-Alias oc PSTool\Invoke-PSHistory
 function Invoke-PSHistory {
+  [OutputType([void])]
+  param()
+
   $History = @{
     Path        = (Get-PSReadLineOption).HistorySavePath
     ProfileName = 'PowerShell'
     Window      = $True
   }
-  Shell\Invoke-Workspace @History
+  [void](Shell\Invoke-Workspace @History)
 }
 
 New-Alias op PSTool\Invoke-PSProfile
 function Invoke-PSProfile {
+  [OutputType([void])]
+  param()
+
   $ProfileRepository = @{
     Path        = 'pwsh'
     ProfileName = 'PowerShell'
   }
-  Shell\Invoke-WorkspaceCode @ProfileRepository @args
+  [void](Shell\Invoke-WorkspaceCode @ProfileRepository @args)
 }
 
 New-Alias up PSTool\Update-PSProfile
@@ -36,6 +42,9 @@ function Update-PSProfile {
 }
 
 function Update-PSLinter {
+  [OutputType([void])]
+  param()
+
   $Linter = @{
     Path     = "$HOME\code\pwsh\PSScriptAnalyzerSettings.psd1"
     PathType = 'Leaf'
@@ -45,7 +54,7 @@ function Update-PSLinter {
       Path        = $Linter.Path
       Destination = $HOME
     } 
-    Copy-Item @Copy
+    [void](Copy-Item @Copy)
   }
 }
 

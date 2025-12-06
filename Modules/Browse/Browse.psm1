@@ -80,6 +80,7 @@ It returns true if the URL returns a status code between 200 to 300, otherwise f
 The function times out if it receives no response after five (5) (lol) seconds, returning false.
 #>
 function Test-Url {
+  [OutputType([bool])]
   param(
     # The URL to test. If the URL has no scheme, it defaults to 'http'.
     [Uri]$Uri
@@ -118,6 +119,7 @@ Open a file path or URL in Google Chrome.
 This function opens the specified file path or URL in Google Chrome. If a file path is provided, it resolves the path before opening it. If the file path cannot be resolved to the filesystem, it casts the path to an URL, throwing an error if the cast is unsuccessful. If an URL is provided, it opens the URI directly.
 #>
 function Open-Url {
+  [OutputType([void])]
   [CmdletBinding(DefaultParameterSetName = 'Path')]
   param(
     [Parameter(

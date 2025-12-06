@@ -20,6 +20,9 @@ Opens the 'Settings' app to the 'Windows Update' page.
 This function invokes the URI 'ms-settings:windowsupdate' to open the 'Windows Update' page in the 'Settings' app.
 #>
 function Update-Windows {
+  [OutputType([void])]
+  param()
+
   if ($env:SSH_CLIENT) {
     throw 'Cannot open Settings app during SSH session'
   }
@@ -38,6 +41,7 @@ Opens the 'Environment Variables' dialog as a standalone window.
 This function invokes 'rundll32' on 'sysdm.cpl' ('System Properties' control panel) with the 'EditEnvironmentVariables' argument, which opens the 'Environment Variables' dialog directly.
 #>
 function Edit-Path {
+  [OutputType([void])]
   param(
     # Launch Environment Variables control panel as administrator to edit system variables
     [switch]$Administrator
@@ -65,6 +69,7 @@ New-Alias remsv Remove-Service
 
 New-Alias tkill WindowsSystem\Stop-Task
 function Stop-Task {
+  [OutputType([void])]
   [CmdletBinding(
     SupportsShouldProcess,
     DefaultParameterSetName = 'Name'
@@ -111,6 +116,6 @@ function Stop-Task {
       'Stop-Process'
     )
   ) {
-    Stop-Process @Process
+    [void](Stop-Process @Process)
   }
 }
