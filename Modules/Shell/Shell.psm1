@@ -333,8 +333,8 @@ class PathCompleter : IArgumentCompleter {
       $files = $files -replace '[\\]+', '/'
     }
 
-    foreach ($directory in $directories) {
-      $string = $directory
+    foreach ($item in $directories) {
+      $string = [System.Management.Automation.Language.codegeneration]::escapesinglequotedstringcontent($item)
       $completion = $string
 
       $resultList.Add(
@@ -343,8 +343,8 @@ class PathCompleter : IArgumentCompleter {
         )
       )
     }
-    foreach ($file in $files) {
-      $string = $file
+    foreach ($item in $files) {
+      $string = $item
       $completion = $string
 
       $resultList.Add(
