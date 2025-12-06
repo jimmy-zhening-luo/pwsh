@@ -3,7 +3,8 @@ New-Alias hash Get-FileHash
 
 New-Alias size Shell\Get-Size
 function Get-Size {
-  [OutputType([UInt32], [string])]
+  [OutputType([string])]
+  [OutputType([double], ParameterSetName='Number')]
   param(
     [Parameter(
       ValueFromPipeline,
@@ -15,6 +16,9 @@ function Get-Size {
     [GenericCompletions('B,KB,MB,GB')]
     [string]$Unit,
     [Alias('qo', 'Number')]
+    [Parameter(
+      ParameterSetName = 'Number'
+    )]
     [switch]$QuantityOnly
   )
 
@@ -83,6 +87,6 @@ function Get-Size {
       3
     )
 
-    $QuantityOnly ? $Quantity : "$Quantity $UnitCanonical"
+    $QuantityOnly ? [double]$Quantity : "$Quantity $UnitCanonical"
   }
 }

@@ -1,15 +1,16 @@
 New-Alias cl Shell\Clear-Line
 function Clear-Line {
+  [OutputType([void])]
   param(
     [PathCompletions('.')]
     [string]$Path
   )
 
   if ($Path -or $args) {
-    Clear-Content @PSBoundParameters @args
+    [void](Clear-Content @PSBoundParameters @args)
   }
   else {
-    Clear-Host
+    [void](Clear-Host)
   }
 }
 
@@ -31,6 +32,6 @@ function Remove-Directory {
       'Remove-Item -Recurse -Force'
     )
   ) {
-    Remove-Item @PSBoundParameters -Recurse -Force
+    [void](Remove-Item @PSBoundParameters -Recurse -Force)
   }
 }
