@@ -8,21 +8,16 @@
     'GenericArgumentCompleter'
   )
   NestedModules     = @(
-    'Git.Add'
-    'Git.Clone'
-    'Git.Commit'
-    'Git.Pull'
-    'Git.Push'
-    'Git.Reset'
+    'Git.Command'
   )
   FunctionsToExport = @(
     'Resolve-Repository'
     'Invoke-Repository'
-    'Add-Repository'
     'Import-Repository'
-    'Write-Repository'
     'Get-Repository'
     'Get-ChildRepository'
+    'Add-Repository'
+    'Write-Repository'
     'Push-Repository'
     'Reset-Repository'
     'Restore-Repository'
@@ -31,13 +26,13 @@
   VariablesToExport = @()
   AliasesToExport   = @(
     'gg'
-    'gga'
     'gitcl'
+    'ggp'
+    'gpa'
+    'gga'
+    'ggm'
     'ggs'
     'gr'
     'grp'
-    'ggm'
-    'ggp'
-    'gpa'
   )
 }

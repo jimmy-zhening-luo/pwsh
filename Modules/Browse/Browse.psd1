@@ -7,16 +7,10 @@
     'Shell'
     'GenericArgumentCompleter'
   )
-  NestedModules     = @(
-    'Browse.Search'
-  )
   FunctionsToExport = @(
     'Test-Host'
     'Test-Url'
     'Open-Url'
-    'Expand-Query'
-    'Search-Query'
-    'Search-Map'
   )
   CmdletsToExport   = @()
   VariablesToExport = @()
@@ -25,9 +19,5 @@
     'tu'
     'go'
     'open'
-    'search'
-    'g'
-    'maps'
-    'map'
   )
 }

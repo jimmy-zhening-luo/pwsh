@@ -3,10 +3,6 @@
   ModuleVersion     = '3.0.0.0'
   GUID              = '9a3324b2-207d-4635-a8d6-ac8261181fb1'
   PowerShellVersion = '7.5'
-  NestedModules     = @(
-    'Shell.New.Directory'
-    'Shell.New.Junction'
-  )
   FunctionsToExport = @(
     'New-Directory'
     'New-Junction'
