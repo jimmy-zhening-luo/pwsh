@@ -339,9 +339,7 @@ class PathCompleter : IArgumentCompleter {
 
       $resultList.Add(
         [CompletionResult]::new(
-          $completion,
-          $directory,
-          [CompletionResultType]::ParameterValue
+          $completion
         )
       )
     }
@@ -351,9 +349,7 @@ class PathCompleter : IArgumentCompleter {
 
       $resultList.Add(
         [CompletionResult]::new(
-          $completion,
-          $file,
-          [CompletionResultType]::ParameterValue
+          $completion
         )
       )
     }
