@@ -334,10 +334,26 @@ class PathCompleter : IArgumentCompleter {
     }
 
     foreach ($directory in $directories) {
-      $resultList.Add([CompletionResult]::new($directory))
+      $string = $directory -match '\s' ? ("'" + $directory + "'") : $directory
+
+      $resultList.Add(
+        [CompletionResult]::new(
+          $string,
+          $directory,
+          [CompletionResultType]::ParameterValue
+        )
+      )
     }
     foreach ($file in $files) {
-      $resultList.Add([CompletionResult]::new($file))
+      $string = $file -match '\s' ? ("'" + $file + "'") : $file
+
+      $resultList.Add(
+        [CompletionResult]::new(
+          $string,
+          $file,
+          [CompletionResultType]::ParameterValue
+        )
+      )
     }
 
     return $resultList
