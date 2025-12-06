@@ -258,7 +258,7 @@ class PathCompleter : System.Management.Automation.IArgumentCompleter {
     $this.UseNativeDirectorySeparator = $useNativeDirectorySeparator
   }
 
-  [IEnumerable[System.Management.Automation.CompletionResult]] CompleteArgument(
+  [System.Collections.Generic.IEnumerable[System.Management.Automation.CompletionResult]] CompleteArgument(
     [string] $CommandName,
     [string] $parameterName,
     [string] $wordToComplete,
