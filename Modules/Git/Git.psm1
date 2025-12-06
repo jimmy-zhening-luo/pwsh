@@ -64,11 +64,22 @@ function Resolve-Repository {
 
 $GIT_VERB = (Import-PowerShellDataFile -Path (Join-Path $PSScriptRoot Git-Verb.psd1 -Resolve)).GIT_VERB
 
+<#
+.SYNOPSIS
+Run a Git command
+.DESCRIPTION
+This function allows you to run a Git command in a local repository. If no command is specified, it defaults to 'git status'. If no path is specified, it defaults to the current location. For every verb except for 'clone', the function will throw an error if there is no Git repository at the specified path.
+.LINK
+https://git-scm.com/docs
+#>
 New-Alias gg Git\Invoke-Repository
 function Invoke-Repository {
   param(
+    # Local repository path
     [string]$Path,
+    # Git verb (command) to run
     [string]$Verb,
+    # Stop execution on Git error
     [switch]$Throw
   )
 

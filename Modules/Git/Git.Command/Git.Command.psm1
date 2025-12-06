@@ -9,9 +9,14 @@ https://git-scm.com/docs/git-clone
 #>
 function Import-Repository {
   param(
+    # Remote repository URL or 'org/repo'
     [string]$Repository,
+    # Local repository path
     [string]$Path,
+    # Stop execution on Git error
     [switch]$Throw,
+    [Alias('ssh')]
+    # Use git@github.com remote protocol instead of the default HTTPS
     [switch]$ForceSsh
   )
 
@@ -49,13 +54,15 @@ New-Alias ggp Git\Get-Repository
 .SYNOPSIS
 Use Git to pull changes from a repository.
 .DESCRIPTION
-This function is an alias for 'git pull'.
+This function is an alias for 'git pull [arguments]'.
 .LINK
 https://git-scm.com/docs/git-pull
 #>
 function Get-Repository {
   param(
+    # Local repository path
     [string]$Path,
+    # Stop execution on Git error
     [switch]$Throw
   )
 
@@ -68,9 +75,9 @@ function Get-Repository {
 New-Alias gpa Git\Get-ChildRepository
 <#
 .SYNOPSIS
-Use Git to pull changes from all child repositories.
+Use Git to pull changes for all repositories in the top level of %USERPROFILE%\code'.
 .DESCRIPTION
-This function retrieves all child repositories in %USERPROFILE%\code\' and pulls changes from each one.
+This function runs 'git pull [arguments]' in each child repository in %USERPROFILE%\code'.
 .LINK
 https://git-scm.com/docs/git-pull
 #>
@@ -96,28 +103,28 @@ New-Alias gga Git\Add-Repository
 .SYNOPSIS
 Use Git to stage all changes in a repository.
 .DESCRIPTION
-This function is an alias for 'git add .' and stages all changes in the repository.
+This function is an alias for 'git add [.]' and stages all changes in the repository.
 .LINK
 https://git-scm.com/docs/git-add
 #>
 function Add-Repository {
   param(
+    # Local repository path
     [string]$Path,
+    # File pattern of files to add, defaults to '.' (all)
+    [string]$Name = '.',
+    # Stop execution on Git error
     [switch]$Throw,
-    [Alias('r')]
+    # Include '--renormalize' flag
     [switch]$Renormalize
   )
 
   $Local:args = $args
-  $All = '.'
-  $fRenormalize = '--renormalize'
-
-  if ($All -notin $args) {
-    $Local:args = , $All + $Local:args
+  if ($Name) {
+    $Local:args = , $Name + $Local:args
   }
-
-  if ($Renormalize -and $fRenormalize -notin $args) {
-    $Local:args += $fRenormalize
+  if ($Renormalize -and '--renormalize' -notin $args) {
+    $Local:args += '--renormalize'
   }
 
   $Add = @{
@@ -139,9 +146,13 @@ https://git-scm.com/docs/git-commit
 #>
 function Write-Repository {
   param(
+    # Local repository path
     [string]$Path,
+    # Commit message. It must be non-empty except on an empty commit, where it defaults to 'No message.'
     [string]$Message,
+    # Stop execution on Git error
     [switch]$Throw,
+    # Allow empty commit ('--allow-empty')
     [switch]$AllowEmpty
   )
 
@@ -217,7 +228,9 @@ https://git-scm.com/docs/git-push
 #>
 function Push-Repository {
   param(
+    # Local repository path
     [string]$Path,
+    # Stop execution on Git error
     [switch]$Throw
   )
 
@@ -234,15 +247,20 @@ New-Alias gr Git\Reset-Repository
 .SYNOPSIS
 Use Git to undo changes in a repository.
 .DESCRIPTION
-This function is an alias for 'git add . && git reset --hard [[[HEAD]~][n=1]]'.
+This function is an alias for 'git add . && git reset --hard [HEAD]([~]|^)[n]'.
 .LINK
 https://git-scm.com/docs/git-reset
 #>
 function Reset-Repository {
   param(
+    # Local repository path
     [string]$Path,
+    # The tree spec to which to revert, specified as '[HEAD]([~]|^)[n]'. If the tree spec is not specified, it defaults to HEAD. If only the number index is given, it defaults to '~' branching. If only the branching is given, the index defaults to 0 = HEAD.
     [string]$Tree,
-    [switch]$Throw
+    # Stop execution on Git error
+    [switch]$Throw,
+    # Remove --hard flag (no destructive reset)
+    [switch]$Soft
   )
 
   if ($Path -eq '~' -and -not $Tree -or -not ($Path | Resolve-Repository)) {
@@ -286,7 +304,9 @@ https://git-scm.com/docs/git-pull
 #>
 function Restore-Repository {
   param(
+    # Local repository path
     [string]$Path,
+    # Stop execution on Git error
     [switch]$Throw
   )
 
