@@ -119,8 +119,8 @@ Open a file path or URL in Google Chrome.
 This function opens the specified file path or URL in Google Chrome. If a file path is provided, it resolves the path before opening it. If the file path cannot be resolved to the filesystem, it casts the path to an URL, throwing an error if the cast is unsuccessful. If an URL is provided, it opens the URI directly.
 #>
 function Open-Url {
-  [OutputType([void])]
   [CmdletBinding(DefaultParameterSetName = 'Path')]
+  [OutputType([void])]
   param(
     [Parameter(
       ParameterSetName = 'Path',

@@ -9,6 +9,7 @@ $CUSTOM_HELP = (
 
 New-Alias m PSTool\Get-HelpOnline
 function Get-HelpOnline {
+  [OutputType([Object])]
   param(
     [Parameter(
       Position = 0,

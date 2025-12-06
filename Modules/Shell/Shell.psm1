@@ -1,4 +1,5 @@
 function Format-Path {
+  [OutputType([string])]
   param(
     [string]$Path,
     [switch]$Leading,
@@ -19,6 +20,7 @@ function Format-Path {
 }
 
 function Trace-RelativePath {
+  [OutputType([string])]
   param(
     [string]$Path,
     [string]$Location
@@ -28,6 +30,7 @@ function Trace-RelativePath {
 }
 
 function Merge-RelativePath {
+  [OutputType([string])]
   param(
     [string]$Path,
     [string]$Location
@@ -37,6 +40,7 @@ function Merge-RelativePath {
 }
 
 function Test-Item {
+  [OutputType([bool])]
   param(
     [string]$Path,
     [string]$Location,
@@ -127,6 +131,7 @@ function Test-Item {
 }
 
 function Resolve-Item {
+  [OutputType([string])]
   param(
     [string]$Path,
     [string]$Location,

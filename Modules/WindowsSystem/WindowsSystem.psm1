@@ -69,11 +69,11 @@ New-Alias remsv Remove-Service
 
 New-Alias tkill WindowsSystem\Stop-Task
 function Stop-Task {
-  [OutputType([void])]
   [CmdletBinding(
     SupportsShouldProcess,
     DefaultParameterSetName = 'Name'
   )]
+  [OutputType([void])]
   param(
     [Parameter(
       ParameterSetName = 'Name',

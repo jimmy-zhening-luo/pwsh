@@ -1,6 +1,6 @@
 function Resolve-Repository {
-  [OutputType([string[]])]
   [CmdletBinding()]
+  [OutputType([string[]])]
   param(
     [Parameter(
       Mandatory,
