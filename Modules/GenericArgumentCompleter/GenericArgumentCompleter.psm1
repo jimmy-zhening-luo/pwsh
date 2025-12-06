@@ -125,8 +125,15 @@ class GenericCompleter : IArgumentCompleter {
 
     $resultList = [List[CompletionResult]]::new()
 
-    foreach ($unit in $unitMatches) {
-      $resultList.Add([CompletionResult]::new($unit))
+    foreach ($item in $unitMatches) {
+      $string = [System.Management.Automation.Language.CodeGeneration]::EscapeSingleQuotedStringContent($item)
+      $completion = $string -match '\s' ? "'" + $string + "'" : $string
+
+      $resultList.Add(
+        [CompletionResult]::new(
+          $completion
+        )
+      )
     }
 
     return $resultList
