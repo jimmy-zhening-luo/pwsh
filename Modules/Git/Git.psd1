@@ -25,7 +25,7 @@
   CmdletsToExport   = @()
   VariablesToExport = @()
   AliasesToExport   = @(
-    'gg'
+    'g'
     'gitcl'
     'ggp'
     'gpa'

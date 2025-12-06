@@ -72,7 +72,7 @@ This function allows you to run a Git command in a local repository. If no comma
 .LINK
 https://git-scm.com/docs
 #>
-New-Alias gg Git\Invoke-Repository
+New-Alias g Git\Invoke-Repository
 function Invoke-Repository {
   param(
     # Local repository path
