@@ -72,7 +72,7 @@ function Get-Repository {
   Invoke-Repository @Pull @PSBoundParameters @args
 }
 
-New-Alias gpa Git\Get-ChildRepository
+New-Alias gpp Git\Get-ChildRepository
 <#
 .SYNOPSIS
 Use Git to pull changes for all repositories in the top level of %USERPROFILE%\code'.
