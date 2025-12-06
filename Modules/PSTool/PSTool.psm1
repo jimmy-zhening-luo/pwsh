@@ -76,7 +76,7 @@ function Measure-PSProfile {
   [double]$StartupLoadProfile = 0
   [double]$NormalStartup = 0
 
-  $Iterations = 5
+  $Iterations = 1
 
   for ($i = 0; $i -lt $Iterations; ++$i) {
     $StartupLoadProfile += (
