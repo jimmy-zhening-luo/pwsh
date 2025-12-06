@@ -30,7 +30,7 @@ function Trace-RelativePath {
     [string]$Location
   )
 
-  [Path]::GetRelativePath($Path, $Location) -match '^[.\\]*$'
+  [System.IO.Path]::GetRelativePath($Path, $Location) -match '^[.\\]*$'
 }
 
 function Merge-RelativePath {
@@ -39,7 +39,7 @@ function Merge-RelativePath {
     [string]$Location
   )
 
-  [Path]::GetRelativePath($Location, $Path)
+  [System.IO.Path]::GetRelativePath($Location, $Path)
 }
 
 function Test-Item {
@@ -54,7 +54,7 @@ function Test-Item {
   $Path = Format-Path -Path $Path -Leading
   $Location = Format-Path -Path $Location
 
-  if ([Path]::IsPathRooted($Path)) {
+  if ([System.IO.Path]::IsPathRooted($Path)) {
     if ($Location) {
       $Relative = @{
         Path     = $Path
@@ -68,7 +68,7 @@ function Test-Item {
       }
     }
     else {
-      $Location = [Path]::GetPathRoot($Path)
+      $Location = [System.IO.Path]::GetPathRoot($Path)
     }
   }
   elseif ($Path -match '^~(?=\\|$)') {
@@ -148,12 +148,12 @@ function Resolve-Item {
   $Path = Format-Path -Path $Path -Leading
   $Location = Format-Path -Path $Location
 
-  if ([Path]::IsPathRooted($Path)) {
+  if ([System.IO.Path]::IsPathRooted($Path)) {
     if ($Location) {
       $Path = Merge-RelativePath -Path $Path -Location $Location
     }
     else {
-      $Location = [Path]::GetPathRoot($Path)
+      $Location = [System.IO.Path]::GetPathRoot($Path)
     }
   }
   elseif ($Path -match '^~(?=\\|$)') {
@@ -181,7 +181,7 @@ function Resolve-Item {
   ).Path
 }
 
-class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory {
+class PathCompletionsAttribute : System.Management.Automation.ArgumentCompleterAttribute, System.Management.Automation.IArgumentCompleterFactory {
   [string] $Root
   [string] $Type
   [bool] $Flat
@@ -226,7 +226,7 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
     $this.UseNativeDirectorySeparator = $useNativeDirectorySeparator
   }
 
-  [IArgumentCompleter] Create() {
+  [System.Management.Automation.IArgumentCompleter] Create() {
     return [PathCompleter]::new(
       $this.Root,
       $this.Type,
@@ -236,7 +236,7 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
   }
 }
 
-class PathCompleter : IArgumentCompleter {
+class PathCompleter : System.Management.Automation.IArgumentCompleter {
   [string] $Root
   [string] $Type
   [bool] $Flat
@@ -249,7 +249,7 @@ class PathCompleter : IArgumentCompleter {
     [bool] $useNativeDirectorySeparator
   ) {
     if (-not $root -or -not (Test-Path -Path $root -PathType Container)) {
-      throw [ArgumentException]::new('root')
+      throw [System.Management.Automation.ArgumentException]::new('root')
     }
 
     $this.Root = $root
@@ -258,16 +258,16 @@ class PathCompleter : IArgumentCompleter {
     $this.UseNativeDirectorySeparator = $useNativeDirectorySeparator
   }
 
-  [IEnumerable[CompletionResult]] CompleteArgument(
+  [IEnumerable[System.Management.Automation.CompletionResult]] CompleteArgument(
     [string] $CommandName,
     [string] $parameterName,
     [string] $wordToComplete,
-    [CommandAst] $commandAst,
-    [IDictionary] $fakeBoundParameters
+    [System.Management.Automation.Language.CommandAst] $commandAst,
+    [System.Collections.IDictionary] $fakeBoundParameters
   ) {
 
     $Local:root = Resolve-Path -Path $this.Root
-    $separator = $this.UseNativeDirectorySeparator ? [Path]::DirectorySeparatorChar : '/'
+    $separator = $this.UseNativeDirectorySeparator ? [System.IO.Path]::DirectorySeparatorChar : '/'
     $query = @{
       Path      = $Local:root
       Directory = $this.Type -eq 'Directory'
@@ -276,7 +276,7 @@ class PathCompleter : IArgumentCompleter {
     $word = $wordToComplete -replace '[\\\/]+', '\' -replace '^\\', ''
     $leaves = @()
     $subpath = ''
-    $resultList = [List[CompletionResult]]::new()
+    $resultList = [System.Collections.Generic.List[System.Management.Automation.CompletionResult]]::new()
 
     if ($word) {
       if ($word.EndsWith('\')) {
@@ -337,7 +337,7 @@ class PathCompleter : IArgumentCompleter {
       $completion = $string -match '\s' ? "'" + $string + "'" : $string
 
       $resultList.Add(
-        [CompletionResult]::new(
+        [System.Management.Automation.CompletionResult]::new(
           $completion
         )
       )
@@ -347,7 +347,7 @@ class PathCompleter : IArgumentCompleter {
       $completion = $string -match '\s' ? "'" + $string + "'" : $string
 
       $resultList.Add(
-        [CompletionResult]::new(
+        [System.Management.Automation.CompletionResult]::new(
           $completion
         )
       )
@@ -361,14 +361,14 @@ $ExportableTypes = @(
   [PathCompletionsAttribute]
   [PathCompleter]
 )
-$TypeAcceleratorsClass = [PSObject].Assembly.GetType(
+$TypeAcceleratorsClass = [System.Management.Automation.PSObject].Assembly.GetType(
   'System.Management.Automation.TypeAccelerators'
 )
 $ExistingTypeAccelerators = $TypeAcceleratorsClass::Get
 foreach ($Type in $ExportableTypes) {
   if ($Type.FullName -in $ExistingTypeAccelerators.Keys) {
     throw [System.Management.Automation.ErrorRecord]::new(
-      [InvalidOperationException]::new("Unable to register type accelerator '$($Type.FullName)' - Accelerator already exists."),
+      [System.Management.Automation.InvalidOperationException]::new("Unable to register type accelerator '$($Type.FullName)' - Accelerator already exists."),
       'TypeAcceleratorAlreadyExists',
       [System.Management.Automation.ErrorCategory]::InvalidOperation,
       $Type.FullName

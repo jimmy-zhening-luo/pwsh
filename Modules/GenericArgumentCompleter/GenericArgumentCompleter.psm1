@@ -3,7 +3,7 @@ using namespace System.Collections.Generic
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
 
-class GenericCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory {
+class GenericCompletionsAttribute : System.Management.Automation.ArgumentCompleterAttribute, System.Management.Automation.IArgumentCompleterFactory {
   [string] $Units
   [string] $Case
 
@@ -21,7 +21,7 @@ class GenericCompletionsAttribute : ArgumentCompleterAttribute, IArgumentComplet
     $this.Case = $case
   }
 
-  [IArgumentCompleter] Create() {
+  [System.Management.Automation.IArgumentCompleter] Create() {
     return [GenericCompleter]::new(
       $this.Units,
       $this.Case
@@ -29,7 +29,7 @@ class GenericCompletionsAttribute : ArgumentCompleterAttribute, IArgumentComplet
   }
 }
 
-class GenericCompleter : IArgumentCompleter {
+class GenericCompleter : System.Management.Automation.IArgumentCompleter {
   [string] $Units
   [string] $Case
 
@@ -44,11 +44,11 @@ class GenericCompleter : IArgumentCompleter {
         'Preserve'
       )
     ) {
-      throw [ArgumentException]::new('case')
+      throw [System.Management.Automation.ArgumentException]::new('case')
     }
 
     if (-not $units) {
-      throw [ArgumentException]::new('units')
+      throw [System.Management.Automation.ArgumentException]::new('units')
     }
 
     $unitKeys = (
@@ -56,7 +56,7 @@ class GenericCompleter : IArgumentCompleter {
     ).Trim().ToLowerInvariant() -notmatch '^\s*$'
 
     if (-not $unitKeys) {
-      throw [ArgumentException]::new('units')
+      throw [System.Management.Automation.ArgumentException]::new('units')
     }
 
     $unique = @()
@@ -64,19 +64,19 @@ class GenericCompleter : IArgumentCompleter {
       Select-Object -Unique
 
     if (-not $unique -or $unique.Count -ne $unitKeys.Count) {
-      throw [ArgumentException]::new('units')
+      throw [System.Management.Automation.ArgumentException]::new('units')
     }
 
     $this.Units = $units
     $this.Case = $case
   }
 
-  [IEnumerable[CompletionResult]] CompleteArgument(
+  [System.Collections.IEnumerable[System.Management.Automation.CompletionResult]] CompleteArgument(
     [string] $CommandName,
     [string] $parameterName,
     [string] $wordToComplete,
-    [CommandAst] $commandAst,
-    [IDictionary] $fakeBoundParameters
+    [System.Management.Automation.Language.CommandAst] $commandAst,
+    [System.Collections.IDictionary] $fakeBoundParameters
   ) {
 
     $Local:units = (
@@ -123,14 +123,14 @@ class GenericCompleter : IArgumentCompleter {
       }
     }
 
-    $resultList = [List[CompletionResult]]::new()
+    $resultList = [System.Collections.Generic.List[System.Management.Automation.CompletionResult]]::new()
 
     foreach ($item in $unitMatches) {
       $string = [System.Management.Automation.Language.CodeGeneration]::EscapeSingleQuotedStringContent($item)
       $completion = $string -match '\s' ? "'" + $string + "'" : $string
 
       $resultList.Add(
-        [CompletionResult]::new(
+        [System.Management.Automation.CompletionResult]::new(
           $completion
         )
       )
@@ -144,14 +144,14 @@ $ExportableTypes = @(
   [GenericCompletionsAttribute]
   [GenericCompleter]
 )
-$TypeAcceleratorsClass = [PSObject].Assembly.GetType(
+$TypeAcceleratorsClass = [System.Management.Automation.PSObject].Assembly.GetType(
   'System.Management.Automation.TypeAccelerators'
 )
 $ExistingTypeAccelerators = $TypeAcceleratorsClass::Get
 foreach ($Type in $ExportableTypes) {
   if ($Type.FullName -in $ExistingTypeAccelerators.Keys) {
     throw [System.Management.Automation.ErrorRecord]::new(
-      [InvalidOperationException]::new("Unable to register type accelerator '$($Type.FullName)' - Accelerator already exists."),
+      [System.Management.Automation.InvalidOperationException]::new("Unable to register type accelerator '$($Type.FullName)' - Accelerator already exists."),
       'TypeAcceleratorAlreadyExists',
       [System.Management.Automation.ErrorCategory]::InvalidOperation,
       $Type.FullName
