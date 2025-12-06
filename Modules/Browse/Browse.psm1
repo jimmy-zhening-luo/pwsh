@@ -40,26 +40,18 @@ function Test-Host {
     [switch]$Detailed
   )
   begin {
-    $InformationLevel = switch (
-      [math]::Max(
-        $Detailed ? 2 : $Quiet ? 1 : 0,
-        $InformationLevel -in @('Quiet', 'Detailed') ? $InformationLevel -eq 'Detailed' ? 2 : 1 : 0
-      )
-    ) {
-      0 { '' }
-      1 { 'Quiet' }
-      2 { 'Detailed' }
+    $InformationLevel = $Detailed -or $InformationLevel -eq 'Detailed' ? 'Detailed' : $Quiet -or $InformationLevel -eq 'Quiet' ? 'Quiet' : ''
+    $Verbosity = $InformationLevel ? @{} : @{
+      InformationLevel = $InformationLevel
     }
   }
   process {
     $Connection = @{
       ComputerName = $Name
     }
-    if ($InformationLevel) {
-      $Connection.InformationLevel = $InformationLevel
-    }
+
     switch ($PSCmdlet.ParameterSetName) {
-      'RemotePort' {
+      RemotePort {
         $Connection.Port = $Port
       }
       default {
@@ -72,7 +64,7 @@ function Test-Host {
       }
     }
 
-    Test-NetConnection @Connection
+    Test-NetConnection @Connection @Verbosity
   }
 }
 

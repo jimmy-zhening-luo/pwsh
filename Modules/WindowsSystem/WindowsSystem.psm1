@@ -87,7 +87,7 @@ function Stop-Task {
     Force = $True
   }
   switch ($PSCmdlet.ParameterSetName) {
-    'Id' {
+    Id {
       $Process.Id = $Id
       break
     }
