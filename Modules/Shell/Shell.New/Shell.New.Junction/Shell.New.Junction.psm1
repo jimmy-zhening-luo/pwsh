@@ -34,7 +34,7 @@ function New-Junction {
       Force    = $True
     }
     $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [System.Management.Automation.CommandTypes]::Cmdlet)
-    $scriptCmd = { & $wrappedCmd @type @PSBoundParameters @args }
+    $scriptCmd = { & $wrappedCmd @type @PSBoundParameters }
     $steppablePipeline = $scriptCmd.GetSteppablePipeline()
 
     if (
@@ -50,7 +50,7 @@ function New-Junction {
     if (
       $PSCmdlet.ShouldProcess(
         $Value,
-        "> Step: New-Item -Force -ItemType Junction -Path [$Path] -Value [$Value] -- $args"
+        "> Step: New-Item -Force -ItemType Junction -Path [$Path] -Value [$Value]"
       )
     ) {
       $steppablePipeline.Process($_)

@@ -50,7 +50,7 @@ function New-Directory {
       ItemType = 'Directory'
     }
     $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [System.Management.Automation.CommandTypes]::Cmdlet)
-    $scriptCmd = { & $wrappedCmd @type @PSBoundParameters @args }
+    $scriptCmd = { & $wrappedCmd @type @PSBoundParameters }
     $steppablePipeline = $scriptCmd.GetSteppablePipeline()
 
     if (
@@ -66,7 +66,7 @@ function New-Directory {
     if (
       $PSCmdlet.ShouldProcess(
         $Value,
-        "> Step: New-Item -ItemType Directory -Path [[$Path]] -Name [$Name] -- @PSBoundParameters @args"
+        "> Step: New-Item -ItemType Directory -Path [[$Path]] -Name [$Name] -- @PSBoundParameters"
       )
     ) {
       $steppablePipeline.Process($_)
