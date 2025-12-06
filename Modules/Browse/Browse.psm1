@@ -1,37 +1,79 @@
 New-Alias tn Browse\Test-Host
+<#
+.SYNOPSIS
+Determine if a host is reachable.
+
+.DESCRIPTION
+This function checks if a host is reachable by testing the network connection to the specified hostname or IP address, optionally on a specified port (number or well-known TCP service).
+#>
 function Test-Host {
+  [CmdletBinding(DefaultParameterSetName = 'CommonTCPPort')]
+  [OutputType([Object])]
   param(
-    [Alias('ComputerName', 'RemoteAddress', 'cn')]
-    [string]$HostName,
-    [Alias('RemotePort')]
-    [string]$Port
+    [Parameter(
+      Position = 0,
+      ValueFromPipeline,
+      ValueFromPipelineByPropertyName
+    )]
+    [Alias('ComputerName', 'RemoteAddress', 'cn', 'HostName', 'IPAddress', 'ip')]
+    # The hostname or IP address of the target host.
+    [string]$Name,
+    [Parameter(
+      ParameterSetName = 'CommonTCPPort',
+      Position = 1
+    )]
+    [GenericCompletions('HTTP,RDP,SMB,WINRM')]
+    [Alias('TCP')]
+    [string]$CommonTCPPort,
+    [Parameter(
+      ParameterSetName = 'RemotePort',
+      Mandatory,
+      ValueFromPipelineByPropertyName
+    )]
+    [ValidateRange(1, 65535)]
+    # The port number to test on the target host.
+    [UInt16]$Port,
+    [GenericCompletions('Quiet,Detailed')]
+    # The level of information to return.
+    [string]$InformationLevel,
+    [switch]$Quiet,
+    [switch]$Detailed
   )
-
-  if ($Hostname -match '^(?>\d{1,5})$' -and $Hostname -as [UInt16]) {
-    if ($Port) {
-      $Hostname, $Port = $Port, $Hostname
-    }
-    else {
-      throw 'No hostname specified'
-    }
-  }
-
-  $Target = @{
-    ComputerName = $HostName
-  }
-
-  $Local:args = $args
-
-  if ($Port) {
-    if ($Port -as [UInt16]) {
-      $Target.Port = [UInt16]$Port
-    }
-    else {
-      $Local:args = , $Port + $Local:args
+  begin {
+    $InformationLevel = switch (
+      [math]::Max(
+        $Detailed ? 2 : $Quiet ? 1 : 0,
+        $InformationLevel -in @('Quiet', 'Detailed') ? $InformationLevel -eq 'Detailed' ? 2 : 1 : 0
+      )
+    ) {
+      0 { '' }
+      1 { 'Quiet' }
+      2 { 'Detailed' }
     }
   }
+  process {
+    $Connection = @{
+      ComputerName = $Name
+    }
+    if ($InformationLevel) {
+      $Connection.InformationLevel = $InformationLevel
+    }
+    switch ($PSCmdlet.ParameterSetName) {
+      'RemotePort' {
+        $Connection.Port = $Port
+      }
+      default {
+        if ($CommonTCPPort -in @('HTTP', 'RDP', 'SMB', 'WINRM')) {
+          $Connection.CommonTCPPort = $CommonTCPPort.ToUpperInvariant()
+        }
+        elseif ($CommonTCPPort -match '^(?>\d{1,5})$' -and $CommonTCPPort -as [UInt16]) {
+          $Connection.Port = [UInt16]$CommonTCPPort
+        }
+      }
+    }
 
-  Test-NetConnection @Target @Local:args
+    Test-NetConnection @Connection
+  }
 }
 
 New-Alias tu Browse\Test-Url
@@ -77,6 +119,12 @@ function Test-Url {
 
 New-Alias go Browse\Open-Url
 New-Alias open Browse\Open-Url
+<#
+.SYNOPSIS
+Open a file path or URL in Google Chrome.
+.DESCRIPTION
+This function opens the specified file path or URL in Google Chrome. If a file path is provided, it resolves the path before opening it. If the file path cannot be resolved to the filesystem, it casts the path to an URL, throwing an error if the cast is unsuccessful. If an URL is provided, it opens the URI directly.
+#>
 function Open-Url {
   [CmdletBinding(DefaultParameterSetName = 'Path')]
   param(
@@ -85,12 +133,14 @@ function Open-Url {
       Position = 0
     )]
     [PathCompletions('.')]
+    # The file path or URL to open. Defaults to the current directory.
     [string]$Path = $PWD.Path,
     [Parameter(
       ParameterSetName = 'Uri',
       Position = 0,
       Mandatory
     )]
+    # The URL to open.
     [Uri]$Uri
   )
 
