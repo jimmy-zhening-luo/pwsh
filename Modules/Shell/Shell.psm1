@@ -268,28 +268,27 @@ class PathCompleter : System.Management.Automation.IArgumentCompleter {
     $Local:root = Resolve-Path -Path $this.Root
     $separator = $this.UseNativeDirectorySeparator ? [System.IO.Path]::DirectorySeparatorChar : '/'
     $query = @{
-      Path      = $Local:root
       Directory = $this.Type -eq 'Directory'
       File      = $this.Type -eq 'File'
     }
-    $word = $wordToComplete -replace '[\\\/]+', '\' -replace '^\\', ''
-    $leaves = @()
-    $subpath = ''
+    $currentText = $wordToComplete ? $wordToComplete -match "^'(?<CurrentText>.*)'$" ? $Matches.CurrentText -replace "''", "'" : $wordToComplete : ''
+    $currentPathText = $currentText -replace '[\\\/]', '\'
+    $currentDirectoryText = ''
     $resultList = [System.Collections.Generic.List[System.Management.Automation.CompletionResult]]::new()
 
-    if ($word) {
-      if ($word.EndsWith('\')) {
-        $word += '*'
+    if ($currentPathText) {
+      if ($currentPathText.EndsWith('\')) {
+        $currentPathText += '*'
       }
 
-      $subpath = Split-Path $word
-      $fragment = Split-Path $word -Leaf
+      $currentDirectoryText = Split-Path $currentPathText
+      $fragment = Split-Path $currentPathText -Leaf
 
       if ($fragment -eq '*') {
         $fragment = ''
       }
 
-      $path = Join-Path $Local:root $subpath
+      $path = Join-Path $Local:root $currentDirectoryText
 
       if (Test-Path -Path $path -PathType Container) {
         $query.Path = $path
@@ -297,10 +296,13 @@ class PathCompleter : System.Management.Automation.IArgumentCompleter {
         $leaves = Get-ChildItem @query
       }
     }
-    else {
-      $leaves = Get-ChildItem @query
+
+    if (-not $query.Path) {
+      $query.Path = $Local:root
     }
 
+    $leaves = @()
+    $leaves += Get-ChildItem @query
     $directories, $files = $leaves.Where(
       { $_.PSIsContainer },
       'Split'
@@ -310,15 +312,15 @@ class PathCompleter : System.Management.Automation.IArgumentCompleter {
     $files = $files |
       Select-Object -ExpandProperty Name
 
-    if ($subpath -and -not $this.Flat) {
+    if ($currentDirectoryText -and -not $this.Flat) {
       $directories += ''
     }
 
-    if ($subpath) {
+    if ($currentDirectoryText) {
       $directories = $directories |
-        % { Join-Path $subpath $_ }
+        % { Join-Path $currentDirectoryText $_ }
       $files = $files |
-        % { Join-Path $subpath $_ }
+        % { Join-Path $currentDirectoryText $_ }
     }
 
     if (-not $this.Flat) {
