@@ -2,7 +2,6 @@ New-Alias ^ Select-Object
 New-Alias to Select-Object
 New-Alias k Get-Member
 New-Alias key Get-Member
-New-Alias n Measure-Object
 New-Alias count Measure-Object
 New-Alias z Sort-Object
 New-Alias format Format-Table
@@ -53,7 +52,7 @@ function Update-PSLinter {
     $Copy = @{
       Path        = $Linter.Path
       Destination = $HOME
-    } 
+    }
     [void](Copy-Item @Copy)
   }
 }
