@@ -1,5 +1,5 @@
 New-Alias ^ Select-Object
-New-Alias pick Select-Object
+New-Alias to Select-Object
 New-Alias k Get-Member
 New-Alias key Get-Member
 New-Alias n Measure-Object

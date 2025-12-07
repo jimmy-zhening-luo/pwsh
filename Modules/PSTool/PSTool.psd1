@@ -20,7 +20,7 @@
   VariablesToExport = @()
   AliasesToExport   = @(
     '^'
-    'pick'
+    'to'
     'k'
     'key'
     'n'
