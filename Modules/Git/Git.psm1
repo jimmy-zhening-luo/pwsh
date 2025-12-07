@@ -63,7 +63,9 @@ function Resolve-GitRepository {
   }
 }
 
-$GIT_VERB_COMPLETION = 'add,clone,commit,config,pull,push,reset,rm,status,switch'
+$GIT_VERB_COMPLETION = (
+  'add,clone,commit,config,pull,push,reset,rm,status,switch,init,diff,rm,mv,branch,switch,checkout,merge,stash,tag,fetch,remote,submodule,ls-files,ls-tree'
+)
 $GIT_VERB = $GIT_VERB_COMPLETION -split ','
 
 <#
@@ -80,6 +82,10 @@ function Invoke-GitRepository {
     [PathCompletions('.', 'Directory')]
     # Local repository path
     [string]$Path,
+    [GenericCompletions(
+      'add,clone,commit,config,pull,push,reset,rm,status,switch,init,diff,rm,mv,branch,switch,checkout,merge,stash,tag,fetch,remote,submodule,ls-files,ls-tree',
+      $True
+    )]
     # Git verb (command) to run
     [string]$Verb,
     # Stop execution on Git error

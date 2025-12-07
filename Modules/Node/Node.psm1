@@ -56,7 +56,7 @@ function Compare-NodeModule {
     [PathCompletions(
       '~\code',
       'Directory',
-      $true
+      $True
     )]
     # Node project root
     [string]$Path
@@ -84,7 +84,7 @@ function Step-NodeProjectVersion {
     [PathCompletions(
       '~\code',
       'Directory',
-      $true
+      $True
     )]
     # Node project root
     [string]$Path
@@ -145,7 +145,7 @@ function Invoke-NodeProjectScript {
     [PathCompletions(
       '~\code',
       'Directory',
-      $true
+      $True
     )]
     # Node project root
     [string]$Path
