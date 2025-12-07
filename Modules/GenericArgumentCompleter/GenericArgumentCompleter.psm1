@@ -129,9 +129,18 @@ class GenericCompleter : System.Management.Automation.IArgumentCompleter {
           $exactMatch, $unitMatches = $unitMatches[0], @()
           $unitMatches += (
             $Local:units |
-              ? { $_ -like "*$currentText*" }
-          ) -ne $exactMatch
+              ? { $_ -like "*$currentText*" } |
+              ? { $_ -ne $exactMatch }
+          )
           $unitMatches += $exactMatch
+
+          if ($unitMatches.Count -eq 1) {
+            $exactMatch, $unitMatches = $unitMatches[0], @()
+
+            if ($currentText -cne $exactMatch) {
+              $unitMatches += $exactMatch
+            }
+          }
         }
         else {
           $unitMatches += $currentText
