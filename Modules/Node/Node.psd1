@@ -10,6 +10,7 @@
   FunctionsToExport = @(
     'Resolve-NodePackage'
     'Invoke-Node'
+    'Invoke-NodePackage'
     'Invoke-NodeExecutable'
     'Clear-NodeModuleCache'
     'Compare-NodeModule'
@@ -20,6 +21,7 @@
   CmdletsToExport   = @()
   VariablesToExport = @()
   AliasesToExport   = @(
+    'no'
     'n'
     'nx'
     'ncc'

@@ -29,7 +29,20 @@ function Resolve-NodePackage {
   }
 }
 
-New-Alias n Node\Invoke-Node
+New-Alias no Node\Invoke-Node
+<#
+.SYNOPSIS
+Run Node.
+.DESCRIPTION
+This function is an alias shim for 'node [args]'.
+.LINK
+https://nodejs.org/api/cli.html
+#>
+function Invoke-Node {
+  & node @args
+}
+
+New-Alias n Node\Invoke-NodePackage
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to run a command in a Node package.
@@ -40,7 +53,7 @@ https://docs.npmjs.com/cli/commands
 .LINK
 https://docs.npmjs.com/cli/commands/npm
 #>
-function Invoke-Node {
+function Invoke-NodePackage {
   & npm @args
 }
 
