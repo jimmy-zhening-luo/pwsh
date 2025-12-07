@@ -22,7 +22,7 @@ function Get-YouTube {
   ).Uri : [Uri]$Video
 
   if (Browse\Test-Url -Uri $VideoUri) {
-    & yt-dlp @args -- $VideoUri.OriginalString
+    & yt-dlp.exe @args -- $VideoUri.OriginalString
   }
   else {
     throw 'The specified video URL is unreachable: ' + $VideoUri.OriginalString
@@ -82,7 +82,7 @@ function Invoke-YouTubeDirectory {
   $YouTubeDownloads = @{
     Path = 'Videos\YouTube'
   }
-  Shell\Invoke-DirectoryHome @YouTubeDownloads
+  Invoke-DirectoryHome @YouTubeDownloads
 }
 
 New-Alias ytc Quick\Invoke-YouTubeConfig
@@ -92,5 +92,5 @@ function Invoke-YouTubeConfig {
     ProfileName = 'Setting'
     Window      = $True
   }
-  Shell\Invoke-WorkspaceHome @YouTubeConfig @args
+  Invoke-WorkspaceHome @YouTubeConfig @args
 }

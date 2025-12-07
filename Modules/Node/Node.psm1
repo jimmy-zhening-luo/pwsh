@@ -39,7 +39,7 @@ This function is an alias shim for 'node [args]'.
 https://nodejs.org/api/cli.html
 #>
 function Invoke-Node {
-  & node @args
+  & node.exe @args
 }
 
 New-Alias n Node\Invoke-NodePackage
@@ -54,7 +54,7 @@ https://docs.npmjs.com/cli/commands
 https://docs.npmjs.com/cli/commands/npm
 #>
 function Invoke-NodePackage {
-  & npm @args
+  & npm.ps1 @args
 }
 
 New-Alias nx Node\Invoke-NodeExecutable
@@ -67,7 +67,7 @@ This function is an alias shim for 'npx [args]'.
 https://docs.npmjs.com/cli/commands/npx
 #>
 function Invoke-NodeExecutable {
-  & npx @args
+  & npx.ps1 @args
 }
 
 New-Alias ncc Node\Clear-NodeModuleCache
@@ -80,7 +80,7 @@ This function is an alias for 'npm cache clean --force'.
 https://docs.npmjs.com/cli/commands/npm-cache
 #>
 function Clear-NodeModuleCache {
-  & npm cache clean --force @args
+  & npm.ps1 cache clean --force @args
 }
 
 New-Alias npo Node\Compare-NodeModule
@@ -106,7 +106,7 @@ function Compare-NodeModule {
   $NodeArguments = $args
   $NodeArguments = , (Resolve-NodePackage @PSBoundParameters) + $NodeArguments
 
-  & npm outdated @NodeArguments
+  & npm.ps1 outdated @NodeArguments
 }
 
 <#
@@ -165,7 +165,7 @@ function Step-NodePackageVersion {
 
   $NodeArguments += $Version.ToLowerInvariant()
 
-  & npm version @NodeArguments
+  & npm.ps1 version @NodeArguments
 }
 
 New-Alias nr Node\Invoke-NodePackageScript
@@ -203,7 +203,7 @@ function Invoke-NodePackageScript {
 
   $NodeArguments = , (Resolve-NodePackage @PSBoundParameters) + $NodeArguments
 
-  & npm run $Script @NodeArguments
+  & npm.ps1 run $Script @NodeArguments
 }
 
 New-Alias nt Node\Test-NodePackage
@@ -235,5 +235,5 @@ function Test-NodePackage {
 
   $NodeArguments = , (Resolve-NodePackage @PSBoundParameters) + $NodeArguments
 
-  & npm test @NodeArguments
+  & npm.ps1 test @NodeArguments
 }

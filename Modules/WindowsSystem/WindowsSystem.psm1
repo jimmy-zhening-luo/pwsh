@@ -9,7 +9,7 @@ Starts a new instance of the command interpreter, 'cmd.exe' to carry out the sup
 https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd
 #>
 function Invoke-CommandPrompt {
-  & cmd /c $args
+  & cmd.exe /c $args
 }
 
 New-Alias wu WindowsSystem\Update-Windows

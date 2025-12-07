@@ -167,7 +167,7 @@ function Invoke-GitRepository {
     $Verb
   ) + $GitArguments
   if ($Throw) {
-    & git $GitArguments 2>&1 |
+    & git.exe $GitArguments 2>&1 |
       Tee-Object -Variable GitResult
 
     if ($GitResult -match '^(?>fatal:)') {
@@ -175,7 +175,7 @@ function Invoke-GitRepository {
     }
   }
   else {
-    & git $GitArguments
+    & git.exe $GitArguments
   }
 }
 

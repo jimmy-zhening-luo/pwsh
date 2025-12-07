@@ -16,7 +16,10 @@ function Update-StoreApp {
     throw 'Cannot launch Microsoft Store app during SSH session'
   }
 
-  [void](Start-Process -FilePath ms-windows-store://downloadsandupdates)
+  $Store = @{
+    FilePath = 'ms-windows-store://downloadsandupdates'
+  }
+  [void](Start-Process @Store)
 }
 
 New-Alias wget winget.exe
