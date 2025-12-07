@@ -77,7 +77,7 @@ New-Alias g Git\Invoke-GitRepository
 function Invoke-GitRepository {
   param(
     [GenericCompletions(
-      'add,clone,commit,config,pull,push,reset,rm,status,switch,init,diff,mv,branch,checkout,merge,stash,tag,fetch,remote,submodule,ls-files,ls-tree'
+      'status,switch,merge,diff,stash,tag,config,remote,submodule,fetch,checkout,branch,rm,mv,ls-files,ls-tree,init,clone,pull,add,commit,push,reset'
     )]
     # Git verb (command) to run
     [string]$Verb,
@@ -89,7 +89,7 @@ function Invoke-GitRepository {
   )
 
   $GIT_VERB_COMPLETION = (
-    'add,clone,commit,config,pull,push,reset,rm,status,switch,init,diff,mv,branch,checkout,merge,stash,tag,fetch,remote,submodule,ls-files,ls-tree'
+    'status,switch,merge,diff,stash,tag,config,remote,submodule,fetch,checkout,branch,rm,mv,ls-files,ls-tree,init,clone,pull,add,commit,push,reset'
   )
   $GIT_VERB = $GIT_VERB_COMPLETION -split ','
   $NEWABLE_GIT_VERB = @(
