@@ -55,7 +55,7 @@ function Clear-NodeModuleCache {
   & npm cache clean --force @args
 }
 
-New-Alias no Node\Compare-NodeModule
+New-Alias npo Node\Compare-NodeModule
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to check for outdated packages in a Node project.

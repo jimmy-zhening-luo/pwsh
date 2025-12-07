@@ -21,7 +21,7 @@
   AliasesToExport   = @(
     'nx'
     'ncc'
-    'no'
+    'npo'
     'nr'
     'nt'
   )
