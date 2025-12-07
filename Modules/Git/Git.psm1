@@ -557,8 +557,6 @@ Use Git to restore a repository to its previous state.
 This function is an alias for 'git add . && git reset --hard && git pull'.
 .LINK
 https://git-scm.com/docs/git-reset
-.LINK
-https://git-scm.com/docs/git-pull
 #>
 function Restore-GitRepository {
   param(

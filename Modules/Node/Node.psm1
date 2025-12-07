@@ -74,7 +74,7 @@ Use Node Package Manager (npm) to increment the package version of the current N
 .DESCRIPTION
 This function is an alias for 'npm version [--prefix $Path] [version=patch]'.
 .LINK
-https://docs.npmjs.com/cli/commands/npm-outdated
+https://docs.npmjs.com/cli/commands/npm-version
 #>
 function Step-NodeProjectVersion {
   param(
@@ -134,7 +134,7 @@ Use Node Package Manager (npm) to run a script defined in a Node project's 'pack
 .DESCRIPTION
 This function is an alias for 'npm run [script] [--prefix $Path] [--args]'.
 .LINK
-https://docs.npmjs.com/cli/commands/npm-outdated
+https://docs.npmjs.com/cli/commands/npm-run
 #>
 function Invoke-NodeProjectScript {
   param(
