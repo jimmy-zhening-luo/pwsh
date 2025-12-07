@@ -9,6 +9,7 @@ https://docs.npmjs.com/cli/commands
 function Resolve-NodeProject {
   [OutputType([string])]
   param(
+    [PathCompletions('.', 'Directory')]
     # Node project root path to be resolved
     [string]$Path = $PWD.Path,
     [switch]$OmitPrefix
