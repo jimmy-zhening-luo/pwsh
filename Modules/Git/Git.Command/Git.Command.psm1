@@ -1,3 +1,5 @@
+$GIT_ARGUMENT = '^-(?:\w|(?>-\w[-\w]*\w)(?>=.*)?)$'
+
 New-Alias gitcl Git\Import-GitRepository
 <#
 .SYNOPSIS
@@ -11,6 +13,7 @@ function Import-GitRepository {
   param(
     # Remote repository URL or 'org/repo'
     [string]$Repository,
+    [PathCompletions('.', 'Directory')]
     # Local repository path
     [string]$Path,
     # Stop execution on Git error
@@ -19,13 +22,6 @@ function Import-GitRepository {
     # Use git@github.com remote protocol instead of the default HTTPS
     [switch]$ForceSsh
   )
-
-  $GitCommandArguments = $args
-
-  if ($Path.StartsWith('-')) {
-    $GitCommandArguments = , $Path + $GitCommandArguments
-    $Path = ''
-  }
 
   $RepositoryPathParts = $Repository -split '/' -notmatch '^\s*$'
 
@@ -37,9 +33,12 @@ function Import-GitRepository {
     $RepositoryPathParts = , 'jimmy-zhening-luo' + $RepositoryPathParts
   }
 
-  $Protocol = $ForceSsh ? 'git@github.com:' : 'https://github.com/'
-  $Origin = $Protocol + ($RepositoryPathParts -join '/')
-  $GitCommandArguments = , $Origin + $GitCommandArguments
+  $Origin = (
+    $ForceSsh ? 'git@github.com:' : 'https://github.com/'
+  ) + (
+    $RepositoryPathParts -join '/'
+  )
+  $GitCommandArguments = , $Origin + $args
   $Clone = @{
     Path  = $Path
     Verb  = 'clone'
@@ -58,6 +57,7 @@ https://git-scm.com/docs/git-pull
 #>
 function Get-GitRepository {
   param(
+    [PathCompletions('.', 'Directory')]
     # Local repository path
     [string]$Path,
     # Stop execution on Git error
@@ -107,6 +107,7 @@ https://git-scm.com/docs/git-add
 #>
 function Add-GitRepository {
   param(
+    [PathCompletions('.', 'Directory')]
     # Local repository path
     [string]$Path,
     # File pattern of files to add, defaults to '.' (all)
@@ -118,10 +119,34 @@ function Add-GitRepository {
   )
 
   $GitCommandArguments = $args
+
+  if ($Name -match $GIT_ARGUMENT) {
+    $GitCommandArguments = , $Name + $GitCommandArguments
+    $Name = ''
+  }
+
+  if (
+    $Path -and (
+      $PWD | Resolve-GitRepository
+    ) -and -not (
+      $Path | Resolve-GitRepository
+    )
+  ) {
+    if ($Name) {
+      $GitCommandArguments = , $Path + $GitCommandArguments
+    }
+    else {
+      $Name = $Path
+    }
+
+    $Path = ''
+  }
+
   if ($Name) {
     $GitCommandArguments = , $Name + $GitCommandArguments
   }
-  if ($Renormalize -and '--renormalize' -notin $args) {
+
+  if ($Renormalize -and '--renormalize' -notin $GitCommandArguments) {
     $GitCommandArguments += '--renormalize'
   }
 
@@ -143,6 +168,7 @@ https://git-scm.com/docs/git-commit
 #>
 function Write-GitRepository {
   param(
+    [PathCompletions('.', 'Directory')]
     # Local repository path
     [string]$Path,
     # Commit message. It must be non-empty except on an empty commit, where it defaults to 'No message.'
@@ -155,47 +181,36 @@ function Write-GitRepository {
     [switch]$AllowEmpty
   )
 
-  $GitCommandArguments = $args
-
-  if ($Message) {
-    $GitCommandArguments = , $Message + $GitCommandArguments
-  }
-
-  $CommitArguments, $Messages = $GitCommandArguments.Where(
-    { $_ -and $_ -is [string] }
-  ).Where(
-    { $_ -match '^-(?>\w|-\w+)$' },
+  $GitCommitArguments, $Messages = (
+    $Message ? (, $Message + $args) : $args
+  ).Where({ $_ }).Where(
+    { $_ -match $GIT_ARGUMENT },
     'Split'
   )
 
-  if ($Path) {
-    if (-not ($Path | Resolve-GitRepository)) {
-      if ($Path -match '^-(?>\w|-\w+)$') {
-        $CommitArguments = , $Path + $CommitArguments
-      }
-      else {
-        $Messages = , $Path + $Messages
-      }
-
-      $Path = ''
+  if (
+    $Path -and (
+      $PWD | Resolve-GitRepository
+    ) -and -not (
+      $Path | Resolve-GitRepository
+    )
+  ) {
+    if ($Path -match $GIT_ARGUMENT -and -not $Messages) {
+      $GitCommitArguments = , $Path + $GitCommitArguments
     }
+    else {
+      $Messages = , $Path + $Messages
+    }
+
+    $Path = ''
   }
 
-  $fAllowEmpty = '--allow-empty'
-
-  if ($AllowEmpty) {
-    if ($fAllowEmpty -notin $CommitArguments) {
-      $CommitArguments += $fAllowEmpty
-    }
-  }
-  else {
-    if ($fAllowEmpty -in $CommitArguments) {
-      $AllowEmpty = $True
-    }
+  if ($AllowEmpty -and '--allow-empty' -notin $GitCommitArguments) {
+    $GitCommitArguments += '--allow-empty'
   }
 
   if (-not $Messages) {
-    if ($AllowEmpty) {
+    if ('--allow-empty' -in $GitCommitArguments) {
       $Messages += 'No message.'
     }
     else {
@@ -203,19 +218,19 @@ function Write-GitRepository {
     }
   }
 
-  $Parameters = @{
+  $GitParameters = @{
     Path  = $Path
     Throw = $Throw
   }
   if (-not $Staged) {
-    Add-GitRepository @Parameters -Throw
+    Add-GitRepository @GitParameters -Throw
   }
 
-  $CommitArguments = '-m', ($Messages -join ' ') + $CommitArguments
+  $GitCommitArguments = '-m', ($Messages -join ' ') + $GitCommitArguments
   $Commit = @{
     Verb = 'commit'
   }
-  Invoke-GitRepository @Commit @Parameters @CommitArguments
+  Invoke-GitRepository @Commit @GitParameters @GitCommitArguments
 }
 
 New-Alias gs Git\Push-GitRepository
@@ -229,18 +244,32 @@ https://git-scm.com/docs/git-push
 #>
 function Push-GitRepository {
   param(
+    [PathCompletions('.', 'Directory')]
     # Local repository path
     [string]$Path,
     # Stop execution on Git error
     [switch]$Throw
   )
 
+  $GitPushArguments = $args
+
+  if (
+    $Path -and (
+      $PWD | Resolve-GitRepository
+    ) -and -not (
+      $Path | Resolve-GitRepository
+    )
+  ) {
+    $GitPushArguments = , $Path + $GitPushArguments
+    $Path = ''
+  }
+
   Get-GitRepository @PSBoundParameters -Throw
 
   $Push = @{
     Verb = 'push'
   }
-  Invoke-GitRepository @Push @PSBoundParameters @args
+  Invoke-GitRepository @Push @PSBoundParameters @GitPushArguments
 }
 
 New-Alias gr Git\Reset-GitRepository
@@ -254,6 +283,7 @@ https://git-scm.com/docs/git-reset
 #>
 function Reset-GitRepository {
   param(
+    [PathCompletions('.', 'Directory')]
     # Local repository path
     [string]$Path,
     # The tree spec to which to revert, specified as '[HEAD]([~]|^)[n]'. If the tree spec is not specified, it defaults to HEAD. If only the number index is given, it defaults to '~' branching. If only the branching is given, the index defaults to 0 = HEAD.
@@ -264,32 +294,59 @@ function Reset-GitRepository {
     [switch]$Soft
   )
 
-  if ($Path -eq '~' -and -not $Tree -or -not ($Path | Resolve-GitRepository)) {
-    $Path, $Tree = '', $Path
-  }
-
-  $Parameters = @{
-    Path  = $Path
-    Throw = $Throw
-  }
-  Add-GitRepository @Parameters -Throw
-
-  $GitCommandArguments = $args
+  $GitResetArguments = $args
 
   if ($Tree) {
-    if ($Tree -match '^(?>head)?(?<Branching>(?>~|\^)?)(?<Step>(?>\d{0,10}))' -and (-not $Matches.Step -or $Matches.Step -as [uint32])) {
+    if (
+      $Tree -match '^(?=.)(?>HEAD)?(?<Branching>(?>~|\^)?)(?<Step>(?>\d{0,10}))$' -and (
+        -not $Matches.Step -or $Matches.Step -as [uint32]
+      )
+    ) {
       $Branching = $Matches.Branching ? $Matches.Branching : '~'
       $Tree = 'HEAD' + $Branching + $Matches.Step
     }
-
-    $GitCommandArguments = , $Tree + $GitCommandArguments
+    else {
+      $GitResetArguments = , $Tree + $GitResetArguments
+      $Tree = ''
+    }
   }
 
-  $GitCommandArguments = , '--hard' + $GitCommandArguments
+  if (
+    $Path -and (
+      $PWD | Resolve-GitRepository
+    ) -and -not (
+      $Path | Resolve-GitRepository
+    )
+  ) {
+    if (
+      -not $Tree -and $Path -match '^(?=.)(?>HEAD)?(?<Branching>(?>~|\^)?)(?<Step>(?>\d{0,10}))$' -and (
+        -not $Matches.Step -or $Matches.Step -as [uint32]
+      )
+    ) {
+      $Branching = $Matches.Branching ? $Matches.Branching : '~'
+      $Tree = 'HEAD' + $Branching + $Matches.Step
+    }
+    else {
+      $GitResetArguments = , $Path + $GitResetArguments
+    }
+
+    $Path = ''
+  }
+
+  $GitParameters = @{
+    Path  = $Path
+    Throw = $Throw
+  }
+  Add-GitRepository @GitParameters -Throw
+
+  if ($Tree) {
+    $GitResetArguments = , $Tree + $GitResetArguments
+  }
+  $GitResetArguments = , '--hard' + $GitResetArguments
   $Reset = @{
     Verb = 'reset'
   }
-  Invoke-GitRepository @Reset @Parameters @GitCommandArguments
+  Invoke-GitRepository @Reset @GitParameters @GitResetArguments
 }
 
 New-Alias grp Git\Restore-GitRepository
@@ -305,12 +362,26 @@ https://git-scm.com/docs/git-pull
 #>
 function Restore-GitRepository {
   param(
+    [PathCompletions('.', 'Directory')]
     # Local repository path
     [string]$Path,
     # Stop execution on Git error
     [switch]$Throw
   )
 
-  Reset-GitRepository @PSBoundParameters -Throw @args
+  $GitResetArguments = $args
+
+  if (
+    $Path -and (
+      $PWD | Resolve-GitRepository
+    ) -and -not (
+      $Path | Resolve-GitRepository
+    )
+  ) {
+    $GitResetArguments = , $Path + $GitResetArguments
+    $Path = ''
+  }
+
+  Reset-GitRepository @PSBoundParameters -Throw @GitResetArguments
   Get-GitRepository @PSBoundParameters
 }
