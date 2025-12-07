@@ -9,17 +9,16 @@
   )
   FunctionsToExport = @(
     'Resolve-NodeProject'
-    'Clear-PackageCache'
-    'Compare-Package'
-    'Step-Package'
-    'Invoke-Script'
+    'Clear-NodeModuleCache'
+    'Compare-NodeModule'
+    'Step-NodeProjectVersion'
+    'Invoke-NodeProjectScript'
   )
   CmdletsToExport   = @()
   VariablesToExport = @()
   AliasesToExport   = @(
     'ncc'
     'no'
-    'nv'
     'nr'
   )
 }

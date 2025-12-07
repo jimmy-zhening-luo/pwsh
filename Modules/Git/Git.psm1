@@ -1,4 +1,4 @@
-function Resolve-Repository {
+function Resolve-GitRepository {
   [CmdletBinding()]
   [OutputType([string[]])]
   param(
@@ -72,8 +72,8 @@ This function allows you to run a Git command in a local repository. If no comma
 .LINK
 https://git-scm.com/docs
 #>
-New-Alias g Git\Invoke-Repository
-function Invoke-Repository {
+New-Alias g Git\Invoke-GitRepository
+function Invoke-GitRepository {
   param(
     # Local repository path
     [string]$Path,
@@ -111,7 +111,7 @@ function Invoke-Repository {
     }
   }
   elseif ($Path -and -not $Verb) {
-    if (-not (Resolve-Repository -Path $Path) -and $Path -in $GIT_VERB) {
+    if (-not (Resolve-GitRepository -Path $Path) -and $Path -in $GIT_VERB) {
       $Verb, $Path = $Path.ToLowerInvariant(), ''
     }
   }
@@ -127,7 +127,7 @@ function Invoke-Repository {
     Path = $Path
     New  = $Verb -eq 'clone'
   }
-  $Repository = Resolve-Repository @Resolve
+  $Repository = Resolve-GitRepository @Resolve
 
   if (-not $Repository) {
     throw "'Path '$Path' is not a Git repository"

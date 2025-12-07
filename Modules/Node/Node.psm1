@@ -28,7 +28,7 @@ function Resolve-NodeProject {
   }
 }
 
-New-Alias ncc Node\Clear-PackageCache
+New-Alias ncc Node\Clear-NodeModuleCache
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to clear the global Node package cache.
@@ -37,11 +37,11 @@ This function is an alias for 'npm cache clean --force'.
 .LINK
 https://docs.npmjs.com/cli/commands/npm-cache
 #>
-function Clear-PackageCache {
+function Clear-NodeModuleCache {
   & npm cache clean --force @args
 }
 
-New-Alias no Node\Compare-Package
+New-Alias no Node\Compare-NodeModule
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to check for outdated packages in a Node project.
@@ -50,7 +50,7 @@ This function is an alias for 'npm outdated [--prefix $Path]'.
 .LINK
 https://docs.npmjs.com/cli/commands/npm-outdated
 #>
-function Compare-Package {
+function Compare-NodeModule {
   param(
     [PathCompletions(
       '~\code',
@@ -67,7 +67,6 @@ function Compare-Package {
   & npm outdated @NodeArguments
 }
 
-New-Alias nv Node\Step-Package
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to increment the package version of the current Node project.
@@ -76,7 +75,7 @@ This function is an alias for 'npm version [--prefix $Path] [version=patch]'.
 .LINK
 https://docs.npmjs.com/cli/commands/npm-outdated
 #>
-function Step-Package {
+function Step-NodeProjectVersion {
   param(
     # New package version, default 'patch'
     [GenericCompletions('patch,minor,major,prerelease,preminor,premajor')]
@@ -127,7 +126,7 @@ function Step-Package {
   & npm version @NodeArguments
 }
 
-New-Alias nr Node\Invoke-Script
+New-Alias nr Node\Invoke-NodeProjectScript
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to run a script defined in a Node project's 'package.json'.
@@ -136,7 +135,7 @@ This function is an alias for 'npm run [script] [--prefix $Path] [--args]'.
 .LINK
 https://docs.npmjs.com/cli/commands/npm-outdated
 #>
-function Invoke-Script {
+function Invoke-NodeProjectScript {
   param(
     [Parameter(Mandatory)]
     [Alias('Run')]

@@ -1,4 +1,4 @@
-New-Alias gitcl Git\Import-Repository
+New-Alias gitcl Git\Import-GitRepository
 <#
 .SYNOPSIS
 Use Git to clone a repository.
@@ -7,7 +7,7 @@ This function is an alias for 'git clone' and allows you to clone a repository i
 .LINK
 https://git-scm.com/docs/git-clone
 #>
-function Import-Repository {
+function Import-GitRepository {
   param(
     # Remote repository URL or 'org/repo'
     [string]$Repository,
@@ -45,7 +45,7 @@ function Import-Repository {
     Verb  = 'clone'
     Throw = $Throw
   }
-  Invoke-Repository @Clone @GitCommandArguments
+  Invoke-GitRepository @Clone @GitCommandArguments
 }
 
 <#
@@ -56,7 +56,7 @@ This function is an alias for 'git pull [arguments]'.
 .LINK
 https://git-scm.com/docs/git-pull
 #>
-function Get-Repository {
+function Get-GitRepository {
   param(
     # Local repository path
     [string]$Path,
@@ -67,10 +67,10 @@ function Get-Repository {
   $Pull = @{
     Verb = 'pull'
   }
-  Invoke-Repository @Pull @PSBoundParameters @args
+  Invoke-GitRepository @Pull @PSBoundParameters @args
 }
 
-New-Alias gpp Git\Get-ChildRepository
+New-Alias gpp Git\Get-ChildGitRepository
 <#
 .SYNOPSIS
 Use Git to pull changes for all repositories in the top level of %USERPROFILE%\code'.
@@ -79,24 +79,24 @@ This function runs 'git pull [arguments]' in each child repository in %USERPROFI
 .LINK
 https://git-scm.com/docs/git-pull
 #>
-function Get-ChildRepository {
+function Get-ChildGitRepository {
   $Code = @{
     Path      = "$HOME\code"
     Directory = $True
   }
   $Repositories = Get-ChildItem @Code |
     Select-Object -ExpandProperty FullName |
-    Resolve-Repository
+    Resolve-GitRepository
   $Count = $Repositories.Count
 
   foreach ($Repository in $Repositories) {
-    Get-Repository -Path $Repository @args
+    Get-GitRepository -Path $Repository @args
   }
 
   "`nPulled $Count repositor" + ($Count -eq 1 ? 'y' : 'ies')
 }
 
-New-Alias ga Git\Add-Repository
+New-Alias ga Git\Add-GitRepository
 <#
 .SYNOPSIS
 Use Git to stage all changes in a repository.
@@ -105,7 +105,7 @@ This function is an alias for 'git add [.]' and stages all changes in the reposi
 .LINK
 https://git-scm.com/docs/git-add
 #>
-function Add-Repository {
+function Add-GitRepository {
   param(
     # Local repository path
     [string]$Path,
@@ -130,7 +130,7 @@ function Add-Repository {
     Verb  = 'add'
     Throw = $Throw
   }
-  Invoke-Repository @Add @GitCommandArguments
+  Invoke-GitRepository @Add @GitCommandArguments
 }
 
 <#
@@ -141,7 +141,7 @@ This function commits changes to a Git repository using the 'git commit' command
 .LINK
 https://git-scm.com/docs/git-commit
 #>
-function Write-Repository {
+function Write-GitRepository {
   param(
     # Local repository path
     [string]$Path,
@@ -169,7 +169,7 @@ function Write-Repository {
   )
 
   if ($Path) {
-    if (-not ($Path | Resolve-Repository)) {
+    if (-not ($Path | Resolve-GitRepository)) {
       if ($Path -match '^-(?>\w|-\w+)$') {
         $CommitArguments = , $Path + $CommitArguments
       }
@@ -208,17 +208,17 @@ function Write-Repository {
     Throw = $Throw
   }
   if (-not $Staged) {
-    Add-Repository @Parameters -Throw
+    Add-GitRepository @Parameters -Throw
   }
 
   $CommitArguments = '-m', ($Messages -join ' ') + $CommitArguments
   $Commit = @{
     Verb = 'commit'
   }
-  Invoke-Repository @Commit @Parameters @CommitArguments
+  Invoke-GitRepository @Commit @Parameters @CommitArguments
 }
 
-New-Alias gs Git\Push-Repository
+New-Alias gs Git\Push-GitRepository
 <#
 .SYNOPSIS
 Use Git to push changes to a repository.
@@ -227,7 +227,7 @@ This function is an alias for 'git push'.
 .LINK
 https://git-scm.com/docs/git-push
 #>
-function Push-Repository {
+function Push-GitRepository {
   param(
     # Local repository path
     [string]$Path,
@@ -235,15 +235,15 @@ function Push-Repository {
     [switch]$Throw
   )
 
-  Get-Repository @PSBoundParameters -Throw
+  Get-GitRepository @PSBoundParameters -Throw
 
   $Push = @{
     Verb = 'push'
   }
-  Invoke-Repository @Push @PSBoundParameters @args
+  Invoke-GitRepository @Push @PSBoundParameters @args
 }
 
-New-Alias gr Git\Reset-Repository
+New-Alias gr Git\Reset-GitRepository
 <#
 .SYNOPSIS
 Use Git to undo changes in a repository.
@@ -252,7 +252,7 @@ This function is an alias for 'git add . && git reset --hard [HEAD]([~]|^)[n]'.
 .LINK
 https://git-scm.com/docs/git-reset
 #>
-function Reset-Repository {
+function Reset-GitRepository {
   param(
     # Local repository path
     [string]$Path,
@@ -264,7 +264,7 @@ function Reset-Repository {
     [switch]$Soft
   )
 
-  if ($Path -eq '~' -and -not $Tree -or -not ($Path | Resolve-Repository)) {
+  if ($Path -eq '~' -and -not $Tree -or -not ($Path | Resolve-GitRepository)) {
     $Path, $Tree = '', $Path
   }
 
@@ -272,7 +272,7 @@ function Reset-Repository {
     Path  = $Path
     Throw = $Throw
   }
-  Add-Repository @Parameters -Throw
+  Add-GitRepository @Parameters -Throw
 
   $GitCommandArguments = $args
 
@@ -289,10 +289,10 @@ function Reset-Repository {
   $Reset = @{
     Verb = 'reset'
   }
-  Invoke-Repository @Reset @Parameters @GitCommandArguments
+  Invoke-GitRepository @Reset @Parameters @GitCommandArguments
 }
 
-New-Alias grp Git\Restore-Repository
+New-Alias grp Git\Restore-GitRepository
 <#
 .SYNOPSIS
 Use Git to restore a repository to its previous state.
@@ -303,7 +303,7 @@ https://git-scm.com/docs/git-reset
 .LINK
 https://git-scm.com/docs/git-pull
 #>
-function Restore-Repository {
+function Restore-GitRepository {
   param(
     # Local repository path
     [string]$Path,
@@ -311,6 +311,6 @@ function Restore-Repository {
     [switch]$Throw
   )
 
-  Reset-Repository @PSBoundParameters -Throw @args
-  Get-Repository @PSBoundParameters
+  Reset-GitRepository @PSBoundParameters -Throw @args
+  Get-GitRepository @PSBoundParameters
 }

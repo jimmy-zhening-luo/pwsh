@@ -11,16 +11,16 @@
     'Git.Command'
   )
   FunctionsToExport = @(
-    'Resolve-Repository'
-    'Invoke-Repository'
-    'Import-Repository'
-    'Get-Repository'
-    'Get-ChildRepository'
-    'Add-Repository'
-    'Write-Repository'
-    'Push-Repository'
-    'Reset-Repository'
-    'Restore-Repository'
+    'Resolve-GitRepository'
+    'Invoke-GitRepository'
+    'Import-GitRepository'
+    'Get-GitRepository'
+    'Get-ChildGitRepository'
+    'Add-GitRepository'
+    'Write-GitRepository'
+    'Push-GitRepository'
+    'Reset-GitRepository'
+    'Restore-GitRepository'
   )
   CmdletsToExport   = @()
   VariablesToExport = @()

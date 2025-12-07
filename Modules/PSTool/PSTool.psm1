@@ -37,7 +37,7 @@ function Update-PSProfile {
   $ProfileRepository = @{
     Path = Join-Path $HOME code\pwsh -Resolve
   }
-  Git\Get-Repository @ProfileRepository
+  Git\Get-GitRepository @ProfileRepository
   Update-PSLinter
 }
 
