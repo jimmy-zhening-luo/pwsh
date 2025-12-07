@@ -29,6 +29,19 @@ function Resolve-NodeProject {
   }
 }
 
+New-Alias nx Node\Invoke-NodeExecutable
+<#
+.SYNOPSIS
+Use 'npx' to run a command from a local or remote npm module.
+.DESCRIPTION
+This function is an alias shim for 'npx [args]'.
+.LINK
+https://docs.npmjs.com/cli/commands/npx
+#>
+function Invoke-NodeExecutable {
+  & npx @args
+}
+
 New-Alias ncc Node\Clear-NodeModuleCache
 <#
 .SYNOPSIS
