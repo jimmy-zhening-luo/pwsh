@@ -13,14 +13,14 @@ function Invoke-Workspace {
     [string]$Location
   )
 
-  $Local:args = $args
+  $ArgumentList = $args
 
   if (
     $Location -and -not (
       Test-Path -Path $Location -PathType Container
     )
   ) {
-    $Local:args = , $Location + $Local:args
+    $ArgumentList = , $Location + $ArgumentList
     $Location = ''
   }
 
@@ -29,7 +29,7 @@ function Invoke-Workspace {
 
     if (Test-Path -Path $Target) {
       $FullPath = (Resolve-Path $Target).Path
-      $Local:args = , $FullPath + $Local:args
+      $ArgumentList = , $FullPath + $ArgumentList
     }
     else {
       if (-not $Path.StartsWith('-')) {
@@ -40,7 +40,7 @@ function Invoke-Workspace {
         $Location = $PWD.Path
       }
 
-      $Local:args = $Location, $Path + $Local:args
+      $ArgumentList = $Location, $Path + $ArgumentList
     }
   }
   else {
@@ -48,7 +48,7 @@ function Invoke-Workspace {
       $Location = $PWD.Path
     }
 
-    $Local:args = , $Location + $Local:args
+    $ArgumentList = , $Location + $ArgumentList
   }
 
   if ($env:SSH_CLIENT) {
@@ -59,22 +59,22 @@ function Invoke-Workspace {
     if (-not $ProfileName.StartsWith('-')) {
       $Window = $True
 
-      $Local:args += '--profile'
+      $ArgumentList += '--profile'
     }
 
-    $Local:args += $ProfileName
+    $ArgumentList += $ProfileName
   }
 
   if ($Window) {
-    $Local:args += '--new-window'
+    $ArgumentList += '--new-window'
   }
   elseif ($ReuseWindow) {
-    $Local:args += '--reuse-window'
+    $ArgumentList += '--reuse-window'
   }
 
   $Process = @{
     FilePath     = 'code.cmd'
-    ArgumentList = $Local:args
+    ArgumentList = $ArgumentList
     NoNewWindow  = $True
   }
   [void](Start-Process @Process)

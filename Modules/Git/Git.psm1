@@ -83,10 +83,10 @@ function Invoke-Repository {
     [switch]$Throw
   )
 
-  $Local:args = $args
+  $GitArguments = $args
 
   if ($Path.StartsWith('-')) {
-    $Local:args = , $Path + $Local:args
+    $GitArguments = , $Path + $GitArguments
     $Path = ''
 
     if ($Verb -and -not $Verb.StartsWith('-')) {
@@ -95,7 +95,7 @@ function Invoke-Repository {
   }
 
   if ($Verb.StartsWith('-')) {
-    $Local:args = , $Verb + $Local:args
+    $GitArguments = , $Verb + $GitArguments
     $Verb = ''
   }
 
@@ -143,16 +143,16 @@ function Invoke-Repository {
     '-C'
     $Repository
     $Verb
-  )
+  ) + $GitArguments
   if ($Throw) {
-    & git $GitArguments @Local:args 2>&1 |
-      Tee-Object -Variable GitOutput
+    & git @GitArguments 2>&1 |
+      Tee-Object -Variable GitResult
 
-    if ($GitOutput -match '^(?>fatal:)') {
-      throw $GitOutput
+    if ($GitResult -match '^(?>fatal:)') {
+      throw $GitResult
     }
   }
   else {
-    & git $GitArguments @Local:args
+    & git @GitArguments
   }
 }

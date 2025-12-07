@@ -20,10 +20,10 @@ function Import-Repository {
     [switch]$ForceSsh
   )
 
-  $Local:args = $args
+  $GitCommandArguments = $args
 
   if ($Path.StartsWith('-')) {
-    $Local:args = , $Path + $Local:args
+    $GitCommandArguments = , $Path + $GitCommandArguments
     $Path = ''
   }
 
@@ -39,13 +39,13 @@ function Import-Repository {
 
   $Protocol = $ForceSsh ? 'git@github.com:' : 'https://github.com/'
   $Origin = $Protocol + ($RepositoryPathParts -join '/')
-  $Local:args = , $Origin + $Local:args
+  $GitCommandArguments = , $Origin + $GitCommandArguments
   $Clone = @{
     Path  = $Path
     Verb  = 'clone'
     Throw = $Throw
   }
-  Invoke-Repository @Clone @Local:args
+  Invoke-Repository @Clone @GitCommandArguments
 }
 
 <#
@@ -117,12 +117,12 @@ function Add-Repository {
     [switch]$Renormalize
   )
 
-  $Local:args = $args
+  $GitCommandArguments = $args
   if ($Name) {
-    $Local:args = , $Name + $Local:args
+    $GitCommandArguments = , $Name + $GitCommandArguments
   }
   if ($Renormalize -and '--renormalize' -notin $args) {
-    $Local:args += '--renormalize'
+    $GitCommandArguments += '--renormalize'
   }
 
   $Add = @{
@@ -130,7 +130,7 @@ function Add-Repository {
     Verb  = 'add'
     Throw = $Throw
   }
-  Invoke-Repository @Add @Local:args
+  Invoke-Repository @Add @GitCommandArguments
 }
 
 <#
@@ -155,13 +155,13 @@ function Write-Repository {
     [switch]$AllowEmpty
   )
 
-  $Local:args = $args
+  $GitCommandArguments = $args
 
   if ($Message) {
-    $Local:args = , $Message + $Local:args
+    $GitCommandArguments = , $Message + $GitCommandArguments
   }
 
-  $CommitArguments, $Messages = $Local:args.Where(
+  $CommitArguments, $Messages = $GitCommandArguments.Where(
     { $_ -and $_ -is [string] }
   ).Where(
     { $_ -match '^-(?>\w|-\w+)$' },
@@ -274,7 +274,7 @@ function Reset-Repository {
   }
   Add-Repository @Parameters -Throw
 
-  $Local:args = $args
+  $GitCommandArguments = $args
 
   if ($Tree) {
     if ($Tree -match '^(?>head)?(?<Branching>(?>~|\^)?)(?<Step>(?>\d{0,10}))' -and (-not $Matches.Step -or $Matches.Step -as [uint32])) {
@@ -282,14 +282,14 @@ function Reset-Repository {
       $Tree = 'HEAD' + $Branching + $Matches.Step
     }
 
-    $Local:args = , $Tree + $Local:args
+    $GitCommandArguments = , $Tree + $GitCommandArguments
   }
 
-  $Local:args = , '--hard' + $Local:args
+  $GitCommandArguments = , '--hard' + $GitCommandArguments
   $Reset = @{
     Verb = 'reset'
   }
-  Invoke-Repository @Reset @Parameters @Local:args
+  Invoke-Repository @Reset @Parameters @GitCommandArguments
 }
 
 New-Alias grp Git\Restore-Repository

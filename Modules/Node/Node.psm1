@@ -10,17 +10,18 @@ function Resolve-NodeProject {
   [OutputType([string])]
   param(
     # Node project root path to be resolved
-    [string]$Path = $PWD.Path
+    [string]$Path = $PWD.Path,
+    [switch]$OmitPrefix
   )
 
-  $IsNode = @{
+  $IsNodeProject = @{
     Path     = Join-Path $Path package.json
     PathType = 'Leaf'
   }
-  if (Test-Path @IsNode) {
-    $Prefix = (Resolve-Path $Path).Path
+  if (Test-Path @IsNodeProject) {
+    $Project = (Resolve-Path $Path).Path
 
-    $Prefix -eq $PWD.Path ? '' : $Prefix
+    $Project -eq $PWD.Path ? '' : $OmitPrefix ? $Project : "--prefix=$Project"
   }
   else {
     throw "Path '$Path' is not a Node project directory."
@@ -60,14 +61,38 @@ function Compare-Package {
     [string]$Path
   )
 
-  $Prefix = Resolve-NodeProject @PSBoundParameters
-  $Local:args = $args
+  $NodeArguments = $args
+  $NodeArguments = , (Resolve-NodeProject @PSBoundParameters) + $NodeArguments
 
-  if ($Prefix) {
-    $Local:args = '--prefix', $Prefix + $Local:args
-  }
+  & npm outdated @NodeArguments
+}
 
-  & npm outdated @Local:args
+New-Alias nv Node\Step-Package
+<#
+.SYNOPSIS
+Use Node Package Manager (npm) to increment the package version of the current Node project.
+.DESCRIPTION
+This function is an alias for 'npm version [--prefix $Path] [version=patch]'.
+.LINK
+https://docs.npmjs.com/cli/commands/npm-outdated
+#>
+function Compare-Package {
+  param(
+    # New package version, default 'patch'
+    [string]$Version = 'patch',
+    [PathCompletions(
+      '~\code',
+      'Directory',
+      $true
+    )]
+    # Node project root
+    [string]$Path
+  )
+
+  $NodeArguments = $args
+  $NodeArguments = , (Resolve-NodeProject @PSBoundParameters) + $NodeArguments
+
+  & npm outdated @NodeArguments
 }
 
 New-Alias nr Node\Invoke-Script
@@ -75,7 +100,7 @@ New-Alias nr Node\Invoke-Script
 .SYNOPSIS
 Use Node Package Manager (npm) to run a script defined in a Node project's 'package.json'.
 .DESCRIPTION
-This function is an alias for 'npm run [script] [--args]'.
+This function is an alias for 'npm run [script] [--prefix $Path] [--args]'.
 .LINK
 https://docs.npmjs.com/cli/commands/npm-outdated
 #>
@@ -94,18 +119,14 @@ function Invoke-Script {
     [string]$Path
   )
 
-  $Local:args = $args
+  $NodeArguments = $args
 
   if ($Path.StartsWith(('-'))) {
-    $Local:args = , $Path + $Local:args
+    $NodeArguments = , $Path + $NodeArguments
     $Path = ''
   }
 
-  $Prefix = Resolve-NodeProject @PSBoundParameters
+  $NodeArguments = , (Resolve-NodeProject @PSBoundParameters) + $NodeArguments
 
-  if ($Prefix) {
-    $Local:args = '--prefix', $Prefix + $Local:args
-  }
-
-  & npm run $Script @Local:args
+  & npm run $Script @NodeArguments
 }
