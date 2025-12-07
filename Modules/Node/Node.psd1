@@ -5,6 +5,7 @@
   PowerShellVersion = '7.5'
   RequiredModules   = @(
     'Shell'
+    'GenericArgumentCompleter'
   )
   FunctionsToExport = @(
     'Resolve-NodeProject'
@@ -15,8 +16,9 @@
   CmdletsToExport   = @()
   VariablesToExport = @()
   AliasesToExport   = @(
-    'npc'
-    'npo'
+    'ncc'
+    'no'
+    'nv'
     'nr'
   )
 }

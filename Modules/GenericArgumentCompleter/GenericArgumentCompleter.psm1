@@ -1,24 +1,37 @@
 class GenericCompletionsAttribute : System.Management.Automation.ArgumentCompleterAttribute, System.Management.Automation.IArgumentCompleterFactory {
   [string] $Units
+  [bool] $Sort
   [string] $Case
 
   GenericCompletionsAttribute(
     [string] $units
   ) {
     $this.Units = $units
+    $this.Sort = $False
     $this.Case = 'Lower'
   }
   GenericCompletionsAttribute(
     [string] $units,
+    [bool] $sort
+  ) {
+    $this.Units = $units
+    $this.Sort = $sort
+    $this.Case = 'Lower'
+  }
+  GenericCompletionsAttribute(
+    [string] $units,
+    [bool] $sort,
     [string] $case
   ) {
     $this.Units = $units
+    $this.Sort = $sort
     $this.Case = $case
   }
 
   [System.Management.Automation.IArgumentCompleter] Create() {
     return [GenericCompleter]::new(
       $this.Units,
+      $this.Sort,
       $this.Case
     )
   }
@@ -26,10 +39,12 @@ class GenericCompletionsAttribute : System.Management.Automation.ArgumentComplet
 
 class GenericCompleter : System.Management.Automation.IArgumentCompleter {
   [string] $Units
+  [bool] $Sort
   [string] $Case
 
   GenericCompleter(
     [string] $units,
+    [bool] $sort,
     [string] $case
   ) {
     if (
@@ -63,6 +78,7 @@ class GenericCompleter : System.Management.Automation.IArgumentCompleter {
     }
 
     $this.Units = $units
+    $this.Sort = $sort
     $this.Case = $case
   }
 
@@ -86,6 +102,10 @@ class GenericCompleter : System.Management.Automation.IArgumentCompleter {
       Upper {
         $Local:units = $Local:units.ToUpperInvariant()
       }
+    }
+
+    if ($this.Sort) {
+      $Local:units = $Local:units | Sort-Object
     }
 
     $unitMatches = @()

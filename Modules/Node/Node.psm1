@@ -28,7 +28,7 @@ function Resolve-NodeProject {
   }
 }
 
-New-Alias npc Node\Clear-PackageCache
+New-Alias ncc Node\Clear-PackageCache
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to clear the global Node package cache.
@@ -41,7 +41,7 @@ function Clear-PackageCache {
   & npm cache clean --force @args
 }
 
-New-Alias npo Node\Compare-Package
+New-Alias no Node\Compare-Package
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to check for outdated packages in a Node project.
@@ -76,9 +76,10 @@ This function is an alias for 'npm version [--prefix $Path] [version=patch]'.
 .LINK
 https://docs.npmjs.com/cli/commands/npm-outdated
 #>
-function Compare-Package {
+function Step-Package {
   param(
     # New package version, default 'patch'
+    [GenericCompletions('patch,minor,major,prerelease,preminor,premajor')]
     [string]$Version = 'patch',
     [PathCompletions(
       '~\code',
@@ -92,7 +93,38 @@ function Compare-Package {
   $NodeArguments = $args
   $NodeArguments = , (Resolve-NodeProject @PSBoundParameters) + $NodeArguments
 
-  & npm outdated @NodeArguments
+  $NamedVersion = @(
+    'patch'
+    'minor'
+    'major'
+    'prerelease'
+    'preminor'
+    'premajor'
+  )
+
+  if ($Version -notin $NamedVersion) {
+    if ($Version -match '^v?(?<Major>\d+)(?>\.(?<Minor>\d*)(?>\.(?<Patch>\d*))?)?(?>-(?<Pre>\w+(?>\.\d+)?))?$') {
+      $FullVersion = @{
+        Major = [UInt32]$Matches.Major
+        Minor = $Matches.Minor ? [UInt32]$Matches.Minor : [UInt32]0
+        Patch = $Matches.Patch ? [UInt32]$Matches.Patch : [UInt32]0
+        Pre   = $Matches.Pre ? [string]$Matches.Pre : ''
+      }
+
+      $Version = "$($FullVersion.Major).$($FullVersion.Minor).$($FullVersion.Patch)"
+
+      if ($FullVersion.Pre) {
+        $Version += "-$($FullVersion.Pre)"
+      }
+    }
+    else {
+      throw "Unrecognized version ''"
+    }
+  }
+
+  $NodeArguments += $Version.ToLowerInvariant()
+
+  & npm version @NodeArguments
 }
 
 New-Alias nr Node\Invoke-Script
