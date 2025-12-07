@@ -149,6 +149,8 @@ function Write-Repository {
     [string]$Message,
     # Stop execution on Git error
     [switch]$Throw,
+    # Only commit files that are already staged
+    [switch]$Staged,
     # Allow empty commit ('--allow-empty')
     [switch]$AllowEmpty
   )
@@ -205,7 +207,9 @@ function Write-Repository {
     Path  = $Path
     Throw = $Throw
   }
-  Add-Repository @Parameters -Throw
+  if (-not $Staged) {
+    Add-Repository @Parameters -Throw
+  }
 
   $CommitArguments = '-m', ($Messages -join ' ') + $CommitArguments
   $Commit = @{
