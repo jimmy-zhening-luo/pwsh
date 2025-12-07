@@ -114,25 +114,27 @@ class GenericCompleter : System.Management.Automation.IArgumentCompleter {
 
     $unitMatches = @()
 
-    if ($wordToComplete) {
+    $fragment = $wordToComplete ? $wordToComplete -match "^'(?<Fragment>.*)'$" ? $Matches.Fragment -replace "''", "'" : $wordToComplete : ''
+
+    if ($fragment) {
       $unitMatches += $Local:units |
-        ? { $_ -like "$wordToComplete*" }
+        ? { $_ -like "$fragment*" }
 
       if (-not $unitMatches) {
         $unitMatches += $Local:units |
-          ? { $_ -like "*$wordToComplete*" }
+          ? { $_ -like "*$fragment*" }
       }
       elseif ($unitMatches.Count -eq 1) {
-        if ($unitMatches[0] -eq $wordToComplete) {
+        if ($unitMatches[0] -eq $fragment) {
           $exactMatch, $unitMatches = $unitMatches[0], @()
           $unitMatches += (
             $Local:units |
-              ? { $_ -like "*$wordToComplete*" }
+              ? { $_ -like "*$fragment*" }
           ) -ne $exactMatch
           $unitMatches += $exactMatch
         }
         else {
-          $unitMatches += $wordToComplete
+          $unitMatches += $fragment
         }
       }
     }
