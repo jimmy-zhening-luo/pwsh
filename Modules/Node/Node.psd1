@@ -11,6 +11,7 @@
     'Resolve-NodeProject'
     'Clear-PackageCache'
     'Compare-Package'
+    'Step-Package'
     'Invoke-Script'
   )
   CmdletsToExport   = @()
