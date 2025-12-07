@@ -146,9 +146,14 @@ function Invoke-GitRepository {
   if (-not $Repository) {
     if ($Path) {
       $GitArguments = , $Path + $GitArguments
+      $Resolve.Path = $PWD
+
+      $Repository = Resolve-GitRepository @Resolve
     }
 
-    $Repository = $PWD.Path
+    if (-not $Repository) {
+      throw "Path '$Path' is not a Git repository"
+    }
   }
 
   $GitArguments = @(
