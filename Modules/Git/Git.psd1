@@ -7,12 +7,10 @@
     'Shell'
     'GenericArgumentCompleter'
   )
-  NestedModules     = @(
-    'Git.Command'
-  )
   FunctionsToExport = @(
     'Resolve-GitRepository'
     'Invoke-GitRepository'
+    'Measure-GitRepository'
     'Import-GitRepository'
     'Get-GitRepository'
     'Get-ChildGitRepository'
@@ -26,6 +24,7 @@
   VariablesToExport = @()
   AliasesToExport   = @(
     'g'
+    'gg'
     'gitcl'
     'gpp'
     'ga'
