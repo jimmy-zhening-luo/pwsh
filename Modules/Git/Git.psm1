@@ -63,7 +63,8 @@ function Resolve-GitRepository {
   }
 }
 
-$GIT_VERB = (Import-PowerShellDataFile -Path (Join-Path $PSScriptRoot Git-Verb.psd1 -Resolve)).GIT_VERB
+$GIT_VERB_COMPLETION = 'add,clone,commit,config,pull,push,reset,rm,status,switch'
+$GIT_VERB = $GIT_VERB_COMPLETION -split ','
 
 <#
 .SYNOPSIS
