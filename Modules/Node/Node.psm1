@@ -164,3 +164,35 @@ function Invoke-NodeProjectScript {
 
   & npm run $Script @NodeArguments
 }
+
+New-Alias nt Node\Test-NodeProject
+<#
+.SYNOPSIS
+Use Node Package Manager (npm) to run the 'test' script defined in a Node project's 'package.json'.
+.DESCRIPTION
+This function is an alias for 'npm test [--prefix $Path] [--args]'.
+.LINK
+https://docs.npmjs.com/cli/commands/npm-test
+#>
+function Test-NodeProject {
+  param(
+    [PathCompletions(
+      '~\code',
+      'Directory',
+      $True
+    )]
+    # Node project root
+    [string]$Path
+  )
+
+  $NodeArguments = $args
+
+  if ($Path.StartsWith(('-'))) {
+    $NodeArguments = , $Path + $NodeArguments
+    $Path = ''
+  }
+
+  $NodeArguments = , (Resolve-NodeProject @PSBoundParameters) + $NodeArguments
+
+  & npm test @NodeArguments
+}

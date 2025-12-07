@@ -13,6 +13,7 @@
     'Compare-NodeModule'
     'Step-NodeProjectVersion'
     'Invoke-NodeProjectScript'
+    'Test-NodeProject'
   )
   CmdletsToExport   = @()
   VariablesToExport = @()
@@ -20,5 +21,6 @@
     'ncc'
     'no'
     'nr'
+    'nt'
   )
 }
