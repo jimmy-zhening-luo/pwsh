@@ -83,8 +83,7 @@ function Invoke-GitRepository {
     # Local repository path
     [string]$Path,
     [GenericCompletions(
-      'add,clone,commit,config,pull,push,reset,rm,status,switch,init,diff,rm,mv,branch,switch,checkout,merge,stash,tag,fetch,remote,submodule,ls-files,ls-tree',
-      $True
+      'add,clone,commit,config,pull,push,reset,rm,status,switch,init,diff,rm,mv,branch,switch,checkout,merge,stash,tag,fetch,remote,submodule,ls-files,ls-tree'
     )]
     # Git verb (command) to run
     [string]$Verb,
