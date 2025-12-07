@@ -8,7 +8,8 @@
     'GenericArgumentCompleter'
   )
   FunctionsToExport = @(
-    'Resolve-NodePackage'
+    'Test-NodePackageDirectory'
+    'Resolve-NodePackageDirectory'
     'Invoke-Node'
     'Invoke-NodePackage'
     'Invoke-NodeExecutable'

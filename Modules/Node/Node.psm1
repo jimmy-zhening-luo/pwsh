@@ -1,26 +1,49 @@
 <#
 .SYNOPSIS
+Test whether a path is the root directory of a Node package.
+.DESCRIPTION
+This function tests returns true if the supplied path is the root directory of a Node package, otherwise false.
+.LINK
+https://docs.npmjs.com/cli/commands
+#>
+function Test-NodePackageDirectory {
+  [OutputType([string])]
+  param(
+    [PathCompletions('.', 'Directory')]
+    # Node package root path to be resolved
+    [string]$Path
+  )
+
+  $IsNodePackage = @{
+    Path     = Join-Path ($Path ? $Path : $PWD) package.json
+    PathType = 'Leaf'
+  }
+  return Test-Path @IsNodePackage
+}
+
+<#
+.SYNOPSIS
 Resolve a Node package at its root directory.
 .DESCRIPTION
 This function resolves the supplied path to a qualified, rooted path if it is a Node package root. If the supplied path is not a Node package root, an error is thrown.
 .LINK
 https://docs.npmjs.com/cli/commands
 #>
-function Resolve-NodePackage {
+function Resolve-NodePackageDirectory {
   [OutputType([string])]
   param(
     [PathCompletions('.', 'Directory')]
     # Node package root path to be resolved
-    [string]$Path = $PWD.Path,
+    [string]$Path,
+    # Omit the '--prefix=' prefix from the output
     [switch]$OmitPrefix
   )
 
   $IsNodePackage = @{
-    Path     = Join-Path $Path package.json
-    PathType = 'Leaf'
+    Path = $Path
   }
-  if (Test-Path @IsNodePackage) {
-    $Package = (Resolve-Path $Path).Path
+  if (Test-NodePackageDirectory @IsNodePackage) {
+    $Package = ($Path ? (Resolve-Path $Path) : $PWD).Path
 
     $Package -eq $PWD.Path ? '' : $OmitPrefix ? $Package : "--prefix=$Package"
   }
@@ -108,7 +131,7 @@ function Compare-NodeModule {
     $NodeArguments = , $Path + $NodeArguments
     $Path = ''
   }
-  $NodeArguments = , (Resolve-NodePackage @PSBoundParameters) + $NodeArguments
+  $NodeArguments = , (Resolve-NodePackageDirectory @PSBoundParameters) + $NodeArguments
 
   & npm.ps1 outdated @NodeArguments
 }
@@ -140,7 +163,7 @@ function Step-NodePackageVersion {
     $NodeArguments = , $Path + $NodeArguments
     $Path = ''
   }
-  $NodeArguments = , (Resolve-NodePackage @PSBoundParameters) + $NodeArguments
+  $NodeArguments = , (Resolve-NodePackageDirectory @PSBoundParameters) + $NodeArguments
 
   $NamedVersion = @(
     'patch'
@@ -207,7 +230,7 @@ function Invoke-NodePackageScript {
     $NodeArguments = , $Path + $NodeArguments
     $Path = ''
   }
-  $NodeArguments = , (Resolve-NodePackage @PSBoundParameters) + $NodeArguments
+  $NodeArguments = , (Resolve-NodePackageDirectory @PSBoundParameters) + $NodeArguments
 
   & npm.ps1 run $Script @NodeArguments
 }
@@ -237,7 +260,7 @@ function Test-NodePackage {
     $NodeArguments = , $Path + $NodeArguments
     $Path = ''
   }
-  $NodeArguments = , (Resolve-NodePackage @PSBoundParameters) + $NodeArguments
+  $NodeArguments = , (Resolve-NodePackageDirectory @PSBoundParameters) + $NodeArguments
 
   & npm.ps1 test @NodeArguments
 }
