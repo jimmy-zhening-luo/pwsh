@@ -138,8 +138,6 @@ https://docs.npmjs.com/cli/commands/npm-outdated
 #>
 function Invoke-NodeProjectScript {
   param(
-    [Parameter(Mandatory)]
-    [Alias('Run')]
     # Name of the npm script to run
     [string]$Script,
     [PathCompletions(
@@ -150,6 +148,10 @@ function Invoke-NodeProjectScript {
     # Node project root
     [string]$Path
   )
+
+  if (-not $Script) {
+    throw 'Script name is required.'
+  }
 
   $NodeArguments = $args
 
