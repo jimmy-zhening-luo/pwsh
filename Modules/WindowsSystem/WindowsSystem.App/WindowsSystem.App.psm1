@@ -19,7 +19,7 @@ function Update-StoreApp {
   [void](Start-Process -FilePath ms-windows-store://downloadsandupdates)
 }
 
-New-Alias wget winget
+New-Alias wget winget.exe
 
 New-Alias wga WindowsSystem\Add-WinGetApp
 <#
@@ -32,10 +32,10 @@ https://learn.microsoft.com/en-us/windows/package-manager/winget/install
 #>
 function Add-WinGetApp {
   if ($args) {
-    & winget install @args
+    & winget.exe install @args
   }
   else {
-    & winget upgrade
+    & winget.exe upgrade
   }
 }
 
@@ -49,7 +49,7 @@ This function is an alias for 'winget upgrade'.
 https://learn.microsoft.com/en-us/windows/package-manager/winget/upgrade
 #>
 function Update-WinGetApp {
-  & winget upgrade @args
+  & winget.exe upgrade @args
 }
 
 New-Alias wgf WindowsSystem\Find-WinGetApp
@@ -63,10 +63,10 @@ https://learn.microsoft.com/en-us/windows/package-manager/winget/search
 #>
 function Find-WinGetApp {
   if ($args) {
-    & winget search @args
+    & winget.exe search @args
   }
   else {
-    & winget list
+    & winget.exe list
   }
 }
 
@@ -80,5 +80,5 @@ This function is an alias for 'winget uninstall'.
 https://learn.microsoft.com/en-us/windows/package-manager/winget/uninstall
 #>
 function Remove-WinGetApp {
-  & winget uninstall @args
+  & winget.exe uninstall @args
 }
