@@ -103,8 +103,7 @@ function Compare-NodeModule {
     [string]$Path
   )
 
-  $NodeArguments = $args
-  $NodeArguments = , (Resolve-NodePackage @PSBoundParameters) + $NodeArguments
+  $NodeArguments = , (Resolve-NodePackage @PSBoundParameters) + $args
 
   & npm.ps1 outdated @NodeArguments
 }
@@ -131,8 +130,7 @@ function Step-NodePackageVersion {
     [string]$Path
   )
 
-  $NodeArguments = $args
-  $NodeArguments = , (Resolve-NodePackage @PSBoundParameters) + $NodeArguments
+  $NodeArguments = , (Resolve-NodePackage @PSBoundParameters) + $args
 
   $NamedVersion = @(
     'patch'
