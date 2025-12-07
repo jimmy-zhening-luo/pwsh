@@ -103,7 +103,12 @@ function Compare-NodeModule {
     [string]$Path
   )
 
-  $NodeArguments = , (Resolve-NodePackage @PSBoundParameters) + $args
+  $NodeArguments = $args
+  if ($Path.StartsWith(('-'))) {
+    $NodeArguments = , $Path + $NodeArguments
+    $Path = ''
+  }
+  $NodeArguments = , (Resolve-NodePackage @PSBoundParameters) + $NodeArguments
 
   & npm.ps1 outdated @NodeArguments
 }
@@ -130,7 +135,12 @@ function Step-NodePackageVersion {
     [string]$Path
   )
 
-  $NodeArguments = , (Resolve-NodePackage @PSBoundParameters) + $args
+  $NodeArguments = $args
+  if ($Path.StartsWith(('-'))) {
+    $NodeArguments = , $Path + $NodeArguments
+    $Path = ''
+  }
+  $NodeArguments = , (Resolve-NodePackage @PSBoundParameters) + $NodeArguments
 
   $NamedVersion = @(
     'patch'
@@ -193,12 +203,10 @@ function Invoke-NodePackageScript {
   }
 
   $NodeArguments = $args
-
   if ($Path.StartsWith(('-'))) {
     $NodeArguments = , $Path + $NodeArguments
     $Path = ''
   }
-
   $NodeArguments = , (Resolve-NodePackage @PSBoundParameters) + $NodeArguments
 
   & npm.ps1 run $Script @NodeArguments
@@ -225,12 +233,10 @@ function Test-NodePackage {
   )
 
   $NodeArguments = $args
-
   if ($Path.StartsWith(('-'))) {
     $NodeArguments = , $Path + $NodeArguments
     $Path = ''
   }
-
   $NodeArguments = , (Resolve-NodePackage @PSBoundParameters) + $NodeArguments
 
   & npm.ps1 test @NodeArguments
