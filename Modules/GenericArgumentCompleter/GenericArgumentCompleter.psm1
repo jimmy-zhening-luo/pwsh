@@ -96,7 +96,7 @@ class GenericCompleter : System.Management.Automation.IArgumentCompleter {
 
     $Local:units = (
       $this.Units -split ','
-    ).Trim() -notmatch '^\s*$'
+    ).Trim() | ? { $_ }
 
     switch ($this.Case) {
       Lower {
@@ -114,32 +114,30 @@ class GenericCompleter : System.Management.Automation.IArgumentCompleter {
 
     $unitMatches = @()
 
-    if ($Local:units) {
-      if ($wordToComplete) {
-        $unitMatches += $Local:units |
-          ? { $_ -like "$wordToComplete*" }
+    if ($wordToComplete) {
+      $unitMatches += $Local:units |
+        ? { $_ -like "$wordToComplete*" }
 
-        if (-not $unitMatches) {
-          $unitMatches += $Local:units |
-            ? { $_ -like "*$wordToComplete*" }
+      if (-not $unitMatches) {
+        $unitMatches += $Local:units |
+          ? { $_ -like "*$wordToComplete*" }
+      }
+      elseif ($unitMatches.Count -eq 1) {
+        if ($unitMatches[0] -eq $wordToComplete) {
+          $exactMatch, $unitMatches = $unitMatches[0], @()
+          $unitMatches += (
+            $Local:units |
+              ? { $_ -like "*$wordToComplete*" }
+          ) -ne $exactMatch
+          $unitMatches += $exactMatch
         }
-        elseif ($unitMatches.Count -eq 1) {
-          if ($unitMatches[0] -eq $wordToComplete) {
-            $exactMatch, $unitMatches = $unitMatches[0], @()
-            $unitMatches += (
-              $Local:units |
-                ? { $_ -like "*$wordToComplete*" }
-            ) -ne $exactMatch
-            $unitMatches += $exactMatch
-          }
-          else {
-            $unitMatches += $wordToComplete
-          }
+        else {
+          $unitMatches += $wordToComplete
         }
       }
-      else {
-        $unitMatches += $Local:units
-      }
+    }
+    else {
+      $unitMatches += $Local:units
     }
 
     $resultList = [System.Collections.Generic.List[System.Management.Automation.CompletionResult]]::new()
