@@ -8,17 +8,19 @@
     'GenericArgumentCompleter'
   )
   FunctionsToExport = @(
-    'Resolve-NodeProject'
+    'Resolve-NodePackage'
+    'Invoke-Node'
     'Invoke-NodeExecutable'
     'Clear-NodeModuleCache'
     'Compare-NodeModule'
-    'Step-NodeProjectVersion'
-    'Invoke-NodeProjectScript'
-    'Test-NodeProject'
+    'Step-NodePackageVersion'
+    'Invoke-NodePackageScript'
+    'Test-NodePackage'
   )
   CmdletsToExport   = @()
   VariablesToExport = @()
   AliasesToExport   = @(
+    'n'
     'nx'
     'ncc'
     'npo'

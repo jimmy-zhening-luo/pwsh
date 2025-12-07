@@ -1,32 +1,47 @@
 <#
 .SYNOPSIS
-Resolve a Node project at its root directory.
+Resolve a Node package at its root directory.
 .DESCRIPTION
-This function resolves the supplied path to a qualified, rooted path if it is a Node project root. If the supplied path is not a Node project root, an error is thrown.
+This function resolves the supplied path to a qualified, rooted path if it is a Node package root. If the supplied path is not a Node package root, an error is thrown.
 .LINK
 https://docs.npmjs.com/cli/commands
 #>
-function Resolve-NodeProject {
+function Resolve-NodePackage {
   [OutputType([string])]
   param(
     [PathCompletions('.', 'Directory')]
-    # Node project root path to be resolved
+    # Node package root path to be resolved
     [string]$Path = $PWD.Path,
     [switch]$OmitPrefix
   )
 
-  $IsNodeProject = @{
+  $IsNodePackage = @{
     Path     = Join-Path $Path package.json
     PathType = 'Leaf'
   }
-  if (Test-Path @IsNodeProject) {
-    $Project = (Resolve-Path $Path).Path
+  if (Test-Path @IsNodePackage) {
+    $Package = (Resolve-Path $Path).Path
 
-    $Project -eq $PWD.Path ? '' : $OmitPrefix ? $Project : "--prefix=$Project"
+    $Package -eq $PWD.Path ? '' : $OmitPrefix ? $Package : "--prefix=$Package"
   }
   else {
-    throw "Path '$Path' is not a Node project directory."
+    throw "Path '$Path' is not a Node package directory."
   }
+}
+
+New-Alias n Node\Invoke-Node
+<#
+.SYNOPSIS
+Use Node Package Manager (npm) to run a command in a Node package.
+.DESCRIPTION
+This function is an alias shim for 'npm [args]'.
+.LINK
+https://docs.npmjs.com/cli/commands
+.LINK
+https://docs.npmjs.com/cli/commands/npm
+#>
+function Invoke-Node {
+  & npm @args
 }
 
 New-Alias nx Node\Invoke-NodeExecutable
@@ -45,7 +60,7 @@ function Invoke-NodeExecutable {
 New-Alias ncc Node\Clear-NodeModuleCache
 <#
 .SYNOPSIS
-Use Node Package Manager (npm) to clear the global Node package cache.
+Use Node Package Manager (npm) to clear the global Node module cache.
 .DESCRIPTION
 This function is an alias for 'npm cache clean --force'.
 .LINK
@@ -58,7 +73,7 @@ function Clear-NodeModuleCache {
 New-Alias npo Node\Compare-NodeModule
 <#
 .SYNOPSIS
-Use Node Package Manager (npm) to check for outdated packages in a Node project.
+Use Node Package Manager (npm) to check for outdated packages in a Node package.
 .DESCRIPTION
 This function is an alias for 'npm outdated [--prefix $Path]'.
 .LINK
@@ -71,25 +86,25 @@ function Compare-NodeModule {
       'Directory',
       $True
     )]
-    # Node project root
+    # Node package root
     [string]$Path
   )
 
   $NodeArguments = $args
-  $NodeArguments = , (Resolve-NodeProject @PSBoundParameters) + $NodeArguments
+  $NodeArguments = , (Resolve-NodePackage @PSBoundParameters) + $NodeArguments
 
   & npm outdated @NodeArguments
 }
 
 <#
 .SYNOPSIS
-Use Node Package Manager (npm) to increment the package version of the current Node project.
+Use Node Package Manager (npm) to increment the package version of the current Node package.
 .DESCRIPTION
 This function is an alias for 'npm version [--prefix $Path] [version=patch]'.
 .LINK
 https://docs.npmjs.com/cli/commands/npm-version
 #>
-function Step-NodeProjectVersion {
+function Step-NodePackageVersion {
   param(
     # New package version, default 'patch'
     [GenericCompletions('patch,minor,major,prerelease,preminor,premajor')]
@@ -99,12 +114,12 @@ function Step-NodeProjectVersion {
       'Directory',
       $True
     )]
-    # Node project root
+    # Node package root
     [string]$Path
   )
 
   $NodeArguments = $args
-  $NodeArguments = , (Resolve-NodeProject @PSBoundParameters) + $NodeArguments
+  $NodeArguments = , (Resolve-NodePackage @PSBoundParameters) + $NodeArguments
 
   $NamedVersion = @(
     'patch'
@@ -140,16 +155,16 @@ function Step-NodeProjectVersion {
   & npm version @NodeArguments
 }
 
-New-Alias nr Node\Invoke-NodeProjectScript
+New-Alias nr Node\Invoke-NodePackageScript
 <#
 .SYNOPSIS
-Use Node Package Manager (npm) to run a script defined in a Node project's 'package.json'.
+Use Node Package Manager (npm) to run a script defined in a Node package's 'package.json'.
 .DESCRIPTION
 This function is an alias for 'npm run [script] [--prefix $Path] [--args]'.
 .LINK
 https://docs.npmjs.com/cli/commands/npm-run
 #>
-function Invoke-NodeProjectScript {
+function Invoke-NodePackageScript {
   param(
     # Name of the npm script to run
     [string]$Script,
@@ -158,7 +173,7 @@ function Invoke-NodeProjectScript {
       'Directory',
       $True
     )]
-    # Node project root
+    # Node package root
     [string]$Path
   )
 
@@ -173,28 +188,28 @@ function Invoke-NodeProjectScript {
     $Path = ''
   }
 
-  $NodeArguments = , (Resolve-NodeProject @PSBoundParameters) + $NodeArguments
+  $NodeArguments = , (Resolve-NodePackage @PSBoundParameters) + $NodeArguments
 
   & npm run $Script @NodeArguments
 }
 
-New-Alias nt Node\Test-NodeProject
+New-Alias nt Node\Test-NodePackage
 <#
 .SYNOPSIS
-Use Node Package Manager (npm) to run the 'test' script defined in a Node project's 'package.json'.
+Use Node Package Manager (npm) to run the 'test' script defined in a Node package's 'package.json'.
 .DESCRIPTION
 This function is an alias for 'npm test [--prefix $Path] [--args]'.
 .LINK
 https://docs.npmjs.com/cli/commands/npm-test
 #>
-function Test-NodeProject {
+function Test-NodePackage {
   param(
     [PathCompletions(
       '~\code',
       'Directory',
       $True
     )]
-    # Node project root
+    # Node package root
     [string]$Path
   )
 
@@ -205,7 +220,7 @@ function Test-NodeProject {
     $Path = ''
   }
 
-  $NodeArguments = , (Resolve-NodeProject @PSBoundParameters) + $NodeArguments
+  $NodeArguments = , (Resolve-NodePackage @PSBoundParameters) + $NodeArguments
 
   & npm test @NodeArguments
 }
