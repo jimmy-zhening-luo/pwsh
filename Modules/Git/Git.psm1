@@ -67,9 +67,11 @@ $GIT_ARGUMENT = '^(?>(?=.*[*=]).+|-(?>\w|(?>-\w[-\w]*\w)))$'
 
 <#
 .SYNOPSIS
-Run a Git command
+Invoke a Git command in a local repository.
 .DESCRIPTION
-This function allows you to run a Git command in a local repository. If no command is specified, it defaults to 'git status'. If no path is specified, it defaults to the current location. For every verb except for 'clone', the function will throw an error if there is no Git repository at the specified path.
+This function allows you to run a Git command in a local repository. If no command is specified, it defaults to 'git status'. If no path is specified, it defaults to the current location.
+
+For every verb except for 'clone', 'config', and 'init', the function will throw an error if there is no Git repository at the specified path.
 .LINK
 https://git-scm.com/docs
 #>
@@ -95,6 +97,7 @@ function Invoke-GitRepository {
   $NEWABLE_GIT_VERB = @(
     'clone'
     'config'
+    'init'
   )
 
   $GitArguments = $args
