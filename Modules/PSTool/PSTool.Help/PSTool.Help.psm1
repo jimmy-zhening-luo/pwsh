@@ -116,7 +116,7 @@ function Get-HelpOnline {
 
   if ($Articles) {
     $Articles = $Articles -replace '^(?>https?:\/\/)?', 'https://' -replace '^(?>https:\/\/learn\.microsoft\.com\/en-us\/)', 'https://learn.microsoft.com/' |
-      Select-Object -Unique
+      Select-Object -Unique -CaseInsensitive
   }
 
   if (-not $env:SSH_CLIENT) {

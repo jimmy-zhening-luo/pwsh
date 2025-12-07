@@ -63,7 +63,7 @@ class GenericCompleter : System.Management.Automation.IArgumentCompleter {
 
     $unitKeys = (
       $units -split ','
-    ).Trim().ToLowerInvariant() -notmatch '^\s*$'
+    ).Trim() | ? { $_ }
 
     if (-not $unitKeys) {
       throw [System.ArgumentException]::new('units')
@@ -71,9 +71,13 @@ class GenericCompleter : System.Management.Automation.IArgumentCompleter {
 
     $unique = @()
     $unique += $unitKeys |
-      Select-Object -Unique
+      Select-Object -Unique -CaseInsensitive
 
     if (-not $unique -or $unique.Count -ne $unitKeys.Count) {
+      throw [System.ArgumentException]::new('units')
+    }
+
+    if ($unique -match "^'.*'$") {
       throw [System.ArgumentException]::new('units')
     }
 
