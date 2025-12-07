@@ -9,6 +9,7 @@ function Resolve-GitRepository {
     )]
     [AllowEmptyString()]
     [AllowEmptyCollection()]
+    [PathCompletions('.', 'Directory')]
     [string[]]$Path,
     [switch]$New
   )
@@ -75,6 +76,7 @@ https://git-scm.com/docs
 New-Alias g Git\Invoke-GitRepository
 function Invoke-GitRepository {
   param(
+    [PathCompletions('.', 'Directory')]
     # Local repository path
     [string]$Path,
     # Git verb (command) to run
