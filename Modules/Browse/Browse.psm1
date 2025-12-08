@@ -8,7 +8,7 @@ This function checks if a host is reachable by testing the network connection to
 #>
 function Test-Host {
   [CmdletBinding(DefaultParameterSetName = 'CommonTCPPort')]
-  [OutputType([Object])]
+  [OutputType([Object[]])]
   param(
     [Parameter(
       Position = 0,
@@ -44,27 +44,40 @@ function Test-Host {
     $Verbosity = $InformationLevel ? @{
       InformationLevel = $InformationLevel
     } : @{}
+    $Results = @()
   }
   process {
-    $Connection = @{
-      ComputerName = $Name
-    }
-
-    switch ($PSCmdlet.ParameterSetName) {
-      RemotePort {
-        $Connection.Port = $Port
+    if ($Name) {
+      $Connection = @{
+        ComputerName = $Name
       }
-      default {
-        if ($CommonTCPPort -in @('HTTP', 'RDP', 'SMB', 'WINRM')) {
-          $Connection.CommonTCPPort = $CommonTCPPort.ToUpperInvariant()
+      switch ($PSCmdlet.ParameterSetName) {
+        RemotePort {
+          $Connection.Port = $Port
         }
-        elseif ($CommonTCPPort -match '^(?>\d{1,5})$' -and $CommonTCPPort -as [UInt16]) {
-          $Connection.Port = [UInt16]$CommonTCPPort
+        default {
+          if ($CommonTCPPort -in @('HTTP', 'RDP', 'SMB', 'WINRM')) {
+            $Connection.CommonTCPPort = $CommonTCPPort.ToUpperInvariant()
+          }
+          elseif ($CommonTCPPort -match '^(?>\d{1,5})$' -and $CommonTCPPort -as [UInt16]) {
+            $Connection.Port = [UInt16]$CommonTCPPort
+          }
         }
       }
-    }
 
-    Test-NetConnection @Connection @Verbosity
+      Test-NetConnection @Connection @Verbosity
+    }
+  }
+  end {
+    if ($Results) {
+      $Results
+    }
+    else {
+      $Connection = @{
+        ComputerName = [Uri]"http://google.com"
+      }
+      Test-NetConnection @Connection @Verbosity
+    }
   }
 }
 
