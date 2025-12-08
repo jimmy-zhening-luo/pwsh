@@ -1,13 +1,15 @@
 @{
-  RootModule           = 'PSTool.psm1'
-  ModuleVersion        = '3.0.0.0'
-  CompatiblePSEditions = @('Desktop', 'Core')
-  GUID                 = 'c84491db-0b43-4dfc-80ea-890b16269a28'
-  Author               = 'Jimmy Zhening Luo'
-  CompanyName          = 'Jimmy Zhening Luo'
-  Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
-  PowerShellVersion    = '7.5'
-  RequiredModules      = @(
+  RootModule            = 'PSTool.psm1'
+  ModuleVersion         = '3.0.0.0'
+  CompatiblePSEditions  = @('Desktop', 'Core')
+  GUID                  = 'c84491db-0b43-4dfc-80ea-890b16269a28'
+  Author                = 'Jimmy Zhening Luo'
+  CompanyName           = 'Jimmy Zhening Luo'
+  Copyright             = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
+  PowerShellVersion     = '7.5'
+  PowerShellHostName    = 'ConsoleHost'
+  PowerShellHostVersion = '7.5'
+  RequiredModules       = @(
     @{
       ModuleName    = 'Shell'
       ModuleVersion = '3.0.0'
@@ -19,14 +21,14 @@
       GUID          = '05b1300b-3c15-49d7-8033-a7edb1386042'
     }
   )
-  NestedModules        = @(
+  NestedModules         = @(
     @{
       ModuleName    = 'PSTool.Help'
       ModuleVersion = '3.0.0'
       GUID          = '2a24daf1-f891-46c4-8613-9943b6913573'
     }
   )
-  FunctionsToExport    = @(
+  FunctionsToExport     = @(
     'Invoke-PSHistory'
     'Invoke-PSProfile'
     'Update-PSProfile'
@@ -36,9 +38,9 @@
     'Get-CommandAlias'
     'Get-VerbList'
   )
-  CmdletsToExport      = @()
-  VariablesToExport    = @()
-  AliasesToExport      = @(
+  CmdletsToExport       = @()
+  VariablesToExport     = @()
+  AliasesToExport       = @(
     '^'
     'to'
     'k'

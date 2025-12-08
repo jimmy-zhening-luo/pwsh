@@ -1,20 +1,22 @@
 @{
-  RootModule           = 'Shell.psm1'
-  ModuleVersion        = '3.0.0.0'
-  CompatiblePSEditions = @('Desktop', 'Core')
-  GUID                 = 'e4d07654-6759-4a2f-8293-39df2b809ba7'
-  Author               = 'Jimmy Zhening Luo'
-  CompanyName          = 'Jimmy Zhening Luo'
-  Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
-  PowerShellVersion    = '7.5'
-  RequiredModules      = @(
+  RootModule            = 'Shell.psm1'
+  ModuleVersion         = '3.0.0.0'
+  CompatiblePSEditions  = @('Desktop', 'Core')
+  GUID                  = 'e4d07654-6759-4a2f-8293-39df2b809ba7'
+  Author                = 'Jimmy Zhening Luo'
+  CompanyName           = 'Jimmy Zhening Luo'
+  Copyright             = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
+  PowerShellVersion     = '7.5'
+  PowerShellHostName    = 'ConsoleHost'
+  PowerShellHostVersion = '7.5'
+  RequiredModules       = @(
     @{
       ModuleName    = 'GenericArgumentCompleter'
       ModuleVersion = '3.0.0'
       GUID          = 'ce7965e6-f9ef-42fb-aa4b-80eb542833de'
     }
   )
-  NestedModules        = @(
+  NestedModules         = @(
     @{
       ModuleName    = 'Shell.New'
       ModuleVersion = '3.0.0.0'
@@ -46,7 +48,7 @@
       GUID          = '1e45c553-ea48-41c2-a7fc-89b5c36f30b1'
     }
   )
-  FunctionsToExport    = @(
+  FunctionsToExport     = @(
     'Format-Path'
     'Test-Item'
     'Resolve-Item'
@@ -90,9 +92,9 @@
     'Test-Url'
     'Open-Url'
   )
-  CmdletsToExport      = @()
-  VariablesToExport    = @()
-  AliasesToExport      = @(
+  CmdletsToExport       = @()
+  VariablesToExport     = @()
+  AliasesToExport       = @(
     'touch'
     'mk'
     'mj'
