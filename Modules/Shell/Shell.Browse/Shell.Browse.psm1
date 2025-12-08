@@ -1,3 +1,5 @@
+using namespace NetTCPIP
+
 Microsoft.PowerShell.Utility\New-Alias tn Shell\Test-Host
 <#
 .SYNOPSIS
@@ -65,7 +67,7 @@ function Test-Host {
         }
       }
 
-      $Results += NetTCPIP\Test-NetConnection @Connection @Verbosity
+      $Results += Test-NetConnection @Connection @Verbosity
     }
   }
   end {
@@ -76,7 +78,7 @@ function Test-Host {
       $Connection = @{
         ComputerName = 'google.com'
       }
-      NetTCPIP\Test-NetConnection @Connection @Verbosity
+      Test-NetConnection @Connection @Verbosity
     }
   }
 }
