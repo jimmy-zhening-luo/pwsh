@@ -56,4 +56,11 @@
     'm'
     'galc'
   )
+  ModuleList            = @(
+    @{
+      ModuleName    = 'PSTool.Help'
+      ModuleVersion = '3.0.0'
+      GUID          = '2a24daf1-f891-46c4-8613-9943b6913573'
+    }
+  )
 }

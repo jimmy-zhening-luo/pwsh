@@ -63,4 +63,16 @@
     'pc'
     'p/'
   )
+  ModuleList            = @(
+    @{
+      ModuleName    = 'Shell.Get.Directory'
+      ModuleVersion = '3.0.0.0'
+      GUID          = '1c90175d-d43c-4e5e-9bd2-160c173da3e7'
+    }
+    @{
+      ModuleName    = 'Shell.Get.File'
+      ModuleVersion = '3.0.0.0'
+      GUID          = '6212672b-6168-4bcb-a3bf-38291446571a'
+    }
+  )
 }

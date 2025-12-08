@@ -139,4 +139,36 @@
     'go'
     'open'
   )
+  ModuleList            = @(
+    @{
+      ModuleName    = 'Shell.New'
+      ModuleVersion = '3.0.0.0'
+      GUID          = '9a3324b2-207d-4635-a8d6-ac8261181fb1'
+    }
+    @{
+      ModuleName    = 'Shell.Clear'
+      ModuleVersion = '3.0.0.0'
+      GUID          = '7b39ad83-781d-49f2-a378-f913d983b1a6'
+    }
+    @{
+      ModuleName    = 'Shell.Get'
+      ModuleVersion = '3.0.0.0'
+      GUID          = '83fda875-8f8c-4bce-a5da-e840d832378d'
+    }
+    @{
+      ModuleName    = 'Shell.Set'
+      ModuleVersion = '3.0.0.0'
+      GUID          = 'e740b507-c756-4684-8565-8c579344e454'
+    }
+    @{
+      ModuleName    = 'Shell.Invoke'
+      ModuleVersion = '3.0.0.0'
+      GUID          = '130b56d3-229a-4ec1-be75-d31a615147c8'
+    }
+    @{
+      ModuleName    = 'Shell.Browse'
+      ModuleVersion = '3.0.0.0'
+      GUID          = '1e45c553-ea48-41c2-a7fc-89b5c36f30b1'
+    }
+  )
 }

@@ -29,4 +29,5 @@
     'm'
     'galc'
   )
+  ModuleList            = @()
 }

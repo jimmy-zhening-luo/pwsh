@@ -30,4 +30,5 @@
     'wgf'
     'wgr'
   )
+  ModuleList            = @()
 }
