@@ -2,7 +2,7 @@ Microsoft.PowerShell.Utility\New-Alias touch Microsoft.PowerShell.Management\New
 
 Microsoft.PowerShell.Utility\New-Alias mk Shell\New-Directory
 <#
-.FORWARDHELPTARGETNAME New-Item
+.FORWARDHELPTARGETNAME Microsoft.PowerShell.Management\New-Item
 .FORWARDHELPCATEGORY Cmdlet
 #>
 function New-Directory {
@@ -68,7 +68,7 @@ function New-Directory {
     if (
       $PSCmdlet.ShouldProcess(
         $Value,
-        "> Step: New-Item -ItemType Directory -Path [[$Path]] -Name [$Name] -- " + ($PSBoundParameters | Microsoft.PowerShell.Utility\ConvertTo-Json -EnumsAsStrings)
+        "> Step: Microsoft.PowerShell.Management\New-Item -ItemType Directory -Path [[$Path]] -Name [$Name] -- " + ($PSBoundParameters | Microsoft.PowerShell.Utility\ConvertTo-Json -EnumsAsStrings)
       )
     ) {
       $steppablePipeline.Process($PSItem)
@@ -83,7 +83,7 @@ function New-Directory {
 
 Microsoft.PowerShell.Utility\New-Alias mj Shell\New-Junction
 <#
-.FORWARDHELPTARGETNAME New-Item
+.FORWARDHELPTARGETNAME Microsoft.PowerShell.Management\New-Item
 .FORWARDHELPCATEGORY Cmdlet
 #>
 function New-Junction {
@@ -133,7 +133,7 @@ function New-Junction {
     if (
       $PSCmdlet.ShouldProcess(
         $Value,
-        "> Step: New-Item -Force -ItemType Junction -Path [$Path] -Value [$Value]"
+        "> Step: Microsoft.PowerShell.Management\New-Item -Force -ItemType Junction -Path [$Path] -Value [$Value]"
       )
     ) {
       $steppablePipeline.Process($PSItem)

@@ -4,7 +4,7 @@ $CUSTOM_HELP_FILE = @{
   Path = "$PSScriptRoot\PSHelp.psd1"
 }
 $CUSTOM_HELP = (
-  Test-Path @CUSTOM_HELP_FILE -Type Leaf
+  Microsoft.PowerShell.Management\Test-Path @CUSTOM_HELP_FILE -Type Leaf
 ) ? (Import-PowerShellDataFile @CUSTOM_HELP_FILE) : @{}
 
 Microsoft.PowerShell.Utility\New-Alias m PSTool\Get-HelpOnline
@@ -20,7 +20,7 @@ function Get-HelpOnline {
   )
 
   if (-not $Name) {
-    return Get-Help -Name Get-Help
+    return Get-Help -Name 'Get-Help'
   }
 
   $Topic = $Name -join '_'
@@ -116,7 +116,7 @@ function Get-HelpOnline {
 
   if ($Articles) {
     $Articles = $Articles -replace '^(?>https?:\/\/)?', 'https://' -replace '^(?>https:\/\/learn\.microsoft\.com\/en-us\/)', 'https://learn.microsoft.com/' |
-      Select-Object -Unique -CaseInsensitive
+      Microsoft.PowerShell.Utility\Select-Object -Unique -CaseInsensitive
   }
 
   if (-not $env:SSH_CLIENT) {
@@ -138,7 +138,7 @@ function Get-HelpOnline {
       MessageData       = "$ArticleList"
       InformationAction = 'Continue'
     }
-    Write-Information @ArticleInformation
+    Microsoft.PowerShell.Utility\Write-Information @ArticleInformation
   }
 }
 
@@ -157,8 +157,8 @@ function Get-CommandAlias {
   $Commands = @{
     Definition = $Definition.Contains('*') ? $Definition : $Definition.Length -lt 3 ? "$Definition*" : "*$Definition*"
   }
-  Get-Alias @Commands @args |
-    Select-Object DisplayName, Options, Source
+  Microsoft.PowerShell.Utility\Get-Alias @Commands @args |
+    Microsoft.PowerShell.Utility\Select-Object DisplayName, Options, Source
 }
 
 <#
@@ -194,7 +194,7 @@ function Get-VerbList {
   $Verbs = @{
     Verb = $Verb.Contains('*') ? $Verb : $Verb.Length -lt 3 ? "$Verb*" : "*$Verb*"
   }
-  Get-Verb @Verbs @args |
-    Sort-Object -Property Verb |
-    Select-Object -ExpandProperty Verb
+  Microsoft.PowerShell.Utility\Get-Verb @Verbs @args |
+    Microsoft.PowerShell.Utility\Sort-Object -Property Verb |
+    Microsoft.PowerShell.Utility\Select-Object -ExpandProperty Verb
 }

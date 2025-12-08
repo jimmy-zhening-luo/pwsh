@@ -18,7 +18,7 @@ function Test-NodePackageDirectory {
     Path     = Microsoft.PowerShell.Management\Join-Path ($Path ? $Path : $PWD) package.json
     PathType = 'Leaf'
   }
-  return Test-Path @IsNodePackage
+  return Microsoft.PowerShell.Management\Test-Path @IsNodePackage
 }
 
 <#

@@ -20,7 +20,7 @@ function Get-File {
   }
 
   if ($Path) {
-    $Target = $Location ? (Join-Path $Location $Path) : $Path
+    $Target = $Location ? (Microsoft.PowerShell.Management\Join-Path $Location $Path) : $Path
 
     if (-not (Microsoft.PowerShell.Management\Test-Path -Path $Target)) {
       throw "Path '$Target' does not exist."

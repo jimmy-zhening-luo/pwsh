@@ -7,7 +7,7 @@ function Test-Sandbox {
     [switch]$Flag
   )
 
-  'PSBoundParameters: ' + ($PSBoundParameters | ConvertTo-Json -EnumsAsStrings)
+  'PSBoundParameters: ' + ($PSBoundParameters | Microsoft.PowerShell.Utility\ConvertTo-Json -EnumsAsStrings)
   "Path: $Path"
   "Args: $args"
 }
