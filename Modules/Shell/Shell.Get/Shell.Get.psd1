@@ -3,6 +3,9 @@
   ModuleVersion     = '3.0.0.0'
   GUID              = '83fda875-8f8c-4bce-a5da-e840d832378d'
   PowerShellVersion = '7.5'
+  RequiredModules   = @(
+    'GenericArgumentCompleter'
+  )
   NestedModules     = @(
     'Shell.Get.Directory'
     'Shell.Get.File'
