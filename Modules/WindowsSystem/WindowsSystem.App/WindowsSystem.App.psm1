@@ -35,7 +35,7 @@ https://learn.microsoft.com/en-us/windows/package-manager/winget/install
 #>
 function Add-WinGetApp {
   if ($args) {
-    & winget.exe install $args
+    & winget.exe install @args
   }
   else {
     & winget.exe upgrade
@@ -52,7 +52,7 @@ This function is an alias for 'winget upgrade'.
 https://learn.microsoft.com/en-us/windows/package-manager/winget/upgrade
 #>
 function Update-WinGetApp {
-  & winget.exe upgrade $args
+  & winget.exe upgrade @args
 }
 
 New-Alias wgf WindowsSystem\Find-WinGetApp
@@ -66,7 +66,7 @@ https://learn.microsoft.com/en-us/windows/package-manager/winget/search
 #>
 function Find-WinGetApp {
   if ($args) {
-    & winget.exe search $args
+    & winget.exe search @args
   }
   else {
     & winget.exe list
@@ -83,5 +83,5 @@ This function is an alias for 'winget uninstall'.
 https://learn.microsoft.com/en-us/windows/package-manager/winget/uninstall
 #>
 function Remove-WinGetApp {
-  & winget.exe uninstall $args
+  & winget.exe uninstall @args
 }

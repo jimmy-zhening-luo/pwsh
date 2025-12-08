@@ -45,7 +45,7 @@ function Resolve-NodePackageDirectory {
   if (Test-NodePackageDirectory @IsNodePackage) {
     $Package = ($Path ? (Resolve-Path $Path) : $PWD).Path
 
-    $Package -eq $PWD.Path ? '' : $OmitPrefix ? $Package : "--prefix=$Package"
+    $OmitPrefix ? $Package : "--prefix=$Package"
   }
   else {
     throw "Path '$Path' is not a Node package directory."
@@ -62,7 +62,7 @@ This function is an alias shim for 'node [args]'.
 https://nodejs.org/api/cli.html
 #>
 function Invoke-Node {
-  & node.exe $args
+  & node.exe @args
 }
 
 New-Alias n Node\Invoke-NodePackage
@@ -77,7 +77,7 @@ https://docs.npmjs.com/cli/commands
 https://docs.npmjs.com/cli/commands/npm
 #>
 function Invoke-NodePackage {
-  & npm.ps1 $args
+  & npm.ps1 @args
 }
 
 New-Alias nx Node\Invoke-NodeExecutable
@@ -90,7 +90,7 @@ This function is an alias shim for 'npx [args]'.
 https://docs.npmjs.com/cli/commands/npx
 #>
 function Invoke-NodeExecutable {
-  & npx.ps1 $args
+  & npx.ps1 @args
 }
 
 New-Alias ncc Node\Clear-NodeModuleCache
@@ -103,7 +103,7 @@ This function is an alias for 'npm cache clean --force'.
 https://docs.npmjs.com/cli/commands/npm-cache
 #>
 function Clear-NodeModuleCache {
-  & npm.ps1 cache clean --force $args
+  & npm.ps1 cache clean --force @args
 }
 
 New-Alias npo Node\Compare-NodeModule
@@ -129,11 +129,15 @@ function Compare-NodeModule {
   $NodeArguments = $args
   if ($Path.StartsWith(('-'))) {
     $NodeArguments = , $Path + $NodeArguments
-    $Path = ''
+    $PSBoundParameters.Path = ''
   }
-  $NodeArguments = , (Resolve-NodePackageDirectory @PSBoundParameters) + $NodeArguments
+  $Package = Resolve-NodePackageDirectory @PSBoundParameters
 
-  & npm.ps1 outdated $NodeArguments
+  if ($Package) {
+    $NodeArguments = , $Package + $NodeArguments
+  }
+
+  & npm.ps1 outdated @NodeArguments
 }
 
 <#
@@ -148,7 +152,7 @@ function Step-NodePackageVersion {
   param(
     # New package version, default 'patch'
     [GenericCompletions('patch,minor,major,prerelease,preminor,premajor')]
-    [string]$Version = 'patch',
+    [string]$Version,
     [PathCompletions(
       '~\code',
       'Directory',
@@ -161,11 +165,15 @@ function Step-NodePackageVersion {
   $NodeArguments = $args
   if ($Path.StartsWith(('-'))) {
     $NodeArguments = , $Path + $NodeArguments
-    $Path = ''
+    $PSBoundParameters.Path = ''
   }
-  $NodeArguments = , (Resolve-NodePackageDirectory @PSBoundParameters) + $NodeArguments
+  $Package = Resolve-NodePackageDirectory @PSBoundParameters
 
-  $NamedVersion = @(
+  if ($Package) {
+    $NodeArguments = , $Package + $NodeArguments
+  }
+
+  $NAMED_VERSION = @(
     'patch'
     'minor'
     'major'
@@ -173,8 +181,8 @@ function Step-NodePackageVersion {
     'preminor'
     'premajor'
   )
-
-  if ($Version -notin $NamedVersion) {
+  if ($Version) {
+  if ($Version -notin $NAMED_VERSION) {
     if ($Version -match '^v?(?<Major>\d+)(?>\.(?<Minor>\d*)(?>\.(?<Patch>\d*))?)?(?>-(?<Pre>\w+(?>\.\d+)?))?$') {
       $FullVersion = @{
         Major = [UInt32]$Matches.Major
@@ -193,10 +201,14 @@ function Step-NodePackageVersion {
       throw "Unrecognized version ''"
     }
   }
+  }
+  else {
+    $Version = 'patch'
+  }
 
-  $NodeArguments += $Version.ToLowerInvariant()
+  $Version = $Version.ToLowerInvariant()
 
-  & npm.ps1 version $NodeArguments
+  & npm.ps1 version $Version @NodeArguments
 }
 
 New-Alias nr Node\Invoke-NodePackageScript
@@ -228,11 +240,15 @@ function Invoke-NodePackageScript {
   $NodeArguments = $args
   if ($Path.StartsWith(('-'))) {
     $NodeArguments = , $Path + $NodeArguments
-    $Path = ''
+    $PSBoundParameters.Path = ''
   }
-  $NodeArguments = , (Resolve-NodePackageDirectory @PSBoundParameters) + $NodeArguments
+  $Package = Resolve-NodePackageDirectory @PSBoundParameters
 
-  & npm.ps1 run $Script $NodeArguments
+  if ($Package) {
+    $NodeArguments = , $Package + $NodeArguments
+  }
+
+  & npm.ps1 run $Script @NodeArguments
 }
 
 New-Alias nt Node\Test-NodePackage
@@ -258,9 +274,13 @@ function Test-NodePackage {
   $NodeArguments = $args
   if ($Path.StartsWith(('-'))) {
     $NodeArguments = , $Path + $NodeArguments
-    $Path = ''
+    $PSBoundParameters.Path = ''
   }
-  $NodeArguments = , (Resolve-NodePackageDirectory @PSBoundParameters) + $NodeArguments
+  $Package = Resolve-NodePackageDirectory @PSBoundParameters
 
-  & npm.ps1 test $NodeArguments
+  if ($Package) {
+    $NodeArguments = , $Package + $NodeArguments
+  }
+
+  & npm.ps1 test @NodeArguments
 }

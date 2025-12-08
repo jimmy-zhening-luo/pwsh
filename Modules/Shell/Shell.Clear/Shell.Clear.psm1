@@ -15,7 +15,6 @@ function Clear-Line {
 }
 
 function Remove-Directory {
-  [CmdletBinding(SupportsShouldProcess)]
   [OutputType([void])]
   param(
     [Parameter(
@@ -26,12 +25,9 @@ function Remove-Directory {
     [string]$Path
   )
 
-  if (
-    $PSCmdlet.ShouldProcess(
-      $Path,
-      'Remove-Item -Recurse -Force'
-    )
-  ) {
-    [void](Remove-Item @PSBoundParameters -Recurse -Force)
+  $Hard = @{
+    Recurse = $True
+    Force   = $True
   }
+  [void](Remove-Item @Hard @PSBoundParameters)
 }

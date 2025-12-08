@@ -9,7 +9,7 @@ Starts a new instance of the command interpreter, 'cmd.exe' to carry out the sup
 https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd
 #>
 function Invoke-CommandPrompt {
-  & cmd.exe /c $args
+  & cmd.exe /c @args
 }
 
 New-Alias wu WindowsSystem\Update-Windows
@@ -79,7 +79,7 @@ function Stop-Task {
       ParameterSetName = 'Name',
       Position = 0
     )]
-    [string]$Name = 'explorer',
+    [string]$Name,
     [Parameter(
       ParameterSetName = 'Id',
       Mandatory,
@@ -97,11 +97,16 @@ function Stop-Task {
       break
     }
     default {
-      if ($Name -match '^(?>\d{1,10})$' -and $Name -as [UInt32]) {
-        $Process.Id = [UInt32]$Name
+      if ($Name) {
+        if ($Name -match '^(?>\d{1,10})$' -and $Name -as [UInt32]) {
+          $Process.Id = [UInt32]$Name
+        }
+        else {
+          $Process.Name = $Name
+        }
       }
       else {
-        $Process.Name = $Name
+        $Name = 'explorer'
       }
     }
   }

@@ -1,27 +1,27 @@
 New-Alias e Shell\Invoke-Directory
 function Invoke-Directory {
+  [OutputType([void], [string[]])]
   param(
     [PathCompletions('.')]
     [string]$Path
   )
 
+  if (-not $Path) {
+    $PSBoundParameters.Path = $PWD
+  }
+
   if ($env:SSH_CLIENT) {
     return Get-File @PSBoundParameters
   }
 
-  if ($Path) {
-    $IsFile = @{
-      PathType = 'Leaf'
-    }
-    if (Test-Path @PSBoundParameters @IsFile) {
-      Invoke-Workspace @PSBoundParameters
-    }
-    else {
-      [void](Invoke-Item @PSBoundParameters)
-    }
+  $IsFile = @{
+    PathType = 'Leaf'
+  }
+  if (Test-Path @PSBoundParameters @IsFile) {
+    [void](Invoke-Workspace @PSBoundParameters)
   }
   else {
-    [void](Invoke-Item -Path $PWD)
+    [void](Invoke-Item @PSBoundParameters)
   }
 }
 

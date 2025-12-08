@@ -22,7 +22,7 @@ function Get-YouTube {
   ).Uri : [Uri]$Video
 
   if (Browse\Test-Url -Uri $VideoUri) {
-    & yt-dlp.exe $args -- $VideoUri.OriginalString
+    & yt-dlp.exe @args -- $VideoUri.OriginalString
   }
   else {
     throw 'The specified video URL is unreachable: ' + $VideoUri.OriginalString
@@ -43,7 +43,7 @@ function Get-YouTubeAudio {
     [string]$Video
   )
 
-  $YtArguments = @(
+  $YouTubeArguments = @(
     '--format'
     'bestaudio'
     '--extract-audio'
@@ -54,7 +54,7 @@ function Get-YouTubeAudio {
     '--postprocessor-args'
     '-ar 44100'
   )
-  Get-YouTube @PSBoundParameters @args @YtArguments
+  Get-YouTube @PSBoundParameters @args @YouTubeArguments
 }
 
 New-Alias ytf Quick\Get-YouTubeFormat
@@ -71,10 +71,10 @@ function Get-YouTubeFormat {
     [string]$Video
   )
 
-  $YtArguments = @(
+  $YouTubeArguments = @(
     '-F'
   )
-  Get-YouTube @PSBoundParameters @args @YTArguments
+  Get-YouTube @PSBoundParameters @args @YouTubeArguments
 }
 
 New-Alias yte Quick\Invoke-YouTubeDirectory

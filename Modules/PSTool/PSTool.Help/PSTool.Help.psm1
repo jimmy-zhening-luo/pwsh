@@ -147,8 +147,12 @@ function Get-CommandAlias {
   [OutputType([System.Management.Automation.CommandInfo])]
   param(
     [Alias('Command')]
-    [string]$Definition = '*'
+    [string]$Definition
   )
+
+  if (-not $Definition) {
+    $Definition = '*'
+  }
 
   $Commands = @{
     Definition = $Definition.Contains('*') ? $Definition : $Definition.Length -lt 3 ? "$Definition*" : "*$Definition*"
@@ -180,8 +184,12 @@ Get-Verb
 function Get-VerbList {
   [OutputType([string[]])]
   param(
-    [string]$Verb = '*'
+    [string]$Verb
   )
+
+  if (-not $Verb) {
+    $Verb = '*'
+  }
 
   $Verbs = @{
     Verb = $Verb.Contains('*') ? $Verb : $Verb.Length -lt 3 ? "$Verb*" : "*$Verb*"

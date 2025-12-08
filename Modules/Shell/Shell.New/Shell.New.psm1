@@ -48,11 +48,11 @@ function New-Directory {
     [System.Management.Automation.PSCredential]$Credential
   )
   begin {
-    $type = @{
+    $DirectoryType = @{
       ItemType = 'Directory'
     }
     $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [System.Management.Automation.CommandTypes]::Cmdlet)
-    $scriptCmd = { & $wrappedCmd @type @PSBoundParameters }
+    $scriptCmd = { & $wrappedCmd @DirectoryType @PSBoundParameters }
     $steppablePipeline = $scriptCmd.GetSteppablePipeline()
 
     if (
@@ -68,7 +68,7 @@ function New-Directory {
     if (
       $PSCmdlet.ShouldProcess(
         $Value,
-        "> Step: New-Item -ItemType Directory -Path [[$Path]] -Name [$Name] -- @PSBoundParameters"
+        "> Step: New-Item -ItemType Directory -Path [[$Path]] -Name [$Name] -- $PSBoundParameters"
       )
     ) {
       $steppablePipeline.Process($_)
@@ -112,12 +112,12 @@ function New-Junction {
     [Object]$Value
   )
   begin {
-    $type = @{
-      ItemType = 'Directory'
+    $JunctionType = @{
+      ItemType = 'Junction'
       Force    = $True
     }
     $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [System.Management.Automation.CommandTypes]::Cmdlet)
-    $scriptCmd = { & $wrappedCmd @type @PSBoundParameters }
+    $scriptCmd = { & $wrappedCmd @PSBoundParameters @JunctionType }
     $steppablePipeline = $scriptCmd.GetSteppablePipeline()
 
     if (

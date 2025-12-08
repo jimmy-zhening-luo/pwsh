@@ -167,7 +167,7 @@ function Invoke-GitRepository {
     $Verb
   ) + $GitArguments
   if ($Throw) {
-    & git.exe $GitArguments 2>&1 |
+    & git.exe @GitArguments 2>&1 |
       Tee-Object -Variable GitResult
 
     if ($GitResult -match '^(?>fatal:)') {
@@ -175,7 +175,7 @@ function Invoke-GitRepository {
     }
   }
   else {
-    & git.exe $GitArguments
+    & git.exe @GitArguments
   }
 }
 
@@ -314,7 +314,7 @@ function Add-GitRepository {
     # Local repository path
     [string]$Path,
     # File pattern of files to add, defaults to '.' (all)
-    [string]$Name = '.',
+    [string]$Name,
     # Stop execution on Git error
     [switch]$Throw,
     # Include '--renormalize' flag
@@ -322,6 +322,10 @@ function Add-GitRepository {
   )
 
   $GitCommandArguments = $args
+
+  if (-not $Name) {
+    $Name = '.'
+  }
 
   if ($Name -match $GIT_ARGUMENT) {
     $GitCommandArguments = , $Name + $GitCommandArguments
@@ -464,7 +468,7 @@ function Push-GitRepository {
     )
   ) {
     $GitPushArguments = , $Path + $GitPushArguments
-    $Path = ''
+    $PSBoundParameters.Path = ''
   }
 
   Get-GitRepository @PSBoundParameters -Throw
@@ -580,7 +584,7 @@ function Restore-GitRepository {
     )
   ) {
     $GitResetArguments = , $Path + $GitResetArguments
-    $Path = ''
+    $PSBoundParameters.Path = ''
   }
 
   Reset-GitRepository @PSBoundParameters -Throw @GitResetArguments
