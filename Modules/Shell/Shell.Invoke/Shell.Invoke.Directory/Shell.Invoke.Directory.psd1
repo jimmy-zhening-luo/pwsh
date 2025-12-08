@@ -30,4 +30,8 @@
     'e/'
   )
   ModuleList            = @()
+  FileList              = @(
+    'Shell.Invoke.Directory.psd1'
+    'Shell.Invoke.Directory.psm1'
+  )
 }

@@ -63,4 +63,11 @@
       GUID          = '2a24daf1-f891-46c4-8613-9943b6913573'
     }
   )
+  FileList              = @(
+    'PSTool.psd1'
+    'PSTool.psm1'
+    'PSTool.Help\PSTool.Help.psd1'
+    'PSTool.Help\PSTool.Help.psm1'
+    'PSTool.Help\PSHelp.psd1'
+  )
 }

@@ -63,4 +63,11 @@
       GUID          = '58837453-25d1-453b-a77f-e37939368d68'
     }
   )
+  FileList              = @(
+    'Shell.Invoke.psd1'
+    'Shell.Invoke.Directory\Shell.Invoke.Directory.psd1'
+    'Shell.Invoke.Directory\Shell.Invoke.Directory.psm1'
+    'Shell.Invoke.Workspace\Shell.Invoke.Workspace.psd1'
+    'Shell.Invoke.Workspace\Shell.Invoke.Workspace.psm1'
+  )
 }

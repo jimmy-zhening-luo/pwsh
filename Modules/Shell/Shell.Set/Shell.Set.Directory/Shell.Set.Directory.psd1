@@ -32,4 +32,8 @@
     'd/'
   )
   ModuleList            = @()
+  FileList              = @(
+    'Shell.Set.Directory.psd1'
+    'Shell.Set.Directory.psm1'
+  )
 }

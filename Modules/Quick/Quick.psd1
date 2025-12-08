@@ -50,4 +50,10 @@
       GUID          = 'bc355ec2-c3a4-4e99-abe1-4e9e2aeb2635'
     }
   )
+  FileList              = @(
+    'Quick.psd1'
+    'Quick.psm1'
+    'Quick.YouTube\Quick.YouTube.psd1'
+    'Quick.YouTube\Quick.YouTube.psm1'
+  )
 }

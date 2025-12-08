@@ -75,4 +75,12 @@
       GUID          = '6212672b-6168-4bcb-a3bf-38291446571a'
     }
   )
+  FileList              = @(
+    'Shell.Get.psd1'
+    'Shell.Get.psm1'
+    'Shell.Get.Directory\Shell.Get.Directory.psd1'
+    'Shell.Get.Directory\Shell.Get.Directory.psm1'
+    'Shell.Get.File\Shell.Get.File.psd1'
+    'Shell.Get.File\Shell.Get.File.psm1'
+  )
 }

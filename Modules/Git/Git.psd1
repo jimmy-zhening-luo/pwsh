@@ -48,4 +48,8 @@
     'grp'
   )
   ModuleList            = @()
+  FileList              = @(
+    'Git.psd1'
+    'Git.psm1'
+  )
 }

@@ -16,4 +16,8 @@
   VariablesToExport     = @()
   AliasesToExport       = @()
   ModuleList            = @()
+  FileList              = @(
+    'GenericArgumentCompleter.psd1'
+    'GenericArgumentCompleter.psm1'
+  )
 }

@@ -30,4 +30,8 @@
     'l/'
   )
   ModuleList            = @()
+  FileList              = @(
+    'Shell.Get.Directory.psd1'
+    'Shell.Get.Directory.psm1'
+  )
 }

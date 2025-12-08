@@ -31,4 +31,8 @@
     'open'
   )
   ModuleList            = @()
+  FileList              = @(
+    'Shell.Browse.psd1'
+    'Shell.Browse.psm1'
+  )
 }
