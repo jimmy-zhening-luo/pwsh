@@ -60,7 +60,7 @@ function Update-PSLinter {
 Microsoft.PowerShell.Utility\New-Alias mc PSTool\Measure-PSProfile
 function Measure-PSProfile {
   [OutputType([string])]
-  [OutputType([int], ParameterSetName='Number')]
+  [OutputType([int], ParameterSetName = 'Number')]
   param(
     [Parameter(
       ParameterSetName = 'Number'

@@ -182,25 +182,25 @@ function Step-NodePackageVersion {
     'premajor'
   )
   if ($Version) {
-  if ($Version -notin $NAMED_VERSION) {
-    if ($Version -match '^v?(?<Major>\d+)(?>\.(?<Minor>\d*)(?>\.(?<Patch>\d*))?)?(?>-(?<Pre>\w+(?>\.\d+)?))?$') {
-      $FullVersion = @{
-        Major = [UInt32]$Matches.Major
-        Minor = $Matches.Minor ? [UInt32]$Matches.Minor : [UInt32]0
-        Patch = $Matches.Patch ? [UInt32]$Matches.Patch : [UInt32]0
-        Pre   = $Matches.Pre ? [string]$Matches.Pre : ''
+    if ($Version -notin $NAMED_VERSION) {
+      if ($Version -match '^v?(?<Major>\d+)(?>\.(?<Minor>\d*)(?>\.(?<Patch>\d*))?)?(?>-(?<Pre>\w+(?>\.\d+)?))?$') {
+        $FullVersion = @{
+          Major = [UInt32]$Matches.Major
+          Minor = $Matches.Minor ? [UInt32]$Matches.Minor : [UInt32]0
+          Patch = $Matches.Patch ? [UInt32]$Matches.Patch : [UInt32]0
+          Pre   = $Matches.Pre ? [string]$Matches.Pre : ''
+        }
+
+        $Version = "$($FullVersion.Major).$($FullVersion.Minor).$($FullVersion.Patch)"
+
+        if ($FullVersion.Pre) {
+          $Version += "-$($FullVersion.Pre)"
+        }
       }
-
-      $Version = "$($FullVersion.Major).$($FullVersion.Minor).$($FullVersion.Patch)"
-
-      if ($FullVersion.Pre) {
-        $Version += "-$($FullVersion.Pre)"
+      else {
+        throw "Unrecognized version ''"
       }
     }
-    else {
-      throw "Unrecognized version ''"
-    }
-  }
   }
   else {
     $Version = 'patch'
