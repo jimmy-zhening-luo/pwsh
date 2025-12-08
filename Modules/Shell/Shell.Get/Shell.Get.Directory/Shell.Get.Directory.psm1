@@ -1,5 +1,3 @@
-using namespace System.IO
-
 Microsoft.PowerShell.Utility\New-Alias l Shell\Get-Directory
 function Get-Directory {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
