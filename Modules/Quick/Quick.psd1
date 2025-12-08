@@ -4,7 +4,13 @@
   CompatiblePSEditions = @('Desktop', 'Core')
   GUID                 = '8984f438-f595-48c1-92a1-b893106bbfe2'
   PowerShellVersion    = '7.5'
-  RequiredModules      = @()
+  RequiredModules      = @(
+    @{
+      ModuleName    = 'Shell'
+      ModuleVersion = '3.0.0'
+      Guid          = 'e4d07654-6759-4a2f-8293-39df2b809ba7'
+    }
+  )
   NestedModules        = @(
     @{
       ModuleName    = 'Quick.YouTube'
