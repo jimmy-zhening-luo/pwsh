@@ -4,13 +4,9 @@ function Test-Sandbox {
   [OutputType([string[]])]
   param (
     [string]$Path,
-    [Parameter(
-      ParameterSetName = 'FlagSet'
-    )]
     [switch]$Flag
   )
 
   "Path: $Path"
   "Args: $args"
-  'ParameterSet: ' + $PSCmdlet.ParameterSetName
 }
