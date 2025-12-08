@@ -1,4 +1,4 @@
-New-Alias guid Quick\Copy-Guid
+Microsoft.PowerShell.Utility\New-Alias guid Quick\Copy-Guid
 function Copy-Guid {
   [OutputType([string])]
   param(
@@ -20,7 +20,7 @@ function Copy-Guid {
   }
 }
 
-New-Alias hex Quick\ConvertTo-Hex
+Microsoft.PowerShell.Utility\New-Alias hex Quick\ConvertTo-Hex
 function ConvertTo-Hex {
   [OutputType([string])]
   param(

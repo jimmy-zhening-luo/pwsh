@@ -1,4 +1,4 @@
-New-Alias l Shell\Get-Directory
+Microsoft.PowerShell.Utility\New-Alias l Shell\Get-Directory
 function Get-Directory {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param (
@@ -14,7 +14,7 @@ function Get-Directory {
   }
 }
 
-New-Alias l. Shell\Get-DirectorySibling
+Microsoft.PowerShell.Utility\New-Alias l. Shell\Get-DirectorySibling
 function Get-DirectorySibling {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param (
@@ -28,7 +28,7 @@ function Get-DirectorySibling {
   Microsoft.PowerShell.Management\Get-ChildItem @FullPath @args
 }
 
-New-Alias l.. Shell\Get-DirectoryRelative
+Microsoft.PowerShell.Utility\New-Alias l.. Shell\Get-DirectoryRelative
 function Get-DirectoryRelative {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param (
@@ -42,7 +42,7 @@ function Get-DirectoryRelative {
   Microsoft.PowerShell.Management\Get-ChildItem @FullPath @args
 }
 
-New-Alias l~ Shell\Get-DirectoryHome
+Microsoft.PowerShell.Utility\New-Alias l~ Shell\Get-DirectoryHome
 function Get-DirectoryHome {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param (
@@ -56,7 +56,7 @@ function Get-DirectoryHome {
   Microsoft.PowerShell.Management\Get-ChildItem @FullPath @args
 }
 
-New-Alias lc Shell\Get-DirectoryCode
+Microsoft.PowerShell.Utility\New-Alias lc Shell\Get-DirectoryCode
 function Get-DirectoryCode {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param (
@@ -70,7 +70,7 @@ function Get-DirectoryCode {
   Microsoft.PowerShell.Management\Get-ChildItem @FullPath @args
 }
 
-New-Alias l/ Shell\Get-DirectoryDrive
+Microsoft.PowerShell.Utility\New-Alias l/ Shell\Get-DirectoryDrive
 function Get-DirectoryDrive {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param (

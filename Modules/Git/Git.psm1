@@ -75,7 +75,7 @@ For every verb except for 'clone', 'config', and 'init', the function will throw
 .LINK
 https://git-scm.com/docs
 #>
-New-Alias g Git\Invoke-GitRepository
+Microsoft.PowerShell.Utility\New-Alias g Git\Invoke-GitRepository
 function Invoke-GitRepository {
   param(
     [GenericCompletions(
@@ -179,7 +179,7 @@ function Invoke-GitRepository {
   }
 }
 
-New-Alias gg Git\Measure-GitRepository
+Microsoft.PowerShell.Utility\New-Alias gg Git\Measure-GitRepository
 <#
 .SYNOPSIS
 Use Git to get the status of a local repository.
@@ -203,7 +203,7 @@ function Measure-GitRepository {
   Invoke-GitRepository @Status @PSBoundParameters @args
 }
 
-New-Alias gitcl Git\Import-GitRepository
+Microsoft.PowerShell.Utility\New-Alias gitcl Git\Import-GitRepository
 <#
 .SYNOPSIS
 Use Git to clone a repository.
@@ -273,7 +273,7 @@ function Get-GitRepository {
   Invoke-GitRepository @Pull @PSBoundParameters @args
 }
 
-New-Alias gpp Git\Get-ChildGitRepository
+Microsoft.PowerShell.Utility\New-Alias gpp Git\Get-ChildGitRepository
 <#
 .SYNOPSIS
 Use Git to pull changes for all repositories in the top level of %USERPROFILE%\code'.
@@ -299,7 +299,7 @@ function Get-ChildGitRepository {
   "`nPulled $Count repositor" + ($Count -eq 1 ? 'y' : 'ies')
 }
 
-New-Alias ga Git\Add-GitRepository
+Microsoft.PowerShell.Utility\New-Alias ga Git\Add-GitRepository
 <#
 .SYNOPSIS
 Use Git to stage all changes in a repository.
@@ -440,7 +440,7 @@ function Write-GitRepository {
   Invoke-GitRepository @Commit @GitParameters @GitCommitArguments
 }
 
-New-Alias gs Git\Push-GitRepository
+Microsoft.PowerShell.Utility\New-Alias gs Git\Push-GitRepository
 <#
 .SYNOPSIS
 Use Git to push changes to a repository.
@@ -479,7 +479,7 @@ function Push-GitRepository {
   Invoke-GitRepository @Push @PSBoundParameters @GitPushArguments
 }
 
-New-Alias gr Git\Reset-GitRepository
+Microsoft.PowerShell.Utility\New-Alias gr Git\Reset-GitRepository
 <#
 .SYNOPSIS
 Use Git to undo changes in a repository.
@@ -556,7 +556,7 @@ function Reset-GitRepository {
   Invoke-GitRepository @Reset @GitParameters @GitResetArguments
 }
 
-New-Alias grp Git\Restore-GitRepository
+Microsoft.PowerShell.Utility\New-Alias grp Git\Restore-GitRepository
 <#
 .SYNOPSIS
 Use Git to restore a repository to its previous state.

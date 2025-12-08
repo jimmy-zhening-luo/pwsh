@@ -1,8 +1,8 @@
-New-Alias split Microsoft.PowerShell.Management\Split-Path
-New-Alias hash Microsoft.PowerShell.Utility\Get-FileHash
+Microsoft.PowerShell.Utility\New-Alias split Microsoft.PowerShell.Management\Split-Path
+Microsoft.PowerShell.Utility\New-Alias hash Microsoft.PowerShell.Utility\Get-FileHash
 
-New-Alias sz Shell\Get-Size
-New-Alias size Shell\Get-Size
+Microsoft.PowerShell.Utility\New-Alias sz Shell\Get-Size
+Microsoft.PowerShell.Utility\New-Alias size Shell\Get-Size
 function Get-Size {
   [OutputType([string])]
   [OutputType([double], ParameterSetName = 'Number')]

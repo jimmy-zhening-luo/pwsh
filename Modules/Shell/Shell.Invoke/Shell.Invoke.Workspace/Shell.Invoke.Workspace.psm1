@@ -1,4 +1,4 @@
-New-Alias i Shell\Invoke-Workspace
+Microsoft.PowerShell.Utility\New-Alias i Shell\Invoke-Workspace
 function Invoke-Workspace {
   [OutputType([void])]
   param(
@@ -80,7 +80,7 @@ function Invoke-Workspace {
   [void](Microsoft.PowerShell.Management\Start-Process @Process)
 }
 
-New-Alias i. Shell\Invoke-WorkspaceSibling
+Microsoft.PowerShell.Utility\New-Alias i. Shell\Invoke-WorkspaceSibling
 function Invoke-WorkspaceSibling {
   [OutputType([void])]
   param (
@@ -101,7 +101,7 @@ function Invoke-WorkspaceSibling {
   Invoke-Workspace @PSBoundParameters @Location @args
 }
 
-New-Alias i.. Shell\Invoke-WorkspaceRelative
+Microsoft.PowerShell.Utility\New-Alias i.. Shell\Invoke-WorkspaceRelative
 function Invoke-WorkspaceRelative {
   [OutputType([void])]
   param (
@@ -122,7 +122,7 @@ function Invoke-WorkspaceRelative {
   Invoke-Workspace @PSBoundParameters @Location @args
 }
 
-New-Alias i~ Shell\Invoke-WorkspaceHome
+Microsoft.PowerShell.Utility\New-Alias i~ Shell\Invoke-WorkspaceHome
 function Invoke-WorkspaceHome {
   [OutputType([void])]
   param (
@@ -143,7 +143,7 @@ function Invoke-WorkspaceHome {
   Invoke-Workspace @PSBoundParameters @Location @args
 }
 
-New-Alias ic Shell\Invoke-WorkspaceCode
+Microsoft.PowerShell.Utility\New-Alias ic Shell\Invoke-WorkspaceCode
 function Invoke-WorkspaceCode {
   [OutputType([void])]
   param (
@@ -164,7 +164,7 @@ function Invoke-WorkspaceCode {
   Invoke-Workspace @PSBoundParameters @Location @args
 }
 
-New-Alias i/ Shell\Invoke-WorkspaceDrive
+Microsoft.PowerShell.Utility\New-Alias i/ Shell\Invoke-WorkspaceDrive
 function Invoke-WorkspaceDrive {
   [OutputType([void])]
   param (

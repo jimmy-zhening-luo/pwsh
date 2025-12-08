@@ -52,7 +52,7 @@ function Resolve-NodePackageDirectory {
   }
 }
 
-New-Alias no Node\Invoke-Node
+Microsoft.PowerShell.Utility\New-Alias no Node\Invoke-Node
 <#
 .SYNOPSIS
 Run Node.
@@ -65,7 +65,7 @@ function Invoke-Node {
   & node.exe @args
 }
 
-New-Alias n Node\Invoke-NodePackage
+Microsoft.PowerShell.Utility\New-Alias n Node\Invoke-NodePackage
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to run a command in a Node package.
@@ -80,7 +80,7 @@ function Invoke-NodePackage {
   & npm.ps1 @args
 }
 
-New-Alias nx Node\Invoke-NodeExecutable
+Microsoft.PowerShell.Utility\New-Alias nx Node\Invoke-NodeExecutable
 <#
 .SYNOPSIS
 Use 'npx' to run a command from a local or remote npm module.
@@ -93,7 +93,7 @@ function Invoke-NodeExecutable {
   & npx.ps1 @args
 }
 
-New-Alias ncc Node\Clear-NodeModuleCache
+Microsoft.PowerShell.Utility\New-Alias ncc Node\Clear-NodeModuleCache
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to clear the global Node module cache.
@@ -106,7 +106,7 @@ function Clear-NodeModuleCache {
   & npm.ps1 cache clean --force @args
 }
 
-New-Alias npo Node\Compare-NodeModule
+Microsoft.PowerShell.Utility\New-Alias npo Node\Compare-NodeModule
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to check for outdated packages in a Node package.
@@ -211,7 +211,7 @@ function Step-NodePackageVersion {
   & npm.ps1 version $Version @NodeArguments
 }
 
-New-Alias nr Node\Invoke-NodePackageScript
+Microsoft.PowerShell.Utility\New-Alias nr Node\Invoke-NodePackageScript
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to run a script defined in a Node package's 'package.json'.
@@ -251,7 +251,7 @@ function Invoke-NodePackageScript {
   & npm.ps1 run $Script @NodeArguments
 }
 
-New-Alias nt Node\Test-NodePackage
+Microsoft.PowerShell.Utility\New-Alias nt Node\Test-NodePackage
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to run the 'test' script defined in a Node package's 'package.json'.

@@ -1,4 +1,4 @@
-New-Alias tn Browse\Test-Host
+Microsoft.PowerShell.Utility\New-Alias tn Browse\Test-Host
 <#
 .SYNOPSIS
 Determine if a host is reachable.
@@ -81,7 +81,7 @@ function Test-Host {
   }
 }
 
-New-Alias tu Browse\Test-Url
+Microsoft.PowerShell.Utility\New-Alias tu Browse\Test-Url
 <#
 .SYNOPSIS
 Determine if an URL is reachable.
@@ -122,8 +122,8 @@ function Test-Url {
   $Status -ge 200 -and $Status -lt 300
 }
 
-New-Alias go Browse\Open-Url
-New-Alias open Browse\Open-Url
+Microsoft.PowerShell.Utility\New-Alias go Browse\Open-Url
+Microsoft.PowerShell.Utility\New-Alias open Browse\Open-Url
 <#
 .SYNOPSIS
 Open a file path or URL in Google Chrome.

@@ -1,4 +1,4 @@
-New-Alias e Shell\Invoke-Directory
+Microsoft.PowerShell.Utility\New-Alias e Shell\Invoke-Directory
 function Invoke-Directory {
   [OutputType([void], [string[]])]
   param(
@@ -25,7 +25,7 @@ function Invoke-Directory {
   }
 }
 
-New-Alias e. Shell\Invoke-DirectorySibling
+Microsoft.PowerShell.Utility\New-Alias e. Shell\Invoke-DirectorySibling
 function Invoke-DirectorySibling {
   param (
     [PathCompletions('..')]
@@ -38,7 +38,7 @@ function Invoke-DirectorySibling {
   Invoke-Directory @FullPath @args
 }
 
-New-Alias e.. Shell\Invoke-DirectoryRelative
+Microsoft.PowerShell.Utility\New-Alias e.. Shell\Invoke-DirectoryRelative
 function Invoke-DirectoryRelative {
   param (
     [PathCompletions('..\..')]
@@ -51,7 +51,7 @@ function Invoke-DirectoryRelative {
   Invoke-Directory @FullPath @args
 }
 
-New-Alias e~ Shell\Invoke-DirectoryHome
+Microsoft.PowerShell.Utility\New-Alias e~ Shell\Invoke-DirectoryHome
 function Invoke-DirectoryHome {
   param (
     [PathCompletions('~')]
@@ -64,7 +64,7 @@ function Invoke-DirectoryHome {
   Invoke-Directory @FullPath @args
 }
 
-New-Alias ec Shell\Invoke-DirectoryCode
+Microsoft.PowerShell.Utility\New-Alias ec Shell\Invoke-DirectoryCode
 function Invoke-DirectoryCode {
   param (
     [PathCompletions('~\code')]
@@ -77,7 +77,7 @@ function Invoke-DirectoryCode {
   Invoke-Directory @FullPath @args
 }
 
-New-Alias e/ Shell\Invoke-DirectoryDrive
+Microsoft.PowerShell.Utility\New-Alias e/ Shell\Invoke-DirectoryDrive
 function Invoke-DirectoryDrive {
   param (
     [PathCompletions('\')]

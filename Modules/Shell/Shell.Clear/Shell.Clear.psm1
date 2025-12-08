@@ -1,4 +1,4 @@
-New-Alias cl Shell\Clear-Line
+Microsoft.PowerShell.Utility\New-Alias cl Shell\Clear-Line
 function Clear-Line {
   [OutputType([void])]
   param(

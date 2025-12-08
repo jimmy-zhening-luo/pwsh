@@ -9,16 +9,16 @@ $ReadonlyAllScope = @{
 }
 
 # Reassign PS alias
-Set-Alias clear Shell\Clear-Line # was: Clear-Host
-Set-Alias rd Shell\Remove-Directory # was: Remove-Item
-Set-Alias man PSTool\Get-HelpOnline # was: Get-Help
-Set-Alias gp Git\Get-GitRepository @Readonly @Force # was: Get-ItemProperty
-Set-Alias gm Git\Write-GitRepository @Readonly @Force # was: Get-Member
-New-Alias nv Node\Step-NodePackageVersion @Readonly @Force # was: New-Variable
+Microsoft.PowerShell.Utility\Set-Alias clear Shell\Clear-Line # was: Clear-Host
+Microsoft.PowerShell.Utility\Set-Alias rd Shell\Remove-Directory # was: Remove-Item
+Microsoft.PowerShell.Utility\Set-Alias man PSTool\Get-HelpOnline # was: Get-Help
+Microsoft.PowerShell.Utility\Set-Alias gp Git\Get-GitRepository @Readonly @Force # was: Get-ItemProperty
+Microsoft.PowerShell.Utility\Set-Alias gm Git\Write-GitRepository @Readonly @Force # was: Get-Member
+Microsoft.PowerShell.Utility\New-Alias nv Node\Step-NodePackageVersion @Readonly @Force # was: New-Variable
 
 # Mask implicit PS alias
-New-Alias verb PSTool\Get-VerbList @Readonly # implicit Get-*
+Microsoft.PowerShell.Utility\New-Alias verb PSTool\Get-VerbList @Readonly # implicit Get-*
 
 # Mask native PATH executable
-New-Alias clip Microsoft.PowerShell.Management\Set-Clipboard @Readonly # clip.exe
-New-Alias run WindowsSystem\Invoke-CommandPrompt @ReadonlyAllScope # nvm/run.cmd
+Microsoft.PowerShell.Utility\New-Alias clip Microsoft.PowerShell.Management\Set-Clipboard @Readonly # clip.exe
+Microsoft.PowerShell.Utility\New-Alias run WindowsSystem\Invoke-CommandPrompt @ReadonlyAllScope # nvm/run.cmd

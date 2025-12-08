@@ -1,4 +1,4 @@
-New-Alias upman Update-Help
+Microsoft.PowerShell.Utility\New-Alias upman Update-Help
 
 $CUSTOM_HELP_FILE = @{
   Path = "$PSScriptRoot\PSHelp.psd1"
@@ -7,7 +7,7 @@ $CUSTOM_HELP = (
   Test-Path @CUSTOM_HELP_FILE -Type Leaf
 ) ? (Import-PowerShellDataFile @CUSTOM_HELP_FILE) : @{}
 
-New-Alias m PSTool\Get-HelpOnline
+Microsoft.PowerShell.Utility\New-Alias m PSTool\Get-HelpOnline
 function Get-HelpOnline {
   [OutputType([Object])]
   param(
@@ -142,7 +142,7 @@ function Get-HelpOnline {
   }
 }
 
-New-Alias galc PSTool\Get-CommandAlias
+Microsoft.PowerShell.Utility\New-Alias galc PSTool\Get-CommandAlias
 function Get-CommandAlias {
   [OutputType([System.Management.Automation.CommandInfo])]
   param(

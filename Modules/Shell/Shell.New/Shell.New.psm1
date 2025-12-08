@@ -1,6 +1,6 @@
-New-Alias touch Microsoft.PowerShell.Management\New-Item
+Microsoft.PowerShell.Utility\New-Alias touch Microsoft.PowerShell.Management\New-Item
 
-New-Alias mk Shell\New-Directory
+Microsoft.PowerShell.Utility\New-Alias mk Shell\New-Directory
 <#
 .FORWARDHELPTARGETNAME New-Item
 .FORWARDHELPCATEGORY Cmdlet
@@ -81,7 +81,7 @@ function New-Directory {
   }
 }
 
-New-Alias mj Shell\New-Junction
+Microsoft.PowerShell.Utility\New-Alias mj Shell\New-Junction
 <#
 .FORWARDHELPTARGETNAME New-Item
 .FORWARDHELPCATEGORY Cmdlet

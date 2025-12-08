@@ -1,4 +1,4 @@
-New-Alias c Shell\Set-Directory
+Microsoft.PowerShell.Utility\New-Alias c Shell\Set-Directory
 function Set-Directory {
   param (
     [PathCompletions('.', 'Directory')]
@@ -13,7 +13,7 @@ function Set-Directory {
   }
 }
 
-New-Alias c. Shell\Set-DirectorySibling
+Microsoft.PowerShell.Utility\New-Alias c. Shell\Set-DirectorySibling
 function Set-DirectorySibling {
   param (
     [PathCompletions('..', 'Directory')]
@@ -26,7 +26,7 @@ function Set-DirectorySibling {
   Microsoft.PowerShell.Management\Set-Location @FullPath @args
 }
 
-New-Alias c.. Shell\Set-DirectoryRelative
+Microsoft.PowerShell.Utility\New-Alias c.. Shell\Set-DirectoryRelative
 function Set-DirectoryRelative {
   param (
     [PathCompletions('..\..', 'Directory')]
@@ -39,7 +39,7 @@ function Set-DirectoryRelative {
   Microsoft.PowerShell.Management\Set-Location @FullPath @args
 }
 
-New-Alias c~ Shell\Set-DirectoryHome
+Microsoft.PowerShell.Utility\New-Alias c~ Shell\Set-DirectoryHome
 function Set-DirectoryHome {
   param (
     [PathCompletions('~', 'Directory')]
@@ -52,7 +52,7 @@ function Set-DirectoryHome {
   Microsoft.PowerShell.Management\Set-Location @FullPath @args
 }
 
-New-Alias cc Shell\Set-DirectoryCode
+Microsoft.PowerShell.Utility\New-Alias cc Shell\Set-DirectoryCode
 function Set-DirectoryCode {
   param (
     [PathCompletions('~\code', 'Directory')]
@@ -65,7 +65,7 @@ function Set-DirectoryCode {
   Microsoft.PowerShell.Management\Set-Location @FullPath @args
 }
 
-New-Alias c/ Shell\Set-Drive
+Microsoft.PowerShell.Utility\New-Alias c/ Shell\Set-Drive
 function Set-Drive {
   param (
     [PathCompletions('\', 'Directory')]
@@ -78,7 +78,7 @@ function Set-Drive {
   Microsoft.PowerShell.Management\Set-Location @FullPath @args
 }
 
-New-Alias d/ Shell\Set-DriveD
+Microsoft.PowerShell.Utility\New-Alias d/ Shell\Set-DriveD
 function Set-DriveD {
   param (
     [PathCompletions('D:', 'Directory')]

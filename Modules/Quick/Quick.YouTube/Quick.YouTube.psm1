@@ -1,4 +1,4 @@
-New-Alias yt Quick\Get-YouTube
+Microsoft.PowerShell.Utility\New-Alias yt Quick\Get-YouTube
 <#
 .SYNOPSIS
 Use yt-dlp to download YouTube videos.
@@ -29,7 +29,7 @@ function Get-YouTube {
   }
 }
 
-New-Alias yta Quick\Get-YouTubeAudio
+Microsoft.PowerShell.Utility\New-Alias yta Quick\Get-YouTubeAudio
 <#
 .SYNOPSIS
 Use yt-dlp to extract audio from a YouTube video.
@@ -57,7 +57,7 @@ function Get-YouTubeAudio {
   Get-YouTube @PSBoundParameters @args @YouTubeArguments
 }
 
-New-Alias ytf Quick\Get-YouTubeFormat
+Microsoft.PowerShell.Utility\New-Alias ytf Quick\Get-YouTubeFormat
 <#
 .SYNOPSIS
 Use yt-dlp to get available formats for a YouTube video.
@@ -77,7 +77,7 @@ function Get-YouTubeFormat {
   Get-YouTube @PSBoundParameters @args @YouTubeArguments
 }
 
-New-Alias yte Quick\Invoke-YouTubeDirectory
+Microsoft.PowerShell.Utility\New-Alias yte Quick\Invoke-YouTubeDirectory
 function Invoke-YouTubeDirectory {
   $YouTubeDownloads = @{
     Path = 'Videos\YouTube'
@@ -85,7 +85,7 @@ function Invoke-YouTubeDirectory {
   Shell\Invoke-DirectoryHome @YouTubeDownloads
 }
 
-New-Alias ytc Quick\Invoke-YouTubeConfig
+Microsoft.PowerShell.Utility\New-Alias ytc Quick\Invoke-YouTubeConfig
 function Invoke-YouTubeConfig {
   $YouTubeConfig = @{
     Path        = 'util\bin\yt\yt-dlp.conf'
