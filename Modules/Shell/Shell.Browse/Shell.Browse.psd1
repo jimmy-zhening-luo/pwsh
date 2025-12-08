@@ -1,10 +1,9 @@
 @{
-  RootModule        = 'Browse.psm1'
+  RootModule        = 'Shell.Browse.psm1'
   ModuleVersion     = '3.0.0.0'
-  GUID              = 'ff158ab2-d35c-450c-8086-03480d1b580e'
+  GUID              = '1e45c553-ea48-41c2-a7fc-89b5c36f30b1'
   PowerShellVersion = '7.5'
   RequiredModules   = @(
-    'Shell'
     'GenericArgumentCompleter'
   )
   FunctionsToExport = @(

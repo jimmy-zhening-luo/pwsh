@@ -4,7 +4,6 @@
   GUID              = 'c84491db-0b43-4dfc-80ea-890b16269a28'
   PowerShellVersion = '7.5'
   RequiredModules   = @(
-    'Browse'
     'Shell'
     'Git'
   )

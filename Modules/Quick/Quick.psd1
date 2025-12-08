@@ -4,7 +4,6 @@
   GUID              = '8984f438-f595-48c1-92a1-b893106bbfe2'
   PowerShellVersion = '7.5'
   RequiredModules   = @(
-    'Browse'
     'Shell'
   )
   NestedModules     = @(

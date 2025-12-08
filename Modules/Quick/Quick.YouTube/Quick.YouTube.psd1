@@ -4,7 +4,6 @@
   GUID              = '06614306-7243-4ca6-8682-826c4fb31b11'
   PowerShellVersion = '7.5'
   RequiredModules   = @(
-    'Browse'
     'Shell'
   )
   FunctionsToExport = @(

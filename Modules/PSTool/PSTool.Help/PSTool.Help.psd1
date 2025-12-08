@@ -4,7 +4,7 @@
   GUID              = '2a24daf1-f891-46c4-8613-9943b6913573'
   PowerShellVersion = '7.5'
   RequiredModules   = @(
-    'Browse'
+    'Shell'
   )
   FunctionsToExport = @(
     'Get-HelpOnline'
