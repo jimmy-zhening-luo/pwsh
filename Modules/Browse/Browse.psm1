@@ -41,9 +41,9 @@ function Test-Host {
   )
   begin {
     $InformationLevel = $Detailed -or $InformationLevel -eq 'Detailed' ? 'Detailed' : $Quiet -or $InformationLevel -eq 'Quiet' ? 'Quiet' : ''
-    $Verbosity = $InformationLevel ? @{} : @{
+    $Verbosity = $InformationLevel ? @{
       InformationLevel = $InformationLevel
-    }
+    } : @{}
   }
   process {
     $Connection = @{
