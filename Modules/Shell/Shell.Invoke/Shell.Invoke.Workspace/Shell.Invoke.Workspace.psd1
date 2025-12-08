@@ -4,6 +4,8 @@
   CompatiblePSEditions = @('Desktop', 'Core')
   GUID                 = '58837453-25d1-453b-a77f-e37939368d68'
   PowerShellVersion    = '7.5'
+  RequiredModules      = @()
+  NestedModules        = @()
   FunctionsToExport    = @(
     'Invoke-Workspace'
     'Invoke-WorkspaceSibling'

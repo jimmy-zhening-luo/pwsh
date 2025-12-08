@@ -4,6 +4,8 @@
   CompatiblePSEditions = @('Desktop', 'Core')
   GUID                 = '0cd1efe3-3183-4a36-9711-93ac269ca118'
   PowerShellVersion    = '7.5'
+  RequiredModules      = @()
+  NestedModules        = @()
   FunctionsToExport    = @(
     'Test-Sandbox'
   )

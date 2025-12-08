@@ -3,6 +3,7 @@
   CompatiblePSEditions = @('Desktop', 'Core')
   GUID                 = 'e740b507-c756-4684-8565-8c579344e454'
   PowerShellVersion    = '7.5'
+  RequiredModules      = @()
   NestedModules        = @(
     @{
       ModuleName    = 'Shell.Set.Directory'

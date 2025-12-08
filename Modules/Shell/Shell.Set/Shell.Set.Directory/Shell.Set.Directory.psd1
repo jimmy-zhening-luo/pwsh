@@ -4,6 +4,8 @@
   CompatiblePSEditions = @('Desktop', 'Core')
   GUID                 = 'b6522962-e911-4dc4-bfbe-0181264ad7d2'
   PowerShellVersion    = '7.5'
+  RequiredModules      = @()
+  NestedModules        = @()
   FunctionsToExport    = @(
     'Set-Directory'
     'Set-DirectorySibling'

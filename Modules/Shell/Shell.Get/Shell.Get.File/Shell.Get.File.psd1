@@ -4,6 +4,8 @@
   CompatiblePSEditions = @('Desktop', 'Core')
   GUID                 = '6212672b-6168-4bcb-a3bf-38291446571a'
   PowerShellVersion    = '7.5'
+  RequiredModules      = @()
+  NestedModules        = @()
   FunctionsToExport    = @(
     'Get-File'
     'Get-FileSibling'

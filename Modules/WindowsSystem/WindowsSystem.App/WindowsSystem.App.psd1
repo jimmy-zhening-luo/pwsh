@@ -4,6 +4,8 @@
   CompatiblePSEditions = @('Desktop', 'Core')
   GUID                 = '73ded6ab-d0a5-4d7c-a014-fa8b32a7714b'
   PowerShellVersion    = '7.5'
+  RequiredModules      = @()
+  NestedModules        = @()
   FunctionsToExport    = @(
     'Update-StoreApp'
     'Update-WinGetApp'

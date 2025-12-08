@@ -11,6 +11,7 @@
       Guid          = 'ce7965e6-f9ef-42fb-aa4b-80eb542833de'
     }
   )
+  NestedModules        = @()
   FunctionsToExport    = @(
     'Test-Host'
     'Test-Url'

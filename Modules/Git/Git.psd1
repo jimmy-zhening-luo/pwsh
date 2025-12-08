@@ -16,6 +16,7 @@
       Guid          = 'e4d07654-6759-4a2f-8293-39df2b809ba7'
     }
   )
+  NestedModules        = @()
   FunctionsToExport    = @(
     'Resolve-GitRepository'
     'Invoke-GitRepository'
