@@ -29,7 +29,10 @@ function Get-File {
     $FullPath = @{
       Path = Microsoft.PowerShell.Management\Resolve-Path -Path $Target
     }
-    if (Microsoft.PowerShell.Management\Test-Path @FullPath -PathType Container) {
+    $Container = @{
+      PathType = 'Container'
+    }
+    if (Microsoft.PowerShell.Management\Test-Path @FullPath @Container) {
       Microsoft.PowerShell.Management\Get-ChildItem @FullPath @Local:args
     }
     else {
@@ -38,7 +41,7 @@ function Get-File {
   }
   else {
     $Directory = @{
-      Path = $Location ? (Microsoft.PowerShell.Management\Resolve-Path -Path $Location) : $PWD
+      Path = $Location ? (Microsoft.PowerShell.Management\Resolve-Path -Path $Location) : (Microsoft.PowerShell.Management\Get-Location).Path
     }
     Microsoft.PowerShell.Management\Get-ChildItem @Directory @Local:args
   }
@@ -54,7 +57,7 @@ function Get-FileSibling {
   )
 
   $Location = @{
-    Location = $PWD | Microsoft.PowerShell.Management\Split-Path
+    Location = Microsoft.PowerShell.Management\Get-Location | Microsoft.PowerShell.Management\Split-Path
   }
   Get-File @PSBoundParameters @Location @args
 }
@@ -69,7 +72,7 @@ function Get-FileRelative {
   )
 
   $Location = @{
-    Location = $PWD | Microsoft.PowerShell.Management\Split-Path | Microsoft.PowerShell.Management\Split-Path
+    Location = Microsoft.PowerShell.Management\Get-Location | Microsoft.PowerShell.Management\Split-Path | Microsoft.PowerShell.Management\Split-Path
   }
   Get-File @PSBoundParameters @Location @args
 }
@@ -114,7 +117,7 @@ function Get-FileDrive {
   )
 
   $Location = @{
-    Location = $PWD.Drive.Root
+    Location = (Microsoft.PowerShell.Management\Get-Location).Drive.Root
   }
   Get-File @PSBoundParameters @Location @args
 }

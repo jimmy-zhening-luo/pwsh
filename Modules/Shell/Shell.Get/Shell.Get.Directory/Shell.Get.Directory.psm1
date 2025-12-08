@@ -23,7 +23,7 @@ function Get-DirectorySibling {
   )
 
   $FullPath = @{
-    Path = Microsoft.PowerShell.Management\Join-Path ($PWD | Microsoft.PowerShell.Management\Split-Path) $Path
+    Path = Microsoft.PowerShell.Management\Join-Path (Microsoft.PowerShell.Management\Get-Location | Microsoft.PowerShell.Management\Split-Path) $Path
   }
   Microsoft.PowerShell.Management\Get-ChildItem @FullPath @args
 }
@@ -37,7 +37,7 @@ function Get-DirectoryRelative {
   )
 
   $FullPath = @{
-    Path = Microsoft.PowerShell.Management\Join-Path ($PWD | Microsoft.PowerShell.Management\Split-Path | Microsoft.PowerShell.Management\Split-Path) $Path
+    Path = Microsoft.PowerShell.Management\Join-Path (Microsoft.PowerShell.Management\Get-Location | Microsoft.PowerShell.Management\Split-Path | Microsoft.PowerShell.Management\Split-Path) $Path
   }
   Microsoft.PowerShell.Management\Get-ChildItem @FullPath @args
 }
@@ -79,7 +79,7 @@ function Get-DirectoryDrive {
   )
 
   $FullPath = @{
-    Path = Microsoft.PowerShell.Management\Join-Path $PWD.Drive.Root $Path
+    Path = Microsoft.PowerShell.Management\Join-Path (Microsoft.PowerShell.Management\Get-Location).Drive.Root $Path
   }
   Microsoft.PowerShell.Management\Get-ChildItem @FullPath @args
 }

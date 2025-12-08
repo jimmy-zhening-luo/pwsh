@@ -21,7 +21,7 @@ function Set-DirectorySibling {
   )
 
   $FullPath = @{
-    Path = Microsoft.PowerShell.Management\Join-Path ($PWD | Microsoft.PowerShell.Management\Split-Path) $Path
+    Path = Microsoft.PowerShell.Management\Join-Path (Microsoft.PowerShell.Management\Get-Location | Microsoft.PowerShell.Management\Split-Path) $Path
   }
   Microsoft.PowerShell.Management\Set-Location @FullPath @args
 }
@@ -34,7 +34,7 @@ function Set-DirectoryRelative {
   )
 
   $FullPath = @{
-    Path = Microsoft.PowerShell.Management\Join-Path ($PWD | Microsoft.PowerShell.Management\Split-Path | Microsoft.PowerShell.Management\Split-Path) $Path
+    Path = Microsoft.PowerShell.Management\Join-Path (Microsoft.PowerShell.Management\Get-Location | Microsoft.PowerShell.Management\Split-Path | Microsoft.PowerShell.Management\Split-Path) $Path
   }
   Microsoft.PowerShell.Management\Set-Location @FullPath @args
 }
@@ -73,7 +73,7 @@ function Set-Drive {
   )
 
   $FullPath = @{
-    Path = Microsoft.PowerShell.Management\Join-Path $PWD.Drive.Root $Path
+    Path = Microsoft.PowerShell.Management\Join-Path (Microsoft.PowerShell.Management\Get-Location).Drive.Root $Path
   }
   Microsoft.PowerShell.Management\Set-Location @FullPath @args
 }

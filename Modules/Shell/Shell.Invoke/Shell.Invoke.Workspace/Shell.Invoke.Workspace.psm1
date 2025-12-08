@@ -37,7 +37,7 @@ function Invoke-Workspace {
       }
 
       if (-not $Location) {
-        $Location = $PWD.Path
+        $Location = (Microsoft.PowerShell.Management\Get-Location).Path
       }
 
       $ArgumentList = $Location, $Path + $ArgumentList
@@ -45,7 +45,7 @@ function Invoke-Workspace {
   }
   else {
     if (-not $Location) {
-      $Location = $PWD.Path
+      $Location = (Microsoft.PowerShell.Management\Get-Location).Path
     }
 
     $ArgumentList = , $Location + $ArgumentList
@@ -96,7 +96,7 @@ function Invoke-WorkspaceSibling {
   )
 
   $Location = @{
-    Location = $PWD | Microsoft.PowerShell.Management\Split-Path
+    Location = Microsoft.PowerShell.Management\Get-Location | Microsoft.PowerShell.Management\Split-Path
   }
   Invoke-Workspace @PSBoundParameters @Location @args
 }
@@ -117,7 +117,7 @@ function Invoke-WorkspaceRelative {
   )
 
   $Location = @{
-    Location = $PWD | Microsoft.PowerShell.Management\Split-Path | Microsoft.PowerShell.Management\Split-Path
+    Location = Microsoft.PowerShell.Management\Get-Location | Microsoft.PowerShell.Management\Split-Path | Microsoft.PowerShell.Management\Split-Path
   }
   Invoke-Workspace @PSBoundParameters @Location @args
 }
@@ -180,7 +180,7 @@ function Invoke-WorkspaceDrive {
   )
 
   $Location = @{
-    Location = $PWD.Drive.Root
+    Location = (Microsoft.PowerShell.Management\Get-Location).Drive.Root
   }
   Invoke-Workspace @PSBoundParameters @Location @args
 }

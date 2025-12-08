@@ -39,7 +39,7 @@ function Get-Size {
       MB = 1MB
       GB = 1GB
     }
-    $DEFAULT_PATH = $PWD.Path
+    $DEFAULT_PATH = (Microsoft.PowerShell.Management\Get-Location).Path
     $DEFAULT_UNIT = 'KB'
 
     if ($Path) {

@@ -90,7 +90,7 @@ function Test-Item {
   }
 
   if (-not $Location) {
-    $Location = $PWD.Path
+    $Location = (Microsoft.PowerShell.Management\Get-Location).Path
   }
 
   $Container = @{
@@ -169,7 +169,7 @@ function Resolve-Item {
   }
 
   if (-not $Location) {
-    $Location = $PWD.Path
+    $Location = (Microsoft.PowerShell.Management\Get-Location).Path
   }
 
   $FullLocation = (Microsoft.PowerShell.Management\Resolve-Path -Path $Location).Path

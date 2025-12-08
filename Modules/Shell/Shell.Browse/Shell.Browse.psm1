@@ -157,7 +157,7 @@ function Open-Url {
       $Target = $Uri
     }
     default {
-      $Target = $Path ? (Microsoft.PowerShell.Management\Test-Path @PSBoundParameters) ? (Microsoft.PowerShell.Management\Resolve-Path @PSBoundParameters) : [Uri]$Path : $PWD
+      $Target = $Path ? (Microsoft.PowerShell.Management\Test-Path @PSBoundParameters) ? (Microsoft.PowerShell.Management\Resolve-Path @PSBoundParameters) : [Uri]$Path : (Microsoft.PowerShell.Management\Get-Location)
     }
   }
 
