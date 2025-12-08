@@ -7,6 +7,7 @@ function Test-Sandbox {
     [switch]$Flag
   )
 
+  'PSBoundParameters: ' + ($PSBoundParameters | ConvertTo-Json)
   "Path: $Path"
   "Args: $args"
 }
