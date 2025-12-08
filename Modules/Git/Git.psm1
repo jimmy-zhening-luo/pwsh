@@ -1,3 +1,5 @@
+#Requires -Modules Microsoft.PowerShell.Management, Microsoft.PowerShell.Utility, @{ ModuleName='GenericArgumentCompleter'; ModuleVersion='3.0.0.0'; GUID='ce7965e6-f9ef-42fb-aa4b-80eb542833de' }, @{ ModuleName='Shell'; ModuleVersion='3.0.0.0'; GUID='e4d07654-6759-4a2f-8293-39df2b809ba7' }
+
 function Resolve-GitRepository {
   [CmdletBinding()]
   [OutputType([string[]])]
@@ -113,11 +115,11 @@ function Invoke-GitRepository {
       else {
         if (
           $Path -and -not (
-            Microsoft.PowerShell.Management\Get-Location | Resolve-GitRepository
+            Microsoft.PowerShell.Management\Get-Location | Git\Resolve-GitRepository
           ) -and -not (
-            $Path | Resolve-GitRepository
+            $Path | Git\Resolve-GitRepository
           ) -and (
-            $Verb | Resolve-GitRepository
+            $Verb | Git\Resolve-GitRepository
           )
         ) {
           $GitArguments = , $Path + $GitArguments
@@ -144,14 +146,14 @@ function Invoke-GitRepository {
     Path = $Path
     New  = $Verb -in $NEWABLE_GIT_VERB
   }
-  $Repository = Resolve-GitRepository @Resolve
+  $Repository = Git\Resolve-GitRepository @Resolve
 
   if (-not $Repository) {
     if ($Path) {
       $GitArguments = , $Path + $GitArguments
       $Resolve.Path = Microsoft.PowerShell.Management\Get-Location
 
-      $Repository = Resolve-GitRepository @Resolve
+      $Repository = Git\Resolve-GitRepository @Resolve
     }
 
     if (-not $Repository) {
@@ -200,7 +202,7 @@ function Measure-GitRepository {
   $Status = @{
     Verb = 'status'
   }
-  Invoke-GitRepository @Status @PSBoundParameters @args
+  Git\Invoke-GitRepository @Status @PSBoundParameters @args
 }
 
 Microsoft.PowerShell.Utility\New-Alias gitcl Git\Import-GitRepository
@@ -247,7 +249,7 @@ function Import-GitRepository {
     Path  = $Path
     Throw = $Throw
   }
-  Invoke-GitRepository @Clone @GitCommandArguments
+  Git\Invoke-GitRepository @Clone @GitCommandArguments
 }
 
 <#
@@ -270,7 +272,7 @@ function Get-GitRepository {
   $Pull = @{
     Verb = 'pull'
   }
-  Invoke-GitRepository @Pull @PSBoundParameters @args
+  Git\Invoke-GitRepository @Pull @PSBoundParameters @args
 }
 
 Microsoft.PowerShell.Utility\New-Alias gpp Git\Get-ChildGitRepository
@@ -289,11 +291,11 @@ function Get-ChildGitRepository {
   }
   $Repositories = Microsoft.PowerShell.Management\Get-ChildItem @Code |
     Microsoft.PowerShell.Utility\Select-Object -ExpandProperty FullName |
-    Resolve-GitRepository
+    Git\Resolve-GitRepository
   $Count = $Repositories.Count
 
   foreach ($Repository in $Repositories) {
-    Get-GitRepository -Path $Repository @args
+    Git\Get-GitRepository -Path $Repository @args
   }
 
   "`nPulled $Count repositor" + ($Count -eq 1 ? 'y' : 'ies')
@@ -334,9 +336,9 @@ function Add-GitRepository {
 
   if (
     $Path -and (
-      Microsoft.PowerShell.Management\Get-Location | Resolve-GitRepository
+      Microsoft.PowerShell.Management\Get-Location | Git\Resolve-GitRepository
     ) -and -not (
-      $Path | Resolve-GitRepository
+      $Path | Git\Resolve-GitRepository
     )
   ) {
     if ($Name) {
@@ -362,7 +364,7 @@ function Add-GitRepository {
     Path  = $Path
     Throw = $Throw
   }
-  Invoke-GitRepository @Add @GitCommandArguments
+  Git\Invoke-GitRepository @Add @GitCommandArguments
 }
 
 <#
@@ -397,9 +399,9 @@ function Write-GitRepository {
 
   if (
     $Path -and (
-      Microsoft.PowerShell.Management\Get-Location | Resolve-GitRepository
+      Microsoft.PowerShell.Management\Get-Location | Git\Resolve-GitRepository
     ) -and -not (
-      $Path | Resolve-GitRepository
+      $Path | Git\Resolve-GitRepository
     )
   ) {
     if ($Path -match $GIT_ARGUMENT -and -not $Messages) {
@@ -430,14 +432,14 @@ function Write-GitRepository {
     Throw = $Throw
   }
   if (-not $Staged) {
-    Add-GitRepository @GitParameters -Throw
+    Git\Add-GitRepository @GitParameters -Throw
   }
 
   $GitCommitArguments = '-m', ($Messages -join ' ') + $GitCommitArguments
   $Commit = @{
     Verb = 'commit'
   }
-  Invoke-GitRepository @Commit @GitParameters @GitCommitArguments
+  Git\Invoke-GitRepository @Commit @GitParameters @GitCommitArguments
 }
 
 Microsoft.PowerShell.Utility\New-Alias gs Git\Push-GitRepository
@@ -462,21 +464,21 @@ function Push-GitRepository {
 
   if (
     $Path -and (
-      Microsoft.PowerShell.Management\Get-Location | Resolve-GitRepository
+      Microsoft.PowerShell.Management\Get-Location | Git\Resolve-GitRepository
     ) -and -not (
-      $Path | Resolve-GitRepository
+      $Path | Git\Resolve-GitRepository
     )
   ) {
     $GitPushArguments = , $Path + $GitPushArguments
     $PSBoundParameters.Path = ''
   }
 
-  Get-GitRepository @PSBoundParameters -Throw
+  Git\Get-GitRepository @PSBoundParameters -Throw
 
   $Push = @{
     Verb = 'push'
   }
-  Invoke-GitRepository @Push @PSBoundParameters @GitPushArguments
+  Git\Invoke-GitRepository @Push @PSBoundParameters @GitPushArguments
 }
 
 Microsoft.PowerShell.Utility\New-Alias gr Git\Reset-GitRepository
@@ -520,9 +522,9 @@ function Reset-GitRepository {
 
   if (
     $Path -and (
-      Microsoft.PowerShell.Management\Get-Location | Resolve-GitRepository
+      Microsoft.PowerShell.Management\Get-Location | Git\Resolve-GitRepository
     ) -and -not (
-      $Path | Resolve-GitRepository
+      $Path | Git\Resolve-GitRepository
     )
   ) {
     if (
@@ -544,7 +546,7 @@ function Reset-GitRepository {
     Path  = $Path
     Throw = $Throw
   }
-  Add-GitRepository @GitParameters -Throw
+  Git\Add-GitRepository @GitParameters -Throw
 
   if ($Tree) {
     $GitResetArguments = , $Tree + $GitResetArguments
@@ -553,7 +555,7 @@ function Reset-GitRepository {
   $Reset = @{
     Verb = 'reset'
   }
-  Invoke-GitRepository @Reset @GitParameters @GitResetArguments
+  Git\Invoke-GitRepository @Reset @GitParameters @GitResetArguments
 }
 
 Microsoft.PowerShell.Utility\New-Alias grp Git\Restore-GitRepository
@@ -578,15 +580,15 @@ function Restore-GitRepository {
 
   if (
     $Path -and (
-      Microsoft.PowerShell.Management\Get-Location | Resolve-GitRepository
+      Microsoft.PowerShell.Management\Get-Location | Git\Resolve-GitRepository
     ) -and -not (
-      $Path | Resolve-GitRepository
+      $Path | Git\Resolve-GitRepository
     )
   ) {
     $GitResetArguments = , $Path + $GitResetArguments
     $PSBoundParameters.Path = ''
   }
 
-  Reset-GitRepository @PSBoundParameters -Throw @GitResetArguments
-  Get-GitRepository @PSBoundParameters
+  Git\Reset-GitRepository @PSBoundParameters -Throw @GitResetArguments
+  Git\Get-GitRepository @PSBoundParameters
 }

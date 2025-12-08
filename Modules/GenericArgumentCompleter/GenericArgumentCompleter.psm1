@@ -1,3 +1,10 @@
+#Requires -Modules Microsoft.PowerShell.Utility
+
+using namespace System.Collections
+using namespace System.Collections.Generic
+using namespace System.Management.Automation
+using namespace System.Management.Automation.Language
+
 class GenericCompletionsAttribute : System.Management.Automation.ArgumentCompleterAttribute, System.Management.Automation.IArgumentCompleterFactory {
   [string] $Units
   [bool] $Sort

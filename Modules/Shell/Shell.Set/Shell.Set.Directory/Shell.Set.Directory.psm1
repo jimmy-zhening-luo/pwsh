@@ -1,3 +1,5 @@
+#Requires -Modules Microsoft.PowerShell.Management, Microsoft.PowerShell.Utility
+
 Microsoft.PowerShell.Utility\New-Alias c Shell\Set-Directory
 function Set-Directory {
   param (

@@ -42,7 +42,7 @@ function Resolve-NodePackageDirectory {
   $IsNodePackage = @{
     Path = $Path
   }
-  if (Test-NodePackageDirectory @IsNodePackage) {
+  if (Node\Test-NodePackageDirectory @IsNodePackage) {
     $Package = ($Path ? (Microsoft.PowerShell.Management\Resolve-Path $Path) : (Microsoft.PowerShell.Management\Get-Location)).Path
 
     $OmitPrefix ? $Package : "--prefix=$Package"
@@ -131,7 +131,7 @@ function Compare-NodeModule {
     $NodeArguments = , $Path + $NodeArguments
     $PSBoundParameters.Path = ''
   }
-  $Package = Resolve-NodePackageDirectory @PSBoundParameters
+  $Package = Node\Resolve-NodePackageDirectory @PSBoundParameters
 
   if ($Package) {
     $NodeArguments = , $Package + $NodeArguments
@@ -167,7 +167,7 @@ function Step-NodePackageVersion {
     $NodeArguments = , $Path + $NodeArguments
     $PSBoundParameters.Path = ''
   }
-  $Package = Resolve-NodePackageDirectory @PSBoundParameters
+  $Package = Node\Resolve-NodePackageDirectory @PSBoundParameters
 
   if ($Package) {
     $NodeArguments = , $Package + $NodeArguments
@@ -242,7 +242,7 @@ function Invoke-NodePackageScript {
     $NodeArguments = , $Path + $NodeArguments
     $PSBoundParameters.Path = ''
   }
-  $Package = Resolve-NodePackageDirectory @PSBoundParameters
+  $Package = Node\Resolve-NodePackageDirectory @PSBoundParameters
 
   if ($Package) {
     $NodeArguments = , $Package + $NodeArguments
@@ -276,7 +276,7 @@ function Test-NodePackage {
     $NodeArguments = , $Path + $NodeArguments
     $PSBoundParameters.Path = ''
   }
-  $Package = Resolve-NodePackageDirectory @PSBoundParameters
+  $Package = Node\Resolve-NodePackageDirectory @PSBoundParameters
 
   if ($Package) {
     $NodeArguments = , $Package + $NodeArguments

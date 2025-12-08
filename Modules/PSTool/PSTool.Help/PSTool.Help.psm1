@@ -1,3 +1,5 @@
+#Requires -Modules Microsoft.PowerShell.Management, Microsoft.PowerShell.Utility, @{ ModuleName='Shell'; ModuleVersion='3.0.0.0'; GUID='e4d07654-6759-4a2f-8293-39df2b809ba7' }
+
 Microsoft.PowerShell.Utility\New-Alias upman Update-Help
 
 $CUSTOM_HELP_FILE = @{
@@ -157,8 +159,15 @@ function Get-CommandAlias {
   $Commands = @{
     Definition = $Definition.Contains('*') ? $Definition : $Definition.Length -lt 3 ? "$Definition*" : "*$Definition*"
   }
+  $Property = @{
+    Property = @(
+      'DisplayName'
+      'Options'
+      'Source'
+    )
+  }
   Microsoft.PowerShell.Utility\Get-Alias @Commands @args |
-    Microsoft.PowerShell.Utility\Select-Object DisplayName, Options, Source
+    Microsoft.PowerShell.Utility\Select-Object @Property
 }
 
 <#
@@ -194,7 +203,8 @@ function Get-VerbList {
   $Verbs = @{
     Verb = $Verb.Contains('*') ? $Verb : $Verb.Length -lt 3 ? "$Verb*" : "*$Verb*"
   }
+  $Property = 'Verb'
   Microsoft.PowerShell.Utility\Get-Verb @Verbs @args |
-    Microsoft.PowerShell.Utility\Sort-Object -Property Verb |
-    Microsoft.PowerShell.Utility\Select-Object -ExpandProperty Verb
+    Microsoft.PowerShell.Utility\Sort-Object -Property $Property |
+    Microsoft.PowerShell.Utility\Select-Object -ExpandProperty $Property
 }

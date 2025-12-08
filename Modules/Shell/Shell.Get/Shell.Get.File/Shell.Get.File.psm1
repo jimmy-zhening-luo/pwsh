@@ -1,3 +1,5 @@
+#Requires -Modules Microsoft.PowerShell.Management, Microsoft.PowerShell.Utility
+
 Microsoft.PowerShell.Utility\New-Alias p Shell\Get-File
 function Get-File {
   [OutputType([string[]])]
@@ -59,7 +61,7 @@ function Get-FileSibling {
   $Location = @{
     Location = Microsoft.PowerShell.Management\Get-Location | Microsoft.PowerShell.Management\Split-Path
   }
-  Get-File @PSBoundParameters @Location @args
+  Shell\Get-File @PSBoundParameters @Location @args
 }
 
 Microsoft.PowerShell.Utility\New-Alias p.. Shell\Get-FileRelative
@@ -74,7 +76,7 @@ function Get-FileRelative {
   $Location = @{
     Location = Microsoft.PowerShell.Management\Get-Location | Microsoft.PowerShell.Management\Split-Path | Microsoft.PowerShell.Management\Split-Path
   }
-  Get-File @PSBoundParameters @Location @args
+  Shell\Get-File @PSBoundParameters @Location @args
 }
 
 Microsoft.PowerShell.Utility\New-Alias p~ Shell\Get-FileHome
@@ -89,7 +91,7 @@ function Get-FileHome {
   $Location = @{
     Location = $HOME
   }
-  Get-File @PSBoundParameters @Location @args
+  Shell\Get-File @PSBoundParameters @Location @args
 }
 
 Microsoft.PowerShell.Utility\New-Alias pc Shell\Get-FileCode
@@ -104,7 +106,7 @@ function Get-FileCode {
   $Location = @{
     Location = "$HOME\code"
   }
-  Get-File @PSBoundParameters @Location @args
+  Shell\Get-File @PSBoundParameters @Location @args
 }
 
 Microsoft.PowerShell.Utility\New-Alias p/ Shell\Get-FileDrive
@@ -119,5 +121,5 @@ function Get-FileDrive {
   $Location = @{
     Location = (Microsoft.PowerShell.Management\Get-Location).Drive.Root
   }
-  Get-File @PSBoundParameters @Location @args
+  Shell\Get-File @PSBoundParameters @Location @args
 }

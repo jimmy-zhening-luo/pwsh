@@ -50,6 +50,8 @@
   )
   FunctionsToExport     = @(
     'Format-Path'
+    'Trace-RelativePath'
+    'Merge-RelativePath'
     'Test-Item'
     'Resolve-Item'
     'New-Directory'

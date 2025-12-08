@@ -1,3 +1,8 @@
+#Requires -Modules Microsoft.PowerShell.Management, Microsoft.PowerShell.Utility
+
+using namespace System.IO
+using namespace System.Management.Automation
+
 Microsoft.PowerShell.Utility\New-Alias touch Microsoft.PowerShell.Management\New-Item
 
 Microsoft.PowerShell.Utility\New-Alias mk Shell\New-Directory

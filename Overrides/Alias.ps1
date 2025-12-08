@@ -1,3 +1,5 @@
+#Requires -Modules Microsoft.PowerShell.Utility
+
 $Force = @{
   Force = $True
 }

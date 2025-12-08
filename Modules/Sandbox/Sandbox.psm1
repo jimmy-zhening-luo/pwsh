@@ -1,3 +1,5 @@
+#Requires -Modules Microsoft.PowerShell.Utility
+
 Microsoft.PowerShell.Utility\New-Alias sand Sandbox\Test-Sandbox
 Microsoft.PowerShell.Utility\New-Alias sandbox Sandbox\Test-Sandbox
 function Test-Sandbox {

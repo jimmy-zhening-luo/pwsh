@@ -1,3 +1,11 @@
+#Requires -Modules Microsoft.PowerShell.Management, Microsoft.PowerShell.Utility
+
+using namespace System.IO
+using namespace System.Collections
+using namespace System.Collections.Generic
+using namespace System.Management.Automation
+using namespace System.Management.Automation.Language
+
 function Format-Path {
   [OutputType([string])]
   param(
@@ -49,8 +57,8 @@ function Test-Item {
     [switch]$RequireSubpath
   )
 
-  $Path = Format-Path -Path $Path -Leading
-  $Location = Format-Path -Path $Location
+  $Path = Shell\Format-Path -Path $Path -Leading
+  $Location = Shell\Format-Path -Path $Location
 
   if ([System.IO.Path]::IsPathRooted($Path)) {
     if ($Location) {
@@ -58,8 +66,8 @@ function Test-Item {
         Path     = $Path
         Location = $Location
       }
-      if (Trace-RelativePath @Relative) {
-        $Path = Merge-RelativePath @Relative
+      if (Shell\Trace-RelativePath @Relative) {
+        $Path = Shell\Merge-RelativePath @Relative
       }
       else {
         return $False
@@ -77,8 +85,8 @@ function Test-Item {
         Path     = Microsoft.PowerShell.Management\Join-Path $HOME $Path
         Location = $Location
       }
-      if (Trace-RelativePath @Relative) {
-        $Path = Merge-RelativePath @Relative
+      if (Shell\Trace-RelativePath @Relative) {
+        $Path = Shell\Merge-RelativePath @Relative
       }
       else {
         return $False
@@ -144,12 +152,12 @@ function Resolve-Item {
     throw "Invalid path '$Path': " + ($PSBoundParameters | Microsoft.PowerShell.Utility\ConvertTo-Json -EnumsAsStrings)
   }
 
-  $Path = Format-Path -Path $Path -Leading
-  $Location = Format-Path -Path $Location
+  $Path = Shell\Format-Path -Path $Path -Leading
+  $Location = Shell\Format-Path -Path $Location
 
   if ([System.IO.Path]::IsPathRooted($Path)) {
     if ($Location) {
-      $Path = Merge-RelativePath -Path $Path -Location $Location
+      $Path = Shell\Merge-RelativePath -Path $Path -Location $Location
     }
     else {
       $Location = [System.IO.Path]::GetPathRoot($Path)
@@ -159,7 +167,7 @@ function Resolve-Item {
     $Path = $Path -replace '^~\\*', ''
 
     if ($Location) {
-      $Path = Merge-RelativePath -Path (
+      $Path = Shell\Merge-RelativePath -Path (
         Microsoft.PowerShell.Management\Join-Path $HOME $Path
       ) -Location $Location
     }

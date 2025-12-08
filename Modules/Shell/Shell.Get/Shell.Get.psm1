@@ -1,3 +1,5 @@
+#Requires -Modules Microsoft.PowerShell.Management, Microsoft.PowerShell.Utility, @{ ModuleName='GenericArgumentCompleter'; ModuleVersion='3.0.0.0'; GUID='ce7965e6-f9ef-42fb-aa4b-80eb542833de' }
+
 Microsoft.PowerShell.Utility\New-Alias split Microsoft.PowerShell.Management\Split-Path
 Microsoft.PowerShell.Utility\New-Alias hash Microsoft.PowerShell.Utility\Get-FileHash
 

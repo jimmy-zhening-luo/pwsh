@@ -1,3 +1,5 @@
+#Requires -Modules Microsoft.PowerShell.Utility, @{ ModuleName='Shell'; ModuleVersion='3.0.0.0'; GUID='e4d07654-6759-4a2f-8293-39df2b809ba7' }
+
 Microsoft.PowerShell.Utility\New-Alias yt Quick\Get-YouTube
 <#
 .SYNOPSIS
@@ -54,7 +56,7 @@ function Get-YouTubeAudio {
     '--postprocessor-args'
     '-ar 44100'
   )
-  Get-YouTube @PSBoundParameters @args @YouTubeArguments
+  Quick\Get-YouTube @PSBoundParameters @args @YouTubeArguments
 }
 
 Microsoft.PowerShell.Utility\New-Alias ytf Quick\Get-YouTubeFormat
@@ -74,7 +76,7 @@ function Get-YouTubeFormat {
   $YouTubeArguments = @(
     '-F'
   )
-  Get-YouTube @PSBoundParameters @args @YouTubeArguments
+  Quick\Get-YouTube @PSBoundParameters @args @YouTubeArguments
 }
 
 Microsoft.PowerShell.Utility\New-Alias yte Quick\Invoke-YouTubeDirectory
@@ -82,7 +84,7 @@ function Invoke-YouTubeDirectory {
   $YouTubeDownloads = @{
     Path = 'Videos\YouTube'
   }
-  Shell\Invoke-DirectoryHome @YouTubeDownloads
+  [void](Shell\Invoke-DirectoryHome @YouTubeDownloads)
 }
 
 Microsoft.PowerShell.Utility\New-Alias ytc Quick\Invoke-YouTubeConfig
@@ -92,5 +94,5 @@ function Invoke-YouTubeConfig {
     ProfileName = 'Setting'
     Window      = $True
   }
-  Shell\Invoke-WorkspaceHome @YouTubeConfig @args
+  [void](Shell\Invoke-WorkspaceHome @YouTubeConfig @args)
 }
