@@ -65,7 +65,7 @@ function Test-Host {
         }
       }
 
-      Test-NetConnection @Connection @Verbosity
+      $Results += Test-NetConnection @Connection @Verbosity
     }
   }
   end {
