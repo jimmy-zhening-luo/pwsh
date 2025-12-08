@@ -390,8 +390,8 @@ function Write-GitRepository {
 
   $GitCommitArguments, $Messages = (
     $Message ? (, $Message + $args) : $args
-  ).Where({ $_ }).Where(
-    { $_ -match $GIT_ARGUMENT },
+  ).Where({ $PSItem }).Where(
+    { $PSItem -match $GIT_ARGUMENT },
     'Split'
   )
 

@@ -52,7 +52,7 @@ function Get-HelpOnline {
 
     if ($Help) {
       $HelpLink = $Help.relatedLinks.navigationLink.Uri -replace '\?.*$', '' |
-        ? { $_ }
+        Where-Object { $PSItem }
     }
 
     if ($Help -and $Parameter) {

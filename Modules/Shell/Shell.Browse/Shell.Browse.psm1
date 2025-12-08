@@ -116,7 +116,7 @@ function Test-Url {
       Microsoft.PowerShell.Utility\Select-Object -ExpandProperty StatusCode
   }
   catch {
-    $Status = $_.Exception.Response.StatusCode.value__
+    $Status = $PSItem.Exception.Response.StatusCode.value__
   }
 
   $Status -ge 200 -and $Status -lt 300

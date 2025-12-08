@@ -304,7 +304,7 @@ class PathCompleter : System.Management.Automation.IArgumentCompleter {
     $leaves = @()
     $leaves += Microsoft.PowerShell.Management\Get-ChildItem @query
     $directories, $files = $leaves.Where(
-      { $_.PSIsContainer },
+      { $PSItem.PSIsContainer },
       'Split'
     )
     $directories = $directories |
@@ -318,14 +318,14 @@ class PathCompleter : System.Management.Automation.IArgumentCompleter {
 
     if ($currentDirectoryText) {
       $directories = $directories |
-        % { Microsoft.PowerShell.Management\Join-Path $currentDirectoryText $_ }
+        ForEach-Object { Microsoft.PowerShell.Management\Join-Path $currentDirectoryText $PSItem }
       $files = $files |
-        % { Microsoft.PowerShell.Management\Join-Path $currentDirectoryText $_ }
+        ForEach-Object { Microsoft.PowerShell.Management\Join-Path $currentDirectoryText $PSItem }
     }
 
     if (-not $this.Flat) {
       $directories = $directories |
-        % { $_ + '\' }
+        ForEach-Object { $PSItem + '\' }
     }
 
     $items = @()

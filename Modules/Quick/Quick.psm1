@@ -30,7 +30,7 @@ function ConvertTo-Hex {
     [switch]$Lowercase
   )
 
-  $Hex = $Decimal | % { '{0:X}' -f $_ }
+  $Hex = $Decimal | ForEach-Object { '{0:X}' -f $PSItem }
 
   if ($Hex) {
     $Lowercase ? $Hex.ToLowerInvariant() : $Hex

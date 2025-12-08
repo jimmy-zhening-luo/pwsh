@@ -63,7 +63,7 @@ class GenericCompleter : System.Management.Automation.IArgumentCompleter {
 
     $unitKeys = (
       $units -split ','
-    ).Trim() | ? { $_ }
+    ).Trim() | Where-Object { $PSItem }
 
     if (-not $unitKeys) {
       throw [System.ArgumentException]::new('units')
@@ -96,7 +96,7 @@ class GenericCompleter : System.Management.Automation.IArgumentCompleter {
 
     $Local:units = (
       $this.Units -split ','
-    ).Trim() | ? { $_ }
+    ).Trim() | Where-Object { $PSItem }
 
     switch ($this.Case) {
       Lower {
@@ -118,19 +118,19 @@ class GenericCompleter : System.Management.Automation.IArgumentCompleter {
 
     if ($currentText) {
       $unitMatches += $Local:units |
-        ? { $_ -like "$currentText*" }
+        Where-Object { $PSItem -like "$currentText*" }
 
       if (-not $unitMatches) {
         $unitMatches += $Local:units |
-          ? { $_ -like "*$currentText*" }
+          Where-Object { $PSItem -like "*$currentText*" }
       }
       elseif ($unitMatches.Count -eq 1) {
         if ($unitMatches[0] -eq $currentText) {
           $exactMatch, $unitMatches = $unitMatches[0], @()
           $unitMatches += (
             $Local:units |
-              ? { $_ -like "*$currentText*" } |
-              ? { $_ -ne $exactMatch }
+              Where-Object { $PSItem -like "*$currentText*" } |
+              Where-Object { $PSItem -ne $exactMatch }
           )
           $unitMatches += $exactMatch
 

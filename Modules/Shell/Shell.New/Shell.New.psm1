@@ -71,7 +71,7 @@ function New-Directory {
         "> Step: New-Item -ItemType Directory -Path [[$Path]] -Name [$Name] -- " + ($PSBoundParameters | Microsoft.PowerShell.Utility\ConvertTo-Json -EnumsAsStrings)
       )
     ) {
-      $steppablePipeline.Process($_)
+      $steppablePipeline.Process($PSItem)
     }
   }
   end {
@@ -136,7 +136,7 @@ function New-Junction {
         "> Step: New-Item -Force -ItemType Junction -Path [$Path] -Value [$Value]"
       )
     ) {
-      $steppablePipeline.Process($_)
+      $steppablePipeline.Process($PSItem)
     }
   }
   end {
