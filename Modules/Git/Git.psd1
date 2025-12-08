@@ -2,11 +2,19 @@
   RootModule           = 'Git.psm1'
   ModuleVersion        = '3.0.0.0'
   CompatiblePSEditions = @('Desktop', 'Core')
-  GUID                 = 'd8a43de0-682d-42d5-8333-bfbc80d84ac4'
+  GUID                 = '05b1300b-3c15-49d7-8033-a7edb1386042'
   PowerShellVersion    = '7.5'
   RequiredModules      = @(
-    'GenericArgumentCompleter'
-    'Shell'
+    @{
+      ModuleName    = 'GenericArgumentCompleter'
+      ModuleVersion = '3.0.0'
+      Guid          = 'ce7965e6-f9ef-42fb-aa4b-80eb542833de'
+    }
+    @{
+      ModuleName    = 'Shell'
+      ModuleVersion = '3.0.0'
+      Guid          = 'e4d07654-6759-4a2f-8293-39df2b809ba7'
+    }
   )
   FunctionsToExport    = @(
     'Resolve-GitRepository'

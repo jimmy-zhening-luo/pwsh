@@ -5,7 +5,11 @@
   GUID                 = 'b047ad82-dcbf-48cc-876a-78c6334900af'
   PowerShellVersion    = '7.5'
   NestedModules        = @(
-    'WindowsSystem.App'
+    @{
+      ModuleName    = 'WindowsSystem.Update'
+      ModuleVersion = '3.0.0'
+      Guid          = '73ded6ab-d0a5-4d7c-a014-fa8b32a7714b'
+    }
   )
   FunctionsToExport    = @(
     'Invoke-CommandPrompt'

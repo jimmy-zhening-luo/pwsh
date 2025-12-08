@@ -2,15 +2,46 @@
   RootModule           = 'Shell.psm1'
   ModuleVersion        = '3.0.0.0'
   CompatiblePSEditions = @('Desktop', 'Core')
-  GUID                 = '195c0492-bfd4-4873-8c2b-c88f53c9b7e8'
+  GUID                 = 'e4d07654-6759-4a2f-8293-39df2b809ba7'
   PowerShellVersion    = '7.5'
+  RequiredModules      = @(
+    @{
+      ModuleName    = 'GenericArgumentCompleter'
+      ModuleVersion = '3.0.0'
+      Guid          = 'ce7965e6-f9ef-42fb-aa4b-80eb542833de'
+    }
+  )
   NestedModules        = @(
-    'Shell.New'
-    'Shell.Clear'
-    'Shell.Get'
-    'Shell.Set'
-    'Shell.Invoke'
-    'Shell.Browse'
+    @{
+      ModuleName    = 'Shell.New'
+      ModuleVersion = '3.0.0.0'
+      Guid          = '9a3324b2-207d-4635-a8d6-ac8261181fb1'
+    }
+    @{
+      ModuleName    = 'Shell.Clear'
+      ModuleVersion = '3.0.0.0'
+      Guid          = '7b39ad83-781d-49f2-a378-f913d983b1a6'
+    }
+    @{
+      ModuleName    = 'Shell.Get'
+      ModuleVersion = '3.0.0.0'
+      Guid          = '83fda875-8f8c-4bce-a5da-e840d832378d'
+    }
+    @{
+      ModuleName    = 'Shell.Set'
+      ModuleVersion = '3.0.0.0'
+      Guid          = 'e740b507-c756-4684-8565-8c579344e454'
+    }
+    @{
+      ModuleName    = 'Shell.Invoke'
+      ModuleVersion = '3.0.0.0'
+      Guid          = '130b56d3-229a-4ec1-be75-d31a615147c8'
+    }
+    @{
+      ModuleName    = 'Shell.Browse'
+      ModuleVersion = '3.0.0.0'
+      Guid          = '1e45c553-ea48-41c2-a7fc-89b5c36f30b1'
+    }
   )
   FunctionsToExport    = @(
     'Format-Path'

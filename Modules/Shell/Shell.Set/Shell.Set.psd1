@@ -4,7 +4,11 @@
   GUID                 = 'e740b507-c756-4684-8565-8c579344e454'
   PowerShellVersion    = '7.5'
   NestedModules        = @(
-    'Shell.Set.Directory'
+    @{
+      ModuleName    = 'Shell.Set.Directory'
+      ModuleVersion = '3.0.0.0'
+      Guid          = 'b6522962-e911-4dc4-bfbe-0181264ad7d2'
+    }
   )
   FunctionsToExport    = @(
     'Set-Directory'

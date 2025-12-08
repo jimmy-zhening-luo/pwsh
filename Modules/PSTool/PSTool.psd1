@@ -5,11 +5,23 @@
   GUID                 = 'c84491db-0b43-4dfc-80ea-890b16269a28'
   PowerShellVersion    = '7.5'
   RequiredModules      = @(
-    'Shell'
-    'Git'
+    @{
+      ModuleName    = 'Shell'
+      ModuleVersion = '3.0.0'
+      Guid          = 'e4d07654-6759-4a2f-8293-39df2b809ba7'
+    }
+    @{
+      ModuleName    = 'Git'
+      ModuleVersion = '3.0.0'
+      Guid          = '05b1300b-3c15-49d7-8033-a7edb1386042'
+    }
   )
   NestedModules        = @(
-    'PSTool.Help'
+    @{
+      ModuleName    = 'PSTool.Help'
+      ModuleVersion = '3.0.0'
+      Guid          = '2a24daf1-f891-46c4-8613-9943b6913573'
+    }
   )
   FunctionsToExport    = @(
     'Invoke-PSHistory'

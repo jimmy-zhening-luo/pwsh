@@ -2,10 +2,14 @@
   RootModule           = 'Quick.YouTube.psm1'
   ModuleVersion        = '3.0.0.0'
   CompatiblePSEditions = @('Desktop', 'Core')
-  GUID                 = '06614306-7243-4ca6-8682-826c4fb31b11'
+  GUID                 = 'bc355ec2-c3a4-4e99-abe1-4e9e2aeb2635'
   PowerShellVersion    = '7.5'
   RequiredModules      = @(
-    'Shell'
+    @{
+      ModuleName    = 'Shell'
+      ModuleVersion = '3.0.0'
+      Guid          = 'e4d07654-6759-4a2f-8293-39df2b809ba7'
+    }
   )
   FunctionsToExport    = @(
     'Get-YouTube'

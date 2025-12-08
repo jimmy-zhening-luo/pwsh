@@ -5,11 +5,23 @@
   GUID                 = '83fda875-8f8c-4bce-a5da-e840d832378d'
   PowerShellVersion    = '7.5'
   RequiredModules      = @(
-    'GenericArgumentCompleter'
+    @{
+      ModuleName    = 'GenericArgumentCompleter'
+      ModuleVersion = '3.0.0'
+      Guid          = 'ce7965e6-f9ef-42fb-aa4b-80eb542833de'
+    }
   )
   NestedModules        = @(
-    'Shell.Get.Directory'
-    'Shell.Get.File'
+    @{
+      ModuleName    = 'Shell.Get.Directory'
+      ModuleVersion = '3.0.0.0'
+      Guid          = '1c90175d-d43c-4e5e-9bd2-160c173da3e7'
+    }
+    @{
+      ModuleName    = 'Shell.Get.File'
+      ModuleVersion = '3.0.0.0'
+      Guid          = '6212672b-6168-4bcb-a3bf-38291446571a'
+    }
   )
   FunctionsToExport    = @(
     'Get-Size'
