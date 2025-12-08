@@ -74,7 +74,7 @@ function Test-Host {
     }
     else {
       $Connection = @{
-        ComputerName = [Uri]"http://google.com"
+        ComputerName = 'google.com'
       }
       Test-NetConnection @Connection @Verbosity
     }
