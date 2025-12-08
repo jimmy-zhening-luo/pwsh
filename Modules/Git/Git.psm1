@@ -1,5 +1,3 @@
-#Requires -Modules Microsoft.PowerShell.Management, Microsoft.PowerShell.Utility, @{ ModuleName='GenericArgumentCompleter'; ModuleVersion='3.0.0.0'; GUID='ce7965e6-f9ef-42fb-aa4b-80eb542833de' }, @{ ModuleName='Shell'; ModuleVersion='3.0.0.0'; GUID='e4d07654-6759-4a2f-8293-39df2b809ba7' }
-
 function Resolve-GitRepository {
   [CmdletBinding()]
   [OutputType([string[]])]

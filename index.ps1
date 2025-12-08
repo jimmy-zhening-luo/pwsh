@@ -1,5 +1,3 @@
-#Requires -Modules Microsoft.PowerShell.Utility
-
 $Env:PSModulePath += ";$PSScriptRoot\Modules"
 
 $PSDefaultParameterValues = Microsoft.PowerShell.Utility\Import-PowerShellDataFile -Path $PSScriptRoot\Overrides\Parameter.psd1

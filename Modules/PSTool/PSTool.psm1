@@ -1,6 +1,3 @@
-#Requires -Modules Microsoft.PowerShell.Management, Microsoft.PowerShell.Utility, PSReadLine, @{ ModuleName='Shell'; ModuleVersion='3.0.0.0'; GUID='e4d07654-6759-4a2f-8293-39df2b809ba7' }, @{ ModuleName='Git'; ModuleVersion='3.0.0.0'; GUID='05b1300b-3c15-49d7-8033-a7edb1386042' }
-
-
 Microsoft.PowerShell.Utility\New-Alias ^ Microsoft.PowerShell.Utility\Select-Object
 Microsoft.PowerShell.Utility\New-Alias to Microsoft.PowerShell.Utility\Select-Object
 Microsoft.PowerShell.Utility\New-Alias k Microsoft.PowerShell.Utility\Get-Member

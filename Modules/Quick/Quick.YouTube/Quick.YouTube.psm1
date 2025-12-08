@@ -1,5 +1,3 @@
-#Requires -Modules Microsoft.PowerShell.Utility, @{ ModuleName='Shell'; ModuleVersion='3.0.0.0'; GUID='e4d07654-6759-4a2f-8293-39df2b809ba7' }
-
 Microsoft.PowerShell.Utility\New-Alias yt Quick\Get-YouTube
 <#
 .SYNOPSIS

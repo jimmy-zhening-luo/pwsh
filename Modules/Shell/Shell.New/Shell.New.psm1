@@ -1,5 +1,3 @@
-#Requires -Modules Microsoft.PowerShell.Management, Microsoft.PowerShell.Utility
-
 using namespace System.IO
 using namespace System.Management.Automation
 

@@ -1,5 +1,3 @@
-#Requires -Modules Microsoft.PowerShell.Management, Microsoft.PowerShell.Utility, @{ ModuleName='Shell'; ModuleVersion='3.0.0.0'; GUID='e4d07654-6759-4a2f-8293-39df2b809ba7' }
-
 Microsoft.PowerShell.Utility\New-Alias upman Update-Help
 
 $CUSTOM_HELP_FILE = @{

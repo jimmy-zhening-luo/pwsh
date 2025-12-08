@@ -1,5 +1,3 @@
-#Requires -Modules Microsoft.PowerShell.Management, Microsoft.PowerShell.Utility
-
 Microsoft.PowerShell.Utility\New-Alias e Shell\Invoke-Directory
 function Invoke-Directory {
   [OutputType([void], [string[]])]

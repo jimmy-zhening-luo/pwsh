@@ -1,5 +1,3 @@
-#Requires -Modules Microsoft.PowerShell.Management, Microsoft.PowerShell.Utility
-
 Microsoft.PowerShell.Utility\New-Alias guid Quick\Copy-Guid
 function Copy-Guid {
   [OutputType([string])]

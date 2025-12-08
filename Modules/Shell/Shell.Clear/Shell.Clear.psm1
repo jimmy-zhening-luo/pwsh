@@ -1,5 +1,3 @@
-#Requires -Modules Microsoft.PowerShell.Management, Microsoft.PowerShell.Utility
-
 Microsoft.PowerShell.Utility\New-Alias cl Shell\Clear-Line
 function Clear-Line {
   [OutputType([void])]

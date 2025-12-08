@@ -1,5 +1,3 @@
-#Requires -Modules Microsoft.PowerShell.Management, Microsoft.PowerShell.Utility
-
 Microsoft.PowerShell.Utility\New-Alias p Shell\Get-File
 function Get-File {
   [OutputType([string[]])]

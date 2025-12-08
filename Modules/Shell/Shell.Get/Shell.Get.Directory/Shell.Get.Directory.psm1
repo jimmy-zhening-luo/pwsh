@@ -1,5 +1,3 @@
-#Requires -Modules Microsoft.PowerShell.Management, Microsoft.PowerShell.Utility
-
 using namespace System.IO
 
 Microsoft.PowerShell.Utility\New-Alias l Shell\Get-Directory

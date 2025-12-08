@@ -1,5 +1,3 @@
-#Requires -Modules Microsoft.PowerShell.Management, Microsoft.PowerShell.Utility
-
 Microsoft.PowerShell.Utility\New-Alias gapx Appx\Get-AppxPackage
 Microsoft.PowerShell.Utility\New-Alias remapx Appx\Remove-AppxPackage
 
