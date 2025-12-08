@@ -98,7 +98,7 @@ function Invoke-WorkspaceSibling {
   $Location = @{
     Location = Microsoft.PowerShell.Management\Get-Location | Microsoft.PowerShell.Management\Split-Path
   }
-  Invoke-Workspace @PSBoundParameters @Location @args
+  [void](Invoke-Workspace @PSBoundParameters @Location @args)
 }
 
 Microsoft.PowerShell.Utility\New-Alias i.. Shell\Invoke-WorkspaceRelative
@@ -119,7 +119,7 @@ function Invoke-WorkspaceRelative {
   $Location = @{
     Location = Microsoft.PowerShell.Management\Get-Location | Microsoft.PowerShell.Management\Split-Path | Microsoft.PowerShell.Management\Split-Path
   }
-  Invoke-Workspace @PSBoundParameters @Location @args
+  [void](Invoke-Workspace @PSBoundParameters @Location @args)
 }
 
 Microsoft.PowerShell.Utility\New-Alias i~ Shell\Invoke-WorkspaceHome
@@ -140,7 +140,7 @@ function Invoke-WorkspaceHome {
   $Location = @{
     Location = $HOME
   }
-  Invoke-Workspace @PSBoundParameters @Location @args
+  [void](Invoke-Workspace @PSBoundParameters @Location @args)
 }
 
 Microsoft.PowerShell.Utility\New-Alias ic Shell\Invoke-WorkspaceCode
@@ -161,7 +161,7 @@ function Invoke-WorkspaceCode {
   $Location = @{
     Location = "$HOME\code"
   }
-  Invoke-Workspace @PSBoundParameters @Location @args
+  [void](Invoke-Workspace @PSBoundParameters @Location @args)
 }
 
 Microsoft.PowerShell.Utility\New-Alias i/ Shell\Invoke-WorkspaceDrive
@@ -182,5 +182,5 @@ function Invoke-WorkspaceDrive {
   $Location = @{
     Location = (Microsoft.PowerShell.Management\Get-Location).Drive.Root
   }
-  Invoke-Workspace @PSBoundParameters @Location @args
+  [void](Invoke-Workspace @PSBoundParameters @Location @args)
 }

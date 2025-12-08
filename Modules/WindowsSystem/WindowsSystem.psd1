@@ -1,12 +1,13 @@
 @{
-  RootModule        = 'WindowsSystem.psm1'
-  ModuleVersion     = '3.0.0.0'
-  GUID              = 'b047ad82-dcbf-48cc-876a-78c6334900af'
-  PowerShellVersion = '7.5'
-  NestedModules     = @(
+  RootModule           = 'WindowsSystem.psm1'
+  ModuleVersion        = '3.0.0.0'
+  CompatiblePSEditions = @('Desktop', 'Core')
+  GUID                 = 'b047ad82-dcbf-48cc-876a-78c6334900af'
+  PowerShellVersion    = '7.5'
+  NestedModules        = @(
     'WindowsSystem.App'
   )
-  FunctionsToExport = @(
+  FunctionsToExport    = @(
     'Invoke-CommandPrompt'
     'Update-Windows'
     'Edit-Path'
@@ -17,9 +18,9 @@
     'Find-WinGetApp'
     'Remove-WinGetApp'
   )
-  CmdletsToExport   = @()
-  VariablesToExport = @()
-  AliasesToExport   = @(
+  CmdletsToExport      = @()
+  VariablesToExport    = @()
+  AliasesToExport      = @(
     'restart'
     'wu'
     'path'

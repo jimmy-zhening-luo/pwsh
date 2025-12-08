@@ -1,16 +1,17 @@
 @{
-  RootModule        = 'Shell.Get.psm1'
-  ModuleVersion     = '3.0.0.0'
-  GUID              = '83fda875-8f8c-4bce-a5da-e840d832378d'
-  PowerShellVersion = '7.5'
-  RequiredModules   = @(
+  RootModule           = 'Shell.Get.psm1'
+  ModuleVersion        = '3.0.0.0'
+  CompatiblePSEditions = @('Desktop', 'Core')
+  GUID                 = '83fda875-8f8c-4bce-a5da-e840d832378d'
+  PowerShellVersion    = '7.5'
+  RequiredModules      = @(
     'GenericArgumentCompleter'
   )
-  NestedModules     = @(
+  NestedModules        = @(
     'Shell.Get.Directory'
     'Shell.Get.File'
   )
-  FunctionsToExport = @(
+  FunctionsToExport    = @(
     'Get-Size'
     'Get-Directory'
     'Get-DirectorySibling'
@@ -25,9 +26,9 @@
     'Get-FileCode'
     'Get-FileDrive'
   )
-  CmdletsToExport   = @()
-  VariablesToExport = @()
-  AliasesToExport   = @(
+  CmdletsToExport      = @()
+  VariablesToExport    = @()
+  AliasesToExport      = @(
     'split'
     'hash'
     'sz'

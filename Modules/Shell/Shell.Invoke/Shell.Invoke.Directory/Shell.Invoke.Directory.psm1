@@ -18,7 +18,7 @@ function Invoke-Directory {
     PathType = 'Leaf'
   }
   if (Microsoft.PowerShell.Management\Test-Path @PSBoundParameters @IsFile) {
-    [void](Invoke-Workspace @PSBoundParameters)
+    # [void](Invoke-Workspace @PSBoundParameters)
   }
   else {
     [void](Microsoft.PowerShell.Management\Invoke-Item @PSBoundParameters)

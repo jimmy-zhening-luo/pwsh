@@ -1,12 +1,13 @@
 @{
-  ModuleVersion     = '3.0.0.0'
-  GUID              = '130b56d3-229a-4ec1-be75-d31a615147c8'
-  PowerShellVersion = '7.5'
-  NestedModules     = @(
+  ModuleVersion        = '3.0.0.0'
+  CompatiblePSEditions = @('Desktop', 'Core')
+  GUID                 = '130b56d3-229a-4ec1-be75-d31a615147c8'
+  PowerShellVersion    = '7.5'
+  NestedModules        = @(
     'Shell.Invoke.Directory'
     'Shell.Invoke.Workspace'
   )
-  FunctionsToExport = @(
+  FunctionsToExport    = @(
     'Invoke-Directory'
     'Invoke-DirectorySibling'
     'Invoke-DirectoryRelative'
@@ -20,9 +21,9 @@
     'Invoke-WorkspaceCode'
     'Invoke-WorkspaceDrive'
   )
-  CmdletsToExport   = @()
-  VariablesToExport = @()
-  AliasesToExport   = @(
+  CmdletsToExport      = @()
+  VariablesToExport    = @()
+  AliasesToExport      = @(
     'e'
     'e.'
     'e..'

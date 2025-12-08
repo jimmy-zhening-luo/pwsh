@@ -1,16 +1,17 @@
 @{
-  RootModule        = 'PSTool.psm1'
-  ModuleVersion     = '3.0.0.0'
-  GUID              = 'c84491db-0b43-4dfc-80ea-890b16269a28'
-  PowerShellVersion = '7.5'
-  RequiredModules   = @(
+  RootModule           = 'PSTool.psm1'
+  ModuleVersion        = '3.0.0.0'
+  CompatiblePSEditions = @('Desktop', 'Core')
+  GUID                 = 'c84491db-0b43-4dfc-80ea-890b16269a28'
+  PowerShellVersion    = '7.5'
+  RequiredModules      = @(
     'Shell'
     'Git'
   )
-  NestedModules     = @(
+  NestedModules        = @(
     'PSTool.Help'
   )
-  FunctionsToExport = @(
+  FunctionsToExport    = @(
     'Invoke-PSHistory'
     'Invoke-PSProfile'
     'Update-PSProfile'
@@ -20,9 +21,9 @@
     'Get-CommandAlias'
     'Get-VerbList'
   )
-  CmdletsToExport   = @()
-  VariablesToExport = @()
-  AliasesToExport   = @(
+  CmdletsToExport      = @()
+  VariablesToExport    = @()
+  AliasesToExport      = @(
     '^'
     'to'
     'k'
