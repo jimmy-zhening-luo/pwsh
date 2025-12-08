@@ -3,6 +3,9 @@
   ModuleVersion        = '3.0.0.0'
   CompatiblePSEditions = @('Desktop', 'Core')
   GUID                 = '05b1300b-3c15-49d7-8033-a7edb1386042'
+  Author               = 'Jimmy Zhening Luo'
+  CompanyName          = 'Jimmy Zhening Luo'
+  Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
   PowerShellVersion    = '7.5'
   RequiredModules      = @(
     @{
