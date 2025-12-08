@@ -10,7 +10,7 @@ function Clear-Line {
     [void](Microsoft.PowerShell.Management\Clear-Content @PSBoundParameters @args)
   }
   else {
-    [void](Microsoft.PowerShell.Core\Clear-Host)
+    [void](Clear-Host)
   }
 }
 
