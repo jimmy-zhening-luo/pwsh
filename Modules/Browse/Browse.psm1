@@ -104,7 +104,6 @@ function Test-Url {
   }
 
   $Request = @{
-    Uri                          = $Uri
     Method                       = 'HEAD'
     PreserveHttpMethodOnRedirect = $True
     DisableKeepAlive             = $True
@@ -113,7 +112,7 @@ function Test-Url {
     ErrorAction                  = 'Stop'
   }
   try {
-    $Status = Invoke-WebRequest @Request |
+    $Status = Invoke-WebRequest @PSBoundParameters @Request |
       Select-Object -ExpandProperty StatusCode
   }
   catch {
