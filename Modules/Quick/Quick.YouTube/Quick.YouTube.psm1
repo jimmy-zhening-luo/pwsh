@@ -22,7 +22,7 @@ function Get-YouTube {
   ).Uri : [Uri]$Video
 
   if (Browse\Test-Url -Uri $VideoUri) {
-    & yt-dlp.exe @args -- $VideoUri.OriginalString
+    & yt-dlp.exe $args -- $VideoUri.OriginalString
   }
   else {
     throw 'The specified video URL is unreachable: ' + $VideoUri.OriginalString
