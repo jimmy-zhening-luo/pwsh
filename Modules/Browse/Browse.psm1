@@ -65,7 +65,7 @@ function Test-Host {
         }
       }
 
-      $Results += Test-NetConnection @Connection @Verbosity
+      $Results += NetTCPIP\Test-NetConnection @Connection @Verbosity
     }
   }
   end {
@@ -112,7 +112,7 @@ function Test-Url {
     ErrorAction                  = 'Stop'
   }
   try {
-    $Status = Invoke-WebRequest @PSBoundParameters @Request |
+    $Status = Microsoft.PowerShell.Utility\Invoke-WebRequest @PSBoundParameters @Request |
       Select-Object -ExpandProperty StatusCode
   }
   catch {
