@@ -38,7 +38,7 @@ function Resolve-GitRepository {
     }
     else {
       $RepoGitPath = @{
-        Path           = $Path ? (Join-Path $Path .git) : '.git'
+        Path           = $Path ? (Microsoft.PowerShell.Management\Join-Path $Path .git) : '.git'
         RequireSubpath = $True
       }
 
@@ -168,7 +168,7 @@ function Invoke-GitRepository {
   ) + $GitArguments
   if ($Throw) {
     & git.exe @GitArguments 2>&1 |
-      Tee-Object -Variable GitResult
+      Microsoft.PowerShell.Utility\Tee-Object -Variable GitResult
 
     if ($GitResult -match '^(?>fatal:)') {
       throw $GitResult
@@ -287,8 +287,8 @@ function Get-ChildGitRepository {
     Path      = "$HOME\code"
     Directory = $True
   }
-  $Repositories = Get-ChildItem @Code |
-    Select-Object -ExpandProperty FullName |
+  $Repositories = Microsoft.PowerShell.Management\Get-ChildItem @Code |
+    Microsoft.PowerShell.Utility\Select-Object -ExpandProperty FullName |
     Resolve-GitRepository
   $Count = $Repositories.Count
 

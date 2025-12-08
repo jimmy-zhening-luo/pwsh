@@ -7,10 +7,10 @@ function Clear-Line {
   )
 
   if ($Path -or $args) {
-    [void](Clear-Content @PSBoundParameters @args)
+    [void](Microsoft.PowerShell.Management\Clear-Content @PSBoundParameters @args)
   }
   else {
-    [void](Clear-Host)
+    [void](Microsoft.PowerShell.Core\Clear-Host)
   }
 }
 
@@ -29,5 +29,5 @@ function Remove-Directory {
     Recurse = $True
     Force   = $True
   }
-  [void](Remove-Item @Hard @PSBoundParameters)
+  [void](Microsoft.PowerShell.Management\Remove-Item @Hard @PSBoundParameters)
 }

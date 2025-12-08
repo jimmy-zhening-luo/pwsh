@@ -6,10 +6,10 @@ function Set-Directory {
   )
 
   if ($Path) {
-    Set-Location @PSBoundParameters @args
+    Microsoft.PowerShell.Management\Set-Location @PSBoundParameters @args
   }
   else {
-    Set-Location @args
+    Microsoft.PowerShell.Management\Set-Location @args
   }
 }
 
@@ -21,9 +21,9 @@ function Set-DirectorySibling {
   )
 
   $FullPath = @{
-    Path = Join-Path ($PWD | Split-Path) $Path
+    Path = Microsoft.PowerShell.Management\Join-Path ($PWD | Microsoft.PowerShell.Management\Split-Path) $Path
   }
-  Set-Location @FullPath @args
+  Microsoft.PowerShell.Management\Set-Location @FullPath @args
 }
 
 New-Alias c.. Shell\Set-DirectoryRelative
@@ -34,9 +34,9 @@ function Set-DirectoryRelative {
   )
 
   $FullPath = @{
-    Path = Join-Path ($PWD | Split-Path | Split-Path) $Path
+    Path = Microsoft.PowerShell.Management\Join-Path ($PWD | Microsoft.PowerShell.Management\Split-Path | Microsoft.PowerShell.Management\Split-Path) $Path
   }
-  Set-Location @FullPath @args
+  Microsoft.PowerShell.Management\Set-Location @FullPath @args
 }
 
 New-Alias c~ Shell\Set-DirectoryHome
@@ -47,9 +47,9 @@ function Set-DirectoryHome {
   )
 
   $FullPath = @{
-    Path = Join-Path $HOME $Path
+    Path = Microsoft.PowerShell.Management\Join-Path $HOME $Path
   }
-  Set-Location @FullPath @args
+  Microsoft.PowerShell.Management\Set-Location @FullPath @args
 }
 
 New-Alias cc Shell\Set-DirectoryCode
@@ -60,9 +60,9 @@ function Set-DirectoryCode {
   )
 
   $FullPath = @{
-    Path = Join-Path $HOME\code $Path
+    Path = Microsoft.PowerShell.Management\Join-Path $HOME\code $Path
   }
-  Set-Location @FullPath @args
+  Microsoft.PowerShell.Management\Set-Location @FullPath @args
 }
 
 New-Alias c/ Shell\Set-Drive
@@ -73,9 +73,9 @@ function Set-Drive {
   )
 
   $FullPath = @{
-    Path = Join-Path $PWD.Drive.Root $Path
+    Path = Microsoft.PowerShell.Management\Join-Path $PWD.Drive.Root $Path
   }
-  Set-Location @FullPath @args
+  Microsoft.PowerShell.Management\Set-Location @FullPath @args
 }
 
 New-Alias d/ Shell\Set-DriveD
@@ -86,7 +86,7 @@ function Set-DriveD {
   )
 
   $FullPath = @{
-    Path = Join-Path D: $Path
+    Path = Microsoft.PowerShell.Management\Join-Path D: $Path
   }
-  Set-Location @FullPath @args
+  Microsoft.PowerShell.Management\Set-Location @FullPath @args
 }

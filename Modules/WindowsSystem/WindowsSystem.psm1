@@ -1,4 +1,4 @@
-New-Alias restart Restart-Computer
+New-Alias restart Microsoft.PowerShell.Management\Restart-Computer
 
 <#
 .SYNOPSIS
@@ -30,7 +30,7 @@ function Update-Windows {
   $WindowsUpdate = @{
     FilePath = 'ms-settings:windowsupdate'
   }
-  [void](Start-Process @WindowsUpdate)
+  [void](Microsoft.PowerShell.Management\Start-Process @WindowsUpdate)
 }
 
 New-Alias path WindowsSystem\Edit-Path
@@ -61,11 +61,11 @@ function Edit-Path {
   if ($Administrator) {
     $ControlPanel.Verb = 'RunAs'
   }
-  [void](Start-Process @ControlPanel)
+  [void](Microsoft.PowerShell.Management\Start-Process @ControlPanel)
 }
 
-New-Alias sesv Set-Service
-New-Alias remsv Remove-Service
+New-Alias sesv Microsoft.PowerShell.Management\Set-Service
+New-Alias remsv Microsoft.PowerShell.Management\Remove-Service
 
 New-Alias tkill WindowsSystem\Stop-Task
 function Stop-Task {
@@ -121,6 +121,6 @@ function Stop-Task {
       'Stop-Process'
     )
   ) {
-    [void](Stop-Process @Process)
+    [void](Microsoft.PowerShell.Management\Stop-Process @Process)
   }
 }

@@ -17,7 +17,7 @@ function Invoke-Workspace {
 
   if (
     $Location -and -not (
-      Test-Path -Path $Location -PathType Container
+      Microsoft.PowerShell.Management\Test-Path -Path $Location -PathType Container
     )
   ) {
     $ArgumentList = , $Location + $ArgumentList
@@ -25,10 +25,10 @@ function Invoke-Workspace {
   }
 
   if ($Path) {
-    $Target = $Location ? (Join-Path $Location $Path) : $Path
+    $Target = $Location ? (Microsoft.PowerShell.Management\Join-Path $Location $Path) : $Path
 
-    if (Test-Path -Path $Target) {
-      $FullPath = (Resolve-Path $Target).Path
+    if (Microsoft.PowerShell.Management\Test-Path -Path $Target) {
+      $FullPath = (Microsoft.PowerShell.Management\Resolve-Path $Target).Path
       $ArgumentList = , $FullPath + $ArgumentList
     }
     else {
@@ -77,7 +77,7 @@ function Invoke-Workspace {
     ArgumentList = $ArgumentList
     NoNewWindow  = $True
   }
-  [void](Start-Process @Process)
+  [void](Microsoft.PowerShell.Management\Start-Process @Process)
 }
 
 New-Alias i. Shell\Invoke-WorkspaceSibling
@@ -96,7 +96,7 @@ function Invoke-WorkspaceSibling {
   )
 
   $Location = @{
-    Location = $PWD | Split-Path
+    Location = $PWD | Microsoft.PowerShell.Management\Split-Path
   }
   Invoke-Workspace @PSBoundParameters @Location @args
 }
@@ -117,7 +117,7 @@ function Invoke-WorkspaceRelative {
   )
 
   $Location = @{
-    Location = $PWD | Split-Path | Split-Path
+    Location = $PWD | Microsoft.PowerShell.Management\Split-Path | Microsoft.PowerShell.Management\Split-Path
   }
   Invoke-Workspace @PSBoundParameters @Location @args
 }

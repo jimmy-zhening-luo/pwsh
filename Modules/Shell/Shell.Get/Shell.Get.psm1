@@ -1,5 +1,5 @@
-New-Alias split Split-Path
-New-Alias hash Get-FileHash
+New-Alias split Microsoft.PowerShell.Management\Split-Path
+New-Alias hash Microsoft.PowerShell.Utility\Get-FileHash
 
 New-Alias sz Shell\Get-Size
 New-Alias size Shell\Get-Size
@@ -49,7 +49,7 @@ function Get-Size {
         }
       }
       else {
-        if (Test-Path $Path) {
+        if (Microsoft.PowerShell.Management\Test-Path $Path) {
           $Unit = $DEFAULT_UNIT
         }
         else {
@@ -77,12 +77,12 @@ function Get-Size {
     }
 
     $UnitCanonical = $UNITS[$Unit]
-    $Item = Get-Item $Path
+    $Item = Microsoft.PowerShell.Management\Get-Item $Path
     $Quantity = [Math]::Round(
       (
         $Item.PSIsContainer ? (
-          Get-ChildItem -Path $Path -Recurse -File |
-            Measure-Object -Property Length -Sum
+          Microsoft.PowerShell.Management\Get-ChildItem -Path $Path -Recurse -File |
+            Microsoft.PowerShell.Utility\Measure-Object -Property Length -Sum
         ).Sum : $Item.Length
       ) / $FACTORS[$UnitCanonical],
       3

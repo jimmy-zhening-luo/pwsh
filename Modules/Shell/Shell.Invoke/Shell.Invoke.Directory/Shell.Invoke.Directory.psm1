@@ -17,11 +17,11 @@ function Invoke-Directory {
   $IsFile = @{
     PathType = 'Leaf'
   }
-  if (Test-Path @PSBoundParameters @IsFile) {
+  if (Microsoft.PowerShell.Management\Test-Path @PSBoundParameters @IsFile) {
     [void](Invoke-Workspace @PSBoundParameters)
   }
   else {
-    [void](Invoke-Item @PSBoundParameters)
+    [void](Microsoft.PowerShell.Management\Invoke-Item @PSBoundParameters)
   }
 }
 
@@ -33,7 +33,7 @@ function Invoke-DirectorySibling {
   )
 
   $FullPath = @{
-    Path = Join-Path ($PWD | Split-Path) $Path
+    Path = Microsoft.PowerShell.Management\Join-Path ($PWD | Microsoft.PowerShell.Management\Split-Path) $Path
   }
   Invoke-Directory @FullPath @args
 }
@@ -46,7 +46,7 @@ function Invoke-DirectoryRelative {
   )
 
   $FullPath = @{
-    Path = Join-Path ($PWD | Split-Path | Split-Path) $Path
+    Path = Microsoft.PowerShell.Management\Join-Path ($PWD | Microsoft.PowerShell.Management\Split-Path | Microsoft.PowerShell.Management\Split-Path) $Path
   }
   Invoke-Directory @FullPath @args
 }
@@ -59,7 +59,7 @@ function Invoke-DirectoryHome {
   )
 
   $FullPath = @{
-    Path = Join-Path $HOME $Path
+    Path = Microsoft.PowerShell.Management\Join-Path $HOME $Path
   }
   Invoke-Directory @FullPath @args
 }
@@ -72,7 +72,7 @@ function Invoke-DirectoryCode {
   )
 
   $FullPath = @{
-    Path = Join-Path $HOME\code $Path
+    Path = Microsoft.PowerShell.Management\Join-Path $HOME\code $Path
   }
   Invoke-Directory @FullPath @args
 }
@@ -85,7 +85,7 @@ function Invoke-DirectoryDrive {
   )
 
   $FullPath = @{
-    Path = Join-Path $PWD.Drive.Root $Path
+    Path = Microsoft.PowerShell.Management\Join-Path $PWD.Drive.Root $Path
   }
   Invoke-Directory @FullPath @args
 }

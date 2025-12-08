@@ -20,5 +20,5 @@ New-Alias nv Node\Step-NodePackageVersion @Readonly @Force # was: New-Variable
 New-Alias verb PSTool\Get-VerbList @Readonly # implicit Get-*
 
 # Mask native PATH executable
-New-Alias clip Set-Clipboard @Readonly # clip.exe
+New-Alias clip Microsoft.PowerShell.Management\Set-Clipboard @Readonly # clip.exe
 New-Alias run WindowsSystem\Invoke-CommandPrompt @ReadonlyAllScope # nvm/run.cmd

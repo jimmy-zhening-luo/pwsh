@@ -7,13 +7,13 @@ function Copy-Guid {
     [switch]$Silent
   )
 
-  $Guid = (New-Guid).Guid
+  $Guid = (Microsoft.PowerShell.Utility\New-Guid).Guid
 
   if ($Uppercase) {
     $Guid = $Guid.ToUpperInvariant()
   }
 
-  [void]($Guid | Set-Clipboard)
+  [void]($Guid | Microsoft.PowerShell.Management\Set-Clipboard)
 
   if (-not $Silent) {
     $Guid

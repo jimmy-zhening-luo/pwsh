@@ -76,7 +76,7 @@ function Test-Host {
       $Connection = @{
         ComputerName = 'google.com'
       }
-      Test-NetConnection @Connection @Verbosity
+      NetTCPIP\Test-NetConnection @Connection @Verbosity
     }
   }
 }
@@ -113,7 +113,7 @@ function Test-Url {
   }
   try {
     $Status = Microsoft.PowerShell.Utility\Invoke-WebRequest @PSBoundParameters @Request |
-      Select-Object -ExpandProperty StatusCode
+      Microsoft.PowerShell.Utility\Select-Object -ExpandProperty StatusCode
   }
   catch {
     $Status = $_.Exception.Response.StatusCode.value__
@@ -155,7 +155,7 @@ function Open-Url {
       $Target = $Uri
     }
     default {
-      $Target = $Path ? (Test-Path @PSBoundParameters) ? (Resolve-Path @PSBoundParameters) : [Uri]$Path : $PWD
+      $Target = $Path ? (Microsoft.PowerShell.Management\Test-Path @PSBoundParameters) ? (Microsoft.PowerShell.Management\Resolve-Path @PSBoundParameters) : [Uri]$Path : $PWD
     }
   }
 
@@ -164,6 +164,6 @@ function Open-Url {
     ArgumentList = $Target
   }
   if (-not $env:SSH_CLIENT) {
-    [void](Start-Process @Browser)
+    [void](Microsoft.PowerShell.Management\Start-Process @Browser)
   }
 }

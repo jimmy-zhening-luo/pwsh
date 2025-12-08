@@ -74,7 +74,7 @@ function Test-Item {
 
     if ($Location) {
       $Relative = @{
-        Path     = Join-Path $HOME $Path
+        Path     = Microsoft.PowerShell.Management\Join-Path $HOME $Path
         Location = $Location
       }
       if (Trace-RelativePath @Relative) {
@@ -97,12 +97,12 @@ function Test-Item {
     Path     = $Location
     PathType = 'Container'
   }
-  if (-not (Test-Path @Container)) {
+  if (-not (Microsoft.PowerShell.Management\Test-Path @Container)) {
     return $False
   }
 
-  $FullLocation = (Resolve-Path -Path $Location).Path
-  $FullPath = Join-Path $FullLocation $Path
+  $FullLocation = (Microsoft.PowerShell.Management\Resolve-Path -Path $Location).Path
+  $FullPath = Microsoft.PowerShell.Management\Join-Path $FullLocation $Path
   $HasSubpath = $FullPath.Substring($FullLocation.Length) -notmatch '^\\*$'
   $FileLike = $HasSubpath -and -not (
     $FullPath.EndsWith('\') -or $FullPath.EndsWith('..')
@@ -123,10 +123,10 @@ function Test-Item {
     PathType = $File ? 'Leaf' : 'Container'
   }
   if ($New) {
-    (Test-Path @Item -IsValid) -and -not (Test-Path @Item)
+    (Microsoft.PowerShell.Management\Test-Path @Item -IsValid) -and -not (Microsoft.PowerShell.Management\Test-Path @Item)
   }
   else {
-    Test-Path @Item
+    Microsoft.PowerShell.Management\Test-Path @Item
   }
 }
 
@@ -141,7 +141,7 @@ function Resolve-Item {
   )
 
   if (-not (Test-Item @PSBoundParameters)) {
-    throw "Invalid path '$Path': " + ($PSBoundParameters | ConvertTo-Json -EnumsAsStrings)
+    throw "Invalid path '$Path': " + ($PSBoundParameters | Microsoft.PowerShell.Utility\ConvertTo-Json -EnumsAsStrings)
   }
 
   $Path = Format-Path -Path $Path -Leading
@@ -160,7 +160,7 @@ function Resolve-Item {
 
     if ($Location) {
       $Path = Merge-RelativePath -Path (
-        Join-Path $HOME $Path
+        Microsoft.PowerShell.Management\Join-Path $HOME $Path
       ) -Location $Location
     }
     else {
@@ -172,11 +172,11 @@ function Resolve-Item {
     $Location = $PWD.Path
   }
 
-  $FullLocation = (Resolve-Path -Path $Location).Path
-  $FullPath = Join-Path $FullLocation $Path
+  $FullLocation = (Microsoft.PowerShell.Management\Resolve-Path -Path $Location).Path
+  $FullPath = Microsoft.PowerShell.Management\Join-Path $FullLocation $Path
 
   $New ? $FullPath : (
-    Resolve-Path -Path $FullPath -Force
+    Microsoft.PowerShell.Management\Resolve-Path -Path $FullPath -Force
   ).Path
 }
 
@@ -247,7 +247,7 @@ class PathCompleter : System.Management.Automation.IArgumentCompleter {
     [bool] $flat,
     [bool] $useNativeDirectorySeparator
   ) {
-    if (-not $root -or -not (Test-Path -Path $root -PathType Container)) {
+    if (-not $root -or -not (Microsoft.PowerShell.Management\Test-Path -Path $root -PathType Container)) {
       throw [System.ArgumentException]::new('root')
     }
 
@@ -265,7 +265,7 @@ class PathCompleter : System.Management.Automation.IArgumentCompleter {
     [System.Collections.IDictionary] $fakeBoundParameters
   ) {
 
-    $Local:root = Resolve-Path -Path $this.Root
+    $Local:root = Microsoft.PowerShell.Management\Resolve-Path -Path $this.Root
     $separator = $this.UseNativeDirectorySeparator ? [System.IO.Path]::DirectorySeparatorChar : '/'
     $query = @{
       Directory = $this.Type -eq 'Directory'
@@ -281,19 +281,19 @@ class PathCompleter : System.Management.Automation.IArgumentCompleter {
         $currentPathText += '*'
       }
 
-      $currentDirectoryText = Split-Path $currentPathText
-      $fragment = Split-Path $currentPathText -Leaf
+      $currentDirectoryText = Microsoft.PowerShell.Management\Split-Path $currentPathText
+      $fragment = Microsoft.PowerShell.Management\Split-Path $currentPathText -Leaf
 
       if ($fragment -eq '*') {
         $fragment = ''
       }
 
-      $path = Join-Path $Local:root $currentDirectoryText
+      $path = Microsoft.PowerShell.Management\Join-Path $Local:root $currentDirectoryText
 
-      if (Test-Path -Path $path -PathType Container) {
+      if (Microsoft.PowerShell.Management\Test-Path -Path $path -PathType Container) {
         $query.Path = $path
         $query['Filter'] = "$fragment*"
-        $leaves = Get-ChildItem @query
+        $leaves = Microsoft.PowerShell.Management\Get-ChildItem @query
       }
     }
 
@@ -302,15 +302,15 @@ class PathCompleter : System.Management.Automation.IArgumentCompleter {
     }
 
     $leaves = @()
-    $leaves += Get-ChildItem @query
+    $leaves += Microsoft.PowerShell.Management\Get-ChildItem @query
     $directories, $files = $leaves.Where(
       { $_.PSIsContainer },
       'Split'
     )
     $directories = $directories |
-      Select-Object -ExpandProperty Name
+      Microsoft.PowerShell.Utility\Select-Object -ExpandProperty Name
     $files = $files |
-      Select-Object -ExpandProperty Name
+      Microsoft.PowerShell.Utility\Select-Object -ExpandProperty Name
 
     if ($currentDirectoryText -and -not $this.Flat) {
       $directories += ''
@@ -318,9 +318,9 @@ class PathCompleter : System.Management.Automation.IArgumentCompleter {
 
     if ($currentDirectoryText) {
       $directories = $directories |
-        % { Join-Path $currentDirectoryText $_ }
+        % { Microsoft.PowerShell.Management\Join-Path $currentDirectoryText $_ }
       $files = $files |
-        % { Join-Path $currentDirectoryText $_ }
+        % { Microsoft.PowerShell.Management\Join-Path $currentDirectoryText $_ }
     }
 
     if (-not $this.Flat) {

@@ -12,7 +12,7 @@ function Get-File {
 
   if (
     $Location -and -not (
-      Test-Path -Path $Location -PathType Container
+      Microsoft.PowerShell.Management\Test-Path -Path $Location -PathType Container
     )
   ) {
     $Local:args = , $Location + $Local:args
@@ -22,25 +22,25 @@ function Get-File {
   if ($Path) {
     $Target = $Location ? (Join-Path $Location $Path) : $Path
 
-    if (-not (Test-Path -Path $Target)) {
+    if (-not (Microsoft.PowerShell.Management\Test-Path -Path $Target)) {
       throw "Path '$Target' does not exist."
     }
 
     $FullPath = @{
-      Path = Resolve-Path -Path $Target
+      Path = Microsoft.PowerShell.Management\Resolve-Path -Path $Target
     }
-    if (Test-Path @FullPath -PathType Container) {
-      Get-ChildItem @FullPath @Local:args
+    if (Microsoft.PowerShell.Management\Test-Path @FullPath -PathType Container) {
+      Microsoft.PowerShell.Management\Get-ChildItem @FullPath @Local:args
     }
     else {
-      Get-Content @FullPath @Local:args
+      Microsoft.PowerShell.Management\Get-Content @FullPath @Local:args
     }
   }
   else {
     $Directory = @{
-      Path = $Location ? (Resolve-Path -Path $Location) : $PWD
+      Path = $Location ? (Microsoft.PowerShell.Management\Resolve-Path -Path $Location) : $PWD
     }
-    Get-ChildItem @Directory @Local:args
+    Microsoft.PowerShell.Management\Get-ChildItem @Directory @Local:args
   }
 }
 
@@ -54,7 +54,7 @@ function Get-FileSibling {
   )
 
   $Location = @{
-    Location = $PWD | Split-Path
+    Location = $PWD | Microsoft.PowerShell.Management\Split-Path
   }
   Get-File @PSBoundParameters @Location @args
 }
@@ -69,7 +69,7 @@ function Get-FileRelative {
   )
 
   $Location = @{
-    Location = $PWD | Split-Path | Split-Path
+    Location = $PWD | Microsoft.PowerShell.Management\Split-Path | Microsoft.PowerShell.Management\Split-Path
   }
   Get-File @PSBoundParameters @Location @args
 }

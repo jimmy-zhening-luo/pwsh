@@ -12,7 +12,7 @@ function Invoke-PSHistory {
   param()
 
   $History = @{
-    Path        = (Get-PSReadLineOption).HistorySavePath
+    Path        = (PSReadLine\Get-PSReadLineOption).HistorySavePath
     ProfileName = 'PowerShell'
     Window      = $True
   }
@@ -34,7 +34,7 @@ function Invoke-PSProfile {
 New-Alias up PSTool\Update-PSProfile
 function Update-PSProfile {
   $ProfileRepository = @{
-    Path = Join-Path $HOME code\pwsh -Resolve
+    Path = Microsoft.PowerShell.Management\Resolve-Path -Path $HOME\code\pwsh
   }
   Git\Get-GitRepository @ProfileRepository
   Update-PSLinter
@@ -48,12 +48,12 @@ function Update-PSLinter {
     Path     = "$HOME\code\pwsh\PSScriptAnalyzerSettings.psd1"
     PathType = 'Leaf'
   }
-  if (Test-Path @Linter) {
+  if (Microsoft.PowerShell.Management\Test-Path @Linter) {
     $Copy = @{
       Path        = $Linter.Path
       Destination = $HOME
     }
-    [void](Copy-Item @Copy)
+    [void](Microsoft.PowerShell.Management\Copy-Item @Copy)
   }
 }
 
@@ -79,10 +79,10 @@ function Measure-PSProfile {
 
   for ($i = 0; $i -lt $Iterations; ++$i) {
     $StartupLoadProfile += (
-      Measure-Command { pwsh @Test }
+      Microsoft.PowerShell.Utility\Measure-Command { pwsh @Test }
     ).TotalMilliseconds
     $NormalStartup += (
-      Measure-Command { pwsh -NoProfile @Test }
+      Microsoft.PowerShell.Utility\Measure-Command { pwsh -NoProfile @Test }
     ).TotalMilliseconds
   }
 

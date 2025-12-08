@@ -15,7 +15,7 @@ function Test-NodePackageDirectory {
   )
 
   $IsNodePackage = @{
-    Path     = Join-Path ($Path ? $Path : $PWD) package.json
+    Path     = Microsoft.PowerShell.Management\Join-Path ($Path ? $Path : $PWD) package.json
     PathType = 'Leaf'
   }
   return Test-Path @IsNodePackage
@@ -43,7 +43,7 @@ function Resolve-NodePackageDirectory {
     Path = $Path
   }
   if (Test-NodePackageDirectory @IsNodePackage) {
-    $Package = ($Path ? (Resolve-Path $Path) : $PWD).Path
+    $Package = ($Path ? (Microsoft.PowerShell.Management\Resolve-Path $Path) : $PWD).Path
 
     $OmitPrefix ? $Package : "--prefix=$Package"
   }

@@ -1,5 +1,5 @@
-New-Alias gapx Get-AppxPackage
-New-Alias remapx Remove-AppxPackage
+New-Alias gapx Appx\Get-AppxPackage
+New-Alias remapx Appx\Remove-AppxPackage
 
 New-Alias su WindowsSystem\Update-StoreApp
 <#
@@ -19,7 +19,7 @@ function Update-StoreApp {
   $Store = @{
     FilePath = 'ms-windows-store://downloadsandupdates'
   }
-  [void](Start-Process @Store)
+  [void](Microsoft.PowerShell.Management\Start-Process @Store)
 }
 
 New-Alias wget winget.exe
