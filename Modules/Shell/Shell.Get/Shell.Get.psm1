@@ -5,7 +5,7 @@ New-Alias sz Shell\Get-Size
 New-Alias size Shell\Get-Size
 function Get-Size {
   [OutputType([string])]
-  [OutputType([double], ParameterSetName='Number')]
+  [OutputType([double], ParameterSetName = 'Number')]
   param(
     [Parameter(
       ValueFromPipeline,
