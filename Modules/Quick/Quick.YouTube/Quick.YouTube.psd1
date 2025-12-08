@@ -8,7 +8,7 @@
     @{
       ModuleName    = 'Shell'
       ModuleVersion = '3.0.0'
-      Guid          = 'e4d07654-6759-4a2f-8293-39df2b809ba7'
+      GUID          = 'e4d07654-6759-4a2f-8293-39df2b809ba7'
     }
   )
   NestedModules        = @()

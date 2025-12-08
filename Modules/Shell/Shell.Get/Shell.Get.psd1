@@ -8,19 +8,19 @@
     @{
       ModuleName    = 'GenericArgumentCompleter'
       ModuleVersion = '3.0.0'
-      Guid          = 'ce7965e6-f9ef-42fb-aa4b-80eb542833de'
+      GUID          = 'ce7965e6-f9ef-42fb-aa4b-80eb542833de'
     }
   )
   NestedModules        = @(
     @{
       ModuleName    = 'Shell.Get.Directory'
       ModuleVersion = '3.0.0.0'
-      Guid          = '1c90175d-d43c-4e5e-9bd2-160c173da3e7'
+      GUID          = '1c90175d-d43c-4e5e-9bd2-160c173da3e7'
     }
     @{
       ModuleName    = 'Shell.Get.File'
       ModuleVersion = '3.0.0.0'
-      Guid          = '6212672b-6168-4bcb-a3bf-38291446571a'
+      GUID          = '6212672b-6168-4bcb-a3bf-38291446571a'
     }
   )
   FunctionsToExport    = @(

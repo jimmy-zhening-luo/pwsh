@@ -8,19 +8,19 @@
     @{
       ModuleName    = 'Shell'
       ModuleVersion = '3.0.0'
-      Guid          = 'e4d07654-6759-4a2f-8293-39df2b809ba7'
+      GUID          = 'e4d07654-6759-4a2f-8293-39df2b809ba7'
     }
     @{
       ModuleName    = 'Git'
       ModuleVersion = '3.0.0'
-      Guid          = '05b1300b-3c15-49d7-8033-a7edb1386042'
+      GUID          = '05b1300b-3c15-49d7-8033-a7edb1386042'
     }
   )
   NestedModules        = @(
     @{
       ModuleName    = 'PSTool.Help'
       ModuleVersion = '3.0.0'
-      Guid          = '2a24daf1-f891-46c4-8613-9943b6913573'
+      GUID          = '2a24daf1-f891-46c4-8613-9943b6913573'
     }
   )
   FunctionsToExport    = @(

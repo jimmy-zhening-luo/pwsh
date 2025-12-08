@@ -8,12 +8,12 @@
     @{
       ModuleName    = 'Shell.Invoke.Directory'
       ModuleVersion = '3.0.0.0'
-      Guid          = 'ae5b665b-de9c-4872-824c-2e8bebc3abe0'
+      GUID          = 'ae5b665b-de9c-4872-824c-2e8bebc3abe0'
     }
     @{
       ModuleName    = 'Shell.Invoke.Workspace'
       ModuleVersion = '3.0.0.0'
-      Guid          = '58837453-25d1-453b-a77f-e37939368d68'
+      GUID          = '58837453-25d1-453b-a77f-e37939368d68'
     }
   )
   FunctionsToExport    = @(

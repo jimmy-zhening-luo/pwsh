@@ -8,12 +8,12 @@
     @{
       ModuleName    = 'GenericArgumentCompleter'
       ModuleVersion = '3.0.0'
-      Guid          = 'ce7965e6-f9ef-42fb-aa4b-80eb542833de'
+      GUID          = 'ce7965e6-f9ef-42fb-aa4b-80eb542833de'
     }
     @{
       ModuleName    = 'Shell'
       ModuleVersion = '3.0.0'
-      Guid          = 'e4d07654-6759-4a2f-8293-39df2b809ba7'
+      GUID          = 'e4d07654-6759-4a2f-8293-39df2b809ba7'
     }
   )
   NestedModules        = @()
