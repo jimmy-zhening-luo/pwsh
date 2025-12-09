@@ -127,7 +127,7 @@ function Get-HelpOnline {
     }
     else {
       if ($Help) {
-        [void](Get-Help @Command 2>&1)
+        Get-Help @Command 2>&1 | Out-Null
       }
     }
   }
