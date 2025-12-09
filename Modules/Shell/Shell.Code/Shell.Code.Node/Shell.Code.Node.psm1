@@ -243,35 +243,37 @@ function Invoke-NodePackage {
   & npm.ps1 @NodeArguments 2>&1 |
     Tee-Object -Variable NpmResult
 
-  if ($NpmResult) {
-    $Private:NpmError = @()
+  if (-not $NpmResult) {
+    return
+  }
 
-    if ($NpmResult -is [array]) {
-      $Private:ErrorRecords = $NpmResult |
-        Where-Object {
-          $_ -is [ErrorRecord]
-        }
+  $Private:NpmError = @()
 
-      if ($ErrorRecords) {
-        $NpmError += $ErrorRecords
+  if ($NpmResult -is [array]) {
+    $Private:ErrorRecords = $NpmResult |
+      Where-Object {
+        $_ -is [ErrorRecord]
       }
-      else {
-        $Private:Strings = $NpmResult |
-          Where-Object { $_ -is [string] } |
-          Where-Object { $_ -match '^npm error' }
 
-        if ($Strings) {
-          $NpmError += $Strings
-        }
+    if ($ErrorRecords) {
+      $NpmError += $ErrorRecords
+    }
+    else {
+      $Private:Strings = $NpmResult |
+        Where-Object { $_ -is [string] } |
+        Where-Object { $_ -match '^npm error' }
+
+      if ($Strings) {
+        $NpmError += $Strings
       }
     }
-    elseif ($NpmResult -is [ErrorRecord] -or $NpmResult -is [string] -and $NpmResult -match '^npm error') {
-      $NpmError += $NpmResult
-    }
+  }
+  elseif ($NpmResult -is [ErrorRecord] -or $NpmResult -is [string] -and $NpmResult -match '^npm error') {
+    $NpmError += $NpmResult
+  }
 
-    if ($NpmError) {
-      throw 'Npm command error, execution stopped.'
-    }
+  if ($NpmError) {
+    throw 'Npm command error, execution stopped.'
   }
 }
 
