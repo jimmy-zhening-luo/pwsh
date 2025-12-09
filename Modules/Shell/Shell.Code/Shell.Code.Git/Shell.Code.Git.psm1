@@ -171,7 +171,7 @@ function Invoke-GitRepository {
       Tee-Object -Variable GitResult
 
     if ($GitResult -match '^fatal:') {
-      throw $GitResult
+      throw 'Git command error, execution stopped.'
     }
   }
   else {

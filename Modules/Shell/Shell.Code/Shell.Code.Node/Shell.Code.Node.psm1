@@ -1,3 +1,6 @@
+using namespace System.Collections.Generic
+using namespace System.Management.Automation
+
 <#
 .SYNOPSIS
 Test whether a path is the root directory of a Node package.
@@ -14,7 +17,7 @@ function Test-NodePackageDirectory {
     [string]$Path
   )
 
-  $IsNodePackage = @{
+  $Private:IsNodePackage = @{
     Path     = Join-Path ($Path ? $Path : $PWD) package.json
     PathType = 'Leaf'
   }
@@ -39,7 +42,7 @@ function Resolve-NodePackageDirectory {
     [switch]$OmitPrefix
   )
 
-  $IsNodePackage = @{
+  $Private:IsNodePackage = @{
     Path = $Path
   }
   if (Test-NodePackageDirectory @IsNodePackage) {
@@ -65,6 +68,106 @@ function Invoke-Node {
   & node.exe @args
 }
 
+$NODE_VERB = @(
+  # Name
+  'access'
+  'adduser'
+  'audit'
+  'bugs'
+  'cache'
+  'ci'
+  'completion'
+  'config'
+  'dedupe'
+  'deprecate'
+  'diff'
+  'dist-tag'
+  'docs'
+  'doctor'
+  'edit'
+  'exec'
+  'explain'
+  'explore'
+  'find-dupes'
+  'fund'
+  'help'
+  'help-search'
+  'init'
+  'install'
+  'install-ci-test'
+  'install-test'
+  'link'
+  'login'
+  'logout'
+  'ls'
+  'org'
+  'outdated'
+  'owner'
+  'pack'
+  'ping'
+  'pkg'
+  'prefix'
+  'profile'
+  'prune'
+  'publish'
+  'query'
+  'rebuild'
+  'repo'
+  'restart'
+  'root'
+  'run'
+  'sbom'
+  'search'
+  'shrinkwrap'
+  'star'
+  'stars'
+  'start'
+  'stop'
+  'team'
+  'test'
+  'token'
+  'undeprecate'
+  'uninstall'
+  'unpublish'
+  'unstar'
+  'update'
+  'version'
+  'view'
+  'whoami'
+)
+
+$NODE_ALIAS = @{
+  issues  = 'bugs'
+  c       = 'config'
+  ddp     = 'dedupe'
+  home    = 'docs'
+  why     = 'explain'
+  create  = 'init'
+  add     = 'install'
+  i       = 'install'
+  in      = 'install'
+  ln      = 'link'
+  cit     = 'install-ci-test'
+  it      = 'install-test'
+  list    = 'ls'
+  author  = 'owner'
+  rb      = 'rebuild'
+  find    = 'search'
+  s       = 'search'
+  se      = 'search'
+  t       = 'test'
+  unlink  = 'uninstall'
+  remove  = 'uninstall'
+  rm      = 'uninstall'
+  r       = 'uninstall'
+  un      = 'uninstall'
+  up      = 'update'
+  upgrade = 'update'
+  info    = 'view'
+  show    = 'view'
+  v       = 'view'
+}
+
 New-Alias n Invoke-NodePackage
 <#
 .SYNOPSIS
@@ -77,7 +180,107 @@ https://docs.npmjs.com/cli/commands
 https://docs.npmjs.com/cli/commands/npm
 #>
 function Invoke-NodePackage {
-  & npm.ps1 @args
+  param(
+    [Parameter(
+      Position = 0
+    )]
+    [GenericCompletions(
+      'access,adduser,audit,bugs,cache,ci,completion,config,dedupe,deprecate,diff,dist-tag,docs,doctor,edit,exec,explain,explore,find-dupes,fund,help,help-search,init,install,install-ci-test,install-test,link,login,logout,ls,org,outdated,owner,pack,ping,pkg,prefix,profile,prune,publish,query,rebuild,repo,restart,root,run,sbom,search,shrinkwrap,star,stars,start,stop,team,test,token,undeprecate,uninstall,unpublish,unstar,update,version,view,whoami'
+    )]
+    [string]$Verb,
+    [PathCompletions(
+      '~\code',
+      'Directory',
+      $True
+    )]
+    # Node package root
+    [string]$Path,
+    # Stop execution on Node error
+    [switch]$Throw
+  )
+
+  if (-not $Verb) {
+    throw 'No npm verb specified.'
+  }
+
+  # npm --color [--prefix] <command> [command options] [arguments...]
+  $Private:NodeArguments = [List[string]]::new()
+  $NodeArguments.Add('--color=always')
+
+  $Private:Package = $Path ? (Resolve-NodePackageDirectory -Path $Path) : ''
+  if ($Package) {
+    $NodeArguments.Add($Package)
+  }
+
+  $Private:NodeCommandArguments = [List[string]]::new()
+  if ($args) {
+    $NodeCommandArguments.AddRange([List[string]]$args)
+  }
+
+  if ($Verb.StartsWith('-') -or $Verb -notin $NODE_VERB -and -not $NODE_ALIAS.ContainsKey($Verb)) {
+    $Private:DeferredVerb = $NodeCommandArguments.Find(
+      {
+        $args[0] -in $NODE_VERB
+      }
+    )
+
+    "DeferredVerb: $DeferredVerb"
+
+    if (-not $DeferredVerb) {
+      throw "Unrecognized npm verb '$Verb'."
+    }
+
+    $NodeCommandArguments.Remove($DeferredVerb) | Out-Null
+    $Verb = $DeferredVerb
+  }
+
+  $Verb = $Verb.ToLowerInvariant()
+
+  $NodeArguments.Add($Verb)
+
+  if ($NodeCommandArguments.Count -ne 0) {
+    $NodeArguments.AddRange($NodeCommandArguments)
+  }
+
+  if ($Throw) {
+    & npm.ps1 @NodeArguments 2>&1 |
+      Tee-Object -Variable NpmResult
+
+    if ($NpmResult) {
+      $Private:NpmError = @()
+
+      if ($NpmResult -is [array]) {
+        $Private:ErrorRecords = $NpmResult |
+          Where-Object {
+            $_ -is [ErrorRecord]
+          }
+
+        if ($ErrorRecords) {
+          $NpmError += $ErrorRecords
+        }
+        else {
+          $Private:Strings = $NpmResult |
+            Where-Object { $_ -is [string] } |
+            Where-Object { $_ -match '^npm error' }
+
+          if ($Strings) {
+            $NpmError += $Strings
+          }
+        }
+      }
+      elseif ($NpmResult -is [ErrorRecord] -or $NpmResult -is [string] -and $NpmResult -match '^npm error') {
+        $NpmError += $NpmResult
+      }
+
+      if ($NpmError) {
+        throw 'Npm command error, execution stopped.'
+      }
+    }
+
+  }
+  else {
+    & npm.ps1 @NodeArguments
+  }
 }
 
 New-Alias nx Invoke-NodeExecutable
