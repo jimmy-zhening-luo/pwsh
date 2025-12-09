@@ -77,7 +77,7 @@ function Invoke-Workspace {
     ArgumentList = $ArgumentList
     NoNewWindow  = $True
   }
-  [void](Start-Process @Process)
+  Start-Process @Process
 }
 
 New-Alias i. Shell\Invoke-WorkspaceSibling
@@ -98,7 +98,7 @@ function Invoke-WorkspaceSibling {
   $Location = @{
     Location = $PWD | Split-Path
   }
-  [void](Shell\Invoke-Workspace @PSBoundParameters @Location @args)
+  Shell\Invoke-Workspace @PSBoundParameters @Location @args
 }
 
 New-Alias i.. Shell\Invoke-WorkspaceRelative
@@ -119,7 +119,7 @@ function Invoke-WorkspaceRelative {
   $Location = @{
     Location = $PWD | Split-Path | Split-Path
   }
-  [void](Shell\Invoke-Workspace @PSBoundParameters @Location @args)
+  Shell\Invoke-Workspace @PSBoundParameters @Location @args
 }
 
 New-Alias i~ Shell\Invoke-WorkspaceHome
@@ -140,7 +140,7 @@ function Invoke-WorkspaceHome {
   $Location = @{
     Location = $HOME
   }
-  [void](Shell\Invoke-Workspace @PSBoundParameters @Location @args)
+  Shell\Invoke-Workspace @PSBoundParameters @Location @args
 }
 
 New-Alias ic Shell\Invoke-WorkspaceCode
@@ -161,7 +161,7 @@ function Invoke-WorkspaceCode {
   $Location = @{
     Location = "$HOME\code"
   }
-  [void](Shell\Invoke-Workspace @PSBoundParameters @Location @args)
+  Shell\Invoke-Workspace @PSBoundParameters @Location @args
 }
 
 New-Alias i/ Shell\Invoke-WorkspaceDrive
@@ -182,5 +182,5 @@ function Invoke-WorkspaceDrive {
   $Location = @{
     Location = $PWD.Drive.Root
   }
-  [void](Shell\Invoke-Workspace @PSBoundParameters @Location @args)
+  Shell\Invoke-Workspace @PSBoundParameters @Location @args
 }

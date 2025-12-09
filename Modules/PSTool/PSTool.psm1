@@ -16,7 +16,7 @@ function Invoke-PSHistory {
     ProfileName = 'PowerShell'
     Window      = $True
   }
-  [void](Shell\Invoke-Workspace @History)
+  Shell\Invoke-Workspace @History
 }
 
 New-Alias op PSTool\Invoke-PSProfile
@@ -28,7 +28,7 @@ function Invoke-PSProfile {
     Path        = 'pwsh'
     ProfileName = 'PowerShell'
   }
-  [void](Shell\Invoke-WorkspaceCode @ProfileRepository @args)
+  Shell\Invoke-WorkspaceCode @ProfileRepository @args
 }
 
 New-Alias up PSTool\Update-PSProfile
@@ -38,7 +38,7 @@ function Update-PSProfile {
   }
   Git\Get-GitRepository @ProfileRepository
 
-  [void](PSTool\Update-PSLinter)
+  PSTool\Update-PSLinter
 }
 
 function Update-PSLinter {
@@ -54,7 +54,7 @@ function Update-PSLinter {
       Path        = $Linter.Path
       Destination = $HOME
     }
-    [void](Copy-Item @Copy)
+    Copy-Item @Copy
   }
 }
 

@@ -7,10 +7,10 @@ function Clear-Line {
   )
 
   if ($Path -or $args) {
-    [void](Clear-Content @PSBoundParameters @args)
+    Clear-Content @PSBoundParameters @args
   }
   else {
-    [void](Clear-Host)
+    Clear-Host
   }
 }
 

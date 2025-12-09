@@ -82,7 +82,7 @@ function Invoke-YouTubeDirectory {
   $YouTubeDownloads = @{
     Path = 'Videos\YouTube'
   }
-  [void](Shell\Invoke-DirectoryHome @YouTubeDownloads)
+  Shell\Invoke-DirectoryHome @YouTubeDownloads
 }
 
 New-Alias ytc Quick\Invoke-YouTubeConfig
@@ -92,5 +92,5 @@ function Invoke-YouTubeConfig {
     ProfileName = 'Setting'
     Window      = $True
   }
-  [void](Shell\Invoke-WorkspaceHome @YouTubeConfig @args)
+  Shell\Invoke-WorkspaceHome @YouTubeConfig @args
 }

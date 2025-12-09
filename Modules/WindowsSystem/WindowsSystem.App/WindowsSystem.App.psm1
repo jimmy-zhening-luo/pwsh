@@ -19,7 +19,7 @@ function Update-StoreApp {
   $Store = @{
     FilePath = 'ms-windows-store://downloadsandupdates'
   }
-  [void](Start-Process @Store)
+  Start-Process @Store
 }
 
 New-Alias wget winget.exe

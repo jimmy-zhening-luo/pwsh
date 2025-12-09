@@ -30,7 +30,7 @@ function Update-Windows {
   $WindowsUpdate = @{
     FilePath = 'ms-settings:windowsupdate'
   }
-  [void](Start-Process @WindowsUpdate)
+  Start-Process @WindowsUpdate
 }
 
 New-Alias path WindowsSystem\Edit-Path
@@ -61,7 +61,7 @@ function Edit-Path {
   if ($Administrator) {
     $ControlPanel.Verb = 'RunAs'
   }
-  [void](Start-Process @ControlPanel)
+  Start-Process @ControlPanel
 }
 
 New-Alias sesv Set-Service
@@ -121,6 +121,6 @@ function Stop-Task {
       'Stop-Process'
     )
   ) {
-    [void](Stop-Process @Process)
+    Stop-Process @Process
   }
 }

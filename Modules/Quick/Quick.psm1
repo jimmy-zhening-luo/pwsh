@@ -13,7 +13,7 @@ function Copy-Guid {
     $Guid = $Guid.ToUpperInvariant()
   }
 
-  [void]($Guid | Set-Clipboard)
+  $Guid | Set-Clipboard
 
   if (-not $Silent) {
     $Guid

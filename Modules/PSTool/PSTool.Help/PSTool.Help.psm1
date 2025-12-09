@@ -122,7 +122,7 @@ function Get-HelpOnline {
   if (-not $env:SSH_CLIENT) {
     if ($Articles) {
       foreach ($Article in $Articles) {
-        [void](Shell\Open-Url -Uri $Article)
+        Shell\Open-Url -Uri $Article
       }
     }
     else {

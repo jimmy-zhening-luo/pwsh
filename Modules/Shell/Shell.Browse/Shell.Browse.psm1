@@ -163,6 +163,6 @@ function Open-Url {
     ArgumentList = $Target
   }
   if (-not $env:SSH_CLIENT) {
-    [void](Start-Process @Browser)
+    Start-Process @Browser
   }
 }

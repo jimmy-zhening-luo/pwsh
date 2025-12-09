@@ -13,5 +13,5 @@ function Remove-Directory {
     Recurse = $True
     Force   = $True
   }
-  [void](Remove-Item @Hard @PSBoundParameters)
+  Remove-Item @Hard @PSBoundParameters
 }

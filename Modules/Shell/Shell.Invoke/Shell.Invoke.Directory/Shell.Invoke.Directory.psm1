@@ -18,7 +18,7 @@ function Invoke-Directory {
     PathType = 'Container'
   }
   if (Test-Path @PSBoundParameters @Container) {
-    [void](Invoke-Item @PSBoundParameters)
+    Invoke-Item @PSBoundParameters
   }
 }
 
@@ -32,7 +32,7 @@ function Invoke-DirectorySibling {
   $FullPath = @{
     Path = Join-Path ($PWD | Split-Path) $Path
   }
-  [void](Shell\Invoke-Directory @FullPath @args)
+  Shell\Invoke-Directory @FullPath @args
 }
 
 New-Alias e.. Shell\Invoke-DirectoryRelative
@@ -45,7 +45,7 @@ function Invoke-DirectoryRelative {
   $FullPath = @{
     Path = Join-Path ($PWD | Split-Path | Split-Path) $Path
   }
-  [void](Shell\Invoke-Directory @FullPath @args)
+  Shell\Invoke-Directory @FullPath @args
 }
 
 New-Alias e~ Shell\Invoke-DirectoryHome
@@ -58,7 +58,7 @@ function Invoke-DirectoryHome {
   $FullPath = @{
     Path = Join-Path $HOME $Path
   }
-  [void](Shell\Invoke-Directory @FullPath @args)
+  Shell\Invoke-Directory @FullPath @args
 }
 
 New-Alias ec Shell\Invoke-DirectoryCode
@@ -71,7 +71,7 @@ function Invoke-DirectoryCode {
   $FullPath = @{
     Path = Join-Path $HOME\code $Path
   }
-  [void](Shell\Invoke-Directory @FullPath @args)
+  Shell\Invoke-Directory @FullPath @args
 }
 
 New-Alias e/ Shell\Invoke-DirectoryDrive
@@ -84,5 +84,5 @@ function Invoke-DirectoryDrive {
   $FullPath = @{
     Path = Join-Path $PWD.Drive.Root $Path
   }
-  [void](Shell\Invoke-Directory @FullPath @args)
+  Shell\Invoke-Directory @FullPath @args
 }
