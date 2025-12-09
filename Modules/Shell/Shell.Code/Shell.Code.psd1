@@ -1,27 +1,37 @@
 @{
-  RootModule            = 'Node.psm1'
   ModuleVersion         = '3.0.0.0'
   CompatiblePSEditions  = @('Desktop', 'Core')
-  GUID                  = '7e838ead-1871-47f2-a845-3ce3725b7781'
+  GUID                  = 'a5751c41-5026-444f-8c2a-f13a2ac354f2'
   Author                = 'Jimmy Zhening Luo'
   CompanyName           = 'Jimmy Zhening Luo'
   Copyright             = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
   PowerShellVersion     = '7.5'
   PowerShellHostName    = 'ConsoleHost'
   PowerShellHostVersion = '7.5'
-  RequiredModules       = @(
+  NestedModules         = @(
     @{
-      ModuleName    = 'GenericArgumentCompleter'
-      ModuleVersion = '3.0.0'
-      GUID          = 'ce7965e6-f9ef-42fb-aa4b-80eb542833de'
+      ModuleName    = 'Shell.Code.Git'
+      ModuleVersion = '3.0.0.0'
+      GUID          = '26c82360-9443-447e-8436-b1afe0e5a086'
     }
     @{
-      ModuleName    = 'PathArgumentCompleter'
-      ModuleVersion = '3.0.0'
-      GUID          = '4aec66c3-c403-44b4-ac4d-fb8c8aa83c20'
+      ModuleName    = 'Shell.Code.Node'
+      ModuleVersion = '3.0.0.0'
+      GUID          = '47836d9e-49bd-4405-bdc6-1900f3108d10'
     }
   )
   FunctionsToExport     = @(
+    'Resolve-GitRepository'
+    'Invoke-GitRepository'
+    'Measure-GitRepository'
+    'Import-GitRepository'
+    'Get-GitRepository'
+    'Get-ChildGitRepository'
+    'Add-GitRepository'
+    'Write-GitRepository'
+    'Push-GitRepository'
+    'Reset-GitRepository'
+    'Restore-GitRepository'
     'Test-NodePackageDirectory'
     'Resolve-NodePackageDirectory'
     'Invoke-Node'
@@ -36,6 +46,14 @@
   CmdletsToExport       = @()
   VariablesToExport     = @()
   AliasesToExport       = @(
+    'g'
+    'gg'
+    'gitcl'
+    'gpp'
+    'ga'
+    'gs'
+    'gr'
+    'grp'
     'no'
     'n'
     'nx'

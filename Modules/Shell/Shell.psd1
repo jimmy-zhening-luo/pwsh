@@ -23,11 +23,6 @@
   )
   NestedModules         = @(
     @{
-      ModuleName    = 'Shell.Browse'
-      ModuleVersion = '3.0.0.0'
-      GUID          = '1e45c553-ea48-41c2-a7fc-89b5c36f30b1'
-    }
-    @{
       ModuleName    = 'Shell.New'
       ModuleVersion = '3.0.0.0'
       GUID          = '9a3324b2-207d-4635-a8d6-ac8261181fb1'
@@ -52,17 +47,16 @@
       ModuleVersion = '3.0.0.0'
       GUID          = '1099153a-7f76-415c-8b8f-d18f5351d581'
     }
+    @{
+      ModuleName    = 'Shell.Code'
+      ModuleVersion = '3.0.0.0'
+      GUID          = 'a5751c41-5026-444f-8c2a-f13a2ac354f2'
+    }
   )
   FunctionsToExport     = @(
     'Clear-Line'
-    'Format-Path'
-    'Trace-RelativePath'
-    'Merge-RelativePath'
     'Test-Item'
     'Resolve-Item'
-    'Test-Host'
-    'Test-Url'
-    'Open-Url'
     'New-Directory'
     'New-Junction'
     'Get-Size'
@@ -98,15 +92,32 @@
     'Invoke-WorkspaceCode'
     'Invoke-WorkspaceDrive'
     'Remove-Directory'
+    'Resolve-GitRepository'
+    'Invoke-GitRepository'
+    'Measure-GitRepository'
+    'Import-GitRepository'
+    'Get-GitRepository'
+    'Get-ChildGitRepository'
+    'Add-GitRepository'
+    'Write-GitRepository'
+    'Push-GitRepository'
+    'Reset-GitRepository'
+    'Restore-GitRepository'
+    'Test-NodePackageDirectory'
+    'Resolve-NodePackageDirectory'
+    'Invoke-Node'
+    'Invoke-NodePackage'
+    'Invoke-NodeExecutable'
+    'Clear-NodeModuleCache'
+    'Compare-NodeModule'
+    'Step-NodePackageVersion'
+    'Invoke-NodePackageScript'
+    'Test-NodePackage'
   )
   CmdletsToExport       = @()
   VariablesToExport     = @()
   AliasesToExport       = @(
     'cl'
-    'tn'
-    'tu'
-    'go'
-    'open'
     'touch'
     'mk'
     'mj'
@@ -145,5 +156,20 @@
     'ih'
     'ic'
     'i/'
+    'g'
+    'gg'
+    'gitcl'
+    'gpp'
+    'ga'
+    'gs'
+    'gr'
+    'grp'
+    'no'
+    'n'
+    'nx'
+    'ncc'
+    'npo'
+    'nr'
+    'nt'
   )
 }

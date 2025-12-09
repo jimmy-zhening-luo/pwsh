@@ -1,5 +1,5 @@
 @{
-  RootModule            = 'Shell.Browse.psm1'
+  RootModule            = 'Browse.psm1'
   ModuleVersion         = '3.0.0.0'
   CompatiblePSEditions  = @('Desktop', 'Core')
   GUID                  = '1e45c553-ea48-41c2-a7fc-89b5c36f30b1'
@@ -9,6 +9,13 @@
   PowerShellVersion     = '7.5'
   PowerShellHostName    = 'ConsoleHost'
   PowerShellHostVersion = '7.5'
+  RequiredModules       = @(
+    @{
+      ModuleName    = 'GenericArgumentCompleter'
+      ModuleVersion = '3.0.0'
+      GUID          = '58b26bc4-05a1-440d-a44b-afef0a8840fe'
+    }
+  )
   FunctionsToExport     = @(
     'Test-Host'
     'Test-Url'
@@ -20,6 +27,5 @@
     'tn'
     'tu'
     'go'
-    'open'
   )
 }

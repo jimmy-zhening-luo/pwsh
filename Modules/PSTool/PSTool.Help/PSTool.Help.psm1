@@ -87,7 +87,7 @@ function Get-HelpOnline {
 
           $Local:about_Article = "$ABOUT_BASE_URL/$Topic"
 
-          (Shell\Test-Url -Uri $Local:about_Article) ? $Local:about_Article : ''
+          (Browse\Test-Url -Uri $Local:about_Article) ? $Local:about_Article : ''
         }
 
         $about_Article = Resolve-AboutArticle -Topic $about_Topic
@@ -122,7 +122,7 @@ function Get-HelpOnline {
   if (-not $env:SSH_CLIENT) {
     if ($Articles) {
       foreach ($Article in $Articles) {
-        Shell\Open-Url -Uri $Article
+        Browse\Open-Url -Uri [Uri]$Article
       }
     }
     else {
@@ -201,8 +201,7 @@ function Get-VerbList {
   $Verbs = @{
     Verb = $Verb.Contains('*') ? $Verb : $Verb.Length -lt 3 ? "$Verb*" : "*$Verb*"
   }
-  $Property = 'Verb'
   Get-Verb @Verbs @args |
-    Sort-Object -Property $Property |
-    Select-Object -ExpandProperty $Property
+    Sort-Object -Property Verb |
+    Select-Object -ExpandProperty Verb
 }

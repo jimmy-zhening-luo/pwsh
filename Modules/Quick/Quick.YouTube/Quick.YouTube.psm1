@@ -21,7 +21,7 @@ function Get-YouTube {
     '?v=' + $Matches.Video
   ).Uri : [Uri]$Video
 
-  if (Shell\Test-Url -Uri $VideoUri) {
+  if (Browse\Test-Url -Uri $VideoUri) {
     & yt-dlp.exe @args -- $VideoUri.OriginalString
   }
   else {

@@ -24,15 +24,15 @@ function Resolve-GitRepository {
     $Repository = ''
 
     if ($New) {
-      if (Shell\Test-Item @RepoPath) {
-        $Repository = Shell\Resolve-Item @RepoPath
+      if (Test-Item @RepoPath) {
+        $Repository = Resolve-Item @RepoPath
       }
       else {
         $RepoPath.Location = $CODE
         $RepoPath.New = $True
 
-        if (Shell\Test-Item @RepoPath) {
-          $Repository = Shell\Resolve-Item @RepoPath
+        if (Test-Item @RepoPath) {
+          $Repository = Resolve-Item @RepoPath
         }
       }
     }
@@ -42,14 +42,14 @@ function Resolve-GitRepository {
         RequireSubpath = $True
       }
 
-      if (Shell\Test-Item @RepoGitPath) {
-        $Repository = Shell\Resolve-Item @RepoPath
+      if (Test-Item @RepoGitPath) {
+        $Repository = Resolve-Item @RepoPath
       }
       else {
         $RepoGitPath.Location = $RepoPath.Location = $CODE
 
-        if (Shell\Test-Item @RepoGitPath) {
-          $Repository = Shell\Resolve-Item @RepoPath
+        if (Test-Item @RepoGitPath) {
+          $Repository = Resolve-Item @RepoPath
         }
       }
     }

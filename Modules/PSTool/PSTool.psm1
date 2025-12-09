@@ -36,7 +36,7 @@ function Update-PSProfile {
   $ProfileRepository = @{
     Path = Resolve-Path -Path $HOME\code\pwsh
   }
-  Git\Get-GitRepository @ProfileRepository
+  Shell\Get-GitRepository @ProfileRepository
 
   Update-PSLinter
 }

@@ -1,31 +1,35 @@
 @{
-  RootModule            = 'PSTool.Help.psm1'
+  RootModule            = 'Shell.Code.Node.psm1'
   ModuleVersion         = '3.0.0.0'
   CompatiblePSEditions  = @('Desktop', 'Core')
-  GUID                  = '2a24daf1-f891-46c4-8613-9943b6913573'
+  GUID                  = '47836d9e-49bd-4405-bdc6-1900f3108d10'
   Author                = 'Jimmy Zhening Luo'
   CompanyName           = 'Jimmy Zhening Luo'
   Copyright             = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
   PowerShellVersion     = '7.5'
   PowerShellHostName    = 'ConsoleHost'
   PowerShellHostVersion = '7.5'
-  RequiredModules       = @(
-    @{
-      ModuleName    = 'Browse'
-      ModuleVersion = '3.0.0'
-      GUID          = '58b26bc4-05a1-440d-a44b-afef0a8840fe'
-    }
-  )
   FunctionsToExport     = @(
-    'Get-HelpOnline'
-    'Get-CommandAlias'
-    'Get-VerbList'
+    'Test-NodePackageDirectory'
+    'Resolve-NodePackageDirectory'
+    'Invoke-Node'
+    'Invoke-NodePackage'
+    'Invoke-NodeExecutable'
+    'Clear-NodeModuleCache'
+    'Compare-NodeModule'
+    'Step-NodePackageVersion'
+    'Invoke-NodePackageScript'
+    'Test-NodePackage'
   )
   CmdletsToExport       = @()
   VariablesToExport     = @()
   AliasesToExport       = @(
-    'upman'
-    'm'
-    'galc'
+    'no'
+    'n'
+    'nx'
+    'ncc'
+    'npo'
+    'nr'
+    'nt'
   )
 }

@@ -9,6 +9,13 @@
   PowerShellVersion     = '7.5'
   PowerShellHostName    = 'ConsoleHost'
   PowerShellHostVersion = '7.5'
+  RequiredModules       = @(
+    @{
+      ModuleName    = 'Shell'
+      ModuleVersion = '3.0.0'
+      GUID          = 'e4d07654-6759-4a2f-8293-39df2b809ba7'
+    }
+  )
   NestedModules         = @(
     @{
       ModuleName    = 'PSTool.Help'

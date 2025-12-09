@@ -33,14 +33,14 @@ function Update-Windows {
   Start-Process @WindowsUpdate
 }
 
-New-Alias path Edit-Path
+New-Alias path Edit-SystemPath
 <#
 .SYNOPSIS
 Opens the 'Environment Variables' dialog as a standalone window.
 .DESCRIPTION
 This function invokes 'rundll32' on 'sysdm.cpl' ('System Properties' control panel) with the 'EditEnvironmentVariables' argument, which opens the 'Environment Variables' dialog directly.
 #>
-function Edit-Path {
+function Edit-SystemPath {
   [OutputType([void])]
   param(
     # Launch Environment Variables control panel as administrator to edit system variables

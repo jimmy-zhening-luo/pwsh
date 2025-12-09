@@ -123,7 +123,6 @@ function Test-Url {
 }
 
 New-Alias go Open-Url
-New-Alias open Open-Url
 <#
 .SYNOPSIS
 Open a file path or URL in Google Chrome.

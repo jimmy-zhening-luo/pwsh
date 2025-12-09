@@ -9,6 +9,18 @@
   PowerShellVersion     = '7.5'
   PowerShellHostName    = 'ConsoleHost'
   PowerShellHostVersion = '7.5'
+  RequiredModules       = @(
+    @{
+      ModuleName    = 'Browse'
+      ModuleVersion = '3.0.0'
+      GUID          = '58b26bc4-05a1-440d-a44b-afef0a8840fe'
+    }
+    @{
+      ModuleName    = 'Shell'
+      ModuleVersion = '3.0.0'
+      GUID          = 'e4d07654-6759-4a2f-8293-39df2b809ba7'
+    }
+  )
   FunctionsToExport     = @(
     'Get-YouTube'
     'Get-YouTubeAudio'

@@ -19,7 +19,7 @@
   FunctionsToExport     = @(
     'Invoke-CommandPrompt'
     'Update-Windows'
-    'Edit-Path'
+    'Edit-SystemPath'
     'Stop-Task'
     'Update-StoreApp'
     'Update-WinGetApp'
