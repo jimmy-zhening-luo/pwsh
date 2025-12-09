@@ -11,11 +11,6 @@
   PowerShellHostVersion = '7.5'
   RequiredModules       = @(
     @{
-      ModuleName    = 'PathArgumentCompleter'
-      ModuleVersion = '3.0.0'
-      GUID          = '4aec66c3-c403-44b4-ac4d-fb8c8aa83c20'
-    }
-    @{
       ModuleName    = 'GenericArgumentCompleter'
       ModuleVersion = '3.0.0'
       GUID          = 'ce7965e6-f9ef-42fb-aa4b-80eb542833de'
