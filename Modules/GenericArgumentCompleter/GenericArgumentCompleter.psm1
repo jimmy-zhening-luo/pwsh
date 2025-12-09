@@ -3,46 +3,61 @@ using namespace System.Collections.Generic
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
 
-class GenericCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory {
-  [string] $Units
-  [bool] $Sort
-  [string] $Case
+class GenericCompleterBase {
+  static [List[string]] FindCompletion(
+    [List[string]] $values,
+    [string] $wordToComplete
+  ) {
+    $completions = [List[string]]::new()
 
-  GenericCompletionsAttribute(
-    [string] $units
-  ) {
-    $this.Units = $units
-    $this.Sort = $False
-    $this.Case = 'Lower'
-  }
-  GenericCompletionsAttribute(
-    [string] $units,
-    [bool] $sort
-  ) {
-    $this.Units = $units
-    $this.Sort = $sort
-    $this.Case = 'Lower'
-  }
-  GenericCompletionsAttribute(
-    [string] $units,
-    [bool] $sort,
-    [string] $case
-  ) {
-    $this.Units = $units
-    $this.Sort = $sort
-    $this.Case = $case
+    $currentArgumentText = $wordToComplete ? $wordToComplete -match "^'(?<CurrentText>.*)'$" ? $Matches.CurrentText -replace "''", "'" : $wordToComplete : ''
+
+    if ($currentArgumentText) {
+      $tailCompletions = $values |
+        Where-Object { $PSItem -like "$currentArgumentText*" }
+
+      if ($tailCompletions) {
+        $completions.AddRange($tailCompletions)
+      }
+
+      if ($completions.Count -eq 0 -or $completions.Count -eq 1 -and $completions[0] -eq $currentArgumentText) {
+        $surroundingCompletions = $values |
+          Where-Object { $PSItem -like "*$currentArgumentText*" } |
+          Where-Object { $PSItem -ne $exactMatch }
+
+        if ($surroundingCompletions) {
+          $completions.AddRange($surroundingCompletions)
+        }
+      }
+    }
+    else {
+      $completions.AddRange($values)
+    }
+
+    return $completions
   }
 
-  [IArgumentCompleter] Create() {
-    return [GenericCompleter]::new(
-      $this.Units,
-      $this.Sort,
-      $this.Case
-    )
+  static [List[CompletionResult]] CreateCompletion(
+    [List[string]] $completions
+  ) {
+    $completionResults = [List[CompletionResult]]::new()
+
+    foreach ($completion in $completions) {
+      $escapedCompletion = [CodeGeneration]::EscapeSingleQuotedStringContent($completion)
+      $quotedEscapedCompletion = $escapedCompletion -match '\s' ? "'" + $escapedCompletion + "'" : $escapedCompletion
+
+      $completionResults.Add(
+        [CompletionResult]::new(
+          $quotedEscapedCompletion
+        )
+      )
+    }
+
+    return $completionResults
   }
 }
 
-class GenericCompleter : IArgumentCompleter {
+class GenericCompleter : GenericCompleterBase, IArgumentCompleter {
   [string] $Units
   [bool] $Sort
   [string] $Case
@@ -117,63 +132,56 @@ class GenericCompleter : IArgumentCompleter {
       $Local:units = $Local:units | Sort-Object
     }
 
-    $unitMatches = @()
-
-    $currentText = $wordToComplete ? $wordToComplete -match "^'(?<CurrentText>.*)'$" ? $Matches.CurrentText -replace "''", "'" : $wordToComplete : ''
-
-    if ($currentText) {
-      $unitMatches += $Local:units |
-        Where-Object { $PSItem -like "$currentText*" }
-
-      if (-not $unitMatches) {
-        $unitMatches += $Local:units |
-          Where-Object { $PSItem -like "*$currentText*" }
-      }
-      elseif ($unitMatches.Count -eq 1) {
-        if ($unitMatches[0] -eq $currentText) {
-          $exactMatch, $unitMatches = $unitMatches[0], @()
-          $unitMatches += (
-            $Local:units |
-              Where-Object { $PSItem -like "*$currentText*" } |
-              Where-Object { $PSItem -ne $exactMatch }
-          )
-          $unitMatches += $exactMatch
-
-          if ($unitMatches.Count -eq 1) {
-            $exactMatch, $unitMatches = $unitMatches[0], @()
-
-            if ($currentText -cne $exactMatch) {
-              $unitMatches += $exactMatch
-            }
-          }
-        }
-        else {
-          $unitMatches += $currentText
-        }
-      }
-    }
-    else {
-      $unitMatches += $Local:units
-    }
-
-    $resultList = [List[CompletionResult]]::new()
-
-    foreach ($item in $unitMatches) {
-      $string = [CodeGeneration]::EscapeSingleQuotedStringContent($item)
-      $completion = $string -match '\s' ? "'" + $string + "'" : $string
-
-      $resultList.Add(
-        [CompletionResult]::new(
-          $completion
-        )
+    return [GenericCompleter]::CreateCompletion(
+      [GenericCompleter]::FindCompletion(
+        $Local:units,
+        $wordToComplete
       )
-    }
+    )
+  }
+}
 
-    return $resultList
+class GenericCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory {
+  [string] $Units
+  [bool] $Sort
+  [string] $Case
+
+  GenericCompletionsAttribute(
+    [string] $units
+  ) {
+    $this.Units = $units
+    $this.Sort = $False
+    $this.Case = 'Lower'
+  }
+  GenericCompletionsAttribute(
+    [string] $units,
+    [bool] $sort
+  ) {
+    $this.Units = $units
+    $this.Sort = $sort
+    $this.Case = 'Lower'
+  }
+  GenericCompletionsAttribute(
+    [string] $units,
+    [bool] $sort,
+    [string] $case
+  ) {
+    $this.Units = $units
+    $this.Sort = $sort
+    $this.Case = $case
+  }
+
+  [IArgumentCompleter] Create() {
+    return [GenericCompleter]::new(
+      $this.Units,
+      $this.Sort,
+      $this.Case
+    )
   }
 }
 
 $ExportableTypes = @(
+  [GenericCompleterBase]
   [GenericCompleter]
   [GenericCompletionsAttribute]
 )
