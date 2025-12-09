@@ -1,3 +1,6 @@
+using namespace System.IO
+using namespace System.Management.Automation
+
 New-Alias touch New-Item
 
 New-Alias mk New-Directory
@@ -12,7 +15,7 @@ function New-Directory {
     SupportsTransactions,
     ConfirmImpact = 'Medium'
   )]
-  [OutputType([System.IO.DirectoryInfo])]
+  [OutputType([DirectoryInfo])]
   param(
     [Parameter(
       ParameterSetName = 'nameSet',
@@ -45,13 +48,13 @@ function New-Directory {
     [Parameter(
       ValueFromPipelineByPropertyName
     )]
-    [System.Management.Automation.PSCredential]$Credential
+    [PSCredential]$Credential
   )
   begin {
     $DirectoryType = @{
       ItemType = 'Directory'
     }
-    $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [System.Management.Automation.CommandTypes]::Cmdlet)
+    $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [CommandTypes]::Cmdlet)
     $scriptCmd = { & $wrappedCmd @DirectoryType @PSBoundParameters }
     $steppablePipeline = $scriptCmd.GetSteppablePipeline()
 
@@ -93,7 +96,7 @@ function New-Junction {
     SupportsTransactions,
     ConfirmImpact = 'Medium'
   )]
-  [OutputType([System.IO.DirectoryInfo])]
+  [OutputType([DirectoryInfo])]
   param(
     [Parameter(
       ParameterSetName = 'pathSet',
@@ -116,7 +119,7 @@ function New-Junction {
       ItemType = 'Junction'
       Force    = $True
     }
-    $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [System.Management.Automation.CommandTypes]::Cmdlet)
+    $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [CommandTypes]::Cmdlet)
     $scriptCmd = { & $wrappedCmd @PSBoundParameters @JunctionType }
     $steppablePipeline = $scriptCmd.GetSteppablePipeline()
 

@@ -3,7 +3,7 @@ using namespace System.Collections.Generic
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
 
-class GenericCompletionsAttribute : System.Management.Automation.ArgumentCompleterAttribute, System.Management.Automation.IArgumentCompleterFactory {
+class GenericCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory {
   [string] $Units
   [bool] $Sort
   [string] $Case
@@ -33,7 +33,7 @@ class GenericCompletionsAttribute : System.Management.Automation.ArgumentComplet
     $this.Case = $case
   }
 
-  [System.Management.Automation.IArgumentCompleter] Create() {
+  [IArgumentCompleter] Create() {
     return [GenericCompleter]::new(
       $this.Units,
       $this.Sort,
@@ -42,7 +42,7 @@ class GenericCompletionsAttribute : System.Management.Automation.ArgumentComplet
   }
 }
 
-class GenericCompleter : System.Management.Automation.IArgumentCompleter {
+class GenericCompleter : IArgumentCompleter {
   [string] $Units
   [bool] $Sort
   [string] $Case
@@ -59,11 +59,11 @@ class GenericCompleter : System.Management.Automation.IArgumentCompleter {
         'Preserve'
       )
     ) {
-      throw [System.ArgumentException]::new('case')
+      throw [ArgumentException]::new('case')
     }
 
     if (-not $units) {
-      throw [System.ArgumentException]::new('units')
+      throw [ArgumentException]::new('units')
     }
 
     $unitKeys = (
@@ -71,7 +71,7 @@ class GenericCompleter : System.Management.Automation.IArgumentCompleter {
     ).Trim() | Where-Object { $PSItem }
 
     if (-not $unitKeys) {
-      throw [System.ArgumentException]::new('units')
+      throw [ArgumentException]::new('units')
     }
 
     $unique = @()
@@ -79,11 +79,11 @@ class GenericCompleter : System.Management.Automation.IArgumentCompleter {
       Select-Object -Unique -CaseInsensitive
 
     if (-not $unique -or $unique.Count -ne $unitKeys.Count) {
-      throw [System.ArgumentException]::new('units')
+      throw [ArgumentException]::new('units')
     }
 
     if ($unique -match "^'.*'$") {
-      throw [System.ArgumentException]::new('units')
+      throw [ArgumentException]::new('units')
     }
 
     $this.Units = $units
@@ -91,12 +91,12 @@ class GenericCompleter : System.Management.Automation.IArgumentCompleter {
     $this.Case = $case
   }
 
-  [System.Collections.Generic.IEnumerable[System.Management.Automation.CompletionResult]] CompleteArgument(
+  [IEnumerable[CompletionResult]] CompleteArgument(
     [string] $CommandName,
     [string] $parameterName,
     [string] $wordToComplete,
-    [System.Management.Automation.Language.CommandAst] $commandAst,
-    [System.Collections.IDictionary] $fakeBoundParameters
+    [CommandAst] $commandAst,
+    [IDictionary] $fakeBoundParameters
   ) {
 
     $Local:units = (
@@ -156,14 +156,14 @@ class GenericCompleter : System.Management.Automation.IArgumentCompleter {
       $unitMatches += $Local:units
     }
 
-    $resultList = [System.Collections.Generic.List[System.Management.Automation.CompletionResult]]::new()
+    $resultList = [List[CompletionResult]]::new()
 
     foreach ($item in $unitMatches) {
-      $string = [System.Management.Automation.Language.CodeGeneration]::EscapeSingleQuotedStringContent($item)
+      $string = [CodeGeneration]::EscapeSingleQuotedStringContent($item)
       $completion = $string -match '\s' ? "'" + $string + "'" : $string
 
       $resultList.Add(
-        [System.Management.Automation.CompletionResult]::new(
+        [CompletionResult]::new(
           $completion
         )
       )
@@ -177,16 +177,16 @@ $ExportableTypes = @(
   [GenericCompletionsAttribute]
   [GenericCompleter]
 )
-$TypeAcceleratorsClass = [System.Management.Automation.PSObject].Assembly.GetType(
-  'System.Management.Automation.TypeAccelerators'
+$TypeAcceleratorsClass = [PSObject].Assembly.GetType(
+  'TypeAccelerators'
 )
 $ExistingTypeAccelerators = $TypeAcceleratorsClass::Get
 foreach ($Type in $ExportableTypes) {
   if ($Type.FullName -in $ExistingTypeAccelerators.Keys) {
-    throw [System.Management.Automation.ErrorRecord]::new(
-      [System.Management.Automation.InvalidOperationException]::new("Unable to register type accelerator '$($Type.FullName)' - Accelerator already exists."),
+    throw [ErrorRecord]::new(
+      [InvalidOperationException]::new("Unable to register type accelerator '$($Type.FullName)' - Accelerator already exists."),
       'TypeAcceleratorAlreadyExists',
-      [System.Management.Automation.ErrorCategory]::InvalidOperation,
+      [ErrorCategory]::InvalidOperation,
       $Type.FullName
     )
   }
