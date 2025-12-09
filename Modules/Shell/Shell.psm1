@@ -201,13 +201,13 @@ $ExportableTypes = @(
   [PathCompleter]
 )
 $TypeAcceleratorsClass = [PSObject].Assembly.GetType(
-  'TypeAccelerators'
+  'System.Management.Automation.TypeAccelerators'
 )
 $ExistingTypeAccelerators = $TypeAcceleratorsClass::Get
 foreach ($Type in $ExportableTypes) {
   if ($Type.FullName -in $ExistingTypeAccelerators.Keys) {
     throw [ErrorRecord]::new(
-      [InvalidOperationException]::new("Unable to register type accelerator '$($Type.FullName)' - Accelerator already exists."),
+      [System.InvalidOperationException]::new("Unable to register type accelerator '$($Type.FullName)' - Accelerator already exists."),
       'TypeAcceleratorAlreadyExists',
       [ErrorCategory]::InvalidOperation,
       $Type.FullName

@@ -178,7 +178,7 @@ $ExportableTypes = @(
   [GenericCompleter]
 )
 $TypeAcceleratorsClass = [PSObject].Assembly.GetType(
-  'TypeAccelerators'
+  'System.Management.Automation.TypeAccelerators'
 )
 $ExistingTypeAccelerators = $TypeAcceleratorsClass::Get
 foreach ($Type in $ExportableTypes) {
