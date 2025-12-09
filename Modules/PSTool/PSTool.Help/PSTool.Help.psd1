@@ -9,7 +9,6 @@
   PowerShellVersion     = '7.5'
   PowerShellHostName    = 'ConsoleHost'
   PowerShellHostVersion = '7.5'
-  RequiredModules       = @()
   FunctionsToExport     = @(
     'Get-HelpOnline'
     'Get-CommandAlias'
