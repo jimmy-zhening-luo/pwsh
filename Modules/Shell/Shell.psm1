@@ -76,7 +76,7 @@ function Test-Item {
 
     if ($Location) {
       $Relative = @{
-        Path     = Microsoft.PowerShell.Management\Join-Path $HOME $Path
+        Path     = Join-Path $HOME $Path
         Location = $Location
       }
       if (Shell\Trace-RelativePath @Relative) {
@@ -92,19 +92,19 @@ function Test-Item {
   }
 
   if (-not $Location) {
-    $Location = (Microsoft.PowerShell.Management\Get-Location).Path
+    $Location = (Get-Location).Path
   }
 
   $Container = @{
     Path     = $Location
     PathType = 'Container'
   }
-  if (-not (Microsoft.PowerShell.Management\Test-Path @Container)) {
+  if (-not (Test-Path @Container)) {
     return $False
   }
 
-  $FullLocation = (Microsoft.PowerShell.Management\Resolve-Path -Path $Location).Path
-  $FullPath = Microsoft.PowerShell.Management\Join-Path $FullLocation $Path
+  $FullLocation = (Resolve-Path -Path $Location).Path
+  $FullPath = Join-Path $FullLocation $Path
   $HasSubpath = $FullPath.Substring($FullLocation.Length) -notmatch '^\\*$'
   $FileLike = $HasSubpath -and -not (
     $FullPath.EndsWith('\') -or $FullPath.EndsWith('..')
@@ -125,10 +125,10 @@ function Test-Item {
     PathType = $File ? 'Leaf' : 'Container'
   }
   if ($New) {
-    (Microsoft.PowerShell.Management\Test-Path @Item -IsValid) -and -not (Microsoft.PowerShell.Management\Test-Path @Item)
+    (Test-Path @Item -IsValid) -and -not (Test-Path @Item)
   }
   else {
-    Microsoft.PowerShell.Management\Test-Path @Item
+    Test-Path @Item
   }
 }
 
@@ -143,7 +143,7 @@ function Resolve-Item {
   )
 
   if (-not (Test-Item @PSBoundParameters)) {
-    throw "Invalid path '$Path': " + ($PSBoundParameters | Microsoft.PowerShell.Utility\ConvertTo-Json -EnumsAsStrings)
+    throw "Invalid path '$Path': " + ($PSBoundParameters | ConvertTo-Json -EnumsAsStrings)
   }
 
   $Path = Shell\Format-Path -Path $Path -LeadingRelative
@@ -162,7 +162,7 @@ function Resolve-Item {
 
     if ($Location) {
       $Path = Shell\Merge-RelativePath -Path (
-        Microsoft.PowerShell.Management\Join-Path $HOME $Path
+        Join-Path $HOME $Path
       ) -Location $Location
     }
     else {
@@ -171,13 +171,13 @@ function Resolve-Item {
   }
 
   if (-not $Location) {
-    $Location = (Microsoft.PowerShell.Management\Get-Location).Path
+    $Location = (Get-Location).Path
   }
 
-  $FullLocation = (Microsoft.PowerShell.Management\Resolve-Path -Path $Location).Path
-  $FullPath = Microsoft.PowerShell.Management\Join-Path $FullLocation $Path
+  $FullLocation = (Resolve-Path -Path $Location).Path
+  $FullPath = Join-Path $FullLocation $Path
 
   $New ? $FullPath : (
-    Microsoft.PowerShell.Management\Resolve-Path -Path $FullPath -Force
+    Resolve-Path -Path $FullPath -Force
   ).Path
 }

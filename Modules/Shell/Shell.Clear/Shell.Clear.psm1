@@ -1,4 +1,4 @@
-Microsoft.PowerShell.Utility\New-Alias cl Shell\Clear-Line
+New-Alias cl Shell\Clear-Line
 function Clear-Line {
   [OutputType([void])]
   param(
@@ -7,7 +7,7 @@ function Clear-Line {
   )
 
   if ($Path -or $args) {
-    [void](Microsoft.PowerShell.Management\Clear-Content @PSBoundParameters @args)
+    [void](Clear-Content @PSBoundParameters @args)
   }
   else {
     [void](Clear-Host)
@@ -29,5 +29,5 @@ function Remove-Directory {
     Recurse = $True
     Force   = $True
   }
-  [void](Microsoft.PowerShell.Management\Remove-Item @Hard @PSBoundParameters)
+  [void](Remove-Item @Hard @PSBoundParameters)
 }

@@ -1,7 +1,7 @@
-Microsoft.PowerShell.Utility\New-Alias gapx Appx\Get-AppxPackage
-Microsoft.PowerShell.Utility\New-Alias remapx Appx\Remove-AppxPackage
+New-Alias gapx Appx\Get-AppxPackage
+New-Alias remapx Appx\Remove-AppxPackage
 
-Microsoft.PowerShell.Utility\New-Alias su WindowsSystem\Update-StoreApp
+New-Alias su WindowsSystem\Update-StoreApp
 <#
 .SYNOPSIS
 Opens the 'Microsoft Store' app to the 'Updates & downloads' page.
@@ -19,12 +19,12 @@ function Update-StoreApp {
   $Store = @{
     FilePath = 'ms-windows-store://downloadsandupdates'
   }
-  [void](Microsoft.PowerShell.Management\Start-Process @Store)
+  [void](Start-Process @Store)
 }
 
-Microsoft.PowerShell.Utility\New-Alias wget winget.exe
+New-Alias wget winget.exe
 
-Microsoft.PowerShell.Utility\New-Alias wga WindowsSystem\Add-WinGetApp
+New-Alias wga WindowsSystem\Add-WinGetApp
 <#
 .SYNOPSIS
 Use WinGet to install a new package or upgrade an existing package.
@@ -42,7 +42,7 @@ function Add-WinGetApp {
   }
 }
 
-Microsoft.PowerShell.Utility\New-Alias wgu WindowsSystem\Update-WinGetApp
+New-Alias wgu WindowsSystem\Update-WinGetApp
 <#
 .SYNOPSIS
 Use WinGet to check for a package upgrade or to upgrade a package.
@@ -55,7 +55,7 @@ function Update-WinGetApp {
   & winget.exe upgrade @args
 }
 
-Microsoft.PowerShell.Utility\New-Alias wgf WindowsSystem\Find-WinGetApp
+New-Alias wgf WindowsSystem\Find-WinGetApp
 <#
 .SYNOPSIS
 Use WinGet to search WinGet repositories for a package.
@@ -73,7 +73,7 @@ function Find-WinGetApp {
   }
 }
 
-Microsoft.PowerShell.Utility\New-Alias wgr WindowsSystem\Remove-WinGetApp
+New-Alias wgr WindowsSystem\Remove-WinGetApp
 <#
 .SYNOPSIS
 Use WinGet to uninstall a package.

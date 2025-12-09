@@ -1,4 +1,4 @@
-Microsoft.PowerShell.Utility\New-Alias c Shell\Set-Directory
+New-Alias c Shell\Set-Directory
 function Set-Directory {
   param (
     [PathCompletions('.', 'Directory')]
@@ -6,14 +6,14 @@ function Set-Directory {
   )
 
   if ($Path) {
-    Microsoft.PowerShell.Management\Set-Location @PSBoundParameters @args
+    Set-Location @PSBoundParameters @args
   }
   else {
-    Microsoft.PowerShell.Management\Set-Location @args
+    Set-Location @args
   }
 }
 
-Microsoft.PowerShell.Utility\New-Alias c. Shell\Set-DirectorySibling
+New-Alias c. Shell\Set-DirectorySibling
 function Set-DirectorySibling {
   param (
     [PathCompletions('..', 'Directory')]
@@ -21,12 +21,12 @@ function Set-DirectorySibling {
   )
 
   $FullPath = @{
-    Path = Microsoft.PowerShell.Management\Join-Path (Microsoft.PowerShell.Management\Get-Location | Microsoft.PowerShell.Management\Split-Path) $Path
+    Path = Join-Path (Get-Location | Split-Path) $Path
   }
-  Microsoft.PowerShell.Management\Set-Location @FullPath @args
+  Set-Location @FullPath @args
 }
 
-Microsoft.PowerShell.Utility\New-Alias c.. Shell\Set-DirectoryRelative
+New-Alias c.. Shell\Set-DirectoryRelative
 function Set-DirectoryRelative {
   param (
     [PathCompletions('..\..', 'Directory')]
@@ -34,12 +34,12 @@ function Set-DirectoryRelative {
   )
 
   $FullPath = @{
-    Path = Microsoft.PowerShell.Management\Join-Path (Microsoft.PowerShell.Management\Get-Location | Microsoft.PowerShell.Management\Split-Path | Microsoft.PowerShell.Management\Split-Path) $Path
+    Path = Join-Path (Get-Location | Split-Path | Split-Path) $Path
   }
-  Microsoft.PowerShell.Management\Set-Location @FullPath @args
+  Set-Location @FullPath @args
 }
 
-Microsoft.PowerShell.Utility\New-Alias c~ Shell\Set-DirectoryHome
+New-Alias c~ Shell\Set-DirectoryHome
 function Set-DirectoryHome {
   param (
     [PathCompletions('~', 'Directory')]
@@ -47,12 +47,12 @@ function Set-DirectoryHome {
   )
 
   $FullPath = @{
-    Path = Microsoft.PowerShell.Management\Join-Path $HOME $Path
+    Path = Join-Path $HOME $Path
   }
-  Microsoft.PowerShell.Management\Set-Location @FullPath @args
+  Set-Location @FullPath @args
 }
 
-Microsoft.PowerShell.Utility\New-Alias cc Shell\Set-DirectoryCode
+New-Alias cc Shell\Set-DirectoryCode
 function Set-DirectoryCode {
   param (
     [PathCompletions('~\code', 'Directory')]
@@ -60,12 +60,12 @@ function Set-DirectoryCode {
   )
 
   $FullPath = @{
-    Path = Microsoft.PowerShell.Management\Join-Path $HOME\code $Path
+    Path = Join-Path $HOME\code $Path
   }
-  Microsoft.PowerShell.Management\Set-Location @FullPath @args
+  Set-Location @FullPath @args
 }
 
-Microsoft.PowerShell.Utility\New-Alias c/ Shell\Set-Drive
+New-Alias c/ Shell\Set-Drive
 function Set-Drive {
   param (
     [PathCompletions('\', 'Directory')]
@@ -73,12 +73,12 @@ function Set-Drive {
   )
 
   $FullPath = @{
-    Path = Microsoft.PowerShell.Management\Join-Path (Microsoft.PowerShell.Management\Get-Location).Drive.Root $Path
+    Path = Join-Path (Get-Location).Drive.Root $Path
   }
-  Microsoft.PowerShell.Management\Set-Location @FullPath @args
+  Set-Location @FullPath @args
 }
 
-Microsoft.PowerShell.Utility\New-Alias d/ Shell\Set-DriveD
+New-Alias d/ Shell\Set-DriveD
 function Set-DriveD {
   param (
     [PathCompletions('D:', 'Directory')]
@@ -86,7 +86,7 @@ function Set-DriveD {
   )
 
   $FullPath = @{
-    Path = Microsoft.PowerShell.Management\Join-Path D: $Path
+    Path = Join-Path D: $Path
   }
-  Microsoft.PowerShell.Management\Set-Location @FullPath @args
+  Set-Location @FullPath @args
 }

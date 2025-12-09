@@ -1,5 +1,5 @@
-Microsoft.PowerShell.Utility\New-Alias sand Sandbox\Test-Sandbox
-Microsoft.PowerShell.Utility\New-Alias sandbox Sandbox\Test-Sandbox
+New-Alias sand Sandbox\Test-Sandbox
+New-Alias sandbox Sandbox\Test-Sandbox
 function Test-Sandbox {
   [OutputType([string[]])]
   param (
@@ -7,7 +7,7 @@ function Test-Sandbox {
     [switch]$Flag
   )
 
-  'PSBoundParameters: ' + ($PSBoundParameters | Microsoft.PowerShell.Utility\ConvertTo-Json -EnumsAsStrings)
+  'PSBoundParameters: ' + ($PSBoundParameters | ConvertTo-Json -EnumsAsStrings)
   "Path: $Path"
   "Args: $args"
 }

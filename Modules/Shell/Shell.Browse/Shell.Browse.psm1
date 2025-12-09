@@ -1,4 +1,4 @@
-Microsoft.PowerShell.Utility\New-Alias tn Shell\Test-Host
+New-Alias tn Shell\Test-Host
 <#
 .SYNOPSIS
 Determine if a host is reachable.
@@ -81,7 +81,7 @@ function Test-Host {
   }
 }
 
-Microsoft.PowerShell.Utility\New-Alias tu Shell\Test-Url
+New-Alias tu Shell\Test-Url
 <#
 .SYNOPSIS
 Determine if an URL is reachable.
@@ -112,8 +112,8 @@ function Test-Url {
     ErrorAction                  = 'Stop'
   }
   try {
-    $Status = Microsoft.PowerShell.Utility\Invoke-WebRequest @PSBoundParameters @Request |
-      Microsoft.PowerShell.Utility\Select-Object -ExpandProperty StatusCode
+    $Status = Invoke-WebRequest @PSBoundParameters @Request |
+      Select-Object -ExpandProperty StatusCode
   }
   catch {
     $Status = $PSItem.Exception.Response.StatusCode.value__
@@ -122,8 +122,8 @@ function Test-Url {
   $Status -ge 200 -and $Status -lt 300
 }
 
-Microsoft.PowerShell.Utility\New-Alias go Shell\Open-Url
-Microsoft.PowerShell.Utility\New-Alias open Shell\Open-Url
+New-Alias go Shell\Open-Url
+New-Alias open Shell\Open-Url
 <#
 .SYNOPSIS
 Open a file path or URL in Google Chrome.
@@ -155,7 +155,7 @@ function Open-Url {
       $Target = $Uri
     }
     default {
-      $Target = $Path ? (Microsoft.PowerShell.Management\Test-Path @PSBoundParameters) ? (Microsoft.PowerShell.Management\Resolve-Path @PSBoundParameters) : [Uri]$Path : (Microsoft.PowerShell.Management\Get-Location)
+      $Target = $Path ? (Test-Path @PSBoundParameters) ? (Resolve-Path @PSBoundParameters) : [Uri]$Path : (Get-Location)
     }
   }
 
@@ -164,6 +164,6 @@ function Open-Url {
     ArgumentList = $Target
   }
   if (-not $env:SSH_CLIENT) {
-    [void](Microsoft.PowerShell.Management\Start-Process @Browser)
+    [void](Start-Process @Browser)
   }
 }

@@ -38,7 +38,7 @@ function Resolve-GitRepository {
     }
     else {
       $RepoGitPath = @{
-        Path           = $Path ? (Microsoft.PowerShell.Management\Join-Path $Path .git) : '.git'
+        Path           = $Path ? (Join-Path $Path .git) : '.git'
         RequireSubpath = $True
       }
 
@@ -75,7 +75,7 @@ For every verb except for 'clone', 'config', and 'init', the function will throw
 .LINK
 https://git-scm.com/docs
 #>
-Microsoft.PowerShell.Utility\New-Alias g Git\Invoke-GitRepository
+New-Alias g Git\Invoke-GitRepository
 function Invoke-GitRepository {
   param(
     [GenericCompletions(
@@ -113,7 +113,7 @@ function Invoke-GitRepository {
       else {
         if (
           $Path -and -not (
-            Microsoft.PowerShell.Management\Get-Location | Git\Resolve-GitRepository
+            Get-Location | Git\Resolve-GitRepository
           ) -and -not (
             $Path | Git\Resolve-GitRepository
           ) -and (
@@ -149,7 +149,7 @@ function Invoke-GitRepository {
   if (-not $Repository) {
     if ($Path) {
       $GitArguments = , $Path + $GitArguments
-      $Resolve.Path = Microsoft.PowerShell.Management\Get-Location
+      $Resolve.Path = Get-Location
 
       $Repository = Git\Resolve-GitRepository @Resolve
     }
@@ -168,7 +168,7 @@ function Invoke-GitRepository {
   ) + $GitArguments
   if ($Throw) {
     & git.exe @GitArguments 2>&1 |
-      Microsoft.PowerShell.Utility\Tee-Object -Variable GitResult
+      Tee-Object -Variable GitResult
 
     if ($GitResult -match '^fatal:') {
       throw $GitResult
@@ -179,7 +179,7 @@ function Invoke-GitRepository {
   }
 }
 
-Microsoft.PowerShell.Utility\New-Alias gg Git\Measure-GitRepository
+New-Alias gg Git\Measure-GitRepository
 <#
 .SYNOPSIS
 Use Git to get the status of a local repository.
@@ -203,7 +203,7 @@ function Measure-GitRepository {
   Git\Invoke-GitRepository @Status @PSBoundParameters @args
 }
 
-Microsoft.PowerShell.Utility\New-Alias gitcl Git\Import-GitRepository
+New-Alias gitcl Git\Import-GitRepository
 <#
 .SYNOPSIS
 Use Git to clone a repository.
@@ -273,7 +273,7 @@ function Get-GitRepository {
   Git\Invoke-GitRepository @Pull @PSBoundParameters @args
 }
 
-Microsoft.PowerShell.Utility\New-Alias gpp Git\Get-ChildGitRepository
+New-Alias gpp Git\Get-ChildGitRepository
 <#
 .SYNOPSIS
 Use Git to pull changes for all repositories in the top level of %USERPROFILE%\code'.
@@ -287,8 +287,8 @@ function Get-ChildGitRepository {
     Path      = "$HOME\code"
     Directory = $True
   }
-  $Repositories = Microsoft.PowerShell.Management\Get-ChildItem @Code |
-    Microsoft.PowerShell.Utility\Select-Object -ExpandProperty FullName |
+  $Repositories = Get-ChildItem @Code |
+    Select-Object -ExpandProperty FullName |
     Git\Resolve-GitRepository
   $Count = $Repositories.Count
 
@@ -299,7 +299,7 @@ function Get-ChildGitRepository {
   "`nPulled $Count repositor" + ($Count -eq 1 ? 'y' : 'ies')
 }
 
-Microsoft.PowerShell.Utility\New-Alias ga Git\Add-GitRepository
+New-Alias ga Git\Add-GitRepository
 <#
 .SYNOPSIS
 Use Git to stage all changes in a repository.
@@ -334,7 +334,7 @@ function Add-GitRepository {
 
   if (
     $Path -and (
-      Microsoft.PowerShell.Management\Get-Location | Git\Resolve-GitRepository
+      Get-Location | Git\Resolve-GitRepository
     ) -and -not (
       $Path | Git\Resolve-GitRepository
     )
@@ -397,7 +397,7 @@ function Write-GitRepository {
 
   if (
     $Path -and (
-      Microsoft.PowerShell.Management\Get-Location | Git\Resolve-GitRepository
+      Get-Location | Git\Resolve-GitRepository
     ) -and -not (
       $Path | Git\Resolve-GitRepository
     )
@@ -440,7 +440,7 @@ function Write-GitRepository {
   Git\Invoke-GitRepository @Commit @GitParameters @GitCommitArguments
 }
 
-Microsoft.PowerShell.Utility\New-Alias gs Git\Push-GitRepository
+New-Alias gs Git\Push-GitRepository
 <#
 .SYNOPSIS
 Use Git to push changes to a repository.
@@ -462,7 +462,7 @@ function Push-GitRepository {
 
   if (
     $Path -and (
-      Microsoft.PowerShell.Management\Get-Location | Git\Resolve-GitRepository
+      Get-Location | Git\Resolve-GitRepository
     ) -and -not (
       $Path | Git\Resolve-GitRepository
     )
@@ -479,7 +479,7 @@ function Push-GitRepository {
   Git\Invoke-GitRepository @Push @PSBoundParameters @GitPushArguments
 }
 
-Microsoft.PowerShell.Utility\New-Alias gr Git\Reset-GitRepository
+New-Alias gr Git\Reset-GitRepository
 <#
 .SYNOPSIS
 Use Git to undo changes in a repository.
@@ -520,7 +520,7 @@ function Reset-GitRepository {
 
   if (
     $Path -and (
-      Microsoft.PowerShell.Management\Get-Location | Git\Resolve-GitRepository
+      Get-Location | Git\Resolve-GitRepository
     ) -and -not (
       $Path | Git\Resolve-GitRepository
     )
@@ -556,7 +556,7 @@ function Reset-GitRepository {
   Git\Invoke-GitRepository @Reset @GitParameters @GitResetArguments
 }
 
-Microsoft.PowerShell.Utility\New-Alias grp Git\Restore-GitRepository
+New-Alias grp Git\Restore-GitRepository
 <#
 .SYNOPSIS
 Use Git to restore a repository to its previous state.
@@ -578,7 +578,7 @@ function Restore-GitRepository {
 
   if (
     $Path -and (
-      Microsoft.PowerShell.Management\Get-Location | Git\Resolve-GitRepository
+      Get-Location | Git\Resolve-GitRepository
     ) -and -not (
       $Path | Git\Resolve-GitRepository
     )

@@ -1,4 +1,4 @@
-Microsoft.PowerShell.Utility\New-Alias e Shell\Invoke-Directory
+New-Alias e Shell\Invoke-Directory
 function Invoke-Directory {
   [OutputType([void], [string[]])]
   param(
@@ -7,7 +7,7 @@ function Invoke-Directory {
   )
 
   if (-not $Path) {
-    $PSBoundParameters.Path = Microsoft.PowerShell.Management\Get-Location
+    $PSBoundParameters.Path = Get-Location
   }
 
   if ($env:SSH_CLIENT) {
@@ -17,12 +17,12 @@ function Invoke-Directory {
   $Container = @{
     PathType = 'Container'
   }
-  if (Microsoft.PowerShell.Management\Test-Path @PSBoundParameters @Container) {
-    [void](Microsoft.PowerShell.Management\Invoke-Item @PSBoundParameters)
+  if (Test-Path @PSBoundParameters @Container) {
+    [void](Invoke-Item @PSBoundParameters)
   }
 }
 
-Microsoft.PowerShell.Utility\New-Alias e. Shell\Invoke-DirectorySibling
+New-Alias e. Shell\Invoke-DirectorySibling
 function Invoke-DirectorySibling {
   param (
     [PathCompletions('..')]
@@ -30,12 +30,12 @@ function Invoke-DirectorySibling {
   )
 
   $FullPath = @{
-    Path = Microsoft.PowerShell.Management\Join-Path (Microsoft.PowerShell.Management\Get-Location | Microsoft.PowerShell.Management\Split-Path) $Path
+    Path = Join-Path (Get-Location | Split-Path) $Path
   }
   [void](Shell\Invoke-Directory @FullPath @args)
 }
 
-Microsoft.PowerShell.Utility\New-Alias e.. Shell\Invoke-DirectoryRelative
+New-Alias e.. Shell\Invoke-DirectoryRelative
 function Invoke-DirectoryRelative {
   param (
     [PathCompletions('..\..')]
@@ -43,12 +43,12 @@ function Invoke-DirectoryRelative {
   )
 
   $FullPath = @{
-    Path = Microsoft.PowerShell.Management\Join-Path (Microsoft.PowerShell.Management\Get-Location | Microsoft.PowerShell.Management\Split-Path | Microsoft.PowerShell.Management\Split-Path) $Path
+    Path = Join-Path (Get-Location | Split-Path | Split-Path) $Path
   }
   [void](Shell\Invoke-Directory @FullPath @args)
 }
 
-Microsoft.PowerShell.Utility\New-Alias e~ Shell\Invoke-DirectoryHome
+New-Alias e~ Shell\Invoke-DirectoryHome
 function Invoke-DirectoryHome {
   param (
     [PathCompletions('~')]
@@ -56,12 +56,12 @@ function Invoke-DirectoryHome {
   )
 
   $FullPath = @{
-    Path = Microsoft.PowerShell.Management\Join-Path $HOME $Path
+    Path = Join-Path $HOME $Path
   }
   [void](Shell\Invoke-Directory @FullPath @args)
 }
 
-Microsoft.PowerShell.Utility\New-Alias ec Shell\Invoke-DirectoryCode
+New-Alias ec Shell\Invoke-DirectoryCode
 function Invoke-DirectoryCode {
   param (
     [PathCompletions('~\code')]
@@ -69,12 +69,12 @@ function Invoke-DirectoryCode {
   )
 
   $FullPath = @{
-    Path = Microsoft.PowerShell.Management\Join-Path $HOME\code $Path
+    Path = Join-Path $HOME\code $Path
   }
   [void](Shell\Invoke-Directory @FullPath @args)
 }
 
-Microsoft.PowerShell.Utility\New-Alias e/ Shell\Invoke-DirectoryDrive
+New-Alias e/ Shell\Invoke-DirectoryDrive
 function Invoke-DirectoryDrive {
   param (
     [PathCompletions('\')]
@@ -82,7 +82,7 @@ function Invoke-DirectoryDrive {
   )
 
   $FullPath = @{
-    Path = Microsoft.PowerShell.Management\Join-Path (Microsoft.PowerShell.Management\Get-Location).Drive.Root $Path
+    Path = Join-Path (Get-Location).Drive.Root $Path
   }
   [void](Shell\Invoke-Directory @FullPath @args)
 }

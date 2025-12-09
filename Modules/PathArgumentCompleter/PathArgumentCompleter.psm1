@@ -65,7 +65,7 @@ class PathCompleter : System.Management.Automation.IArgumentCompleter {
     [bool] $flat,
     [bool] $useNativeDirectorySeparator
   ) {
-    if (-not $root -or -not (Microsoft.PowerShell.Management\Test-Path -Path $root -PathType Container)) {
+    if (-not $root -or -not (Test-Path -Path $root -PathType Container)) {
       throw [System.ArgumentException]::new('root')
     }
 
@@ -83,7 +83,7 @@ class PathCompleter : System.Management.Automation.IArgumentCompleter {
     [System.Collections.IDictionary] $fakeBoundParameters
   ) {
 
-    $Local:root = Microsoft.PowerShell.Management\Resolve-Path -Path $this.Root
+    $Local:root = Resolve-Path -Path $this.Root
     $separator = $this.UseNativeDirectorySeparator ? [System.IO.Path]::DirectorySeparatorChar : '/'
     $query = @{
       Directory = $this.Type -eq 'Directory'
@@ -99,19 +99,19 @@ class PathCompleter : System.Management.Automation.IArgumentCompleter {
         $currentPathText += '*'
       }
 
-      $currentDirectoryText = Microsoft.PowerShell.Management\Split-Path $currentPathText
-      $fragment = Microsoft.PowerShell.Management\Split-Path $currentPathText -Leaf
+      $currentDirectoryText = Split-Path $currentPathText
+      $fragment = Split-Path $currentPathText -Leaf
 
       if ($fragment -eq '*') {
         $fragment = ''
       }
 
-      $path = Microsoft.PowerShell.Management\Join-Path $Local:root $currentDirectoryText
+      $path = Join-Path $Local:root $currentDirectoryText
 
-      if (Microsoft.PowerShell.Management\Test-Path -Path $path -PathType Container) {
+      if (Test-Path -Path $path -PathType Container) {
         $query.Path = $path
         $query['Filter'] = "$fragment*"
-        $leaves = Microsoft.PowerShell.Management\Get-ChildItem @query
+        $leaves = Get-ChildItem @query
       }
     }
 
@@ -120,15 +120,15 @@ class PathCompleter : System.Management.Automation.IArgumentCompleter {
     }
 
     $leaves = @()
-    $leaves += Microsoft.PowerShell.Management\Get-ChildItem @query
+    $leaves += Get-ChildItem @query
     $directories, $files = $leaves.Where(
       { $PSItem.PSIsContainer },
       'Split'
     )
     $directories = $directories |
-      Microsoft.PowerShell.Utility\Select-Object -ExpandProperty Name
+      Select-Object -ExpandProperty Name
     $files = $files |
-      Microsoft.PowerShell.Utility\Select-Object -ExpandProperty Name
+      Select-Object -ExpandProperty Name
 
     if ($currentDirectoryText -and -not $this.Flat) {
       $directories += ''
@@ -136,9 +136,9 @@ class PathCompleter : System.Management.Automation.IArgumentCompleter {
 
     if ($currentDirectoryText) {
       $directories = $directories |
-        ForEach-Object { Microsoft.PowerShell.Management\Join-Path $currentDirectoryText $PSItem }
+        ForEach-Object { Join-Path $currentDirectoryText $PSItem }
       $files = $files |
-        ForEach-Object { Microsoft.PowerShell.Management\Join-Path $currentDirectoryText $PSItem }
+        ForEach-Object { Join-Path $currentDirectoryText $PSItem }
     }
 
     if (-not $this.Flat) {

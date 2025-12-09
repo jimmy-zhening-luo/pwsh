@@ -1,4 +1,4 @@
-Microsoft.PowerShell.Utility\New-Alias restart Microsoft.PowerShell.Management\Restart-Computer
+New-Alias restart Restart-Computer
 
 <#
 .SYNOPSIS
@@ -12,7 +12,7 @@ function Invoke-CommandPrompt {
   & cmd.exe /c @args
 }
 
-Microsoft.PowerShell.Utility\New-Alias wu WindowsSystem\Update-Windows
+New-Alias wu WindowsSystem\Update-Windows
 <#
 .SYNOPSIS
 Opens the 'Settings' app to the 'Windows Update' page.
@@ -30,10 +30,10 @@ function Update-Windows {
   $WindowsUpdate = @{
     FilePath = 'ms-settings:windowsupdate'
   }
-  [void](Microsoft.PowerShell.Management\Start-Process @WindowsUpdate)
+  [void](Start-Process @WindowsUpdate)
 }
 
-Microsoft.PowerShell.Utility\New-Alias path WindowsSystem\Edit-Path
+New-Alias path WindowsSystem\Edit-Path
 <#
 .SYNOPSIS
 Opens the 'Environment Variables' dialog as a standalone window.
@@ -61,13 +61,13 @@ function Edit-Path {
   if ($Administrator) {
     $ControlPanel.Verb = 'RunAs'
   }
-  [void](Microsoft.PowerShell.Management\Start-Process @ControlPanel)
+  [void](Start-Process @ControlPanel)
 }
 
-Microsoft.PowerShell.Utility\New-Alias sesv Microsoft.PowerShell.Management\Set-Service
-Microsoft.PowerShell.Utility\New-Alias remsv Microsoft.PowerShell.Management\Remove-Service
+New-Alias sesv Set-Service
+New-Alias remsv Remove-Service
 
-Microsoft.PowerShell.Utility\New-Alias tkill WindowsSystem\Stop-Task
+New-Alias tkill WindowsSystem\Stop-Task
 function Stop-Task {
   [CmdletBinding(
     SupportsShouldProcess,
@@ -121,6 +121,6 @@ function Stop-Task {
       'Stop-Process'
     )
   ) {
-    [void](Microsoft.PowerShell.Management\Stop-Process @Process)
+    [void](Stop-Process @Process)
   }
 }

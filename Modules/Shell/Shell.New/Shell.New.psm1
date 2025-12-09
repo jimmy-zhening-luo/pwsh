@@ -1,8 +1,8 @@
-Microsoft.PowerShell.Utility\New-Alias touch Microsoft.PowerShell.Management\New-Item
+New-Alias touch New-Item
 
-Microsoft.PowerShell.Utility\New-Alias mk Shell\New-Directory
+New-Alias mk Shell\New-Directory
 <#
-.FORWARDHELPTARGETNAME Microsoft.PowerShell.Management\New-Item
+.FORWARDHELPTARGETNAME New-Item
 .FORWARDHELPCATEGORY Cmdlet
 #>
 function New-Directory {
@@ -51,7 +51,7 @@ function New-Directory {
     $DirectoryType = @{
       ItemType = 'Directory'
     }
-    $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('Microsoft.PowerShell.Management\New-Item', [System.Management.Automation.CommandTypes]::Cmdlet)
+    $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [System.Management.Automation.CommandTypes]::Cmdlet)
     $scriptCmd = { & $wrappedCmd @DirectoryType @PSBoundParameters }
     $steppablePipeline = $scriptCmd.GetSteppablePipeline()
 
@@ -68,7 +68,7 @@ function New-Directory {
     if (
       $PSCmdlet.ShouldProcess(
         $Value,
-        "> Step: Microsoft.PowerShell.Management\New-Item -ItemType Directory -Path [[$Path]] -Name [$Name] -- " + ($PSBoundParameters | Microsoft.PowerShell.Utility\ConvertTo-Json -EnumsAsStrings)
+        "> Step: New-Item -ItemType Directory -Path [[$Path]] -Name [$Name] -- " + ($PSBoundParameters | ConvertTo-Json -EnumsAsStrings)
       )
     ) {
       $steppablePipeline.Process($PSItem)
@@ -81,9 +81,9 @@ function New-Directory {
   }
 }
 
-Microsoft.PowerShell.Utility\New-Alias mj Shell\New-Junction
+New-Alias mj Shell\New-Junction
 <#
-.FORWARDHELPTARGETNAME Microsoft.PowerShell.Management\New-Item
+.FORWARDHELPTARGETNAME New-Item
 .FORWARDHELPCATEGORY Cmdlet
 #>
 function New-Junction {
@@ -116,7 +116,7 @@ function New-Junction {
       ItemType = 'Junction'
       Force    = $True
     }
-    $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('Microsoft.PowerShell.Management\New-Item', [System.Management.Automation.CommandTypes]::Cmdlet)
+    $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [System.Management.Automation.CommandTypes]::Cmdlet)
     $scriptCmd = { & $wrappedCmd @PSBoundParameters @JunctionType }
     $steppablePipeline = $scriptCmd.GetSteppablePipeline()
 
@@ -133,7 +133,7 @@ function New-Junction {
     if (
       $PSCmdlet.ShouldProcess(
         $Value,
-        "> Step: Microsoft.PowerShell.Management\New-Item -Force -ItemType Junction -Path [$Path] -Value [$Value]"
+        "> Step: New-Item -Force -ItemType Junction -Path [$Path] -Value [$Value]"
       )
     ) {
       $steppablePipeline.Process($PSItem)

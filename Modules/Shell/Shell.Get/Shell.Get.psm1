@@ -1,8 +1,8 @@
-Microsoft.PowerShell.Utility\New-Alias split Microsoft.PowerShell.Management\Split-Path
-Microsoft.PowerShell.Utility\New-Alias hash Microsoft.PowerShell.Utility\Get-FileHash
+New-Alias split Split-Path
+New-Alias hash Get-FileHash
 
-Microsoft.PowerShell.Utility\New-Alias sz Shell\Get-Size
-Microsoft.PowerShell.Utility\New-Alias size Shell\Get-Size
+New-Alias sz Shell\Get-Size
+New-Alias size Shell\Get-Size
 function Get-Size {
   [OutputType([string])]
   [OutputType([double], ParameterSetName = 'Number')]
@@ -39,7 +39,7 @@ function Get-Size {
       MB = 1MB
       GB = 1GB
     }
-    $DEFAULT_PATH = (Microsoft.PowerShell.Management\Get-Location).Path
+    $DEFAULT_PATH = (Get-Location).Path
     $DEFAULT_UNIT = 'KB'
 
     if ($Path) {
@@ -49,7 +49,7 @@ function Get-Size {
         }
       }
       else {
-        if (Microsoft.PowerShell.Management\Test-Path $Path) {
+        if (Test-Path $Path) {
           $Unit = $DEFAULT_UNIT
         }
         else {
@@ -77,12 +77,12 @@ function Get-Size {
     }
 
     $UnitCanonical = $UNITS[$Unit]
-    $Item = Microsoft.PowerShell.Management\Get-Item $Path
+    $Item = Get-Item $Path
     $Quantity = [Math]::Round(
       (
         $Item.PSIsContainer ? (
-          Microsoft.PowerShell.Management\Get-ChildItem -Path $Path -Recurse -File |
-            Microsoft.PowerShell.Utility\Measure-Object -Property Length -Sum
+          Get-ChildItem -Path $Path -Recurse -File |
+            Measure-Object -Property Length -Sum
         ).Sum : $Item.Length
       ) / $FACTORS[$UnitCanonical],
       3

@@ -1,4 +1,4 @@
-Microsoft.PowerShell.Utility\New-Alias p Shell\Get-File
+New-Alias p Shell\Get-File
 function Get-File {
   [OutputType([string[]])]
   param(
@@ -12,7 +12,7 @@ function Get-File {
 
   if (
     $Location -and -not (
-      Microsoft.PowerShell.Management\Test-Path -Path $Location -PathType Container
+      Test-Path -Path $Location -PathType Container
     )
   ) {
     $Local:args = , $Location + $Local:args
@@ -20,34 +20,34 @@ function Get-File {
   }
 
   if ($Path) {
-    $Target = $Location ? (Microsoft.PowerShell.Management\Join-Path $Location $Path) : $Path
+    $Target = $Location ? (Join-Path $Location $Path) : $Path
 
-    if (-not (Microsoft.PowerShell.Management\Test-Path -Path $Target)) {
+    if (-not (Test-Path -Path $Target)) {
       throw "Path '$Target' does not exist."
     }
 
     $FullPath = @{
-      Path = Microsoft.PowerShell.Management\Resolve-Path -Path $Target
+      Path = Resolve-Path -Path $Target
     }
     $Container = @{
       PathType = 'Container'
     }
-    if (Microsoft.PowerShell.Management\Test-Path @FullPath @Container) {
-      Microsoft.PowerShell.Management\Get-ChildItem @FullPath @Local:args
+    if (Test-Path @FullPath @Container) {
+      Get-ChildItem @FullPath @Local:args
     }
     else {
-      Microsoft.PowerShell.Management\Get-Content @FullPath @Local:args
+      Get-Content @FullPath @Local:args
     }
   }
   else {
     $Directory = @{
-      Path = $Location ? (Microsoft.PowerShell.Management\Resolve-Path -Path $Location) : (Microsoft.PowerShell.Management\Get-Location).Path
+      Path = $Location ? (Resolve-Path -Path $Location) : (Get-Location).Path
     }
-    Microsoft.PowerShell.Management\Get-ChildItem @Directory @Local:args
+    Get-ChildItem @Directory @Local:args
   }
 }
 
-Microsoft.PowerShell.Utility\New-Alias p. Shell\Get-FileSibling
+New-Alias p. Shell\Get-FileSibling
 function Get-FileSibling {
   [OutputType([string[]])]
   param (
@@ -57,12 +57,12 @@ function Get-FileSibling {
   )
 
   $Location = @{
-    Location = Microsoft.PowerShell.Management\Get-Location | Microsoft.PowerShell.Management\Split-Path
+    Location = Get-Location | Split-Path
   }
   Shell\Get-File @PSBoundParameters @Location @args
 }
 
-Microsoft.PowerShell.Utility\New-Alias p.. Shell\Get-FileRelative
+New-Alias p.. Shell\Get-FileRelative
 function Get-FileRelative {
   [OutputType([string[]])]
   param (
@@ -72,12 +72,12 @@ function Get-FileRelative {
   )
 
   $Location = @{
-    Location = Microsoft.PowerShell.Management\Get-Location | Microsoft.PowerShell.Management\Split-Path | Microsoft.PowerShell.Management\Split-Path
+    Location = Get-Location | Split-Path | Split-Path
   }
   Shell\Get-File @PSBoundParameters @Location @args
 }
 
-Microsoft.PowerShell.Utility\New-Alias p~ Shell\Get-FileHome
+New-Alias p~ Shell\Get-FileHome
 function Get-FileHome {
   [OutputType([string[]])]
   param (
@@ -92,7 +92,7 @@ function Get-FileHome {
   Shell\Get-File @PSBoundParameters @Location @args
 }
 
-Microsoft.PowerShell.Utility\New-Alias pc Shell\Get-FileCode
+New-Alias pc Shell\Get-FileCode
 function Get-FileCode {
   [OutputType([string[]])]
   param (
@@ -107,7 +107,7 @@ function Get-FileCode {
   Shell\Get-File @PSBoundParameters @Location @args
 }
 
-Microsoft.PowerShell.Utility\New-Alias p/ Shell\Get-FileDrive
+New-Alias p/ Shell\Get-FileDrive
 function Get-FileDrive {
   [OutputType([string[]])]
   param (
@@ -117,7 +117,7 @@ function Get-FileDrive {
   )
 
   $Location = @{
-    Location = (Microsoft.PowerShell.Management\Get-Location).Drive.Root
+    Location = (Get-Location).Drive.Root
   }
   Shell\Get-File @PSBoundParameters @Location @args
 }

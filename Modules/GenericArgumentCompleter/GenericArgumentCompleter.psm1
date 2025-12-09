@@ -71,7 +71,7 @@ class GenericCompleter : System.Management.Automation.IArgumentCompleter {
 
     $unique = @()
     $unique += $unitKeys |
-      Microsoft.PowerShell.Utility\Select-Object -Unique -CaseInsensitive
+      Select-Object -Unique -CaseInsensitive
 
     if (-not $unique -or $unique.Count -ne $unitKeys.Count) {
       throw [System.ArgumentException]::new('units')
@@ -109,7 +109,7 @@ class GenericCompleter : System.Management.Automation.IArgumentCompleter {
     }
 
     if ($this.Sort) {
-      $Local:units = $Local:units | Microsoft.PowerShell.Utility\Sort-Object
+      $Local:units = $Local:units | Sort-Object
     }
 
     $unitMatches = @()

@@ -1,4 +1,4 @@
-Microsoft.PowerShell.Utility\New-Alias l Shell\Get-Directory
+New-Alias l Shell\Get-Directory
 function Get-Directory {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param (
@@ -7,14 +7,14 @@ function Get-Directory {
   )
 
   if ($Path) {
-    Microsoft.PowerShell.Management\Get-ChildItem @PSBoundParameters @args
+    Get-ChildItem @PSBoundParameters @args
   }
   else {
-    Microsoft.PowerShell.Management\Get-ChildItem @args
+    Get-ChildItem @args
   }
 }
 
-Microsoft.PowerShell.Utility\New-Alias l. Shell\Get-DirectorySibling
+New-Alias l. Shell\Get-DirectorySibling
 function Get-DirectorySibling {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param (
@@ -23,12 +23,12 @@ function Get-DirectorySibling {
   )
 
   $FullPath = @{
-    Path = Microsoft.PowerShell.Management\Join-Path (Microsoft.PowerShell.Management\Get-Location | Microsoft.PowerShell.Management\Split-Path) $Path
+    Path = Join-Path (Get-Location | Split-Path) $Path
   }
-  Microsoft.PowerShell.Management\Get-ChildItem @FullPath @args
+  Get-ChildItem @FullPath @args
 }
 
-Microsoft.PowerShell.Utility\New-Alias l.. Shell\Get-DirectoryRelative
+New-Alias l.. Shell\Get-DirectoryRelative
 function Get-DirectoryRelative {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param (
@@ -37,12 +37,12 @@ function Get-DirectoryRelative {
   )
 
   $FullPath = @{
-    Path = Microsoft.PowerShell.Management\Join-Path (Microsoft.PowerShell.Management\Get-Location | Microsoft.PowerShell.Management\Split-Path | Microsoft.PowerShell.Management\Split-Path) $Path
+    Path = Join-Path (Get-Location | Split-Path | Split-Path) $Path
   }
-  Microsoft.PowerShell.Management\Get-ChildItem @FullPath @args
+  Get-ChildItem @FullPath @args
 }
 
-Microsoft.PowerShell.Utility\New-Alias l~ Shell\Get-DirectoryHome
+New-Alias l~ Shell\Get-DirectoryHome
 function Get-DirectoryHome {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param (
@@ -51,12 +51,12 @@ function Get-DirectoryHome {
   )
 
   $FullPath = @{
-    Path = Microsoft.PowerShell.Management\Join-Path $HOME $Path
+    Path = Join-Path $HOME $Path
   }
-  Microsoft.PowerShell.Management\Get-ChildItem @FullPath @args
+  Get-ChildItem @FullPath @args
 }
 
-Microsoft.PowerShell.Utility\New-Alias lc Shell\Get-DirectoryCode
+New-Alias lc Shell\Get-DirectoryCode
 function Get-DirectoryCode {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param (
@@ -65,12 +65,12 @@ function Get-DirectoryCode {
   )
 
   $FullPath = @{
-    Path = Microsoft.PowerShell.Management\Join-Path $HOME\code $Path
+    Path = Join-Path $HOME\code $Path
   }
-  Microsoft.PowerShell.Management\Get-ChildItem @FullPath @args
+  Get-ChildItem @FullPath @args
 }
 
-Microsoft.PowerShell.Utility\New-Alias l/ Shell\Get-DirectoryDrive
+New-Alias l/ Shell\Get-DirectoryDrive
 function Get-DirectoryDrive {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param (
@@ -79,7 +79,7 @@ function Get-DirectoryDrive {
   )
 
   $FullPath = @{
-    Path = Microsoft.PowerShell.Management\Join-Path (Microsoft.PowerShell.Management\Get-Location).Drive.Root $Path
+    Path = Join-Path (Get-Location).Drive.Root $Path
   }
-  Microsoft.PowerShell.Management\Get-ChildItem @FullPath @args
+  Get-ChildItem @FullPath @args
 }

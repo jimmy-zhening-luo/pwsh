@@ -1,4 +1,4 @@
-Microsoft.PowerShell.Utility\New-Alias i Shell\Invoke-Workspace
+New-Alias i Shell\Invoke-Workspace
 function Invoke-Workspace {
   [OutputType([void])]
   param(
@@ -17,7 +17,7 @@ function Invoke-Workspace {
 
   if (
     $Location -and -not (
-      Microsoft.PowerShell.Management\Test-Path -Path $Location -PathType Container
+      Test-Path -Path $Location -PathType Container
     )
   ) {
     $ArgumentList = , $Location + $ArgumentList
@@ -25,10 +25,10 @@ function Invoke-Workspace {
   }
 
   if ($Path) {
-    $Target = $Location ? (Microsoft.PowerShell.Management\Join-Path $Location $Path) : $Path
+    $Target = $Location ? (Join-Path $Location $Path) : $Path
 
-    if (Microsoft.PowerShell.Management\Test-Path -Path $Target) {
-      $FullPath = (Microsoft.PowerShell.Management\Resolve-Path $Target).Path
+    if (Test-Path -Path $Target) {
+      $FullPath = (Resolve-Path $Target).Path
       $ArgumentList = , $FullPath + $ArgumentList
     }
     else {
@@ -37,7 +37,7 @@ function Invoke-Workspace {
       }
 
       if (-not $Location) {
-        $Location = (Microsoft.PowerShell.Management\Get-Location).Path
+        $Location = (Get-Location).Path
       }
 
       $ArgumentList = $Location, $Path + $ArgumentList
@@ -45,7 +45,7 @@ function Invoke-Workspace {
   }
   else {
     if (-not $Location) {
-      $Location = (Microsoft.PowerShell.Management\Get-Location).Path
+      $Location = (Get-Location).Path
     }
 
     $ArgumentList = , $Location + $ArgumentList
@@ -77,10 +77,10 @@ function Invoke-Workspace {
     ArgumentList = $ArgumentList
     NoNewWindow  = $True
   }
-  [void](Microsoft.PowerShell.Management\Start-Process @Process)
+  [void](Start-Process @Process)
 }
 
-Microsoft.PowerShell.Utility\New-Alias i. Shell\Invoke-WorkspaceSibling
+New-Alias i. Shell\Invoke-WorkspaceSibling
 function Invoke-WorkspaceSibling {
   [OutputType([void])]
   param (
@@ -96,12 +96,12 @@ function Invoke-WorkspaceSibling {
   )
 
   $Location = @{
-    Location = Microsoft.PowerShell.Management\Get-Location | Microsoft.PowerShell.Management\Split-Path
+    Location = Get-Location | Split-Path
   }
   [void](Shell\Invoke-Workspace @PSBoundParameters @Location @args)
 }
 
-Microsoft.PowerShell.Utility\New-Alias i.. Shell\Invoke-WorkspaceRelative
+New-Alias i.. Shell\Invoke-WorkspaceRelative
 function Invoke-WorkspaceRelative {
   [OutputType([void])]
   param (
@@ -117,12 +117,12 @@ function Invoke-WorkspaceRelative {
   )
 
   $Location = @{
-    Location = Microsoft.PowerShell.Management\Get-Location | Microsoft.PowerShell.Management\Split-Path | Microsoft.PowerShell.Management\Split-Path
+    Location = Get-Location | Split-Path | Split-Path
   }
   [void](Shell\Invoke-Workspace @PSBoundParameters @Location @args)
 }
 
-Microsoft.PowerShell.Utility\New-Alias i~ Shell\Invoke-WorkspaceHome
+New-Alias i~ Shell\Invoke-WorkspaceHome
 function Invoke-WorkspaceHome {
   [OutputType([void])]
   param (
@@ -143,7 +143,7 @@ function Invoke-WorkspaceHome {
   [void](Shell\Invoke-Workspace @PSBoundParameters @Location @args)
 }
 
-Microsoft.PowerShell.Utility\New-Alias ic Shell\Invoke-WorkspaceCode
+New-Alias ic Shell\Invoke-WorkspaceCode
 function Invoke-WorkspaceCode {
   [OutputType([void])]
   param (
@@ -164,7 +164,7 @@ function Invoke-WorkspaceCode {
   [void](Shell\Invoke-Workspace @PSBoundParameters @Location @args)
 }
 
-Microsoft.PowerShell.Utility\New-Alias i/ Shell\Invoke-WorkspaceDrive
+New-Alias i/ Shell\Invoke-WorkspaceDrive
 function Invoke-WorkspaceDrive {
   [OutputType([void])]
   param (
@@ -180,7 +180,7 @@ function Invoke-WorkspaceDrive {
   )
 
   $Location = @{
-    Location = (Microsoft.PowerShell.Management\Get-Location).Drive.Root
+    Location = (Get-Location).Drive.Root
   }
   [void](Shell\Invoke-Workspace @PSBoundParameters @Location @args)
 }

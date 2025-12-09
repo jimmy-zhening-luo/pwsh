@@ -1,13 +1,13 @@
-Microsoft.PowerShell.Utility\New-Alias upman Update-Help
+New-Alias upman Update-Help
 
 $CUSTOM_HELP_FILE = @{
   Path = "$PSScriptRoot\PSHelp.psd1"
 }
 $CUSTOM_HELP = (
-  Microsoft.PowerShell.Management\Test-Path @CUSTOM_HELP_FILE -Type Leaf
+  Test-Path @CUSTOM_HELP_FILE -Type Leaf
 ) ? (Import-PowerShellDataFile @CUSTOM_HELP_FILE) : @{}
 
-Microsoft.PowerShell.Utility\New-Alias m PSTool\Get-HelpOnline
+New-Alias m PSTool\Get-HelpOnline
 function Get-HelpOnline {
   [OutputType([Object])]
   param(
@@ -116,7 +116,7 @@ function Get-HelpOnline {
 
   if ($Articles) {
     $Articles = $Articles -replace '^(?>https?:\/\/)?', 'https://' -replace '^https:\/\/learn\.microsoft\.com\/en-us\/', 'https://learn.microsoft.com/' |
-      Microsoft.PowerShell.Utility\Select-Object -Unique -CaseInsensitive
+      Select-Object -Unique -CaseInsensitive
   }
 
   if (-not $env:SSH_CLIENT) {
@@ -138,11 +138,11 @@ function Get-HelpOnline {
       MessageData       = "$ArticleList"
       InformationAction = 'Continue'
     }
-    Microsoft.PowerShell.Utility\Write-Information @ArticleInformation
+    Write-Information @ArticleInformation
   }
 }
 
-Microsoft.PowerShell.Utility\New-Alias galc PSTool\Get-CommandAlias
+New-Alias galc PSTool\Get-CommandAlias
 function Get-CommandAlias {
   [OutputType([System.Management.Automation.CommandInfo])]
   param(
@@ -164,8 +164,8 @@ function Get-CommandAlias {
       'Source'
     )
   }
-  Microsoft.PowerShell.Utility\Get-Alias @Commands @args |
-    Microsoft.PowerShell.Utility\Select-Object @Property
+  Get-Alias @Commands @args |
+    Select-Object @Property
 }
 
 <#
@@ -202,7 +202,7 @@ function Get-VerbList {
     Verb = $Verb.Contains('*') ? $Verb : $Verb.Length -lt 3 ? "$Verb*" : "*$Verb*"
   }
   $Property = 'Verb'
-  Microsoft.PowerShell.Utility\Get-Verb @Verbs @args |
-    Microsoft.PowerShell.Utility\Sort-Object -Property $Property |
-    Microsoft.PowerShell.Utility\Select-Object -ExpandProperty $Property
+  Get-Verb @Verbs @args |
+    Sort-Object -Property $Property |
+    Select-Object -ExpandProperty $Property
 }

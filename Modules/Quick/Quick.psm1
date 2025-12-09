@@ -1,4 +1,4 @@
-Microsoft.PowerShell.Utility\New-Alias guid Quick\Copy-Guid
+New-Alias guid Quick\Copy-Guid
 function Copy-Guid {
   [OutputType([string])]
   param(
@@ -7,20 +7,20 @@ function Copy-Guid {
     [switch]$Silent
   )
 
-  $Guid = (Microsoft.PowerShell.Utility\New-Guid).Guid
+  $Guid = (New-Guid).Guid
 
   if ($Uppercase) {
     $Guid = $Guid.ToUpperInvariant()
   }
 
-  [void]($Guid | Microsoft.PowerShell.Management\Set-Clipboard)
+  [void]($Guid | Set-Clipboard)
 
   if (-not $Silent) {
     $Guid
   }
 }
 
-Microsoft.PowerShell.Utility\New-Alias hex Quick\ConvertTo-Hex
+New-Alias hex Quick\ConvertTo-Hex
 function ConvertTo-Hex {
   [OutputType([string])]
   param(
