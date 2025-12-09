@@ -11,7 +11,7 @@ function Format-Path {
   $TrimmedPath = $AlignedPath -replace '(?<!^)(?>\\+)', '\'
 
   if ($LeadingRelative) {
-    $TrimmedPath = $TrimmedPath -replace '^(?>\.(?>\\+))', ''
+    $TrimmedPath = $TrimmedPath -replace '^\.(?>\\+)', ''
   }
 
   if ($Trailing) {
@@ -72,7 +72,7 @@ function Test-Item {
     }
   }
   elseif ($Path -match '^~(?=\\|$)') {
-    $Path = $Path -replace '^(~(?>\\*))', ''
+    $Path = $Path -replace '^~(?>\\*)', ''
 
     if ($Location) {
       $Relative = @{
@@ -158,7 +158,7 @@ function Resolve-Item {
     }
   }
   elseif ($Path -match '^~(?=\\|$)') {
-    $Path = $Path -replace '^(?>~(?>\\*))', ''
+    $Path = $Path -replace '^~(?>\\*)', ''
 
     if ($Location) {
       $Path = Shell\Merge-RelativePath -Path (

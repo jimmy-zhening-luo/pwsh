@@ -63,7 +63,7 @@ function Resolve-GitRepository {
   }
 }
 
-$GIT_ARGUMENT = '^(?>(?=.*[*=]).+|-(?>\w|(?>-\w[-\w]*\w)))$'
+$GIT_ARGUMENT = '^(?>(?=.*[*=])(?>.+)|-(?>\w|(?>-\w[-\w]*\w)))$'
 
 <#
 .SYNOPSIS
@@ -170,7 +170,7 @@ function Invoke-GitRepository {
     & git.exe @GitArguments 2>&1 |
       Microsoft.PowerShell.Utility\Tee-Object -Variable GitResult
 
-    if ($GitResult -match '^(?>fatal:)') {
+    if ($GitResult -match '^fatal:') {
       throw $GitResult
     }
   }

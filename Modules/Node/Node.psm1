@@ -183,7 +183,7 @@ function Step-NodePackageVersion {
   )
   if ($Version) {
     if ($Version -notin $NAMED_VERSION) {
-      if ($Version -match '^v?(?<Major>\d+)(?>\.(?<Minor>\d*)(?>\.(?<Patch>\d*))?)?(?>-(?<Pre>\w+(?>\.\d+)?))?$') {
+      if ($Version -match '^v?(?<Major>(?>\d+))(?>\.(?<Minor>(?>\d*))(?>\.(?<Patch>\(?>d*)))?)?(?>-(?<Pre>(?>\w+)(?>\.(?>\d+))?))?$') {
         $FullVersion = @{
           Major = [UInt32]$Matches.Major
           Minor = $Matches.Minor ? [UInt32]$Matches.Minor : [UInt32]0

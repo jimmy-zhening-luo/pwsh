@@ -13,7 +13,7 @@ function Get-YouTube {
     [string]$Video
   )
 
-  $VideoUri = $Video -match '^(?>https?://)?(?>(?>www|m)\.)?(?>youtube\.com/watch\?)\S*v=(?<Video>[-\w]+)' ? [UriBuilder]::new(
+  $VideoUri = $Video -match '^(?>https?://)?(?>(?>www|m)\.)?(?>youtube\.com/watch\?)(?:\S*&)?v=(?<Video>(?>[-\w]+))' ? [UriBuilder]::new(
     'https',
     'www.youtube.com',
     -1,

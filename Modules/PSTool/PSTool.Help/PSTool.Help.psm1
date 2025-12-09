@@ -51,7 +51,7 @@ function Get-HelpOnline {
     }
 
     if ($Help) {
-      $HelpLink = $Help.relatedLinks.navigationLink.Uri -replace '\?.*$', '' |
+      $HelpLink = $Help.relatedLinks.navigationLink.Uri -replace '\?(?>.*)$', '' |
         Where-Object { $PSItem }
     }
 
@@ -78,7 +78,7 @@ function Get-HelpOnline {
         $about_Article = "$ABOUT_BASE_URL/$($Help.name)"
       }
       else {
-        $about_Topic = $Topic -replace '[-_ :]+', '_' -replace '^(?>about)?_?', 'about_'
+        $about_Topic = $Topic -replace '(?>[-_ :]+)', '_' -replace '^(?>about)?_?', 'about_'
 
         function Resolve-AboutArticle {
           param(
@@ -115,7 +115,7 @@ function Get-HelpOnline {
   }
 
   if ($Articles) {
-    $Articles = $Articles -replace '^(?>https?:\/\/)?', 'https://' -replace '^(?>https:\/\/learn\.microsoft\.com\/en-us\/)', 'https://learn.microsoft.com/' |
+    $Articles = $Articles -replace '^(?>https?:\/\/)?', 'https://' -replace '^https:\/\/learn\.microsoft\.com\/en-us\/', 'https://learn.microsoft.com/' |
       Microsoft.PowerShell.Utility\Select-Object -Unique -CaseInsensitive
   }
 
