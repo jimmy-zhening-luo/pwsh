@@ -194,9 +194,7 @@ function Invoke-NodePackage {
       $True
     )]
     # Node package root
-    [string]$Path,
-    # Stop execution on Node error
-    [switch]$Throw
+    [string]$Path
   )
 
   if (-not $Verb) {
@@ -242,44 +240,38 @@ function Invoke-NodePackage {
     $NodeArguments.AddRange($NodeCommandArguments)
   }
 
-  if ($Throw) {
-    & npm.ps1 @NodeArguments 2>&1 |
-      Tee-Object -Variable NpmResult
+  & npm.ps1 @NodeArguments 2>&1 |
+    Tee-Object -Variable NpmResult
 
-    if ($NpmResult) {
-      $Private:NpmError = @()
+  if ($NpmResult) {
+    $Private:NpmError = @()
 
-      if ($NpmResult -is [array]) {
-        $Private:ErrorRecords = $NpmResult |
-          Where-Object {
-            $_ -is [ErrorRecord]
-          }
-
-        if ($ErrorRecords) {
-          $NpmError += $ErrorRecords
+    if ($NpmResult -is [array]) {
+      $Private:ErrorRecords = $NpmResult |
+        Where-Object {
+          $_ -is [ErrorRecord]
         }
-        else {
-          $Private:Strings = $NpmResult |
-            Where-Object { $_ -is [string] } |
-            Where-Object { $_ -match '^npm error' }
 
-          if ($Strings) {
-            $NpmError += $Strings
-          }
+      if ($ErrorRecords) {
+        $NpmError += $ErrorRecords
+      }
+      else {
+        $Private:Strings = $NpmResult |
+          Where-Object { $_ -is [string] } |
+          Where-Object { $_ -match '^npm error' }
+
+        if ($Strings) {
+          $NpmError += $Strings
         }
-      }
-      elseif ($NpmResult -is [ErrorRecord] -or $NpmResult -is [string] -and $NpmResult -match '^npm error') {
-        $NpmError += $NpmResult
-      }
-
-      if ($NpmError) {
-        throw 'Npm command error, execution stopped.'
       }
     }
+    elseif ($NpmResult -is [ErrorRecord] -or $NpmResult -is [string] -and $NpmResult -match '^npm error') {
+      $NpmError += $NpmResult
+    }
 
-  }
-  else {
-    & npm.ps1 @NodeArguments
+    if ($NpmError) {
+      throw 'Npm command error, execution stopped.'
+    }
   }
 }
 
