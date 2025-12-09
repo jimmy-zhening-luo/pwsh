@@ -27,5 +27,4 @@
     'yte'
     'ytc'
   )
-  ModuleList            = @()
 }

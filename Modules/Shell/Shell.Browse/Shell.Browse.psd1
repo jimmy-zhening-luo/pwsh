@@ -30,5 +30,4 @@
     'go'
     'open'
   )
-  ModuleList            = @()
 }

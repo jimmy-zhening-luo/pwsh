@@ -47,5 +47,4 @@
     'gr'
     'grp'
   )
-  ModuleList            = @()
 }

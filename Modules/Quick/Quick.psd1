@@ -37,11 +37,4 @@
     'yte'
     'ytc'
   )
-  ModuleList            = @(
-    @{
-      ModuleName    = 'Quick.YouTube'
-      ModuleVersion = '3.0.0'
-      GUID          = 'bc355ec2-c3a4-4e99-abe1-4e9e2aeb2635'
-    }
-  )
 }

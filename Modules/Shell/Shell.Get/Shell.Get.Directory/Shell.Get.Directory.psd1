@@ -29,5 +29,4 @@
     'lc'
     'l/'
   )
-  ModuleList            = @()
 }

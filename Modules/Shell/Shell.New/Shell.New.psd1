@@ -22,5 +22,4 @@
     'mk'
     'mj'
   )
-  ModuleList            = @()
 }

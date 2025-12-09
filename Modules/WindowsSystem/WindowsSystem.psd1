@@ -46,11 +46,4 @@
     'wgf'
     'wgr'
   )
-  ModuleList            = @(
-    @{
-      ModuleName    = 'WindowsSystem.App'
-      ModuleVersion = '3.0.0'
-      GUID          = '73ded6ab-d0a5-4d7c-a014-fa8b32a7714b'
-    }
-  )
 }

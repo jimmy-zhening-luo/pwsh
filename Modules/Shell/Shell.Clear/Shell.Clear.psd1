@@ -20,5 +20,4 @@
   AliasesToExport       = @(
     'cl'
   )
-  ModuleList            = @()
 }

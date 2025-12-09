@@ -20,5 +20,4 @@
     'sand'
     'sandbox'
   )
-  ModuleList            = @()
 }

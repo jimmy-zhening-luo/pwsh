@@ -15,5 +15,4 @@
   CmdletsToExport       = @()
   VariablesToExport     = @()
   AliasesToExport       = @()
-  ModuleList            = @()
 }

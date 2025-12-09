@@ -29,5 +29,4 @@
     'ic'
     'i/'
   )
-  ModuleList            = @()
 }

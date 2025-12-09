@@ -23,5 +23,4 @@
     'm'
     'galc'
   )
-  ModuleList            = @()
 }

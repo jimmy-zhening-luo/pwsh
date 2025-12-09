@@ -45,5 +45,4 @@
     'nr'
     'nt'
   )
-  ModuleList            = @()
 }
