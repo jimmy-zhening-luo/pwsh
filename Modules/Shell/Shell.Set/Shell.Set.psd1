@@ -1,20 +1,14 @@
 @{
+  RootModule            = 'Shell.Set.psm1'
   ModuleVersion         = '3.0.0.0'
   CompatiblePSEditions  = @('Desktop', 'Core')
-  GUID                  = 'e740b507-c756-4684-8565-8c579344e454'
+  GUID                  = 'afed7375-abb6-4d62-9b11-fa07320220aa'
   Author                = 'Jimmy Zhening Luo'
   CompanyName           = 'Jimmy Zhening Luo'
   Copyright             = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
   PowerShellVersion     = '7.5'
   PowerShellHostName    = 'ConsoleHost'
   PowerShellHostVersion = '7.5'
-  NestedModules         = @(
-    @{
-      ModuleName    = 'Shell.Set.Directory'
-      ModuleVersion = '3.0.0.0'
-      GUID          = 'b6522962-e911-4dc4-bfbe-0181264ad7d2'
-    }
-  )
   FunctionsToExport     = @(
     'Set-Directory'
     'Set-DirectorySibling'
@@ -30,8 +24,6 @@
     'c'
     'c.'
     'c..'
-    '..'
-    '...'
     'c~'
     'cc'
     'c/'

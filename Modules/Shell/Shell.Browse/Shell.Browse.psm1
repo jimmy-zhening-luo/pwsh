@@ -138,7 +138,6 @@ function Open-Url {
       ParameterSetName = 'Path',
       Position = 0
     )]
-    [PathCompletions('.')]
     # The file path or URL to open. Defaults to the current directory.
     [string]$Path,
     [Parameter(

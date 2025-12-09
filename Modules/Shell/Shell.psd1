@@ -15,17 +15,22 @@
       ModuleVersion = '3.0.0'
       GUID          = '4aec66c3-c403-44b4-ac4d-fb8c8aa83c20'
     }
+    @{
+      ModuleName    = 'GenericArgumentCompleter'
+      ModuleVersion = '3.0.0'
+      GUID          = 'ce7965e6-f9ef-42fb-aa4b-80eb542833de'
+    }
   )
   NestedModules         = @(
+    @{
+      ModuleName    = 'Shell.Browse'
+      ModuleVersion = '3.0.0.0'
+      GUID          = '1e45c553-ea48-41c2-a7fc-89b5c36f30b1'
+    }
     @{
       ModuleName    = 'Shell.New'
       ModuleVersion = '3.0.0.0'
       GUID          = '9a3324b2-207d-4635-a8d6-ac8261181fb1'
-    }
-    @{
-      ModuleName    = 'Shell.Clear'
-      ModuleVersion = '3.0.0.0'
-      GUID          = '7b39ad83-781d-49f2-a378-f913d983b1a6'
     }
     @{
       ModuleName    = 'Shell.Get'
@@ -35,7 +40,7 @@
     @{
       ModuleName    = 'Shell.Set'
       ModuleVersion = '3.0.0.0'
-      GUID          = 'e740b507-c756-4684-8565-8c579344e454'
+      GUID          = 'afed7375-abb6-4d62-9b11-fa07320220aa'
     }
     @{
       ModuleName    = 'Shell.Invoke'
@@ -43,21 +48,23 @@
       GUID          = '130b56d3-229a-4ec1-be75-d31a615147c8'
     }
     @{
-      ModuleName    = 'Shell.Browse'
+      ModuleName    = 'Shell.Remove'
       ModuleVersion = '3.0.0.0'
-      GUID          = '1e45c553-ea48-41c2-a7fc-89b5c36f30b1'
+      GUID          = '1099153a-7f76-415c-8b8f-d18f5351d581'
     }
   )
   FunctionsToExport     = @(
+    'Clear-Line'
     'Format-Path'
     'Trace-RelativePath'
     'Merge-RelativePath'
     'Test-Item'
     'Resolve-Item'
+    'Test-Host'
+    'Test-Url'
+    'Open-Url'
     'New-Directory'
     'New-Junction'
-    'Clear-Line'
-    'Remove-Directory'
     'Get-Size'
     'Get-Directory'
     'Get-DirectorySibling'
@@ -90,17 +97,19 @@
     'Invoke-WorkspaceHome'
     'Invoke-WorkspaceCode'
     'Invoke-WorkspaceDrive'
-    'Test-Host'
-    'Test-Url'
-    'Open-Url'
+    'Remove-Directory'
   )
   CmdletsToExport       = @()
   VariablesToExport     = @()
   AliasesToExport       = @(
+    'cl'
+    'tn'
+    'tu'
+    'go'
+    'open'
     'touch'
     'mk'
     'mj'
-    'cl'
     'split'
     'hash'
     'sz'
@@ -136,9 +145,5 @@
     'i~'
     'ic'
     'i/'
-    'tn'
-    'tu'
-    'go'
-    'open'
   )
 }

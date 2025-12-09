@@ -1,19 +1,3 @@
-New-Alias cl Shell\Clear-Line
-function Clear-Line {
-  [OutputType([void])]
-  param(
-    [PathCompletions('.')]
-    [string]$Path
-  )
-
-  if ($Path -or $args) {
-    [void](Clear-Content @PSBoundParameters @args)
-  }
-  else {
-    [void](Clear-Host)
-  }
-}
-
 function Remove-Directory {
   [OutputType([void])]
   param(

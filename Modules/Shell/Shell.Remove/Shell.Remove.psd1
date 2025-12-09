@@ -1,8 +1,8 @@
 @{
-  RootModule            = 'Shell.Clear.psm1'
+  RootModule            = 'Shell.Remove.psm1'
   ModuleVersion         = '3.0.0.0'
   CompatiblePSEditions  = @('Desktop', 'Core')
-  GUID                  = '7b39ad83-781d-49f2-a378-f913d983b1a6'
+  GUID                  = '1099153a-7f76-415c-8b8f-d18f5351d581'
   Author                = 'Jimmy Zhening Luo'
   CompanyName           = 'Jimmy Zhening Luo'
   Copyright             = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
@@ -10,12 +10,9 @@
   PowerShellHostName    = 'ConsoleHost'
   PowerShellHostVersion = '7.5'
   FunctionsToExport     = @(
-    'Clear-Line'
     'Remove-Directory'
   )
   CmdletsToExport       = @()
   VariablesToExport     = @()
-  AliasesToExport       = @(
-    'cl'
-  )
+  AliasesToExport       = @()
 }
