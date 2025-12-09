@@ -1,3 +1,5 @@
+using module GenericArgumentCompleter
+
 using namespace System.IO
 using namespace System.Collections
 using namespace System.Collections.Generic
@@ -75,7 +77,7 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
   }
 }
 
-class PathCompleter : IArgumentCompleter {
+class PathCompleter : GenericCompleterBase, IArgumentCompleter {
   [string] $Root
   [string] $Type
   [bool] $Flat
@@ -114,7 +116,6 @@ class PathCompleter : IArgumentCompleter {
     $currentText = $wordToComplete ? $wordToComplete -match "^'(?<CurrentText>.*)'$" ? $Matches.CurrentText -replace "''", "'" : $wordToComplete : ''
     $currentPathText = $currentText -replace '[\\\/]', '\'
     $currentDirectoryText = ''
-    $resultList = [List[CompletionResult]]::new()
 
     if ($currentPathText) {
       if ($currentPathText.EndsWith('\')) {
@@ -168,31 +169,20 @@ class PathCompleter : IArgumentCompleter {
         ForEach-Object { $PSItem + '\' }
     }
 
-    $items = @()
+    $items = [List[string]]::new()
 
     if ($directories) {
-      $items += $directories
+      $items.AddRange([List[string]]$directories)
     }
     if ($files) {
-      $items += $files
+      $items.AddRange([List[string]]$files)
     }
 
     if ($separator -ne '\') {
       $items = $items -replace '(?>[\\]+)', '/'
     }
 
-    foreach ($item in $items) {
-      $string = [CodeGeneration]::EscapeSingleQuotedStringContent($item)
-      $completion = $string -match '\s' ? "'" + $string + "'" : $string
-
-      $resultList.Add(
-        [CompletionResult]::new(
-          $completion
-        )
-      )
-    }
-
-    return $resultList
+    return [PathCompleter]::CreateCompletion($items)
   }
 }
 
