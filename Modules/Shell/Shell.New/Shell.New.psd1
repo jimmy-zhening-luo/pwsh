@@ -23,8 +23,4 @@
     'mj'
   )
   ModuleList            = @()
-  FileList              = @(
-    'Shell.New.psd1'
-    'Shell.New.psm1'
-  )
 }

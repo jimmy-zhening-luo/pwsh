@@ -31,8 +31,4 @@
     'wgr'
   )
   ModuleList            = @()
-  FileList              = @(
-    'WindowsSystem.App.psd1'
-    'WindowsSystem.App.psm1'
-  )
 }

@@ -46,8 +46,4 @@
     'nt'
   )
   ModuleList            = @()
-  FileList              = @(
-    'Node.psd1'
-    'Node.psm1'
-  )
 }

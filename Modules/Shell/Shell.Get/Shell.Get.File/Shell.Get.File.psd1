@@ -30,8 +30,4 @@
     'p/'
   )
   ModuleList            = @()
-  FileList              = @(
-    'Shell.Get.File.psd1'
-    'Shell.Get.File.psm1'
-  )
 }

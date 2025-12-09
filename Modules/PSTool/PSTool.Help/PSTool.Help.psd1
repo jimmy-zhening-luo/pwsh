@@ -24,9 +24,4 @@
     'galc'
   )
   ModuleList            = @()
-  FileList              = @(
-    'PSTool.Help.psd1'
-    'PSTool.Help.psm1'
-    'PSHelp.psd1'
-  )
 }

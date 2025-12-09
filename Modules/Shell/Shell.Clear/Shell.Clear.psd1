@@ -21,8 +21,4 @@
     'cl'
   )
   ModuleList            = @()
-  FileList              = @(
-    'Shell.Clear.psd1'
-    'Shell.Clear.psm1'
-  )
 }

@@ -21,8 +21,4 @@
     'sandbox'
   )
   ModuleList            = @()
-  FileList              = @(
-    'Sandbox.psd1'
-    'Sandbox.psm1'
-  )
 }

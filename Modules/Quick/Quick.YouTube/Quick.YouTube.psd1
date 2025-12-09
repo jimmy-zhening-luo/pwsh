@@ -28,8 +28,4 @@
     'ytc'
   )
   ModuleList            = @()
-  FileList              = @(
-    'Quick.YouTube.psd1'
-    'Quick.YouTube.psm1'
-  )
 }

@@ -173,28 +173,4 @@
       GUID          = '1e45c553-ea48-41c2-a7fc-89b5c36f30b1'
     }
   )
-  FileList              = @(
-    'Shell.psd1'
-    'Shell.psm1'
-    'Shell.New\Shell.New.psd1'
-    'Shell.New\Shell.New.psm1'
-    'Shell.Clear\Shell.Clear.psd1'
-    'Shell.Clear\Shell.Clear.psm1'
-    'Shell.Get\Shell.Get.psd1'
-    'Shell.Get\Shell.Get.psm1'
-    'Shell.Get\Shell.Get.Directory\Shell.Get.Directory.psd1'
-    'Shell.Get\Shell.Get.Directory\Shell.Get.Directory.psm1'
-    'Shell.Get\Shell.Get.File\Shell.Get.File.psd1'
-    'Shell.Get\Shell.Get.File\Shell.Get.File.psm1'
-    'Shell.Set\Shell.Set.psd1'
-    'Shell.Set\Shell.Set.Directory\Shell.Set.Directory.psd1'
-    'Shell.Set\Shell.Set.Directory\Shell.Set.Directory.psm1'
-    'Shell.Invoke\Shell.Invoke.psd1'
-    'Shell.Invoke\Shell.Invoke.Directory\Shell.Invoke.Directory.psd1'
-    'Shell.Invoke\Shell.Invoke.Directory\Shell.Invoke.Directory.psm1'
-    'Shell.Invoke\Shell.Invoke.Workspace\Shell.Invoke.Workspace.psd1'
-    'Shell.Invoke\Shell.Invoke.Workspace\Shell.Invoke.Workspace.psm1'
-    'Shell.Browse\Shell.Browse.psd1'
-    'Shell.Browse\Shell.Browse.psm1'
-  )
 }

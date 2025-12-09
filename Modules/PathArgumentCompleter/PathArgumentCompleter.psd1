@@ -16,8 +16,4 @@
   VariablesToExport     = @()
   AliasesToExport       = @()
   ModuleList            = @()
-  FileList              = @(
-    'PathArgumentCompleter.psd1'
-    'PathArgumentCompleter.psm1'
-  )
 }

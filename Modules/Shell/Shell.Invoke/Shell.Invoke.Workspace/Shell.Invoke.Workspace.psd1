@@ -30,8 +30,4 @@
     'i/'
   )
   ModuleList            = @()
-  FileList              = @(
-    'Shell.Invoke.Workspace.psd1'
-    'Shell.Invoke.Workspace.psm1'
-  )
 }

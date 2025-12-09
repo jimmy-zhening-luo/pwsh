@@ -53,10 +53,4 @@
       GUID          = '73ded6ab-d0a5-4d7c-a014-fa8b32a7714b'
     }
   )
-  FileList              = @(
-    'WindowsSystem.psd1'
-    'WindowsSystem.psm1'
-    'WindowsSystem.App\WindowsSystem.App.psd1'
-    'WindowsSystem.App\WindowsSystem.App.psm1'
-  )
 }
