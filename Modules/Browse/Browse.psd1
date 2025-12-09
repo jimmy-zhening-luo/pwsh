@@ -13,7 +13,7 @@
     @{
       ModuleName    = 'GenericArgumentCompleter'
       ModuleVersion = '3.0.0'
-      GUID          = '58b26bc4-05a1-440d-a44b-afef0a8840fe'
+      GUID          = 'ce7965e6-f9ef-42fb-aa4b-80eb542833de'
     }
   )
   FunctionsToExport     = @(
