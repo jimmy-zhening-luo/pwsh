@@ -2,21 +2,23 @@ function Format-Path {
   [OutputType([string])]
   param(
     [string]$Path,
-    [switch]$Leading,
+    [string]$Separator,
+    [switch]$LeadingRelative,
     [switch]$Trailing
   )
 
-  $TrimmedPath = $Path -replace '[\\\/]+', '\'
+  $AlignedPath = $Path -replace '[\\\/]', '\'
+  $TrimmedPath = $AlignedPath -replace '(?<!^)(?>\\+)', '\'
 
-  if ($Leading) {
-    $TrimmedPath = $Path -replace '^(?>\.\\+)', ''
+  if ($LeadingRelative) {
+    $TrimmedPath = $TrimmedPath -replace '^(?>\.(?>\\+))', ''
   }
 
   if ($Trailing) {
-    $TrimmedPath = $Path -replace '\\+$', ''
+    $TrimmedPath = $TrimmedPath -replace '(?>\\+)$', ''
   }
 
-  $TrimmedPath
+  $Separator -and $Separator -ne '\' ? $TrimmedPath -replace '\\', $Separator : $TrimmedPath
 }
 
 function Trace-RelativePath {
@@ -26,7 +28,7 @@ function Trace-RelativePath {
     [string]$Location
   )
 
-  [System.IO.Path]::GetRelativePath($Path, $Location) -match '^[.\\]*$'
+  [System.IO.Path]::GetRelativePath($Path, $Location) -match '^(?>[.\\]*)$'
 }
 
 function Merge-RelativePath {
@@ -49,7 +51,7 @@ function Test-Item {
     [switch]$RequireSubpath
   )
 
-  $Path = Shell\Format-Path -Path $Path -Leading
+  $Path = Shell\Format-Path -Path $Path -LeadingRelative
   $Location = Shell\Format-Path -Path $Location
 
   if ([System.IO.Path]::IsPathRooted($Path)) {
@@ -70,7 +72,7 @@ function Test-Item {
     }
   }
   elseif ($Path -match '^~(?=\\|$)') {
-    $Path = $Path -replace '^~\\*', ''
+    $Path = $Path -replace '^(~(?>\\*))', ''
 
     if ($Location) {
       $Relative = @{
@@ -144,7 +146,7 @@ function Resolve-Item {
     throw "Invalid path '$Path': " + ($PSBoundParameters | Microsoft.PowerShell.Utility\ConvertTo-Json -EnumsAsStrings)
   }
 
-  $Path = Shell\Format-Path -Path $Path -Leading
+  $Path = Shell\Format-Path -Path $Path -LeadingRelative
   $Location = Shell\Format-Path -Path $Location
 
   if ([System.IO.Path]::IsPathRooted($Path)) {
@@ -156,7 +158,7 @@ function Resolve-Item {
     }
   }
   elseif ($Path -match '^~(?=\\|$)') {
-    $Path = $Path -replace '^~\\*', ''
+    $Path = $Path -replace '^(?>~(?>\\*))', ''
 
     if ($Location) {
       $Path = Shell\Merge-RelativePath -Path (
@@ -338,7 +340,7 @@ class PathCompleter : System.Management.Automation.IArgumentCompleter {
     }
 
     if ($separator -ne '\') {
-      $items = $items -replace '[\\]+', '/'
+      $items = $items -replace '(?>[\\]+)', '/'
     }
 
     foreach ($item in $items) {
