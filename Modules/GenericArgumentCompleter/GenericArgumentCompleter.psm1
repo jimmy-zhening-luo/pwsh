@@ -22,8 +22,7 @@ class GenericCompleterBase {
 
       if ($completions.Count -eq 0 -or $completions.Count -eq 1 -and $completions[0] -eq $currentArgumentText) {
         $surroundingCompletions = $values |
-          Where-Object { $PSItem -like "*$currentArgumentText*" } |
-          Where-Object { $PSItem -ne $currentArgumentText }
+          Where-Object { $PSItem -like "*$currentArgumentText*" -and $PSItem -ne $currentArgumentText }
 
         if ($surroundingCompletions) {
           $completions.AddRange([List[string]]$surroundingCompletions)
