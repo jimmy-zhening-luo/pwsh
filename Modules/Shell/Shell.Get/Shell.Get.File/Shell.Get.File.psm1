@@ -1,4 +1,4 @@
-New-Alias p Shell\Get-File
+New-Alias p Get-File
 function Get-File {
   [OutputType([string[]])]
   param(
@@ -47,7 +47,7 @@ function Get-File {
   }
 }
 
-New-Alias p. Shell\Get-FileSibling
+New-Alias p. Get-FileSibling
 function Get-FileSibling {
   [OutputType([string[]])]
   param (
@@ -59,10 +59,10 @@ function Get-FileSibling {
   $Location = @{
     Location = $PWD | Split-Path
   }
-  Shell\Get-File @PSBoundParameters @Location @args
+  Get-File @PSBoundParameters @Location @args
 }
 
-New-Alias p.. Shell\Get-FileRelative
+New-Alias p.. Get-FileRelative
 function Get-FileRelative {
   [OutputType([string[]])]
   param (
@@ -74,10 +74,10 @@ function Get-FileRelative {
   $Location = @{
     Location = $PWD | Split-Path | Split-Path
   }
-  Shell\Get-File @PSBoundParameters @Location @args
+  Get-File @PSBoundParameters @Location @args
 }
 
-New-Alias p~ Shell\Get-FileHome
+New-Alias p~ Get-FileHome
 function Get-FileHome {
   [OutputType([string[]])]
   param (
@@ -89,10 +89,10 @@ function Get-FileHome {
   $Location = @{
     Location = $HOME
   }
-  Shell\Get-File @PSBoundParameters @Location @args
+  Get-File @PSBoundParameters @Location @args
 }
 
-New-Alias pc Shell\Get-FileCode
+New-Alias pc Get-FileCode
 function Get-FileCode {
   [OutputType([string[]])]
   param (
@@ -104,10 +104,10 @@ function Get-FileCode {
   $Location = @{
     Location = "$HOME\code"
   }
-  Shell\Get-File @PSBoundParameters @Location @args
+  Get-File @PSBoundParameters @Location @args
 }
 
-New-Alias p/ Shell\Get-FileDrive
+New-Alias p/ Get-FileDrive
 function Get-FileDrive {
   [OutputType([string[]])]
   param (
@@ -119,5 +119,5 @@ function Get-FileDrive {
   $Location = @{
     Location = $PWD.Drive.Root
   }
-  Shell\Get-File @PSBoundParameters @Location @args
+  Get-File @PSBoundParameters @Location @args
 }

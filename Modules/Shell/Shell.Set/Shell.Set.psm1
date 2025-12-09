@@ -1,4 +1,4 @@
-New-Alias c Shell\Set-Directory
+New-Alias c Set-Directory
 function Set-Directory {
   param (
     [PathCompletions('.', 'Directory')]
@@ -13,7 +13,7 @@ function Set-Directory {
   }
 }
 
-New-Alias c. Shell\Set-DirectorySibling
+New-Alias c. Set-DirectorySibling
 function Set-DirectorySibling {
   param (
     [PathCompletions('..', 'Directory')]
@@ -26,7 +26,7 @@ function Set-DirectorySibling {
   Set-Location @FullPath @args
 }
 
-New-Alias c.. Shell\Set-DirectoryRelative
+New-Alias c.. Set-DirectoryRelative
 function Set-DirectoryRelative {
   param (
     [PathCompletions('..\..', 'Directory')]
@@ -39,7 +39,7 @@ function Set-DirectoryRelative {
   Set-Location @FullPath @args
 }
 
-New-Alias c~ Shell\Set-DirectoryHome
+New-Alias c~ Set-DirectoryHome
 function Set-DirectoryHome {
   param (
     [PathCompletions('~', 'Directory')]
@@ -52,7 +52,7 @@ function Set-DirectoryHome {
   Set-Location @FullPath @args
 }
 
-New-Alias cc Shell\Set-DirectoryCode
+New-Alias cc Set-DirectoryCode
 function Set-DirectoryCode {
   param (
     [PathCompletions('~\code', 'Directory')]
@@ -65,7 +65,7 @@ function Set-DirectoryCode {
   Set-Location @FullPath @args
 }
 
-New-Alias c/ Shell\Set-Drive
+New-Alias c/ Set-Drive
 function Set-Drive {
   param (
     [PathCompletions('\', 'Directory')]
@@ -78,7 +78,7 @@ function Set-Drive {
   Set-Location @FullPath @args
 }
 
-New-Alias d/ Shell\Set-DriveD
+New-Alias d/ Set-DriveD
 function Set-DriveD {
   param (
     [PathCompletions('D:', 'Directory')]

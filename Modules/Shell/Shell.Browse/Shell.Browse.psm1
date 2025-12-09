@@ -1,4 +1,4 @@
-New-Alias tn Shell\Test-Host
+New-Alias tn Test-Host
 <#
 .SYNOPSIS
 Determine if a host is reachable.
@@ -81,7 +81,7 @@ function Test-Host {
   }
 }
 
-New-Alias tu Shell\Test-Url
+New-Alias tu Test-Url
 <#
 .SYNOPSIS
 Determine if an URL is reachable.
@@ -122,8 +122,8 @@ function Test-Url {
   $Status -ge 200 -and $Status -lt 300
 }
 
-New-Alias go Shell\Open-Url
-New-Alias open Shell\Open-Url
+New-Alias go Open-Url
+New-Alias open Open-Url
 <#
 .SYNOPSIS
 Open a file path or URL in Google Chrome.

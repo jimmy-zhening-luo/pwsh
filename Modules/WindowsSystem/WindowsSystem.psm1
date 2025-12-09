@@ -12,7 +12,7 @@ function Invoke-CommandPrompt {
   & cmd.exe /c @args
 }
 
-New-Alias wu WindowsSystem\Update-Windows
+New-Alias wu Update-Windows
 <#
 .SYNOPSIS
 Opens the 'Settings' app to the 'Windows Update' page.
@@ -33,7 +33,7 @@ function Update-Windows {
   Start-Process @WindowsUpdate
 }
 
-New-Alias path WindowsSystem\Edit-Path
+New-Alias path Edit-Path
 <#
 .SYNOPSIS
 Opens the 'Environment Variables' dialog as a standalone window.
@@ -67,7 +67,7 @@ function Edit-Path {
 New-Alias sesv Set-Service
 New-Alias remsv Remove-Service
 
-New-Alias tkill WindowsSystem\Stop-Task
+New-Alias tkill Stop-Task
 function Stop-Task {
   [CmdletBinding(
     SupportsShouldProcess,

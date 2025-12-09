@@ -1,4 +1,4 @@
-New-Alias e Shell\Invoke-Directory
+New-Alias e Invoke-Directory
 function Invoke-Directory {
   [OutputType([void], [string[]])]
   param(
@@ -11,7 +11,7 @@ function Invoke-Directory {
   }
 
   if ($env:SSH_CLIENT) {
-    return Shell\Get-File @PSBoundParameters
+    return Get-File @PSBoundParameters
   }
 
   $Container = @{
@@ -22,7 +22,7 @@ function Invoke-Directory {
   }
 }
 
-New-Alias e. Shell\Invoke-DirectorySibling
+New-Alias e. Invoke-DirectorySibling
 function Invoke-DirectorySibling {
   param (
     [PathCompletions('..')]
@@ -32,10 +32,10 @@ function Invoke-DirectorySibling {
   $FullPath = @{
     Path = Join-Path ($PWD | Split-Path) $Path
   }
-  Shell\Invoke-Directory @FullPath @args
+  Invoke-Directory @FullPath @args
 }
 
-New-Alias e.. Shell\Invoke-DirectoryRelative
+New-Alias e.. Invoke-DirectoryRelative
 function Invoke-DirectoryRelative {
   param (
     [PathCompletions('..\..')]
@@ -45,10 +45,10 @@ function Invoke-DirectoryRelative {
   $FullPath = @{
     Path = Join-Path ($PWD | Split-Path | Split-Path) $Path
   }
-  Shell\Invoke-Directory @FullPath @args
+  Invoke-Directory @FullPath @args
 }
 
-New-Alias e~ Shell\Invoke-DirectoryHome
+New-Alias e~ Invoke-DirectoryHome
 function Invoke-DirectoryHome {
   param (
     [PathCompletions('~')]
@@ -58,10 +58,10 @@ function Invoke-DirectoryHome {
   $FullPath = @{
     Path = Join-Path $HOME $Path
   }
-  Shell\Invoke-Directory @FullPath @args
+  Invoke-Directory @FullPath @args
 }
 
-New-Alias ec Shell\Invoke-DirectoryCode
+New-Alias ec Invoke-DirectoryCode
 function Invoke-DirectoryCode {
   param (
     [PathCompletions('~\code')]
@@ -71,10 +71,10 @@ function Invoke-DirectoryCode {
   $FullPath = @{
     Path = Join-Path $HOME\code $Path
   }
-  Shell\Invoke-Directory @FullPath @args
+  Invoke-Directory @FullPath @args
 }
 
-New-Alias e/ Shell\Invoke-DirectoryDrive
+New-Alias e/ Invoke-DirectoryDrive
 function Invoke-DirectoryDrive {
   param (
     [PathCompletions('\')]
@@ -84,5 +84,5 @@ function Invoke-DirectoryDrive {
   $FullPath = @{
     Path = Join-Path $PWD.Drive.Root $Path
   }
-  Shell\Invoke-Directory @FullPath @args
+  Invoke-Directory @FullPath @args
 }

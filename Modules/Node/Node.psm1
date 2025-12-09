@@ -42,7 +42,7 @@ function Resolve-NodePackageDirectory {
   $IsNodePackage = @{
     Path = $Path
   }
-  if (Node\Test-NodePackageDirectory @IsNodePackage) {
+  if (Test-NodePackageDirectory @IsNodePackage) {
     $Package = ($Path ? (Resolve-Path $Path) : $PWD).Path
 
     $OmitPrefix ? $Package : "--prefix=$Package"
@@ -52,7 +52,7 @@ function Resolve-NodePackageDirectory {
   }
 }
 
-New-Alias no Node\Invoke-Node
+New-Alias no Invoke-Node
 <#
 .SYNOPSIS
 Run Node.
@@ -65,7 +65,7 @@ function Invoke-Node {
   & node.exe @args
 }
 
-New-Alias n Node\Invoke-NodePackage
+New-Alias n Invoke-NodePackage
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to run a command in a Node package.
@@ -80,7 +80,7 @@ function Invoke-NodePackage {
   & npm.ps1 @args
 }
 
-New-Alias nx Node\Invoke-NodeExecutable
+New-Alias nx Invoke-NodeExecutable
 <#
 .SYNOPSIS
 Use 'npx' to run a command from a local or remote npm module.
@@ -93,7 +93,7 @@ function Invoke-NodeExecutable {
   & npx.ps1 @args
 }
 
-New-Alias ncc Node\Clear-NodeModuleCache
+New-Alias ncc Clear-NodeModuleCache
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to clear the global Node module cache.
@@ -106,7 +106,7 @@ function Clear-NodeModuleCache {
   & npm.ps1 cache clean --force @args
 }
 
-New-Alias npo Node\Compare-NodeModule
+New-Alias npo Compare-NodeModule
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to check for outdated packages in a Node package.
@@ -131,7 +131,7 @@ function Compare-NodeModule {
     $NodeArguments = , $Path + $NodeArguments
     $PSBoundParameters.Path = ''
   }
-  $Package = Node\Resolve-NodePackageDirectory @PSBoundParameters
+  $Package = Resolve-NodePackageDirectory @PSBoundParameters
 
   if ($Package) {
     $NodeArguments = , $Package + $NodeArguments
@@ -167,7 +167,7 @@ function Step-NodePackageVersion {
     $NodeArguments = , $Path + $NodeArguments
     $PSBoundParameters.Path = ''
   }
-  $Package = Node\Resolve-NodePackageDirectory @PSBoundParameters
+  $Package = Resolve-NodePackageDirectory @PSBoundParameters
 
   if ($Package) {
     $NodeArguments = , $Package + $NodeArguments
@@ -211,7 +211,7 @@ function Step-NodePackageVersion {
   & npm.ps1 version $Version @NodeArguments
 }
 
-New-Alias nr Node\Invoke-NodePackageScript
+New-Alias nr Invoke-NodePackageScript
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to run a script defined in a Node package's 'package.json'.
@@ -242,7 +242,7 @@ function Invoke-NodePackageScript {
     $NodeArguments = , $Path + $NodeArguments
     $PSBoundParameters.Path = ''
   }
-  $Package = Node\Resolve-NodePackageDirectory @PSBoundParameters
+  $Package = Resolve-NodePackageDirectory @PSBoundParameters
 
   if ($Package) {
     $NodeArguments = , $Package + $NodeArguments
@@ -251,7 +251,7 @@ function Invoke-NodePackageScript {
   & npm.ps1 run $Script @NodeArguments
 }
 
-New-Alias nt Node\Test-NodePackage
+New-Alias nt Test-NodePackage
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to run the 'test' script defined in a Node package's 'package.json'.
@@ -276,7 +276,7 @@ function Test-NodePackage {
     $NodeArguments = , $Path + $NodeArguments
     $PSBoundParameters.Path = ''
   }
-  $Package = Node\Resolve-NodePackageDirectory @PSBoundParameters
+  $Package = Resolve-NodePackageDirectory @PSBoundParameters
 
   if ($Package) {
     $NodeArguments = , $Package + $NodeArguments

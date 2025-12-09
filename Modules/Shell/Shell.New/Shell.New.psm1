@@ -1,6 +1,6 @@
 New-Alias touch New-Item
 
-New-Alias mk Shell\New-Directory
+New-Alias mk New-Directory
 <#
 .FORWARDHELPTARGETNAME New-Item
 .FORWARDHELPCATEGORY Cmdlet
@@ -81,7 +81,7 @@ function New-Directory {
   }
 }
 
-New-Alias mj Shell\New-Junction
+New-Alias mj New-Junction
 <#
 .FORWARDHELPTARGETNAME New-Item
 .FORWARDHELPCATEGORY Cmdlet

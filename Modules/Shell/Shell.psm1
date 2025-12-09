@@ -1,4 +1,4 @@
-New-Alias cl Shell\Clear-Line
+New-Alias cl Clear-Line
 function Clear-Line {
   [OutputType([void])]
   param(
@@ -67,8 +67,8 @@ function Test-Item {
     [switch]$RequireSubpath
   )
 
-  $Path = Shell\Format-Path -Path $Path -LeadingRelative
-  $Location = Shell\Format-Path -Path $Location
+  $Path = Format-Path -Path $Path -LeadingRelative
+  $Location = Format-Path -Path $Location
 
   if ([System.IO.Path]::IsPathRooted($Path)) {
     if ($Location) {
@@ -76,8 +76,8 @@ function Test-Item {
         Path     = $Path
         Location = $Location
       }
-      if (Shell\Trace-RelativePath @Relative) {
-        $Path = Shell\Merge-RelativePath @Relative
+      if (Trace-RelativePath @Relative) {
+        $Path = Merge-RelativePath @Relative
       }
       else {
         return $False
@@ -95,8 +95,8 @@ function Test-Item {
         Path     = Join-Path $HOME $Path
         Location = $Location
       }
-      if (Shell\Trace-RelativePath @Relative) {
-        $Path = Shell\Merge-RelativePath @Relative
+      if (Trace-RelativePath @Relative) {
+        $Path = Merge-RelativePath @Relative
       }
       else {
         return $False
@@ -162,12 +162,12 @@ function Resolve-Item {
     throw "Invalid path '$Path': " + ($PSBoundParameters | ConvertTo-Json -EnumsAsStrings)
   }
 
-  $Path = Shell\Format-Path -Path $Path -LeadingRelative
-  $Location = Shell\Format-Path -Path $Location
+  $Path = Format-Path -Path $Path -LeadingRelative
+  $Location = Format-Path -Path $Location
 
   if ([System.IO.Path]::IsPathRooted($Path)) {
     if ($Location) {
-      $Path = Shell\Merge-RelativePath -Path $Path -Location $Location
+      $Path = Merge-RelativePath -Path $Path -Location $Location
     }
     else {
       $Location = [System.IO.Path]::GetPathRoot($Path)
@@ -177,7 +177,7 @@ function Resolve-Item {
     $Path = $Path -replace '^~(?>\\*)', ''
 
     if ($Location) {
-      $Path = Shell\Merge-RelativePath -Path (
+      $Path = Merge-RelativePath -Path (
         Join-Path $HOME $Path
       ) -Location $Location
     }

@@ -6,7 +6,7 @@ New-Alias count Measure-Object
 New-Alias z Sort-Object
 New-Alias format Format-Table
 
-New-Alias oc PSTool\Invoke-PSHistory
+New-Alias oc Invoke-PSHistory
 function Invoke-PSHistory {
   [OutputType([void])]
   param()
@@ -19,7 +19,7 @@ function Invoke-PSHistory {
   Shell\Invoke-Workspace @History
 }
 
-New-Alias op PSTool\Invoke-PSProfile
+New-Alias op Invoke-PSProfile
 function Invoke-PSProfile {
   [OutputType([void])]
   param()
@@ -31,14 +31,14 @@ function Invoke-PSProfile {
   Shell\Invoke-WorkspaceCode @ProfileRepository @args
 }
 
-New-Alias up PSTool\Update-PSProfile
+New-Alias up Update-PSProfile
 function Update-PSProfile {
   $ProfileRepository = @{
     Path = Resolve-Path -Path $HOME\code\pwsh
   }
   Git\Get-GitRepository @ProfileRepository
 
-  PSTool\Update-PSLinter
+  Update-PSLinter
 }
 
 function Update-PSLinter {
@@ -58,7 +58,7 @@ function Update-PSLinter {
   }
 }
 
-New-Alias mc PSTool\Measure-PSProfile
+New-Alias mc Measure-PSProfile
 function Measure-PSProfile {
   [OutputType([string])]
   [OutputType([int], ParameterSetName = 'Number')]

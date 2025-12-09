@@ -1,4 +1,4 @@
-New-Alias l Shell\Get-Directory
+New-Alias l Get-Directory
 function Get-Directory {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param (
@@ -14,7 +14,7 @@ function Get-Directory {
   }
 }
 
-New-Alias l. Shell\Get-DirectorySibling
+New-Alias l. Get-DirectorySibling
 function Get-DirectorySibling {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param (
@@ -28,7 +28,7 @@ function Get-DirectorySibling {
   Get-ChildItem @FullPath @args
 }
 
-New-Alias l.. Shell\Get-DirectoryRelative
+New-Alias l.. Get-DirectoryRelative
 function Get-DirectoryRelative {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param (
@@ -42,7 +42,7 @@ function Get-DirectoryRelative {
   Get-ChildItem @FullPath @args
 }
 
-New-Alias l~ Shell\Get-DirectoryHome
+New-Alias l~ Get-DirectoryHome
 function Get-DirectoryHome {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param (
@@ -56,7 +56,7 @@ function Get-DirectoryHome {
   Get-ChildItem @FullPath @args
 }
 
-New-Alias lc Shell\Get-DirectoryCode
+New-Alias lc Get-DirectoryCode
 function Get-DirectoryCode {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param (
@@ -70,7 +70,7 @@ function Get-DirectoryCode {
   Get-ChildItem @FullPath @args
 }
 
-New-Alias l/ Shell\Get-DirectoryDrive
+New-Alias l/ Get-DirectoryDrive
 function Get-DirectoryDrive {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param (

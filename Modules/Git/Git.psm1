@@ -75,7 +75,7 @@ For every verb except for 'clone', 'config', and 'init', the function will throw
 .LINK
 https://git-scm.com/docs
 #>
-New-Alias g Git\Invoke-GitRepository
+New-Alias g Invoke-GitRepository
 function Invoke-GitRepository {
   param(
     [GenericCompletions(
@@ -113,11 +113,11 @@ function Invoke-GitRepository {
       else {
         if (
           $Path -and -not (
-            $PWD | Git\Resolve-GitRepository
+            $PWD | Resolve-GitRepository
           ) -and -not (
-            $Path | Git\Resolve-GitRepository
+            $Path | Resolve-GitRepository
           ) -and (
-            $Verb | Git\Resolve-GitRepository
+            $Verb | Resolve-GitRepository
           )
         ) {
           $GitArguments = , $Path + $GitArguments
@@ -144,14 +144,14 @@ function Invoke-GitRepository {
     Path = $Path
     New  = $Verb -in $NEWABLE_GIT_VERB
   }
-  $Repository = Git\Resolve-GitRepository @Resolve
+  $Repository = Resolve-GitRepository @Resolve
 
   if (-not $Repository) {
     if ($Path) {
       $GitArguments = , $Path + $GitArguments
       $Resolve.Path = $PWD
 
-      $Repository = Git\Resolve-GitRepository @Resolve
+      $Repository = Resolve-GitRepository @Resolve
     }
 
     if (-not $Repository) {
@@ -179,7 +179,7 @@ function Invoke-GitRepository {
   }
 }
 
-New-Alias gg Git\Measure-GitRepository
+New-Alias gg Measure-GitRepository
 <#
 .SYNOPSIS
 Use Git to get the status of a local repository.
@@ -200,10 +200,10 @@ function Measure-GitRepository {
   $Status = @{
     Verb = 'status'
   }
-  Git\Invoke-GitRepository @Status @PSBoundParameters @args
+  Invoke-GitRepository @Status @PSBoundParameters @args
 }
 
-New-Alias gitcl Git\Import-GitRepository
+New-Alias gitcl Import-GitRepository
 <#
 .SYNOPSIS
 Use Git to clone a repository.
@@ -247,7 +247,7 @@ function Import-GitRepository {
     Path  = $Path
     Throw = $Throw
   }
-  Git\Invoke-GitRepository @Clone @GitCommandArguments
+  Invoke-GitRepository @Clone @GitCommandArguments
 }
 
 <#
@@ -270,10 +270,10 @@ function Get-GitRepository {
   $Pull = @{
     Verb = 'pull'
   }
-  Git\Invoke-GitRepository @Pull @PSBoundParameters @args
+  Invoke-GitRepository @Pull @PSBoundParameters @args
 }
 
-New-Alias gpp Git\Get-ChildGitRepository
+New-Alias gpp Get-ChildGitRepository
 <#
 .SYNOPSIS
 Use Git to pull changes for all repositories in the top level of %USERPROFILE%\code'.
@@ -289,17 +289,17 @@ function Get-ChildGitRepository {
   }
   $Repositories = Get-ChildItem @Code |
     Select-Object -ExpandProperty FullName |
-    Git\Resolve-GitRepository
+    Resolve-GitRepository
   $Count = $Repositories.Count
 
   foreach ($Repository in $Repositories) {
-    Git\Get-GitRepository -Path $Repository @args
+    Get-GitRepository -Path $Repository @args
   }
 
   "`nPulled $Count repositor" + ($Count -eq 1 ? 'y' : 'ies')
 }
 
-New-Alias ga Git\Add-GitRepository
+New-Alias ga Add-GitRepository
 <#
 .SYNOPSIS
 Use Git to stage all changes in a repository.
@@ -334,9 +334,9 @@ function Add-GitRepository {
 
   if (
     $Path -and (
-      $PWD | Git\Resolve-GitRepository
+      $PWD | Resolve-GitRepository
     ) -and -not (
-      $Path | Git\Resolve-GitRepository
+      $Path | Resolve-GitRepository
     )
   ) {
     if ($Name) {
@@ -362,7 +362,7 @@ function Add-GitRepository {
     Path  = $Path
     Throw = $Throw
   }
-  Git\Invoke-GitRepository @Add @GitCommandArguments
+  Invoke-GitRepository @Add @GitCommandArguments
 }
 
 <#
@@ -397,9 +397,9 @@ function Write-GitRepository {
 
   if (
     $Path -and (
-      $PWD | Git\Resolve-GitRepository
+      $PWD | Resolve-GitRepository
     ) -and -not (
-      $Path | Git\Resolve-GitRepository
+      $Path | Resolve-GitRepository
     )
   ) {
     if ($Path -match $GIT_ARGUMENT -and -not $Messages) {
@@ -430,17 +430,17 @@ function Write-GitRepository {
     Throw = $Throw
   }
   if (-not $Staged) {
-    Git\Add-GitRepository @GitParameters -Throw
+    Add-GitRepository @GitParameters -Throw
   }
 
   $GitCommitArguments = '-m', ($Messages -join ' ') + $GitCommitArguments
   $Commit = @{
     Verb = 'commit'
   }
-  Git\Invoke-GitRepository @Commit @GitParameters @GitCommitArguments
+  Invoke-GitRepository @Commit @GitParameters @GitCommitArguments
 }
 
-New-Alias gs Git\Push-GitRepository
+New-Alias gs Push-GitRepository
 <#
 .SYNOPSIS
 Use Git to push changes to a repository.
@@ -462,24 +462,24 @@ function Push-GitRepository {
 
   if (
     $Path -and (
-      $PWD | Git\Resolve-GitRepository
+      $PWD | Resolve-GitRepository
     ) -and -not (
-      $Path | Git\Resolve-GitRepository
+      $Path | Resolve-GitRepository
     )
   ) {
     $GitPushArguments = , $Path + $GitPushArguments
     $PSBoundParameters.Path = ''
   }
 
-  Git\Get-GitRepository @PSBoundParameters -Throw
+  Get-GitRepository @PSBoundParameters -Throw
 
   $Push = @{
     Verb = 'push'
   }
-  Git\Invoke-GitRepository @Push @PSBoundParameters @GitPushArguments
+  Invoke-GitRepository @Push @PSBoundParameters @GitPushArguments
 }
 
-New-Alias gr Git\Reset-GitRepository
+New-Alias gr Reset-GitRepository
 <#
 .SYNOPSIS
 Use Git to undo changes in a repository.
@@ -520,9 +520,9 @@ function Reset-GitRepository {
 
   if (
     $Path -and (
-      $PWD | Git\Resolve-GitRepository
+      $PWD | Resolve-GitRepository
     ) -and -not (
-      $Path | Git\Resolve-GitRepository
+      $Path | Resolve-GitRepository
     )
   ) {
     if (
@@ -544,7 +544,7 @@ function Reset-GitRepository {
     Path  = $Path
     Throw = $Throw
   }
-  Git\Add-GitRepository @GitParameters -Throw
+  Add-GitRepository @GitParameters -Throw
 
   if ($Tree) {
     $GitResetArguments = , $Tree + $GitResetArguments
@@ -553,10 +553,10 @@ function Reset-GitRepository {
   $Reset = @{
     Verb = 'reset'
   }
-  Git\Invoke-GitRepository @Reset @GitParameters @GitResetArguments
+  Invoke-GitRepository @Reset @GitParameters @GitResetArguments
 }
 
-New-Alias grp Git\Restore-GitRepository
+New-Alias grp Restore-GitRepository
 <#
 .SYNOPSIS
 Use Git to restore a repository to its previous state.
@@ -578,15 +578,15 @@ function Restore-GitRepository {
 
   if (
     $Path -and (
-      $PWD | Git\Resolve-GitRepository
+      $PWD | Resolve-GitRepository
     ) -and -not (
-      $Path | Git\Resolve-GitRepository
+      $Path | Resolve-GitRepository
     )
   ) {
     $GitResetArguments = , $Path + $GitResetArguments
     $PSBoundParameters.Path = ''
   }
 
-  Git\Reset-GitRepository @PSBoundParameters -Throw @GitResetArguments
-  Git\Get-GitRepository @PSBoundParameters
+  Reset-GitRepository @PSBoundParameters -Throw @GitResetArguments
+  Get-GitRepository @PSBoundParameters
 }

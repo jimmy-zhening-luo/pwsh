@@ -1,8 +1,8 @@
 New-Alias split Split-Path
 New-Alias hash Get-FileHash
 
-New-Alias sz Shell\Get-Size
-New-Alias size Shell\Get-Size
+New-Alias sz Get-Size
+New-Alias size Get-Size
 function Get-Size {
   [OutputType([string])]
   [OutputType([double], ParameterSetName = 'Number')]

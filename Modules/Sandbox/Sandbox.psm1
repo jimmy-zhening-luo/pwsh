@@ -1,5 +1,5 @@
-New-Alias sand Sandbox\Test-Sandbox
-New-Alias sandbox Sandbox\Test-Sandbox
+New-Alias sand Test-Sandbox
+New-Alias sandbox Test-Sandbox
 function Test-Sandbox {
   [OutputType([string[]])]
   param (

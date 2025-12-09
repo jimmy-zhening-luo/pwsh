@@ -1,4 +1,4 @@
-New-Alias guid Quick\Copy-Guid
+New-Alias guid Copy-Guid
 function Copy-Guid {
   [OutputType([string])]
   param(
@@ -20,7 +20,7 @@ function Copy-Guid {
   }
 }
 
-New-Alias hex Quick\ConvertTo-Hex
+New-Alias hex ConvertTo-Hex
 function ConvertTo-Hex {
   [OutputType([string])]
   param(

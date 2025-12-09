@@ -7,7 +7,7 @@ $CUSTOM_HELP = (
   Test-Path @CUSTOM_HELP_FILE -Type Leaf
 ) ? (Import-PowerShellDataFile @CUSTOM_HELP_FILE) : @{}
 
-New-Alias m PSTool\Get-HelpOnline
+New-Alias m Get-HelpOnline
 function Get-HelpOnline {
   [OutputType([Object])]
   param(
@@ -142,7 +142,7 @@ function Get-HelpOnline {
   }
 }
 
-New-Alias galc PSTool\Get-CommandAlias
+New-Alias galc Get-CommandAlias
 function Get-CommandAlias {
   [OutputType([System.Management.Automation.CommandInfo])]
   param(

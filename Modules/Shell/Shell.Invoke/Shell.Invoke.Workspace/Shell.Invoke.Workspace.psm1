@@ -1,4 +1,4 @@
-New-Alias i Shell\Invoke-Workspace
+New-Alias i Invoke-Workspace
 function Invoke-Workspace {
   [OutputType([void])]
   param(
@@ -80,7 +80,7 @@ function Invoke-Workspace {
   Start-Process @Process
 }
 
-New-Alias i. Shell\Invoke-WorkspaceSibling
+New-Alias i. Invoke-WorkspaceSibling
 function Invoke-WorkspaceSibling {
   [OutputType([void])]
   param (
@@ -98,10 +98,10 @@ function Invoke-WorkspaceSibling {
   $Location = @{
     Location = $PWD | Split-Path
   }
-  Shell\Invoke-Workspace @PSBoundParameters @Location @args
+  Invoke-Workspace @PSBoundParameters @Location @args
 }
 
-New-Alias i.. Shell\Invoke-WorkspaceRelative
+New-Alias i.. Invoke-WorkspaceRelative
 function Invoke-WorkspaceRelative {
   [OutputType([void])]
   param (
@@ -119,10 +119,10 @@ function Invoke-WorkspaceRelative {
   $Location = @{
     Location = $PWD | Split-Path | Split-Path
   }
-  Shell\Invoke-Workspace @PSBoundParameters @Location @args
+  Invoke-Workspace @PSBoundParameters @Location @args
 }
 
-New-Alias i~ Shell\Invoke-WorkspaceHome
+New-Alias i~ Invoke-WorkspaceHome
 function Invoke-WorkspaceHome {
   [OutputType([void])]
   param (
@@ -140,10 +140,10 @@ function Invoke-WorkspaceHome {
   $Location = @{
     Location = $HOME
   }
-  Shell\Invoke-Workspace @PSBoundParameters @Location @args
+  Invoke-Workspace @PSBoundParameters @Location @args
 }
 
-New-Alias ic Shell\Invoke-WorkspaceCode
+New-Alias ic Invoke-WorkspaceCode
 function Invoke-WorkspaceCode {
   [OutputType([void])]
   param (
@@ -161,10 +161,10 @@ function Invoke-WorkspaceCode {
   $Location = @{
     Location = "$HOME\code"
   }
-  Shell\Invoke-Workspace @PSBoundParameters @Location @args
+  Invoke-Workspace @PSBoundParameters @Location @args
 }
 
-New-Alias i/ Shell\Invoke-WorkspaceDrive
+New-Alias i/ Invoke-WorkspaceDrive
 function Invoke-WorkspaceDrive {
   [OutputType([void])]
   param (
@@ -182,5 +182,5 @@ function Invoke-WorkspaceDrive {
   $Location = @{
     Location = $PWD.Drive.Root
   }
-  Shell\Invoke-Workspace @PSBoundParameters @Location @args
+  Invoke-Workspace @PSBoundParameters @Location @args
 }

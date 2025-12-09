@@ -1,4 +1,4 @@
-New-Alias yt Quick\Get-YouTube
+New-Alias yt Get-YouTube
 <#
 .SYNOPSIS
 Use yt-dlp to download YouTube videos.
@@ -29,7 +29,7 @@ function Get-YouTube {
   }
 }
 
-New-Alias yta Quick\Get-YouTubeAudio
+New-Alias yta Get-YouTubeAudio
 <#
 .SYNOPSIS
 Use yt-dlp to extract audio from a YouTube video.
@@ -54,10 +54,10 @@ function Get-YouTubeAudio {
     '--postprocessor-args'
     '-ar 44100'
   )
-  Quick\Get-YouTube @PSBoundParameters @args @YouTubeArguments
+  Get-YouTube @PSBoundParameters @args @YouTubeArguments
 }
 
-New-Alias ytf Quick\Get-YouTubeFormat
+New-Alias ytf Get-YouTubeFormat
 <#
 .SYNOPSIS
 Use yt-dlp to get available formats for a YouTube video.
@@ -74,10 +74,10 @@ function Get-YouTubeFormat {
   $YouTubeArguments = @(
     '-F'
   )
-  Quick\Get-YouTube @PSBoundParameters @args @YouTubeArguments
+  Get-YouTube @PSBoundParameters @args @YouTubeArguments
 }
 
-New-Alias yte Quick\Invoke-YouTubeDirectory
+New-Alias yte Invoke-YouTubeDirectory
 function Invoke-YouTubeDirectory {
   $YouTubeDownloads = @{
     Path = 'Videos\YouTube'
@@ -85,7 +85,7 @@ function Invoke-YouTubeDirectory {
   Shell\Invoke-DirectoryHome @YouTubeDownloads
 }
 
-New-Alias ytc Quick\Invoke-YouTubeConfig
+New-Alias ytc Invoke-YouTubeConfig
 function Invoke-YouTubeConfig {
   $YouTubeConfig = @{
     Path        = 'util\bin\yt\yt-dlp.conf'
