@@ -12,7 +12,7 @@ function Invoke-PSHistory {
   param()
 
   $History = @{
-    Path        = (PSReadLine\Get-PSReadLineOption).HistorySavePath
+    Path        = (Get-PSReadLineOption).HistorySavePath
     ProfileName = 'PowerShell'
     Window      = $True
   }
