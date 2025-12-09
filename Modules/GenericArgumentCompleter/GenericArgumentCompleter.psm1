@@ -58,12 +58,12 @@ class GenericCompleterBase {
 }
 
 class GenericCompleter : GenericCompleterBase, IArgumentCompleter {
-  [string] $Units
+  [List[string]] $Units
   [bool] $Sort
   [string] $Case
 
   GenericCompleter(
-    [string] $units,
+    [List[string]] $units,
     [bool] $sort,
     [string] $case
   ) {
@@ -77,27 +77,15 @@ class GenericCompleter : GenericCompleterBase, IArgumentCompleter {
       throw [ArgumentException]::new('case')
     }
 
-    if (-not $units) {
-      throw [ArgumentException]::new('units')
-    }
-
-    $unitKeys = (
-      $units -split ','
-    ).Trim() | Where-Object { $PSItem }
-
-    if (-not $unitKeys) {
+    if ($units.Count -eq 0) {
       throw [ArgumentException]::new('units')
     }
 
     $unique = @()
-    $unique += $unitKeys |
+    $unique += $units |
       Select-Object -Unique -CaseInsensitive
 
-    if (-not $unique -or $unique.Count -ne $unitKeys.Count) {
-      throw [ArgumentException]::new('units')
-    }
-
-    if ($unique -match "^'.*'$") {
+    if (-not $unique -or $unique.Count -ne $units.Count) {
       throw [ArgumentException]::new('units')
     }
 
@@ -114,30 +102,25 @@ class GenericCompleter : GenericCompleterBase, IArgumentCompleter {
     [IDictionary] $fakeBoundParameters
   ) {
 
-    $Local:units = (
-      $this.Units -split ','
-    ).Trim() | Where-Object { $PSItem }
+    $Local:units = [List[string]]::new()
 
     switch ($this.Case) {
       Lower {
-        $Local:units = $Local:units.ToLowerInvariant()
+        $Local:units.AddRange([List[string]]$this.Units.ToLowerInvariant())
         break
       }
       Upper {
-        $Local:units = $Local:units.ToUpperInvariant()
+        $Local:units.AddRange([List[string]]$this.Units.ToUpperInvariant())
       }
     }
 
     if ($this.Sort) {
-      $Local:units = $Local:units | Sort-Object
+      $Local:units.Sort()
     }
-
-    $values = [List[string]]::new()
-    $values.AddRange([List[string]]$Local:units)
 
     return [GenericCompleter]::CreateCompletion(
       [GenericCompleter]::FindCompletion(
-        $values,
+        $Local:units,
         "$wordToComplete"
       )
     )
@@ -175,8 +158,16 @@ class GenericCompletionsAttribute : ArgumentCompleterAttribute, IArgumentComplet
   }
 
   [IArgumentCompleter] Create() {
+    $unitList = [List[string]]::new()
+    $parsedUnits = ($this.Units -split ',').Trim() |
+      Where-Object { $PSItem }
+
+    if ($parsedUnits) {
+      $unitList.AddRange([List[string]]$parsedUnits)
+    }
+
     return [GenericCompleter]::new(
-      $this.Units,
+      $unitList,
       $this.Sort,
       $this.Case
     )
