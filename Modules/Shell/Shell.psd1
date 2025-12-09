@@ -9,7 +9,13 @@
   PowerShellVersion     = '7.5'
   PowerShellHostName    = 'ConsoleHost'
   PowerShellHostVersion = '7.5'
-  RequiredModules       = @()
+  RequiredModules       = @(
+    @{
+      ModuleName    = 'PathArgumentCompleter'
+      ModuleVersion = '3.0.0'
+      GUID          = '4aec66c3-c403-44b4-ac4d-fb8c8aa83c20'
+    }
+  )
   NestedModules         = @(
     @{
       ModuleName    = 'Shell.New'

@@ -16,9 +16,9 @@
       GUID          = 'ce7965e6-f9ef-42fb-aa4b-80eb542833de'
     }
     @{
-      ModuleName    = 'Shell'
+      ModuleName    = 'PathArgumentCompleter'
       ModuleVersion = '3.0.0'
-      GUID          = 'e4d07654-6759-4a2f-8293-39df2b809ba7'
+      GUID          = '4aec66c3-c403-44b4-ac4d-fb8c8aa83c20'
     }
   )
   NestedModules         = @()
