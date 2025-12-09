@@ -15,7 +15,7 @@ function Test-NodePackageDirectory {
   )
 
   $IsNodePackage = @{
-    Path     = Join-Path ($Path ? $Path : (Get-Location)) package.json
+    Path     = Join-Path ($Path ? $Path : $PWD) package.json
     PathType = 'Leaf'
   }
   return Test-Path @IsNodePackage
@@ -43,7 +43,7 @@ function Resolve-NodePackageDirectory {
     Path = $Path
   }
   if (Node\Test-NodePackageDirectory @IsNodePackage) {
-    $Package = ($Path ? (Resolve-Path $Path) : (Get-Location)).Path
+    $Package = ($Path ? (Resolve-Path $Path) : $PWD).Path
 
     $OmitPrefix ? $Package : "--prefix=$Package"
   }

@@ -41,7 +41,7 @@ function Get-File {
   }
   else {
     $Directory = @{
-      Path = $Location ? (Resolve-Path -Path $Location) : (Get-Location).Path
+      Path = $Location ? (Resolve-Path -Path $Location) : $PWD.Path
     }
     Get-ChildItem @Directory @Local:args
   }
@@ -57,7 +57,7 @@ function Get-FileSibling {
   )
 
   $Location = @{
-    Location = Get-Location | Split-Path
+    Location = $PWD | Split-Path
   }
   Shell\Get-File @PSBoundParameters @Location @args
 }
@@ -72,7 +72,7 @@ function Get-FileRelative {
   )
 
   $Location = @{
-    Location = Get-Location | Split-Path | Split-Path
+    Location = $PWD | Split-Path | Split-Path
   }
   Shell\Get-File @PSBoundParameters @Location @args
 }
@@ -117,7 +117,7 @@ function Get-FileDrive {
   )
 
   $Location = @{
-    Location = (Get-Location).Drive.Root
+    Location = $PWD.Drive.Root
   }
   Shell\Get-File @PSBoundParameters @Location @args
 }

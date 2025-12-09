@@ -7,7 +7,7 @@ function Invoke-Directory {
   )
 
   if (-not $Path) {
-    $PSBoundParameters.Path = Get-Location
+    $PSBoundParameters.Path = $PWD
   }
 
   if ($env:SSH_CLIENT) {
@@ -30,7 +30,7 @@ function Invoke-DirectorySibling {
   )
 
   $FullPath = @{
-    Path = Join-Path (Get-Location | Split-Path) $Path
+    Path = Join-Path ($PWD | Split-Path) $Path
   }
   [void](Shell\Invoke-Directory @FullPath @args)
 }
@@ -43,7 +43,7 @@ function Invoke-DirectoryRelative {
   )
 
   $FullPath = @{
-    Path = Join-Path (Get-Location | Split-Path | Split-Path) $Path
+    Path = Join-Path ($PWD | Split-Path | Split-Path) $Path
   }
   [void](Shell\Invoke-Directory @FullPath @args)
 }
@@ -82,7 +82,7 @@ function Invoke-DirectoryDrive {
   )
 
   $FullPath = @{
-    Path = Join-Path (Get-Location).Drive.Root $Path
+    Path = Join-Path $PWD.Drive.Root $Path
   }
   [void](Shell\Invoke-Directory @FullPath @args)
 }

@@ -39,7 +39,7 @@ function Get-Size {
       MB = 1MB
       GB = 1GB
     }
-    $DEFAULT_PATH = (Get-Location).Path
+    $DEFAULT_PATH = $PWD.Path
     $DEFAULT_UNIT = 'KB'
 
     if ($Path) {

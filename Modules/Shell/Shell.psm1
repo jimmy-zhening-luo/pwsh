@@ -92,7 +92,7 @@ function Test-Item {
   }
 
   if (-not $Location) {
-    $Location = (Get-Location).Path
+    $Location = $PWD.Path
   }
 
   $Container = @{
@@ -171,7 +171,7 @@ function Resolve-Item {
   }
 
   if (-not $Location) {
-    $Location = (Get-Location).Path
+    $Location = $PWD.Path
   }
 
   $FullLocation = (Resolve-Path -Path $Location).Path

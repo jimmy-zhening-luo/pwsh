@@ -155,7 +155,7 @@ function Open-Url {
       $Target = $Uri
     }
     default {
-      $Target = $Path ? (Test-Path @PSBoundParameters) ? (Resolve-Path @PSBoundParameters) : [Uri]$Path : (Get-Location)
+      $Target = $Path ? (Test-Path @PSBoundParameters) ? (Resolve-Path @PSBoundParameters) : [Uri]$Path : $PWD
     }
   }
 
