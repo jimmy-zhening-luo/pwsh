@@ -17,7 +17,7 @@ class GenericCompleterBase {
         Where-Object { $PSItem -like "$currentArgumentText*" }
 
       if ($tailCompletions) {
-        $completions.AddRange($tailCompletions)
+        $completions.AddRange([List[string]]$tailCompletions)
       }
 
       if ($completions.Count -eq 0 -or $completions.Count -eq 1 -and $completions[0] -eq $currentArgumentText) {
@@ -26,7 +26,7 @@ class GenericCompleterBase {
           Where-Object { $PSItem -ne $exactMatch }
 
         if ($surroundingCompletions) {
-          $completions.AddRange($surroundingCompletions)
+          $completions.AddRange([List[string]]$surroundingCompletions)
         }
       }
     }
@@ -132,10 +132,13 @@ class GenericCompleter : GenericCompleterBase, IArgumentCompleter {
       $Local:units = $Local:units | Sort-Object
     }
 
+    $values = [List[string]]::new()
+    $values.AddRange([List[string]]$Local:units)
+
     return [GenericCompleter]::CreateCompletion(
       [GenericCompleter]::FindCompletion(
-        $Local:units,
-        $wordToComplete
+        $values,
+        "$wordToComplete"
       )
     )
   }
