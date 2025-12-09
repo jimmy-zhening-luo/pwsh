@@ -174,8 +174,8 @@ class GenericCompleter : IArgumentCompleter {
 }
 
 $ExportableTypes = @(
-  [GenericCompletionsAttribute]
   [GenericCompleter]
+  [GenericCompletionsAttribute]
 )
 $TypeAcceleratorsClass = [PSObject].Assembly.GetType(
   'System.Management.Automation.TypeAccelerators'
@@ -183,10 +183,14 @@ $TypeAcceleratorsClass = [PSObject].Assembly.GetType(
 $ExistingTypeAccelerators = $TypeAcceleratorsClass::Get
 foreach ($Type in $ExportableTypes) {
   if ($Type.FullName -in $ExistingTypeAccelerators.Keys) {
-    throw [ErrorRecord]::new(
-      [InvalidOperationException]::new("Unable to register type accelerator '$($Type.FullName)' - Accelerator already exists."),
+    $Message = @(
+      "Unable to register type accelerator '$($Type.FullName)'"
+      'Accelerator already exists.'
+    ) -join ' - '
+    throw [System.Management.Automation.ErrorRecord]::new(
+      [System.InvalidOperationException]::new($Message),
       'TypeAcceleratorAlreadyExists',
-      [ErrorCategory]::InvalidOperation,
+      [System.Management.Automation.ErrorCategory]::InvalidOperation,
       $Type.FullName
     )
   }
