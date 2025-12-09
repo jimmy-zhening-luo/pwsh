@@ -21,7 +21,6 @@
       GUID          = '4aec66c3-c403-44b4-ac4d-fb8c8aa83c20'
     }
   )
-  NestedModules         = @()
   FunctionsToExport     = @(
     'Test-NodePackageDirectory'
     'Resolve-NodePackageDirectory'

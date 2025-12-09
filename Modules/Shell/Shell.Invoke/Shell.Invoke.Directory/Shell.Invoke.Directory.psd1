@@ -10,7 +10,6 @@
   PowerShellHostName    = 'ConsoleHost'
   PowerShellHostVersion = '7.5'
   RequiredModules       = @()
-  NestedModules         = @()
   FunctionsToExport     = @(
     'Invoke-Directory'
     'Invoke-DirectorySibling'
