@@ -1,3 +1,8 @@
+using namespace System.Collections
+using namespace System.Collections.Generic
+using namespace System.Management.Automation
+using namespace System.Management.Automation.Language
+
 New-Alias cl Clear-Line
 function Clear-Line {
   [OutputType([void])]
