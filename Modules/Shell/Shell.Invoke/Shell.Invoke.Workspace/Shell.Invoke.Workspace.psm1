@@ -122,7 +122,7 @@ function Invoke-WorkspaceRelative {
   Invoke-Workspace @PSBoundParameters @Location @args
 }
 
-New-Alias i~ Invoke-WorkspaceHome
+New-Alias ih Invoke-WorkspaceHome
 function Invoke-WorkspaceHome {
   [OutputType([void])]
   param (

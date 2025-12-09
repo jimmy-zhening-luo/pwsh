@@ -48,7 +48,7 @@ function Invoke-DirectoryRelative {
   Invoke-Directory @FullPath @args
 }
 
-New-Alias e~ Invoke-DirectoryHome
+New-Alias eh Invoke-DirectoryHome
 function Invoke-DirectoryHome {
   param (
     [PathCompletions('~')]

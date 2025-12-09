@@ -77,7 +77,7 @@ function Get-FileRelative {
   Get-File @PSBoundParameters @Location @args
 }
 
-New-Alias p~ Get-FileHome
+New-Alias ph Get-FileHome
 function Get-FileHome {
   [OutputType([string[]])]
   param (

@@ -39,7 +39,7 @@ function Set-DirectoryRelative {
   Set-Location @FullPath @args
 }
 
-New-Alias c~ Set-DirectoryHome
+New-Alias ch Set-DirectoryHome
 function Set-DirectoryHome {
   param (
     [PathCompletions('~', 'Directory')]

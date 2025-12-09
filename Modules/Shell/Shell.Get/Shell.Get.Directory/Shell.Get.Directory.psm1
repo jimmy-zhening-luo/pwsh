@@ -42,7 +42,7 @@ function Get-DirectoryRelative {
   Get-ChildItem @FullPath @args
 }
 
-New-Alias l~ Get-DirectoryHome
+New-Alias lh Get-DirectoryHome
 function Get-DirectoryHome {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param (
