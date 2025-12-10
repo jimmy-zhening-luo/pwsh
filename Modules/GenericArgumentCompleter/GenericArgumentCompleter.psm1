@@ -171,7 +171,7 @@ class GenericCompletionsAttribute : ArgumentCompleterAttribute, IArgumentComplet
   }
 }
 
-$Private:ExportableTypes = @(
+$ExportableTypes = @(
   [GenericCompleterBase]
   [GenericCompleter]
   [GenericCompletionsAttribute]
