@@ -1,6 +1,7 @@
 using namespace System.Collections.Generic
 
 function Resolve-GitRepository {
+  [CmdletBinding()]
   [OutputType([string[]])]
   param(
     [Parameter(
