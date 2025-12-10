@@ -177,9 +177,7 @@ $ExportableTypes = @(
   [GenericCompletionsAttribute]
 )
 
-if (-not $TypeAcceleratorsClass) {
-  $Global:TypeAcceleratorsClass = [PSObject].Assembly.GetType('System.Management.Automation.TypeAccelerators')
-}
+$TypeAcceleratorsClass = [PSObject].Assembly.GetType('System.Management.Automation.TypeAccelerators')
 
 $Private:ExistingTypeAccelerators = $TypeAcceleratorsClass::Get
 
