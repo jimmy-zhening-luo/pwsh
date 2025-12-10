@@ -164,6 +164,7 @@
     'nx'
     'ncc'
     'npo'
+    'nu'
     'nr'
     'nt'
   )

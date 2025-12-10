@@ -14,7 +14,6 @@ Set-Alias rd Shell\Remove-Directory # was: Remove-Item
 Set-Alias man PSTool\Get-HelpOnline # was: Microsoft.PowerShell.Core\Get-Help
 Set-Alias gp Shell\Get-GitRepository @Readonly @Force # was: Get-ItemProperty
 Set-Alias gm Shell\Write-GitRepository @Readonly @Force # was: Get-Member
-New-Alias nv Shell\Step-NodePackageVersion @Readonly @Force # was: New-Variable
 
 # Mask implicit PS alias
 New-Alias verb PSTool\Get-VerbList @Readonly # implicit Get-Verb

@@ -405,6 +405,7 @@ function Compare-NodeModule {
   Invoke-NodePackage @Outdated
 }
 
+New-Alias nu Step-NodePackageVersion
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to increment the package version of the current Node package.
