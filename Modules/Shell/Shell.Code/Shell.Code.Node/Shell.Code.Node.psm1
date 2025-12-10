@@ -180,9 +180,9 @@ https://docs.npmjs.com/cli/commands/npm
 function Invoke-NodePackage {
   param(
     [Parameter(
-      Position = 0,
-      Mandatory
+      Position = 0
     )]
+    [AllowEmptyString()]
     [GenericCompletions(
       'pkg,i,it,cit,rm,access,adduser,audit,bugs,cache,ci,completion,config,dedupe,deprecate,diff,dist-tag,docs,doctor,edit,exec,explain,explore,find-dupes,fund,help,help-search,init,install,install-ci-test,install-test,link,login,logout,ls,org,outdated,owner,pack,ping,prefix,profile,prune,publish,query,rebuild,repo,restart,root,run,sbom,search,shrinkwrap,star,stars,start,stop,team,test,token,undeprecate,uninstall,unpublish,unstar,update,version,view,whoami'
     )]
@@ -246,6 +246,10 @@ function Invoke-NodePackage {
 
   if ($CallerNodeArguments.Count -ne 0) {
     $ArgumentList.AddRange($CallerNodeArguments)
+  }
+
+  if ($ArgumentList.Count -eq 0) {
+    $ArgumentList.Add('-v')
   }
 
   & npm.ps1 @ArgumentList 2>&1 |
