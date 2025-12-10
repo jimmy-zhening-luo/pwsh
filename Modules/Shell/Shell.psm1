@@ -231,15 +231,7 @@ $MyInvocation.MyCommand.ScriptBlock.Module.OnRemove = {
 function Format-Path {
   [OutputType([string])]
   param(
-    [Parameter(
-      Position = 0,
-      Mandatory
-    )]
-    [AllowEmptyString()]
     [string]$Path,
-    [Parameter(
-      Position = 1
-    )]
     [string]$Separator,
     [switch]$LeadingRelative,
     [switch]$Trailing
@@ -262,17 +254,7 @@ function Format-Path {
 function Trace-RelativePath {
   [OutputType([bool])]
   param(
-    [Parameter(
-      Position = 0,
-      Mandatory
-    )]
-    [AllowEmptyString()]
     [string]$Path,
-    [Parameter(
-      Position = 1,
-      Mandatory
-    )]
-    [AllowEmptyString()]
     [string]$Location
   )
 
@@ -282,17 +264,7 @@ function Trace-RelativePath {
 function Merge-RelativePath {
   [OutputType([string])]
   param(
-    [Parameter(
-      Position = 0,
-      Mandatory
-    )]
-    [AllowEmptyString()]
     [string]$Path,
-    [Parameter(
-      Position = 1,
-      Mandatory
-    )]
-    [AllowEmptyString()]
     [string]$Location
   )
 
@@ -300,18 +272,9 @@ function Merge-RelativePath {
 }
 
 function Test-Item {
-  [CmdletBinding()]
   [OutputType([bool])]
   param(
-    [Parameter(
-      Position = 0,
-      Mandatory
-    )]
-    [AllowEmptyString()]
     [string]$Path,
-    [Parameter(
-      Position = 1
-    )]
     [string]$Location,
     [switch]$File,
     [switch]$New,
@@ -400,7 +363,6 @@ function Test-Item {
 }
 
 function Resolve-Item {
-  [CmdletBinding()]
   [OutputType([string])]
   param(
     [string]$Path,
