@@ -104,6 +104,12 @@ The function times out if it receives no response after five (5) (lol) seconds, 
 function Test-Url {
   [OutputType([bool])]
   param(
+    [Parameter(
+      Position = 0,
+      Mandatory
+    )]
+    [AllowNull()]
+    [AllowEmptyString()]
     # The URL to test. If the URL has no scheme, it defaults to 'http'.
     [uri]$Uri
   )
