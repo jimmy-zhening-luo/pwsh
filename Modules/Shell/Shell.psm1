@@ -410,6 +410,7 @@ function Resolve-Item {
     [Parameter(
       Position = 1
     )]
+    [AllowEmptyString()]
     [string]$Location,
     [switch]$File,
     [switch]$New,
