@@ -39,7 +39,7 @@ Use yt-dlp to extract audio from a YouTube video.
 .DESCRIPTION
 This function is an alias for 'yt-dlp' and extracts audio from a YouTube video.
 .LINK
-https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#video-format-options
+https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#post-processing-options
 #>
 function Get-YouTubeAudio {
   param(
