@@ -176,7 +176,7 @@ function Invoke-GitRepository {
     & git.exe @GitArguments 2>&1 |
       Tee-Object -Variable GitResult
 
-    if ($GitResult -match '^fatal:') {
+    if ($GitResult -match [regex]'^fatal:') {
       throw 'Git command error, execution stopped.'
     }
   }

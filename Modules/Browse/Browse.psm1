@@ -61,7 +61,7 @@ function Test-Host {
           if ($CommonTCPPort -in @('HTTP', 'RDP', 'SMB', 'WINRM')) {
             $Connection.CommonTCPPort = $CommonTCPPort.ToUpperInvariant()
           }
-          elseif ($CommonTCPPort -match '^(?>\d{1,5})$' -and $CommonTCPPort -as [UInt16]) {
+          elseif ($CommonTCPPort -match [regex]'^(?>\d{1,5})$' -and $CommonTCPPort -as [UInt16]) {
             $Connection.Port = [UInt16]$CommonTCPPort
           }
         }

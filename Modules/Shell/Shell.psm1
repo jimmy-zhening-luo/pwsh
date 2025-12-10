@@ -244,7 +244,7 @@ function Format-Path {
     $TrimmedPath = $TrimmedPath -replace [regex]'(?>\\+)$', ''
   }
 
-  $Separator -and $Separator -ne '\' ? $TrimmedPath -replace [regex]'\\', $Separator : $TrimmedPath
+  return $Separator -and $Separator -ne '\' ? $TrimmedPath -replace [regex]'\\', $Separator : $TrimmedPath
 }
 
 function Trace-RelativePath {

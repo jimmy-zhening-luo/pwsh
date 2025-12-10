@@ -287,6 +287,7 @@ function Invoke-NodePackage {
     return
   }
 
+  [regex]$Private:ERROR_LIKE = '^npm error'
   $Private:NpmError = [List[System.Object]]::new()
 
   if ($NpmResult -is [array]) {
@@ -301,14 +302,14 @@ function Invoke-NodePackage {
     else {
       $Private:Strings = $NpmResult |
         Where-Object { $_ -is [string] } |
-        Where-Object { $_ -match '^npm error' }
+        Where-Object { $_ -match $ERROR_LIKE }
 
       if ($Strings) {
         $NpmError.AddRange([List[string]]$Strings)
       }
     }
   }
-  elseif ($NpmResult -is [ErrorRecord] -or $NpmResult -is [string] -and $NpmResult -match '^npm error') {
+  elseif ($NpmResult -is [ErrorRecord] -or $NpmResult -is [string] -and $NpmResult -match $ERROR_LIKE) {
     $NpmError.Add($NpmResult)
   }
 
