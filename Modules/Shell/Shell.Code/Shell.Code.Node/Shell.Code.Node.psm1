@@ -46,7 +46,7 @@ function Resolve-NodePackageDirectory {
   if (Test-NodePackageDirectory @IsNodePackage) {
     $Private:Package = ($Path ? (Resolve-Path $Path) : $PWD).Path
 
-    $OmitPrefix ? $Package : "--prefix=$Package"
+    return $Package -eq $PWD.Path ? '' : $OmitPrefix ? $Package : "--prefix=$Package"
   }
   else {
     throw "Path '$Path' is not a Node package directory."
@@ -187,7 +187,7 @@ function Invoke-NodePackage {
       'pkg,i,it,cit,rm,access,adduser,audit,bugs,cache,ci,completion,config,dedupe,deprecate,diff,dist-tag,docs,doctor,edit,exec,explain,explore,find-dupes,fund,help,help-search,init,install,install-ci-test,install-test,link,login,logout,ls,org,outdated,owner,pack,ping,prefix,profile,prune,publish,query,rebuild,repo,restart,root,run,sbom,search,shrinkwrap,star,stars,start,stop,team,test,token,undeprecate,uninstall,unpublish,unstar,update,version,view,whoami'
     )]
     # npm command verb
-    [string]$Verb,
+    [string]$Command,
     [AllowEmptyString()]
     [PathCompletions(
       '~\code',
@@ -200,18 +200,19 @@ function Invoke-NodePackage {
       Position = 1,
       ValueFromRemainingArguments
     )]
-    [string[]]$NodeArguments
+    [string[]]$NodeArguments,
+    [switch]$Version
   )
 
-  $Private:ArgumentList = [List[string]]::new()
-  $ArgumentList.Add('--color=always')
+  $Private:NodeArgumentList = [List[string]]::new()
+  $NodeArgumentList.Add('--color=always')
 
   $Private:CallerNodeArguments = [List[string]]::new()
   if ($NodeArguments) {
     $CallerNodeArguments.AddRange([List[string]]$NodeArguments)
   }
 
-  if ($Path) {
+  if ($Path.Length -ne 0) {
     if ($Path.StartsWith('-') -or -not (Test-NodePackageDirectory -Path $Path)) {
       $CallerNodeArguments.Add($Path)
       $Path = ''
@@ -220,13 +221,13 @@ function Invoke-NodePackage {
       $Private:PackagePrefix = Resolve-NodePackageDirectory -Path $Path
 
       if ($PackagePrefix) {
-        $ArgumentList.Add($PackagePrefix)
+        $NodeArgumentList.Add($PackagePrefix)
       }
     }
   }
 
-  if ($Verb.StartsWith('-') -or $Verb -notin $NODE_VERB -and -not $NODE_ALIAS.ContainsKey($Verb)) {
-    [string]$Private:DeferredVerb = $CallerNodeArguments.Count -eq 0 ? '' : $CallerNodeArguments.Find(
+  if ($Command.Length -ne 0 -and $Command.StartsWith('-') -or $Command -notin $NODE_VERB -and -not $NODE_ALIAS.ContainsKey($Command)) {
+    $Private:DeferredVerb = $CallerNodeArguments.Count -eq 0 ? '' : $CallerNodeArguments.Find(
       {
         $args[0] -in $NODE_VERB
       }
@@ -236,23 +237,22 @@ function Invoke-NodePackage {
       $CallerNodeArguments.Remove($DeferredVerb) | Out-Null
     }
 
-    $CallerNodeArguments.Add($Verb)
-    $Verb = $DeferredVerb
+    $CallerNodeArguments.Insert(0, $Command)
+    $Command = $DeferredVerb
   }
 
-  if ($Verb) {
-    $ArgumentList.Add($Verb.ToLowerInvariant())
+  if ($Command) {
+    $NodeArgumentList.Add($Command.ToLowerInvariant())
+  }
+  elseif ($Version) {
+    $NodeArgumentList.Add('-v')
   }
 
   if ($CallerNodeArguments.Count -ne 0) {
-    $ArgumentList.AddRange($CallerNodeArguments)
+    $NodeArgumentList.AddRange($CallerNodeArguments)
   }
 
-  if ($ArgumentList.Count -eq 0) {
-    $ArgumentList.Add('-v')
-  }
-
-  & npm.ps1 @ArgumentList 2>&1 |
+  & npm.ps1 @NodeArgumentList 2>&1 |
     Tee-Object -Variable NpmResult
 
   if (-not $NpmResult) {
