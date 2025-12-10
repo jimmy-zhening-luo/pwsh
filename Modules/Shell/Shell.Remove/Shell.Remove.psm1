@@ -1,10 +1,6 @@
 function Remove-Directory {
   [OutputType([void])]
   param(
-    [Parameter(
-      Mandatory,
-      Position = 0
-    )]
     [PathCompletions('.')]
     [string]$Path
   )
