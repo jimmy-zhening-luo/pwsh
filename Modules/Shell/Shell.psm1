@@ -300,6 +300,7 @@ function Merge-RelativePath {
 }
 
 function Test-Item {
+  [CmdletBinding()]
   [OutputType([bool])]
   param(
     [Parameter(
@@ -399,6 +400,7 @@ function Test-Item {
 }
 
 function Resolve-Item {
+  [CmdletBinding()]
   [OutputType([string])]
   param(
     [Parameter(
