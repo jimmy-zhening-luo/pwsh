@@ -106,51 +106,57 @@ class PathCompleter : GenericCompleterBase, IArgumentCompleter {
     [CommandAst] $commandAst,
     [IDictionary] $fakeBoundParameters
   ) {
-
-    $Local:root = Resolve-Path -Path $this.Root
-    $separator = $this.UseNativeDirectorySeparator ? [Path]::DirectorySeparatorChar : '/'
-    $query = @{
+    $private:root = Resolve-Path -Path $this.Root
+    [string]$private:separator = $this.UseNativeDirectorySeparator ? [Path]::DirectorySeparatorChar : $EASY_SEPARATOR
+    [hashtable]$private:query = @{
       Directory = $this.Type -eq 'Directory'
       File      = $this.Type -eq 'File'
     }
-    $currentText = $wordToComplete ? $wordToComplete -match "^'(?<CurrentText>.*)'$" ? $Matches.CurrentText -replace "''", "'" : $wordToComplete : ''
-    $currentPathText = $currentText -replace '[\\\/]', '\'
-    $currentDirectoryText = ''
+
+    [string]$private:currentText = $wordToComplete ? $wordToComplete -match [regex]"^'(?<CurrentText>.*)'$" ? $Matches.CurrentText -replace [regex]"''", "'" : $wordToComplete : ''
+
+    [string]$private:CANONICAL_SEPARATOR = '\'
+    [string]$private:EASY_SEPARATOR = '/'
+    [regex]$private:DUPLICATE_SEPARATOR = [regex]'(?<!^)\\+'
+
+    [string]$private:currentPathText = $currentText -replace [regex]$EASY_SEPARATOR, $CANONICAL_SEPARATOR -replace $DUPLICATE_SEPARATOR, $CANONICAL_SEPARATOR
+
+    [string]$private:currentDirectoryText = ''
 
     if ($currentPathText) {
-      if ($currentPathText.EndsWith('\')) {
+      if ($currentPathText.EndsWith($CANONICAL_SEPARATOR)) {
         $currentPathText += '*'
       }
 
       $currentDirectoryText = Split-Path $currentPathText
-      $fragment = Split-Path $currentPathText -Leaf
+      [string]$private:fragment = Split-Path $currentPathText -Leaf
 
       if ($fragment -eq '*') {
         $fragment = ''
       }
 
-      $path = Join-Path $Local:root $currentDirectoryText
+      [string]$private:path = Join-Path $private:root $currentDirectoryText
 
       if (Test-Path -Path $path -PathType Container) {
         $query.Path = $path
         $query['Filter'] = "$fragment*"
-        $leaves = Get-ChildItem @query
       }
     }
 
     if (-not $query.Path) {
-      $query.Path = $Local:root
+      $query.Path = $private:root
     }
 
-    $leaves = @()
-    $leaves += Get-ChildItem @query
-    $directories, $files = $leaves.Where(
+    [FileSystemInfo[]]$private:leaves = Get-ChildItem @query
+
+    [FileSystemInfo[]]$private:containers, [FileSystemInfo[]]$private:children = $leaves.Where(
       { $PSItem.PSIsContainer },
       'Split'
     )
-    $directories = $directories |
+
+    [string[]]$private:directories = $containers |
       Select-Object -ExpandProperty Name
-    $files = $files |
+    [string[]]$private:files = $children |
       Select-Object -ExpandProperty Name
 
     if ($currentDirectoryText -and -not $this.Flat) {
@@ -166,20 +172,21 @@ class PathCompleter : GenericCompleterBase, IArgumentCompleter {
 
     if (-not $this.Flat) {
       $directories = $directories |
-        ForEach-Object { $PSItem + '\' }
+        ForEach-Object { $PSItem + $CANONICAL_SEPARATOR }
     }
 
-    $items = [List[string]]::new()
+    if ($separator -ne $CANONICAL_SEPARATOR) {
+      $directories = $directories -replace $DUPLICATE_SEPARATOR, $EASY_SEPARATOR
+      $files = $files -replace $DUPLICATE_SEPARATOR, $EASY_SEPARATOR
+    }
+
+    $private:items = [List[string]]::new()
 
     if ($directories) {
       $items.AddRange([List[string]]$directories)
     }
     if ($files) {
       $items.AddRange([List[string]]$files)
-    }
-
-    if ($separator -ne '\') {
-      $items = $items -replace '(?>[\\]+)', '/'
     }
 
     return [PathCompleter]::CreateCompletion($items)
@@ -226,28 +233,28 @@ function Format-Path {
     [switch]$Trailing
   )
 
-  $Private:AlignedPath = $Path -replace '[\\\/]', '\'
-  $Private:TrimmedPath = $AlignedPath -replace '(?<!^)(?>\\+)', '\'
+  $Private:AlignedPath = $Path -replace [regex]'[\\\/]', '\'
+  $Private:TrimmedPath = $AlignedPath -replace [regex]'(?<!^)\\+', '\'
 
   if ($LeadingRelative) {
-    $TrimmedPath = $TrimmedPath -replace '^\.(?>\\+)', ''
+    $TrimmedPath = $TrimmedPath -replace [regex]'^\.(?>\\+)', ''
   }
 
   if ($Trailing) {
-    $TrimmedPath = $TrimmedPath -replace '(?>\\+)$', ''
+    $TrimmedPath = $TrimmedPath -replace [regex]'(?>\\+)$', ''
   }
 
-  $Separator -and $Separator -ne '\' ? $TrimmedPath -replace '\\', $Separator : $TrimmedPath
+  $Separator -and $Separator -ne '\' ? $TrimmedPath -replace [regex]'\\', $Separator : $TrimmedPath
 }
 
 function Trace-RelativePath {
-  [OutputType([string])]
+  [OutputType([bool])]
   param(
     [string]$Path,
     [string]$Location
   )
 
-  [Path]::GetRelativePath($Path, $Location) -match '^(?>[.\\]*)$'
+  return [Path]::GetRelativePath($Path, $Location) -match [regex]'^(?>[.\\]*)$'
 }
 
 function Merge-RelativePath {
@@ -257,7 +264,7 @@ function Merge-RelativePath {
     [string]$Location
   )
 
-  [Path]::GetRelativePath($Location, $Path)
+  return [Path]::GetRelativePath($Location, $Path)
 }
 
 function Test-Item {
@@ -275,7 +282,7 @@ function Test-Item {
 
   if ([Path]::IsPathRooted($Path)) {
     if ($Location) {
-      $Private:Relative = @{
+      [hashtable]$Private:Relative = @{
         Path     = $Path
         Location = $Location
       }
@@ -290,11 +297,11 @@ function Test-Item {
       $Location = [Path]::GetPathRoot($Path)
     }
   }
-  elseif ($Path -match '^~(?=\\|$)') {
-    $Path = $Path -replace '^~(?>\\*)', ''
+  elseif ($Path -match [regex]'^~(?=\\|$)') {
+    $Path = $Path -replace [regex]'^~(?>\\*)', ''
 
     if ($Location) {
-      $Private:Relative = @{
+      [hashtable]$Private:Relative = @{
         Path     = Join-Path $HOME $Path
         Location = $Location
       }
@@ -314,7 +321,7 @@ function Test-Item {
     $Location = $PWD.Path
   }
 
-  $Private:Container = @{
+  [hashtable]$Private:Container = @{
     Path     = $Location
     PathType = 'Container'
   }
@@ -322,9 +329,9 @@ function Test-Item {
     return $False
   }
 
-  $Private:FullLocation = (Resolve-Path -Path $Location).Path
-  $Private:FullPath = Join-Path $FullLocation $Path
-  $Private:HasSubpath = $FullPath.Substring($FullLocation.Length) -notmatch '^\\*$'
+  [string]$Private:FullLocation = Resolve-Path -Path $Location
+  [string]$Private:FullPath = Join-Path $FullLocation $Path
+  [bool]$Private:HasSubpath = $FullPath.Substring($FullLocation.Length) -notmatch [regex]'^\\*$'
   $Private:FileLike = $HasSubpath -and -not (
     $FullPath.EndsWith('\') -or $FullPath.EndsWith('..')
   )
@@ -339,15 +346,15 @@ function Test-Item {
     return $False
   }
 
-  $Private:Item = @{
+  [hashtable]$Private:Item = @{
     Path     = $FullPath
     PathType = $File ? 'Leaf' : 'Container'
   }
   if ($New) {
-    (Test-Path @Item -IsValid) -and -not (Test-Path @Item)
+    return (Test-Path @Item -IsValid) -and -not (Test-Path @Item)
   }
   else {
-    Test-Path @Item
+    return Test-Path @Item
   }
 }
 
@@ -362,7 +369,9 @@ function Resolve-Item {
   )
 
   if (-not (Test-Item @PSBoundParameters)) {
-    throw "Invalid path '$Path': " + ($PSBoundParameters | ConvertTo-Json -EnumsAsStrings)
+    throw "Invalid path '$Path': " + (
+      $PSBoundParameters | ConvertTo-Json -EnumsAsStrings
+    )
   }
 
   $Path = Format-Path -Path $Path -LeadingRelative
@@ -376,13 +385,15 @@ function Resolve-Item {
       $Location = [Path]::GetPathRoot($Path)
     }
   }
-  elseif ($Path -match '^~(?=\\|$)') {
-    $Path = $Path -replace '^~(?>\\*)', ''
+  elseif ($Path -match [regex]'^~(?=\\|$)') {
+    $Path = $Path -replace [regex]'^~(?>\\*)', ''
 
     if ($Location) {
-      $Path = Merge-RelativePath -Path (
-        Join-Path $HOME $Path
-      ) -Location $Location
+      [hashtable]$Private:RelativePath = @{
+        Path     = Join-Path $HOME $Path
+        Location = $Location
+      }
+      $Path = Merge-RelativePath @RelativePath
     }
     else {
       $Location = $HOME
@@ -390,13 +401,16 @@ function Resolve-Item {
   }
 
   if (-not $Location) {
-    $Location = $PWD.Path
+    $Location = $PWD
   }
 
-  $Private:FullLocation = (Resolve-Path -Path $Location).Path
-  $Private:FullPath = Join-Path $FullLocation $Path
+  [string]$Private:FullLocation = Resolve-Path -Path $Location
+  [string]$Private:FullPath = Join-Path $FullLocation $Path
 
-  $New ? $FullPath : (
-    Resolve-Path -Path $FullPath -Force
-  ).Path
+  if ($New) {
+    return $FullPath
+  }
+  else {
+    return [string](Resolve-Path -Path $FullPath -Force)
+  }
 }

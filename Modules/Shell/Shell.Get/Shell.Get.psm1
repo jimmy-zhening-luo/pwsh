@@ -1,3 +1,5 @@
+using namespace System.IO
+
 New-Alias split Split-Path
 New-Alias hash Get-FileHash
 
@@ -24,7 +26,7 @@ function Get-Size {
   )
 
   process {
-    $Private:UNITS = @{
+    [hashtable]$Private:UNITS = @{
       B  = 'B'
       KB = 'KB'
       MB = 'MB'
@@ -33,14 +35,14 @@ function Get-Size {
       M  = 'MB'
       G  = 'GB'
     }
-    $Private:FACTORS = @{
+    [hashtable]$Private:FACTORS = @{
       B  = 1
       KB = 1KB
       MB = 1MB
       GB = 1GB
     }
-    $Private:DEFAULT_PATH = $PWD.Path
-    $Private:DEFAULT_UNIT = 'KB'
+    [string]$Private:DEFAULT_PATH = $PWD.Path
+    [string]$Private:DEFAULT_UNIT = 'KB'
 
     if ($Path) {
       if ($Unit) {
@@ -76,18 +78,26 @@ function Get-Size {
       }
     }
 
-    $Private:UnitCanonical = $UNITS[$Unit]
-    $Private:Item = Get-Item $Path
-    $Private:Quantity = [Math]::Round(
+    [hashtable]$Private:Target = @{
+      Path = $Path
+    }
+    [string]$Private:UnitCanonical = $UNITS[$Unit]
+    [FileSystemInfo]$Private:Item = Get-Item @Target
+    [double]$Private:Quantity = [Math]::Round(
       (
         $Item.PSIsContainer ? (
-          Get-ChildItem -Path $Path -Recurse -File |
+          Get-ChildItem @Target -Recurse -File |
             Measure-Object -Property Length -Sum
         ).Sum : $Item.Length
-      ) / $FACTORS[$UnitCanonical],
+      ) / [Int32]$FACTORS[$UnitCanonical],
       3
     )
 
-    $QuantityOnly ? [double]$Quantity : "$Quantity $UnitCanonical"
+    if ($QuantityOnly) {
+      return $Quantity
+    }
+    else {
+      return "$Quantity $UnitCanonical"
+    }
   }
 }

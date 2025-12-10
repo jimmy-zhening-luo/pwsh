@@ -10,4 +10,6 @@ function Test-Sandbox {
   'PSBoundParameters: ' + ($PSBoundParameters | ConvertTo-Json -EnumsAsStrings)
   "Path: $Path"
   "Args: $args"
+
+  $args.gettype()
 }

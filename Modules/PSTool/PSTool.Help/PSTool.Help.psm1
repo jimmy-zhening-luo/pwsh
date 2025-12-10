@@ -1,3 +1,5 @@
+using namespace System.Collections.Generic
+
 New-Alias upman Update-Help
 
 $CUSTOM_HELP_FILE = @{
@@ -9,7 +11,7 @@ $CUSTOM_HELP = (
 
 New-Alias m Get-HelpOnline
 function Get-HelpOnline {
-  [OutputType([Object])]
+  [OutputType([System.Object])]
   param(
     [Parameter(
       Position = 0,
@@ -23,11 +25,11 @@ function Get-HelpOnline {
     return Get-Help -Name 'Get-Help'
   }
 
-  $Private:Topic = $Name -join '_'
+  [string]$Private:Topic = $Name -join '_'
   $Private:Help = ''
-  $Private:HelpLink = ''
-  $Private:Articles = @()
-  $Private:Command = @{
+  $Private:HelpLinkArticles = [List[uri]]::new()
+  $Private:Articles = [List[uri]]::new()
+  [hashtable]$Private:Command = @{
     Name        = $Topic
     ErrorAction = 'SilentlyContinue'
   }
@@ -35,12 +37,12 @@ function Get-HelpOnline {
   if ($CUSTOM_HELP.Contains($Topic)) {
     $Private:CustomHelp = $CUSTOM_HELP[$Topic]
 
-    if ($CustomHelp -and $CustomHelp -notmatch ':') {
-      $CustomHelp = $CUSTOM_HELP[$CustomHelp]
+    if ($CustomHelp -and $CustomHelp -as [string] -and $CustomHelp -notmatch ':') {
+      [uri[]]$CustomHelp = $CUSTOM_HELP[[string]$CustomHelp]
     }
 
     if ($CustomHelp) {
-      $Articles += $CustomHelp
+      $Articles.AddRange([List[uri]]$CustomHelp)
     }
   }
   else {
@@ -51,8 +53,13 @@ function Get-HelpOnline {
     }
 
     if ($Help) {
-      $Private:HelpLink = $Help.relatedLinks.navigationLink.Uri -replace '\?(?>.*)$', '' |
-        Where-Object { $PSItem }
+      [string[]]$Private:HelpLinkProperty = $Help.relatedLinks.navigationLink.Uri -replace '\?(?>.*)$', '' |
+        Where-Object { $PSItem } |
+        Where-Object { $PSItem -as [uri] }
+
+      if ($HelpLinkProperty) {
+        $HelpLinkArticles.AddRange([List[uri]]$HelpLinkProperty)
+      }
     }
 
     if ($Help -and $Parameter) {
@@ -61,33 +68,41 @@ function Get-HelpOnline {
       if ($ParameterHelp) {
         $Help = $ParameterHelp
 
-        if ($HelpLink -and $Parameter.Count -eq 1) {
-          $HelpLink = $HelpLink + "#-$Parameter".ToLowerInvariant()
+        if ($HelpLinkArticles.Count -eq 1 -and $Parameter.Count -eq 1) {
+          [uri]$Private:CanonicalHelpLinkArticle = $HelpLinkArticles[0]
+          $HelpLinkArticles.RemoveAt(0)
+
+          [uri]$Private:ParameterizedCanonicalHelpLinkArticle = [string]$CanonicalHelpLinkArticle + "#-$Parameter".ToLowerInvariant()
+
+          $HelpLinkArticles.Add($ParameterizedCanonicalHelpLinkArticle)
         }
       }
     }
 
-    if ($HelpLink) {
-      $Articles += $HelpLink
+    if ($HelpLinkArticles.Count -ne 0) {
+      $Articles.AddRange([List[uri]]$HelpLinkArticles)
     }
     else {
-      $Private:ABOUT_BASE_URL = 'https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about'
-      $Private:about_Article = ''
+      [string]$Private:ABOUT_BASE_URL = 'https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about'
+      [string]$Private:about_Article = ''
 
       if ($Help) {
-        $about_Article = "$ABOUT_BASE_URL/$($Help.name)"
+        $about_Article = [uri]"$ABOUT_BASE_URL/$($Help.name)"
       }
       else {
-        $Private:about_Topic = $Topic -replace '(?>[-_ :]+)', '_' -replace '^(?>about)?_?', 'about_'
+        [string]$Private:about_Topic = $Topic -replace '(?>[-_ :]+)', '_' -replace '^(?>about)?_?', 'about_'
 
         function Resolve-AboutArticle {
+          [OutputType([uri])]
           param(
             [string]$Topic
           )
 
-          $Private:about_Article = "$ABOUT_BASE_URL/$Topic"
+          [uri]$Private:about_Article = "$ABOUT_BASE_URL/$Topic"
 
-          (Browse\Test-Url -Uri $Private:about_Article) ? $Private:about_Article : ''
+          if (Browse\Test-Url -Uri $about_Article) {
+            return $about_Article
+          }
         }
 
         $about_Article = Resolve-AboutArticle -Topic $about_Topic
@@ -105,7 +120,7 @@ function Get-HelpOnline {
       }
 
       if ($about_Article) {
-        $Articles += $about_Article
+        $Articles.Add([uri]$about_Article)
       }
     }
   }
@@ -114,15 +129,25 @@ function Get-HelpOnline {
     $Help
   }
 
-  if ($Articles) {
-    $Articles = $Articles -replace '^(?>https?:\/\/)?', 'https://' -replace '^https:\/\/learn\.microsoft\.com\/en-us\/', 'https://learn.microsoft.com/' |
+  [string[]]$Private:ArticleList = $Articles.ToArray()
+
+  if ($ArticleList) {
+    $ArticleList = $ArticleList -replace '^(?>https?:\/\/)?', 'https://' -replace '^https:\/\/learn\.microsoft\.com\/en-us\/', 'https://learn.microsoft.com/' |
       Select-Object -Unique -CaseInsensitive
+
+    [string]$Private:ArticleDisplay = $ArticleList -join "`n"
+
+    [hashtable]$Private:ArticleInformation = @{
+      MessageData       = "$ArticleDisplay"
+      InformationAction = 'Continue'
+    }
+    Write-Information @ArticleInformation
   }
 
   if (-not $env:SSH_CLIENT) {
-    if ($Articles) {
-      foreach ($Article in $Articles) {
-        Browse\Open-Url -Uri [Uri]$Article
+    if ($ArticleList) {
+      foreach ($Private:Article in $ArticleList) {
+        Browse\Open-Url -Uri [uri]$Article
       }
     }
     else {
@@ -130,15 +155,6 @@ function Get-HelpOnline {
         Get-Help @Command 2>&1 | Out-Null
       }
     }
-  }
-
-  if ($Articles) {
-    $Private:ArticleList = $Articles -join "`n"
-    $Private:ArticleInformation = @{
-      MessageData       = "$ArticleList"
-      InformationAction = 'Continue'
-    }
-    Write-Information @ArticleInformation
   }
 }
 
@@ -154,17 +170,17 @@ function Get-CommandAlias {
     $Definition = '*'
   }
 
-  $Private:Commands = @{
+  [hashtable]$Private:Commands = @{
     Definition = $Definition.Contains('*') ? $Definition : $Definition.Length -lt 3 ? "$Definition*" : "*$Definition*"
   }
-  $Private:Property = @{
+  [hashtable]$Private:Property = @{
     Property = @(
       'DisplayName'
       'Options'
       'Source'
     )
   }
-  Get-Alias @Commands @args |
+  return Get-Alias @Commands @args |
     Select-Object @Property
 }
 
@@ -198,10 +214,10 @@ function Get-VerbList {
     $Verb = '*'
   }
 
-  $Private:Verbs = @{
+  [hashtable]$Private:Verbs = @{
     Verb = $Verb.Contains('*') ? $Verb : $Verb.Length -lt 3 ? "$Verb*" : "*$Verb*"
   }
-  Get-Verb @Verbs @args |
+  return Get-Verb @Verbs @args |
     Sort-Object -Property Verb |
     Select-Object -ExpandProperty Verb
 }

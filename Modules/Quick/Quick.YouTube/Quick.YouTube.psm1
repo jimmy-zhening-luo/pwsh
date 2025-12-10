@@ -13,19 +13,19 @@ function Get-YouTube {
     [string]$Video
   )
 
-  $Private:VideoUri = $Video -match '^(?>https?://)?(?>(?>www|m)\.)?(?>youtube\.com/watch\?)(?:\S*&)?v=(?<Video>(?>[-\w]+))' ? [UriBuilder]::new(
+  [uri]$Private:VideoUri = $Video -match '^(?>https?://)?(?>(?>www|m)\.)?(?>youtube\.com/watch\?)(?:\S*&)?v=(?<Video>(?>[-\w]+))' ? [UriBuilder]::new(
     'https',
     'www.youtube.com',
     -1,
     '/watch',
     '?v=' + $Matches.Video
-  ).Uri : [Uri]$Video
+  ).Uri : [uri]$Video
 
   if (Browse\Test-Url -Uri $VideoUri) {
-    & yt-dlp.exe @args -- $VideoUri.OriginalString
+    & yt-dlp.exe @args -- [string]$VideoUri
   }
   else {
-    throw 'The specified video URL is unreachable: ' + $VideoUri.OriginalString
+    throw 'The specified video URL is unreachable: ' + [string]$VideoUri
   }
 }
 
@@ -43,7 +43,7 @@ function Get-YouTubeAudio {
     [string]$Video
   )
 
-  $Private:YouTubeArguments = @(
+  [string[]]$Private:YouTubeArguments = @(
     '--format'
     'bestaudio'
     '--extract-audio'
@@ -71,7 +71,7 @@ function Get-YouTubeFormat {
     [string]$Video
   )
 
-  $Private:YouTubeArguments = @(
+  [string[]]$Private:YouTubeArguments = @(
     '-F'
   )
   Get-YouTube @PSBoundParameters @args @YouTubeArguments
@@ -79,7 +79,10 @@ function Get-YouTubeFormat {
 
 New-Alias yte Invoke-YouTubeDirectory
 function Invoke-YouTubeDirectory {
-  $Private:YouTubeDownloads = @{
+  [OutputType([void])]
+  param()
+
+  [hashtable]$Private:YouTubeDownloads = @{
     Path = 'Videos\YouTube'
   }
   Shell\Invoke-DirectoryHome @YouTubeDownloads
@@ -87,7 +90,10 @@ function Invoke-YouTubeDirectory {
 
 New-Alias ytc Invoke-YouTubeConfig
 function Invoke-YouTubeConfig {
-  $Private:YouTubeConfig = @{
+  [OutputType([void])]
+  param()
+
+  [hashtable]$Private:YouTubeConfig = @{
     Path        = 'util\bin\yt\yt-dlp.conf'
     ProfileName = 'Setting'
     Window      = $True

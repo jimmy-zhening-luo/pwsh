@@ -27,7 +27,7 @@ function Update-Windows {
     throw 'Cannot open Settings app during SSH session'
   }
 
-  $Private:WindowsUpdate = @{
+  [hashtable]$Private:WindowsUpdate = @{
     FilePath = 'ms-settings:windowsupdate'
   }
   Start-Process @WindowsUpdate
@@ -51,7 +51,7 @@ function Edit-SystemPath {
     throw 'Cannot present Control Panel during SSH session'
   }
 
-  $Private:ControlPanel = @{
+  [hashtable]$Private:ControlPanel = @{
     FilePath     = 'rundll32'
     ArgumentList = @(
       'sysdm.cpl'
@@ -88,7 +88,7 @@ function Stop-Task {
     [UInt32]$Id
   )
 
-  $Private:Process = @{
+  [hashtable]$Private:Process = @{
     Force = $True
   }
   switch ($PSCmdlet.ParameterSetName) {
@@ -98,7 +98,7 @@ function Stop-Task {
     }
     default {
       if ($Name) {
-        if ($Name -match '^(?>\d{1,10})$' -and $Name -as [UInt32]) {
+        if ($Name -match [regex]'^(?>\d{1,10})$' -and $Name -as [UInt32]) {
           $Process.Id = [UInt32]$Name
         }
         else {
@@ -106,7 +106,7 @@ function Stop-Task {
         }
       }
       else {
-        $Name = 'explorer'
+        $Process.Name = 'explorer'
       }
     }
   }

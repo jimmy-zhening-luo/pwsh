@@ -1,5 +1,6 @@
 New-Alias c Set-Directory
 function Set-Directory {
+  [OutputType([void])]
   param (
     [PathCompletions('.', 'Directory')]
     [string]$Path
@@ -15,12 +16,13 @@ function Set-Directory {
 
 New-Alias c. Set-DirectorySibling
 function Set-DirectorySibling {
+  [OutputType([void])]
   param (
     [PathCompletions('..', 'Directory')]
     [string]$Path
   )
 
-  $FullPath = @{
+  [hashtable]$Private:FullPath = @{
     Path = Join-Path ($PWD | Split-Path) $Path
   }
   Set-Location @FullPath @args
@@ -28,12 +30,13 @@ function Set-DirectorySibling {
 
 New-Alias c.. Set-DirectoryRelative
 function Set-DirectoryRelative {
+  [OutputType([void])]
   param (
     [PathCompletions('..\..', 'Directory')]
     [string]$Path
   )
 
-  $FullPath = @{
+  [hashtable]$Private:FullPath = @{
     Path = Join-Path ($PWD | Split-Path | Split-Path) $Path
   }
   Set-Location @FullPath @args
@@ -41,12 +44,13 @@ function Set-DirectoryRelative {
 
 New-Alias ch Set-DirectoryHome
 function Set-DirectoryHome {
+  [OutputType([void])]
   param (
     [PathCompletions('~', 'Directory')]
     [string]$Path
   )
 
-  $FullPath = @{
+  [hashtable]$Private:FullPath = @{
     Path = Join-Path $HOME $Path
   }
   Set-Location @FullPath @args
@@ -54,12 +58,13 @@ function Set-DirectoryHome {
 
 New-Alias cc Set-DirectoryCode
 function Set-DirectoryCode {
+  [OutputType([void])]
   param (
     [PathCompletions('~\code', 'Directory')]
     [string]$Path
   )
 
-  $FullPath = @{
+  [hashtable]$Private:FullPath = @{
     Path = Join-Path $HOME\code $Path
   }
   Set-Location @FullPath @args
@@ -67,12 +72,13 @@ function Set-DirectoryCode {
 
 New-Alias c/ Set-Drive
 function Set-Drive {
+  [OutputType([void])]
   param (
     [PathCompletions('\', 'Directory')]
     [string]$Path
   )
 
-  $FullPath = @{
+  [hashtable]$Private:FullPath = @{
     Path = Join-Path $PWD.Drive.Root $Path
   }
   Set-Location @FullPath @args
@@ -80,12 +86,13 @@ function Set-Drive {
 
 New-Alias d/ Set-DriveD
 function Set-DriveD {
+  [OutputType([void])]
   param (
     [PathCompletions('D:', 'Directory')]
     [string]$Path
   )
 
-  $FullPath = @{
+  [hashtable]$Private:FullPath = @{
     Path = Join-Path D: $Path
   }
   Set-Location @FullPath @args

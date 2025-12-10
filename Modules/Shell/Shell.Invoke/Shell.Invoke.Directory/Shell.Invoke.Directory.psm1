@@ -1,35 +1,33 @@
 New-Alias e Invoke-Directory
 function Invoke-Directory {
-  [OutputType([void], [string[]])]
+  [OutputType([void])]
   param(
     [PathCompletions('.')]
     [string]$Path
   )
+  if (-not $env:SSH_CLIENT) {
+    if (-not $Path) {
+      $PSBoundParameters.Path = $PWD
+    }
 
-  if (-not $Path) {
-    $PSBoundParameters.Path = $PWD
-  }
-
-  if ($env:SSH_CLIENT) {
-    return Get-File @PSBoundParameters
-  }
-
-  $Private:Container = @{
-    PathType = 'Container'
-  }
-  if (Test-Path @PSBoundParameters @Container) {
-    Invoke-Item @PSBoundParameters
+    [hashtable]$Private:Container = @{
+      PathType = 'Container'
+    }
+    if (Test-Path @PSBoundParameters @Container) {
+      Invoke-Item @PSBoundParameters
+    }
   }
 }
 
 New-Alias e. Invoke-DirectorySibling
 function Invoke-DirectorySibling {
+  [OutputType([void])]
   param (
     [PathCompletions('..')]
     [string]$Path
   )
 
-  $Private:FullPath = @{
+  [hashtable]$Private:FullPath = @{
     Path = Join-Path ($PWD | Split-Path) $Path
   }
   Invoke-Directory @FullPath @args
@@ -37,12 +35,13 @@ function Invoke-DirectorySibling {
 
 New-Alias e.. Invoke-DirectoryRelative
 function Invoke-DirectoryRelative {
+  [OutputType([void])]
   param (
     [PathCompletions('..\..')]
     [string]$Path
   )
 
-  $Private:FullPath = @{
+  [hashtable]$Private:FullPath = @{
     Path = Join-Path ($PWD | Split-Path | Split-Path) $Path
   }
   Invoke-Directory @FullPath @args
@@ -50,12 +49,13 @@ function Invoke-DirectoryRelative {
 
 New-Alias eh Invoke-DirectoryHome
 function Invoke-DirectoryHome {
+  [OutputType([void])]
   param (
     [PathCompletions('~')]
     [string]$Path
   )
 
-  $Private:FullPath = @{
+  [hashtable]$Private:FullPath = @{
     Path = Join-Path $HOME $Path
   }
   Invoke-Directory @FullPath @args
@@ -63,12 +63,13 @@ function Invoke-DirectoryHome {
 
 New-Alias ec Invoke-DirectoryCode
 function Invoke-DirectoryCode {
+  [OutputType([void])]
   param (
     [PathCompletions('~\code')]
     [string]$Path
   )
 
-  $Private:FullPath = @{
+  [hashtable]$Private:FullPath = @{
     Path = Join-Path $HOME\code $Path
   }
   Invoke-Directory @FullPath @args
@@ -76,12 +77,13 @@ function Invoke-DirectoryCode {
 
 New-Alias e/ Invoke-DirectoryDrive
 function Invoke-DirectoryDrive {
+  [OutputType([void])]
   param (
     [PathCompletions('\')]
     [string]$Path
   )
 
-  $Private:FullPath = @{
+  [hashtable]$Private:FullPath = @{
     Path = Join-Path $PWD.Drive.Root $Path
   }
   Invoke-Directory @FullPath @args

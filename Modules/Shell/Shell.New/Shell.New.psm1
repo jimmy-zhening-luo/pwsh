@@ -43,7 +43,7 @@ function New-Directory {
     )]
     [Alias('Target')]
     [PathCompletions('.')]
-    [Object]$Value,
+    [System.Object]$Value,
     [switch]$Force,
     [Parameter(
       ValueFromPipelineByPropertyName
@@ -51,7 +51,7 @@ function New-Directory {
     [PSCredential]$Credential
   )
   begin {
-    $Private:DirectoryType = @{
+    [hashtable]$Private:DirectoryType = @{
       ItemType = 'Directory'
     }
     $Private:wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [CommandTypes]::Cmdlet)
@@ -112,10 +112,10 @@ function New-Junction {
     )]
     [Alias('Target')]
     [PathCompletions('.')]
-    [Object]$Value
+    [System.Object]$Value
   )
   begin {
-    $Private:JunctionType = @{
+    [hashtable]$Private:JunctionType = @{
       ItemType = 'Junction'
       Force    = $True
     }

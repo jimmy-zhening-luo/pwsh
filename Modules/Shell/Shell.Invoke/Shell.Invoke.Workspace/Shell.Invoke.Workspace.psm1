@@ -1,3 +1,5 @@
+using namespace System.Collections.Generic
+
 New-Alias i Invoke-Workspace
 function Invoke-Workspace {
   [OutputType([void])]
@@ -13,23 +15,27 @@ function Invoke-Workspace {
     [string]$Location
   )
 
-  $Private:ArgumentList = $args
+  $Private:ArgumentList = [List[string]]::new()
+  if ($args) {
+    $ArgumentList.AddRange([List[string]]$args)
+  }
 
   if (
     $Location -and -not (
       Test-Path -Path $Location -PathType Container
     )
   ) {
-    $ArgumentList = , $Location + $ArgumentList
+    $ArgumentList.Insert(0, $Location)
     $Location = ''
   }
 
   if ($Path) {
-    $Private:Target = $Location ? (Join-Path $Location $Path) : $Path
+    [string]$Private:Target = $Location ? (Join-Path $Location $Path) : $Path
 
     if (Test-Path -Path $Target) {
-      $Private:FullPath = (Resolve-Path $Target).Path
-      $ArgumentList = , $FullPath + $ArgumentList
+      [string]$Private:FullPath = Resolve-Path $Target
+
+      $ArgumentList.Insert(0, $FullPath)
     }
     else {
       if (-not $Path.StartsWith('-')) {
@@ -40,7 +46,7 @@ function Invoke-Workspace {
         $Location = $PWD.Path
       }
 
-      $ArgumentList = $Location, $Path + $ArgumentList
+      $ArgumentList.Insert(0, $Location)
     }
   }
   else {
@@ -48,7 +54,7 @@ function Invoke-Workspace {
       $Location = $PWD.Path
     }
 
-    $ArgumentList = , $Location + $ArgumentList
+    $ArgumentList.Insert(0, $Location)
   }
 
   if ($env:SSH_CLIENT) {
@@ -59,20 +65,20 @@ function Invoke-Workspace {
     if (-not $ProfileName.StartsWith('-')) {
       $Window = $True
 
-      $ArgumentList += '--profile'
+      $ArgumentList.Add('--profile')
     }
 
-    $ArgumentList += $ProfileName
+    $ArgumentList.Add($ProfileName)
   }
 
   if ($Window) {
-    $ArgumentList += '--new-window'
+    $ArgumentList.Add('--new-window')
   }
   elseif ($ReuseWindow) {
-    $ArgumentList += '--reuse-window'
+    $ArgumentList.Add('--reuse-window')
   }
 
-  $Private:Process = @{
+  [hashtable]$Private:Process = @{
     FilePath     = 'code.cmd'
     ArgumentList = $ArgumentList
     NoNewWindow  = $True
@@ -95,7 +101,7 @@ function Invoke-WorkspaceSibling {
     [switch]$ReuseWindow
   )
 
-  $Private:Location = @{
+  [hashtable]$Private:Location = @{
     Location = $PWD | Split-Path
   }
   Invoke-Workspace @PSBoundParameters @Location @args
@@ -116,7 +122,7 @@ function Invoke-WorkspaceRelative {
     [switch]$ReuseWindow
   )
 
-  $Private:Location = @{
+  [hashtable]$Private:Location = @{
     Location = $PWD | Split-Path | Split-Path
   }
   Invoke-Workspace @PSBoundParameters @Location @args
@@ -137,7 +143,7 @@ function Invoke-WorkspaceHome {
     [switch]$ReuseWindow
   )
 
-  $Private:Location = @{
+  [hashtable]$Private:Location = @{
     Location = $HOME
   }
   Invoke-Workspace @PSBoundParameters @Location @args
@@ -158,7 +164,7 @@ function Invoke-WorkspaceCode {
     [switch]$ReuseWindow
   )
 
-  $Private:Location = @{
+  [hashtable]$Private:Location = @{
     Location = "$HOME\code"
   }
   Invoke-Workspace @PSBoundParameters @Location @args
@@ -179,7 +185,7 @@ function Invoke-WorkspaceDrive {
     [switch]$ReuseWindow
   )
 
-  $Private:Location = @{
+  [hashtable]$Private:Location = @{
     Location = $PWD.Drive.Root
   }
   Invoke-Workspace @PSBoundParameters @Location @args

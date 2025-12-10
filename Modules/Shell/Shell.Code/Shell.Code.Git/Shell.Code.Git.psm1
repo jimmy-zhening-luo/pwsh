@@ -1,3 +1,5 @@
+using namespace System.Collections.Generic
+
 function Resolve-GitRepository {
   [CmdletBinding()]
   [OutputType([string[]])]
@@ -13,21 +15,21 @@ function Resolve-GitRepository {
     [switch]$New
   )
   begin {
-    $Private:CODE = "$HOME\code"
-    $Private:Repositories = @()
+    [string]$Private:CODE_PATH = "$HOME\code"
+    $Private:Repositories = [List[string]]::new()
   }
   process {
-    $Private:RepoPath = @{
+    [hashtable]$Private:RepoPath = @{
       Path = $Path
     }
-    $Private:Repository = ''
+    [string]$Private:Repository = ''
 
     if ($New) {
       if (Test-Item @RepoPath) {
         $Repository = Resolve-Item @RepoPath
       }
       else {
-        $RepoPath.Location = $CODE
+        $RepoPath.Location = $CODE_PATH
         $RepoPath.New = $True
 
         if (Test-Item @RepoPath) {
@@ -36,7 +38,7 @@ function Resolve-GitRepository {
       }
     }
     else {
-      $Private:RepoGitPath = @{
+      [hashtable]$Private:RepoGitPath = @{
         Path           = $Path ? (Join-Path $Path .git) : '.git'
         RequireSubpath = $True
       }
@@ -45,7 +47,7 @@ function Resolve-GitRepository {
         $Repository = Resolve-Item @RepoPath
       }
       else {
-        $RepoGitPath.Location = $RepoPath.Location = $CODE
+        $RepoGitPath.Location = $RepoPath.Location = $CODE_PATH
 
         if (Test-Item @RepoGitPath) {
           $Repository = Resolve-Item @RepoPath
@@ -54,24 +56,24 @@ function Resolve-GitRepository {
     }
 
     if ($Repository) {
-      $Repositories += $Repository
+      $Repositories.Add([string]$Repository)
     }
   }
   end {
-    $Repositories
+    return [string[]]$Repositories.ToArray()
   }
 }
 
-$GIT_VERB_COMPLETION = (
+[string]$GIT_VERB_COMPLETION = (
   'switch,merge,diff,stash,tag,config,remote,submodule,fetch,checkout,branch,rm,mv,ls-files,ls-tree,init,status,clone,pull,add,commit,push,reset'
 )
-$GIT_VERB = $GIT_VERB_COMPLETION -split ','
-$NEWABLE_GIT_VERB = @(
+[string[]]$GIT_VERB = $GIT_VERB_COMPLETION -split ','
+[string[]]$NEWABLE_GIT_VERB = @(
   'clone'
   'config'
   'init'
 )
-$GIT_ARGUMENT = '^(?>(?=.*[*=])(?>.+)|-(?>\w|(?>-\w[-\w]*\w)))$'
+[regex]$GIT_ARGUMENT = '^(?>(?=.*[*=])(?>.+)|-(?>\w|(?>-\w[-\w]*\w)))$'
 
 <#
 .SYNOPSIS
@@ -98,13 +100,17 @@ function Invoke-GitRepository {
     [switch]$Throw
   )
 
-  $Private:GitArguments = $args
+  $Private:GitArguments = [List[string]]::new()
+
+  if ($args) {
+    $GitArguments.AddRange([List[string]]$args)
+  }
 
   if ($Verb) {
     if ($Verb -in $GIT_VERB) {
       if ($Verb -in $NEWABLE_GIT_VERB) {
         if ($Path -match $GIT_ARGUMENT) {
-          $GitArguments = , $Path + $GitArguments
+          $GitArguments.Insert(0, $Path)
           $Path = ''
         }
       }
@@ -118,14 +124,14 @@ function Invoke-GitRepository {
             $Verb | Resolve-GitRepository
           )
         ) {
-          $GitArguments = , $Path + $GitArguments
+          $GitArguments.Insert(0, $Path)
           $Verb, $Path = 'status', $Verb
         }
       }
     }
     else {
       if ($Path -or $GitArguments) {
-        $GitArguments = , $Verb + $GitArguments
+        $GitArguments.Insert(0, $Verb)
       }
       else {
         $Path = $Verb
@@ -138,17 +144,17 @@ function Invoke-GitRepository {
     $Verb = 'status'
   }
 
-  $Private:Resolve = @{
+  [hashtable]$Private:Resolve = @{
     Path = $Path
     New  = $Verb -in $NEWABLE_GIT_VERB
   }
-  $Private:Repository = Resolve-GitRepository @Resolve
+  [string]$Private:Repository = Resolve-GitRepository @Resolve
 
   if (-not $Repository) {
     if ($Path) {
-      $GitArguments = , $Path + $GitArguments
-      $Resolve.Path = $PWD
+      $GitArguments.Insert(0, $Path)
 
+      $Resolve.Path = $PWD
       $Repository = Resolve-GitRepository @Resolve
     }
 
@@ -157,13 +163,15 @@ function Invoke-GitRepository {
     }
   }
 
-  $GitArguments = @(
+  [string[]]$GitCommandManifest = @(
     '-c'
     'color.ui=always'
     '-C'
     $Repository
     $Verb
-  ) + $GitArguments
+  )
+  $GitArguments.InsertRange(0, [List[string]]$GitCommandManifest)
+
   if ($Throw) {
     & git.exe @GitArguments 2>&1 |
       Tee-Object -Variable GitResult
@@ -195,7 +203,7 @@ function Measure-GitRepository {
     [switch]$Throw
   )
 
-  $Private:Status = @{
+  [hashtable]$Private:Status = @{
     Verb = 'status'
   }
   Invoke-GitRepository @Status @PSBoundParameters @args
@@ -224,7 +232,7 @@ function Import-GitRepository {
     [switch]$ForceSsh
   )
 
-  $Private:RepositoryPathParts = $Repository -split '/' -notmatch '^\s*$'
+  [string[]]$Private:RepositoryPathParts = $Repository -split '/' -notmatch '^\s*$'
 
   if (-not $RepositoryPathParts) {
     throw 'No repository name given.'
@@ -234,13 +242,19 @@ function Import-GitRepository {
     $RepositoryPathParts = , 'jimmy-zhening-luo' + $RepositoryPathParts
   }
 
-  $Private:Origin = (
+  [string]$Private:Origin = (
     $ForceSsh ? 'git@github.com:' : 'https://github.com/'
   ) + (
     $RepositoryPathParts -join '/'
   )
-  $Private:GitCommandArguments = , $Origin + $args
-  $Private:Clone = @{
+
+  $Private:GitCommandArguments = [List[string]]::new()
+  $GitCommandArguments.Add($Origin)
+  if ($args) {
+    $GitCommandArguments.AddRange([List[string]]$args)
+  }
+
+  [hashtable]$Private:Clone = @{
     Verb  = 'clone'
     Path  = $Path
     Throw = $Throw
@@ -265,7 +279,7 @@ function Get-GitRepository {
     [switch]$Throw
   )
 
-  $Private:Pull = @{
+  [hashtable]$Private:Pull = @{
     Verb = 'pull'
   }
   Invoke-GitRepository @Pull @PSBoundParameters @args
@@ -281,20 +295,20 @@ This function runs 'git pull [arguments]' in each child repository in %USERPROFI
 https://git-scm.com/docs/git-pull
 #>
 function Get-ChildGitRepository {
-  $Private:Code = @{
+  [hashtable]$Private:CodeDirectory = @{
     Path      = "$HOME\code"
     Directory = $True
   }
-  $Private:Repositories = Get-ChildItem @Code |
+  [string[]]$Private:Repositories = Get-ChildItem @CodeDirectory |
     Select-Object -ExpandProperty FullName |
     Resolve-GitRepository
-  $Private:Count = $Repositories.Count
+  [UInt16]$Private:Count = $Repositories.Count
 
-  foreach ($Repository in $Repositories) {
+  foreach ($Private:Repository in $Repositories) {
     Get-GitRepository -Path $Repository @args
   }
 
-  "`nPulled $Count repositor" + ($Count -eq 1 ? 'y' : 'ies')
+  return "`nPulled $Count repositor" + ($Count -eq 1 ? 'y' : 'ies')
 }
 
 New-Alias ga Add-GitRepository
@@ -319,14 +333,17 @@ function Add-GitRepository {
     [switch]$Renormalize
   )
 
-  $Private:GitCommandArguments = $args
+  $Private:GitCommandArguments = [List[string]]::new()
+  if ($args) {
+    $GitCommandArguments.AddRange([List[string]]$args)
+  }
 
   if (-not $Name) {
     $Name = '.'
   }
 
   if ($Name -match $GIT_ARGUMENT) {
-    $GitCommandArguments = , $Name + $GitCommandArguments
+    $GitCommandArguments.Insert(0, $Name)
     $Name = ''
   }
 
@@ -338,7 +355,7 @@ function Add-GitRepository {
     )
   ) {
     if ($Name) {
-      $GitCommandArguments = , $Path + $GitCommandArguments
+      $GitCommandArguments.Insert(0, $Path)
     }
     else {
       $Name = $Path
@@ -348,14 +365,14 @@ function Add-GitRepository {
   }
 
   if ($Name) {
-    $GitCommandArguments = , $Name + $GitCommandArguments
+    $GitCommandArguments.Insert(0, $Name)
   }
 
   if ($Renormalize -and '--renormalize' -notin $GitCommandArguments) {
-    $GitCommandArguments += '--renormalize'
+    $GitCommandArguments.Add('--renormalize')
   }
 
-  $Private:Add = @{
+  [hashtable]$Private:Add = @{
     Verb  = 'add'
     Path  = $Path
     Throw = $Throw
@@ -386,12 +403,28 @@ function Write-GitRepository {
     [switch]$AllowEmpty
   )
 
-  $Private:GitCommitArguments, $Private:Messages = (
+  [string[]]$Private:Arguments, [string[]]$Private:MessageWords = (
     $Message ? (, $Message + $args) : $args
-  ).Where({ $PSItem }).Where(
-    { $PSItem -match $GIT_ARGUMENT },
+  ).Where(
+    {
+      $PSItem
+    }
+  ).Where(
+    {
+      $PSItem -match $GIT_ARGUMENT
+    },
     'Split'
   )
+
+  $Private:GitCommitArguments = [List[string]]::new()
+  if ($Arguments) {
+    $GitCommitArguments.AddRange([List[string]]$Arguments)
+  }
+
+  $Private:Messages = [List[string]]::new()
+  if ($MessageWords) {
+    $Messages.AddRange([List[string]]$MessageWords)
+  }
 
   if (
     $Path -and (
@@ -400,30 +433,30 @@ function Write-GitRepository {
       $Path | Resolve-GitRepository
     )
   ) {
-    if ($Path -match $GIT_ARGUMENT -and -not $Messages) {
-      $GitCommitArguments = , $Path + $GitCommitArguments
+    if ($Path -match $GIT_ARGUMENT -and $Messages.Count -eq 0) {
+      $GitCommitArguments.Insert(0, $Path)
     }
     else {
-      $Messages = , $Path + $Messages
+      $Messages.Insert(0, $Path)
     }
 
     $Path = ''
   }
 
   if ($AllowEmpty -and '--allow-empty' -notin $GitCommitArguments) {
-    $GitCommitArguments += '--allow-empty'
+    $GitCommitArguments.Add('--allow-empty')
   }
 
-  if (-not $Messages) {
+  if ($Messages.Count -eq 0) {
     if ('--allow-empty' -in $GitCommitArguments) {
-      $Messages += 'No message.'
+      $Messages.Add('No message.')
     }
     else {
       throw 'Missing commit message.'
     }
   }
 
-  $Private:GitParameters = @{
+  [hashtable]$Private:GitParameters = @{
     Path  = $Path
     Throw = $Throw
   }
@@ -431,7 +464,12 @@ function Write-GitRepository {
     Add-GitRepository @GitParameters -Throw
   }
 
-  $GitCommitArguments = '-m', ($Messages -join ' ') + $GitCommitArguments
+  [string[]]$MessageArguments = @(
+    '-m'
+    $Messages -join ' '
+  )
+  $GitCommitArguments.InsertRange(0, [List[string]]$MessageArguments)
+
   $Private:Commit = @{
     Verb = 'commit'
   }
@@ -456,7 +494,10 @@ function Push-GitRepository {
     [switch]$Throw
   )
 
-  $Private:GitPushArguments = $args
+  $Private:GitPushArguments = [List[string]]::new()
+  if ($args) {
+    $GitPushArguments.AddRange([List[string]]$args)
+  }
 
   if (
     $Path -and (
@@ -465,13 +506,13 @@ function Push-GitRepository {
       $Path | Resolve-GitRepository
     )
   ) {
-    $GitPushArguments = , $Path + $GitPushArguments
+    $GitPushArguments.Insert(0, $Path)
     $PSBoundParameters.Path = ''
   }
 
   Get-GitRepository @PSBoundParameters -Throw
 
-  $Private:Push = @{
+  [hashtable]$Private:Push = @{
     Verb = 'push'
   }
   Invoke-GitRepository @Push @PSBoundParameters @GitPushArguments
@@ -499,19 +540,24 @@ function Reset-GitRepository {
     [switch]$Soft
   )
 
-  $Private:GitResetArguments = $args
+  $Private:GitResetArguments = [List[string]]::new()
+  if ($args) {
+    $GitResetArguments.AddRange([List[string]]$args)
+  }
+
+  [regex]$Private:TREE_SPEC = '^(?=.)(?>HEAD)?(?<Branching>(?>~|\^)?)(?<Step>(?>\d{0,10}))$'
 
   if ($Tree) {
     if (
-      $Tree -match '^(?=.)(?>HEAD)?(?<Branching>(?>~|\^)?)(?<Step>(?>\d{0,10}))$' -and (
+      $Tree -match $TREE_SPEC -and (
         -not $Matches.Step -or $Matches.Step -as [uint32]
       )
     ) {
-      $Private:Branching = $Matches.Branching ? $Matches.Branching : '~'
+      [string]$Private:Branching = $Matches.Branching ? $Matches.Branching : '~'
       $Tree = 'HEAD' + $Branching + $Matches.Step
     }
     else {
-      $GitResetArguments = , $Tree + $GitResetArguments
+      $GitResetArguments.Insert(0, $Tree)
       $Tree = ''
     }
   }
@@ -524,31 +570,32 @@ function Reset-GitRepository {
     )
   ) {
     if (
-      -not $Tree -and $Path -match '^(?=.)(?>HEAD)?(?<Branching>(?>~|\^)?)(?<Step>(?>\d{0,10}))$' -and (
+      -not $Tree -and $Path -match $TREE_SPEC -and (
         -not $Matches.Step -or $Matches.Step -as [uint32]
       )
     ) {
-      $Private:Branching = $Matches.Branching ? $Matches.Branching : '~'
+      [string]$Private:Branching = $Matches.Branching ? $Matches.Branching : '~'
       $Tree = 'HEAD' + $Branching + $Matches.Step
     }
     else {
-      $GitResetArguments = , $Path + $GitResetArguments
+      $GitResetArguments.Insert(0, $Path)
     }
 
     $Path = ''
   }
 
-  $Private:GitParameters = @{
+  [hashtable]$Private:GitParameters = @{
     Path  = $Path
     Throw = $Throw
   }
   Add-GitRepository @GitParameters -Throw
 
   if ($Tree) {
-    $GitResetArguments = , $Tree + $GitResetArguments
+    $GitResetArguments.Insert(0, $Tree)
   }
-  $GitResetArguments = , '--hard' + $GitResetArguments
-  $Private:Reset = @{
+  $GitResetArguments.Insert(0, '--hard')
+
+  [hashtable]$Private:Reset = @{
     Verb = 'reset'
   }
   Invoke-GitRepository @Reset @GitParameters @GitResetArguments
@@ -572,7 +619,10 @@ function Restore-GitRepository {
     [switch]$Throw
   )
 
-  $Private:GitResetArguments = $args
+  $Private:GitResetArguments = [List[string]]::new()
+  if ($args) {
+    $GitResetArguments.AddRange([List[string]]$args)
+  }
 
   if (
     $Path -and (
@@ -581,7 +631,7 @@ function Restore-GitRepository {
       $Path | Resolve-GitRepository
     )
   ) {
-    $GitResetArguments = , $Path + $GitResetArguments
+    $GitResetArguments.Insert(0, $Path)
     $PSBoundParameters.Path = ''
   }
 

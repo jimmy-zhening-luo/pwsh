@@ -1,3 +1,5 @@
+using namespace System.Collections.Generic
+
 New-Alias tn Test-Host
 <#
 .SYNOPSIS
@@ -8,7 +10,7 @@ This function checks if a host is reachable by testing the network connection to
 #>
 function Test-Host {
   [CmdletBinding(DefaultParameterSetName = 'CommonTCPPort')]
-  [OutputType([Object[]])]
+  [OutputType([System.Object[]])]
   param(
     [Parameter(
       Position = 0,
@@ -41,14 +43,14 @@ function Test-Host {
   )
   begin {
     $InformationLevel = $Detailed -or $InformationLevel -eq 'Detailed' ? 'Detailed' : $Quiet -or $InformationLevel -eq 'Quiet' ? 'Quiet' : ''
-    $Private:Verbosity = $InformationLevel ? @{
+    [hashtable]$Private:Verbosity = $InformationLevel ? @{
       InformationLevel = $InformationLevel
     } : @{}
-    $Private:Results = @()
+    $Private:Results = [List[System.Object]]::new()
   }
   process {
     if ($Name) {
-      $Private:Connection = @{
+      [hashtable]$Private:Connection = @{
         ComputerName = $Name
       }
       switch ($PSCmdlet.ParameterSetName) {
@@ -65,19 +67,26 @@ function Test-Host {
         }
       }
 
-      $Results += Test-NetConnection @Connection @Verbosity
+      $Private:Result = Test-NetConnection @Connection @Verbosity
+
+      if ($Result) {
+        $Results.Add($Result)
+      }
     }
   }
   end {
-    if ($Results) {
-      $Results
-    }
-    else {
-      $Private:Connection = @{
+    if ($Results.Count -eq 0) {
+      [hashtable]$Private:Connection = @{
         ComputerName = 'google.com'
       }
-      Test-NetConnection @Connection @Verbosity
+      $Private:Result = Test-NetConnection @Connection @Verbosity
+
+      if ($Result) {
+        $Results.Add($Result)
+      }
     }
+
+    return $Results.ToArray()
   }
 }
 
@@ -96,14 +105,14 @@ function Test-Url {
   [OutputType([bool])]
   param(
     # The URL to test. If the URL has no scheme, it defaults to 'http'.
-    [Uri]$Uri
+    [uri]$Uri
   )
 
   if (-not $Uri) {
     return $False
   }
 
-  $Private:Request = @{
+  [hashtable]$Private:Request = @{
     Method                       = 'HEAD'
     PreserveHttpMethodOnRedirect = $True
     DisableKeepAlive             = $True
@@ -112,14 +121,14 @@ function Test-Url {
     ErrorAction                  = 'Stop'
   }
   try {
-    $Status = Invoke-WebRequest @PSBoundParameters @Request |
+    [int]$Private:Status = Invoke-WebRequest @PSBoundParameters @Request |
       Select-Object -ExpandProperty StatusCode
   }
   catch {
-    $Status = $PSItem.Exception.Response.StatusCode.value__
+    $Private:Status = $PSItem.Exception.Response.StatusCode.value__
   }
 
-  $Status -ge 200 -and $Status -lt 300
+  return $Status -ge 200 -and $Status -lt 300
 }
 
 New-Alias go Open-Url
@@ -145,19 +154,19 @@ function Open-Url {
       Mandatory
     )]
     # The URL to open.
-    [Uri]$Uri
+    [uri]$Uri
   )
 
   switch ($PSCmdlet.ParameterSetName) {
     Uri {
-      $Private:Target = $Uri
+      [uri]$Private:Target = $Uri
     }
     default {
-      $Private:Target = $Path ? (Test-Path @PSBoundParameters) ? (Resolve-Path @PSBoundParameters) : [Uri]$Path : $PWD
+      [string]$Private:Target = $Path ? (Test-Path @PSBoundParameters) ? (Resolve-Path @PSBoundParameters) : [uri]$Path : $PWD
     }
   }
 
-  $Private:Browser = @{
+  [hashtable]$Private:Browser = @{
     FilePath     = 'C:\Program Files\Google\Chrome\Application\chrome.exe'
     ArgumentList = $Target
   }

@@ -8,12 +8,12 @@ class GenericCompleterBase {
     [List[string]] $values,
     [string] $wordToComplete
   ) {
-    $completions = [List[string]]::new()
+    $private:completions = [List[string]]::new()
 
-    $currentArgumentText = $wordToComplete ? $wordToComplete -match "^'(?<CurrentText>.*)'$" ? $Matches.CurrentText -replace "''", "'" : $wordToComplete : ''
+    $private:currentArgumentText = $wordToComplete ? $wordToComplete -match [regex]"^'(?<CurrentText>.*)'$" ? $Matches.CurrentText -replace [regex]"''", "'" : $wordToComplete : ''
 
     if ($currentArgumentText) {
-      $tailCompletions = $values |
+      [string[]]$private:tailCompletions = $values |
         Where-Object { $PSItem -like "$currentArgumentText*" }
 
       if ($tailCompletions) {
@@ -21,7 +21,7 @@ class GenericCompleterBase {
       }
 
       if ($completions.Count -eq 0 -or $completions.Count -eq 1 -and $completions[0] -eq $currentArgumentText) {
-        $surroundingCompletions = $values |
+        [string[]]$private:surroundingCompletions = $values |
           Where-Object { $PSItem -like "*$currentArgumentText*" -and $PSItem -ne $currentArgumentText }
 
         if ($surroundingCompletions) {
@@ -41,9 +41,9 @@ class GenericCompleterBase {
   ) {
     $completionResults = [List[CompletionResult]]::new()
 
-    foreach ($completion in $completions) {
-      $escapedCompletion = [CodeGeneration]::EscapeSingleQuotedStringContent($completion)
-      $quotedEscapedCompletion = $escapedCompletion -match '\s' ? "'" + $escapedCompletion + "'" : $escapedCompletion
+    foreach ($private:completion in $completions) {
+      [string]$private:escapedCompletion = [CodeGeneration]::EscapeSingleQuotedStringContent($completion)
+      [string]$private:quotedEscapedCompletion = $escapedCompletion -match [regex]'\s' ? "'" + $escapedCompletion + "'" : $escapedCompletion
 
       $completionResults.Add(
         [CompletionResult]::new(
@@ -80,8 +80,7 @@ class GenericCompleter : GenericCompleterBase, IArgumentCompleter {
       throw [ArgumentException]::new('units')
     }
 
-    $unique = @()
-    $unique += $units |
+    [string[]]$private:unique = $units |
       Select-Object -Unique -CaseInsensitive
 
     if (-not $unique -or $unique.Count -ne $units.Count) {
@@ -100,26 +99,25 @@ class GenericCompleter : GenericCompleterBase, IArgumentCompleter {
     [CommandAst] $commandAst,
     [IDictionary] $fakeBoundParameters
   ) {
-
-    $Local:units = [List[string]]::new()
+    $private:units = [List[string]]::new()
 
     switch ($this.Case) {
       Lower {
-        $Local:units.AddRange([List[string]]$this.Units.ToLowerInvariant())
+        $private:units.AddRange([List[string]]$this.Units.ToLowerInvariant())
         break
       }
       Upper {
-        $Local:units.AddRange([List[string]]$this.Units.ToUpperInvariant())
+        $private:units.AddRange([List[string]]$this.Units.ToUpperInvariant())
       }
     }
 
     if ($this.Sort) {
-      $Local:units.Sort()
+      $private:units.Sort()
     }
 
     return [GenericCompleter]::CreateCompletion(
       [GenericCompleter]::FindCompletion(
-        $Local:units,
+        $private:units,
         "$wordToComplete"
       )
     )
@@ -157,8 +155,8 @@ class GenericCompletionsAttribute : ArgumentCompleterAttribute, IArgumentComplet
   }
 
   [IArgumentCompleter] Create() {
-    $unitList = [List[string]]::new()
-    $parsedUnits = ($this.Units -split ',').Trim() |
+    $private:unitList = [List[string]]::new()
+    [string[]]$private:parsedUnits = ($this.Units -split ',').Trim() |
       Where-Object { $PSItem }
 
     if ($parsedUnits) {

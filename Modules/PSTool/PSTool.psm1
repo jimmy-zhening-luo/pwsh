@@ -11,7 +11,7 @@ function Invoke-PSHistory {
   [OutputType([void])]
   param()
 
-  $Private:History = @{
+  [hashtable]$Private:History = @{
     Path        = (Get-PSReadLineOption).HistorySavePath
     ProfileName = 'PowerShell'
     Window      = $True
@@ -24,7 +24,7 @@ function Invoke-PSProfile {
   [OutputType([void])]
   param()
 
-  $Private:ProfileRepository = @{
+  [hashtable]$Private:ProfileRepository = @{
     Path        = 'pwsh'
     ProfileName = 'PowerShell'
   }
@@ -33,7 +33,7 @@ function Invoke-PSProfile {
 
 New-Alias up Update-PSProfile
 function Update-PSProfile {
-  $Private:ProfileRepository = @{
+  [hashtable]$Private:ProfileRepository = @{
     Path = Resolve-Path -Path $HOME\code\pwsh
   }
   Shell\Get-GitRepository @ProfileRepository
@@ -45,12 +45,12 @@ function Update-PSLinter {
   [OutputType([void])]
   param()
 
-  $Private:Linter = @{
+  [hashtable]$Private:Linter = @{
     Path     = "$HOME\code\pwsh\PSScriptAnalyzerSettings.psd1"
     PathType = 'Leaf'
   }
   if (Test-Path @Linter) {
-    $Private:Copy = @{
+    [hashtable]$Private:Copy = @{
       Path        = $Linter.Path
       Destination = $HOME
     }
@@ -69,31 +69,36 @@ function Measure-PSProfile {
     [switch]$Number
   )
 
-  $Private:Test = @{
+  [hashtable]$Private:Test = @{
     Command = '1'
   }
 
   [double]$Private:StartupLoadProfile = 0
   [double]$Private:NormalStartup = 0
 
-  $Private:Iterations = 1
+  [UInt16]$Private:Iterations = 1
 
-  for ($i = 0; $i -lt $Iterations; ++$i) {
-    $StartupLoadProfile += (
+  for ([UInt16]$Private:i = 0; $i -lt $Iterations; ++$i) {
+    $StartupLoadProfile += [double](
       Measure-Command { pwsh @Test }
     ).TotalMilliseconds
-    $NormalStartup += (
+    $NormalStartup += [double](
       Measure-Command { pwsh -NoProfile @Test }
     ).TotalMilliseconds
   }
 
-  $Private:Performance = [int][Math]::Max(
-    [Math]::Round(
+  [int]$Private:Performance = [Math]::Max(
+    [int][Math]::Round(
       ($StartupLoadProfile - $NormalStartup) / $Iterations
     ),
     0
   )
-  $Private:MeanNormalStartup = [int][Math]::Round($NormalStartup / $Iterations)
+  [int]$Private:MeanNormalStartup = [Math]::Round($NormalStartup / $Iterations)
 
-  $Number ? $Performance : "$Performance ms`n(Base: $MeanNormalStartup ms)"
+  if ($Number) {
+    return $Performance
+  }
+  else {
+    return "$Performance ms`n(Base: $MeanNormalStartup ms)"
+  }
 }

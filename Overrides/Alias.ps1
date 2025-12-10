@@ -1,11 +1,14 @@
-$Private:Force = @{
+[hashtable]$Private:Force = @{
   Force = $True
 }
-$Private:Readonly = @{
+[hashtable]$Private:Readonly = @{
   Option = 'ReadOnly'
 }
-$Private:ReadonlyAllScope = @{
-  Option = 'ReadOnly', 'AllScope'
+[hashtable]$Private:ReadonlyAllScope = @{
+  Option = @(
+    'ReadOnly'
+    'AllScope'
+  )
 }
 
 # Reassign PS alias

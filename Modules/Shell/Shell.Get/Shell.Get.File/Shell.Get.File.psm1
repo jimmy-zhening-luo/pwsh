@@ -1,6 +1,9 @@
+using namespace System.IO
+using namespace System.Collections.Generic
+
 New-Alias p Get-File
 function Get-File {
-  [OutputType([string[]])]
+  [OutputType([string[]], [DirectoryInfo[]], [FileInfo[]])]
   param(
     [Parameter(Position = 0)]
     [PathCompletions('.')]
@@ -8,42 +11,45 @@ function Get-File {
     [string]$Location
   )
 
-  $Private:args = $args
+  $Private:ArgumentList = [List[string]]::new()
+  if ($args) {
+    $ArgumentList.AddRange([List[string]]$args)
+  }
 
   if (
     $Location -and -not (
       Test-Path -Path $Location -PathType Container
     )
   ) {
-    $Private:args = , $Location + $Private:args
+    $ArgumentList.Insert(0, $Location)
     $Location = ''
   }
 
   if ($Path) {
-    $Private:Target = $Location ? (Join-Path $Location $Path) : $Path
+    [string]$Private:Target = $Location ? (Join-Path $Location $Path) : $Path
 
     if (-not (Test-Path -Path $Target)) {
       throw "Path '$Target' does not exist."
     }
 
-    $Private:FullPath = @{
+    [hashtable]$Private:FullPath = @{
       Path = Resolve-Path -Path $Target
     }
-    $Private:Container = @{
+    [hashtable]$Private:Container = @{
       PathType = 'Container'
     }
     if (Test-Path @FullPath @Container) {
-      Get-ChildItem @FullPath @Private:args
+      return Get-ChildItem @FullPath @Private:args
     }
     else {
-      Get-Content @FullPath @Private:args
+      return Get-Content @FullPath @Private:args
     }
   }
   else {
-    $Private:Directory = @{
+    [hashtable]$Private:Directory = @{
       Path = $Location ? (Resolve-Path -Path $Location) : $PWD.Path
     }
-    Get-ChildItem @Directory @Local:args
+    return Get-ChildItem @Directory @ArgumentList
   }
 }
 
@@ -56,7 +62,7 @@ function Get-FileSibling {
     [string]$Path
   )
 
-  $Private:Location = @{
+  [hashtable]$Private:Location = @{
     Location = $PWD | Split-Path
   }
   Get-File @PSBoundParameters @Location @args
@@ -71,7 +77,7 @@ function Get-FileRelative {
     [string]$Path
   )
 
-  $Private:Location = @{
+  [hashtable]$Private:Location = @{
     Location = $PWD | Split-Path | Split-Path
   }
   Get-File @PSBoundParameters @Location @args
@@ -86,7 +92,7 @@ function Get-FileHome {
     [string]$Path
   )
 
-  $Private:Location = @{
+  [hashtable]$Private:Location = @{
     Location = $HOME
   }
   Get-File @PSBoundParameters @Location @args
@@ -101,7 +107,7 @@ function Get-FileCode {
     [string]$Path
   )
 
-  $Private:Location = @{
+  [hashtable]$Private:Location = @{
     Location = "$HOME\code"
   }
   Get-File @PSBoundParameters @Location @args
@@ -116,7 +122,7 @@ function Get-FileDrive {
     [string]$Path
   )
 
-  $Private:Location = @{
+  [hashtable]$Private:Location = @{
     Location = $PWD.Drive.Root
   }
   Get-File @PSBoundParameters @Location @args

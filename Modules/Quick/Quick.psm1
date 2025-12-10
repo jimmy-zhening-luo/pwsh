@@ -7,16 +7,16 @@ function Copy-Guid {
     [switch]$Silent
   )
 
-  $Private:Guid = (New-Guid).Guid
+  [guid]$Private:Guid = New-Guid
 
   if ($Uppercase) {
-    $Guid = $Guid.ToUpperInvariant()
+    $Guid = [guid]$Guid.Guid.ToUpperInvariant()
   }
 
   $Guid | Set-Clipboard
 
   if (-not $Silent) {
-    $Guid
+    return [string]$Guid.Guid
   }
 }
 
@@ -30,9 +30,10 @@ function ConvertTo-Hex {
     [switch]$Lowercase
   )
 
-  $Private:Hex = $Decimal | ForEach-Object { '{0:X}' -f $PSItem }
+  [string]$Private:Hex = $Decimal |
+    ForEach-Object { '{0:X}' -f $PSItem }
 
   if ($Hex) {
-    $Lowercase ? $Hex.ToLowerInvariant() : $Hex
+    return $Lowercase ? $Hex.ToLowerInvariant() : $Hex
   }
 }
