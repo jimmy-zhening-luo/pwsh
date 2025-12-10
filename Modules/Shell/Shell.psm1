@@ -403,22 +403,14 @@ function Resolve-Item {
   [CmdletBinding()]
   [OutputType([string])]
   param(
-    [Parameter(
-      Position = 0,
-      Mandatory
-    )]
-    [AllowEmptyString()]
     [string]$Path,
-    [Parameter(
-      Position = 1
-    )]
     [string]$Location,
     [switch]$File,
     [switch]$New,
     [switch]$RequireSubpath
   )
 
-  if (-not (Test-Item @PSBoundParameters)) {
+  if (-not (Test-Item @Test)) {
     throw "Invalid path '$Path': " + (
       $PSBoundParameters | ConvertTo-Json -EnumsAsStrings
     )
