@@ -372,7 +372,7 @@ function Resolve-Item {
     [switch]$RequireSubpath
   )
 
-  if (-not (Test-Item @Test)) {
+  if (-not (Test-Item @PSBoundParameters)) {
     throw "Invalid path '$Path': " + (
       $PSBoundParameters | ConvertTo-Json -EnumsAsStrings
     )
