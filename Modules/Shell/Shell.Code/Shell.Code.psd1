@@ -21,7 +21,6 @@
     }
   )
   FunctionsToExport     = @(
-    'Resolve-GitRepository'
     'Invoke-GitRepository'
     'Measure-GitRepository'
     'Import-GitRepository'
@@ -32,8 +31,6 @@
     'Push-GitRepository'
     'Reset-GitRepository'
     'Restore-GitRepository'
-    'Test-NodePackageDirectory'
-    'Resolve-NodePackageDirectory'
     'Invoke-Node'
     'Invoke-NodePackage'
     'Invoke-NodeExecutable'

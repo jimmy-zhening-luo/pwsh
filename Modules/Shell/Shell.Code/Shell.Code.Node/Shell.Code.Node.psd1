@@ -10,8 +10,6 @@
   PowerShellHostName    = 'ConsoleHost'
   PowerShellHostVersion = '7.5'
   FunctionsToExport     = @(
-    'Test-NodePackageDirectory'
-    'Resolve-NodePackageDirectory'
     'Invoke-Node'
     'Invoke-NodePackage'
     'Invoke-NodeExecutable'

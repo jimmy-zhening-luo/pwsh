@@ -10,7 +10,6 @@
   PowerShellHostName    = 'ConsoleHost'
   PowerShellHostVersion = '7.5'
   FunctionsToExport     = @(
-    'Resolve-GitRepository'
     'Invoke-GitRepository'
     'Measure-GitRepository'
     'Import-GitRepository'
