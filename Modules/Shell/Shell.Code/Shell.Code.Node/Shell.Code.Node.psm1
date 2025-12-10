@@ -194,14 +194,26 @@ function Invoke-NodePackage {
       'Directory',
       $True
     )]
-    # Node package root
-    [string]$Path,
+    # Node package root at which to run the command
+    [string]$WorkingDirectory,
     [Parameter(
       Position = 1,
       ValueFromRemainingArguments
     )]
+    # Additional arguments to pass to npm
     [string[]]$NodeArguments,
-    [switch]$Version
+    # Show npm version if no command is specified
+    [switch]$Version,
+    # Pass the -D flag as an argument to npm
+    [switch]$D,
+    # Pass the -E flag as an argument to npm
+    [switch]$E,
+    # Pass the -i flag as an argument to npm
+    [switch]$I,
+    # Pass the -o flag as an argument to npm
+    [switch]$O,
+    # Pass the -P flag as an argument to npm
+    [switch]$P
   )
 
   $Private:NodeArgumentList = [List[string]]::new()
@@ -212,13 +224,13 @@ function Invoke-NodePackage {
     $CallerNodeArguments.AddRange([List[string]]$NodeArguments)
   }
 
-  if ($Path.Length -ne 0) {
-    if ($Path.StartsWith('-') -or -not (Test-NodePackageDirectory -Path $Path)) {
-      $CallerNodeArguments.Add($Path)
-      $Path = ''
+  if ($WorkingDirectory.Length -ne 0) {
+    if ($WorkingDirectory.StartsWith('-') -or -not (Test-NodePackageDirectory -Path $WorkingDirectory)) {
+      $CallerNodeArguments.Add($WorkingDirectory)
+      $WorkingDirectory = ''
     }
     else {
-      $Private:PackagePrefix = Resolve-NodePackageDirectory -Path $Path
+      $Private:PackagePrefix = Resolve-NodePackageDirectory -Path $WorkingDirectory
 
       if ($PackagePrefix) {
         $NodeArgumentList.Add($PackagePrefix)
@@ -243,6 +255,22 @@ function Invoke-NodePackage {
 
   if ($Command) {
     $NodeArgumentList.Add($Command.ToLowerInvariant())
+
+    if ($D) {
+      $CallerNodeArguments.Add('-D')
+    }
+    if ($E) {
+      $CallerNodeArguments.Add('-E')
+    }
+    if ($I) {
+      $CallerNodeArguments.Add('-i')
+    }
+    if ($O) {
+      $CallerNodeArguments.Add('-o')
+    }
+    if ($P) {
+      $CallerNodeArguments.Add('-P')
+    }
   }
   elseif ($Version) {
     $NodeArgumentList.Add('-v')
@@ -317,10 +345,10 @@ function Clear-NodeModuleCache {
     '--force'
   )
 
-  if ($Path) {
-    if (-not (Test-NodePackageDirectory -Path $Path)) {
-      $NodeArguments += $Path
-      $Path = ''
+  if ($WorkingDirectory) {
+    if (-not (Test-NodePackageDirectory -Path $WorkingDirectory)) {
+      $NodeArguments += $WorkingDirectory
+      $WorkingDirectory = ''
     }
   }
 
@@ -329,9 +357,9 @@ function Clear-NodeModuleCache {
   }
 
   $Private:CacheClean = @{
-    Verb          = 'cache'
-    Path          = $Path
-    NodeArguments = $NodeArguments
+    Command          = 'cache'
+    WorkingDirectory = $WorkingDirectory
+    NodeArguments    = $NodeArguments
   }
   Invoke-NodePackage @CacheClean
 }
@@ -341,7 +369,7 @@ New-Alias npo Compare-NodeModule
 .SYNOPSIS
 Use Node Package Manager (npm) to check for outdated packages in a Node package.
 .DESCRIPTION
-This function is an alias for 'npm outdated [--prefix $Path]'.
+This function is an alias for 'npm outdated [--prefix $WorkingDirectory]'.
 .LINK
 https://docs.npmjs.com/cli/commands/npm-outdated
 #>
@@ -352,16 +380,16 @@ function Compare-NodeModule {
       'Directory',
       $True
     )]
-    # Node package root
-    [string]$Path
+    # Node package root at which to run the command
+    [string]$WorkingDirectory
   )
 
   $Private:NodeArguments = @()
 
-  if ($Path) {
-    if (-not (Test-NodePackageDirectory -Path $Path)) {
-      $NodeArguments += $Path
-      $Path = ''
+  if ($WorkingDirectory) {
+    if (-not (Test-NodePackageDirectory -Path $WorkingDirectory)) {
+      $NodeArguments += $WorkingDirectory
+      $WorkingDirectory = ''
     }
   }
 
@@ -370,9 +398,9 @@ function Compare-NodeModule {
   }
 
   $Private:Outdated = @{
-    Verb          = 'outdated'
-    Path          = $Path
-    NodeArguments = $NodeArguments
+    Command          = 'outdated'
+    WorkingDirectory = $WorkingDirectory
+    NodeArguments    = $NodeArguments
   }
   Invoke-NodePackage @Outdated
 }
@@ -381,7 +409,7 @@ function Compare-NodeModule {
 .SYNOPSIS
 Use Node Package Manager (npm) to increment the package version of the current Node package.
 .DESCRIPTION
-This function is an alias for 'npm version [--prefix $Path] [version=patch]'.
+This function is an alias for 'npm version [--prefix $WorkingDirectory] [version=patch]'.
 .LINK
 https://docs.npmjs.com/cli/commands/npm-version
 #>
@@ -395,8 +423,8 @@ function Step-NodePackageVersion {
       'Directory',
       $True
     )]
-    # Node package root
-    [string]$Path
+    # Node package root at which to run the command
+    [string]$WorkingDirectory
   )
 
   $Private:NAMED_VERSION = @(
@@ -434,10 +462,10 @@ function Step-NodePackageVersion {
 
   $Private:NodeArguments = , $Version.ToLowerInvariant()
 
-  if ($Path) {
-    if (-not (Test-NodePackageDirectory -Path $Path)) {
-      $NodeArguments += $Path
-      $Path = ''
+  if ($WorkingDirectory) {
+    if (-not (Test-NodePackageDirectory -Path $WorkingDirectory)) {
+      $NodeArguments += $WorkingDirectory
+      $WorkingDirectory = ''
     }
   }
 
@@ -446,9 +474,9 @@ function Step-NodePackageVersion {
   }
 
   $Private:StepVersion = @{
-    Verb          = 'version'
-    Path          = $Path
-    NodeArguments = $NodeArguments
+    Command          = 'version'
+    WorkingDirectory = $WorkingDirectory
+    NodeArguments    = $NodeArguments
   }
   Invoke-NodePackage @StepVersion
 }
@@ -458,7 +486,7 @@ New-Alias nr Invoke-NodePackageScript
 .SYNOPSIS
 Use Node Package Manager (npm) to run a script defined in a Node package's 'package.json'.
 .DESCRIPTION
-This function is an alias for 'npm run [script] [--prefix $Path] [--args]'.
+This function is an alias for 'npm run [script] [--prefix $WorkingDirectory] [--args]'.
 .LINK
 https://docs.npmjs.com/cli/commands/npm-run
 #>
@@ -471,8 +499,8 @@ function Invoke-NodePackageScript {
       'Directory',
       $True
     )]
-    # Node package root
-    [string]$Path
+    # Node package root at which to run the command
+    [string]$WorkingDirectory
   )
 
   if (-not $Script) {
@@ -481,10 +509,10 @@ function Invoke-NodePackageScript {
 
   $Private:NodeArguments = , $Script
 
-  if ($Path) {
-    if (-not (Test-NodePackageDirectory -Path $Path)) {
-      $NodeArguments += $Path
-      $Path = ''
+  if ($WorkingDirectory) {
+    if (-not (Test-NodePackageDirectory -Path $WorkingDirectory)) {
+      $NodeArguments += $WorkingDirectory
+      $WorkingDirectory = ''
     }
   }
 
@@ -493,9 +521,9 @@ function Invoke-NodePackageScript {
   }
 
   $Private:RunScript = @{
-    Verb          = 'run'
-    Path          = $Path
-    NodeArguments = $NodeArguments
+    Command          = 'run'
+    WorkingDirectory = $WorkingDirectory
+    NodeArguments    = $NodeArguments
   }
   Invoke-NodePackage @RunScript
 }
@@ -505,7 +533,7 @@ New-Alias nt Test-NodePackage
 .SYNOPSIS
 Use Node Package Manager (npm) to run the 'test' script defined in a Node package's 'package.json'.
 .DESCRIPTION
-This function is an alias for 'npm test [--prefix $Path] [--args]'.
+This function is an alias for 'npm test [--prefix $WorkingDirectory] [--args]'.
 .LINK
 https://docs.npmjs.com/cli/commands/npm-test
 #>
@@ -516,16 +544,16 @@ function Test-NodePackage {
       'Directory',
       $True
     )]
-    # Node package root
-    [string]$Path
+    # Node package root at which to run the command
+    [string]$WorkingDirectory
   )
 
   $Private:NodeArguments = @()
 
-  if ($Path) {
-    if (-not (Test-NodePackageDirectory -Path $Path)) {
-      $NodeArguments += $Path
-      $Path = ''
+  if ($WorkingDirectory) {
+    if (-not (Test-NodePackageDirectory -Path $WorkingDirectory)) {
+      $NodeArguments += $WorkingDirectory
+      $WorkingDirectory = ''
     }
   }
 
@@ -534,9 +562,9 @@ function Test-NodePackage {
   }
 
   $Private:Test = @{
-    Verb          = 'test'
-    Path          = $Path
-    NodeArguments = $NodeArguments
+    Command          = 'test'
+    WorkingDirectory = $WorkingDirectory
+    NodeArguments    = $NodeArguments
   }
   Invoke-NodePackage @Test
 }
