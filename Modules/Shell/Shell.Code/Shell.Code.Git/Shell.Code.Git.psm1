@@ -13,14 +13,14 @@ function Resolve-GitRepository {
     [switch]$New
   )
   begin {
-    $CODE = "$HOME\code"
-    $Repositories = @()
+    $Private:CODE = "$HOME\code"
+    $Private:Repositories = @()
   }
   process {
-    $RepoPath = @{
+    $Private:RepoPath = @{
       Path = $Path
     }
-    $Repository = ''
+    $Private:Repository = ''
 
     if ($New) {
       if (Test-Item @RepoPath) {
@@ -36,7 +36,7 @@ function Resolve-GitRepository {
       }
     }
     else {
-      $RepoGitPath = @{
+      $Private:RepoGitPath = @{
         Path           = $Path ? (Join-Path $Path .git) : '.git'
         RequireSubpath = $True
       }
@@ -98,7 +98,7 @@ function Invoke-GitRepository {
     [switch]$Throw
   )
 
-  $GitArguments = $args
+  $Private:GitArguments = $args
 
   if ($Verb) {
     if ($Verb -in $GIT_VERB) {
@@ -138,11 +138,11 @@ function Invoke-GitRepository {
     $Verb = 'status'
   }
 
-  $Resolve = @{
+  $Private:Resolve = @{
     Path = $Path
     New  = $Verb -in $NEWABLE_GIT_VERB
   }
-  $Repository = Resolve-GitRepository @Resolve
+  $Private:Repository = Resolve-GitRepository @Resolve
 
   if (-not $Repository) {
     if ($Path) {
@@ -195,7 +195,7 @@ function Measure-GitRepository {
     [switch]$Throw
   )
 
-  $Status = @{
+  $Private:Status = @{
     Verb = 'status'
   }
   Invoke-GitRepository @Status @PSBoundParameters @args
@@ -224,7 +224,7 @@ function Import-GitRepository {
     [switch]$ForceSsh
   )
 
-  $RepositoryPathParts = $Repository -split '/' -notmatch '^\s*$'
+  $Private:RepositoryPathParts = $Repository -split '/' -notmatch '^\s*$'
 
   if (-not $RepositoryPathParts) {
     throw 'No repository name given.'
@@ -234,13 +234,13 @@ function Import-GitRepository {
     $RepositoryPathParts = , 'jimmy-zhening-luo' + $RepositoryPathParts
   }
 
-  $Origin = (
+  $Private:Origin = (
     $ForceSsh ? 'git@github.com:' : 'https://github.com/'
   ) + (
     $RepositoryPathParts -join '/'
   )
-  $GitCommandArguments = , $Origin + $args
-  $Clone = @{
+  $Private:GitCommandArguments = , $Origin + $args
+  $Private:Clone = @{
     Verb  = 'clone'
     Path  = $Path
     Throw = $Throw
@@ -265,7 +265,7 @@ function Get-GitRepository {
     [switch]$Throw
   )
 
-  $Pull = @{
+  $Private:Pull = @{
     Verb = 'pull'
   }
   Invoke-GitRepository @Pull @PSBoundParameters @args
@@ -281,14 +281,14 @@ This function runs 'git pull [arguments]' in each child repository in %USERPROFI
 https://git-scm.com/docs/git-pull
 #>
 function Get-ChildGitRepository {
-  $Code = @{
+  $Private:Code = @{
     Path      = "$HOME\code"
     Directory = $True
   }
-  $Repositories = Get-ChildItem @Code |
+  $Private:Repositories = Get-ChildItem @Code |
     Select-Object -ExpandProperty FullName |
     Resolve-GitRepository
-  $Count = $Repositories.Count
+  $Private:Count = $Repositories.Count
 
   foreach ($Repository in $Repositories) {
     Get-GitRepository -Path $Repository @args
@@ -319,7 +319,7 @@ function Add-GitRepository {
     [switch]$Renormalize
   )
 
-  $GitCommandArguments = $args
+  $Private:GitCommandArguments = $args
 
   if (-not $Name) {
     $Name = '.'
@@ -355,7 +355,7 @@ function Add-GitRepository {
     $GitCommandArguments += '--renormalize'
   }
 
-  $Add = @{
+  $Private:Add = @{
     Verb  = 'add'
     Path  = $Path
     Throw = $Throw
@@ -386,7 +386,7 @@ function Write-GitRepository {
     [switch]$AllowEmpty
   )
 
-  $GitCommitArguments, $Messages = (
+  $Private:GitCommitArguments, $Private:Messages = (
     $Message ? (, $Message + $args) : $args
   ).Where({ $PSItem }).Where(
     { $PSItem -match $GIT_ARGUMENT },
@@ -423,7 +423,7 @@ function Write-GitRepository {
     }
   }
 
-  $GitParameters = @{
+  $Private:GitParameters = @{
     Path  = $Path
     Throw = $Throw
   }
@@ -432,7 +432,7 @@ function Write-GitRepository {
   }
 
   $GitCommitArguments = '-m', ($Messages -join ' ') + $GitCommitArguments
-  $Commit = @{
+  $Private:Commit = @{
     Verb = 'commit'
   }
   Invoke-GitRepository @Commit @GitParameters @GitCommitArguments
@@ -456,7 +456,7 @@ function Push-GitRepository {
     [switch]$Throw
   )
 
-  $GitPushArguments = $args
+  $Private:GitPushArguments = $args
 
   if (
     $Path -and (
@@ -471,7 +471,7 @@ function Push-GitRepository {
 
   Get-GitRepository @PSBoundParameters -Throw
 
-  $Push = @{
+  $Private:Push = @{
     Verb = 'push'
   }
   Invoke-GitRepository @Push @PSBoundParameters @GitPushArguments
@@ -499,7 +499,7 @@ function Reset-GitRepository {
     [switch]$Soft
   )
 
-  $GitResetArguments = $args
+  $Private:GitResetArguments = $args
 
   if ($Tree) {
     if (
@@ -507,7 +507,7 @@ function Reset-GitRepository {
         -not $Matches.Step -or $Matches.Step -as [uint32]
       )
     ) {
-      $Branching = $Matches.Branching ? $Matches.Branching : '~'
+      $Private:Branching = $Matches.Branching ? $Matches.Branching : '~'
       $Tree = 'HEAD' + $Branching + $Matches.Step
     }
     else {
@@ -528,7 +528,7 @@ function Reset-GitRepository {
         -not $Matches.Step -or $Matches.Step -as [uint32]
       )
     ) {
-      $Branching = $Matches.Branching ? $Matches.Branching : '~'
+      $Private:Branching = $Matches.Branching ? $Matches.Branching : '~'
       $Tree = 'HEAD' + $Branching + $Matches.Step
     }
     else {
@@ -538,7 +538,7 @@ function Reset-GitRepository {
     $Path = ''
   }
 
-  $GitParameters = @{
+  $Private:GitParameters = @{
     Path  = $Path
     Throw = $Throw
   }
@@ -548,7 +548,7 @@ function Reset-GitRepository {
     $GitResetArguments = , $Tree + $GitResetArguments
   }
   $GitResetArguments = , '--hard' + $GitResetArguments
-  $Reset = @{
+  $Private:Reset = @{
     Verb = 'reset'
   }
   Invoke-GitRepository @Reset @GitParameters @GitResetArguments
@@ -572,7 +572,7 @@ function Restore-GitRepository {
     [switch]$Throw
   )
 
-  $GitResetArguments = $args
+  $Private:GitResetArguments = $args
 
   if (
     $Path -and (
