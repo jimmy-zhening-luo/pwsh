@@ -9,7 +9,6 @@ function Resolve-GitRepository {
     )]
     [AllowEmptyString()]
     [AllowEmptyCollection()]
-    [PathCompletions('.', 'Directory')]
     [string[]]$Path,
     [switch]$New
   )

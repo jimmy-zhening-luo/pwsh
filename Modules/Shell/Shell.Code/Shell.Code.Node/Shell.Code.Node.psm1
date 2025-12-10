@@ -12,7 +12,6 @@ https://docs.npmjs.com/cli/commands
 function Test-NodePackageDirectory {
   [OutputType([string])]
   param(
-    [PathCompletions('.', 'Directory')]
     # Node package root path to be resolved
     [string]$Path
   )
@@ -35,7 +34,6 @@ https://docs.npmjs.com/cli/commands
 function Resolve-NodePackageDirectory {
   [OutputType([string])]
   param(
-    [PathCompletions('.', 'Directory')]
     # Node package root path to be resolved
     [string]$Path,
     # Omit the '--prefix=' prefix from the output
@@ -46,7 +44,7 @@ function Resolve-NodePackageDirectory {
     Path = $Path
   }
   if (Test-NodePackageDirectory @IsNodePackage) {
-    $Package = ($Path ? (Resolve-Path $Path) : $PWD).Path
+    $Private:Package = ($Path ? (Resolve-Path $Path) : $PWD).Path
 
     $OmitPrefix ? $Package : "--prefix=$Package"
   }
@@ -173,7 +171,7 @@ New-Alias n Invoke-NodePackage
 .SYNOPSIS
 Use Node Package Manager (npm) to run a command in a Node package.
 .DESCRIPTION
-This function is an alias shim for 'npm [args]'.
+This function runs an npm command in a specified Node package directory, or the current directory if no path is specified.
 .LINK
 https://docs.npmjs.com/cli/commands
 .LINK
@@ -182,65 +180,75 @@ https://docs.npmjs.com/cli/commands/npm
 function Invoke-NodePackage {
   param(
     [Parameter(
-      Position = 0
+      Position = 0,
+      Mandatory
     )]
     [GenericCompletions(
-      'access,adduser,audit,bugs,cache,ci,completion,config,dedupe,deprecate,diff,dist-tag,docs,doctor,edit,exec,explain,explore,find-dupes,fund,help,help-search,init,install,install-ci-test,install-test,link,login,logout,ls,org,outdated,owner,pack,ping,pkg,prefix,profile,prune,publish,query,rebuild,repo,restart,root,run,sbom,search,shrinkwrap,star,stars,start,stop,team,test,token,undeprecate,uninstall,unpublish,unstar,update,version,view,whoami'
+      'pkg,i,it,cit,rm,access,adduser,audit,bugs,cache,ci,completion,config,dedupe,deprecate,diff,dist-tag,docs,doctor,edit,exec,explain,explore,find-dupes,fund,help,help-search,init,install,install-ci-test,install-test,link,login,logout,ls,org,outdated,owner,pack,ping,prefix,profile,prune,publish,query,rebuild,repo,restart,root,run,sbom,search,shrinkwrap,star,stars,start,stop,team,test,token,undeprecate,uninstall,unpublish,unstar,update,version,view,whoami'
     )]
+    # npm command verb
     [string]$Verb,
+    [AllowEmptyString()]
     [PathCompletions(
       '~\code',
       'Directory',
       $True
     )]
     # Node package root
-    [string]$Path
+    [string]$Path,
+    [Parameter(
+      Position = 1,
+      ValueFromRemainingArguments
+    )]
+    [string[]]$NodeArguments
   )
 
-  if (-not $Verb) {
-    throw 'No npm verb specified.'
+  $Private:ArgumentList = [List[string]]::new()
+  $ArgumentList.Add('--color=always')
+
+  $Private:CallerNodeArguments = [List[string]]::new()
+  if ($NodeArguments) {
+    $CallerNodeArguments.AddRange([List[string]]$NodeArguments)
   }
 
-  # npm --color [--prefix] <command> [command options] [arguments...]
-  $Private:NodeArguments = [List[string]]::new()
-  $NodeArguments.Add('--color=always')
+  if ($Path) {
+    if ($Path.StartsWith('-') -or -not (Test-NodePackageDirectory -Path $Path)) {
+      $CallerNodeArguments.Add($Path)
+      $Path = ''
+    }
+    else {
+      $Private:PackagePrefix = Resolve-NodePackageDirectory -Path $Path
 
-  $Private:Package = $Path ? (Resolve-NodePackageDirectory -Path $Path) : ''
-  if ($Package) {
-    $NodeArguments.Add($Package)
-  }
-
-  $Private:NodeCommandArguments = [List[string]]::new()
-  if ($args) {
-    $NodeCommandArguments.AddRange([List[string]]$args)
+      if ($PackagePrefix) {
+        $ArgumentList.Add($PackagePrefix)
+      }
+    }
   }
 
   if ($Verb.StartsWith('-') -or $Verb -notin $NODE_VERB -and -not $NODE_ALIAS.ContainsKey($Verb)) {
-    $Private:DeferredVerb = $NodeCommandArguments.Find(
+    [string]$Private:DeferredVerb = $CallerNodeArguments.Count -eq 0 ? '' : $CallerNodeArguments.Find(
       {
         $args[0] -in $NODE_VERB
       }
     )
 
-    "DeferredVerb: $DeferredVerb"
-
-    if (-not $DeferredVerb) {
-      throw "Unrecognized npm verb '$Verb'."
+    if ($DeferredVerb) {
+      $CallerNodeArguments.Remove($DeferredVerb) | Out-Null
     }
 
-    $NodeCommandArguments.Remove($DeferredVerb) | Out-Null
+    $CallerNodeArguments.Add($Verb)
     $Verb = $DeferredVerb
   }
 
-  $Verb = $Verb.ToLowerInvariant()
-
-  $NodeArguments.Add($Verb)
-
-  if ($NodeCommandArguments.Count -ne 0) {
-    $NodeArguments.AddRange($NodeCommandArguments)
+  if ($Verb) {
+    $ArgumentList.Add($Verb.ToLowerInvariant())
   }
 
-  & npm.ps1 @NodeArguments 2>&1 |
+  if ($CallerNodeArguments.Count -ne 0) {
+    $ArgumentList.AddRange($CallerNodeArguments)
+  }
+
+  & npm.ps1 @ArgumentList 2>&1 |
     Tee-Object -Variable NpmResult
 
   if (-not $NpmResult) {
@@ -300,7 +308,28 @@ This function is an alias for 'npm cache clean --force'.
 https://docs.npmjs.com/cli/commands/npm-cache
 #>
 function Clear-NodeModuleCache {
-  & npm.ps1 cache clean --force @args
+  $Private:NodeArguments = @(
+    'clean'
+    '--force'
+  )
+
+  if ($Path) {
+    if (-not (Test-NodePackageDirectory -Path $Path)) {
+      $NodeArguments += $Path
+      $Path = ''
+    }
+  }
+
+  if ($args) {
+    $NodeArguments += $args
+  }
+
+  $Private:CacheClean = @{
+    Verb          = 'cache'
+    Path          = $Path
+    NodeArguments = $NodeArguments
+  }
+  Invoke-NodePackage @CacheClean
 }
 
 New-Alias npo Compare-NodeModule
@@ -323,18 +352,25 @@ function Compare-NodeModule {
     [string]$Path
   )
 
-  $NodeArguments = $args
-  if ($Path.StartsWith(('-'))) {
-    $NodeArguments = , $Path + $NodeArguments
-    $PSBoundParameters.Path = ''
-  }
-  $Package = Resolve-NodePackageDirectory @PSBoundParameters
+  $Private:NodeArguments = @()
 
-  if ($Package) {
-    $NodeArguments = , $Package + $NodeArguments
+  if ($Path) {
+    if (-not (Test-NodePackageDirectory -Path $Path)) {
+      $NodeArguments += $Path
+      $Path = ''
+    }
   }
 
-  & npm.ps1 outdated @NodeArguments
+  if ($args) {
+    $NodeArguments += $args
+  }
+
+  $Private:Outdated = @{
+    Verb          = 'outdated'
+    Path          = $Path
+    NodeArguments = $NodeArguments
+  }
+  Invoke-NodePackage @Outdated
 }
 
 <#
@@ -359,18 +395,7 @@ function Step-NodePackageVersion {
     [string]$Path
   )
 
-  $NodeArguments = $args
-  if ($Path.StartsWith(('-'))) {
-    $NodeArguments = , $Path + $NodeArguments
-    $PSBoundParameters.Path = ''
-  }
-  $Package = Resolve-NodePackageDirectory @PSBoundParameters
-
-  if ($Package) {
-    $NodeArguments = , $Package + $NodeArguments
-  }
-
-  $NAMED_VERSION = @(
+  $Private:NAMED_VERSION = @(
     'patch'
     'minor'
     'major'
@@ -403,9 +428,25 @@ function Step-NodePackageVersion {
     $Version = 'patch'
   }
 
-  $Version = $Version.ToLowerInvariant()
+  $Private:NodeArguments = , $Version.ToLowerInvariant()
 
-  & npm.ps1 version $Version @NodeArguments
+  if ($Path) {
+    if (-not (Test-NodePackageDirectory -Path $Path)) {
+      $NodeArguments += $Path
+      $Path = ''
+    }
+  }
+
+  if ($args) {
+    $NodeArguments += $args
+  }
+
+  $Private:StepVersion = @{
+    Verb          = 'version'
+    Path          = $Path
+    NodeArguments = $NodeArguments
+  }
+  Invoke-NodePackage @StepVersion
 }
 
 New-Alias nr Invoke-NodePackageScript
@@ -434,18 +475,25 @@ function Invoke-NodePackageScript {
     throw 'Script name is required.'
   }
 
-  $NodeArguments = $args
-  if ($Path.StartsWith(('-'))) {
-    $NodeArguments = , $Path + $NodeArguments
-    $PSBoundParameters.Path = ''
-  }
-  $Package = Resolve-NodePackageDirectory @PSBoundParameters
+  $Private:NodeArguments = , $Script
 
-  if ($Package) {
-    $NodeArguments = , $Package + $NodeArguments
+  if ($Path) {
+    if (-not (Test-NodePackageDirectory -Path $Path)) {
+      $NodeArguments += $Path
+      $Path = ''
+    }
   }
 
-  & npm.ps1 run $Script @NodeArguments
+  if ($args) {
+    $NodeArguments += $args
+  }
+
+  $Private:RunScript = @{
+    Verb          = 'run'
+    Path          = $Path
+    NodeArguments = $NodeArguments
+  }
+  Invoke-NodePackage @RunScript
 }
 
 New-Alias nt Test-NodePackage
@@ -468,16 +516,23 @@ function Test-NodePackage {
     [string]$Path
   )
 
-  $NodeArguments = $args
-  if ($Path.StartsWith(('-'))) {
-    $NodeArguments = , $Path + $NodeArguments
-    $PSBoundParameters.Path = ''
-  }
-  $Package = Resolve-NodePackageDirectory @PSBoundParameters
+  $Private:NodeArguments = @()
 
-  if ($Package) {
-    $NodeArguments = , $Package + $NodeArguments
+  if ($Path) {
+    if (-not (Test-NodePackageDirectory -Path $Path)) {
+      $NodeArguments += $Path
+      $Path = ''
+    }
   }
 
-  & npm.ps1 test @NodeArguments
+  if ($args) {
+    $NodeArguments += $args
+  }
+
+  $Private:Test = @{
+    Verb          = 'test'
+    Path          = $Path
+    NodeArguments = $NodeArguments
+  }
+  Invoke-NodePackage @Test
 }
