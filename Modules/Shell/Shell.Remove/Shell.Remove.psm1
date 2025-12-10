@@ -9,7 +9,7 @@ function Remove-Directory {
     [string]$Path
   )
 
-  $Hard = @{
+  $Private:Hard = @{
     Recurse = $True
     Force   = $True
   }

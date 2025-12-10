@@ -226,8 +226,8 @@ function Format-Path {
     [switch]$Trailing
   )
 
-  $AlignedPath = $Path -replace '[\\\/]', '\'
-  $TrimmedPath = $AlignedPath -replace '(?<!^)(?>\\+)', '\'
+  $Private:AlignedPath = $Path -replace '[\\\/]', '\'
+  $Private:TrimmedPath = $AlignedPath -replace '(?<!^)(?>\\+)', '\'
 
   if ($LeadingRelative) {
     $TrimmedPath = $TrimmedPath -replace '^\.(?>\\+)', ''
@@ -275,7 +275,7 @@ function Test-Item {
 
   if ([Path]::IsPathRooted($Path)) {
     if ($Location) {
-      $Relative = @{
+      $Private:Relative = @{
         Path     = $Path
         Location = $Location
       }
@@ -294,7 +294,7 @@ function Test-Item {
     $Path = $Path -replace '^~(?>\\*)', ''
 
     if ($Location) {
-      $Relative = @{
+      $Private:Relative = @{
         Path     = Join-Path $HOME $Path
         Location = $Location
       }
@@ -314,7 +314,7 @@ function Test-Item {
     $Location = $PWD.Path
   }
 
-  $Container = @{
+  $Private:Container = @{
     Path     = $Location
     PathType = 'Container'
   }
@@ -322,10 +322,10 @@ function Test-Item {
     return $False
   }
 
-  $FullLocation = (Resolve-Path -Path $Location).Path
-  $FullPath = Join-Path $FullLocation $Path
-  $HasSubpath = $FullPath.Substring($FullLocation.Length) -notmatch '^\\*$'
-  $FileLike = $HasSubpath -and -not (
+  $Private:FullLocation = (Resolve-Path -Path $Location).Path
+  $Private:FullPath = Join-Path $FullLocation $Path
+  $Private:HasSubpath = $FullPath.Substring($FullLocation.Length) -notmatch '^\\*$'
+  $Private:FileLike = $HasSubpath -and -not (
     $FullPath.EndsWith('\') -or $FullPath.EndsWith('..')
   )
 
@@ -339,7 +339,7 @@ function Test-Item {
     return $False
   }
 
-  $Item = @{
+  $Private:Item = @{
     Path     = $FullPath
     PathType = $File ? 'Leaf' : 'Container'
   }
@@ -393,8 +393,8 @@ function Resolve-Item {
     $Location = $PWD.Path
   }
 
-  $FullLocation = (Resolve-Path -Path $Location).Path
-  $FullPath = Join-Path $FullLocation $Path
+  $Private:FullLocation = (Resolve-Path -Path $Location).Path
+  $Private:FullPath = Join-Path $FullLocation $Path
 
   $New ? $FullPath : (
     Resolve-Path -Path $FullPath -Force

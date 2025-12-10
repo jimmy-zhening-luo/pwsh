@@ -41,14 +41,14 @@ function Test-Host {
   )
   begin {
     $InformationLevel = $Detailed -or $InformationLevel -eq 'Detailed' ? 'Detailed' : $Quiet -or $InformationLevel -eq 'Quiet' ? 'Quiet' : ''
-    $Verbosity = $InformationLevel ? @{
+    $Private:Verbosity = $InformationLevel ? @{
       InformationLevel = $InformationLevel
     } : @{}
-    $Results = @()
+    $Private:Results = @()
   }
   process {
     if ($Name) {
-      $Connection = @{
+      $Private:Connection = @{
         ComputerName = $Name
       }
       switch ($PSCmdlet.ParameterSetName) {
@@ -73,7 +73,7 @@ function Test-Host {
       $Results
     }
     else {
-      $Connection = @{
+      $Private:Connection = @{
         ComputerName = 'google.com'
       }
       Test-NetConnection @Connection @Verbosity
@@ -103,7 +103,7 @@ function Test-Url {
     return $False
   }
 
-  $Request = @{
+  $Private:Request = @{
     Method                       = 'HEAD'
     PreserveHttpMethodOnRedirect = $True
     DisableKeepAlive             = $True
@@ -150,14 +150,14 @@ function Open-Url {
 
   switch ($PSCmdlet.ParameterSetName) {
     Uri {
-      $Target = $Uri
+      $Private:Target = $Uri
     }
     default {
-      $Target = $Path ? (Test-Path @PSBoundParameters) ? (Resolve-Path @PSBoundParameters) : [Uri]$Path : $PWD
+      $Private:Target = $Path ? (Test-Path @PSBoundParameters) ? (Resolve-Path @PSBoundParameters) : [Uri]$Path : $PWD
     }
   }
 
-  $Browser = @{
+  $Private:Browser = @{
     FilePath     = 'C:\Program Files\Google\Chrome\Application\chrome.exe'
     ArgumentList = $Target
   }

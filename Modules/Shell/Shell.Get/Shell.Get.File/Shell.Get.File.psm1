@@ -8,39 +8,39 @@ function Get-File {
     [string]$Location
   )
 
-  $Local:args = $args
+  $Private:args = $args
 
   if (
     $Location -and -not (
       Test-Path -Path $Location -PathType Container
     )
   ) {
-    $Local:args = , $Location + $Local:args
+    $Private:args = , $Location + $Private:args
     $Location = ''
   }
 
   if ($Path) {
-    $Target = $Location ? (Join-Path $Location $Path) : $Path
+    $Private:Target = $Location ? (Join-Path $Location $Path) : $Path
 
     if (-not (Test-Path -Path $Target)) {
       throw "Path '$Target' does not exist."
     }
 
-    $FullPath = @{
+    $Private:FullPath = @{
       Path = Resolve-Path -Path $Target
     }
-    $Container = @{
+    $Private:Container = @{
       PathType = 'Container'
     }
     if (Test-Path @FullPath @Container) {
-      Get-ChildItem @FullPath @Local:args
+      Get-ChildItem @FullPath @Private:args
     }
     else {
-      Get-Content @FullPath @Local:args
+      Get-Content @FullPath @Private:args
     }
   }
   else {
-    $Directory = @{
+    $Private:Directory = @{
       Path = $Location ? (Resolve-Path -Path $Location) : $PWD.Path
     }
     Get-ChildItem @Directory @Local:args
@@ -56,7 +56,7 @@ function Get-FileSibling {
     [string]$Path
   )
 
-  $Location = @{
+  $Private:Location = @{
     Location = $PWD | Split-Path
   }
   Get-File @PSBoundParameters @Location @args
@@ -71,7 +71,7 @@ function Get-FileRelative {
     [string]$Path
   )
 
-  $Location = @{
+  $Private:Location = @{
     Location = $PWD | Split-Path | Split-Path
   }
   Get-File @PSBoundParameters @Location @args
@@ -86,7 +86,7 @@ function Get-FileHome {
     [string]$Path
   )
 
-  $Location = @{
+  $Private:Location = @{
     Location = $HOME
   }
   Get-File @PSBoundParameters @Location @args
@@ -101,7 +101,7 @@ function Get-FileCode {
     [string]$Path
   )
 
-  $Location = @{
+  $Private:Location = @{
     Location = "$HOME\code"
   }
   Get-File @PSBoundParameters @Location @args
@@ -116,7 +116,7 @@ function Get-FileDrive {
     [string]$Path
   )
 
-  $Location = @{
+  $Private:Location = @{
     Location = $PWD.Drive.Root
   }
   Get-File @PSBoundParameters @Location @args

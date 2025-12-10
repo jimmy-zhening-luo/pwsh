@@ -51,12 +51,12 @@ function New-Directory {
     [PSCredential]$Credential
   )
   begin {
-    $DirectoryType = @{
+    $Private:DirectoryType = @{
       ItemType = 'Directory'
     }
-    $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [CommandTypes]::Cmdlet)
-    $scriptCmd = { & $wrappedCmd @DirectoryType @PSBoundParameters }
-    $steppablePipeline = $scriptCmd.GetSteppablePipeline()
+    $Private:wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [CommandTypes]::Cmdlet)
+    $Private:scriptCmd = { & $wrappedCmd @DirectoryType @PSBoundParameters }
+    $Private:steppablePipeline = $scriptCmd.GetSteppablePipeline()
 
     if (
       $PSCmdlet.ShouldProcess(
@@ -115,13 +115,13 @@ function New-Junction {
     [Object]$Value
   )
   begin {
-    $JunctionType = @{
+    $Private:JunctionType = @{
       ItemType = 'Junction'
       Force    = $True
     }
-    $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [CommandTypes]::Cmdlet)
-    $scriptCmd = { & $wrappedCmd @PSBoundParameters @JunctionType }
-    $steppablePipeline = $scriptCmd.GetSteppablePipeline()
+    $Private:wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [CommandTypes]::Cmdlet)
+    $Private:scriptCmd = { & $wrappedCmd @PSBoundParameters @JunctionType }
+    $Private:steppablePipeline = $scriptCmd.GetSteppablePipeline()
 
     if (
       $PSCmdlet.ShouldProcess(

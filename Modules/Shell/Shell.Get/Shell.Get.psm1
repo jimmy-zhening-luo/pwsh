@@ -24,7 +24,7 @@ function Get-Size {
   )
 
   process {
-    $UNITS = @{
+    $Private:UNITS = @{
       B  = 'B'
       KB = 'KB'
       MB = 'MB'
@@ -33,14 +33,14 @@ function Get-Size {
       M  = 'MB'
       G  = 'GB'
     }
-    $FACTORS = @{
+    $Private:FACTORS = @{
       B  = 1
       KB = 1KB
       MB = 1MB
       GB = 1GB
     }
-    $DEFAULT_PATH = $PWD.Path
-    $DEFAULT_UNIT = 'KB'
+    $Private:DEFAULT_PATH = $PWD.Path
+    $Private:DEFAULT_UNIT = 'KB'
 
     if ($Path) {
       if ($Unit) {
@@ -76,9 +76,9 @@ function Get-Size {
       }
     }
 
-    $UnitCanonical = $UNITS[$Unit]
-    $Item = Get-Item $Path
-    $Quantity = [Math]::Round(
+    $Private:UnitCanonical = $UNITS[$Unit]
+    $Private:Item = Get-Item $Path
+    $Private:Quantity = [Math]::Round(
       (
         $Item.PSIsContainer ? (
           Get-ChildItem -Path $Path -Recurse -File |

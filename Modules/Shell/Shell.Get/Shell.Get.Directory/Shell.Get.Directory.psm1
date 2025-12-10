@@ -24,7 +24,7 @@ function Get-DirectorySibling {
     [string]$Path
   )
 
-  $FullPath = @{
+  $Private:FullPath = @{
     Path = Join-Path ($PWD | Split-Path) $Path
   }
   Get-ChildItem @FullPath @args
@@ -38,7 +38,7 @@ function Get-DirectoryRelative {
     [string]$Path
   )
 
-  $FullPath = @{
+  $Private:FullPath = @{
     Path = Join-Path ($PWD | Split-Path | Split-Path) $Path
   }
   Get-ChildItem @FullPath @args
@@ -52,7 +52,7 @@ function Get-DirectoryHome {
     [string]$Path
   )
 
-  $FullPath = @{
+  $Private:FullPath = @{
     Path = Join-Path $HOME $Path
   }
   Get-ChildItem @FullPath @args
@@ -66,7 +66,7 @@ function Get-DirectoryCode {
     [string]$Path
   )
 
-  $FullPath = @{
+  $Private:FullPath = @{
     Path = Join-Path $HOME\code $Path
   }
   Get-ChildItem @FullPath @args
@@ -80,7 +80,7 @@ function Get-DirectoryDrive {
     [string]$Path
   )
 
-  $FullPath = @{
+  $Private:FullPath = @{
     Path = Join-Path $PWD.Drive.Root $Path
   }
   Get-ChildItem @FullPath @args

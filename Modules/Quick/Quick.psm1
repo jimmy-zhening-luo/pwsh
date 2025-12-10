@@ -7,7 +7,7 @@ function Copy-Guid {
     [switch]$Silent
   )
 
-  $Guid = (New-Guid).Guid
+  $Private:Guid = (New-Guid).Guid
 
   if ($Uppercase) {
     $Guid = $Guid.ToUpperInvariant()
@@ -30,7 +30,7 @@ function ConvertTo-Hex {
     [switch]$Lowercase
   )
 
-  $Hex = $Decimal | ForEach-Object { '{0:X}' -f $PSItem }
+  $Private:Hex = $Decimal | ForEach-Object { '{0:X}' -f $PSItem }
 
   if ($Hex) {
     $Lowercase ? $Hex.ToLowerInvariant() : $Hex

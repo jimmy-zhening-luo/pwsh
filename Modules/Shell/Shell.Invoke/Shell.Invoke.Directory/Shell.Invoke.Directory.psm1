@@ -14,7 +14,7 @@ function Invoke-Directory {
     return Get-File @PSBoundParameters
   }
 
-  $Container = @{
+  $Private:Container = @{
     PathType = 'Container'
   }
   if (Test-Path @PSBoundParameters @Container) {
@@ -29,7 +29,7 @@ function Invoke-DirectorySibling {
     [string]$Path
   )
 
-  $FullPath = @{
+  $Private:FullPath = @{
     Path = Join-Path ($PWD | Split-Path) $Path
   }
   Invoke-Directory @FullPath @args
@@ -42,7 +42,7 @@ function Invoke-DirectoryRelative {
     [string]$Path
   )
 
-  $FullPath = @{
+  $Private:FullPath = @{
     Path = Join-Path ($PWD | Split-Path | Split-Path) $Path
   }
   Invoke-Directory @FullPath @args
@@ -55,7 +55,7 @@ function Invoke-DirectoryHome {
     [string]$Path
   )
 
-  $FullPath = @{
+  $Private:FullPath = @{
     Path = Join-Path $HOME $Path
   }
   Invoke-Directory @FullPath @args
@@ -68,7 +68,7 @@ function Invoke-DirectoryCode {
     [string]$Path
   )
 
-  $FullPath = @{
+  $Private:FullPath = @{
     Path = Join-Path $HOME\code $Path
   }
   Invoke-Directory @FullPath @args
@@ -81,7 +81,7 @@ function Invoke-DirectoryDrive {
     [string]$Path
   )
 
-  $FullPath = @{
+  $Private:FullPath = @{
     Path = Join-Path $PWD.Drive.Root $Path
   }
   Invoke-Directory @FullPath @args

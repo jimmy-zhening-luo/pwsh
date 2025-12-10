@@ -23,17 +23,17 @@ function Get-HelpOnline {
     return Get-Help -Name 'Get-Help'
   }
 
-  $Topic = $Name -join '_'
-  $Help = ''
-  $HelpLink = ''
-  $Articles = @()
-  $Command = @{
+  $Private:Topic = $Name -join '_'
+  $Private:Help = ''
+  $Private:HelpLink = ''
+  $Private:Articles = @()
+  $Private:Command = @{
     Name        = $Topic
     ErrorAction = 'SilentlyContinue'
   }
 
   if ($CUSTOM_HELP.Contains($Topic)) {
-    $CustomHelp = $CUSTOM_HELP[$Topic]
+    $Private:CustomHelp = $CUSTOM_HELP[$Topic]
 
     if ($CustomHelp -and $CustomHelp -notmatch ':') {
       $CustomHelp = $CUSTOM_HELP[$CustomHelp]
@@ -44,19 +44,19 @@ function Get-HelpOnline {
     }
   }
   else {
-    $Help = Get-Help @Command
+    $Private:Help = Get-Help @Command
 
     if ($Help -and $Help.Count -gt 1) {
       $Help = ''
     }
 
     if ($Help) {
-      $HelpLink = $Help.relatedLinks.navigationLink.Uri -replace '\?(?>.*)$', '' |
+      $Private:HelpLink = $Help.relatedLinks.navigationLink.Uri -replace '\?(?>.*)$', '' |
         Where-Object { $PSItem }
     }
 
     if ($Help -and $Parameter) {
-      $ParameterHelp = Get-Help @Command -Parameter $Parameter
+      $Private:ParameterHelp = Get-Help @Command -Parameter $Parameter
 
       if ($ParameterHelp) {
         $Help = $ParameterHelp
@@ -71,23 +71,23 @@ function Get-HelpOnline {
       $Articles += $HelpLink
     }
     else {
-      $ABOUT_BASE_URL = 'https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about'
-      $about_Article = ''
+      $Private:ABOUT_BASE_URL = 'https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about'
+      $Private:about_Article = ''
 
       if ($Help) {
         $about_Article = "$ABOUT_BASE_URL/$($Help.name)"
       }
       else {
-        $about_Topic = $Topic -replace '(?>[-_ :]+)', '_' -replace '^(?>about)?_?', 'about_'
+        $Private:about_Topic = $Topic -replace '(?>[-_ :]+)', '_' -replace '^(?>about)?_?', 'about_'
 
         function Resolve-AboutArticle {
           param(
             [string]$Topic
           )
 
-          $Local:about_Article = "$ABOUT_BASE_URL/$Topic"
+          $Private:about_Article = "$ABOUT_BASE_URL/$Topic"
 
-          (Browse\Test-Url -Uri $Local:about_Article) ? $Local:about_Article : ''
+          (Browse\Test-Url -Uri $Private:about_Article) ? $Private:about_Article : ''
         }
 
         $about_Article = Resolve-AboutArticle -Topic $about_Topic
@@ -133,8 +133,8 @@ function Get-HelpOnline {
   }
 
   if ($Articles) {
-    $ArticleList = $Articles -join "`n"
-    $ArticleInformation = @{
+    $Private:ArticleList = $Articles -join "`n"
+    $Private:ArticleInformation = @{
       MessageData       = "$ArticleList"
       InformationAction = 'Continue'
     }
@@ -154,10 +154,10 @@ function Get-CommandAlias {
     $Definition = '*'
   }
 
-  $Commands = @{
+  $Private:Commands = @{
     Definition = $Definition.Contains('*') ? $Definition : $Definition.Length -lt 3 ? "$Definition*" : "*$Definition*"
   }
-  $Property = @{
+  $Private:Property = @{
     Property = @(
       'DisplayName'
       'Options'
@@ -198,7 +198,7 @@ function Get-VerbList {
     $Verb = '*'
   }
 
-  $Verbs = @{
+  $Private:Verbs = @{
     Verb = $Verb.Contains('*') ? $Verb : $Verb.Length -lt 3 ? "$Verb*" : "*$Verb*"
   }
   Get-Verb @Verbs @args |

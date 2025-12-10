@@ -13,7 +13,7 @@ function Invoke-Workspace {
     [string]$Location
   )
 
-  $ArgumentList = $args
+  $Private:ArgumentList = $args
 
   if (
     $Location -and -not (
@@ -25,10 +25,10 @@ function Invoke-Workspace {
   }
 
   if ($Path) {
-    $Target = $Location ? (Join-Path $Location $Path) : $Path
+    $Private:Target = $Location ? (Join-Path $Location $Path) : $Path
 
     if (Test-Path -Path $Target) {
-      $FullPath = (Resolve-Path $Target).Path
+      $Private:FullPath = (Resolve-Path $Target).Path
       $ArgumentList = , $FullPath + $ArgumentList
     }
     else {
@@ -72,7 +72,7 @@ function Invoke-Workspace {
     $ArgumentList += '--reuse-window'
   }
 
-  $Process = @{
+  $Private:Process = @{
     FilePath     = 'code.cmd'
     ArgumentList = $ArgumentList
     NoNewWindow  = $True
@@ -95,7 +95,7 @@ function Invoke-WorkspaceSibling {
     [switch]$ReuseWindow
   )
 
-  $Location = @{
+  $Private:Location = @{
     Location = $PWD | Split-Path
   }
   Invoke-Workspace @PSBoundParameters @Location @args
@@ -116,7 +116,7 @@ function Invoke-WorkspaceRelative {
     [switch]$ReuseWindow
   )
 
-  $Location = @{
+  $Private:Location = @{
     Location = $PWD | Split-Path | Split-Path
   }
   Invoke-Workspace @PSBoundParameters @Location @args
@@ -137,7 +137,7 @@ function Invoke-WorkspaceHome {
     [switch]$ReuseWindow
   )
 
-  $Location = @{
+  $Private:Location = @{
     Location = $HOME
   }
   Invoke-Workspace @PSBoundParameters @Location @args
@@ -158,7 +158,7 @@ function Invoke-WorkspaceCode {
     [switch]$ReuseWindow
   )
 
-  $Location = @{
+  $Private:Location = @{
     Location = "$HOME\code"
   }
   Invoke-Workspace @PSBoundParameters @Location @args
@@ -179,7 +179,7 @@ function Invoke-WorkspaceDrive {
     [switch]$ReuseWindow
   )
 
-  $Location = @{
+  $Private:Location = @{
     Location = $PWD.Drive.Root
   }
   Invoke-Workspace @PSBoundParameters @Location @args

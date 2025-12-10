@@ -1,10 +1,10 @@
-$Force = @{
+$Private:Force = @{
   Force = $True
 }
-$Readonly = @{
+$Private:Readonly = @{
   Option = 'ReadOnly'
 }
-$ReadonlyAllScope = @{
+$Private:ReadonlyAllScope = @{
   Option = 'ReadOnly', 'AllScope'
 }
 

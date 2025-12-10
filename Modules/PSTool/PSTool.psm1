@@ -11,7 +11,7 @@ function Invoke-PSHistory {
   [OutputType([void])]
   param()
 
-  $History = @{
+  $Private:History = @{
     Path        = (Get-PSReadLineOption).HistorySavePath
     ProfileName = 'PowerShell'
     Window      = $True
@@ -24,7 +24,7 @@ function Invoke-PSProfile {
   [OutputType([void])]
   param()
 
-  $ProfileRepository = @{
+  $Private:ProfileRepository = @{
     Path        = 'pwsh'
     ProfileName = 'PowerShell'
   }
@@ -33,7 +33,7 @@ function Invoke-PSProfile {
 
 New-Alias up Update-PSProfile
 function Update-PSProfile {
-  $ProfileRepository = @{
+  $Private:ProfileRepository = @{
     Path = Resolve-Path -Path $HOME\code\pwsh
   }
   Shell\Get-GitRepository @ProfileRepository
@@ -45,12 +45,12 @@ function Update-PSLinter {
   [OutputType([void])]
   param()
 
-  $Linter = @{
+  $Private:Linter = @{
     Path     = "$HOME\code\pwsh\PSScriptAnalyzerSettings.psd1"
     PathType = 'Leaf'
   }
   if (Test-Path @Linter) {
-    $Copy = @{
+    $Private:Copy = @{
       Path        = $Linter.Path
       Destination = $HOME
     }
@@ -69,14 +69,14 @@ function Measure-PSProfile {
     [switch]$Number
   )
 
-  $Test = @{
+  $Private:Test = @{
     Command = '1'
   }
 
-  [double]$StartupLoadProfile = 0
-  [double]$NormalStartup = 0
+  [double]$Private:StartupLoadProfile = 0
+  [double]$Private:NormalStartup = 0
 
-  $Iterations = 1
+  $Private:Iterations = 1
 
   for ($i = 0; $i -lt $Iterations; ++$i) {
     $StartupLoadProfile += (
@@ -87,13 +87,13 @@ function Measure-PSProfile {
     ).TotalMilliseconds
   }
 
-  $Performance = [int][Math]::Max(
+  $Private:Performance = [int][Math]::Max(
     [Math]::Round(
       ($StartupLoadProfile - $NormalStartup) / $Iterations
     ),
     0
   )
-  $MeanNormalStartup = [int][Math]::Round($NormalStartup / $Iterations)
+  $Private:MeanNormalStartup = [int][Math]::Round($NormalStartup / $Iterations)
 
   $Number ? $Performance : "$Performance ms`n(Base: $MeanNormalStartup ms)"
 }
