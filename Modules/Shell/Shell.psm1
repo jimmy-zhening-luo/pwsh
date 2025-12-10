@@ -22,61 +22,6 @@ function Clear-Line {
   }
 }
 
-class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory {
-  [string] $Root
-  [string] $Type
-  [bool] $Flat
-  [bool] $UseNativeDirectorySeparator
-
-  PathCompletionsAttribute(
-    [string] $root
-  ) {
-    $this.Root = $root
-    $this.Type = ''
-    $this.Flat = $false
-    $this.UseNativeDirectorySeparator = $false
-  }
-  PathCompletionsAttribute(
-    [string] $root,
-    [string] $type
-  ) {
-    $this.Root = $root
-    $this.Type = $type
-    $this.Flat = $false
-    $this.UseNativeDirectorySeparator = $false
-  }
-  PathCompletionsAttribute(
-    [string] $root,
-    [string] $type,
-    [bool] $flat
-  ) {
-    $this.Root = $root
-    $this.Type = $type
-    $this.Flat = $flat
-    $this.UseNativeDirectorySeparator = $false
-  }
-  PathCompletionsAttribute(
-    [string] $root,
-    [string] $type,
-    [bool] $flat,
-    [bool] $useNativeDirectorySeparator
-  ) {
-    $this.Root = $root
-    $this.Type = $type
-    $this.Flat = $flat
-    $this.UseNativeDirectorySeparator = $useNativeDirectorySeparator
-  }
-
-  [IArgumentCompleter] Create() {
-    return [PathCompleter]::new(
-      $this.Root,
-      $this.Type,
-      $this.Flat,
-      $this.UseNativeDirectorySeparator
-    )
-  }
-}
-
 class PathCompleter : GenericCompleterBase, IArgumentCompleter {
   [string] $Root
   [string] $Type
@@ -190,6 +135,61 @@ class PathCompleter : GenericCompleterBase, IArgumentCompleter {
     }
 
     return [PathCompleter]::CreateCompletion($items)
+  }
+}
+
+class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory {
+  [string] $Root
+  [string] $Type
+  [bool] $Flat
+  [bool] $UseNativeDirectorySeparator
+
+  PathCompletionsAttribute(
+    [string] $root
+  ) {
+    $this.Root = $root
+    $this.Type = ''
+    $this.Flat = $false
+    $this.UseNativeDirectorySeparator = $false
+  }
+  PathCompletionsAttribute(
+    [string] $root,
+    [string] $type
+  ) {
+    $this.Root = $root
+    $this.Type = $type
+    $this.Flat = $false
+    $this.UseNativeDirectorySeparator = $false
+  }
+  PathCompletionsAttribute(
+    [string] $root,
+    [string] $type,
+    [bool] $flat
+  ) {
+    $this.Root = $root
+    $this.Type = $type
+    $this.Flat = $flat
+    $this.UseNativeDirectorySeparator = $false
+  }
+  PathCompletionsAttribute(
+    [string] $root,
+    [string] $type,
+    [bool] $flat,
+    [bool] $useNativeDirectorySeparator
+  ) {
+    $this.Root = $root
+    $this.Type = $type
+    $this.Flat = $flat
+    $this.UseNativeDirectorySeparator = $useNativeDirectorySeparator
+  }
+
+  [IArgumentCompleter] Create() {
+    return [PathCompleter]::new(
+      $this.Root,
+      $this.Type,
+      $this.Flat,
+      $this.UseNativeDirectorySeparator
+    )
   }
 }
 
