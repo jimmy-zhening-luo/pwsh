@@ -9,7 +9,6 @@ function Resolve-GitRepository {
       Position = 0,
       ValueFromPipeline
     )]
-    [AllowEmptyString()]
     [AllowEmptyCollection()]
     [string[]]$Path,
     [switch]$New
