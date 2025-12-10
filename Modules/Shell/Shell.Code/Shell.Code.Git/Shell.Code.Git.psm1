@@ -117,7 +117,7 @@ function Invoke-GitRepository {
       else {
         if (
           $Path -and -not (
-            $PWD | Resolve-GitRepository
+            $PWD.Path | Resolve-GitRepository
           ) -and -not (
             $Path | Resolve-GitRepository
           ) -and (
@@ -349,7 +349,7 @@ function Add-GitRepository {
 
   if (
     $Path -and (
-      $PWD | Resolve-GitRepository
+      $PWD.Path | Resolve-GitRepository
     ) -and -not (
       $Path | Resolve-GitRepository
     )
@@ -428,7 +428,7 @@ function Write-GitRepository {
 
   if (
     $Path -and (
-      $PWD | Resolve-GitRepository
+      $PWD.Path | Resolve-GitRepository
     ) -and -not (
       $Path | Resolve-GitRepository
     )
@@ -501,7 +501,7 @@ function Push-GitRepository {
 
   if (
     $Path -and (
-      $PWD | Resolve-GitRepository
+      $PWD.Path | Resolve-GitRepository
     ) -and -not (
       $Path | Resolve-GitRepository
     )
@@ -564,7 +564,7 @@ function Reset-GitRepository {
 
   if (
     $Path -and (
-      $PWD | Resolve-GitRepository
+      $PWD.Path | Resolve-GitRepository
     ) -and -not (
       $Path | Resolve-GitRepository
     )
@@ -626,7 +626,7 @@ function Restore-GitRepository {
 
   if (
     $Path -and (
-      $PWD | Resolve-GitRepository
+      $PWD.Path | Resolve-GitRepository
     ) -and -not (
       $Path | Resolve-GitRepository
     )
