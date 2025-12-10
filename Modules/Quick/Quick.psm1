@@ -24,6 +24,12 @@ New-Alias hex ConvertTo-Hex
 function ConvertTo-Hex {
   [OutputType([string])]
   param(
+    [Parameter(
+      Position = 0,
+      Mandatory,
+      ValueFromRemainingArguments
+    )]
+    [AllowEmptyCollection()]
     [Alias('Number')]
     [int[]]$Decimal,
     [Alias('Case')]

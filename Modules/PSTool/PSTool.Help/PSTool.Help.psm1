@@ -11,6 +11,7 @@ $CUSTOM_HELP = (
 
 New-Alias m Get-HelpOnline
 function Get-HelpOnline {
+  [CmdletBinding()]
   [OutputType([System.Object])]
   param(
     [Parameter(

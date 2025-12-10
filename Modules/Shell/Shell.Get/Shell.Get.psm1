@@ -10,12 +10,14 @@ function Get-Size {
   [OutputType([double], ParameterSetName = 'Number')]
   param(
     [Parameter(
-      ValueFromPipeline,
-      Position = 0
+      Position = 0,
+      ValueFromPipeline
     )]
     [PathCompletions('.')]
     [string]$Path,
-    [Parameter(Position = 1)]
+    [Parameter(
+      Position = 1
+    )]
     [GenericCompletions('B,KB,MB,GB')]
     [string]$Unit,
     [Alias('qo', 'Number')]

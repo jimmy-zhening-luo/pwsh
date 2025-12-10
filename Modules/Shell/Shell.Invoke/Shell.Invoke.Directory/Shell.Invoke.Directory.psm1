@@ -14,7 +14,7 @@ function Invoke-Directory {
       PathType = 'Container'
     }
     if (Test-Path @PSBoundParameters @Container) {
-      Invoke-Item @PSBoundParameters
+      Invoke-Item @PSBoundParameters @args
     }
   }
 }

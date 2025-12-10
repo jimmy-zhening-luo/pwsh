@@ -20,6 +20,7 @@ Opens the 'Settings' app to the 'Windows Update' page.
 This function invokes the URI 'ms-settings:windowsupdate' to open the 'Windows Update' page in the 'Settings' app.
 #>
 function Update-Windows {
+  [CmdletBinding()]
   [OutputType([void])]
   param()
 
@@ -41,6 +42,7 @@ Opens the 'Environment Variables' dialog as a standalone window.
 This function invokes 'rundll32' on 'sysdm.cpl' ('System Properties' control panel) with the 'EditEnvironmentVariables' argument, which opens the 'Environment Variables' dialog directly.
 #>
 function Edit-SystemPath {
+  [CmdletBinding()]
   [OutputType([void])]
   param(
     # Launch Environment Variables control panel as administrator to edit system variables

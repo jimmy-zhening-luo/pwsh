@@ -5,7 +5,6 @@ New-Alias p Get-File
 function Get-File {
   [OutputType([string[]], [DirectoryInfo[]], [FileInfo[]])]
   param(
-    [Parameter(Position = 0)]
     [PathCompletions('.')]
     [string]$Path,
     [string]$Location
@@ -57,7 +56,6 @@ New-Alias p. Get-FileSibling
 function Get-FileSibling {
   [OutputType([string[]])]
   param (
-    [Parameter(Position = 0)]
     [PathCompletions('..')]
     [string]$Path
   )
@@ -72,7 +70,6 @@ New-Alias p.. Get-FileRelative
 function Get-FileRelative {
   [OutputType([string[]])]
   param (
-    [Parameter(Position = 0)]
     [PathCompletions('..\..')]
     [string]$Path
   )
@@ -87,7 +84,6 @@ New-Alias ph Get-FileHome
 function Get-FileHome {
   [OutputType([string[]])]
   param (
-    [Parameter(Position = 0)]
     [PathCompletions('~')]
     [string]$Path
   )
@@ -102,7 +98,6 @@ New-Alias pc Get-FileCode
 function Get-FileCode {
   [OutputType([string[]])]
   param (
-    [Parameter(Position = 0)]
     [PathCompletions('~\code')]
     [string]$Path
   )
@@ -117,7 +112,6 @@ New-Alias p/ Get-FileDrive
 function Get-FileDrive {
   [OutputType([string[]])]
   param (
-    [Parameter(Position = 0)]
     [PathCompletions('\')]
     [string]$Path
   )

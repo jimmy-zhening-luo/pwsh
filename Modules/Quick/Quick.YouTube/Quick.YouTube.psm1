@@ -9,9 +9,12 @@ https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#usage-and-options
 #>
 function Get-YouTube {
   param(
-    [Parameter(Mandatory)]
     [string]$Video
   )
+
+  if (-not $Video) {
+    throw 'No video specified.'
+  }
 
   [uri]$Private:VideoUri = $Video -match [regex]'^(?>https?://)?(?>(?>www|m)\.)?(?>youtube\.com/watch\?)(?:\S*&)?v=(?<Video>(?>[-\w]+))' ? [UriBuilder]::new(
     'https',
