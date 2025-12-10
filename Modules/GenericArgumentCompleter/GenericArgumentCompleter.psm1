@@ -39,7 +39,7 @@ class GenericCompleterBase {
   static [List[CompletionResult]] CreateCompletion(
     [List[string]] $completions
   ) {
-    $completionResults = [List[CompletionResult]]::new()
+    $private:completionResults = [List[CompletionResult]]::new()
 
     foreach ($private:completion in $completions) {
       [string]$private:escapedCompletion = [CodeGeneration]::EscapeSingleQuotedStringContent($completion)
