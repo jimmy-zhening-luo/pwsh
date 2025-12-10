@@ -197,16 +197,20 @@ $ExportableTypes = @(
   [PathCompleter]
   [PathCompletionsAttribute]
 )
-$TypeAcceleratorsClass = [PSObject].Assembly.GetType(
-  'System.Management.Automation.TypeAccelerators'
-)
-$ExistingTypeAccelerators = $TypeAcceleratorsClass::Get
-foreach ($Type in $ExportableTypes) {
+
+if (-not $TypeAcceleratorsClass) {
+  $Global:TypeAcceleratorsClass = [PSObject].Assembly.GetType('System.Management.Automation.TypeAccelerators')
+}
+
+$Private:ExistingTypeAccelerators = $TypeAcceleratorsClass::Get
+
+foreach ($Private:Type in $ExportableTypes) {
   if ($Type.FullName -in $ExistingTypeAccelerators.Keys) {
-    $Message = @(
+    [string]$Private:Message = @(
       "Unable to register type accelerator '$($Type.FullName)'"
       'Accelerator already exists.'
     ) -join ' - '
+
     throw [System.Management.Automation.ErrorRecord]::new(
       [System.InvalidOperationException]::new($Message),
       'TypeAcceleratorAlreadyExists',
@@ -215,11 +219,13 @@ foreach ($Type in $ExportableTypes) {
     )
   }
 }
-foreach ($Type in $ExportableTypes) {
+
+foreach ($Private:Type in $ExportableTypes) {
   $TypeAcceleratorsClass::Add($Type.FullName, $Type)
 }
+
 $MyInvocation.MyCommand.ScriptBlock.Module.OnRemove = {
-  foreach ($Type in $ExportableTypes) {
+  foreach ($Private:Type in $ExportableTypes) {
     $TypeAcceleratorsClass::Remove($Type.FullName)
   }
 }.GetNewClosure()

@@ -180,6 +180,7 @@ $ExportableTypes = @(
 if (-not $TypeAcceleratorsClass) {
   $Global:TypeAcceleratorsClass = [PSObject].Assembly.GetType('System.Management.Automation.TypeAccelerators')
 }
+
 $Private:ExistingTypeAccelerators = $TypeAcceleratorsClass::Get
 
 foreach ($Private:Type in $ExportableTypes) {
