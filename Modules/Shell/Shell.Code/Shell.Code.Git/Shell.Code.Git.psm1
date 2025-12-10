@@ -62,6 +62,15 @@ function Resolve-GitRepository {
   }
 }
 
+$GIT_VERB_COMPLETION = (
+  'switch,merge,diff,stash,tag,config,remote,submodule,fetch,checkout,branch,rm,mv,ls-files,ls-tree,init,status,clone,pull,add,commit,push,reset'
+)
+$GIT_VERB = $GIT_VERB_COMPLETION -split ','
+$NEWABLE_GIT_VERB = @(
+  'clone'
+  'config'
+  'init'
+)
 $GIT_ARGUMENT = '^(?>(?=.*[*=])(?>.+)|-(?>\w|(?>-\w[-\w]*\w)))$'
 
 <#
@@ -87,16 +96,6 @@ function Invoke-GitRepository {
     [string]$Path,
     # Stop execution on Git error
     [switch]$Throw
-  )
-
-  $GIT_VERB_COMPLETION = (
-    'switch,merge,diff,stash,tag,config,remote,submodule,fetch,checkout,branch,rm,mv,ls-files,ls-tree,init,status,clone,pull,add,commit,push,reset'
-  )
-  $GIT_VERB = $GIT_VERB_COMPLETION -split ','
-  $NEWABLE_GIT_VERB = @(
-    'clone'
-    'config'
-    'init'
   )
 
   $GitArguments = $args
