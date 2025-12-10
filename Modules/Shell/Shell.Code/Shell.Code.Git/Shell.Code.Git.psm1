@@ -154,7 +154,7 @@ function Invoke-GitRepository {
     if ($Path) {
       $GitArguments.Insert(0, $Path)
 
-      $Resolve.Path = $PWD
+      $Resolve.Path = $PWD.Path
       $Repository = Resolve-GitRepository @Resolve
     }
 
