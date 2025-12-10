@@ -7,7 +7,8 @@ function Resolve-GitRepository {
     [Parameter(
       Mandatory,
       Position = 0,
-      ValueFromPipeline
+      ValueFromPipeline,
+      ValueFromPipelineByProperty
     )]
     [AllowEmptyCollection()]
     [string[]]$Path,
