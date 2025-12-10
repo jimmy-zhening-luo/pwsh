@@ -34,7 +34,7 @@ function Invoke-PSProfile {
 New-Alias up Update-PSProfile
 function Update-PSProfile {
   [hashtable]$Private:ProfileRepository = @{
-    Path = (Resolve-Path -Path $HOME\code\pwsh).Path
+    Path = Resolve-Path -Path $HOME\code\pwsh
   }
   Shell\Get-GitRepository @ProfileRepository
 

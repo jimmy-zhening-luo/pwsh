@@ -1,7 +1,6 @@
 using namespace System.Collections.Generic
 
 function Resolve-GitRepository {
-  [CmdletBinding()]
   [OutputType([string[]])]
   param(
     [Parameter(
@@ -117,7 +116,7 @@ function Invoke-GitRepository {
       else {
         if (
           $Path -and -not (
-            $PWD.Path | Resolve-GitRepository
+            $PWD | Resolve-GitRepository
           ) -and -not (
             $Path | Resolve-GitRepository
           ) -and (
@@ -154,7 +153,7 @@ function Invoke-GitRepository {
     if ($Path) {
       $GitArguments.Insert(0, $Path)
 
-      $Resolve.Path = $PWD.Path
+      $Resolve.Path = $PWD
       $Repository = Resolve-GitRepository @Resolve
     }
 
@@ -349,7 +348,7 @@ function Add-GitRepository {
 
   if (
     $Path -and (
-      $PWD.Path | Resolve-GitRepository
+      $PWD | Resolve-GitRepository
     ) -and -not (
       $Path | Resolve-GitRepository
     )
@@ -428,7 +427,7 @@ function Write-GitRepository {
 
   if (
     $Path -and (
-      $PWD.Path | Resolve-GitRepository
+      $PWD | Resolve-GitRepository
     ) -and -not (
       $Path | Resolve-GitRepository
     )
@@ -501,7 +500,7 @@ function Push-GitRepository {
 
   if (
     $Path -and (
-      $PWD.Path | Resolve-GitRepository
+      $PWD | Resolve-GitRepository
     ) -and -not (
       $Path | Resolve-GitRepository
     )
@@ -564,7 +563,7 @@ function Reset-GitRepository {
 
   if (
     $Path -and (
-      $PWD.Path | Resolve-GitRepository
+      $PWD | Resolve-GitRepository
     ) -and -not (
       $Path | Resolve-GitRepository
     )
@@ -626,7 +625,7 @@ function Restore-GitRepository {
 
   if (
     $Path -and (
-      $PWD.Path | Resolve-GitRepository
+      $PWD | Resolve-GitRepository
     ) -and -not (
       $Path | Resolve-GitRepository
     )
