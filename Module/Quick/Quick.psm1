@@ -22,21 +22,22 @@ function Copy-Guid {
 
 New-Alias hex ConvertTo-Hex
 function ConvertTo-Hex {
+  [CmdletBinding()]
   [OutputType([string])]
   param(
     [Parameter(
-      Position = 0,
       Mandatory,
+      Position = 0,
       ValueFromRemainingArguments
     )]
     [AllowEmptyCollection()]
     [Alias('Number')]
-    [int[]]$Decimal,
+    [int[]]$Integer,
     [Alias('Case')]
     [switch]$Lowercase
   )
 
-  [string]$Private:Hex = $Decimal |
+  [string]$Private:Hex = $Integer |
     ForEach-Object { '{0:X}' -f $PSItem }
 
   if ($Hex) {

@@ -1,4 +1,5 @@
 using namespace System.Collections.Generic
+using namespace System.Management.Automation
 
 New-Alias upman Update-Help
 
@@ -12,7 +13,7 @@ $CUSTOM_HELP = (
 New-Alias m Get-HelpOnline
 function Get-HelpOnline {
   [CmdletBinding()]
-  [OutputType([System.Object])]
+  [OutputType([string], [System.Object])]
   param(
     [Parameter(
       Position = 0,
@@ -161,7 +162,7 @@ function Get-HelpOnline {
 
 New-Alias galc Get-CommandAlias
 function Get-CommandAlias {
-  [OutputType([System.Management.Automation.CommandInfo])]
+  [OutputType([CommandInfo[]])]
   param(
     [Alias('Command')]
     [string]$Definition

@@ -72,8 +72,8 @@ New-Alias remsv Remove-Service
 New-Alias tkill Stop-Task
 function Stop-Task {
   [CmdletBinding(
-    SupportsShouldProcess,
-    DefaultParameterSetName = 'Name'
+    DefaultParameterSetName = 'Name',
+    SupportsShouldProcess
   )]
   [OutputType([void])]
   param(

@@ -13,8 +13,8 @@ function Test-NodePackageDirectory {
   [OutputType([bool])]
   param(
     [Parameter(
-      Position = 0,
-      Mandatory
+      Mandatory,
+      Position = 0
     )]
     [AllowEmptyString()]
     # Node package root path to be resolved
@@ -40,8 +40,8 @@ function Resolve-NodePackageDirectory {
   [OutputType([string])]
   param(
     [Parameter(
-      Position = 0,
-      Mandatory
+      Mandatory,
+      Position = 0
     )]
     [AllowEmptyString()]
     # Node package root path to be resolved
