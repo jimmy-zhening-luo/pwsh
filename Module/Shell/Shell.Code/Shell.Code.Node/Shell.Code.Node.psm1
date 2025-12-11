@@ -338,7 +338,7 @@ https://docs.npmjs.com/cli/commands/npx
 #>
 function Invoke-NodeExecutable {
 
-  & npx.cmd @args
+  & npx.ps1 @args
 }
 
 New-Alias ncc Clear-NodeModuleCache
