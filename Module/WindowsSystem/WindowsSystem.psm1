@@ -87,13 +87,21 @@ function Stop-Task {
       Mandatory,
       Position = 0
     )]
-    [UInt32]$Id
+    [UInt32]$Id,
+    [Parameter(
+      ParameterSetName = 'Self',
+      Mandatory
+    )]
+    [UInt32]$Self
   )
 
   [hashtable]$Private:Process = @{
     Force = $True
   }
   switch ($PSCmdlet.ParameterSetName) {
+    Self {
+      $Process.Name = 'windowsterminal'
+    }
     Id {
       $Process.Id = $Id
       break
