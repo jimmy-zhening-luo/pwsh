@@ -3,12 +3,14 @@ using namespace System.Management.Automation
 
 New-Alias upman Update-Help
 
-$CUSTOM_HELP_FILE = @{
+[hashtable]$CUSTOM_HELP_FILE = @{
   Path = "$PSScriptRoot\PSHelp.psd1"
 }
-$CUSTOM_HELP = (
+[hashtable]$CUSTOM_HELP = (
   Test-Path @CUSTOM_HELP_FILE -Type Leaf
 ) ? (Import-PowerShellDataFile @CUSTOM_HELP_FILE) : @{}
+
+[string]$ABOUT_BASE_URL = 'https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about'
 
 New-Alias m Get-HelpOnline
 <#
@@ -73,22 +75,22 @@ function Get-HelpOnline {
 
   [string]$Private:Topic = $Name -join '_'
   $Private:Help = ''
-  $Private:HelpLinkArticles = [List[uri]]::new()
-  $Private:Articles = [List[uri]]::new()
+  $Private:HelpLinkArticleList = [List[uri]]::new()
+  $Private:ArticleList = [List[uri]]::new()
   [hashtable]$Private:Command = @{
     Name        = $Topic
     ErrorAction = 'SilentlyContinue'
   }
 
-  if ($CUSTOM_HELP.Contains($Topic)) {
+  if ($CUSTOM_HELP.ContainsKey($Topic)) {
     $Private:CustomHelp = $CUSTOM_HELP[$Topic]
 
-    if ($CustomHelp -and $CustomHelp -as [string] -and $CustomHelp -notmatch ':') {
+    if ($CustomHelp -and $CustomHelp -as [string] -and $CustomHelp -notmatch [regex]':') {
       [uri[]]$CustomHelp = $CUSTOM_HELP[[string]$CustomHelp]
     }
 
     if ($CustomHelp) {
-      $Articles.AddRange([List[uri]]$CustomHelp)
+      $ArticleList.AddRange([List[uri]]$CustomHelp)
     }
   }
   else {
@@ -99,12 +101,16 @@ function Get-HelpOnline {
     }
 
     if ($Help) {
-      [string[]]$Private:HelpLinkProperty = $Help.relatedLinks.navigationLink.Uri -replace '\?(?>.*)$', '' |
-        Where-Object { $PSItem } |
-        Where-Object { $PSItem -as [uri] }
+      [string[]]$Private:HelpLinkProperty = $Help.relatedLinks.navigationLink.Uri -replace [regex]'\?(?>.*)$', '' |
+        Where-Object {
+          -not [string]::IsNullOrWhiteSpace($PSItem)
+        } |
+        Where-Object {
+          $PSItem -as [uri]
+        }
 
       if ($HelpLinkProperty) {
-        $HelpLinkArticles.AddRange([List[uri]]$HelpLinkProperty)
+        $HelpLinkArticleList.AddRange([List[uri]]$HelpLinkProperty)
       }
     }
 
@@ -114,30 +120,33 @@ function Get-HelpOnline {
       if ($ParameterHelp) {
         $Help = $ParameterHelp
 
-        if ($HelpLinkArticles.Count -eq 1 -and $Parameter.Count -eq 1) {
-          [uri]$Private:CanonicalHelpLinkArticle = $HelpLinkArticles[0]
-          $HelpLinkArticles.RemoveAt(0)
+        if ($HelpLinkArticleList.Count -eq 1 -and $Parameter.Count -eq 1) {
+          [uri]$Private:CanonicalHelpLinkArticle = $HelpLinkArticleList[0]
+          $HelpLinkArticleList.RemoveAt(0)
 
           [uri]$Private:ParameterizedCanonicalHelpLinkArticle = [string]$CanonicalHelpLinkArticle + "#-$Parameter".ToLowerInvariant()
 
-          $HelpLinkArticles.Add($ParameterizedCanonicalHelpLinkArticle)
+          $HelpLinkArticleList.Add($ParameterizedCanonicalHelpLinkArticle)
         }
       }
     }
 
-    if ($HelpLinkArticles.Count -ne 0) {
-      $Articles.AddRange([List[uri]]$HelpLinkArticles)
+    if ($HelpLinkArticleList.Count -ne 0) {
+      $ArticleList.AddRange([List[uri]]$HelpLinkArticleList)
     }
     else {
-      [string]$Private:ABOUT_BASE_URL = 'https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about'
-      [string]$Private:about_Article = ''
+      $Private:about_Article = ''
 
       if ($Help) {
-        $about_Article = [uri]"$ABOUT_BASE_URL/$($Help.name)"
+        if ($Help -is [pscustomobject]) {
+          [string]$Private:LocalHelpTopic = $Help.Name
+
+          if ($LocalHelpTopic.StartsWith('about_')) {
+          $about_Article = [uri]"$ABOUT_BASE_URL/$LocalHelpTopic"
+          }
+        }
       }
       else {
-        [string]$Private:about_Topic = $Topic -replace '(?>[-_ :]+)', '_' -replace '^(?>about)?_?', 'about_'
-
         function Resolve-AboutArticle {
 
           [OutputType([uri])]
@@ -155,22 +164,24 @@ function Get-HelpOnline {
           }
         }
 
-        $about_Article = Resolve-AboutArticle -Topic $about_Topic
+        [string]$Private:about_TopicCandidate = $Topic -replace [regex]'(?>[-_ :]+)', '_' -replace [regex]'^(?>about)?_?', 'about_'
+
+        $about_Article = Resolve-AboutArticle -Topic $about_TopicCandidate
 
         if (-not $about_Article) {
-          if ($about_Topic -notmatch 's$') {
-            $about_Topic += 's'
-            $about_Article = Resolve-AboutArticle -Topic $about_Topic
+          if ($about_TopicCandidate -notmatch [regex]'s$') {
+            $about_TopicCandidate += 's'
+            $about_Article = Resolve-AboutArticle -Topic $about_TopicCandidate
           }
         }
 
         if ($about_Article) {
-          $Help = Get-Help @Command -Name $about_Topic
+          $Help = Get-Help @Command -Name $about_TopicCandidate
         }
       }
 
       if ($about_Article) {
-        $Articles.Add([uri]$about_Article)
+        $ArticleList.Add([uri]$about_Article)
       }
     }
   }
@@ -179,13 +190,11 @@ function Get-HelpOnline {
     $Help
   }
 
-  [string[]]$Private:ArticleList = $Articles.ToArray()
+  [string[]]$Private:Articles = $ArticleList.ToArray() -replace [regex]'^(?>https?:\/\/)?', 'https://' -replace [regex]'^https:\/\/learn\.microsoft\.com\/en-us\/', 'https://learn.microsoft.com/' |
+    Select-Object -Unique -CaseInsensitive
 
-  if ($ArticleList) {
-    $ArticleList = $ArticleList -replace '^(?>https?:\/\/)?', 'https://' -replace '^https:\/\/learn\.microsoft\.com\/en-us\/', 'https://learn.microsoft.com/' |
-      Select-Object -Unique -CaseInsensitive
-
-    [string]$Private:ArticleDisplay = $ArticleList -join "`n"
+  if ($Articles) {
+    [string]$Private:ArticleDisplay = $Articles -join "`n"
 
     [hashtable]$Private:ArticleInformation = @{
       MessageData       = "$ArticleDisplay"
@@ -195,10 +204,10 @@ function Get-HelpOnline {
   }
 
   if (-not $env:SSH_CLIENT) {
-    if ($ArticleList) {
-      foreach ($Private:Article in $ArticleList) {
-        Browse\Open-Url -Uri [uri]$Article
-      }
+    if ($Articles) {
+      $Private:ArticleUrls = [List[uri]]::new([List[uri]]$Articles)
+
+      $ArticleUrls | Browse\Open-Url
     }
     else {
       if ($Help) {
