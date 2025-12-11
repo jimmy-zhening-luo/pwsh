@@ -318,41 +318,10 @@ function Invoke-NodePackage {
     $NodeArgumentList.AddRange($CallerNodeArguments)
   }
 
-  & npm.cmd @NodeArgumentList 2>&1 |
-    Tee-Object -Variable NpmResult
+  & npm.ps1 @NodeArgumentList 2>&1
 
-  if (-not $NpmResult) {
-    return
-  }
-
-  [regex]$Private:ERROR_LIKE = '^npm error'
-  $Private:NpmError = [List[System.Object]]::new()
-
-  if ($NpmResult -is [array]) {
-    [ErrorRecord[]]$Private:ErrorRecords = $NpmResult |
-      Where-Object {
-        $_ -is [ErrorRecord]
-      }
-
-    if ($ErrorRecords) {
-      $NpmError.AddRange([List[ErrorRecord]]$ErrorRecords)
-    }
-    else {
-      $Private:Strings = $NpmResult |
-        Where-Object { $_ -is [string] } |
-        Where-Object { $_ -match $ERROR_LIKE }
-
-      if ($Strings) {
-        $NpmError.AddRange([List[string]]$Strings)
-      }
-    }
-  }
-  elseif ($NpmResult -is [ErrorRecord] -or $NpmResult -is [string] -and $NpmResult -match $ERROR_LIKE) {
-    $NpmError.Add($NpmResult)
-  }
-
-  if ($NpmError.Count -ne 0) {
-    throw 'Npm command error, execution stopped.'
+  if ($LASTEXITCODE -ne 0) {
+    throw "Npm command error, execution stopped with exit code: $LASTEXITCODE"
   }
 }
 
