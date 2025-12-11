@@ -101,6 +101,7 @@ function Stop-Task {
   switch ($PSCmdlet.ParameterSetName) {
     Self {
       $Process.Name = 'windowsterminal'
+      break
     }
     Id {
       $Process.Id = $Id
