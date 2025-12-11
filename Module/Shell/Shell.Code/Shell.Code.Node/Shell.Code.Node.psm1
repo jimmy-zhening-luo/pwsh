@@ -466,6 +466,8 @@ enum NodePackageNamedVersion {
   premajor
 }
 
+[regex]$Private:VERSION_SPEC = '^v?(?<Major>(?>\d+))(?>\.(?<Minor>(?>\d*))(?>\.(?<Patch>(?>\d*)))?)?(?>-(?<Pre>(?>\w+)(?>\.(?>\d+))?))?$'
+
 New-Alias nu Step-NodePackageVersion
 <#
 .SYNOPSIS
@@ -494,8 +496,6 @@ function Step-NodePackageVersion {
     [string]$WorkingDirectory
 
   )
-
-  [regex]$Private:VERSION_SPEC = '^v?(?<Major>(?>\d+))(?>\.(?<Minor>(?>\d*))(?>\.(?<Patch>\(?>d*)))?)?(?>-(?<Pre>(?>\w+)(?>\.(?>\d+))?))?$'
 
   if ($Version) {
     if (-not (NodePackageNamedVersion::IsDefined($Version))) {
