@@ -145,26 +145,28 @@ function Stop-Task {
   )
 
   begin {
-    if ($PSCmdlet.ParameterSetName -eq 'Self' -and $Self) {
-      [hashtable]$Private:Process = @{
-        Name  = 'windowsterminal'
-        Force = $True
+    if ($PSCmdlet.ParameterSetName -eq 'Self') {
+      if ($Self) {
+        [hashtable]$Private:Process = @{
+          Name  = 'windowsterminal'
+          Force = $True
+        }
+        if (
+          $PSCmdlet.ShouldProcess(
+            'Process Name: ' + $Process.Name,
+            'Stop-Process (-Self flag = Windows Terminal)'
+          )
+        ) {
+          Stop-Process @Process
+        }
       }
 
-      if (
-        $PSCmdlet.ShouldProcess(
-          'Process Name: ' + $Process.Name,
-          'Stop-Process (-Self flag = Windows Terminal)'
-        )
-      ) {
-        Stop-Process @Process
-        return
-      }
+      return
     }
   }
 
   process {
-    if ($PSCmdlet.ParameterSetName -ne 'Self' -and -not $Self) {
+    if ($PSCmdlet.ParameterSetName -ne 'Self') {
       [hashtable]$Private:Process = @{
         Force = $True
       }
