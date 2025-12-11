@@ -109,7 +109,7 @@ function Stop-Task {
   [CmdletBinding(
     DefaultParameterSetName = 'Name',
     SupportsShouldProcess,
-    ConfirmImpact = 'High'
+    ConfirmImpact = 'Medium'
   )]
 
   [OutputType([void])]
