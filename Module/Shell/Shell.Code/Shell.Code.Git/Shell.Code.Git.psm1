@@ -94,6 +94,8 @@ This function allows you to run a Git command in a local repository. If no comma
 
 For every verb except for 'clone', 'config', and 'init', the function will throw an error if there is no Git repository at the specified path.
 
+For every verb, if the Git command returns a non-zero exit code, the function will throw an error by default. If the Continue switch is set, it will emit a warning instead.
+
 .LINK
 https://git-scm.com/docs
 #>
@@ -105,15 +107,15 @@ function Invoke-GitRepository {
     [GenericCompletions(
       'switch,merge,diff,stash,tag,config,remote,submodule,fetch,checkout,branch,rm,mv,ls-files,ls-tree,init,status,clone,pull,add,commit,push,reset'
     )]
-    # Git verb (command) to run
+    # Git command to run.
     [string]$Verb,
 
     [PathCompletions('.', 'Directory')]
-    # Local repository path
+    # Path to local repository. If not specified, defaults to the current location. For all verbs except 'clone', 'config', and 'init', the function will throw an error if there is no Git repository at the path.
     [string]$Path,
 
-    # Stop execution on Git error
-    [switch]$Throw
+    # If Git returns a non-zero exit code, emit a warning instead of throwing an error. This switch does not suppress errors related to missing repositories for verbs that require a repository or to paths with incorrect syntax for verbs that do not require a repository.
+    [switch]$Continue
 
   )
 
@@ -189,16 +191,17 @@ function Invoke-GitRepository {
   )
   $GitArguments.InsertRange(0, [List[string]]$GitCommandManifest)
 
-  if ($Throw) {
-    & git.exe @GitArguments 2>&1 |
-      Tee-Object -Variable GitResult
+  & git.exe @GitArguments
 
-    if ($GitResult -match [regex]'^fatal:') {
-      throw 'Git command error, execution stopped.'
+  if ($LASTEXITCODE -ne 0) {
+    $Exception = "Git command warning, execution returned exit code: $LASTEXITCODE"
+
+    if ($Continue) {
+      Write-Warning $Exception
     }
-  }
-  else {
-    & git.exe @GitArguments
+    else {
+      throw $Exception
+    }
   }
 }
 
@@ -218,11 +221,11 @@ function Measure-GitRepository {
   param(
 
     [PathCompletions('.', 'Directory')]
-    # Local repository path
+    # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
     [string]$Path,
 
-    # Stop execution on Git error
-    [switch]$Throw
+    # If Git returns a non-zero exit code, emit a warning instead of throwing an error. This switch does not suppress errors related to missing repositories for verbs that require a repository.
+    [switch]$Continue
 
   )
 
@@ -251,11 +254,11 @@ function Import-GitRepository {
     [string]$Repository,
 
     [PathCompletions('.', 'Directory')]
-    # Local repository path
+    # Path to the directory into which the repository will be cloned. If not specified, defaults to the current location. The repository will be cloned into a subdirectory with the same name as the repository. If the path points to a container which does not exist, it will be created. If parent container creation fails, this function will throw an error. If Git encounters an error during cloning, this function will throw an error.
     [string]$Path,
 
-    # Stop execution on Git error
-    [switch]$Throw,
+    # If cloning fails, emit a warning instead of throwing an error. This switch does not suppress errors related to paths with incorrect syntax.
+    [switch]$Continue,
 
     [Alias('ssh')]
     # Use git@github.com remote protocol instead of the default HTTPS
@@ -263,34 +266,35 @@ function Import-GitRepository {
 
   )
 
-  [string[]]$Private:RepositoryPathParts = $Repository -split '/' -notmatch '^\s*$'
+  [string[]]$Private:RepositoryPathSegments = $Repository -split '/' -notmatch [regex]'^\s*$'
 
-  if (-not $RepositoryPathParts) {
+  if (-not $RepositoryPathSegments) {
     throw 'No repository name given.'
   }
 
-  if ($RepositoryPathParts.Count -eq 1) {
-    $RepositoryPathParts = , 'jimmy-zhening-luo' + $RepositoryPathParts
+  if ($RepositoryPathSegments.Count -eq 1) {
+    $RepositoryPathSegments = , 'jimmy-zhening-luo' + $RepositoryPathSegments
   }
 
   [string]$Private:Origin = (
     $ForceSsh ? 'git@github.com:' : 'https://github.com/'
   ) + (
-    $RepositoryPathParts -join '/'
+    $RepositoryPathSegments -join '/'
   )
 
-  $Private:GitCommandArguments = [List[string]]::new()
-  $GitCommandArguments.Add($Origin)
+  $Private:CloneArguments = [List[string]]::new()
+  $CloneArguments.Add($Origin)
+
   if ($args) {
-    $GitCommandArguments.AddRange([List[string]]$args)
+    $CloneArguments.AddRange([List[string]]$args)
   }
 
   [hashtable]$Private:Clone = @{
-    Verb  = 'clone'
-    Path  = $Path
-    Throw = $Throw
+    Verb     = 'clone'
+    Path     = $Path
+    Continue = $Continue
   }
-  Invoke-GitRepository @Clone @GitCommandArguments
+  Invoke-GitRepository @Clone @CloneArguments
 }
 
 <#
@@ -308,11 +312,11 @@ function Get-GitRepository {
   param(
 
     [PathCompletions('.', 'Directory')]
-    # Local repository path
+    # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
     [string]$Path,
 
-    # Stop execution on Git error
-    [switch]$Throw
+    # If Git returns a non-zero exit code, emit a warning instead of throwing an error. This switch does not suppress errors related to missing repositories for verbs that require a repository.
+    [switch]$Continue
 
   )
 
@@ -367,23 +371,23 @@ function Add-GitRepository {
   param(
 
     [PathCompletions('.', 'Directory')]
-    # Local repository path
+    # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
     [string]$Path,
 
     # File pattern of files to add, defaults to '.' (all)
     [string]$Name,
 
-    # Stop execution on Git error
-    [switch]$Throw,
+    # If Git returns a non-zero exit code, emit a warning instead of throwing an error. This switch does not suppress errors related to missing repositories for verbs that require a repository.
+    [switch]$Continue,
 
-    # Include '--renormalize' flag
+    # Equivalent to git add --renormalize flag
     [switch]$Renormalize
 
   )
 
-  $Private:GitCommandArguments = [List[string]]::new()
+  $Private:AddArguments = [List[string]]::new()
   if ($args) {
-    $GitCommandArguments.AddRange([List[string]]$args)
+    $AddArguments.AddRange([List[string]]$args)
   }
 
   if (-not $Name) {
@@ -391,7 +395,7 @@ function Add-GitRepository {
   }
 
   if ($Name -match $GIT_ARGUMENT) {
-    $GitCommandArguments.Insert(0, $Name)
+    $AddArguments.Insert(0, $Name)
     $Name = ''
   }
 
@@ -403,7 +407,7 @@ function Add-GitRepository {
     )
   ) {
     if ($Name) {
-      $GitCommandArguments.Insert(0, $Path)
+      $AddArguments.Insert(0, $Path)
     }
     else {
       $Name = $Path
@@ -413,19 +417,19 @@ function Add-GitRepository {
   }
 
   if ($Name) {
-    $GitCommandArguments.Insert(0, $Name)
+    $AddArguments.Insert(0, $Name)
   }
 
-  if ($Renormalize -and '--renormalize' -notin $GitCommandArguments) {
-    $GitCommandArguments.Add('--renormalize')
+  if ($Renormalize -and '--renormalize' -notin $AddArguments) {
+    $AddArguments.Add('--renormalize')
   }
 
   [hashtable]$Private:Add = @{
-    Verb  = 'add'
-    Path  = $Path
-    Throw = $Throw
+    Verb     = 'add'
+    Path     = $Path
+    Continue = $Continue
   }
-  Invoke-GitRepository @Add @GitCommandArguments
+  Invoke-GitRepository @Add @AddArguments
 }
 
 <#
@@ -443,19 +447,19 @@ function Write-GitRepository {
   param(
 
     [PathCompletions('.', 'Directory')]
-    # Local repository path
+    # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
     [string]$Path,
 
     # Commit message. It must be non-empty except on an empty commit, where it defaults to 'No message.'
     [string]$Message,
 
-    # Stop execution on Git error
-    [switch]$Throw,
+    # If Git returns a non-zero exit code, emit a warning instead of throwing an error. This switch does not suppress errors related to missing repositories for verbs that require a repository.
+    [switch]$Continue,
 
-    # Only commit files that are already staged
+    # Do not add unstaged nor untracked files: only commit files that are already staged.
     [switch]$Staged,
 
-    # Allow empty commit ('--allow-empty')
+    # Allow an empty commit, equivalent to git commit --allow-empty flag.
     [switch]$AllowEmpty
 
   )
@@ -473,9 +477,9 @@ function Write-GitRepository {
     'Split'
   )
 
-  $Private:GitCommitArguments = [List[string]]::new()
+  $Private:CommitArguments = [List[string]]::new()
   if ($Arguments) {
-    $GitCommitArguments.AddRange([List[string]]$Arguments)
+    $CommitArguments.AddRange([List[string]]$Arguments)
   }
 
   $Private:Messages = [List[string]]::new()
@@ -491,7 +495,7 @@ function Write-GitRepository {
     )
   ) {
     if ($Path -match $GIT_ARGUMENT -and $Messages.Count -eq 0) {
-      $GitCommitArguments.Insert(0, $Path)
+      $CommitArguments.Insert(0, $Path)
     }
     else {
       $Messages.Insert(0, $Path)
@@ -500,12 +504,12 @@ function Write-GitRepository {
     $Path = ''
   }
 
-  if ($AllowEmpty -and '--allow-empty' -notin $GitCommitArguments) {
-    $GitCommitArguments.Add('--allow-empty')
+  if ($AllowEmpty -and '--allow-empty' -notin $CommitArguments) {
+    $CommitArguments.Add('--allow-empty')
   }
 
   if ($Messages.Count -eq 0) {
-    if ('--allow-empty' -in $GitCommitArguments) {
+    if ('--allow-empty' -in $CommitArguments) {
       $Messages.Add('No message.')
     }
     else {
@@ -513,24 +517,25 @@ function Write-GitRepository {
     }
   }
 
-  [hashtable]$Private:GitParameters = @{
-    Path  = $Path
-    Throw = $Throw
-  }
   if (-not $Staged) {
-    Add-GitRepository @GitParameters -Throw
+    [hashtable]$Private:Add = @{
+      Path = $Path
+    }
+    Add-GitRepository @Add
   }
 
-  [string[]]$MessageArguments = @(
+  [string[]]$CommitMessageArguments = @(
     '-m'
     $Messages -join ' '
   )
-  $GitCommitArguments.InsertRange(0, [List[string]]$MessageArguments)
+  $CommitArguments.InsertRange(0, [List[string]]$CommitMessageArguments)
 
   $Private:Commit = @{
-    Verb = 'commit'
+    Path     = $Path
+    Verb     = 'commit'
+    Continue = $Continue
   }
-  Invoke-GitRepository @Commit @GitParameters @GitCommitArguments
+  Invoke-GitRepository @Commit @CommitArguments
 }
 
 New-Alias gs Push-GitRepository
@@ -549,17 +554,17 @@ function Push-GitRepository {
   param(
 
     [PathCompletions('.', 'Directory')]
-    # Local repository path
+    # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
     [string]$Path,
 
-    # Stop execution on Git error
-    [switch]$Throw
+    # If Git returns a non-zero exit code, emit a warning instead of throwing an error. This switch does not suppress errors related to missing repositories for verbs that require a repository.
+    [switch]$Continue
 
   )
 
-  $Private:GitPushArguments = [List[string]]::new()
+  $Private:PushArguments = [List[string]]::new()
   if ($args) {
-    $GitPushArguments.AddRange([List[string]]$args)
+    $PushArguments.AddRange([List[string]]$args)
   }
 
   if (
@@ -569,17 +574,25 @@ function Push-GitRepository {
       $Path | Resolve-GitRepository
     )
   ) {
-    $GitPushArguments.Insert(0, $Path)
-    $PSBoundParameters.Path = ''
+    $PushArguments.Insert(0, $Path)
+    $Path = ''
   }
 
-  Get-GitRepository @PSBoundParameters -Throw
+  [hashtable]$Private:Pull = @{
+    Path = $Path
+  }
+  Get-GitRepository @Pull
 
   [hashtable]$Private:Push = @{
-    Verb = 'push'
+    Verb     = 'push'
+    Path     = $Path
+    Continue = $Continue
   }
-  Invoke-GitRepository @Push @PSBoundParameters @GitPushArguments
+  Invoke-GitRepository @Push @PushArguments
 }
+
+[regex]$TREE_SPEC = '^(?=.)(?>HEAD)?(?<Branching>(?>~|\^)?)(?<Step>(?>\d{0,10}))$'
+
 
 New-Alias gr Reset-GitRepository
 <#
@@ -597,26 +610,24 @@ function Reset-GitRepository {
   param(
 
     [PathCompletions('.', 'Directory')]
-    # Local repository path
+    # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
     [string]$Path,
 
     # The tree spec to which to revert, specified as '[HEAD]([~]|^)[n]'. If the tree spec is not specified, it defaults to HEAD. If only the number index is given, it defaults to '~' branching. If only the branching is given, the index defaults to 0 = HEAD.
     [string]$Tree,
 
-    # Stop execution on Git error
-    [switch]$Throw,
+    # If Git returns a non-zero exit code, emit a warning instead of throwing an error. This switch does not suppress errors related to missing repositories for verbs that require a repository.
+    [switch]$Continue,
 
-    # Remove --hard flag (no destructive reset)
+    # Non-destructive reset, equivalent to running git reset without the --hard flag.
     [switch]$Soft
 
   )
 
-  $Private:GitResetArguments = [List[string]]::new()
+  $Private:ResetArguments = [List[string]]::new()
   if ($args) {
-    $GitResetArguments.AddRange([List[string]]$args)
+    $ResetArguments.AddRange([List[string]]$args)
   }
-
-  [regex]$Private:TREE_SPEC = '^(?=.)(?>HEAD)?(?<Branching>(?>~|\^)?)(?<Step>(?>\d{0,10}))$'
 
   if ($Tree) {
     if (
@@ -628,7 +639,7 @@ function Reset-GitRepository {
       $Tree = 'HEAD' + $Branching + $Matches.Step
     }
     else {
-      $GitResetArguments.Insert(0, $Tree)
+      $ResetArguments.Insert(0, $Tree)
       $Tree = ''
     }
   }
@@ -649,27 +660,27 @@ function Reset-GitRepository {
       $Tree = 'HEAD' + $Branching + $Matches.Step
     }
     else {
-      $GitResetArguments.Insert(0, $Path)
+      $ResetArguments.Insert(0, $Path)
     }
 
     $Path = ''
   }
 
-  [hashtable]$Private:GitParameters = @{
-    Path  = $Path
-    Throw = $Throw
+  [hashtable]$Private:Add = @{
+    Path = $Path
   }
-  Add-GitRepository @GitParameters -Throw
+  Add-GitRepository @Add
 
   if ($Tree) {
-    $GitResetArguments.Insert(0, $Tree)
+    $ResetArguments.Insert(0, $Tree)
   }
-  $GitResetArguments.Insert(0, '--hard')
-
+  $ResetArguments.Insert(0, '--hard')
   [hashtable]$Private:Reset = @{
-    Verb = 'reset'
+    Verb     = 'reset'
+    Path     = $Path
+    Continue = $Continue
   }
-  Invoke-GitRepository @Reset @GitParameters @GitResetArguments
+  Invoke-GitRepository @Reset @ResetArguments
 }
 
 New-Alias grp Restore-GitRepository
@@ -688,17 +699,14 @@ function Restore-GitRepository {
   param(
 
     [PathCompletions('.', 'Directory')]
-    # Local repository path
-    [string]$Path,
-
-    # Stop execution on Git error
-    [switch]$Throw
+    # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
+    [string]$Path
 
   )
 
-  $Private:GitResetArguments = [List[string]]::new()
+  $Private:ResetArguments = [List[string]]::new()
   if ($args) {
-    $GitResetArguments.AddRange([List[string]]$args)
+    $ResetArguments.AddRange([List[string]]$args)
   }`
 
   if (
@@ -708,10 +716,11 @@ function Restore-GitRepository {
       $Path | Resolve-GitRepository
     )
   ) {
-    $GitResetArguments.Insert(0, $Path)
+    $ResetArguments.Insert(0, $Path)
     $PSBoundParameters.Path = ''
   }
 
-  Reset-GitRepository @PSBoundParameters -Throw @GitResetArguments
+  Reset-GitRepository @PSBoundParameters @ResetArguments
+
   Get-GitRepository @PSBoundParameters
 }
