@@ -318,7 +318,7 @@ function Invoke-NodePackage {
     $NodeArgumentList.AddRange($CallerNodeArguments)
   }
 
-  & npm.ps1 @NodeArgumentList 2>&1 |
+  & npm.cmd @NodeArgumentList 2>&1 |
     Tee-Object -Variable NpmResult
 
   if (-not $NpmResult) {
@@ -369,7 +369,7 @@ https://docs.npmjs.com/cli/commands/npx
 #>
 function Invoke-NodeExecutable {
 
-  & npx.ps1 @args
+  & npx.cmd @args
 }
 
 New-Alias ncc Clear-NodeModuleCache
