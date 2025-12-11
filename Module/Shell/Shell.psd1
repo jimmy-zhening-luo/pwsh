@@ -115,7 +115,6 @@
     'mj'
     'split'
     'hash'
-    'sz'
     'size'
     'l'
     'l.'

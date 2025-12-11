@@ -4,14 +4,8 @@ New-Alias i Invoke-Workspace
 function Invoke-Workspace {
   [OutputType([void])]
   param(
-    [Parameter(
-      Position = 0
-    )]
     [PathCompletions('.')]
     [string]$Path,
-    [Parameter(
-      Position = 1
-    )]
     [Alias('Name')]
     [string]$ProfileName,
     [switch]$Window,
@@ -94,14 +88,8 @@ New-Alias i. Invoke-WorkspaceSibling
 function Invoke-WorkspaceSibling {
   [OutputType([void])]
   param (
-    [Parameter(
-      Position = 0
-    )]
     [PathCompletions('..')]
     [string]$Path,
-    [Parameter(
-      Position = 1
-    )]
     [Alias('Name', 'pn')]
     [string]$ProfileName,
     [switch]$Window,
@@ -119,14 +107,8 @@ New-Alias i.. Invoke-WorkspaceRelative
 function Invoke-WorkspaceRelative {
   [OutputType([void])]
   param (
-    [Parameter(
-      Position = 0
-    )]
     [PathCompletions('..\..')]
     [string]$Path,
-    [Parameter(
-      Position = 1
-    )]
     [Alias('Name', 'pn')]
     [string]$ProfileName,
     [switch]$Window,
@@ -144,14 +126,8 @@ New-Alias ih Invoke-WorkspaceHome
 function Invoke-WorkspaceHome {
   [OutputType([void])]
   param (
-    [Parameter(
-      Position = 0
-    )]
     [PathCompletions('~')]
     [string]$Path,
-    [Parameter(
-      Position = 1
-    )]
     [Alias('Name', 'pn')]
     [string]$ProfileName,
     [switch]$Window,
@@ -169,14 +145,8 @@ New-Alias ic Invoke-WorkspaceCode
 function Invoke-WorkspaceCode {
   [OutputType([void])]
   param (
-    [Parameter(
-      Position = 0
-    )]
     [PathCompletions('~\code')]
     [string]$Path,
-    [Parameter(
-      Position = 1
-    )]
     [Alias('Name', 'pn')]
     [string]$ProfileName,
     [switch]$Window,
@@ -194,14 +164,8 @@ New-Alias i/ Invoke-WorkspaceDrive
 function Invoke-WorkspaceDrive {
   [OutputType([void])]
   param (
-    [Parameter(
-      Position = 0
-    )]
     [PathCompletions('\')]
     [string]$Path,
-    [Parameter(
-      Position = 1
-    )]
     [Alias('Name', 'pn')]
     [string]$ProfileName,
     [switch]$Window,

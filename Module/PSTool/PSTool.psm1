@@ -66,10 +66,23 @@ function Update-PSLinter {
 
 New-Alias mc Measure-PSProfile
 function Measure-PSProfile {
-  [CmdletBinding()]
+  [CmdletBinding(
+    DefaultParameterSetName = 'String'
+  )]
   [OutputType([string])]
   [OutputType([int], ParameterSetName = 'Number')]
   param(
+    [Parameter(
+      ParameterSetName = 'String',
+      Position = 0
+    )]
+    [Parameter(
+      ParameterSetName = 'Number',
+      Position = 0
+    )]
+    [ValidateRange(1, 50)]
+    # The number of iterations to perform, maximum 50. Default is 1.
+    [UInt16]$Iterations,
     [Parameter(
       ParameterSetName = 'Number',
       Mandatory
@@ -78,16 +91,17 @@ function Measure-PSProfile {
     [switch]$Number
   )
 
-  [hashtable]$Private:Test = @{
-    Command = '1'
+  if (-not $Iterations) {
+    $Iterations = 1
   }
 
   [double]$Private:StartupLoadProfile = 0
   [double]$Private:NormalStartup = 0
 
-  [UInt16]$Private:Iterations = 1
-
-  for ([UInt16]$Private:i = 0; $i -lt $Iterations; ++$i) {
+  [hashtable]$Private:Test = @{
+    Command = '1'
+  }
+  for ([UInt16]$i = 0; $i -lt $Iterations; ++$i) {
     $StartupLoadProfile += [double](
       Measure-Command { pwsh @Test }
     ).TotalMilliseconds
@@ -96,13 +110,13 @@ function Measure-PSProfile {
     ).TotalMilliseconds
   }
 
-  [int]$Private:Performance = [Math]::Max(
-    [int][Math]::Round(
+  [int]$Private:Performance = [System.Math]::Max(
+    [int][System.Math]::Round(
       ($StartupLoadProfile - $NormalStartup) / $Iterations
     ),
     0
   )
-  [int]$Private:MeanNormalStartup = [Math]::Round($NormalStartup / $Iterations)
+  [int]$Private:MeanNormalStartup = [System.Math]::Round($NormalStartup / $Iterations)
 
   if ($Number) {
     return $Performance

@@ -1,105 +1,129 @@
 using namespace System.IO
+using namespace System.Collections.Generic
 
 New-Alias split Split-Path
 New-Alias hash Get-FileHash
 
-New-Alias sz Get-Size
 New-Alias size Get-Size
 function Get-Size {
-  [OutputType([string])]
-  [OutputType([double], ParameterSetName = 'Number')]
+  [CmdletBinding(
+    DefaultParameterSetName = 'String'
+  )]
+  [OutputType([string[]])]
+  [OutputType([double[]], ParameterSetName = 'Number')]
   param(
     [Parameter(
+      ParameterSetName = 'String',
       Position = 0,
-      ValueFromPipeline
+      ValueFromPipeline,
+      ValueFromPipelineByPropertyName
+    )]
+    [Parameter(
+      ParameterSetName = 'Number',
+      Position = 0,
+      ValueFromPipeline,
+      ValueFromPipelineByPropertyName
     )]
     [PathCompletions('.')]
+    # The path of the file or directory to be measured.
     [string]$Path,
     [Parameter(
+      ParameterSetName = 'String',
       Position = 1
     )]
-    [GenericCompletions('B,KB,MB,GB')]
-    [string]$Unit,
-    [Alias('qo', 'Number')]
     [Parameter(
-      ParameterSetName = 'Number'
+      ParameterSetName = 'Number',
+      Position = 1
     )]
-    [switch]$QuantityOnly
+    [GenericCompletions('B,KB,MB,GB,TB,PB')]
+    # The unit in which to return the size.
+    [string]$Unit,
+    [Parameter(
+      ParameterSetName = 'Number',
+      Mandatory
+    )]
+    # Returns only the numeric scalar value in the specified unit.
+    [switch]$Number
   )
 
-  process {
-    [hashtable]$Private:UNITS = @{
+  begin {
+    [hashtable]$UNITS = @{
       B  = 'B'
       KB = 'KB'
       MB = 'MB'
       GB = 'GB'
+      TB = 'TB'
+      PB = 'PB'
       K  = 'KB'
       M  = 'MB'
       G  = 'GB'
+      T  = 'TB'
+      P  = 'PB'
     }
     [hashtable]$Private:FACTORS = @{
       B  = 1
       KB = 1KB
       MB = 1MB
       GB = 1GB
+      TB = 1TB
+      PB = 1PB
     }
-    [string]$Private:DEFAULT_PATH = $PWD.Path
-    [string]$Private:DEFAULT_UNIT = 'KB'
 
-    if ($Path) {
-      if ($Unit) {
-        if (-not ($UNITS.Contains($Unit))) {
-          throw "Unknown unit '$Unit'. Allowed units: $($FACTORS.Keys -join ', ')"
-        }
-      }
-      else {
-        if (Test-Path $Path) {
-          $Unit = $DEFAULT_UNIT
-        }
-        else {
-          if ($UNITS.Contains($Path)) {
-            $Unit, $Path = $Path, $DEFAULT_PATH
-          }
-          else {
-            throw "Path '$Path' does not exist"
-          }
-        }
+    if ($Unit) {
+      if (-not $UNITS.ContainsKey($Unit)) {
+        throw "Unknown unit '$Unit'"
       }
     }
     else {
-      if ($Unit) {
-        if ($UNITS.Contains($Unit)) {
-          $Path = $DEFAULT_PATH
-        }
-        else {
-          throw "Unknown unit '$Unit'. Allowed units: $($FACTORS.Keys -join ', ')"
-        }
-      }
-      else {
-        $Path, $Unit = $DEFAULT_PATH, $DEFAULT_UNIT
-      }
+      $Unit = 'KB'
+    }
+
+    [string]$Private:CanonicalUnit = $UNITS[$Unit]
+    [UInt64]$Private:Factor = $FACTORS[$CanonicalUnit]
+
+    $Sizes = [List[UInt64]]::new()
+  }
+  process {
+    if (-not $Path) {
+      $Path = $PWD.Path
+    }
+
+    if (-not (Test-Path -Path $Path)) {
+      throw "Path '$Path' does not exist."
     }
 
     [hashtable]$Private:Target = @{
       Path = $Path
     }
-    [string]$Private:UnitCanonical = $UNITS[$Unit]
     [FileSystemInfo]$Private:Item = Get-Item @Target
-    [double]$Private:Quantity = [Math]::Round(
-      (
-        $Item.PSIsContainer ? (
-          Get-ChildItem @Target -Recurse -File |
-            Measure-Object -Property Length -Sum
-        ).Sum : $Item.Length
-      ) / [Int32]$FACTORS[$UnitCanonical],
-      3
-    )
 
-    if ($QuantityOnly) {
-      return $Quantity
+    [UInt64]$Private:Size = $Item.PSIsContainer ? (
+      Get-ChildItem @Target -Recurse -File |
+        Measure-Object -Property Length -Sum
+    ).Sum : $Item.Length
+
+    $Sizes.Add($Size)
+  }
+  end {
+    [double[]]$Private:ScaledSizes = $Sizes |
+      ForEach-Object {
+        $PSItem / $Factor
+      }
+
+    if ($Number) {
+      return $ScaledSizes
     }
     else {
-      return "$Quantity $UnitCanonical"
+      [double[]]$RoundedSizes = $ScaledSizes |
+        ForEach-Object {
+          [System.Math]::Round($PSItem, 3)
+        }
+      [string[]]$Private:PrintedSizes = $RoundedSizes |
+        ForEach-Object {
+          "$PSItem $CanonicalUnit"
+        }
+
+      return $PrintedSizes
     }
   }
 }

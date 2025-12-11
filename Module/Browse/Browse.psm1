@@ -19,7 +19,7 @@ function Test-Host {
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
-    [Alias('ComputerName', 'RemoteAddress', 'cn', 'HostName', 'IPAddress', 'ip')]
+    [Alias('ComputerName', 'RemoteAddress', 'cn', 'HostName', 'IpAddress')]
     # The hostname or IP address of the target host.
     [string]$Name,
     [Parameter(
