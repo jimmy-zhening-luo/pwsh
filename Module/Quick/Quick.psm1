@@ -1,9 +1,12 @@
 New-Alias guid Copy-Guid
 function Copy-Guid {
+  [CmdletBinding()]
   [OutputType([string])]
   param(
     [Alias('Case')]
+    # Generate an uppercase GUID
     [switch]$Uppercase,
+    # Only copy GUID to clipboard; do not output to the console
     [switch]$Silent
   )
 

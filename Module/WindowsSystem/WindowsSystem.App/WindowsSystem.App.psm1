@@ -9,6 +9,7 @@ Opens the 'Microsoft Store' app to the 'Updates & downloads' page.
 This function invokes the URI 'ms-windows-store://downloadsandupdates' to open the 'Updates & downloads' page in the 'Microsoft Store' app.
 #>
 function Update-StoreApp {
+  [CmdletBinding()]
   [OutputType([void])]
   param()
 

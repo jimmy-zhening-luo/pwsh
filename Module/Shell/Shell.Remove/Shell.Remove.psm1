@@ -1,3 +1,7 @@
+<#
+.FORWARDHELPTARGETNAME Remove-Item
+.FORWARDHELPCATEGORY Cmdlet
+#>
 function Remove-Directory {
   [OutputType([void])]
   param(

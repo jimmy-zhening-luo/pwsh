@@ -73,65 +73,86 @@ New-Alias tkill Stop-Task
 function Stop-Task {
   [CmdletBinding(
     DefaultParameterSetName = 'Name',
-    SupportsShouldProcess
+    SupportsShouldProcess,
+    ConfirmImpact = 'High'
   )]
   [OutputType([void])]
   param(
     [Parameter(
       ParameterSetName = 'Name',
-      Position = 0
+      Position = 0,
+      ValueFromPipeline,
+      ValueFromPipelineByPropertyName
     )]
-    [string]$Name,
+    [SupportsWildcards()]
+    [Alias('ProcessName')]
+    [string[]]$Name,
     [Parameter(
       ParameterSetName = 'Id',
       Mandatory,
-      Position = 0
+      Position = 0,
+      ValueFromPipelineByPropertyName
     )]
-    [UInt32]$Id,
+    [UInt32[]]$Id,
     [Parameter(
       ParameterSetName = 'Self',
       Mandatory
     )]
-    [UInt32]$Self
+    [switch]$Self
   )
 
-  [hashtable]$Private:Process = @{
-    Force = $True
-  }
-  switch ($PSCmdlet.ParameterSetName) {
-    Self {
-      $Process.Name = 'windowsterminal'
-      break
-    }
-    Id {
-      $Process.Id = $Id
-      break
-    }
-    default {
-      if ($Name) {
-        if ($Name -match [regex]'^(?>\d{1,10})$' -and $Name -as [UInt32]) {
-          $Process.Id = [UInt32]$Name
-        }
-        else {
-          $Process.Name = $Name
-        }
+  begin {
+    if ($PSCmdlet.ParameterSetName -eq 'Self' -and $Self) {
+      [hashtable]$Private:Process = @{
+        Name  = 'windowsterminal'
+        Force = $True
       }
-      else {
-        $Process.Name = 'explorer'
+
+      if (
+        $PSCmdlet.ShouldProcess(
+          'Process Name: ' + $Process.Name,
+          'Stop-Process (-Self flag = Windows Terminal)'
+        )
+      ) {
+        Stop-Process @Process
+        return
       }
     }
   }
+  process {
+    if ($PSCmdlet.ParameterSetName -ne 'Self') {
+      [hashtable]$Private:Process = @{
+        Force = $True
+      }
 
-  if (-not $Process.Id -and -not $Process.Name) {
-    throw 'Must specify a valid PID or process name'
-  }
+      switch ($PSCmdlet.ParameterSetName) {
+        Id {
+          $Process.Id = $Id
+          break
+        }
+        default {
+          if ($Name) {
+            if ($Name -match [regex]'^(?>\d{1,10})$' -and $Name -as [UInt32]) {
+              $Process.Id = [UInt32]$Name
+            }
+            else {
+              $Process.Name = $Name
+            }
+          }
+          else {
+            $Process.Name = 'explorer'
+          }
+        }
+      }
 
-  if (
-    $PSCmdlet.ShouldProcess(
-      $Process.Id ? "Process ID: $($Process.Id)" : "Process Name: $($Process.Name)",
-      'Stop-Process'
-    )
-  ) {
-    Stop-Process @Process
+      if (
+        $PSCmdlet.ShouldProcess(
+          $Process.Id ? "Process ID: $($Process.Id)" : "Process Name: $($Process.Name)",
+          'Stop-Process'
+        )
+      ) {
+        Stop-Process @Process
+      }
+    }
   }
 }

@@ -162,28 +162,67 @@ function Get-HelpOnline {
 
 New-Alias galc Get-CommandAlias
 function Get-CommandAlias {
+  [CmdletBinding()]
   [OutputType([CommandInfo[]])]
   param(
+    [Parameter(
+      Position = 0,
+      ValueFromPipeline,
+      ValueFromPipelineByPropertyName
+    )]
+    [SupportsWildcards()]
+    [GenericCompletions('*')]
     [Alias('Command')]
-    [string]$Definition
+    # Gets the aliases for the specified item. Enter the name of a cmdlet, function, script, file, or executable file. This parameter is called Definition, because it searches for the item name in the Definition property of the alias object.
+    [string[]]$Definition,
+    [Parameter(
+      Position = 1
+    )]
+    [SupportsWildcards()]
+    [GenericCompletions('Global,Local,Script,0,1,2,3')]
+    # Specifies the scope for which this cmdlet gets aliases. The acceptable values for this parameter are: Global, Local, Script, and a positive integer relative to the current scope (0 through the number of scopes, where 0 is the current scope and 1 is its parent). Global is the default, which differs from Get-Alias where Local is the default.
+    [string]$Scope,
+    [Parameter(
+      Position = 2
+    )]
+    [SupportsWildcards()]
+    # Omits the specified items. The value of this parameter qualifies the Definition parameter. Enter a name, a definition, or a pattern, such as "s*". Wildcards are permitted.
+    [string[]]$Exclude
   )
 
-  if (-not $Definition) {
-    $Definition = '*'
-  }
+  begin {
+    if (-not $Scope) {
+      $Scope = 'Global'
+    }
 
-  [hashtable]$Private:Commands = @{
-    Definition = $Definition.Contains('*') ? $Definition : $Definition.Length -lt 3 ? "$Definition*" : "*$Definition*"
+    $Private:AliasList = [List[CommandInfo]]::new()
   }
-  [hashtable]$Private:Property = @{
-    Property = @(
-      'DisplayName'
-      'Options'
-      'Source'
-    )
+  process {
+    [hashtable]$Private:AliasQuery = @{
+      Scope      = $Scope
+      Definition = $Definition ? $Definition.Contains('*') ? $Definition : $Definition.Length -lt 3 ? "$Definition*" : "*$Definition*" : '*'
+    }
+
+    if ($Exclude) {
+      $AliasQuery.Exclude = $Exclude
+    }
+
+    [CommandInfo[]]$Private:AliasResults = Get-Alias @Private:AliasQuery
+
+    if ($AliasResults) {
+      $AliasList.AddRange([List[CommandInfo]]$AliasResults)
+    }
   }
-  return Get-Alias @Commands @args |
-    Select-Object @Property
+  end {
+    [CommandInfo[]]$Private:UniqueAliases = $AliasList.ToArray() |
+      Sort-Object -Property 'DisplayName' |
+      Group-Object -Property 'DisplayName' |
+      ForEach-Object {
+        $PSItem.Group[0]
+      }
+
+    return $UniqueAliases
+  }
 }
 
 <#
@@ -207,19 +246,53 @@ http://learn.microsoft.com/powershell/module/microsoft.powershell.utility/get-ve
 Get-Verb
 #>
 function Get-VerbList {
+  [CmdletBinding()]
   [OutputType([string[]])]
   param(
-    [string]$Verb
+    [Parameter(
+      Position = 0,
+      ValueFromPipeline,
+      ValueFromPipelineByPropertyName
+    )]
+    [SupportsWildcards()]
+    [GenericCompletions('*')]
+    # Gets only the specified verbs. Enter the name of a verb or a name pattern. Wildcards are allowed.
+    [string[]]$Verb,
+    [Parameter(
+      Position = 1,
+      ValueFromPipeline,
+      ValueFromPipelineByPropertyName
+    )]
+    [GenericCompletions('Common,Communications,Data,Diagnostic,Lifecycle,Other,Security')]
+    # Gets only the specified groups. Enter the name of a group. Wildcards aren't allowed.
+    [string[]]$Group
   )
 
-  if (-not $Verb) {
-    $Verb = '*'
+  begin {
+    $Private:VerbList = [List[string]]::new()
   }
+  process {
+    [hashtable]$Private:VerbQuery = @{
+      Verb = $Verb ? $Verb.Contains('*') ? $Verb : $Verb.Length -lt 3 ? "$Verb*" : "*$Verb*" : '*'
+    }
 
-  [hashtable]$Private:Verbs = @{
-    Verb = $Verb.Contains('*') ? $Verb : $Verb.Length -lt 3 ? "$Verb*" : "*$Verb*"
+    if ($Group) {
+      $VerbQuery.Group = $Group
+    }
+
+    [string[]]$Private:VerbResults = Get-Verb @VerbQuery |
+      Select-Object -ExpandProperty Verb
+
+    if ($VerbResults) {
+      $VerbList.AddRange([List[string]]$VerbResults)
+    }
   }
-  return Get-Verb @Verbs @args |
-    Sort-Object -Property Verb |
-    Select-Object -ExpandProperty Verb
+  end {
+    $VerbList.Sort()
+
+    [string[]]$Private:UniqueVerbs = $VerbList |
+      Select-Object -Unique -CaseInsensitive
+
+    return $UniqueVerbs
+  }
 }

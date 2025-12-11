@@ -104,6 +104,7 @@ It returns true if the URL returns a status code between 200 to 300, otherwise f
 The function times out if it receives no response after five (5) (lol) seconds, returning false.
 #>
 function Test-Url {
+  [CmdletBinding()]
   [OutputType([bool])]
   param(
     [Parameter(
@@ -148,7 +149,8 @@ This function opens the specified file path or URL in Google Chrome. If a file p
 #>
 function Open-Url {
   [CmdletBinding(
-    DefaultParameterSetName = 'Path'
+    DefaultParameterSetName = 'Path',
+    SupportsShouldProcess
   )]
   [OutputType([void])]
   param(
@@ -156,31 +158,60 @@ function Open-Url {
       ParameterSetName = 'Path',
       Position = 0
     )]
+    [AllowEmptyString()]
     # The file path or URL to open. Defaults to the current directory.
     [string]$Path,
     [Parameter(
       ParameterSetName = 'Uri',
       Mandatory,
-      Position = 0
+      Position = 0,
+      ValueFromPipeline,
+      ValueFromPipelineByPropertyName
     )]
+    [AllowEmptyCollection()]
     # The URL to open.
-    [uri]$Uri
+    [uri[]]$Uri
   )
 
-  switch ($PSCmdlet.ParameterSetName) {
-    Uri {
-      [uri]$Private:Target = $Uri
+  begin {
+    [bool]$Private:Interactive = -not $env:SSH_CLIENT
+  }
+  process {
+    if ($Uri) {
+      if (
+        $PSCmdlet.ShouldProcess(
+          $Uri,
+          "[ui=$Interactive] $($Interactive ? 'Open' : 'Print') URI"
+        )
+      ) {
+        if ($Interactive) {
+          [hashtable]$Private:Browser = @{
+            FilePath     = 'C:\Program Files\Google\Chrome\Application\chrome.exe'
+            ArgumentList = $Uri
+          }
+          Start-Process @Browser
+        }
+      }
     }
-    default {
+  }
+  end {
+    if ($Path) {
       [string]$Private:Target = $Path ? (Test-Path @PSBoundParameters) ? (Resolve-Path @PSBoundParameters) : [uri]$Path : $PWD
-    }
-  }
 
-  [hashtable]$Private:Browser = @{
-    FilePath     = 'C:\Program Files\Google\Chrome\Application\chrome.exe'
-    ArgumentList = $Target
-  }
-  if (-not $env:SSH_CLIENT) {
-    Start-Process @Browser
+      if (
+        $PSCmdlet.ShouldProcess(
+          $Target,
+          "[ui=$Interactive] $($Interactive ? 'Open' : 'Print') path"
+        )
+      ) {
+        if ($Interactive) {
+          [hashtable]$Private:Browser = @{
+            FilePath     = 'C:\Program Files\Google\Chrome\Application\chrome.exe'
+            ArgumentList = $Target
+          }
+          Start-Process @Browser
+        }
+      }
+    }
   }
 }

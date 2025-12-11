@@ -82,6 +82,7 @@ function Get-YouTubeFormat {
 
 New-Alias yte Invoke-YouTubeDirectory
 function Invoke-YouTubeDirectory {
+  [CmdletBinding()]
   [OutputType([void])]
   param()
 
@@ -93,6 +94,7 @@ function Invoke-YouTubeDirectory {
 
 New-Alias ytc Invoke-YouTubeConfig
 function Invoke-YouTubeConfig {
+  [CmdletBinding()]
   [OutputType([void])]
   param()
 
