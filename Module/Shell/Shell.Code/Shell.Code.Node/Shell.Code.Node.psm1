@@ -318,7 +318,7 @@ function Invoke-NodePackage {
     $NodeArgumentList.AddRange($CallerNodeArguments)
   }
 
-  & npm.ps1 @NodeArgumentList 2>&1
+  & npm.ps1 @NodeArgumentList
 
   if ($LASTEXITCODE -ne 0) {
     throw "Npm command error, execution stopped with exit code: $LASTEXITCODE"
