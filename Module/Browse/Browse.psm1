@@ -9,7 +9,9 @@ Determine if a host is reachable.
 This function checks if a host is reachable by testing the network connection to the specified hostname or IP address, optionally on a specified port (number or well-known TCP service).
 #>
 function Test-Host {
-  [CmdletBinding(DefaultParameterSetName = 'CommonTCPPort')]
+  [CmdletBinding(
+    DefaultParameterSetName = 'CommonTCPPort'
+  )]
   [OutputType([System.Object[]])]
   param(
     [Parameter(
@@ -105,8 +107,8 @@ function Test-Url {
   [OutputType([bool])]
   param(
     [Parameter(
-      Position = 0,
-      Mandatory
+      Mandatory,
+      Position = 0
     )]
     [AllowNull()]
     [AllowEmptyString()]
@@ -145,7 +147,9 @@ Open a file path or URL in Google Chrome.
 This function opens the specified file path or URL in Google Chrome. If a file path is provided, it resolves the path before opening it. If the file path cannot be resolved to the filesystem, it casts the path to an URL, throwing an error if the cast is unsuccessful. If an URL is provided, it opens the URI directly.
 #>
 function Open-Url {
-  [CmdletBinding(DefaultParameterSetName = 'Path')]
+  [CmdletBinding(
+    DefaultParameterSetName = 'Path'
+  )]
   [OutputType([void])]
   param(
     [Parameter(
@@ -156,8 +160,8 @@ function Open-Url {
     [string]$Path,
     [Parameter(
       ParameterSetName = 'Uri',
-      Position = 0,
-      Mandatory
+      Mandatory,
+      Position = 0
     )]
     # The URL to open.
     [uri]$Uri
