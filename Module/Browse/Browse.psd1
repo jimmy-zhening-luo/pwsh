@@ -2,7 +2,7 @@
   RootModule            = 'Browse.psm1'
   ModuleVersion         = '3.0.0.0'
   CompatiblePSEditions  = @('Desktop', 'Core')
-  GUID                  = '1e45c553-ea48-41c2-a7fc-89b5c36f30b1'
+  GUID                  = '5a80488d-6a5a-4f24-b3f1-ff9d275ab8b5'
   Author                = 'Jimmy Zhening Luo'
   CompanyName           = 'Jimmy Zhening Luo'
   Copyright             = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
