@@ -9,14 +9,18 @@ New-Alias mk New-Directory
 .FORWARDHELPCATEGORY Cmdlet
 #>
 function New-Directory {
+
   [CmdletBinding(
     DefaultParameterSetName = 'pathSet',
     SupportsShouldProcess,
     SupportsTransactions,
     ConfirmImpact = 'Medium'
   )]
+
   [OutputType([DirectoryInfo])]
+
   param(
+
     [Parameter(
       ParameterSetName = 'nameSet',
       Position = 0,
@@ -29,6 +33,7 @@ function New-Directory {
       ValueFromPipelineByPropertyName
     )]
     [string[]]$Path,
+
     [Parameter(
       ParameterSetName = 'nameSet',
       Mandatory,
@@ -37,6 +42,7 @@ function New-Directory {
     [AllowNull()]
     [AllowEmptyString()]
     [string]$Name,
+
     [Parameter(
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
@@ -45,11 +51,14 @@ function New-Directory {
     [PathCompletions('.')]
     [System.Object]$Value,
     [switch]$Force,
+
     [Parameter(
       ValueFromPipelineByPropertyName
     )]
     [PSCredential]$Credential
+
   )
+
   begin {
     [hashtable]$Private:DirectoryType = @{
       ItemType = 'Directory'
@@ -67,6 +76,7 @@ function New-Directory {
       $steppablePipeline.Begin($PSCmdlet)
     }
   }
+
   process {
     if (
       $PSCmdlet.ShouldProcess(
@@ -77,6 +87,7 @@ function New-Directory {
       $steppablePipeline.Process($PSItem)
     }
   }
+
   end {
     if ($PSCmdlet.ShouldProcess('Transaction', 'Close')) {
       $steppablePipeline.End()
@@ -90,14 +101,18 @@ New-Alias mj New-Junction
 .FORWARDHELPCATEGORY Cmdlet
 #>
 function New-Junction {
+
   [CmdletBinding(
     DefaultParameterSetName = 'pathSet',
     SupportsShouldProcess,
     SupportsTransactions,
     ConfirmImpact = 'Medium'
   )]
+
   [OutputType([DirectoryInfo])]
+
   param(
+
     [Parameter(
       ParameterSetName = 'pathSet',
       Mandatory,
@@ -105,6 +120,7 @@ function New-Junction {
       ValueFromPipelineByPropertyName
     )]
     [string[]]$Path,
+
     [Parameter(
       Mandatory,
       ValueFromPipeline,
@@ -113,7 +129,9 @@ function New-Junction {
     [Alias('Target')]
     [PathCompletions('.')]
     [System.Object]$Value
+
   )
+
   begin {
     [hashtable]$Private:JunctionType = @{
       ItemType = 'Junction'
@@ -132,6 +150,7 @@ function New-Junction {
       $steppablePipeline.Begin($PSCmdlet)
     }
   }
+
   process {
     if (
       $PSCmdlet.ShouldProcess(
@@ -142,6 +161,7 @@ function New-Junction {
       $steppablePipeline.Process($PSItem)
     }
   }
+
   end {
     if ($PSCmdlet.ShouldProcess('Transaction', 'Close')) {
       $steppablePipeline.End()

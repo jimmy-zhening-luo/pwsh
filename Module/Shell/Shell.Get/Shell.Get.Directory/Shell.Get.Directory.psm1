@@ -2,10 +2,14 @@ using namespace System.IO
 
 New-Alias l Get-Directory
 function Get-Directory {
+
   [OutputType([DirectoryInfo[]], [FileInfo[]])]
-  param (
+
+  param(
+
     [PathCompletions('.', 'Directory')]
     [string]$Path
+
   )
 
   if ($Path) {
@@ -18,10 +22,14 @@ function Get-Directory {
 
 New-Alias l. Get-DirectorySibling
 function Get-DirectorySibling {
+
   [OutputType([DirectoryInfo[]], [FileInfo[]])]
-  param (
+
+  param(
+
     [PathCompletions('..', 'Directory')]
     [string]$Path
+
   )
 
   [hashtable]$Private:FullPath = @{
@@ -32,10 +40,14 @@ function Get-DirectorySibling {
 
 New-Alias l.. Get-DirectoryRelative
 function Get-DirectoryRelative {
+
   [OutputType([DirectoryInfo[]], [FileInfo[]])]
-  param (
+
+  param(
+
     [PathCompletions('..\..', 'Directory')]
     [string]$Path
+
   )
 
   [hashtable]$Private:FullPath = @{
@@ -46,10 +58,14 @@ function Get-DirectoryRelative {
 
 New-Alias lh Get-DirectoryHome
 function Get-DirectoryHome {
+
   [OutputType([DirectoryInfo[]], [FileInfo[]])]
-  param (
+
+  param(
+
     [PathCompletions('~', 'Directory')]
     [string]$Path
+
   )
 
   [hashtable]$Private:FullPath = @{
@@ -60,10 +76,14 @@ function Get-DirectoryHome {
 
 New-Alias lc Get-DirectoryCode
 function Get-DirectoryCode {
+
   [OutputType([DirectoryInfo[]], [FileInfo[]])]
-  param (
+
+  param(
+
     [PathCompletions('~\code', 'Directory')]
     [string]$Path
+
   )
 
   [hashtable]$Private:FullPath = @{
@@ -74,10 +94,14 @@ function Get-DirectoryCode {
 
 New-Alias l/ Get-DirectoryDrive
 function Get-DirectoryDrive {
+
   [OutputType([DirectoryInfo[]], [FileInfo[]])]
-  param (
+
+  param(
+
     [PathCompletions('\', 'Directory')]
     [string]$Path
+
   )
 
   [hashtable]$Private:FullPath = @{

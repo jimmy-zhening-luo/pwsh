@@ -12,10 +12,14 @@ using namespace System.Management.Automation.Language
 #>
 New-Alias cl Clear-Line
 function Clear-Line {
+
   [OutputType([void])]
+
   param(
+
     [PathCompletions('.')]
     [string]$Path
+
   )
 
   if ($Path -or $args) {
@@ -233,12 +237,16 @@ $MyInvocation.MyCommand.ScriptBlock.Module.OnRemove = {
 }.GetNewClosure()
 
 function Format-Path {
+
   [OutputType([string])]
+
   param(
+
     [string]$Path,
     [string]$Separator,
     [switch]$LeadingRelative,
     [switch]$Trailing
+
   )
 
   $Private:AlignedPath = $Path -replace [regex]'[\\\/]', '\'
@@ -256,33 +264,51 @@ function Format-Path {
 }
 
 function Trace-RelativePath {
+
   [OutputType([bool])]
+
   param(
+
     [string]$Path,
+
     [string]$Location
+
   )
 
   return [Path]::GetRelativePath($Path, $Location) -match [regex]'^(?>[.\\]*)$'
 }
 
 function Merge-RelativePath {
+
   [OutputType([string])]
+
   param(
+
     [string]$Path,
+
     [string]$Location
+
   )
 
   return [Path]::GetRelativePath($Location, $Path)
 }
 
 function Test-Item {
+
   [OutputType([bool])]
+
   param(
+
     [string]$Path,
+
     [string]$Location,
+
     [switch]$File,
+
     [switch]$New,
+
     [switch]$RequireSubpath
+
   )
 
   $Path = Format-Path -Path $Path -LeadingRelative
@@ -367,13 +393,21 @@ function Test-Item {
 }
 
 function Resolve-Item {
+
   [OutputType([string])]
+
   param(
+
     [string]$Path,
+
     [string]$Location,
+
     [switch]$File,
+
     [switch]$New,
+
     [switch]$RequireSubpath
+
   )
 
   if (-not (Test-Item @PSBoundParameters)) {

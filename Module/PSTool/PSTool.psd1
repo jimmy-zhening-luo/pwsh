@@ -37,7 +37,6 @@
     'Invoke-PSHistory'
     'Invoke-PSProfile'
     'Update-PSProfile'
-    'Update-PSLinter'
     'Measure-PSProfile'
     'Get-HelpOnline'
     'Get-CommandAlias'

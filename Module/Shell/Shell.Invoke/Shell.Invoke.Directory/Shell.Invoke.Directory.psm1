@@ -1,9 +1,13 @@
 New-Alias e Invoke-Directory
 function Invoke-Directory {
+
   [OutputType([void])]
+
   param(
+
     [PathCompletions('.')]
     [string]$Path
+
   )
   if (-not $env:SSH_CLIENT) {
     if (-not $Path) {
@@ -21,10 +25,14 @@ function Invoke-Directory {
 
 New-Alias e. Invoke-DirectorySibling
 function Invoke-DirectorySibling {
+
   [OutputType([void])]
-  param (
+
+  param(
+
     [PathCompletions('..')]
     [string]$Path
+
   )
 
   [hashtable]$Private:FullPath = @{
@@ -35,10 +43,14 @@ function Invoke-DirectorySibling {
 
 New-Alias e.. Invoke-DirectoryRelative
 function Invoke-DirectoryRelative {
+
   [OutputType([void])]
-  param (
+
+  param(
+
     [PathCompletions('..\..')]
     [string]$Path
+
   )
 
   [hashtable]$Private:FullPath = @{
@@ -49,10 +61,14 @@ function Invoke-DirectoryRelative {
 
 New-Alias eh Invoke-DirectoryHome
 function Invoke-DirectoryHome {
+
   [OutputType([void])]
-  param (
+
+  param(
+
     [PathCompletions('~')]
     [string]$Path
+
   )
 
   [hashtable]$Private:FullPath = @{
@@ -63,10 +79,14 @@ function Invoke-DirectoryHome {
 
 New-Alias ec Invoke-DirectoryCode
 function Invoke-DirectoryCode {
+
   [OutputType([void])]
-  param (
+
+  param(
+
     [PathCompletions('~\code')]
     [string]$Path
+
   )
 
   [hashtable]$Private:FullPath = @{
@@ -77,10 +97,14 @@ function Invoke-DirectoryCode {
 
 New-Alias e/ Invoke-DirectoryDrive
 function Invoke-DirectoryDrive {
+
   [OutputType([void])]
-  param (
+
+  param(
+
     [PathCompletions('\')]
     [string]$Path
+
   )
 
   [hashtable]$Private:FullPath = @{

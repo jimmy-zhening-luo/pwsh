@@ -1,9 +1,13 @@
 using namespace System.Collections.Generic
 
 function Resolve-GitRepository {
+
   [CmdletBinding()]
+
   [OutputType([string[]])]
+
   param(
+
     [Parameter(
       Mandatory,
       Position = 0,
@@ -13,12 +17,16 @@ function Resolve-GitRepository {
     [AllowEmptyString()]
     [AllowEmptyCollection()]
     [string[]]$Path,
+
     [switch]$New
+
   )
+
   begin {
     [string]$Private:CODE_PATH = "$HOME\code"
     $Private:Repositories = [List[string]]::new()
   }
+
   process {
     [hashtable]$Private:RepoPath = @{
       Path = $Path
@@ -60,6 +68,7 @@ function Resolve-GitRepository {
       $Repositories.Add([string]$Repository)
     }
   }
+
   end {
     return [string[]]$Repositories.ToArray()
   }
@@ -79,26 +88,33 @@ function Resolve-GitRepository {
 <#
 .SYNOPSIS
 Invoke a Git command in a local repository.
+
 .DESCRIPTION
 This function allows you to run a Git command in a local repository. If no command is specified, it defaults to 'git status'. If no path is specified, it defaults to the current location.
 
 For every verb except for 'clone', 'config', and 'init', the function will throw an error if there is no Git repository at the specified path.
+
 .LINK
 https://git-scm.com/docs
 #>
 New-Alias g Invoke-GitRepository
 function Invoke-GitRepository {
+
   param(
+
     [GenericCompletions(
       'switch,merge,diff,stash,tag,config,remote,submodule,fetch,checkout,branch,rm,mv,ls-files,ls-tree,init,status,clone,pull,add,commit,push,reset'
     )]
     # Git verb (command) to run
     [string]$Verb,
+
     [PathCompletions('.', 'Directory')]
     # Local repository path
     [string]$Path,
+
     # Stop execution on Git error
     [switch]$Throw
+
   )
 
   $Private:GitArguments = [List[string]]::new()
@@ -190,18 +206,24 @@ New-Alias gg Measure-GitRepository
 <#
 .SYNOPSIS
 Use Git to get the status of a local repository.
+
 .DESCRIPTION
 This function is an alias for 'git status [arguments]'.
+
 .LINK
 https://git-scm.com/docs/git-status
 #>
 function Measure-GitRepository {
+
   param(
+
     [PathCompletions('.', 'Directory')]
     # Local repository path
     [string]$Path,
+
     # Stop execution on Git error
     [switch]$Throw
+
   )
 
   [hashtable]$Private:Status = @{
@@ -214,23 +236,31 @@ New-Alias gitcl Import-GitRepository
 <#
 .SYNOPSIS
 Use Git to clone a repository.
+
 .DESCRIPTION
 This function is an alias for 'git clone' and allows you to clone a repository into a specified path.
+
 .LINK
 https://git-scm.com/docs/git-clone
 #>
 function Import-GitRepository {
+
   param(
+
     # Remote repository URL or 'org/repo'
     [string]$Repository,
+
     [PathCompletions('.', 'Directory')]
     # Local repository path
     [string]$Path,
+
     # Stop execution on Git error
     [switch]$Throw,
+
     [Alias('ssh')]
     # Use git@github.com remote protocol instead of the default HTTPS
     [switch]$ForceSsh
+
   )
 
   [string[]]$Private:RepositoryPathParts = $Repository -split '/' -notmatch '^\s*$'
@@ -266,18 +296,24 @@ function Import-GitRepository {
 <#
 .SYNOPSIS
 Use Git to pull changes from a repository.
+
 .DESCRIPTION
 This function is an alias for 'git pull [arguments]'.
+
 .LINK
 https://git-scm.com/docs/git-pull
 #>
 function Get-GitRepository {
+
   param(
+
     [PathCompletions('.', 'Directory')]
     # Local repository path
     [string]$Path,
+
     # Stop execution on Git error
     [switch]$Throw
+
   )
 
   [hashtable]$Private:Pull = @{
@@ -290,12 +326,15 @@ New-Alias gpp Get-ChildGitRepository
 <#
 .SYNOPSIS
 Use Git to pull changes for all repositories in the top level of %USERPROFILE%\code'.
+
 .DESCRIPTION
 This function runs 'git pull [arguments]' in each child repository in %USERPROFILE%\code'.
+
 .LINK
 https://git-scm.com/docs/git-pull
 #>
 function Get-ChildGitRepository {
+
   [hashtable]$Private:CodeDirectory = @{
     Path      = "$HOME\code"
     Directory = $True
@@ -316,22 +355,30 @@ New-Alias ga Add-GitRepository
 <#
 .SYNOPSIS
 Use Git to stage all changes in a repository.
+
 .DESCRIPTION
 This function is an alias for 'git add [.]' and stages all changes in the repository.
+
 .LINK
 https://git-scm.com/docs/git-add
 #>
 function Add-GitRepository {
+
   param(
+
     [PathCompletions('.', 'Directory')]
     # Local repository path
     [string]$Path,
+
     # File pattern of files to add, defaults to '.' (all)
     [string]$Name,
+
     # Stop execution on Git error
     [switch]$Throw,
+
     # Include '--renormalize' flag
     [switch]$Renormalize
+
   )
 
   $Private:GitCommandArguments = [List[string]]::new()
@@ -384,24 +431,33 @@ function Add-GitRepository {
 <#
 .SYNOPSIS
 Commit changes to a Git repository.
+
 .DESCRIPTION
 This function commits changes to a Git repository using the 'git commit' command.
+
 .LINK
 https://git-scm.com/docs/git-commit
 #>
 function Write-GitRepository {
+
   param(
+
     [PathCompletions('.', 'Directory')]
     # Local repository path
     [string]$Path,
+
     # Commit message. It must be non-empty except on an empty commit, where it defaults to 'No message.'
     [string]$Message,
+
     # Stop execution on Git error
     [switch]$Throw,
+
     # Only commit files that are already staged
     [switch]$Staged,
+
     # Allow empty commit ('--allow-empty')
     [switch]$AllowEmpty
+
   )
 
   [string[]]$Private:Arguments, [string[]]$Private:MessageWords = (
@@ -481,18 +537,24 @@ New-Alias gs Push-GitRepository
 <#
 .SYNOPSIS
 Use Git to push changes to a repository.
+
 .DESCRIPTION
 This function is an alias for 'git push'.
+
 .LINK
 https://git-scm.com/docs/git-push
 #>
 function Push-GitRepository {
+
   param(
+
     [PathCompletions('.', 'Directory')]
     # Local repository path
     [string]$Path,
+
     # Stop execution on Git error
     [switch]$Throw
+
   )
 
   $Private:GitPushArguments = [List[string]]::new()
@@ -523,22 +585,30 @@ New-Alias gr Reset-GitRepository
 <#
 .SYNOPSIS
 Use Git to undo changes in a repository.
+
 .DESCRIPTION
 This function is an alias for 'git add . && git reset --hard [HEAD]([~]|^)[n]'.
+
 .LINK
 https://git-scm.com/docs/git-reset
 #>
 function Reset-GitRepository {
+
   param(
+
     [PathCompletions('.', 'Directory')]
     # Local repository path
     [string]$Path,
+
     # The tree spec to which to revert, specified as '[HEAD]([~]|^)[n]'. If the tree spec is not specified, it defaults to HEAD. If only the number index is given, it defaults to '~' branching. If only the branching is given, the index defaults to 0 = HEAD.
     [string]$Tree,
+
     # Stop execution on Git error
     [switch]$Throw,
+
     # Remove --hard flag (no destructive reset)
     [switch]$Soft
+
   )
 
   $Private:GitResetArguments = [List[string]]::new()
@@ -606,24 +676,30 @@ New-Alias grp Restore-GitRepository
 <#
 .SYNOPSIS
 Use Git to restore a repository to its previous state.
+
 .DESCRIPTION
 This function is an alias for 'git add . && git reset --hard && git pull'.
+
 .LINK
 https://git-scm.com/docs/git-reset
 #>
 function Restore-GitRepository {
+
   param(
+
     [PathCompletions('.', 'Directory')]
     # Local repository path
     [string]$Path,
+
     # Stop execution on Git error
     [switch]$Throw
+
   )
 
   $Private:GitResetArguments = [List[string]]::new()
   if ($args) {
     $GitResetArguments.AddRange([List[string]]$args)
-  }
+  }`
 
   if (
     $Path -and (

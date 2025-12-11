@@ -3,10 +3,14 @@
 .FORWARDHELPCATEGORY Cmdlet
 #>
 function Remove-Directory {
+
   [OutputType([void])]
+
   param(
+
     [PathCompletions('.')]
     [string]$Path
+
   )
 
   [hashtable]$Private:Hard = @{

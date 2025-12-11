@@ -7,9 +7,22 @@ New-Alias z Sort-Object
 New-Alias format Format-Table
 
 New-Alias oc Invoke-PSHistory
+<#
+.SYNOPSIS
+Open PowerShell command history in a text editor.
+
+.DESCRIPTION
+This function opens the PowerShell command history file in Visual Studio Code.
+
+.COMPONENT
+PSTool
+#>
 function Invoke-PSHistory {
+
   [CmdletBinding()]
+
   [OutputType([void])]
+
   param()
 
   [hashtable]$Private:History = @{
@@ -21,9 +34,22 @@ function Invoke-PSHistory {
 }
 
 New-Alias op Invoke-PSProfile
+<#
+.SYNOPSIS
+Open PowerShell profile repository.
+
+.DESCRIPTION
+This function opens the PowerShell profile repository in Visual Studio Code.
+
+.COMPONENT
+PSTool
+#>
 function Invoke-PSProfile {
+
   [CmdletBinding()]
+
   [OutputType([void])]
+
   param()
 
   [hashtable]$Private:ProfileRepository = @{
@@ -34,8 +60,20 @@ function Invoke-PSProfile {
 }
 
 New-Alias up Update-PSProfile
+<#
+.SYNOPSIS
+Update PowerShell profile repository.
+
+.DESCRIPTION
+This function updates the PowerShell profile repository by pulling the latest changes from the remote Git repository and updating the PSScriptAnalyzer settings file in the user's home directory.
+
+.COMPONENT
+PSTool
+#>
 function Update-PSProfile {
+
   [CmdletBinding()]
+
   param()
 
   [hashtable]$Private:ProfileRepository = @{
@@ -47,8 +85,11 @@ function Update-PSProfile {
 }
 
 function Update-PSLinter {
+
   [CmdletBinding()]
+
   [OutputType([void])]
+
   param()
 
   [hashtable]$Private:Linter = @{
@@ -65,13 +106,28 @@ function Update-PSLinter {
 }
 
 New-Alias mc Measure-PSProfile
+<#
+.SYNOPSIS
+Measure PowerShell profile load time.
+
+.DESCRIPTION
+This function measures the load time of the PowerShell profile by comparing the startup time with and without the profile loaded. It performs multiple iterations to calculate an average load time.
+
+.COMPONENT
+PSTool
+#>
 function Measure-PSProfile {
+
   [CmdletBinding(
     DefaultParameterSetName = 'String'
   )]
+
   [OutputType([string])]
+
   [OutputType([int], ParameterSetName = 'Number')]
+
   param(
+
     [Parameter(
       ParameterSetName = 'String',
       Position = 0
@@ -83,12 +139,14 @@ function Measure-PSProfile {
     [ValidateRange(1, 50)]
     # The number of iterations to perform, maximum 50. Default is 1.
     [UInt16]$Iterations,
+
     [Parameter(
       ParameterSetName = 'Number',
       Mandatory
     )]
     # If specified, returns only the numeric performance value in milliseconds.
     [switch]$Number
+
   )
 
   if (-not $Iterations) {

@@ -2,8 +2,11 @@ using namespace System.Collections.Generic
 
 New-Alias i Invoke-Workspace
 function Invoke-Workspace {
+
   [OutputType([void])]
+
   param(
+
     [PathCompletions('.')]
     [string]$Path,
     [Alias('Name')]
@@ -11,6 +14,7 @@ function Invoke-Workspace {
     [switch]$Window,
     [switch]$ReuseWindow,
     [string]$Location
+
   )
 
   $Private:ArgumentList = [List[string]]::new()
@@ -86,8 +90,11 @@ function Invoke-Workspace {
 
 New-Alias i. Invoke-WorkspaceSibling
 function Invoke-WorkspaceSibling {
+
   [OutputType([void])]
-  param (
+
+  param(
+
     [PathCompletions('..')]
     [string]$Path,
     [Alias('Name', 'pn')]
@@ -95,6 +102,7 @@ function Invoke-WorkspaceSibling {
     [switch]$Window,
     [Alias('rw')]
     [switch]$ReuseWindow
+
   )
 
   [hashtable]$Private:Location = @{
@@ -105,8 +113,11 @@ function Invoke-WorkspaceSibling {
 
 New-Alias i.. Invoke-WorkspaceRelative
 function Invoke-WorkspaceRelative {
+
   [OutputType([void])]
-  param (
+
+  param(
+
     [PathCompletions('..\..')]
     [string]$Path,
     [Alias('Name', 'pn')]
@@ -114,6 +125,7 @@ function Invoke-WorkspaceRelative {
     [switch]$Window,
     [Alias('rw')]
     [switch]$ReuseWindow
+
   )
 
   [hashtable]$Private:Location = @{
@@ -124,8 +136,11 @@ function Invoke-WorkspaceRelative {
 
 New-Alias ih Invoke-WorkspaceHome
 function Invoke-WorkspaceHome {
+
   [OutputType([void])]
-  param (
+
+  param(
+
     [PathCompletions('~')]
     [string]$Path,
     [Alias('Name', 'pn')]
@@ -133,6 +148,7 @@ function Invoke-WorkspaceHome {
     [switch]$Window,
     [Alias('rw')]
     [switch]$ReuseWindow
+
   )
 
   [hashtable]$Private:Location = @{
@@ -143,8 +159,11 @@ function Invoke-WorkspaceHome {
 
 New-Alias ic Invoke-WorkspaceCode
 function Invoke-WorkspaceCode {
+
   [OutputType([void])]
-  param (
+
+  param(
+
     [PathCompletions('~\code')]
     [string]$Path,
     [Alias('Name', 'pn')]
@@ -152,6 +171,7 @@ function Invoke-WorkspaceCode {
     [switch]$Window,
     [Alias('rw')]
     [switch]$ReuseWindow
+
   )
 
   [hashtable]$Private:Location = @{
@@ -162,8 +182,11 @@ function Invoke-WorkspaceCode {
 
 New-Alias i/ Invoke-WorkspaceDrive
 function Invoke-WorkspaceDrive {
+
   [OutputType([void])]
-  param (
+
+  param(
+
     [PathCompletions('\')]
     [string]$Path,
     [Alias('Name', 'pn')]
@@ -171,6 +194,7 @@ function Invoke-WorkspaceDrive {
     [switch]$Window,
     [Alias('rw')]
     [switch]$ReuseWindow
+
   )
 
   [hashtable]$Private:Location = @{

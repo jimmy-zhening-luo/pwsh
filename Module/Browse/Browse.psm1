@@ -7,13 +7,26 @@ Determine if a host is reachable.
 
 .DESCRIPTION
 This function checks if a host is reachable by testing the network connection to the specified hostname or IP address, optionally on a specified port (number or well-known TCP service).
+
+.COMPONENT
+Browse
+
+.LINK
+https://learn.microsoft.com/powershell/module/nettcpip/test-netconnection
+
+.LINK
+Test-NetConnection
 #>
 function Test-Host {
+
   [CmdletBinding(
     DefaultParameterSetName = 'CommonTCPPort'
   )]
+
   [OutputType([System.Object[]])]
+
   param(
+
     [Parameter(
       Position = 0,
       ValueFromPipeline,
@@ -22,13 +35,15 @@ function Test-Host {
     [Alias('ComputerName', 'RemoteAddress', 'cn', 'HostName', 'IpAddress')]
     # The hostname or IP address of the target host.
     [string]$Name,
+
     [Parameter(
       ParameterSetName = 'CommonTCPPort',
       Position = 1
     )]
-    [GenericCompletions('HTTP,RDP,SMB,WINRM')]
     [Alias('TCP')]
+    [GenericCompletions('HTTP,RDP,SMB,WINRM')]
     [string]$CommonTCPPort,
+
     [Parameter(
       ParameterSetName = 'RemotePort',
       Mandatory,
@@ -37,12 +52,19 @@ function Test-Host {
     [ValidateRange(1, 65535)]
     # The port number to test on the target host.
     [UInt16]$Port,
+
     [GenericCompletions('Quiet,Detailed')]
-    # The level of information to return.
+    # The level of information to return, can be Quiet or Detailed. Will not take effect if a more verbose switch is set.
     [string]$InformationLevel,
+
+    # Shorthand for InformationLevel Quiet. Will not take effect if InformationLevel is Detailed or if the Detailed switch is set.
     [switch]$Quiet,
+
+    # Shorthand for InformationLevel Detailed
     [switch]$Detailed
+
   )
+
   begin {
     $InformationLevel = $Detailed -or $InformationLevel -eq 'Detailed' ? 'Detailed' : $Quiet -or $InformationLevel -eq 'Quiet' ? 'Quiet' : ''
     [hashtable]$Private:Verbosity = $InformationLevel ? @{
@@ -50,6 +72,7 @@ function Test-Host {
     } : @{}
     $Private:Results = [List[System.Object]]::new()
   }
+
   process {
     if ($Name) {
       [hashtable]$Private:Connection = @{
@@ -76,6 +99,7 @@ function Test-Host {
       }
     }
   }
+
   end {
     if ($Results.Count -eq 0) {
       [hashtable]$Private:Connection = @{
@@ -96,17 +120,31 @@ New-Alias tu Test-Url
 <#
 .SYNOPSIS
 Determine if an URL is reachable.
+
 .DESCRIPTION
 This function checks if an URL is reachable by sending a web request and checking the status code of the response.
 
 It returns true if the URL returns a status code between 200 to 300, otherwise false.
 
 The function times out if it receives no response after five (5) (lol) seconds, returning false.
+
+.COMPONENT
+Browse
+
+.LINK
+https://learn.microsoft.com/powershell/module/microsoft.powershell.utility/invoke-webrequest
+
+.LINK
+Invoke-WebRequest
 #>
 function Test-Url {
+
   [CmdletBinding()]
+
   [OutputType([bool])]
+
   param(
+
     [Parameter(
       Mandatory,
       Position = 0
@@ -115,6 +153,7 @@ function Test-Url {
     [AllowEmptyString()]
     # The URL to test. If the URL has no scheme, it defaults to 'http'.
     [uri]$Uri
+
   )
 
   if (-not $Uri) {
@@ -144,16 +183,27 @@ New-Alias go Open-Url
 <#
 .SYNOPSIS
 Open a file path or URL in Google Chrome.
+
 .DESCRIPTION
 This function opens the specified file path or URL in Google Chrome. If a file path is provided, it resolves the path before opening it. If the file path cannot be resolved to the filesystem, it casts the path to an URL, throwing an error if the cast is unsuccessful. If an URL is provided, it opens the URI directly.
+
+.COMPONENT
+Browse
+
+.LINK
+https://www.chromium.org/developers/how-tos/run-chromium-with-flags/
 #>
 function Open-Url {
+
   [CmdletBinding(
     DefaultParameterSetName = 'Path',
     SupportsShouldProcess
   )]
+
   [OutputType([void])]
+
   param(
+
     [Parameter(
       ParameterSetName = 'Path',
       Position = 0
@@ -161,6 +211,7 @@ function Open-Url {
     [AllowEmptyString()]
     # The file path or URL to open. Defaults to the current directory.
     [string]$Path,
+
     [Parameter(
       ParameterSetName = 'Uri',
       Mandatory,
@@ -169,13 +220,15 @@ function Open-Url {
       ValueFromPipelineByPropertyName
     )]
     [AllowEmptyCollection()]
-    # The URL to open.
+    # The URL(s) to open.
     [uri[]]$Uri
+
   )
 
   begin {
     [bool]$Private:Interactive = -not $env:SSH_CLIENT
   }
+
   process {
     if ($Uri) {
       if (
@@ -194,6 +247,7 @@ function Open-Url {
       }
     }
   }
+
   end {
     if ($Path) {
       [string]$Private:Target = $Path ? (Test-Path @PSBoundParameters) ? (Resolve-Path @PSBoundParameters) : [uri]$Path : $PWD

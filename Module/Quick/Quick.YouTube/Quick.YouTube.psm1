@@ -2,14 +2,23 @@ New-Alias yt Get-YouTube
 <#
 .SYNOPSIS
 Use yt-dlp to download YouTube videos.
+
 .DESCRIPTION
 This function is an alias for 'yt-dlp' and allows you to download YouTube videos or extract audio from them.
+
+.COMPONENT
+Quick.YouTube
+
 .LINK
 https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#usage-and-options
 #>
 function Get-YouTube {
+
   param(
+
+    # The YouTube video URL or identifier to process.
     [string]$Video
+
   )
 
   if (-not $Video) {
@@ -36,14 +45,23 @@ New-Alias yta Get-YouTubeAudio
 <#
 .SYNOPSIS
 Use yt-dlp to extract audio from a YouTube video.
+
 .DESCRIPTION
 This function is an alias for 'yt-dlp' and extracts audio from a YouTube video.
+
+.COMPONENT
+Quick.YouTube
+
 .LINK
 https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#post-processing-options
 #>
 function Get-YouTubeAudio {
+
   param(
+
+    # The YouTube video URL or identifier to process.
     [string]$Video
+
   )
 
   [string[]]$Private:YouTubeArguments = @(
@@ -64,14 +82,23 @@ New-Alias ytf Get-YouTubeFormat
 <#
 .SYNOPSIS
 Use yt-dlp to get available formats for a YouTube video.
+
 .DESCRIPTION
 This function is an alias for 'yt-dlp -F' and lists all available formats for a YouTube video.
+
+.COMPONENT
+Quick.YouTube
+
 .LINK
 https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#video-format-options
 #>
 function Get-YouTubeFormat {
+
   param(
+
+    # The YouTube video URL or identifier to process.
     [string]$Video
+
   )
 
   [string[]]$Private:YouTubeArguments = @(
@@ -81,9 +108,22 @@ function Get-YouTubeFormat {
 }
 
 New-Alias yte Invoke-YouTubeDirectory
+<#
+.SYNOPSIS
+Opens yt-dlp download location in File Explorer.
+
+.DESCRIPTION
+Opens yt-dlp download location in File Explorer, not by config though lmao.
+
+.COMPONENT
+Quick.YouTube
+#>
 function Invoke-YouTubeDirectory {
+
   [CmdletBinding()]
+
   [OutputType([void])]
+
   param()
 
   [hashtable]$Private:YouTubeDownloads = @{
@@ -93,9 +133,22 @@ function Invoke-YouTubeDirectory {
 }
 
 New-Alias ytc Invoke-YouTubeConfig
+<#
+.SYNOPSIS
+Opens yt-dlp configuration file for editing.
+
+.DESCRIPTION
+Opens yt-dlp configuration file for editing.
+
+.COMPONENT
+Quick.YouTube
+#>
 function Invoke-YouTubeConfig {
+
   [CmdletBinding()]
+
   [OutputType([void])]
+
   param()
 
   [hashtable]$Private:YouTubeConfig = @{

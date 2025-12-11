@@ -4,14 +4,19 @@ using namespace System.Management.Automation
 <#
 .SYNOPSIS
 Test whether a path is the root directory of a Node package.
+
 .DESCRIPTION
 This function tests returns true if the supplied path is the root directory of a Node package, otherwise false.
+
 .LINK
 https://docs.npmjs.com/cli/commands
 #>
 function Test-NodePackageDirectory {
+
   [OutputType([bool])]
+
   param(
+
     [Parameter(
       Mandatory,
       Position = 0
@@ -19,6 +24,7 @@ function Test-NodePackageDirectory {
     [AllowEmptyString()]
     # Node package root path to be resolved
     [string]$Path
+
   )
 
   [hashtable]$Private:IsNodePackage = @{
@@ -31,14 +37,19 @@ function Test-NodePackageDirectory {
 <#
 .SYNOPSIS
 Resolve a Node package at its root directory.
+
 .DESCRIPTION
 This function resolves the supplied path to a qualified, rooted path if it is a Node package root. If the supplied path is not a Node package root, an error is thrown.
+
 .LINK
 https://docs.npmjs.com/cli/commands
 #>
 function Resolve-NodePackageDirectory {
+
   [OutputType([string])]
+
   param(
+
     [Parameter(
       Mandatory,
       Position = 0
@@ -46,8 +57,10 @@ function Resolve-NodePackageDirectory {
     [AllowEmptyString()]
     # Node package root path to be resolved
     [string]$Path,
+
     # Omit the '--prefix=' prefix from the output
     [switch]$OmitPrefix
+
   )
 
   [hashtable]$Private:IsNodePackage = @{
@@ -67,12 +80,15 @@ New-Alias no Invoke-Node
 <#
 .SYNOPSIS
 Run Node.
+
 .DESCRIPTION
 This function is an alias shim for 'node [args]'.
+
 .LINK
 https://nodejs.org/api/cli.html
 #>
 function Invoke-Node {
+
   & node.exe @args
 }
 
@@ -180,15 +196,20 @@ New-Alias n Invoke-NodePackage
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to run a command in a Node package.
+
 .DESCRIPTION
 This function runs an npm command in a specified Node package directory, or the current directory if no path is specified.
+
 .LINK
 https://docs.npmjs.com/cli/commands
+
 .LINK
 https://docs.npmjs.com/cli/commands/npm
 #>
 function Invoke-NodePackage {
+
   param(
+
     [Parameter(
       Position = 0
     )]
@@ -197,6 +218,7 @@ function Invoke-NodePackage {
     )]
     # npm command verb
     [string]$Command,
+
     [PathCompletions(
       '~\code',
       'Directory',
@@ -204,24 +226,32 @@ function Invoke-NodePackage {
     )]
     # Node package root at which to run the command
     [string]$WorkingDirectory,
+
     [Parameter(
       Position = 1,
       ValueFromRemainingArguments
     )]
     # Additional arguments to pass to npm
     [string[]]$NodeArguments,
+
     # Show npm version if no command is specified
     [switch]$Version,
+
     # Pass the -D flag as an argument to npm
     [switch]$D,
+
     # Pass the -E flag as an argument to npm
     [switch]$E,
+
     # Pass the -i flag as an argument to npm
     [switch]$I,
+
     # Pass the -o flag as an argument to npm
     [switch]$O,
+
     # Pass the -P flag as an argument to npm
     [switch]$P
+
   )
 
   $Private:NodeArgumentList = [List[string]]::new()
@@ -330,12 +360,15 @@ New-Alias nx Invoke-NodeExecutable
 <#
 .SYNOPSIS
 Use 'npx' to run a command from a local or remote npm module.
+
 .DESCRIPTION
 This function is an alias shim for 'npx [args]'.
+
 .LINK
 https://docs.npmjs.com/cli/commands/npx
 #>
 function Invoke-NodeExecutable {
+
   & npx.ps1 @args
 }
 
@@ -343,12 +376,15 @@ New-Alias ncc Clear-NodeModuleCache
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to clear the global Node module cache.
+
 .DESCRIPTION
 This function is an alias for 'npm cache clean --force'.
+
 .LINK
 https://docs.npmjs.com/cli/commands/npm-cache
 #>
 function Clear-NodeModuleCache {
+
   $Private:NodeArguments = [List[string]]::new(
     [List[string]]@(
       'clean'
@@ -379,13 +415,17 @@ New-Alias npo Compare-NodeModule
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to check for outdated packages in a Node package.
+
 .DESCRIPTION
 This function is an alias for 'npm outdated [--prefix $WorkingDirectory]'.
+
 .LINK
 https://docs.npmjs.com/cli/commands/npm-outdated
 #>
 function Compare-NodeModule {
+
   param(
+
     [PathCompletions(
       '~\code',
       'Directory',
@@ -393,6 +433,7 @@ function Compare-NodeModule {
     )]
     # Node package root at which to run the command
     [string]$WorkingDirectory
+
   )
 
   $Private:NodeArguments = [List[string]]::new()
@@ -429,16 +470,21 @@ New-Alias nu Step-NodePackageVersion
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to increment the package version of the current Node package.
+
 .DESCRIPTION
 This function is an alias for 'npm version [--prefix $WorkingDirectory] [version=patch]'.
+
 .LINK
 https://docs.npmjs.com/cli/commands/npm-version
 #>
 function Step-NodePackageVersion {
+
   param(
+
     # New package version, default 'patch'
     [GenericCompletions('patch,minor,major,prerelease,preminor,premajor')]
     [string]$Version,
+
     [PathCompletions(
       '~\code',
       'Directory',
@@ -446,6 +492,7 @@ function Step-NodePackageVersion {
     )]
     # Node package root at which to run the command
     [string]$WorkingDirectory
+
   )
 
   [regex]$Private:VERSION_SPEC = '^v?(?<Major>(?>\d+))(?>\.(?<Minor>(?>\d*))(?>\.(?<Patch>\(?>d*)))?)?(?>-(?<Pre>(?>\w+)(?>\.(?>\d+))?))?$'
@@ -501,15 +548,20 @@ New-Alias nr Invoke-NodePackageScript
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to run a script defined in a Node package's 'package.json'.
+
 .DESCRIPTION
 This function is an alias for 'npm run [script] [--prefix $WorkingDirectory] [--args]'.
+
 .LINK
 https://docs.npmjs.com/cli/commands/npm-run
 #>
 function Invoke-NodePackageScript {
+
   param(
+
     # Name of the npm script to run
     [string]$Script,
+
     [PathCompletions(
       '~\code',
       'Directory',
@@ -517,6 +569,7 @@ function Invoke-NodePackageScript {
     )]
     # Node package root at which to run the command
     [string]$WorkingDirectory
+
   )
 
   if (-not $Script) {
@@ -549,13 +602,17 @@ New-Alias nt Test-NodePackage
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to run the 'test' script defined in a Node package's 'package.json'.
+
 .DESCRIPTION
 This function is an alias for 'npm test [--prefix $WorkingDirectory] [--args]'.
+
 .LINK
 https://docs.npmjs.com/cli/commands/npm-test
 #>
 function Test-NodePackage {
+
   param(
+
     [PathCompletions(
       '~\code',
       'Directory',
@@ -563,6 +620,7 @@ function Test-NodePackage {
     )]
     # Node package root at which to run the command
     [string]$WorkingDirectory
+
   )
 
   $Private:NodeArguments = [List[string]]::new()

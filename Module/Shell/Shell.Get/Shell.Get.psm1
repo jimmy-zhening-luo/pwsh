@@ -6,12 +6,17 @@ New-Alias hash Get-FileHash
 
 New-Alias size Get-Size
 function Get-Size {
+
   [CmdletBinding(
     DefaultParameterSetName = 'String'
   )]
+
   [OutputType([string[]])]
+
   [OutputType([double[]], ParameterSetName = 'Number')]
+
   param(
+
     [Parameter(
       ParameterSetName = 'String',
       Position = 0,
@@ -27,6 +32,7 @@ function Get-Size {
     [PathCompletions('.')]
     # The path of the file or directory to be measured.
     [string]$Path,
+
     [Parameter(
       ParameterSetName = 'String',
       Position = 1
@@ -38,12 +44,14 @@ function Get-Size {
     [GenericCompletions('B,KB,MB,GB,TB,PB')]
     # The unit in which to return the size.
     [string]$Unit,
+
     [Parameter(
       ParameterSetName = 'Number',
       Mandatory
     )]
     # Returns only the numeric scalar value in the specified unit.
     [switch]$Number
+
   )
 
   begin {
@@ -83,6 +91,7 @@ function Get-Size {
 
     $Sizes = [List[UInt64]]::new()
   }
+
   process {
     if (-not $Path) {
       $Path = $PWD.Path
@@ -104,6 +113,7 @@ function Get-Size {
 
     $Sizes.Add($Size)
   }
+
   end {
     [double[]]$Private:ScaledSizes = $Sizes |
       ForEach-Object {

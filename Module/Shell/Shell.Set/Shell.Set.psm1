@@ -1,9 +1,13 @@
 New-Alias c Set-Directory
 function Set-Directory {
+
   [OutputType([void])]
-  param (
+
+  param(
+
     [PathCompletions('.', 'Directory')]
     [string]$Path
+
   )
 
   if ($Path) {
@@ -16,10 +20,14 @@ function Set-Directory {
 
 New-Alias c. Set-DirectorySibling
 function Set-DirectorySibling {
+
   [OutputType([void])]
-  param (
+
+  param(
+
     [PathCompletions('..', 'Directory')]
     [string]$Path
+
   )
 
   [hashtable]$Private:FullPath = @{
@@ -30,10 +38,14 @@ function Set-DirectorySibling {
 
 New-Alias c.. Set-DirectoryRelative
 function Set-DirectoryRelative {
+
   [OutputType([void])]
-  param (
+
+  param(
+
     [PathCompletions('..\..', 'Directory')]
     [string]$Path
+
   )
 
   [hashtable]$Private:FullPath = @{
@@ -44,10 +56,14 @@ function Set-DirectoryRelative {
 
 New-Alias ch Set-DirectoryHome
 function Set-DirectoryHome {
+
   [OutputType([void])]
-  param (
+
+  param(
+
     [PathCompletions('~', 'Directory')]
     [string]$Path
+
   )
 
   [hashtable]$Private:FullPath = @{
@@ -58,10 +74,14 @@ function Set-DirectoryHome {
 
 New-Alias cc Set-DirectoryCode
 function Set-DirectoryCode {
+
   [OutputType([void])]
-  param (
+
+  param(
+
     [PathCompletions('~\code', 'Directory')]
     [string]$Path
+
   )
 
   [hashtable]$Private:FullPath = @{
@@ -72,10 +92,14 @@ function Set-DirectoryCode {
 
 New-Alias c/ Set-Drive
 function Set-Drive {
+
   [OutputType([void])]
-  param (
+
+  param(
+
     [PathCompletions('\', 'Directory')]
     [string]$Path
+
   )
 
   [hashtable]$Private:FullPath = @{
@@ -86,10 +110,14 @@ function Set-Drive {
 
 New-Alias d/ Set-DriveD
 function Set-DriveD {
+
   [OutputType([void])]
-  param (
+
+  param(
+
     [PathCompletions('D:', 'Directory')]
     [string]$Path
+
   )
 
   [hashtable]$Private:FullPath = @{
