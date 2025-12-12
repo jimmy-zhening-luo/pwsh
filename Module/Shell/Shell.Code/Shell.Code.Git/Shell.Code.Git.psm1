@@ -586,7 +586,7 @@ function Reset-GitRepository {
   )
 
   $Private:ResetArguments = [List[string]]::new(
-    List[string]]$args
+    [List[string]]$args
   )
 
   if ($Tree) {
