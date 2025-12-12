@@ -86,8 +86,6 @@ class PathCompleter : GenericCompleterBase, IArgumentCompleter {
   ) {
     [hashtable]$private:matchChild = @{}
 
-    if ($this.Type)
-
     switch ($this.Type) {
       Directory {
         $matchChild.Directory = $True
