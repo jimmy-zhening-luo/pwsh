@@ -85,21 +85,21 @@ class PathCompleter : GenericCompleterBase, IArgumentCompleter {
 
     [string]$private:currentPathValue = $currentValue -replace [regex][PathCompleter]::EasyDirectorySeparator, [PathCompleter]::NormalDirectorySeparator -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator
 
-    [string]$private:currentDirectoryText = ''
+    [string]$private:currentDirectoryValue = ''
 
     if ($currentPathValue) {
       if ($currentPathValue.EndsWith([PathCompleter]::NormalDirectorySeparator)) {
         $currentPathValue += '*'
       }
 
-      $currentDirectoryText = Split-Path $currentPathValue
+      $currentDirectoryValue = Split-Path $currentPathValue
       [string]$private:fragment = Split-Path $currentPathValue -Leaf
 
       if ($fragment -eq '*') {
         $fragment = ''
       }
 
-      [string]$private:path = Join-Path $private:root $currentDirectoryText
+      [string]$private:path = Join-Path $private:root $currentDirectoryValue
 
       if (Test-Path -Path $path -PathType Container) {
         $query.Path = $path
@@ -125,18 +125,18 @@ class PathCompleter : GenericCompleterBase, IArgumentCompleter {
     [string[]]$private:files = $children |
       Select-Object -ExpandProperty Name
 
-    if ($currentDirectoryText -and -not $this.Flat) {
+    if ($currentDirectoryValue -and -not $this.Flat) {
       $directories += ''
     }
 
-    if ($currentDirectoryText) {
+    if ($currentDirectoryValue) {
       $directories = $directories |
         ForEach-Object {
-          Join-Path $currentDirectoryText $PSItem
+          Join-Path $currentDirectoryValue $PSItem
         }
       $files = $files |
         ForEach-Object {
-          Join-Path $currentDirectoryText $PSItem
+          Join-Path $currentDirectoryValue $PSItem
         }
     }
 
