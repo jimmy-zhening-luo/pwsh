@@ -13,6 +13,8 @@ https://docs.npmjs.com/cli/commands
 #>
 function Test-NodePackageDirectory {
 
+  [CmdletBinding()]
+
   [OutputType([bool])]
 
   param(
@@ -23,15 +25,19 @@ function Test-NodePackageDirectory {
     )]
     [AllowEmptyString()]
     # Node package root path to be resolved
-    [string]$Path
+    [string]$WorkingDirectory
 
   )
 
-  [hashtable]$Private:IsNodePackage = @{
-    Path     = Join-Path ($Path ? $Path : $PWD) package.json
+  if (-not $WorkingDirectory) {
+    $WorkingDirectory = $PWD
+  }
+
+  [hashtable]$Private:HasPackageJson = @{
+    Path     = Join-Path $WorkingDirectory package.json
     PathType = 'Leaf'
   }
-  return Test-Path @IsNodePackage
+  return Test-Path @HasPackageJson
 }
 
 <#
@@ -46,6 +52,8 @@ https://docs.npmjs.com/cli/commands
 #>
 function Resolve-NodePackageDirectory {
 
+  [CmdletBinding()]
+
   [OutputType([string])]
 
   param(
@@ -56,23 +64,28 @@ function Resolve-NodePackageDirectory {
     )]
     [AllowEmptyString()]
     # Node package root path to be resolved
-    [string]$Path,
-
-    # Omit the '--prefix=' prefix from the output
-    [switch]$OmitPrefix
+    [string]$WorkingDirectory
 
   )
 
-  [hashtable]$Private:IsNodePackage = @{
-    Path = $Path
+  [hashtable]$Private:TestWorkingDirectory = @{
+    WorkingDirectory = $WorkingDirectory
   }
-  if (Test-NodePackageDirectory @IsNodePackage) {
-    [string]$Private:Package = ($Path ? (Resolve-Path $Path) : $PWD).Path
+  if (Test-NodePackageDirectory @TestWorkingDirectory) {
+    if ($WorkingDirectory) {
+      [hashtable]$Private:ResolveWorkingDirectory = @{
+        Path = $WorkingDirectory
+      }
+      [string]$Private:WorkingDirectoryPath = Resolve-Path @ResolveWorkingDirectory
 
-    return $Package -eq $PWD.Path ? '' : $OmitPrefix ? $Package : "--prefix=$Package"
+      return "--prefix=$WorkingDirectoryPath"
+    }
+    else {
+      return ''
+    }
   }
   else {
-    throw "Path '$Path' is not a Node package directory."
+    throw "Path '$WorkingDirectory' is not a Node package directory."
   }
 }
 
@@ -90,10 +103,13 @@ https://nodejs.org/api/cli.html
 function Invoke-Node {
 
   & node.exe @args
+
+  if ($LASTEXITCODE -ne 0) {
+    throw "Node.exe error, execution stopped with exit code: $LASTEXITCODE"
+  }
 }
 
 $NODE_VERB = @(
-  # Name
   'access'
   'adduser'
   'audit'
@@ -234,7 +250,7 @@ function Invoke-NodePackage {
     # Additional arguments to pass to npm
     [string[]]$NodeArguments,
 
-    # Show npm version if no command is specified
+    # Show npm version if no command is specified. Otherwise, pass the -v flag.
     [switch]$Version,
 
     # Pass the -D flag as an argument to npm
@@ -254,21 +270,21 @@ function Invoke-NodePackage {
 
   )
 
-  $Private:NodeArgumentList = [List[string]]::new()
-  $NodeArgumentList.Add('--color=always')
+  $Private:NodeArgumentList = [List[string]]::new(
+    [List[string]]@(
+      '--color=always'
+    )
+  )
 
-  $Private:CallerNodeArguments = [List[string]]::new()
-  if ($NodeArguments) {
-    $CallerNodeArguments.AddRange([List[string]]$NodeArguments)
-  }
+  $Private:CallerNodeArguments = [List[string]]::new([List[string]]$NodeArguments)
 
   if ($WorkingDirectory.Length -ne 0) {
-    if ($WorkingDirectory.StartsWith('-') -or -not (Test-NodePackageDirectory -Path $WorkingDirectory)) {
+    if ($WorkingDirectory.StartsWith('-') -or -not (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)) {
       $CallerNodeArguments.Add($WorkingDirectory)
       $WorkingDirectory = ''
     }
     else {
-      [string]$Private:PackagePrefix = Resolve-NodePackageDirectory -Path $WorkingDirectory
+      [string]$Private:PackagePrefix = Resolve-NodePackageDirectory -WorkingDirectory $WorkingDirectory
 
       if ($PackagePrefix) {
         $NodeArgumentList.Add($PackagePrefix)
@@ -309,19 +325,21 @@ function Invoke-NodePackage {
     if ($P) {
       $CallerNodeArguments.Add('-P')
     }
+    if ($Version) {
+      $CallerNodeArguments.Add('-v')
+    }
   }
-  elseif ($Version) {
+
+  if ($Version) {
     $NodeArgumentList.Add('-v')
   }
 
-  if ($CallerNodeArguments.Count -ne 0) {
-    $NodeArgumentList.AddRange($CallerNodeArguments)
-  }
+  $NodeArgumentList.AddRange($CallerNodeArguments)
 
   & npm.ps1 @NodeArgumentList
 
   if ($LASTEXITCODE -ne 0) {
-    throw "Npm command error, execution stopped with exit code: $LASTEXITCODE"
+    throw "npm command error, execution stopped with exit code: $LASTEXITCODE"
   }
 }
 
@@ -339,6 +357,10 @@ https://docs.npmjs.com/cli/commands/npx
 function Invoke-NodeExecutable {
 
   & npx.ps1 @args
+
+  if ($LASTEXITCODE -ne 0) {
+    throw "npx error, execution stopped with exit code: $LASTEXITCODE"
+  }
 }
 
 New-Alias ncc Clear-NodeModuleCache
@@ -361,21 +383,11 @@ function Clear-NodeModuleCache {
     )
   )
 
-  if ($WorkingDirectory) {
-    if (-not (Test-NodePackageDirectory -Path $WorkingDirectory)) {
-      $NodeArguments.Add($WorkingDirectory)
-      $WorkingDirectory = ''
-    }
-  }
-
-  if ($args) {
-    $NodeArguments.AddRange([List[string]]$args)
-  }
+  $NodeArguments.AddRange([List[string]]$args)
 
   [hashtable]$Private:CacheClean = @{
-    Command          = 'cache'
-    WorkingDirectory = $WorkingDirectory
-    NodeArguments    = $NodeArguments
+    Command       = 'cache'
+    NodeArguments = $NodeArguments
   }
   Invoke-NodePackage @CacheClean
 }
@@ -408,15 +420,13 @@ function Compare-NodeModule {
   $Private:NodeArguments = [List[string]]::new()
 
   if ($WorkingDirectory) {
-    if (-not (Test-NodePackageDirectory -Path $WorkingDirectory)) {
+    if (-not (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)) {
       $NodeArguments.Add($WorkingDirectory)
       $WorkingDirectory = ''
     }
   }
 
-  if ($args) {
-    $NodeArguments.AddRange([List[string]]$args)
-  }
+  $NodeArguments.AddRange([List[string]]$args)
 
   [hashtable]$Private:Outdated = @{
     Command          = 'outdated'
@@ -491,19 +501,20 @@ function Step-NodePackageVersion {
     $Version = 'patch'
   }
 
-  $Private:NodeArguments = [List[string]]::new()
-  $NodeArguments.Add($Version.ToLowerInvariant())
+  $Private:NodeArguments = [List[string]]::new(
+    [List[string]]@(
+      $Version.ToLowerInvariant()
+    )
+  )
 
   if ($WorkingDirectory) {
-    if (-not (Test-NodePackageDirectory -Path $WorkingDirectory)) {
+    if (-not (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)) {
       $NodeArguments.Add($WorkingDirectory)
       $WorkingDirectory = ''
     }
   }
 
-  if ($args) {
-    $NodeArguments.AddRange([List[string]]$args)
-  }
+  $NodeArguments.AddRange([List[string]]$args)
 
   [hashtable]$Private:StepVersion = @{
     Command          = 'version'
@@ -545,19 +556,20 @@ function Invoke-NodePackageScript {
     throw 'Script name is required.'
   }
 
-  $Private:NodeArguments = [List[string]]::new()
-  $NodeArguments.Add($Script)
+  $Private:NodeArguments = [List[string]]::new(
+    [List[string]]@(
+      $Script
+    )
+  )
 
   if ($WorkingDirectory) {
-    if (-not (Test-NodePackageDirectory -Path $WorkingDirectory)) {
+    if (-not (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)) {
       $NodeArguments.Add($WorkingDirectory)
       $WorkingDirectory = ''
     }
   }
 
-  if ($args) {
-    $NodeArguments.AddRange([List[string]]$args)
-  }
+  $NodeArguments.AddRange([List[string]]$args)
 
   [hashtable]$Private:RunScript = @{
     Command          = 'run'
@@ -595,15 +607,13 @@ function Test-NodePackage {
   $Private:NodeArguments = [List[string]]::new()
 
   if ($WorkingDirectory) {
-    if (-not (Test-NodePackageDirectory -Path $WorkingDirectory)) {
+    if (-not (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)) {
       $NodeArguments.Add($WorkingDirectory)
       $WorkingDirectory = ''
     }
   }
 
-  if ($args) {
-    $NodeArguments.AddRange([List[string]]$args)
-  }
+  $NodeArguments.AddRange([List[string]]$args)
 
   [hashtable]$Private:Test = @{
     Command          = 'test'
