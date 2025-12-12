@@ -230,7 +230,78 @@ function Invoke-NodePackage {
       Position = 0
     )]
     [GenericCompletions(
-      'pkg,i,it,cit,rm,access,adduser,audit,bugs,cache,ci,completion,config,dedupe,deprecate,diff,dist-tag,docs,doctor,edit,exec,explain,explore,find-dupes,fund,help,help-search,init,install,install-ci-test,install-test,link,login,logout,ls,org,outdated,owner,pack,ping,prefix,profile,prune,publish,query,rebuild,repo,restart,root,run,sbom,search,shrinkwrap,star,stars,start,stop,team,test,token,undeprecate,uninstall,unpublish,unstar,update,version,view,whoami'
+      {
+        return @(
+          'pkg'
+          'i'
+          'it'
+          'cit'
+          'rm'
+          'access'
+          'adduser'
+          'audit'
+          'bugs'
+          'cache'
+          'ci'
+          'completion'
+          'config'
+          'dedupe'
+          'deprecate'
+          'diff'
+          'dist-tag'
+          'docs'
+          'doctor'
+          'edit'
+          'exec'
+          'explain'
+          'explore'
+          'find-dupes'
+          'fund'
+          'help'
+          'help-search'
+          'init'
+          'install'
+          'install-ci-test'
+          'install-test'
+          'link'
+          'login'
+          'logout'
+          'ls'
+          'org'
+          'outdated'
+          'owner'
+          'pack'
+          'ping'
+          'prefix'
+          'profile'
+          'prune'
+          'publish'
+          'query'
+          'rebuild'
+          'repo'
+          'restart'
+          'root'
+          'run'
+          'sbom'
+          'search'
+          'shrinkwrap'
+          'star'
+          'stars'
+          'start'
+          'stop'
+          'team'
+          'test'
+          'token'
+          'undeprecate'
+          'uninstall'
+          'unpublish'
+          'unstar'
+          'update'
+          'version'
+          'view'
+          'whoami'
+        )
+      }
     )]
     # npm command verb
     [string]$Command,
@@ -491,7 +562,11 @@ function Step-NodePackageVersion {
   param(
 
     # New package version, default 'patch'
-    [GenericCompletions('patch,minor,major,prerelease,preminor,premajor')]
+    [GenericCompletions(
+      {
+        return [NodePackageNamedVersion].GetEnumNames()
+      }
+    )]
     [string]$Version,
 
     [PathCompletions(
@@ -505,7 +580,7 @@ function Step-NodePackageVersion {
   )
 
   if ($Version) {
-    if (-not (NodePackageNamedVersion::IsDefined($Version))) {
+    if ($null -eq [NodePackageNamedVersion]::$Version) {
       if ($Version -match $VERSION_SPEC) {
         [hashtable]$Private:FullVersion = @{
           Major = [UInt32]$Matches.Major
@@ -524,9 +599,12 @@ function Step-NodePackageVersion {
         throw "Unrecognized version ''"
       }
     }
+    else {
+      $Version = [NodePackageNamedVersion]::$Version
+    }
   }
   else {
-    $Version = 'patch'
+    $Version = [NodePackageNamedVersion]::patch
   }
 
   $Private:NodeArguments = [List[string]]::new(

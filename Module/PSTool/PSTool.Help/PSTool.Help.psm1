@@ -257,7 +257,7 @@ function Get-CommandAlias {
     )]
     [SupportsWildcards()]
     [Alias('Command')]
-    [GenericCompletions('*')]
+    [GenericCompletions({ return @('*') })]
     # Gets the aliases for the specified item. Enter the name of a cmdlet, function, script, file, or executable file. This parameter is called Definition, because it searches for the item name in the Definition property of the alias object.
     [string[]]$Definition,
 
@@ -265,7 +265,19 @@ function Get-CommandAlias {
       Position = 1
     )]
     [SupportsWildcards()]
-    [GenericCompletions('Global,Local,Script,0,1,2,3')]
+    [GenericCompletions(
+      {
+        return @(
+          'Global'
+          'Local'
+          'Script'
+          '0'
+          '1'
+          '2'
+          '3'
+        )
+      }
+    )]
     # Specifies the scope for which this cmdlet gets aliases. The acceptable values for this parameter are: Global, Local, Script, and a positive integer relative to the current scope (0 through the number of scopes, where 0 is the current scope and 1 is its parent). Global is the default, which differs from Get-Alias where Local is the default.
     [string]$Scope,
 
@@ -317,6 +329,19 @@ function Get-CommandAlias {
   }
 }
 
+enum VerbGroup {
+  Communications
+  Data
+  Diagnostic
+  Lifecycle
+  Security
+  Service
+  Settings
+  Support
+  System
+  Utility
+}
+
 <#
 .SYNOPSIS
 Gets a list of approved PowerShell verbs.
@@ -354,18 +379,20 @@ function Get-VerbList {
       ValueFromPipelineByPropertyName
     )]
     [SupportsWildcards()]
-    [GenericCompletions('*')]
+    [GenericCompletions({ return @('*') })]
     # Gets only the specified verbs. Enter the name of a verb or a name pattern. Wildcards are allowed.
     [string[]]$Verb,
 
     [Parameter(
-      Position = 1,
-      ValueFromPipeline,
-      ValueFromPipelineByPropertyName
+      Position = 1
     )]
-    [GenericCompletions('Common,Communications,Data,Diagnostic,Lifecycle,Other,Security')]
-    # Gets only the specified groups. Enter the name of a group. Wildcards aren't allowed.
-    [string[]]$Group
+    [GenericCompletions(
+      {
+        return [VerbGroup].GetEnumNames()
+      }
+    )]
+    # Gets only the specified group. Enter the name of a group. Wildcards aren't allowed.
+    [string]$Group
 
   )
 

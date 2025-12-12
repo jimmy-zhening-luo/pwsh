@@ -72,10 +72,31 @@ function Resolve-GitRepository {
   }
 }
 
-[string]$GIT_VERB_COMPLETION = (
-  'switch,merge,diff,stash,tag,config,remote,submodule,fetch,checkout,branch,rm,mv,ls-files,ls-tree,init,status,clone,pull,add,commit,push,reset'
+[string[]]$GIT_VERB = @(
+  'switch'
+  'merge'
+  'diff'
+  'stash'
+  'tag'
+  'config'
+  'remote'
+  'submodule'
+  'fetch'
+  'checkout'
+  'branch'
+  'rm'
+  'mv'
+  'ls-files'
+  'ls-tree'
+  'init'
+  'status'
+  'clone'
+  'pull'
+  'add'
+  'commit'
+  'push'
+  'reset'
 )
-[string[]]$GIT_VERB = $GIT_VERB_COMPLETION -split ','
 [string[]]$NEWABLE_GIT_VERB = @(
   'clone'
   'config'
@@ -103,7 +124,33 @@ function Invoke-GitRepository {
   param(
 
     [GenericCompletions(
-      'switch,merge,diff,stash,tag,config,remote,submodule,fetch,checkout,branch,rm,mv,ls-files,ls-tree,init,status,clone,pull,add,commit,push,reset'
+      {
+        return @(
+          'switch'
+          'merge'
+          'diff'
+          'stash'
+          'tag'
+          'config'
+          'remote'
+          'submodule'
+          'fetch'
+          'checkout'
+          'branch'
+          'rm'
+          'mv'
+          'ls-files'
+          'ls-tree'
+          'init'
+          'status'
+          'clone'
+          'pull'
+          'add'
+          'commit'
+          'push'
+          'reset'
+        )
+      }
     )]
     # Git command to run.
     [string]$Verb,

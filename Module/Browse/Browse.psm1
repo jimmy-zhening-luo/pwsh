@@ -53,7 +53,11 @@ function Test-Host {
       Position = 1
     )]
     [Alias('TCP')]
-    [GenericCompletions('HTTP,RDP,SMB,WINRM')]
+    [GenericCompletions(
+      {
+        return [TestHostWellknownPort].GetEnumNames()
+      }
+    )]
     [string]$CommonTCPPort,
 
     [Parameter(
@@ -65,9 +69,13 @@ function Test-Host {
     # The port number to test on the target host.
     [UInt16]$Port,
 
-    [GenericCompletions('Quiet,Detailed')]
+    [GenericCompletions(
+      {
+        return [TestHostVerbosity].GetEnumNames()
+      }
+    )]
     # The level of information to return, can be Quiet or Detailed. Will not take effect if Detailed switch is set. Defaults to Quiet.
-    [TestHostVerbosity]$InformationLevel = [TestHostVerbosity]::Quiet,
+    [string]$InformationLevel,
 
     # Shorthand for InformationLevel Detailed
     [switch]$Detailed
@@ -96,13 +104,8 @@ function Test-Host {
         }
         CommonTCPPort {
           if ($CommonTCPPort) {
-            if (
-              [System.Enum]::IsDefined(
-                [TestHostWellknownPort],
-                $CommonTCPPort
-              )
-            ) {
-              $Connection.CommonTCPPort = [TestHostWellknownPort].GetEnumName($CommonTCPPort)
+            if ([TestHostWellknownPort]::$CommonTCPPort) {
+              $Connection.CommonTCPPort = [TestHostWellknownPort]::$CommonTCPPort
             }
             elseif (
               $CommonTCPPort -match [regex]'^(?>\d{1,5})$' -and $CommonTCPPort -as [UInt16]

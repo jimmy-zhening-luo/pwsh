@@ -248,7 +248,7 @@ class GenericCompleter : GenericCompleterBase, IArgumentCompleter {
 
 class GenericCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory {
 
-  [string] $Units
+  [scriptblock] $Units
 
   [CompletionCase] $Case
 
@@ -257,7 +257,7 @@ class GenericCompletionsAttribute : ArgumentCompleterAttribute, IArgumentComplet
   [bool] $Surrounding
 
   GenericCompletionsAttribute(
-    [string] $units
+    [scriptblock] $units
   ) {
     $this.Units = $units
     $this.Case = [CompletionCase]::Lower
@@ -265,7 +265,7 @@ class GenericCompletionsAttribute : ArgumentCompleterAttribute, IArgumentComplet
     $this.Surrounding = $True
   }
   GenericCompletionsAttribute(
-    [string] $units,
+    [scriptblock] $units,
     [CompletionCase] $case
   ) {
     $this.Units = $units
@@ -274,7 +274,7 @@ class GenericCompletionsAttribute : ArgumentCompleterAttribute, IArgumentComplet
     $this.Surrounding = $True
   }
   GenericCompletionsAttribute(
-    [string] $units,
+    [scriptblock] $units,
     [CompletionCase] $case,
     [bool] $sort
   ) {
@@ -284,7 +284,7 @@ class GenericCompletionsAttribute : ArgumentCompleterAttribute, IArgumentComplet
     $this.Surrounding = $True
   }
   GenericCompletionsAttribute(
-    [string] $units,
+    [scriptblock] $units,
     [CompletionCase] $case,
     [bool] $sort,
     [bool] $surrounding
@@ -298,15 +298,19 @@ class GenericCompletionsAttribute : ArgumentCompleterAttribute, IArgumentComplet
   [IArgumentCompleter] Create() {
     $private:unitList = [List[string]]::new()
 
-    [string[]]$private:parsedUnits = ($this.Units -split ',').Trim() |
-      Where-Object {
-        -not [string]::IsNullOrEmpty($PSItem)
-      }
+    [string[]]$private:invokedUnits = Invoke-Command -ScriptBlock $this.Units
 
-    if ($parsedUnits) {
-      $private:unitList.AddRange(
-        [List[string]]$parsedUnits
-      )
+    if ($invokedUnits) {
+      [string[]]$private:cleanedUnits = $invokedUnits.Trim() |
+        Where-Object {
+          -not [string]::IsNullOrEmpty($PSItem)
+        }
+
+      if ($cleanedUnits) {
+        $unitList.AddRange(
+          [List[string]]$cleanedUnits
+        )
+      }
     }
 
     return [GenericCompleter]::new(
