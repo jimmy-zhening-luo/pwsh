@@ -221,7 +221,7 @@ class GenericCompletionsAttribute : ArgumentCompleterAttribute, IArgumentComplet
   ) {
     $this.Units = $units
     $this.Case = [CompletionCase]::Lower
-    $this.Sort = $True
+    $this.Sort = $False
     $this.Surrounding = $True
   }
   GenericCompletionsAttribute(
@@ -230,7 +230,7 @@ class GenericCompletionsAttribute : ArgumentCompleterAttribute, IArgumentComplet
   ) {
     $this.Units = $units
     $this.Case = $case
-    $this.Sort = $True
+    $this.Sort = $False
     $this.Surrounding = $True
   }
   GenericCompletionsAttribute(
