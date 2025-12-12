@@ -44,7 +44,7 @@ class PathCompleter : GenericCompleterBase, IArgumentCompleter {
 
   [bool] $Flat
 
-  [string] $Separator
+  [bool] $UseNativeDirectorySeparator
 
   PathCompleter(
 
@@ -64,7 +64,7 @@ class PathCompleter : GenericCompleterBase, IArgumentCompleter {
     $this.Root = $root
     $this.Type = $type
     $this.Flat = $flat
-    $this.Separator = $useNativeDirectorySeparator ? [Path]::DirectorySeparator : [PathCompleter]::EasyDirectorySeparator
+    $this.UseNativeDirectorySeparator = $useNativeDirectorySeparator
   }
 
   [IEnumerable[CompletionResult]] CompleteArgument(
@@ -147,6 +147,15 @@ class PathCompleter : GenericCompleterBase, IArgumentCompleter {
         }
     }
 
+    $directories = $directories -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator
+    $files = $files -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator
+
+    [string]$private:separator = $this.UseNativeDirectorySeparator ? [Path]::DirectorySeparatorChar : [PathCompleter]::EasyDirectorySeparator
+    if ($separator -ne [PathCompleter]::NormalDirectorySeparator) {
+      $directories = $directories -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::EasyDirectorySeparator
+      $files = $files -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::EasyDirectorySeparator
+    }
+
     $private:completionPaths = [List[string]]::new()
     if ($directories) {
       $completionPaths.AddRange(
@@ -158,15 +167,8 @@ class PathCompleter : GenericCompleterBase, IArgumentCompleter {
         [List[string]]$files
       )
     }
-
-    [string[]]$private:cleanCompletionPaths = $completionPaths -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator
-
-    if ($this.Separator -ne [PathCompleter]::NormalDirectorySeparator) {
-      $cleanCompletionPaths = $cleanCompletionPaths -replace [regex][PathCompleter]::NormalDirectorySeparator, $this.Separator
-    }
-
     $private:completionValues = [List[string]]::new(
-      [List[string]]$cleanCompletionPaths
+      [List[string]]$completionPaths
     )
 
     return [PathCompleter]::CreateCompletionResult(
