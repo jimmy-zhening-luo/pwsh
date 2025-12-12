@@ -114,7 +114,9 @@ class PathCompleter : GenericCompleterBase, IArgumentCompleter {
     [FileSystemInfo[]]$private:leaves = Get-ChildItem @query
 
     [FileSystemInfo[]]$private:containers, [FileSystemInfo[]]$private:children = $leaves.Where(
-      { $PSItem.PSIsContainer },
+      {
+        $PSItem.PSIsContainer
+      },
       'Split'
     )
 
