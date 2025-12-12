@@ -31,16 +31,31 @@ function Clear-Line {
 }
 
 class PathCompleter : GenericCompleterBase, IArgumentCompleter {
+
+  static [string] $EasyDirectorySeparator = '/'
+
+  static [string] $NormalDirectorySeparator = '\'
+
+  static [regex] $DuplicateDirectorySeparatorPattern = [regex]'(?<!^)\\+'
+
   [string] $Root
+
   [string] $Type
+
   [bool] $Flat
-  [bool] $UseNativeDirectorySeparator
+
+  [string] $Separator
 
   PathCompleter(
+
     [string] $root,
+
     [string] $type,
+
     [bool] $flat,
+
     [bool] $useNativeDirectorySeparator
+
   ) {
     if (-not $root -or -not (Test-Path -Path $root -PathType Container)) {
       throw [ArgumentException]::new('root')
@@ -49,7 +64,7 @@ class PathCompleter : GenericCompleterBase, IArgumentCompleter {
     $this.Root = $root
     $this.Type = $type
     $this.Flat = $flat
-    $this.UseNativeDirectorySeparator = $useNativeDirectorySeparator
+    $this.Separator = $useNativeDirectorySeparator ? [Path]::DirectorySeparator : [PathCompleter]::EasyDirectorySeparator
   }
 
   [IEnumerable[CompletionResult]] CompleteArgument(
@@ -59,30 +74,26 @@ class PathCompleter : GenericCompleterBase, IArgumentCompleter {
     [CommandAst] $commandAst,
     [IDictionary] $fakeBoundParameters
   ) {
-    $private:root = Resolve-Path -Path $this.Root
-    [string]$private:separator = $this.UseNativeDirectorySeparator ? [Path]::DirectorySeparatorChar : $EASY_SEPARATOR
     [hashtable]$private:query = @{
       Directory = $this.Type -eq 'Directory'
       File      = $this.Type -eq 'File'
     }
 
-    [string]$private:currentText = $wordToComplete ? $wordToComplete -match [regex]"^'(?<CurrentText>.*)'$" ? $Matches.CurrentText -replace [regex]"''", "'" : $wordToComplete : ''
+    $private:root = Resolve-Path -Path $this.Root
 
-    [string]$private:CANONICAL_SEPARATOR = '\'
-    [string]$private:EASY_SEPARATOR = '/'
-    [regex]$private:DUPLICATE_SEPARATOR = [regex]'(?<!^)\\+'
+    [string]$private:currentValue = [PathCompleter]::Unescape($wordToComplete)
 
-    [string]$private:currentPathText = $currentText -replace [regex]$EASY_SEPARATOR, $CANONICAL_SEPARATOR -replace $DUPLICATE_SEPARATOR, $CANONICAL_SEPARATOR
+    [string]$private:currentPathValue = $currentValue -replace [regex][PathCompleter]::EasyDirectorySeparator, [PathCompleter]::NormalDirectorySeparator -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator
 
     [string]$private:currentDirectoryText = ''
 
-    if ($currentPathText) {
-      if ($currentPathText.EndsWith($CANONICAL_SEPARATOR)) {
-        $currentPathText += '*'
+    if ($currentPathValue) {
+      if ($currentPathValue.EndsWith([PathCompleter]::NormalDirectorySeparator)) {
+        $currentPathValue += '*'
       }
 
-      $currentDirectoryText = Split-Path $currentPathText
-      [string]$private:fragment = Split-Path $currentPathText -Leaf
+      $currentDirectoryText = Split-Path $currentPathValue
+      [string]$private:fragment = Split-Path $currentPathValue -Leaf
 
       if ($fragment -eq '*') {
         $fragment = ''
@@ -118,31 +129,42 @@ class PathCompleter : GenericCompleterBase, IArgumentCompleter {
 
     if ($currentDirectoryText) {
       $directories = $directories |
-        ForEach-Object { Join-Path $currentDirectoryText $PSItem }
+        ForEach-Object {
+          Join-Path $currentDirectoryText $PSItem
+        }
       $files = $files |
-        ForEach-Object { Join-Path $currentDirectoryText $PSItem }
+        ForEach-Object {
+          Join-Path $currentDirectoryText $PSItem
+        }
     }
 
     if (-not $this.Flat) {
       $directories = $directories |
-        ForEach-Object { $PSItem + $CANONICAL_SEPARATOR }
+        ForEach-Object {
+          $PSItem + [PathCompleter]::NormalDirectorySeparator
+        }
     }
 
-    if ($separator -ne $CANONICAL_SEPARATOR) {
-      $directories = $directories -replace $DUPLICATE_SEPARATOR, $EASY_SEPARATOR
-      $files = $files -replace $DUPLICATE_SEPARATOR, $EASY_SEPARATOR
+    $private:completionPaths = [List[string]]::new(
+      [List[string]]$directories
+    )
+    $completionPaths.AddRange(
+      [List[string]]$files
+    )
+
+    [string[]]$private:cleanCompletionPaths = $completionPaths -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator
+
+    if ($this.Separator -ne [PathCompleter]::NormalDirectorySeparator) {
+      $cleanCompletionPaths = $cleanCompletionPaths -replace [regex][PathCompleter]::NormalDirectorySeparator, $this.Separator
     }
 
-    $private:items = [List[string]]::new()
+    $private:completionValues = [List[string]]::new(
+      [List[string]]$cleanCompletionPaths
+    )
 
-    if ($directories) {
-      $items.AddRange([List[string]]$directories)
-    }
-    if ($files) {
-      $items.AddRange([List[string]]$files)
-    }
-
-    return [PathCompleter]::CreateCompletionResult($items)
+    return [PathCompleter]::CreateCompletionResult(
+      $completionValues
+    )
   }
 }
 
