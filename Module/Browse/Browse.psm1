@@ -1,5 +1,17 @@
 using namespace System.Collections.Generic
 
+enum TestHostVerbosity {
+  Quiet
+  Detailed
+}
+
+enum TestHostWellknownPort {
+  HTTP = -4
+  RDP
+  SMB
+  WINRM
+}
+
 New-Alias tn Test-Host
 <#
 .SYNOPSIS
@@ -54,11 +66,8 @@ function Test-Host {
     [UInt16]$Port,
 
     [GenericCompletions('Quiet,Detailed')]
-    # The level of information to return, can be Quiet or Detailed. Will not take effect if a more verbose switch is set.
-    [string]$InformationLevel,
-
-    # Shorthand for InformationLevel Quiet. Will not take effect if InformationLevel is Detailed or if the Detailed switch is set.
-    [switch]$Quiet,
+    # The level of information to return, can be Quiet or Detailed. Will not take effect if Detailed switch is set. Defaults to Quiet.
+    [TestHostVerbosity]$InformationLevel = [TestHostVerbosity]::Quiet,
 
     # Shorthand for InformationLevel Detailed
     [switch]$Detailed
@@ -66,11 +75,14 @@ function Test-Host {
   )
 
   begin {
-    $InformationLevel = $Detailed -or $InformationLevel -eq 'Detailed' ? 'Detailed' : $Quiet -or $InformationLevel -eq 'Quiet' ? 'Quiet' : ''
-    [hashtable]$Private:Verbosity = $InformationLevel ? @{
-      InformationLevel = $InformationLevel
-    } : @{}
     $Private:Results = [List[System.Object]]::new()
+
+    if ($Detailed) {
+      $InformationLevel = [TestHostVerbosity]::Detailed
+    }
+    [hashtable]$Private:Verbosity = @{
+      InformationLevel = $InformationLevel -eq [TestHostVerbosity]::Detailed ? [TestHostVerbosity]::Detailed : [TestHostVerbosity]::Quiet
+    }
   }
 
   process {
@@ -82,12 +94,21 @@ function Test-Host {
         RemotePort {
           $Connection.Port = $Port
         }
-        default {
-          if ($CommonTCPPort -in @('HTTP', 'RDP', 'SMB', 'WINRM')) {
-            $Connection.CommonTCPPort = $CommonTCPPort.ToUpperInvariant()
-          }
-          elseif ($CommonTCPPort -match [regex]'^(?>\d{1,5})$' -and $CommonTCPPort -as [UInt16]) {
-            $Connection.Port = [UInt16]$CommonTCPPort
+        CommonTCPPort {
+          if ($CommonTCPPort) {
+            if (
+              [System.Enum]::IsDefined(
+                [TestHostWellknownPort],
+                $CommonTCPPort
+              )
+            ) {
+              $Connection.CommonTCPPort = [TestHostWellknownPort].GetEnumName($CommonTCPPort)
+            }
+            elseif (
+              $CommonTCPPort -match [regex]'^(?>\d{1,5})$' -and $CommonTCPPort -as [UInt16]
+            ) {
+              $Connection.Port = [UInt16]$CommonTCPPort
+            }
           }
         }
       }

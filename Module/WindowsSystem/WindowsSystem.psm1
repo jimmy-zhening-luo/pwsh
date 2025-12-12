@@ -178,9 +178,8 @@ function Stop-Task {
       switch ($PSCmdlet.ParameterSetName) {
         Id {
           $Process.Id = $Id
-          break
         }
-        default {
+        Name {
           if ($Name) {
             if ($Name -match [regex]'^(?>\d{1,10})$' -and $Name -as [UInt32]) {
               $Process.Id = [UInt32]$Name

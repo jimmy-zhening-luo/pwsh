@@ -114,16 +114,14 @@ class GenericCompleterBase {
     $private:normalizedValues = [List[string]]::new()
 
     switch ($case) {
-      [CompletionCase]::Lower {
-        $normalizedValues.AddRange([List[string]]$values.ToLowerInvariant())
-        break
-      }
-      [CompletionCase]::Upper {
-        $normalizedValues.AddRange([List[string]]$values.ToUpperInvariant())
-        break
-      }
-      default {
+      Preserve {
         $normalizedValues.AddRange($values)
+      }
+      Lower {
+        $normalizedValues.AddRange([List[string]]$values.ToLowerInvariant())
+      }
+      Upper {
+        $normalizedValues.AddRange([List[string]]$values.ToUpperInvariant())
       }
     }
 
