@@ -63,6 +63,34 @@ function Get-HelpOnline {
       Position = 0,
       ValueFromRemainingArguments
     )]
+    [GenericCompletions(
+      {
+        if (-not $PSTOOL_HELP_ABOUT_TOPICS) {
+          [hashtable]$Private:GetHelpAboutTopics = @{
+            Category = 'HelpFile'
+            Name = 'about_*'
+          }
+          [string[]]$Global:PSTOOL_HELP_ABOUT_TOPICS = (Get-Help @GetHelpAboutTopics).Name.Substring(6).ToLowerInvariant()
+        }
+
+        if (-not $PSTOOL_HELP_COMMANDS) {
+          [hashtable]$Private:GetHelpCommands = @{
+            Category = @(
+              'Cmdlet'
+              'Function'
+              'Alias'
+            )
+          }
+          [string[]]$Global:PSTOOL_HELP_COMMANDS = (
+            Get-Help @GetHelpCommands |
+              Sort-Object -Property Name
+          ).Name.ToLowerInvariant()
+        }
+
+        return $PSTOOL_HELP_ABOUT_TOPICS + $PSTOOL_HELP_COMMANDS
+      },
+      'Preserve'
+    )]
     [string[]]$Name,
 
     [string[]]$Parameter
@@ -319,8 +347,8 @@ function Get-CommandAlias {
 
   end {
     [CommandInfo[]]$Private:UniqueAliases = $AliasList.ToArray() |
-      Sort-Object -Property 'DisplayName' |
-      Group-Object -Property 'DisplayName' |
+      Sort-Object -Property DisplayName |
+      Group-Object -Property DisplayName |
       ForEach-Object {
         $PSItem.Group[0]
       }
