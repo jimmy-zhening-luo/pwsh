@@ -77,7 +77,7 @@ function Update-PSProfile {
   param()
 
   [hashtable]$Private:ProfileRepository = @{
-    Path = Resolve-Path -Path $HOME\code\pwsh
+    WorkingDirectory = Resolve-Path -Path $HOME\code\pwsh
   }
   Shell\Get-GitRepository @ProfileRepository
 
