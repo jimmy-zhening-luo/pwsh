@@ -242,7 +242,7 @@ class GenericCompleter : GenericCompleterBase, IArgumentCompleter {
 class GenericCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory {
 
   [string] $Units
-  
+
   [CompletionCase] $Case
 
   [bool] $Sort
