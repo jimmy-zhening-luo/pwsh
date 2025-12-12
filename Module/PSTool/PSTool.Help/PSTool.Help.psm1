@@ -142,7 +142,7 @@ function Get-HelpOnline {
           [string]$Private:LocalHelpTopic = $Help.Name
 
           if ($LocalHelpTopic.StartsWith('about_')) {
-          $about_Article = [uri]"$ABOUT_BASE_URL/$LocalHelpTopic"
+            $about_Article = [uri]"$ABOUT_BASE_URL/$LocalHelpTopic"
           }
         }
       }

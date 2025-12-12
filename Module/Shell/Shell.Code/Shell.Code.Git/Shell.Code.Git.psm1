@@ -114,9 +114,10 @@ function Invoke-GitRepository {
 
   )
 
-  $Private:GitArguments = [List[string]]::new(
-    [List[string]]$args
-  )
+  $Private:GitArguments = [List[string]]::new()
+  if ($args) {
+    $GitArguments.AddRange([List[string]]$args)
+  }
 
   if ($Verb) {
     if ($Verb -in $GIT_VERB) {
@@ -361,9 +362,10 @@ function Add-GitRepository {
 
   )
 
-  $Private:AddArguments = [List[string]]::new(
-    [List[string]]$args
-  )
+  $Private:AddArguments = [List[string]]::new()
+  if ($args) {
+    $AddArguments.AddRange([List[string]]$args)
+  }
 
   if (-not $Name) {
     $Name = '.'
@@ -435,6 +437,9 @@ function Write-GitRepository {
 
   )
 
+  $Private:CommitArguments = [List[string]]::new()
+  $Private:Messages = [List[string]]::new()
+
   [string[]]$Private:Arguments, [string[]]$Private:MessageWords = (
     $Message ? (, $Message + $args) : $args
   ).Where(
@@ -448,8 +453,12 @@ function Write-GitRepository {
     'Split'
   )
 
-  $Private:CommitArguments = [List[string]]::new([List[string]]$Arguments)
-  $Private:Messages = [List[string]]::new([List[string]]$MessageWords)
+  if ($Arguments) {
+    $CommitArguments.AddRange([List[string]]$Arguments)
+  }
+  if ($MessageWords) {
+    $Messages.AddRange([List[string]]$MessageWords)
+  }
 
   if (
     $WorkingDirectory -and (
@@ -533,7 +542,9 @@ function Push-GitRepository {
     $WorkingDirectory = ''
   }
 
-  $PushArguments.AddRange([List[string]]$args)
+  if ($args) {
+    $PushArguments.AddRange([List[string]]$args)
+  }
 
   [hashtable]$Private:Repository = @{
     WorkingDirectory = $WorkingDirectory
@@ -573,9 +584,10 @@ function Reset-GitRepository {
 
   )
 
-  $Private:ResetArguments = [List[string]]::new(
-    [List[string]]$args
-  )
+  $Private:ResetArguments = [List[string]]::new()
+  if ($args) {
+    $ResetArguments.AddRange([List[string]]$args)
+  }
 
   if ($Tree) {
     if (
@@ -662,7 +674,9 @@ function Restore-GitRepository {
     $WorkingDirectory = ''
   }
 
-  $ResetArguments.AddRange([List[string]]$args)
+  if ($args) {
+    $ResetArguments.AddRange([List[string]]$args)
+  }
 
   [hashtable]$Private:Repository = @{
     WorkingDirectory = $WorkingDirectory

@@ -275,7 +275,6 @@ function Invoke-NodePackage {
       '--color=always'
     )
   )
-
   $Private:CallerNodeArguments = [List[string]]::new([List[string]]$NodeArguments)
 
   if ($WorkingDirectory.Length -ne 0) {
@@ -382,8 +381,9 @@ function Clear-NodeModuleCache {
       '--force'
     )
   )
-
-  $NodeArguments.AddRange([List[string]]$args)
+  if ($args) {
+    $NodeArguments.AddRange([List[string]]$args)
+  }
 
   [hashtable]$Private:CacheClean = @{
     Command       = 'cache'
@@ -426,7 +426,9 @@ function Compare-NodeModule {
     }
   }
 
-  $NodeArguments.AddRange([List[string]]$args)
+  if ($args) {
+    $NodeArguments.AddRange([List[string]]$args)
+  }
 
   [hashtable]$Private:Outdated = @{
     Command          = 'outdated'
@@ -525,7 +527,9 @@ function Step-NodePackageVersion {
     }
   }
 
-  $NodeArguments.AddRange([List[string]]$args)
+  if ($args) {
+    $NodeArguments.AddRange([List[string]]$args)
+  }
 
   [hashtable]$Private:StepVersion = @{
     Command          = 'version'
@@ -580,7 +584,9 @@ function Invoke-NodePackageScript {
     }
   }
 
-  $NodeArguments.AddRange([List[string]]$args)
+  if ($args) {
+    $NodeArguments.AddRange([List[string]]$args)
+  }
 
   [hashtable]$Private:RunScript = @{
     Command          = 'run'
@@ -624,7 +630,9 @@ function Test-NodePackage {
     }
   }
 
-  $NodeArguments.AddRange([List[string]]$args)
+  if ($args) {
+    $NodeArguments.AddRange([List[string]]$args)
+  }
 
   [hashtable]$Private:Test = @{
     Command          = 'test'
