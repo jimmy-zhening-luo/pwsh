@@ -147,12 +147,17 @@ class PathCompleter : GenericCompleterBase, IArgumentCompleter {
         }
     }
 
-    $private:completionPaths = [List[string]]::new(
-      [List[string]]$directories
-    )
-    $completionPaths.AddRange(
-      [List[string]]$files
-    )
+    $private:completionPaths = [List[string]]::new()
+    if ($directories) {
+      $completionPaths.AddRange(
+        [List[string]]$directories
+      )
+    }
+    if ($files) {
+      $completionPaths.AddRange(
+        [List[string]]$files
+      )
+    }
 
     [string[]]$private:cleanCompletionPaths = $completionPaths -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator
 
