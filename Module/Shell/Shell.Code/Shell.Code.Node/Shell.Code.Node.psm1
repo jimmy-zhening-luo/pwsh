@@ -433,7 +433,18 @@ function Compare-NodeModule {
     WorkingDirectory = $WorkingDirectory
     NodeArguments    = $NodeArguments
   }
-  Invoke-NodePackage @Outdated
+  try {
+    Invoke-NodePackage @Outdated
+  }
+  catch {
+    if (
+      -not (
+        Test-NodePackageDirectory -WorkingDirectory $Outdated.WorkingDirectory
+      )
+    ) {
+      throw $PSItem
+    }
+  }
 }
 
 enum NodePackageNamedVersion {
