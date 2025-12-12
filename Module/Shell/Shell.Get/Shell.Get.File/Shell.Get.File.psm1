@@ -4,7 +4,7 @@ using namespace System.Collections.Generic
 New-Alias p Get-File
 function Get-File {
 
-  [OutputType([string[]], [DirectoryInfo[]], [FileInfo[]])]
+  [OutputType([string[]], [System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
 
   param(
 

@@ -246,7 +246,7 @@ function Get-CommandAlias {
 
   [CmdletBinding()]
 
-  [OutputType([CommandInfo[]])]
+  [OutputType([System.Management.Automation.CommandInfo[]])]
 
   param(
 

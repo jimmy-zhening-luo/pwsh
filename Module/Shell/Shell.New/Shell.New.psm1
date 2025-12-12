@@ -17,7 +17,7 @@ function New-Directory {
     ConfirmImpact = 'Medium'
   )]
 
-  [OutputType([DirectoryInfo])]
+  [OutputType([System.IO.DirectoryInfo])]
 
   param(
 
@@ -109,7 +109,7 @@ function New-Junction {
     ConfirmImpact = 'Medium'
   )]
 
-  [OutputType([DirectoryInfo])]
+  [OutputType([System.IO.DirectoryInfo])]
 
   param(
 
