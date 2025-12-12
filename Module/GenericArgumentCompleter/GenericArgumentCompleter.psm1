@@ -34,13 +34,11 @@ class GenericCompleterBase {
     [string] $value
 
   ) {
-    [string]$private:escapedValue = [CodeGeneration]::EscapeSingleQuotedStringContent($value)
-
-    if ($escapedValue.Contains(' ')) {
-      return "'" + $escapedValue + "'"
+    if ($value.Contains(' ')) {
+      return "'" + [CodeGeneration]::EscapeSingleQuotedStringContent($value) + "'"
     }
     else {
-      return $escapedValue
+      return $value
     }
   }
 
