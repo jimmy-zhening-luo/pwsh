@@ -10,6 +10,25 @@ enum CompletionCase {
 }
 
 class GenericCompleterBase {
+  static [string] Unescape(
+
+    [string] $quotedValue
+
+  ) {
+    if ($quotedValue.Length -gt 1 -and $quotedValue.StartsWith("'") -and $quotedValue.EndsWith("'")) {
+      return $quotedValue.Substring(
+        1,
+        $quotedValue.Length - 2
+      ).Replace(
+        "''",
+        "'"
+      )
+    }
+    else {
+      return $quotedValue
+    }
+  }
+
   static [List[string]] FindCompletion(
 
     [List[string]] $values,
@@ -99,7 +118,7 @@ class GenericCompleterBase {
       $normalizedValues.Sort()
     }
 
-    [string]$private:currentValue = $wordToComplete -match [regex]"^'(?<CurrentValue>.*)'$" ? $Matches.CurrentValue -replace [regex]"''", "'" : $wordToComplete
+    [string]$private:currentValue = [GenericCompleterBase]::Unescape($wordToComplete)
 
     if ($currentValue) {
       [string[]]$private:tailCompletions = $normalizedValues -like "$currentValue*"
