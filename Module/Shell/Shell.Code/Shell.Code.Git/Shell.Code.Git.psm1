@@ -2,9 +2,7 @@ using namespace System.Collections.Generic
 
 function Resolve-GitRepository {
 
-  [CmdletBinding(
-    DefaultParameterSetName = 'WorkingDirectory'
-  )]
+  [CmdletBinding()]
 
   [OutputType([string[]])]
 
@@ -13,20 +11,13 @@ function Resolve-GitRepository {
     [Parameter(
       ParameterSetName = 'WorkingDirectory',
       Mandatory,
-      Position = 0
-    )]
-    [AllowEmptyString()]
-    [string]$WorkingDirectory,
-
-    [Parameter(
-      ParameterSetName = 'Path',
-      Mandatory,
+      Position = 0,
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
     [AllowEmptyString()]
     [AllowEmptyCollection()]
-    [string[]]$Path,
+    [string]$WorkingDirectory,
 
     [switch]$New
 
@@ -39,11 +30,9 @@ function Resolve-GitRepository {
   }
 
   process {
-    [string]$Private:Target = $PSCmdlet.ParameterSetName -eq $Path ? $Path : $WorkingDirectory
-
     if ($New) {
       [hashtable]$Private:TestWorkingDirectory = @{
-        Path = $Target
+        Path = $WorkingDirectory
       }
       if (Test-Item @TestWorkingDirectory) {
         $WorkingDirectories.Add([string](Resolve-Item @TestWorkingDirectory))
@@ -59,7 +48,7 @@ function Resolve-GitRepository {
     }
     else {
       [hashtable]$Private:ResolveRepository = @{
-        Path = $Target
+        Path = $WorkingDirectory
       }
       [hashtable]$Private:TestRepository = @{
         Path           = $Target ? (Join-Path $Target .git) : '.git'
