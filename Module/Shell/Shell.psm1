@@ -84,16 +84,16 @@ class PathCompleter : GenericCompleterBase, IArgumentCompleter {
     [CommandAst] $commandAst,
     [IDictionary] $fakeBoundParameters
   ) {
-    [hashtable]$private:matchChildItems = @{}
+    [hashtable]$private:matchChild = @{}
+
+    if ($this.Type)
 
     switch ($this.Type) {
-      [PathItemType]::Directory {
-        $matchChildItems.Directory = $True
-
-        break
+      Directory {
+        $matchChild.Directory = $True
       }
-      [PathItemType]::File {
-        $matchChildItems.File = $True
+      File {
+        $matchChild.File = $True
       }
     }
 
@@ -120,16 +120,16 @@ class PathCompleter : GenericCompleterBase, IArgumentCompleter {
       [string]$private:path = Join-Path $private:root $currentDirectoryValue
 
       if (Test-Path -Path $path -PathType Container) {
-        $matchChildItems.Path = $path
-        $matchChildItems['Filter'] = "$fragment*"
+        $matchChild.Path = $path
+        $matchChild['Filter'] = "$fragment*"
       }
     }
 
-    if (-not $matchChildItems.Path) {
-      $matchChildItems.Path = $private:root
+    if (-not $matchChild.Path) {
+      $matchChild.Path = $private:root
     }
 
-    [FileSystemInfo[]]$private:leaves = Get-ChildItem @matchChildItems
+    [FileSystemInfo[]]$private:leaves = Get-ChildItem @matchChild
 
     [FileSystemInfo[]]$private:containers, [FileSystemInfo[]]$private:children = $leaves.Where(
       {
