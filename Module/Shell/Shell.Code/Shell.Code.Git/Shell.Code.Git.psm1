@@ -16,7 +16,7 @@ function Resolve-GitRepository {
     )]
     [AllowEmptyString()]
     [AllowEmptyCollection()]
-    [string]$WorkingDirectory,
+    [string[]]$WorkingDirectory,
 
     [switch]$New
 
