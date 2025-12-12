@@ -142,7 +142,7 @@ class PathCompleter : GenericCompleterBase, IArgumentCompleter {
       $items.AddRange([List[string]]$files)
     }
 
-    return [PathCompleter]::CreateCompletion($items)
+    return [PathCompleter]::CreateCompletionResult($items)
   }
 }
 

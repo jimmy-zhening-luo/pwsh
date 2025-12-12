@@ -3,26 +3,117 @@ using namespace System.Collections.Generic
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
 
+enum CompletionCase {
+  Preserve
+  Lower
+  Upper
+}
+
 class GenericCompleterBase {
   static [List[string]] FindCompletion(
+
     [List[string]] $values,
+
     [string] $wordToComplete
+
+  ) {
+    return [GenericCompleterBase]::FindCompletion(
+      $values,
+      $wordToComplete,
+      [CompletionCase]::Preserve,
+      $False,
+      $False
+    )
+  }
+
+  static [List[string]] FindCompletion(
+
+    [List[string]] $values,
+
+    [string] $wordToComplete,
+
+    [CompletionCase] $case
+
+  ) {
+    return [GenericCompleterBase]::FindCompletion(
+      $values,
+      $wordToComplete,
+      $case,
+      $False,
+      $False
+    )
+  }
+
+  static [List[string]] FindCompletion(
+
+    [List[string]] $values,
+
+    [string] $wordToComplete,
+
+    [CompletionCase] $case,
+
+    [bool] $sort
+
+  ) {
+    return [GenericCompleterBase]::FindCompletion(
+      $values,
+      $wordToComplete,
+      $case,
+      $sort,
+      $False
+    )
+  }
+
+  static [List[string]] FindCompletion(
+
+    [List[string]] $values,
+
+    [string] $wordToComplete,
+
+    [CompletionCase] $case,
+
+    [bool] $sort,
+
+    [bool] $surrounding
+
   ) {
     $private:completions = [List[string]]::new()
 
-    $private:currentArgumentText = $wordToComplete ? $wordToComplete -match [regex]"^'(?<CurrentText>.*)'$" ? $Matches.CurrentText -replace [regex]"''", "'" : $wordToComplete : ''
+    $private:normalizedValues = [List[string]]::new()
 
-    if ($currentArgumentText) {
-      [string[]]$private:tailCompletions = $values |
-        Where-Object { $PSItem -like "$currentArgumentText*" }
+    switch ($case) {
+      [CompletionCase]::Lower {
+        $normalizedValues.AddRange([List[string]]$values.ToLowerInvariant())
+        break
+      }
+      [CompletionCase]::Upper {
+        $normalizedValues.AddRange([List[string]]$values.ToUpperInvariant())
+        break
+      }
+      default {
+        $normalizedValues.AddRange($values)
+      }
+    }
+
+    if ($sort) {
+      $normalizedValues.Sort()
+    }
+
+    [string]$private:currentValue = $wordToComplete -match [regex]"^'(?<CurrentValue>.*)'$" ? $Matches.CurrentValue -replace [regex]"''", "'" : $wordToComplete
+
+    if ($currentValue) {
+      [string[]]$private:tailCompletions = $normalizedValues -like "$currentValue*"
 
       if ($tailCompletions) {
         $completions.AddRange([List[string]]$tailCompletions)
       }
 
-      if ($completions.Count -eq 0 -or $completions.Count -eq 1 -and $completions[0] -eq $currentArgumentText) {
-        [string[]]$private:surroundingCompletions = $values |
-          Where-Object { $PSItem -like "*$currentArgumentText*" -and $PSItem -ne $currentArgumentText }
+      if (
+        $surrounding -and (
+          $completions.Count -eq 0 -or $completions.Count -eq 1 -and $currentValue -in $completions
+        )
+      ) {
+        [string[]]$private:surroundingCompletions = $normalizedValues -like "*$currentValue*" -ne $currentValue
 
         if ($surroundingCompletions) {
           $completions.AddRange([List[string]]$surroundingCompletions)
@@ -30,14 +121,16 @@ class GenericCompleterBase {
       }
     }
     else {
-      $completions.AddRange($values)
+      $completions.AddRange($normalizedValues)
     }
 
     return $completions
   }
 
-  static [List[CompletionResult]] CreateCompletion(
+  static [List[CompletionResult]] CreateCompletionResult(
+
     [List[string]] $completions
+
   ) {
     $private:completionResults = [List[CompletionResult]]::new()
 
@@ -57,25 +150,26 @@ class GenericCompleterBase {
 }
 
 class GenericCompleter : GenericCompleterBase, IArgumentCompleter {
+
   [List[string]] $Units
+
+  [CompletionCase] $Case
+
   [bool] $Sort
-  [string] $Case
+
+  [bool] $Surrounding
 
   GenericCompleter(
-    [List[string]] $units,
-    [bool] $sort,
-    [string] $case
-  ) {
-    if (
-      -not $case -or $case -notin @(
-        'Lower'
-        'Upper'
-        'Preserve'
-      )
-    ) {
-      throw [ArgumentException]::new('case')
-    }
 
+    [List[string]] $units,
+
+    [CompletionCase] $case,
+
+    [bool] $sort,
+
+    [bool] $surrounding
+
+  ) {
     if ($units.Count -eq 0) {
       throw [ArgumentException]::new('units')
     }
@@ -88,8 +182,9 @@ class GenericCompleter : GenericCompleterBase, IArgumentCompleter {
     }
 
     $this.Units = $units
-    $this.Sort = $sort
     $this.Case = $case
+    $this.Sort = $sort
+    $this.Surrounding = $surrounding
   }
 
   [IEnumerable[CompletionResult]] CompleteArgument(
@@ -99,79 +194,88 @@ class GenericCompleter : GenericCompleterBase, IArgumentCompleter {
     [CommandAst] $commandAst,
     [IDictionary] $fakeBoundParameters
   ) {
-    $private:units = [List[string]]::new()
-
-    switch ($this.Case) {
-      Lower {
-        $private:units.AddRange([List[string]]$this.Units.ToLowerInvariant())
-        break
-      }
-      Upper {
-        $private:units.AddRange([List[string]]$this.Units.ToUpperInvariant())
-      }
-    }
-
-    if ($this.Sort) {
-      $private:units.Sort()
-    }
-
-    return [GenericCompleter]::CreateCompletion(
+    return [GenericCompleter]::CreateCompletionResult(
       [GenericCompleter]::FindCompletion(
-        $private:units,
-        "$wordToComplete"
+        $this.Units,
+        $wordToComplete,
+        $this.Case,
+        $this.Sort,
+        $this.Surrounding
       )
     )
   }
 }
 
 class GenericCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory {
+
   [string] $Units
+  
+  [CompletionCase] $Case
+
   [bool] $Sort
-  [string] $Case
+
+  [bool] $Surrounding
 
   GenericCompletionsAttribute(
     [string] $units
   ) {
     $this.Units = $units
-    $this.Sort = $False
-    $this.Case = 'Lower'
+    $this.Case = [CompletionCase]::Lower
+    $this.Sort = $True
+    $this.Surrounding = $True
   }
   GenericCompletionsAttribute(
     [string] $units,
+    [CompletionCase] $case
+  ) {
+    $this.Units = $units
+    $this.Case = $case
+    $this.Sort = $True
+    $this.Surrounding = $True
+  }
+  GenericCompletionsAttribute(
+    [string] $units,
+    [CompletionCase] $case,
     [bool] $sort
   ) {
     $this.Units = $units
+    $this.Case = $case
     $this.Sort = $sort
-    $this.Case = 'Lower'
+    $this.Surrounding = $True
   }
   GenericCompletionsAttribute(
     [string] $units,
+    [CompletionCase] $case,
     [bool] $sort,
-    [string] $case
+    [bool] $surrounding
   ) {
     $this.Units = $units
-    $this.Sort = $sort
     $this.Case = $case
+    $this.Sort = $sort
+    $this.Surrounding = $surrounding
   }
 
   [IArgumentCompleter] Create() {
-    $private:unitList = [List[string]]::new()
     [string[]]$private:parsedUnits = ($this.Units -split ',').Trim() |
-      Where-Object { $PSItem }
+      Where-Object {
+        -not [string]::IsNullOrEmpty($PSItem)
+      }
 
-    if ($parsedUnits) {
-      $unitList.AddRange([List[string]]$parsedUnits)
-    }
+    $private:unitList = [List[string]]::new(
+      [List[string]]$parsedUnits
+    )
 
     return [GenericCompleter]::new(
       $unitList,
+      $this.Case,
       $this.Sort,
-      $this.Case
+      $this.Surrounding
     )
   }
 }
 
 $ExportableTypes = @(
+  [CompletionCase]
   [GenericCompleterBase]
   [GenericCompleter]
   [GenericCompletionsAttribute]
