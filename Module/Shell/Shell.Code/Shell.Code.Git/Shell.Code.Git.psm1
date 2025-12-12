@@ -94,7 +94,7 @@ This function allows you to run a Git command in a local repository. If no comma
 
 For every verb except for 'clone', 'config', and 'init', the function will throw an error if there is no Git repository at the specified path.
 
-For every verb, if the Git command returns a non-zero exit code, the function will throw an error by default. If the Continue switch is set, it will emit a warning instead.
+For every verb, if the Git command returns a non-zero exit code, the function will throw an error by default.
 
 .LINK
 https://git-scm.com/docs
@@ -112,10 +112,7 @@ function Invoke-GitRepository {
 
     [PathCompletions('.', 'Directory')]
     # Path to local repository. If not specified, defaults to the current location. For all verbs except 'clone', 'config', and 'init', the function will throw an error if there is no Git repository at the path.
-    [string]$Path,
-
-    # If Git returns a non-zero exit code, emit a warning instead of throwing an error. This switch does not suppress errors related to missing repositories for verbs that require a repository or to paths with incorrect syntax for verbs that do not require a repository.
-    [switch]$Continue
+    [string]$Path
 
   )
 
@@ -194,14 +191,7 @@ function Invoke-GitRepository {
   & git.exe @GitArguments
 
   if ($LASTEXITCODE -ne 0) {
-    $Exception = "Git command warning, execution returned exit code: $LASTEXITCODE"
-
-    if ($Continue) {
-      Write-Warning $Exception
-    }
-    else {
-      throw $Exception
-    }
+    throw "git command error, execution returned exit code: $LASTEXITCODE"
   }
 }
 
@@ -222,10 +212,7 @@ function Measure-GitRepository {
 
     [PathCompletions('.', 'Directory')]
     # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
-    [string]$Path,
-
-    # If Git returns a non-zero exit code, emit a warning instead of throwing an error. This switch does not suppress errors related to missing repositories for verbs that require a repository.
-    [switch]$Continue
+    [string]$Path
 
   )
 
@@ -257,9 +244,6 @@ function Import-GitRepository {
     # Path to the directory into which the repository will be cloned. If not specified, defaults to the current location. The repository will be cloned into a subdirectory with the same name as the repository. If the path points to a container which does not exist, it will be created. If parent container creation fails, this function will throw an error. If Git encounters an error during cloning, this function will throw an error.
     [string]$Path,
 
-    # If cloning fails, emit a warning instead of throwing an error. This switch does not suppress errors related to paths with incorrect syntax.
-    [switch]$Continue,
-
     [Alias('ssh')]
     # Use git@github.com remote protocol instead of the default HTTPS
     [switch]$ForceSsh
@@ -290,9 +274,8 @@ function Import-GitRepository {
   }
 
   [hashtable]$Private:Clone = @{
-    Verb     = 'clone'
-    Path     = $Path
-    Continue = $Continue
+    Verb = 'clone'
+    Path = $Path
   }
   Invoke-GitRepository @Clone @CloneArguments
 }
@@ -313,10 +296,7 @@ function Get-GitRepository {
 
     [PathCompletions('.', 'Directory')]
     # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
-    [string]$Path,
-
-    # If Git returns a non-zero exit code, emit a warning instead of throwing an error. This switch does not suppress errors related to missing repositories for verbs that require a repository.
-    [switch]$Continue
+    [string]$Path
 
   )
 
@@ -377,9 +357,6 @@ function Add-GitRepository {
     # File pattern of files to add, defaults to '.' (all)
     [string]$Name,
 
-    # If Git returns a non-zero exit code, emit a warning instead of throwing an error. This switch does not suppress errors related to missing repositories for verbs that require a repository.
-    [switch]$Continue,
-
     # Equivalent to git add --renormalize flag
     [switch]$Renormalize
 
@@ -425,9 +402,8 @@ function Add-GitRepository {
   }
 
   [hashtable]$Private:Add = @{
-    Verb     = 'add'
-    Path     = $Path
-    Continue = $Continue
+    Verb = 'add'
+    Path = $Path
   }
   Invoke-GitRepository @Add @AddArguments
 }
@@ -452,9 +428,6 @@ function Write-GitRepository {
 
     # Commit message. It must be non-empty except on an empty commit, where it defaults to 'No message.'
     [string]$Message,
-
-    # If Git returns a non-zero exit code, emit a warning instead of throwing an error. This switch does not suppress errors related to missing repositories for verbs that require a repository.
-    [switch]$Continue,
 
     # Do not add unstaged nor untracked files: only commit files that are already staged.
     [switch]$Staged,
@@ -531,9 +504,8 @@ function Write-GitRepository {
   $CommitArguments.InsertRange(0, [List[string]]$CommitMessageArguments)
 
   $Private:Commit = @{
-    Path     = $Path
-    Verb     = 'commit'
-    Continue = $Continue
+    Path = $Path
+    Verb = 'commit'
   }
   Invoke-GitRepository @Commit @CommitArguments
 }
@@ -555,10 +527,7 @@ function Push-GitRepository {
 
     [PathCompletions('.', 'Directory')]
     # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
-    [string]$Path,
-
-    # If Git returns a non-zero exit code, emit a warning instead of throwing an error. This switch does not suppress errors related to missing repositories for verbs that require a repository.
-    [switch]$Continue
+    [string]$Path
 
   )
 
@@ -584,9 +553,8 @@ function Push-GitRepository {
   Get-GitRepository @Pull
 
   [hashtable]$Private:Push = @{
-    Verb     = 'push'
-    Path     = $Path
-    Continue = $Continue
+    Verb = 'push'
+    Path = $Path
   }
   Invoke-GitRepository @Push @PushArguments
 }
@@ -615,9 +583,6 @@ function Reset-GitRepository {
 
     # The tree spec to which to revert, specified as '[HEAD]([~]|^)[n]'. If the tree spec is not specified, it defaults to HEAD. If only the number index is given, it defaults to '~' branching. If only the branching is given, the index defaults to 0 = HEAD.
     [string]$Tree,
-
-    # If Git returns a non-zero exit code, emit a warning instead of throwing an error. This switch does not suppress errors related to missing repositories for verbs that require a repository.
-    [switch]$Continue,
 
     # Non-destructive reset, equivalent to running git reset without the --hard flag.
     [switch]$Soft
@@ -676,9 +641,8 @@ function Reset-GitRepository {
   }
   $ResetArguments.Insert(0, '--hard')
   [hashtable]$Private:Reset = @{
-    Verb     = 'reset'
-    Path     = $Path
-    Continue = $Continue
+    Verb = 'reset'
+    Path = $Path
   }
   Invoke-GitRepository @Reset @ResetArguments
 }
