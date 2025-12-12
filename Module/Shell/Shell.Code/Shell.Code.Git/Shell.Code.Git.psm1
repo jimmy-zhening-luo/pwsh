@@ -9,7 +9,6 @@ function Resolve-GitRepository {
   param(
 
     [Parameter(
-      ParameterSetName = 'WorkingDirectory',
       Mandatory,
       Position = 0,
       ValueFromPipeline,
@@ -51,7 +50,7 @@ function Resolve-GitRepository {
         Path = $WorkingDirectory
       }
       [hashtable]$Private:TestRepository = @{
-        Path           = $Target ? (Join-Path $Target .git) : '.git'
+        Path           = $WorkingDirectory ? (Join-Path $WorkingDirectory .git) : '.git'
         RequireSubpath = $True
       }
 
