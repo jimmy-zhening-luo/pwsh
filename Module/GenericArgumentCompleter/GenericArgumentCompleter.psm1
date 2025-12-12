@@ -12,20 +12,35 @@ enum CompletionCase {
 class GenericCompleterBase {
   static [string] Unescape(
 
-    [string] $quotedValue
+    [string] $escapedValue
 
   ) {
-    if ($quotedValue.Length -gt 1 -and $quotedValue.StartsWith("'") -and $quotedValue.EndsWith("'")) {
-      return $quotedValue.Substring(
+    if ($escapedValue.Length -gt 1 -and $escapedValue.StartsWith("'") -and $escapedValue.EndsWith("'")) {
+      return $escapedValue.Substring(
         1,
-        $quotedValue.Length - 2
+        $escapedValue.Length - 2
       ).Replace(
         "''",
         "'"
       )
     }
     else {
-      return $quotedValue
+      return $escapedValue
+    }
+  }
+
+  static [string] Escape(
+
+    [string] $value
+
+  ) {
+    [string]$private:escapedValue = [CodeGeneration]::EscapeSingleQuotedStringContent($value)
+
+    if ($escapedValue.Contains(' ')) {
+      return "'" + $escapedValue + "'"
+    }
+    else {
+      return $escapedValue
     }
   }
 
@@ -154,12 +169,11 @@ class GenericCompleterBase {
     $private:completionResults = [List[CompletionResult]]::new()
 
     foreach ($private:completion in $completions) {
-      [string]$private:escapedCompletion = [CodeGeneration]::EscapeSingleQuotedStringContent($completion)
-      [string]$private:quotedEscapedCompletion = $escapedCompletion -match [regex]'\s' ? "'" + $escapedCompletion + "'" : $escapedCompletion
-
       $completionResults.Add(
         [CompletionResult]::new(
-          $quotedEscapedCompletion
+          [GenericCompleterBase]::Escape(
+            $completion
+          )
         )
       )
     }
