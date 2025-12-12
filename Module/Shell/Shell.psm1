@@ -205,7 +205,7 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
     [string] $root
   ) {
     $this.Root = $root
-    $this.Type = [PathItemType]:Any
+    $this.Type = [PathItemType]::Any
     $this.Flat = $false
     $this.UseNativeDirectorySeparator = $false
   }
