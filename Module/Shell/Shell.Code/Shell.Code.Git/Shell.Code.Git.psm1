@@ -157,7 +157,10 @@ function Invoke-GitRepository {
 
     [PathCompletions('.', 'Directory')]
     # Path to local repository. If not specified, defaults to the current location. For all verbs except 'clone', 'config', and 'init', the function will throw an error if there is no Git repository at the path.
-    [string]$WorkingDirectory
+    [string]$WorkingDirectory,
+
+    # When git command execution results in a non-zero exit code, write a warning and continue instead of the default behavior of throwing a terminating error.
+    [switch]$NoThrow
 
   )
 
@@ -240,7 +243,14 @@ function Invoke-GitRepository {
   & git.exe @GitArguments
 
   if ($LASTEXITCODE -ne 0) {
-    throw "git command error, execution returned exit code: $LASTEXITCODE"
+    [string]$Private:Exception = "git command error, execution returned exit code: $LASTEXITCODE"
+
+    if ($NoThrow) {
+      Write-Warning -Message $Exception
+    }
+    else {
+      throw $Exception
+    }
   }
 }
 

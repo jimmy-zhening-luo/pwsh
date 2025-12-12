@@ -321,6 +321,9 @@ function Invoke-NodePackage {
     # Additional arguments to pass to npm
     [string[]]$NodeArguments,
 
+    # When npm command execution results in a non-zero exit code, write a warning and continue instead of the default behavior of throwing a terminating error.
+    [switch]$NoThrow,
+
     # Show npm version if no command is specified. Otherwise, pass the -v flag.
     [switch]$Version,
 
@@ -420,7 +423,14 @@ function Invoke-NodePackage {
   & npm.ps1 @NodeArgumentList
 
   if ($LASTEXITCODE -ne 0) {
-    throw "npm command error, execution stopped with exit code: $LASTEXITCODE"
+    [string]$Private:Exception = "npm command error, execution returned exit code: $LASTEXITCODE"
+
+    if ($NoThrow) {
+      Write-Warning -Message $Exception
+    }
+    else {
+      throw $Exception
+    }
   }
 }
 
@@ -520,19 +530,9 @@ function Compare-NodeModule {
     Command          = 'outdated'
     WorkingDirectory = $WorkingDirectory
     NodeArguments    = $NodeArguments
+    NoThrow          = $True
   }
-  try {
-    Invoke-NodePackage @Outdated
-  }
-  catch {
-    if (
-      -not (
-        Test-NodePackageDirectory -WorkingDirectory $Outdated.WorkingDirectory
-      )
-    ) {
-      throw $PSItem
-    }
-  }
+  Invoke-NodePackage @Outdated
 }
 
 enum NodePackageNamedVersion {
