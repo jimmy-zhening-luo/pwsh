@@ -275,7 +275,13 @@ function Invoke-NodePackage {
       '--color=always'
     )
   )
-  $Private:CallerNodeArguments = [List[string]]::new([List[string]]$NodeArguments)
+
+  $Private:CallerNodeArguments = [List[string]]::new()
+  if ($NodeArguments) {
+    $CallerNodeArguments.AddRange(
+      [List[string]]$NodeArguments
+    )
+  }
 
   if ($WorkingDirectory.Length -ne 0) {
     if ($WorkingDirectory.StartsWith('-') -or -not (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)) {
@@ -328,12 +334,17 @@ function Invoke-NodePackage {
       $CallerNodeArguments.Add('-v')
     }
   }
-
-  if ($Version) {
-    $NodeArgumentList.Add('-v')
+  else {
+    if ($Version) {
+      $NodeArgumentList.Add('-v')
+    }
   }
 
-  $NodeArgumentList.AddRange($CallerNodeArguments)
+  if ($CallerNodeArguments.Count -ne 0) {
+    $NodeArgumentList.AddRange(
+      $CallerNodeArguments
+    )
+  }
 
   & npm.ps1 @NodeArgumentList
 
@@ -382,7 +393,9 @@ function Clear-NodeModuleCache {
     )
   )
   if ($args) {
-    $NodeArguments.AddRange([List[string]]$args)
+    $NodeArguments.AddRange(
+      [List[string]]$args
+    )
   }
 
   [hashtable]$Private:CacheClean = @{
@@ -427,7 +440,9 @@ function Compare-NodeModule {
   }
 
   if ($args) {
-    $NodeArguments.AddRange([List[string]]$args)
+    $NodeArguments.AddRange(
+      [List[string]]$args
+    )
   }
 
   [hashtable]$Private:Outdated = @{
@@ -528,7 +543,9 @@ function Step-NodePackageVersion {
   }
 
   if ($args) {
-    $NodeArguments.AddRange([List[string]]$args)
+    $NodeArguments.AddRange(
+      [List[string]]$args
+    )
   }
 
   [hashtable]$Private:StepVersion = @{
@@ -585,7 +602,9 @@ function Invoke-NodePackageScript {
   }
 
   if ($args) {
-    $NodeArguments.AddRange([List[string]]$args)
+    $NodeArguments.AddRange(
+      [List[string]]$args
+    )
   }
 
   [hashtable]$Private:RunScript = @{
@@ -631,7 +650,9 @@ function Test-NodePackage {
   }
 
   if ($args) {
-    $NodeArguments.AddRange([List[string]]$args)
+    $NodeArguments.AddRange(
+      [List[string]]$args
+    )
   }
 
   [hashtable]$Private:Test = @{

@@ -116,7 +116,9 @@ function Invoke-GitRepository {
 
   $Private:GitArguments = [List[string]]::new()
   if ($args) {
-    $GitArguments.AddRange([List[string]]$args)
+    $GitArguments.AddRange(
+      [List[string]]$args
+    )
   }
 
   if ($Verb) {
@@ -183,7 +185,10 @@ function Invoke-GitRepository {
     $Repository
     $Verb
   )
-  $GitArguments.InsertRange(0, [List[string]]$GitCommandManifest)
+  $GitArguments.InsertRange(
+    0,
+    [List[string]]$GitCommandManifest
+  )
 
   & git.exe @GitArguments
 
@@ -268,7 +273,9 @@ function Import-GitRepository {
   $CloneArguments.Add($Origin)
 
   if ($args) {
-    $CloneArguments.AddRange([List[string]]$args)
+    $CloneArguments.AddRange(
+      [List[string]]$args
+    )
   }
 
   [hashtable]$Private:Clone = @{
@@ -364,7 +371,9 @@ function Add-GitRepository {
 
   $Private:AddArguments = [List[string]]::new()
   if ($args) {
-    $AddArguments.AddRange([List[string]]$args)
+    $AddArguments.AddRange(
+      [List[string]]$args
+    )
   }
 
   if (-not $Name) {
@@ -454,10 +463,14 @@ function Write-GitRepository {
   )
 
   if ($Arguments) {
-    $CommitArguments.AddRange([List[string]]$Arguments)
+    $CommitArguments.AddRange(
+      [List[string]]$Arguments
+    )
   }
   if ($MessageWords) {
-    $Messages.AddRange([List[string]]$MessageWords)
+    $Messages.AddRange(
+      [List[string]]$MessageWords
+    )
   }
 
   if (
@@ -543,7 +556,9 @@ function Push-GitRepository {
   }
 
   if ($args) {
-    $PushArguments.AddRange([List[string]]$args)
+    $PushArguments.AddRange(
+      [List[string]]$args
+    )
   }
 
   [hashtable]$Private:Repository = @{
@@ -586,7 +601,9 @@ function Reset-GitRepository {
 
   $Private:ResetArguments = [List[string]]::new()
   if ($args) {
-    $ResetArguments.AddRange([List[string]]$args)
+    $ResetArguments.AddRange(
+      [List[string]]$args
+    )
   }
 
   if ($Tree) {
@@ -675,7 +692,9 @@ function Restore-GitRepository {
   }
 
   if ($args) {
-    $ResetArguments.AddRange([List[string]]$args)
+    $ResetArguments.AddRange(
+      [List[string]]$args
+    )
   }
 
   [hashtable]$Private:Repository = @{

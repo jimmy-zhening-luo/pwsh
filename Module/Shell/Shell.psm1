@@ -183,12 +183,9 @@ class PathCompleter : GenericCompleterBase, IArgumentCompleter {
         [List[string]]$files
       )
     }
-    $private:completionValues = [List[string]]::new(
-      [List[string]]$completionPaths
-    )
 
     return [PathCompleter]::CreateCompletionResult(
-      $completionValues
+      $completionPaths
     )
   }
 }

@@ -90,7 +90,9 @@ function Get-HelpOnline {
     }
 
     if ($CustomHelp) {
-      $ArticleList.AddRange([List[uri]]$CustomHelp)
+      $ArticleList.AddRange(
+        [List[uri]]$CustomHelp
+      )
     }
   }
   else {
@@ -110,7 +112,9 @@ function Get-HelpOnline {
         }
 
       if ($HelpLinkProperty) {
-        $HelpLinkArticleList.AddRange([List[uri]]$HelpLinkProperty)
+        $HelpLinkArticleList.AddRange(
+          [List[uri]]$HelpLinkProperty
+        )
       }
     }
 
@@ -132,7 +136,9 @@ function Get-HelpOnline {
     }
 
     if ($HelpLinkArticleList.Count -ne 0) {
-      $ArticleList.AddRange([List[uri]]$HelpLinkArticleList)
+      $ArticleList.AddRange(
+        [List[uri]]$HelpLinkArticleList
+      )
     }
     else {
       $Private:about_Article = ''
@@ -205,7 +211,9 @@ function Get-HelpOnline {
 
   if (-not $env:SSH_CLIENT) {
     if ($Articles) {
-      $Private:ArticleUrls = [List[uri]]::new([List[uri]]$Articles)
+      $Private:ArticleUrls = [List[uri]]::new(
+        [List[uri]]$Articles
+      )
 
       $ArticleUrls | Browse\Open-Url
     }
@@ -291,7 +299,9 @@ function Get-CommandAlias {
     [CommandInfo[]]$Private:AliasResults = Get-Alias @Private:AliasQuery
 
     if ($AliasResults) {
-      $AliasList.AddRange([List[CommandInfo]]$AliasResults)
+      $AliasList.AddRange(
+        [List[CommandInfo]]$AliasResults
+      )
     }
   }
 
@@ -376,7 +386,9 @@ function Get-VerbList {
       Select-Object -ExpandProperty Verb
 
     if ($VerbResults) {
-      $VerbList.AddRange([List[string]]$VerbResults)
+      $VerbList.AddRange(
+        [List[string]]$VerbResults
+      )
     }
   }
 

@@ -112,15 +112,21 @@ class GenericCompleterBase {
     $private:completions = [List[string]]::new()
     $private:normalizedValues = [List[string]]::new()
 
-    switch ($case) {
-      Preserve {
-        $normalizedValues.AddRange($values)
-      }
-      Lower {
-        $normalizedValues.AddRange([List[string]]$values.ToLowerInvariant())
-      }
-      Upper {
-        $normalizedValues.AddRange([List[string]]$values.ToUpperInvariant())
+    if ($values.Count -ne 0) {
+      switch ($case) {
+        Preserve {
+          $normalizedValues.AddRange($values)
+        }
+        Lower {
+          $normalizedValues.AddRange(
+            [List[string]]$values.ToLowerInvariant()
+          )
+        }
+        Upper {
+          $normalizedValues.AddRange(
+            [List[string]]$values.ToUpperInvariant()
+          )
+        }
       }
     }
 
@@ -134,7 +140,9 @@ class GenericCompleterBase {
       [string[]]$private:tailCompletions = $normalizedValues -like "$currentValue*"
 
       if ($tailCompletions) {
-        $completions.AddRange([List[string]]$tailCompletions)
+        $completions.AddRange(
+          [List[string]]$tailCompletions
+        )
       }
 
       if (
@@ -145,12 +153,16 @@ class GenericCompleterBase {
         [string[]]$private:surroundingCompletions = $normalizedValues -like "*$currentValue*" -ne $currentValue
 
         if ($surroundingCompletions) {
-          $completions.AddRange([List[string]]$surroundingCompletions)
+          $completions.AddRange(
+            [List[string]]$surroundingCompletions
+          )
         }
       }
     }
     else {
-      $completions.AddRange($normalizedValues)
+      if ($normalizedValues.Count -ne 0) {
+        $completions.AddRange($normalizedValues)
+      }
     }
 
     return $completions
@@ -284,14 +296,18 @@ class GenericCompletionsAttribute : ArgumentCompleterAttribute, IArgumentComplet
   }
 
   [IArgumentCompleter] Create() {
+    $private:unitList = [List[string]]::new()
+
     [string[]]$private:parsedUnits = ($this.Units -split ',').Trim() |
       Where-Object {
         -not [string]::IsNullOrEmpty($PSItem)
       }
 
-    $private:unitList = [List[string]]::new(
-      [List[string]]$parsedUnits
-    )
+    if ($parsedUnits) {
+      $private:unitList.AddRange(
+        [List[string]]$parsedUnits
+      )
+    }
 
     return [GenericCompleter]::new(
       $unitList,
