@@ -35,6 +35,10 @@ function Get-YouTube {
 
   if (Browse\Test-Url -Uri $VideoUri) {
     & yt-dlp.exe @args -- [string]$VideoUri
+
+    if ($LASTEXITCODE -ne 0) {
+      throw "ytdlp error, execution stopped with exit code: $LASTEXITCODE"
+    }
   }
   else {
     throw 'The specified video URL is unreachable: ' + [string]$VideoUri

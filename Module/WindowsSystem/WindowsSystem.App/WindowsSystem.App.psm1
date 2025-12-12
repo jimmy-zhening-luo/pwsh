@@ -54,6 +54,10 @@ function Add-WinGetApp {
   else {
     & winget.exe upgrade
   }
+
+  if ($LASTEXITCODE -ne 0) {
+    throw "winget.exe error, execution stopped with exit code: $LASTEXITCODE"
+  }
 }
 
 New-Alias wgu Update-WinGetApp
@@ -73,6 +77,10 @@ https://learn.microsoft.com/en-us/windows/package-manager/winget/upgrade
 function Update-WinGetApp {
 
   & winget.exe upgrade @args
+
+  if ($LASTEXITCODE -ne 0) {
+    throw "winget.exe error, execution stopped with exit code: $LASTEXITCODE"
+  }
 }
 
 New-Alias wgf Find-WinGetApp
@@ -97,6 +105,10 @@ function Find-WinGetApp {
   else {
     & winget.exe list
   }
+
+  if ($LASTEXITCODE -ne 0) {
+    throw "winget.exe error, execution stopped with exit code: $LASTEXITCODE"
+  }
 }
 
 New-Alias wgr Remove-WinGetApp
@@ -116,4 +128,8 @@ https://learn.microsoft.com/en-us/windows/package-manager/winget/uninstall
 function Remove-WinGetApp {
 
   & winget.exe uninstall @args
+
+  if ($LASTEXITCODE -ne 0) {
+    throw "winget.exe error, execution stopped with exit code: $LASTEXITCODE"
+  }
 }
