@@ -110,7 +110,6 @@ class GenericCompleterBase {
 
   ) {
     $private:completions = [List[string]]::new()
-
     $private:normalizedValues = [List[string]]::new()
 
     switch ($case) {
