@@ -30,6 +30,12 @@ function Clear-Line {
   }
 }
 
+enum PathItemType {
+  Any
+  File
+  Directory
+}
+
 class PathCompleter : GenericCompleterBase, IArgumentCompleter {
 
   static [string] $EasyDirectorySeparator = '/'
@@ -40,7 +46,7 @@ class PathCompleter : GenericCompleterBase, IArgumentCompleter {
 
   [string] $Root
 
-  [string] $Type
+  [PathItemType] $Type
 
   [bool] $Flat
 
@@ -50,14 +56,18 @@ class PathCompleter : GenericCompleterBase, IArgumentCompleter {
 
     [string] $root,
 
-    [string] $type,
+    [PathItemType] $type,
 
     [bool] $flat,
 
     [bool] $useNativeDirectorySeparator
 
   ) {
-    if (-not $root -or -not (Test-Path -Path $root -PathType Container)) {
+    [hashtable]$private:rootIsContainer = @{
+      Path     = $root
+      PathType = 'Container'
+    }
+    if (-not $root -or -not (Test-Path @rootIsContainer)) {
       throw [ArgumentException]::new('root')
     }
 
@@ -74,9 +84,17 @@ class PathCompleter : GenericCompleterBase, IArgumentCompleter {
     [CommandAst] $commandAst,
     [IDictionary] $fakeBoundParameters
   ) {
-    [hashtable]$private:query = @{
-      Directory = $this.Type -eq 'Directory'
-      File      = $this.Type -eq 'File'
+    [hashtable]$private:matchChildItems = @{}
+
+    switch ($this.Type) {
+      [PathItemType]::Directory {
+        $matchChildItems.Directory = $True
+
+        break
+      }
+      [PathItemType]::File {
+        $matchChildItems.File = $True
+      }
     }
 
     $private:root = Resolve-Path -Path $this.Root
@@ -102,16 +120,16 @@ class PathCompleter : GenericCompleterBase, IArgumentCompleter {
       [string]$private:path = Join-Path $private:root $currentDirectoryValue
 
       if (Test-Path -Path $path -PathType Container) {
-        $query.Path = $path
-        $query['Filter'] = "$fragment*"
+        $matchChildItems.Path = $path
+        $matchChildItems['Filter'] = "$fragment*"
       }
     }
 
-    if (-not $query.Path) {
-      $query.Path = $private:root
+    if (-not $matchChildItems.Path) {
+      $matchChildItems.Path = $private:root
     }
 
-    [FileSystemInfo[]]$private:leaves = Get-ChildItem @query
+    [FileSystemInfo[]]$private:leaves = Get-ChildItem @matchChildItems
 
     [FileSystemInfo[]]$private:containers, [FileSystemInfo[]]$private:children = $leaves.Where(
       {
@@ -179,7 +197,7 @@ class PathCompleter : GenericCompleterBase, IArgumentCompleter {
 
 class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory {
   [string] $Root
-  [string] $Type
+  [PathItemType] $Type
   [bool] $Flat
   [bool] $UseNativeDirectorySeparator
 
@@ -187,13 +205,13 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
     [string] $root
   ) {
     $this.Root = $root
-    $this.Type = ''
+    $this.Type = [PathItemType]:Any
     $this.Flat = $false
     $this.UseNativeDirectorySeparator = $false
   }
   PathCompletionsAttribute(
     [string] $root,
-    [string] $type
+    [PathItemType] $type
   ) {
     $this.Root = $root
     $this.Type = $type
@@ -202,7 +220,7 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
   }
   PathCompletionsAttribute(
     [string] $root,
-    [string] $type,
+    [PathItemType] $type,
     [bool] $flat
   ) {
     $this.Root = $root
@@ -212,7 +230,7 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
   }
   PathCompletionsAttribute(
     [string] $root,
-    [string] $type,
+    [PathItemType] $type,
     [bool] $flat,
     [bool] $useNativeDirectorySeparator
   ) {
@@ -233,6 +251,7 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
 }
 
 $ExportableTypes = @(
+  [PathItemType]
   [PathCompleter]
   [PathCompletionsAttribute]
 )
