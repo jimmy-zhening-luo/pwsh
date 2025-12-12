@@ -170,7 +170,7 @@ function Get-HelpOnline {
           }
         }
 
-        [string]$Private:about_TopicCandidate = $Topic -replace [regex]'(?>[-_ :]+)', '_' -replace [regex]'^(?>about)?_?', 'about_'
+        [string]$Private:about_TopicCandidate = $Topic -replace [regex]'(?>[_ :]+)', '_' -replace [regex]'^(?>about)?_?', 'about_'
 
         $about_Article = Resolve-AboutArticle -Topic $about_TopicCandidate
 
