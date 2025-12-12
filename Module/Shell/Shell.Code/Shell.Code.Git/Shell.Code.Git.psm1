@@ -2,15 +2,25 @@ using namespace System.Collections.Generic
 
 function Resolve-GitRepository {
 
-  [CmdletBinding()]
+  [CmdletBinding(
+    DefaultParameterSetName = 'WorkingDirectory'
+  )]
 
   [OutputType([string[]])]
 
   param(
 
     [Parameter(
+      ParameterSetName = 'WorkingDirectory',
       Mandatory,
-      Position = 0,
+      Position = 0
+    )]
+    [AllowEmptyString()]
+    [string]$WorkingDirectory,
+
+    [Parameter(
+      ParameterSetName = 'Path',
+      Mandatory,
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
@@ -24,53 +34,53 @@ function Resolve-GitRepository {
 
   begin {
     [string]$Private:CODE_PATH = "$HOME\code"
-    $Private:Repositories = [List[string]]::new()
+
+    $Private:WorkingDirectories = [List[string]]::new()
   }
 
   process {
-    [hashtable]$Private:RepoPath = @{
-      Path = $Path
-    }
-    [string]$Private:Repository = ''
+    [string]$Private:Target = $PSCmdlet.ParameterSetName -eq $Path ? $Path : $WorkingDirectory
 
     if ($New) {
-      if (Test-Item @RepoPath) {
-        $Repository = Resolve-Item @RepoPath
+      [hashtable]$Private:TestWorkingDirectory = @{
+        Path = $Target
+      }
+      if (Test-Item @TestWorkingDirectory) {
+        $WorkingDirectories.Add([string](Resolve-Item @TestWorkingDirectory))
       }
       else {
-        $RepoPath.Location = $CODE_PATH
-        $RepoPath.New = $True
+        $TestWorkingDirectory.Location = $CODE_PATH
+        $TestWorkingDirectory.New = $True
 
-        if (Test-Item @RepoPath) {
-          $Repository = Resolve-Item @RepoPath
+        if (Test-Item @TestWorkingDirectory) {
+          $WorkingDirectories.Add([string](Resolve-Item @TestWorkingDirectory))
         }
       }
     }
     else {
-      [hashtable]$Private:RepoGitPath = @{
-        Path           = $Path ? (Join-Path $Path .git) : '.git'
+      [hashtable]$Private:ResolveRepository = @{
+        Path = $Target
+      }
+      [hashtable]$Private:TestRepository = @{
+        Path           = $Target ? (Join-Path $Target .git) : '.git'
         RequireSubpath = $True
       }
 
-      if (Test-Item @RepoGitPath) {
-        $Repository = Resolve-Item @RepoPath
+      if (Test-Item @TestRepository) {
+        $WorkingDirectories.Add([string](Resolve-Item @ResolveRepository))
       }
       else {
-        $RepoGitPath.Location = $RepoPath.Location = $CODE_PATH
+        $TestRepository.Location = $ResolveRepository.Location = $CODE_PATH
 
-        if (Test-Item @RepoGitPath) {
-          $Repository = Resolve-Item @RepoPath
+        if (Test-Item @TestRepository) {
+          $WorkingDirectories.Add([string](Resolve-Item @ResolveRepository))
         }
       }
-    }
-
-    if ($Repository) {
-      $Repositories.Add([string]$Repository)
     }
   }
 
   end {
-    return [string[]]$Repositories.ToArray()
+    return [string[]]$WorkingDirectories.ToArray()
   }
 }
 
@@ -112,45 +122,43 @@ function Invoke-GitRepository {
 
     [PathCompletions('.', 'Directory')]
     # Path to local repository. If not specified, defaults to the current location. For all verbs except 'clone', 'config', and 'init', the function will throw an error if there is no Git repository at the path.
-    [string]$Path
+    [string]$WorkingDirectory
 
   )
 
-  $Private:GitArguments = [List[string]]::new()
-
-  if ($args) {
-    $GitArguments.AddRange([List[string]]$args)
-  }
+  $Private:GitArguments = [List[string]]::new(
+    [List[string]]$args
+  )
 
   if ($Verb) {
     if ($Verb -in $GIT_VERB) {
       if ($Verb -in $NEWABLE_GIT_VERB) {
-        if ($Path -match $GIT_ARGUMENT) {
-          $GitArguments.Insert(0, $Path)
-          $Path = ''
+        if ($WorkingDirectory -match $GIT_ARGUMENT) {
+          $GitArguments.Insert(0, $WorkingDirectory)
+          $WorkingDirectory = ''
         }
       }
       else {
         if (
-          $Path -and -not (
+          $WorkingDirectory -and -not (
             $PWD | Resolve-GitRepository
           ) -and -not (
-            $Path | Resolve-GitRepository
+            $WorkingDirectory | Resolve-GitRepository
           ) -and (
             $Verb | Resolve-GitRepository
           )
         ) {
-          $GitArguments.Insert(0, $Path)
-          $Verb, $Path = 'status', $Verb
+          $GitArguments.Insert(0, $WorkingDirectory)
+          $Verb, $WorkingDirectory = 'status', $Verb
         }
       }
     }
     else {
-      if ($Path -or $GitArguments) {
+      if ($WorkingDirectory -or $GitArguments) {
         $GitArguments.Insert(0, $Verb)
       }
       else {
-        $Path = $Verb
+        $WorkingDirectory = $Verb
       }
 
       $Verb = 'status'
@@ -161,21 +169,21 @@ function Invoke-GitRepository {
   }
 
   [hashtable]$Private:Resolve = @{
-    Path = $Path
-    New  = $Verb -in $NEWABLE_GIT_VERB
+    WorkingDirectory = $WorkingDirectory
+    New              = $Verb -in $NEWABLE_GIT_VERB
   }
   [string]$Private:Repository = Resolve-GitRepository @Resolve
 
   if (-not $Repository) {
-    if ($Path) {
-      $GitArguments.Insert(0, $Path)
+    if ($WorkingDirectory) {
+      $GitArguments.Insert(0, $WorkingDirectory)
 
-      $Resolve.Path = $PWD
+      $Resolve.WorkingDirectory = $PWD
       $Repository = Resolve-GitRepository @Resolve
     }
 
     if (-not $Repository) {
-      throw "Path '$Path' is not a Git repository"
+      throw "Path '$WorkingDirectory' is not a Git repository"
     }
   }
 
@@ -212,14 +220,15 @@ function Measure-GitRepository {
 
     [PathCompletions('.', 'Directory')]
     # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
-    [string]$Path
+    [string]$WorkingDirectory
 
   )
 
   [hashtable]$Private:Status = @{
-    Verb = 'status'
+    Verb             = 'status'
+    WorkingDirectory = $WorkingDirectory
   }
-  Invoke-GitRepository @Status @PSBoundParameters @args
+  Invoke-GitRepository @Status @args
 }
 
 New-Alias gitcl Import-GitRepository
@@ -242,7 +251,7 @@ function Import-GitRepository {
 
     [PathCompletions('.', 'Directory')]
     # Path to the directory into which the repository will be cloned. If not specified, defaults to the current location. The repository will be cloned into a subdirectory with the same name as the repository. If the path points to a container which does not exist, it will be created. If parent container creation fails, this function will throw an error. If Git encounters an error during cloning, this function will throw an error.
-    [string]$Path,
+    [string]$WorkingDirectory,
 
     [Alias('ssh')]
     # Use git@github.com remote protocol instead of the default HTTPS
@@ -274,8 +283,8 @@ function Import-GitRepository {
   }
 
   [hashtable]$Private:Clone = @{
-    Verb = 'clone'
-    Path = $Path
+    Verb             = 'clone'
+    WorkingDirectory = $WorkingDirectory
   }
   Invoke-GitRepository @Clone @CloneArguments
 }
@@ -296,14 +305,15 @@ function Get-GitRepository {
 
     [PathCompletions('.', 'Directory')]
     # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
-    [string]$Path
+    [string]$WorkingDirectory
 
   )
 
   [hashtable]$Private:Pull = @{
-    Verb = 'pull'
+    Verb             = 'pull'
+    WorkingDirectory = $WorkingDirectory
   }
-  Invoke-GitRepository @Pull @PSBoundParameters @args
+  Invoke-GitRepository @Pull @args
 }
 
 New-Alias gpp Get-ChildGitRepository
@@ -326,11 +336,12 @@ function Get-ChildGitRepository {
   [string[]]$Private:Repositories = Get-ChildItem @CodeDirectory |
     Select-Object -ExpandProperty FullName |
     Resolve-GitRepository
-  [UInt16]$Private:Count = $Repositories.Count
 
   foreach ($Private:Repository in $Repositories) {
-    Get-GitRepository -Path $Repository @args
+    Get-GitRepository -WorkingDirectory $Repository @args
   }
+
+  [UInt16]$Private:Count = $Repositories.Count
 
   return "`nPulled $Count repositor" + ($Count -eq 1 ? 'y' : 'ies')
 }
@@ -352,7 +363,7 @@ function Add-GitRepository {
 
     [PathCompletions('.', 'Directory')]
     # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
-    [string]$Path,
+    [string]$WorkingDirectory,
 
     # File pattern of files to add, defaults to '.' (all)
     [string]$Name,
@@ -362,10 +373,9 @@ function Add-GitRepository {
 
   )
 
-  $Private:AddArguments = [List[string]]::new()
-  if ($args) {
-    $AddArguments.AddRange([List[string]]$args)
-  }
+  $Private:AddArguments = [List[string]]::new(
+    [List[string]]$args
+  )
 
   if (-not $Name) {
     $Name = '.'
@@ -377,20 +387,20 @@ function Add-GitRepository {
   }
 
   if (
-    $Path -and (
+    $WorkingDirectory -and (
       $PWD | Resolve-GitRepository
     ) -and -not (
-      $Path | Resolve-GitRepository
+      $WorkingDirectory | Resolve-GitRepository
     )
   ) {
     if ($Name) {
-      $AddArguments.Insert(0, $Path)
+      $AddArguments.Insert(0, $WorkingDirectory)
     }
     else {
-      $Name = $Path
+      $Name = $WorkingDirectory
     }
 
-    $Path = ''
+    $WorkingDirectory = ''
   }
 
   if ($Name) {
@@ -402,8 +412,8 @@ function Add-GitRepository {
   }
 
   [hashtable]$Private:Add = @{
-    Verb = 'add'
-    Path = $Path
+    Verb             = 'add'
+    WorkingDirectory = $WorkingDirectory
   }
   Invoke-GitRepository @Add @AddArguments
 }
@@ -424,7 +434,7 @@ function Write-GitRepository {
 
     [PathCompletions('.', 'Directory')]
     # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
-    [string]$Path,
+    [string]$WorkingDirectory,
 
     # Commit message. It must be non-empty except on an empty commit, where it defaults to 'No message.'
     [string]$Message,
@@ -450,31 +460,24 @@ function Write-GitRepository {
     'Split'
   )
 
-  $Private:CommitArguments = [List[string]]::new()
-  if ($Arguments) {
-    $CommitArguments.AddRange([List[string]]$Arguments)
-  }
-
-  $Private:Messages = [List[string]]::new()
-  if ($MessageWords) {
-    $Messages.AddRange([List[string]]$MessageWords)
-  }
+  $Private:CommitArguments = [List[string]]::new([List[string]]$Arguments)
+  $Private:Messages = [List[string]]::new([List[string]]$MessageWords)
 
   if (
-    $Path -and (
+    $WorkingDirectory -and (
       $PWD | Resolve-GitRepository
     ) -and -not (
-      $Path | Resolve-GitRepository
+      $WorkingDirectory | Resolve-GitRepository
     )
   ) {
-    if ($Path -match $GIT_ARGUMENT -and $Messages.Count -eq 0) {
-      $CommitArguments.Insert(0, $Path)
+    if ($WorkingDirectory -match $GIT_ARGUMENT -and $Messages.Count -eq 0) {
+      $CommitArguments.Insert(0, $WorkingDirectory)
     }
     else {
-      $Messages.Insert(0, $Path)
+      $Messages.Insert(0, $WorkingDirectory)
     }
 
-    $Path = ''
+    $WorkingDirectory = ''
   }
 
   if ($AllowEmpty -and '--allow-empty' -notin $CommitArguments) {
@@ -489,25 +492,23 @@ function Write-GitRepository {
       throw 'Missing commit message.'
     }
   }
-
-  if (-not $Staged) {
-    [hashtable]$Private:Add = @{
-      Path = $Path
-    }
-    Add-GitRepository @Add
-  }
-
-  [string[]]$CommitMessageArguments = @(
-    '-m'
-    $Messages -join ' '
+  $CommitArguments.InsertRange(
+    0,
+    [List[string]]@(
+      '-m'
+      $Messages -join ' '
+    )
   )
-  $CommitArguments.InsertRange(0, [List[string]]$CommitMessageArguments)
 
-  $Private:Commit = @{
-    Path = $Path
-    Verb = 'commit'
+  [hashtable]$Private:Repository = @{
+    WorkingDirectory = $WorkingDirectory
+  }  
+  if (-not $Staged) {
+    Add-GitRepository @Repository
   }
-  Invoke-GitRepository @Commit @CommitArguments
+
+  $Repository.Verb = 'commit'
+  Invoke-GitRepository @Repository @CommitArguments
 }
 
 New-Alias gs Push-GitRepository
@@ -527,40 +528,35 @@ function Push-GitRepository {
 
     [PathCompletions('.', 'Directory')]
     # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
-    [string]$Path
+    [string]$WorkingDirectory
 
   )
 
   $Private:PushArguments = [List[string]]::new()
-  if ($args) {
-    $PushArguments.AddRange([List[string]]$args)
-  }
 
   if (
-    $Path -and (
+    $WorkingDirectory -and (
       $PWD | Resolve-GitRepository
     ) -and -not (
-      $Path | Resolve-GitRepository
+      $WorkingDirectory | Resolve-GitRepository
     )
   ) {
-    $PushArguments.Insert(0, $Path)
-    $Path = ''
+    $PushArguments.Add($WorkingDirectory)
+    $WorkingDirectory = ''
   }
 
-  [hashtable]$Private:Pull = @{
-    Path = $Path
-  }
-  Get-GitRepository @Pull
+  $PushArguments.AddRange([List[string]]$args)
 
-  [hashtable]$Private:Push = @{
-    Verb = 'push'
-    Path = $Path
+  [hashtable]$Private:Repository = @{
+    WorkingDirectory = $WorkingDirectory
   }
-  Invoke-GitRepository @Push @PushArguments
+  Get-GitRepository @Repository
+
+  $Repository.Verb = 'push'
+  Invoke-GitRepository @Repository @PushArguments
 }
 
 [regex]$TREE_SPEC = '^(?=.)(?>HEAD)?(?<Branching>(?>~|\^)?)(?<Step>(?>\d{0,10}))$'
-
 
 New-Alias gr Reset-GitRepository
 <#
@@ -579,7 +575,7 @@ function Reset-GitRepository {
 
     [PathCompletions('.', 'Directory')]
     # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
-    [string]$Path,
+    [string]$WorkingDirectory,
 
     # The tree spec to which to revert, specified as '[HEAD]([~]|^)[n]'. If the tree spec is not specified, it defaults to HEAD. If only the number index is given, it defaults to '~' branching. If only the branching is given, the index defaults to 0 = HEAD.
     [string]$Tree,
@@ -589,10 +585,9 @@ function Reset-GitRepository {
 
   )
 
-  $Private:ResetArguments = [List[string]]::new()
-  if ($args) {
-    $ResetArguments.AddRange([List[string]]$args)
-  }
+  $Private:ResetArguments = [List[string]]::new(
+    List[string]]$args
+  )
 
   if ($Tree) {
     if (
@@ -610,14 +605,14 @@ function Reset-GitRepository {
   }
 
   if (
-    $Path -and (
+    $WorkingDirectory -and (
       $PWD | Resolve-GitRepository
     ) -and -not (
-      $Path | Resolve-GitRepository
+      $WorkingDirectory | Resolve-GitRepository
     )
   ) {
     if (
-      -not $Tree -and $Path -match $TREE_SPEC -and (
+      -not $Tree -and $WorkingDirectory -match $TREE_SPEC -and (
         -not $Matches.Step -or $Matches.Step -as [uint32]
       )
     ) {
@@ -625,26 +620,24 @@ function Reset-GitRepository {
       $Tree = 'HEAD' + $Branching + $Matches.Step
     }
     else {
-      $ResetArguments.Insert(0, $Path)
+      $ResetArguments.Insert(0, $WorkingDirectory)
     }
 
-    $Path = ''
+    $WorkingDirectory = ''
   }
-
-  [hashtable]$Private:Add = @{
-    Path = $Path
-  }
-  Add-GitRepository @Add
 
   if ($Tree) {
     $ResetArguments.Insert(0, $Tree)
   }
   $ResetArguments.Insert(0, '--hard')
-  [hashtable]$Private:Reset = @{
-    Verb = 'reset'
-    Path = $Path
+
+  [hashtable]$Private:Repository = @{
+    WorkingDirectory = $WorkingDirectory
   }
-  Invoke-GitRepository @Reset @ResetArguments
+  Add-GitRepository @Repository
+
+  $Repository.Verb = 'reset'
+  Invoke-GitRepository @Repository @ResetArguments
 }
 
 New-Alias grp Restore-GitRepository
@@ -664,27 +657,29 @@ function Restore-GitRepository {
 
     [PathCompletions('.', 'Directory')]
     # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
-    [string]$Path
+    [string]$WorkingDirectory
 
   )
 
   $Private:ResetArguments = [List[string]]::new()
-  if ($args) {
-    $ResetArguments.AddRange([List[string]]$args)
-  }`
 
   if (
-    $Path -and (
+    $WorkingDirectory -and (
       $PWD | Resolve-GitRepository
     ) -and -not (
-      $Path | Resolve-GitRepository
+      $WorkingDirectory | Resolve-GitRepository
     )
   ) {
-    $ResetArguments.Insert(0, $Path)
-    $PSBoundParameters.Path = ''
+    $ResetArguments.Add($WorkingDirectory)
+    $WorkingDirectory = ''
   }
 
-  Reset-GitRepository @PSBoundParameters @ResetArguments
+  $ResetArguments.AddRange([List[string]]$args)
 
-  Get-GitRepository @PSBoundParameters
+  [hashtable]$Private:Repository = @{
+    WorkingDirectory = $WorkingDirectory
+  }
+  Reset-GitRepository @Repository @ResetArguments
+
+  Get-GitRepository @Repository
 }
