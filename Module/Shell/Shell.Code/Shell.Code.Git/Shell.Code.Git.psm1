@@ -490,7 +490,7 @@ function Write-GitRepository {
 
   [hashtable]$Private:Repository = @{
     WorkingDirectory = $WorkingDirectory
-  }  
+  }
   if (-not $Staged) {
     Add-GitRepository @Repository
   }
