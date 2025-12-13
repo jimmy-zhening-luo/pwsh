@@ -1,3 +1,5 @@
+using namespace System.Collections.Generic
+
 New-Alias gapx Appx\Get-AppxPackage
 New-Alias remapx Appx\Remove-AppxPackage
 
@@ -30,7 +32,9 @@ function Update-StoreApp {
   Start-Process @Store
 }
 
-New-Alias wget winget.exe
+$WINGET = "$HOME\AppData\Local\Microsoft\WindowsApps\winget.exe"
+
+New-Alias wget $WINGET
 
 New-Alias wga Add-WinGetApp
 <#
@@ -48,12 +52,26 @@ https://learn.microsoft.com/en-us/windows/package-manager/winget/install
 #>
 function Add-WinGetApp {
 
-  if ($args) {
-    & winget.exe install @args
+  if (-not $args) {
+    return Update-WinGetApp
   }
-  else {
-    & winget.exe upgrade
+
+  $Private:ArgumentList = [List[string]]::new(
+    [List[string]]@(
+      'install'
+    )
+  )
+  $ArgumentList.AddRange(
+    [List[string]]$args
+  )
+
+  [hashtable]$Private:Add = @{
+    FilePath         = $WINGET
+    ArgumentList     = $ArgumentList
+    NoNewWindow      = $True
+    PassThru         = $True
   }
+  Start-Process @Add | Wait-Process
 
   if ($LASTEXITCODE -ne 0) {
     throw "winget.exe error, execution stopped with exit code: $LASTEXITCODE"
@@ -76,7 +94,24 @@ https://learn.microsoft.com/en-us/windows/package-manager/winget/upgrade
 #>
 function Update-WinGetApp {
 
-  & winget.exe upgrade @args
+  $Private:ArgumentList = [List[string]]::new(
+    [List[string]]@(
+      'upgrade'
+    )
+  )
+  if ($args) {
+    $ArgumentList.AddRange(
+      [List[string]]$args
+    )
+  }
+
+  [hashtable]$Private:Update = @{
+    FilePath         = $WINGET
+    ArgumentList     = $ArgumentList
+    NoNewWindow      = $True
+    PassThru         = $True
+  }
+  Start-Process @Update | Wait-Process
 
   if ($LASTEXITCODE -ne 0) {
     throw "winget.exe error, execution stopped with exit code: $LASTEXITCODE"
@@ -99,12 +134,24 @@ https://learn.microsoft.com/en-us/windows/package-manager/winget/search
 #>
 function Find-WinGetApp {
 
+  $Private:ArgumentList = [List[string]]::new()
   if ($args) {
-    & winget.exe search @args
+    $ArgumentList.Add('search')
+    $ArgumentList.AddRange(
+      [List[string]]$args
+    )
   }
   else {
-    & winget.exe list
+    $ArgumentList.Add('list')
   }
+
+  [hashtable]$Private:Find = @{
+    FilePath         = $WINGET
+    ArgumentList     = $ArgumentList
+    NoNewWindow      = $True
+    PassThru         = $True
+  }
+  Start-Process @Find | Wait-Process
 
   if ($LASTEXITCODE -ne 0) {
     throw "winget.exe error, execution stopped with exit code: $LASTEXITCODE"
@@ -127,7 +174,24 @@ https://learn.microsoft.com/en-us/windows/package-manager/winget/uninstall
 #>
 function Remove-WinGetApp {
 
-  & winget.exe uninstall @args
+  $Private:ArgumentList = [List[string]]::new(
+    [List[string]]@(
+      'uninstall'
+    )
+  )
+  if ($args) {
+    $ArgumentList.AddRange(
+      [List[string]]$args
+    )
+  }
+
+  [hashtable]$Private:Uninstall = @{
+    FilePath         = $WINGET
+    ArgumentList     = $ArgumentList
+    NoNewWindow      = $True
+    PassThru         = $True
+  }
+  Start-Process @Uninstall | Wait-Process
 
   if ($LASTEXITCODE -ne 0) {
     throw "winget.exe error, execution stopped with exit code: $LASTEXITCODE"
