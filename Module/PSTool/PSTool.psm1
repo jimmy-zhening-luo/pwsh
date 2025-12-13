@@ -74,6 +74,7 @@ function Build-PSProfile {
     NoNewWindow      = $True
     Wait             = $True
     PassThru         = $True
+    ErrorAction      = 'Stop'
   }
   Start-Process @Build | Wait-Process
 }
