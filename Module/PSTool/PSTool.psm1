@@ -67,13 +67,14 @@ function Build-PSProfile {
 
   param()
 
-  [hashtable]$Private:Publish = @{
-    FilePath          = 'C:\Program Files\dotnet\dotnet.exe'
-    ArgumentList      = 'publish'
-    WorkingDirectory  = "$HOME\code\pwsh"
-    InformationAction = 'Continue'
+  [hashtable]$Private:Build = @{
+    FilePath         = 'C:\Program Files\dotnet\dotnet.exe'
+    ArgumentList     = 'publish'
+    WorkingDirectory = "$HOME\code\pwsh"
+    NoNewWindow      = $True
+    Wait             = $True
   }
-  Start-Process @Publish
+  Start-Process @Build
 }
 
 New-Alias up Update-PSProfile
