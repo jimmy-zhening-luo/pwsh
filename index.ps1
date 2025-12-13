@@ -1,8 +1,8 @@
 $Env:PSModulePath += ";$PSScriptRoot\Module"
 
-$Global:PSDefaultParameterValues = Import-PowerShellDataFile -Path $PSScriptRoot\Overrides\Parameter.psd1
+$Global:PSDefaultParameterValues = Import-PowerShellDataFile -Path $PSScriptRoot\Script\Parameter.psd1
 
-. $PSScriptRoot\Overrides\Alias.ps1
+. $PSScriptRoot\Script\Alias.ps1
 
 [hashtable]$Private:Compiled = @{
   Path = "$HOME\code\pwsh\Cmdlet\Good\bin\Release\net10.0\Good.dll"
