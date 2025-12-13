@@ -12,5 +12,18 @@ if (Test-Path @Compiled) {
     Destination = "$HOME\code\pwsh\Module\Good"
     Force       = $True
   }
-  Copy-Item @Compiled @Install
+  [hashtable]$Private:ExistingInstall = @{
+    Path = Join-Path $Install.Destination Good.dll
+  }
+
+  if (
+    -not (Test-Path @ExistingInstall) -or (
+      Get-Item @ExistingInstall
+    ).LastWriteTime -ne (
+      Get-Item @Compiled
+    ).LastWriteTime
+  ) {
+    Copy-Item @Compiled @Install
+    echo "hi!"
+  }
 }
