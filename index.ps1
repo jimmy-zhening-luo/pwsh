@@ -9,7 +9,7 @@ $Global:PSDefaultParameterValues = Import-PowerShellDataFile -Path $PSScriptRoot
 }
 if (Test-Path @Compiled) {
   [hashtable]$Private:Install = @{
-    Destination = "$HOME\code\pwsh\Module\Good\"
+    Destination = "$HOME\code\pwsh\Module\Good"
     Force       = $True
   }
   Copy-Item @Compiled @Install
