@@ -9,7 +9,8 @@ namespace Good;
 public class Hello : Cmdlet
 {
   [Parameter(
-    Position = 0
+    Position = 0,
+    Mandatory = true
   )]
   public string Greeting
   {
