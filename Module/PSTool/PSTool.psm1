@@ -72,9 +72,9 @@ function Build-PSProfile {
     ArgumentList     = 'publish'
     WorkingDirectory = "$HOME\code\pwsh"
     NoNewWindow      = $True
-    Wait             = $True
+    PassThru         = $True
   }
-  Start-Process @Build
+  Start-Process @Build | Wait-Process
 }
 
 New-Alias up Update-PSProfile
