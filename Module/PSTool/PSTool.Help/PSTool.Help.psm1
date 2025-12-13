@@ -65,29 +65,58 @@ function Get-HelpOnline {
     )]
     [GenericCompletions(
       {
-        if (-not $PSTOOL_HELP_ABOUT_TOPICS) {
-          [hashtable]$Private:GetHelpAboutTopics = @{
-            Category = 'HelpFile'
-            Name = 'about_*'
+        if ($null -eq $PSTOOL_HELP_TOPIC) {
+          [hashtable]$Private:GetModule = @{
+            Path      = "$HOME\code\pwsh\Module"
+            Directory = $True
           }
-          [string[]]$Global:PSTOOL_HELP_ABOUT_TOPICS = (Get-Help @GetHelpAboutTopics).Name.Substring(6).ToLowerInvariant()
-        }
+          [string[]]$Private:Module = (Get-ChildItem @GetModule).Name
 
-        if (-not $PSTOOL_HELP_COMMANDS) {
-          [hashtable]$Private:GetHelpCommands = @{
-            Category = @(
-              'Cmdlet'
-              'Function'
-              'Alias'
-            )
+          if ($Module) {
+            $Module += 'Microsoft.PowerShell.*'
           }
-          [string[]]$Global:PSTOOL_HELP_COMMANDS = (
-            Get-Help @GetHelpCommands |
+          else {
+            [string[]]$Private:Module = @('Microsoft.PowerShell.*')
+          }
+
+          [hashtable]$Private:GetCommand = @{
+            Module = $Module
+            All    = $True
+          }
+          [string[]]$Private:Command = (
+            Get-Command @GetCommand |
               Sort-Object -Property Name
           ).Name.ToLowerInvariant()
+
+          [hashtable]$Private:GetAbout = @{
+            Category = 'HelpFile'
+            Name     = 'about_*'
+          }
+          [string[]]$Private:About = (
+            Get-Help @GetAbout
+          ).Name.Substring(6).ToLowerInvariant()
+
+          if ($About) {
+            if ($Command) {
+              $Command += $About
+            }
+            else {
+              [string[]]$Private:Command = $About
+            }
+          }
+
+          $Global:PSTOOL_HELP_TOPIC = (
+            $Command
+          ) ? (
+            [System.Collections.Generic.List[string]]::new(
+              [System.Collections.Generic.List[string]]$Command
+            )
+          ) : (
+            [System.Collections.Generic.List[string]]::new()
+          )
         }
 
-        return $PSTOOL_HELP_ABOUT_TOPICS + $PSTOOL_HELP_COMMANDS
+        return $Global:PSTOOL_HELP_TOPIC
       },
       'Preserve'
     )]
