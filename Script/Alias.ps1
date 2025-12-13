@@ -1,6 +1,3 @@
-[hashtable]$Private:Force = @{
-  Force = $True
-}
 [hashtable]$Private:Readonly = @{
   Option = 'ReadOnly'
 }
@@ -11,16 +8,19 @@
   )
 }
 
-# Reassign PS alias
+#region Reassign
 Set-Alias clear Shell\Clear-Line # was: Microsoft.PowerShell.Core\Clear-Host
 Set-Alias rd Shell\Remove-Directory # was: Remove-Item
 Set-Alias man PSTool\Get-HelpOnline # was: Microsoft.PowerShell.Core\Get-Help
-Set-Alias gp Shell\Get-GitRepository @Readonly @Force # was: Get-ItemProperty
-Set-Alias gm Shell\Write-GitRepository @Readonly @Force # was: Get-Member
+Set-Alias gp Shell\Get-GitRepository @Readonly -Force # was: Get-ItemProperty
+Set-Alias gm Shell\Write-GitRepository @Readonly -Force # was: Get-Member
+#endregion
 
-# Mask implicit PS alias
-New-Alias verb PSTool\Get-VerbList @Readonly # implicit Get-Verb
+#region Mask
+# Implicit PowerShell alias
+New-Alias verb PSTool\Get-VerbList @Readonly # was: implicit Get-Verb
 
-# Mask native PATH executable
-New-Alias clip Set-Clipboard @Readonly # clip.exe
-New-Alias run WindowsSystem\Invoke-CommandPrompt @ReadonlyAllScope # nvm\run.cmd
+# PATH executable
+New-Alias clip Set-Clipboard @Readonly # was: clip.exe
+New-Alias run WindowsSystem\Invoke-CommandPrompt @ReadonlyAllScope # was: nvm\run.cmd
+#endregion

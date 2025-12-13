@@ -1,7 +1,4 @@
-New-Alias gapx Appx\Get-AppxPackage
-New-Alias remapx Appx\Remove-AppxPackage
 
-New-Alias su Update-StoreApp
 <#
 .SYNOPSIS
 Opens the 'Microsoft Store' app to the 'Updates & downloads' page.
@@ -32,9 +29,6 @@ function Update-StoreApp {
 
 $WINGET = "$HOME\AppData\Local\Microsoft\WindowsApps\winget.exe"
 
-New-Alias wget $WINGET
-
-New-Alias wga Add-WinGetApp
 <#
 .SYNOPSIS
 Use WinGet to install a new package or upgrade an existing package.
@@ -62,7 +56,6 @@ function Add-WinGetApp {
   }
 }
 
-New-Alias wgu Update-WinGetApp
 <#
 .SYNOPSIS
 Use WinGet to check for a package upgrade or to upgrade a package.
@@ -85,7 +78,6 @@ function Update-WinGetApp {
   }
 }
 
-New-Alias wgf Find-WinGetApp
 <#
 .SYNOPSIS
 Use WinGet to search WinGet repositories for a package.
@@ -113,7 +105,6 @@ function Find-WinGetApp {
   }
 }
 
-New-Alias wgr Remove-WinGetApp
 <#
 .SYNOPSIS
 Use WinGet to uninstall a package.
@@ -135,3 +126,13 @@ function Remove-WinGetApp {
     throw "winget.exe error, execution stopped with exit code: $LASTEXITCODE"
   }
 }
+
+New-Alias gapx Appx\Get-AppxPackage
+New-Alias remapx Appx\Remove-AppxPackage
+
+New-Alias su Update-StoreApp
+New-Alias wget $WINGET
+New-Alias wga Add-WinGetApp
+New-Alias wgu Update-WinGetApp
+New-Alias wgf Find-WinGetApp
+New-Alias wgr Remove-WinGetApp

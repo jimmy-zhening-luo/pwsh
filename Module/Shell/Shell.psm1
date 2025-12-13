@@ -10,7 +10,6 @@ using namespace System.Management.Automation.Language
 .FORWARDHELPTARGETNAME Clear-Content
 .FORWARDHELPCATEGORY Cmdlet
 #>
-New-Alias cl Clear-Line
 function Clear-Line {
 
   [OutputType([void])]
@@ -501,3 +500,5 @@ function Resolve-Item {
     return [string](Resolve-Path -Path $FullPath -Force)
   }
 }
+
+New-Alias cl Clear-Line

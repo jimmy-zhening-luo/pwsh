@@ -1,9 +1,6 @@
 using namespace System.IO
 using namespace System.Management.Automation
 
-New-Alias touch New-Item
-
-New-Alias mk New-Directory
 <#
 .FORWARDHELPTARGETNAME New-Item
 .FORWARDHELPCATEGORY Cmdlet
@@ -95,7 +92,6 @@ function New-Directory {
   }
 }
 
-New-Alias mj New-Junction
 <#
 .FORWARDHELPTARGETNAME New-Item
 .FORWARDHELPCATEGORY Cmdlet
@@ -168,3 +164,8 @@ function New-Junction {
     }
   }
 }
+
+New-Alias touch New-Item
+
+New-Alias mk New-Directory
+New-Alias mj New-Junction

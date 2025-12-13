@@ -89,7 +89,6 @@ function Resolve-NodePackageDirectory {
   }
 }
 
-New-Alias no Invoke-Node
 <#
 .SYNOPSIS
 Run Node.
@@ -208,7 +207,6 @@ $NODE_ALIAS = @{
   v       = 'view'
 }
 
-New-Alias n Invoke-NodePackage
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to run a command in a Node package.
@@ -434,7 +432,6 @@ function Invoke-NodePackage {
   }
 }
 
-New-Alias nx Invoke-NodeExecutable
 <#
 .SYNOPSIS
 Use 'npx' to run a command from a local or remote npm module.
@@ -454,7 +451,6 @@ function Invoke-NodeExecutable {
   }
 }
 
-New-Alias ncc Clear-NodeModuleCache
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to clear the global Node module cache.
@@ -486,7 +482,6 @@ function Clear-NodeModuleCache {
   Invoke-NodePackage @CacheClean
 }
 
-New-Alias npo Compare-NodeModule
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to check for outdated packages in a Node package.
@@ -546,7 +541,6 @@ enum NodePackageNamedVersion {
 
 [regex]$VERSION_SPEC = '^v?(?<Major>(?>\d+))(?>\.(?<Minor>(?>\d*))(?>\.(?<Patch>(?>\d*)))?)?(?>-(?<Pre>(?>\w+)(?>\.(?>\d+))?))?$'
 
-New-Alias nu Step-NodePackageVersion
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to increment the package version of the current Node package.
@@ -634,7 +628,6 @@ function Step-NodePackageVersion {
   Invoke-NodePackage @StepVersion
 }
 
-New-Alias nr Invoke-NodePackageScript
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to run a script defined in a Node package's 'package.json'.
@@ -693,7 +686,6 @@ function Invoke-NodePackageScript {
   Invoke-NodePackage @RunScript
 }
 
-New-Alias nt Test-NodePackage
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to run the 'test' script defined in a Node package's 'package.json'.
@@ -740,3 +732,12 @@ function Test-NodePackage {
   }
   Invoke-NodePackage @Test
 }
+
+New-Alias no Invoke-Node
+New-Alias n Invoke-NodePackage
+New-Alias nx Invoke-NodeExecutable
+New-Alias ncc Clear-NodeModuleCache
+New-Alias npo Compare-NodeModule
+New-Alias nu Step-NodePackageVersion
+New-Alias nr Invoke-NodePackageScript
+New-Alias nt Test-NodePackage

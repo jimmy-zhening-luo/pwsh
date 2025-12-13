@@ -1,12 +1,3 @@
-New-Alias ^ Select-Object
-New-Alias to Select-Object
-New-Alias k Get-Member
-New-Alias key Get-Member
-New-Alias count Measure-Object
-New-Alias z Sort-Object
-New-Alias format Format-Table
-
-New-Alias oc Invoke-PSHistory
 <#
 .SYNOPSIS
 Open PowerShell command history in a text editor.
@@ -33,7 +24,6 @@ function Invoke-PSHistory {
   Shell\Invoke-Workspace @History
 }
 
-New-Alias op Invoke-PSProfile
 <#
 .SYNOPSIS
 Open PowerShell profile repository.
@@ -78,7 +68,6 @@ function Build-PSProfile {
   Start-Process @Build | Wait-Process
 }
 
-New-Alias up Update-PSProfile
 <#
 .SYNOPSIS
 Update PowerShell profile repository.
@@ -142,7 +131,6 @@ function Update-PSLinter {
   }
 }
 
-New-Alias mc Measure-PSProfile
 <#
 .SYNOPSIS
 Measure PowerShell profile load time.
@@ -220,3 +208,16 @@ function Measure-PSProfile {
     return "$Performance ms`n(Base: $MeanNormalStartup ms)"
   }
 }
+
+New-Alias ^ Select-Object
+New-Alias to Select-Object
+New-Alias k Get-Member
+New-Alias key Get-Member
+New-Alias count Measure-Object
+New-Alias z Sort-Object
+New-Alias format Format-Table
+
+New-Alias oc Invoke-PSHistory
+New-Alias op Invoke-PSProfile
+New-Alias up Update-PSProfile
+New-Alias mc Measure-PSProfile

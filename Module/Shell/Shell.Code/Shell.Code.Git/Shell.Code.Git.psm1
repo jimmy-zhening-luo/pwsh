@@ -118,7 +118,6 @@ For every verb, if the Git command returns a non-zero exit code, the function wi
 .LINK
 https://git-scm.com/docs
 #>
-New-Alias g Invoke-GitRepository
 function Invoke-GitRepository {
 
   param(
@@ -240,7 +239,7 @@ function Invoke-GitRepository {
     [List[string]]$GitCommandManifest
   )
 
-  & "C:\Program Files\Git\cmd\git.exe" @GitArguments
+  & 'C:\Program Files\Git\cmd\git.exe' @GitArguments
 
   if ($LASTEXITCODE -ne 0) {
     [string]$Private:Exception = "git command error, execution returned exit code: $LASTEXITCODE"
@@ -254,7 +253,6 @@ function Invoke-GitRepository {
   }
 }
 
-New-Alias gg Measure-GitRepository
 <#
 .SYNOPSIS
 Use Git to get the status of a local repository.
@@ -282,7 +280,6 @@ function Measure-GitRepository {
   Invoke-GitRepository @Status @args
 }
 
-New-Alias gitcl Import-GitRepository
 <#
 .SYNOPSIS
 Use Git to clone a repository.
@@ -369,7 +366,6 @@ function Get-GitRepository {
   Invoke-GitRepository @Pull @args
 }
 
-New-Alias gpp Get-ChildGitRepository
 <#
 .SYNOPSIS
 Use Git to pull changes for all repositories in the top level of %USERPROFILE%\code'.
@@ -399,7 +395,6 @@ function Get-ChildGitRepository {
   return "`nPulled $Count repositor" + ($Count -eq 1 ? 'y' : 'ies')
 }
 
-New-Alias ga Add-GitRepository
 <#
 .SYNOPSIS
 Use Git to stage all changes in a repository.
@@ -578,7 +573,6 @@ function Write-GitRepository {
   Invoke-GitRepository @Repository @CommitArguments
 }
 
-New-Alias gs Push-GitRepository
 <#
 .SYNOPSIS
 Use Git to push changes to a repository.
@@ -629,7 +623,6 @@ function Push-GitRepository {
 
 [regex]$TREE_SPEC = '^(?=.)(?>HEAD)?(?<Branching>(?>~|\^)?)(?<Step>(?>\d{0,10}))$'
 
-New-Alias gr Reset-GitRepository
 <#
 .SYNOPSIS
 Use Git to undo changes in a repository.
@@ -714,7 +707,6 @@ function Reset-GitRepository {
   Invoke-GitRepository @Repository @ResetArguments
 }
 
-New-Alias grp Restore-GitRepository
 <#
 .SYNOPSIS
 Use Git to restore a repository to its previous state.
@@ -761,3 +753,12 @@ function Restore-GitRepository {
 
   Get-GitRepository @Repository
 }
+
+New-Alias g Invoke-GitRepository
+New-Alias gg Measure-GitRepository
+New-Alias gitcl Import-GitRepository
+New-Alias gpp Get-ChildGitRepository
+New-Alias ga Add-GitRepository
+New-Alias gs Push-GitRepository
+New-Alias gr Reset-GitRepository
+New-Alias grp Restore-GitRepository

@@ -1,4 +1,3 @@
-New-Alias guid Copy-Guid
 <#
 .SYNOPSIS
 Generate a new GUID and copy it to the clipboard.
@@ -45,7 +44,6 @@ function Copy-Guid {
   }
 }
 
-New-Alias hex ConvertTo-Hex
 <#
 .SYNOPSIS
 Convert integer(s) to hexadecimal string(s).
@@ -87,3 +85,6 @@ function ConvertTo-Hex {
     return $Lowercase ? $Hex.ToLowerInvariant() : $Hex
   }
 }
+
+New-Alias guid Copy-Guid
+New-Alias hex ConvertTo-Hex

@@ -1,4 +1,3 @@
-New-Alias e Invoke-Directory
 function Invoke-Directory {
 
   [OutputType([void])]
@@ -23,7 +22,6 @@ function Invoke-Directory {
   }
 }
 
-New-Alias e. Invoke-DirectorySibling
 function Invoke-DirectorySibling {
 
   [OutputType([void])]
@@ -41,7 +39,6 @@ function Invoke-DirectorySibling {
   Invoke-Directory @FullPath @args
 }
 
-New-Alias e.. Invoke-DirectoryRelative
 function Invoke-DirectoryRelative {
 
   [OutputType([void])]
@@ -59,7 +56,6 @@ function Invoke-DirectoryRelative {
   Invoke-Directory @FullPath @args
 }
 
-New-Alias eh Invoke-DirectoryHome
 function Invoke-DirectoryHome {
 
   [OutputType([void])]
@@ -77,7 +73,6 @@ function Invoke-DirectoryHome {
   Invoke-Directory @FullPath @args
 }
 
-New-Alias ec Invoke-DirectoryCode
 function Invoke-DirectoryCode {
 
   [OutputType([void])]
@@ -95,7 +90,6 @@ function Invoke-DirectoryCode {
   Invoke-Directory @FullPath @args
 }
 
-New-Alias e/ Invoke-DirectoryDrive
 function Invoke-DirectoryDrive {
 
   [OutputType([void])]
@@ -112,3 +106,10 @@ function Invoke-DirectoryDrive {
   }
   Invoke-Directory @FullPath @args
 }
+
+New-Alias e Invoke-Directory
+New-Alias e. Invoke-DirectorySibling
+New-Alias e.. Invoke-DirectoryRelative
+New-Alias eh Invoke-DirectoryHome
+New-Alias ec Invoke-DirectoryCode
+New-Alias e/ Invoke-DirectoryDrive

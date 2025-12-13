@@ -1,4 +1,3 @@
-New-Alias c Set-Directory
 function Set-Directory {
 
   [OutputType([void])]
@@ -18,7 +17,6 @@ function Set-Directory {
   }
 }
 
-New-Alias c. Set-DirectorySibling
 function Set-DirectorySibling {
 
   [OutputType([void])]
@@ -36,7 +34,6 @@ function Set-DirectorySibling {
   Set-Location @FullPath @args
 }
 
-New-Alias c.. Set-DirectoryRelative
 function Set-DirectoryRelative {
 
   [OutputType([void])]
@@ -54,7 +51,6 @@ function Set-DirectoryRelative {
   Set-Location @FullPath @args
 }
 
-New-Alias ch Set-DirectoryHome
 function Set-DirectoryHome {
 
   [OutputType([void])]
@@ -72,7 +68,6 @@ function Set-DirectoryHome {
   Set-Location @FullPath @args
 }
 
-New-Alias cc Set-DirectoryCode
 function Set-DirectoryCode {
 
   [OutputType([void])]
@@ -90,7 +85,6 @@ function Set-DirectoryCode {
   Set-Location @FullPath @args
 }
 
-New-Alias c/ Set-Drive
 function Set-Drive {
 
   [OutputType([void])]
@@ -108,7 +102,6 @@ function Set-Drive {
   Set-Location @FullPath @args
 }
 
-New-Alias d/ Set-DriveD
 function Set-DriveD {
 
   [OutputType([void])]
@@ -125,3 +118,11 @@ function Set-DriveD {
   }
   Set-Location @FullPath @args
 }
+
+New-Alias c Set-Directory
+New-Alias c. Set-DirectorySibling
+New-Alias c.. Set-DirectoryRelative
+New-Alias ch Set-DirectoryHome
+New-Alias cc Set-DirectoryCode
+New-Alias c/ Set-Drive
+New-Alias d/ Set-DriveD

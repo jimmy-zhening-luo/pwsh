@@ -12,7 +12,6 @@ enum TestHostWellknownPort {
   WINRM
 }
 
-New-Alias tn Test-Host
 <#
 .SYNOPSIS
 Determine if a host is reachable.
@@ -140,7 +139,6 @@ function Test-Host {
   }
 }
 
-New-Alias tu Test-Url
 <#
 .SYNOPSIS
 Determine if an URL is reachable.
@@ -203,7 +201,6 @@ function Test-Url {
   return $Status -ge 200 -and $Status -lt 300
 }
 
-New-Alias go Open-Url
 <#
 .SYNOPSIS
 Open a file path or URL in Google Chrome.
@@ -293,3 +290,7 @@ function Open-Url {
     }
   }
 }
+
+New-Alias tn Test-Host
+New-Alias tu Test-Url
+New-Alias go Open-Url

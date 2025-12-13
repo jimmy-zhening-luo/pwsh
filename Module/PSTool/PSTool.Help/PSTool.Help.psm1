@@ -1,8 +1,6 @@
 using namespace System.Collections.Generic
 using namespace System.Management.Automation
 
-New-Alias upman Update-Help
-
 [hashtable]$CUSTOM_HELP_FILE = @{
   Path = "$PSScriptRoot\PSHelp.psd1"
 }
@@ -12,7 +10,6 @@ New-Alias upman Update-Help
 
 [string]$ABOUT_BASE_URL = 'https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about'
 
-New-Alias m Get-HelpOnline
 <#
 .SYNOPSIS
 Displays information about PowerShell commands and concepts, opening the relevant online documentation page in Chrome if available.
@@ -282,7 +279,6 @@ function Get-HelpOnline {
   }
 }
 
-New-Alias galc Get-CommandAlias
 <#
 .SYNOPSIS
 Gets global aliases by command.
@@ -485,3 +481,8 @@ function Get-VerbList {
     return $UniqueVerbs
   }
 }
+
+New-Alias upman Update-Help
+
+New-Alias m Get-HelpOnline
+New-Alias galc Get-CommandAlias

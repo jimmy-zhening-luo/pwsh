@@ -1,4 +1,3 @@
-New-Alias yt Get-YouTube
 <#
 .SYNOPSIS
 Use yt-dlp to download YouTube videos.
@@ -45,7 +44,6 @@ function Get-YouTube {
   }
 }
 
-New-Alias yta Get-YouTubeAudio
 <#
 .SYNOPSIS
 Use yt-dlp to extract audio from a YouTube video.
@@ -82,7 +80,6 @@ function Get-YouTubeAudio {
   Get-YouTube @PSBoundParameters @args @YouTubeArguments
 }
 
-New-Alias ytf Get-YouTubeFormat
 <#
 .SYNOPSIS
 Use yt-dlp to get available formats for a YouTube video.
@@ -111,7 +108,6 @@ function Get-YouTubeFormat {
   Get-YouTube @PSBoundParameters @args @YouTubeArguments
 }
 
-New-Alias yte Invoke-YouTubeDirectory
 <#
 .SYNOPSIS
 Opens yt-dlp download location in File Explorer.
@@ -136,7 +132,6 @@ function Invoke-YouTubeDirectory {
   Shell\Invoke-DirectoryHome @YouTubeDownloads
 }
 
-New-Alias ytc Invoke-YouTubeConfig
 <#
 .SYNOPSIS
 Opens yt-dlp configuration file for editing.
@@ -162,3 +157,9 @@ function Invoke-YouTubeConfig {
   }
   Shell\Invoke-WorkspaceHome @YouTubeConfig @args
 }
+
+New-Alias yt Get-YouTube
+New-Alias yta Get-YouTubeAudio
+New-Alias ytf Get-YouTubeFormat
+New-Alias yte Invoke-YouTubeDirectory
+New-Alias ytc Invoke-YouTubeConfig

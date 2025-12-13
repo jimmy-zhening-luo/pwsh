@@ -1,9 +1,6 @@
 using namespace System.IO
 using namespace System.Collections.Generic
 
-New-Alias split Split-Path
-New-Alias hash Get-FileHash
-
 enum DiskSizeUnit {
   B
   KB
@@ -30,7 +27,6 @@ enum DiskSizeUnit {
   [DiskSizeUnit]::PB = 1PB
 }
 
-New-Alias size Get-Size
 function Get-Size {
 
   [CmdletBinding(
@@ -137,3 +133,9 @@ function Get-Size {
     }
   }
 }
+
+New-Alias split Split-Path
+New-Alias hash Get-FileHash
+
+New-Alias size Get-Size
+New-Alias sz Get-Size

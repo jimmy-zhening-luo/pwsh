@@ -1,4 +1,3 @@
-New-Alias restart Restart-Computer
 
 <#
 .SYNOPSIS
@@ -22,7 +21,6 @@ function Invoke-CommandPrompt {
   }
 }
 
-New-Alias wu Update-Windows
 <#
 .SYNOPSIS
 Opens the 'Settings' app to the 'Windows Update' page.
@@ -51,7 +49,6 @@ function Update-Windows {
   Start-Process @WindowsUpdate
 }
 
-New-Alias path Edit-SystemPath
 <#
 .SYNOPSIS
 Opens the 'Environment Variables' dialog as a standalone window.
@@ -92,10 +89,6 @@ function Edit-SystemPath {
   Start-Process @ControlPanel
 }
 
-New-Alias sesv Set-Service
-New-Alias remsv Remove-Service
-
-New-Alias tkill Stop-Task
 <#
 .SYNOPSIS
 Stops one or more running processes by name or ID.
@@ -205,3 +198,11 @@ function Stop-Task {
     }
   }
 }
+
+New-Alias restart Restart-Computer
+
+New-Alias wu Update-Windows
+New-Alias path Edit-SystemPath
+New-Alias sesv Set-Service
+New-Alias remsv Remove-Service
+New-Alias tkill Stop-Task

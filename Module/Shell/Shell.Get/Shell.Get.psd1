@@ -42,6 +42,7 @@
     'split'
     'hash'
     'size'
+    'sz'
     'l'
     'l.'
     'l..'

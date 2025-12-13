@@ -1,7 +1,6 @@
 using namespace System.IO
 using namespace System.Collections.Generic
 
-New-Alias p Get-File
 function Get-File {
 
   [OutputType([string[]], [System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
@@ -59,7 +58,6 @@ function Get-File {
   }
 }
 
-New-Alias p. Get-FileSibling
 function Get-FileSibling {
 
   [OutputType([string[]])]
@@ -77,7 +75,6 @@ function Get-FileSibling {
   Get-File @PSBoundParameters @Location @args
 }
 
-New-Alias p.. Get-FileRelative
 function Get-FileRelative {
 
   [OutputType([string[]])]
@@ -95,7 +92,6 @@ function Get-FileRelative {
   Get-File @PSBoundParameters @Location @args
 }
 
-New-Alias ph Get-FileHome
 function Get-FileHome {
 
   [OutputType([string[]])]
@@ -113,7 +109,6 @@ function Get-FileHome {
   Get-File @PSBoundParameters @Location @args
 }
 
-New-Alias pc Get-FileCode
 function Get-FileCode {
 
   [OutputType([string[]])]
@@ -131,7 +126,6 @@ function Get-FileCode {
   Get-File @PSBoundParameters @Location @args
 }
 
-New-Alias p/ Get-FileDrive
 function Get-FileDrive {
 
   [OutputType([string[]])]
@@ -148,3 +142,10 @@ function Get-FileDrive {
   }
   Get-File @PSBoundParameters @Location @args
 }
+
+New-Alias p Get-File
+New-Alias p. Get-FileSibling
+New-Alias p.. Get-FileRelative
+New-Alias ph Get-FileHome
+New-Alias pc Get-FileCode
+New-Alias p/ Get-FileDrive

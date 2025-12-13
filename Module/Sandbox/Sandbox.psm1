@@ -1,5 +1,3 @@
-New-Alias sand Test-Sandbox
-New-Alias sandbox Test-Sandbox
 function Test-Sandbox {
 
   [OutputType([string[]])]
@@ -18,3 +16,6 @@ function Test-Sandbox {
 
   $args.gettype()
 }
+
+New-Alias sand Test-Sandbox
+New-Alias sandbox Test-Sandbox

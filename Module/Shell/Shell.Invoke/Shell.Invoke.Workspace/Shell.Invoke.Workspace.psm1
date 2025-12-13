@@ -1,6 +1,5 @@
 using namespace System.Collections.Generic
 
-New-Alias i Invoke-Workspace
 function Invoke-Workspace {
 
   [OutputType([void])]
@@ -90,7 +89,6 @@ function Invoke-Workspace {
   Start-Process @Process
 }
 
-New-Alias i. Invoke-WorkspaceSibling
 function Invoke-WorkspaceSibling {
 
   [OutputType([void])]
@@ -113,7 +111,6 @@ function Invoke-WorkspaceSibling {
   Invoke-Workspace @PSBoundParameters @Location @args
 }
 
-New-Alias i.. Invoke-WorkspaceRelative
 function Invoke-WorkspaceRelative {
 
   [OutputType([void])]
@@ -136,7 +133,6 @@ function Invoke-WorkspaceRelative {
   Invoke-Workspace @PSBoundParameters @Location @args
 }
 
-New-Alias ih Invoke-WorkspaceHome
 function Invoke-WorkspaceHome {
 
   [OutputType([void])]
@@ -159,7 +155,6 @@ function Invoke-WorkspaceHome {
   Invoke-Workspace @PSBoundParameters @Location @args
 }
 
-New-Alias ic Invoke-WorkspaceCode
 function Invoke-WorkspaceCode {
 
   [OutputType([void])]
@@ -182,7 +177,6 @@ function Invoke-WorkspaceCode {
   Invoke-Workspace @PSBoundParameters @Location @args
 }
 
-New-Alias i/ Invoke-WorkspaceDrive
 function Invoke-WorkspaceDrive {
 
   [OutputType([void])]
@@ -204,3 +198,10 @@ function Invoke-WorkspaceDrive {
   }
   Invoke-Workspace @PSBoundParameters @Location @args
 }
+
+New-Alias i Invoke-Workspace
+New-Alias i. Invoke-WorkspaceSibling
+New-Alias i.. Invoke-WorkspaceRelative
+New-Alias ih Invoke-WorkspaceHome
+New-Alias ic Invoke-WorkspaceCode
+New-Alias i/ Invoke-WorkspaceDrive
