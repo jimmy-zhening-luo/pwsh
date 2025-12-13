@@ -1,15 +1,16 @@
+$Private:PROJECT_ROOT = "$PSScriptRoot\.."
+
 [hashtable]$Private:Compiled = @{
-  Path = "$PSScriptRoot\..\Cmdlet\Good\bin\Release\net10.0\Good.dll"
+  Path = "$PROJECT_ROOT\Cmdlet\Good\bin\Release\net10.0\Good.dll"
 }
 if (Test-Path @Compiled) {
   [hashtable]$Private:Install = @{
-    Destination = "$PSScriptRoot\..\Module\Good"
+    Destination = "$PROJECT_ROOT\Module\Good"
     Force       = $True
   }
   [hashtable]$Private:ExistingInstall = @{
     Path = Join-Path $Install.Destination Good.dll
   }
-
   if (
     -not (Test-Path @ExistingInstall) -or (
       Get-FileHash @ExistingInstall
