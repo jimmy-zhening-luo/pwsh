@@ -240,25 +240,7 @@ function Invoke-GitRepository {
     [List[string]]$GitCommandManifest
   )
 
-  $Private:ArgumentList = [List[string]]::new(
-    [List[string]]@(
-      'uninstall'
-    )
-  )
-  if ($args) {
-    $ArgumentList.AddRange(
-      [List[string]]$args
-    )
-  }
-
-  [hashtable]$Private:Git = @{
-    FilePath         = "C:\Program Files\Git\cmd\git.exe"
-    ArgumentList     = $GitArguments
-    NoNewWindow      = $True
-    Wait             = $True
-    PassThru         = $True
-  }
-  Start-Process @Git | Wait-Process
+  & "C:\Program Files\Git\cmd\git.exe" @GitArguments
 
   if ($LASTEXITCODE -ne 0) {
     [string]$Private:Exception = "git command error, execution returned exit code: $LASTEXITCODE"
