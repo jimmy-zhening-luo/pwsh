@@ -71,8 +71,16 @@ function Build-PSProfile {
     FilePath         = 'dotnet'
     ArgumentList     = 'publish'
     WorkingDirectory = "$HOME\code\pwsh"
+    Wait             = $True
   }
   Start-Process @Publish
+
+  [hashtable]$Private:Copy = @{
+    Path        = "$HOME\pwsh\Cmdlet\Good\bin\Release\net10.0\Good.dll"
+    Destination = 'publish'
+    Force       = $True
+  }
+  Copy-Item @Copy
 }
 
 New-Alias up Update-PSProfile
