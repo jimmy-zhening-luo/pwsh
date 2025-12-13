@@ -325,7 +325,6 @@ class GenericCompletionsAttribute : ArgumentCompleterAttribute, IArgumentComplet
 $ExportableTypes = @(
   [CompletionCase]
   [GenericCompleterBase]
-  [GenericCompleter]
   [GenericCompletionsAttribute]
 )
 

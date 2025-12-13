@@ -245,8 +245,6 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
 }
 
 $ExportableTypes = @(
-  [PathItemType]
-  [PathCompleter]
   [PathCompletionsAttribute]
 )
 
