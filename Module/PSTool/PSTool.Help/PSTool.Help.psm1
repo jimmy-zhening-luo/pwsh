@@ -116,7 +116,7 @@ function Get-HelpOnline {
           )
         }
 
-        return $Global:PSTOOL_HELP_TOPIC
+        return [string[]]$Global:PSTOOL_HELP_TOPIC
       },
       'Preserve'
     )]
