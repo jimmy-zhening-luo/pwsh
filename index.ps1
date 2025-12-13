@@ -5,11 +5,11 @@ $Global:PSDefaultParameterValues = Import-PowerShellDataFile -Path $PSScriptRoot
 . $PSScriptRoot\Script\Alias.ps1
 
 [hashtable]$Private:Compiled = @{
-  Path = "$HOME\code\pwsh\Cmdlet\Good\bin\Release\net10.0\Good.dll"
+  Path = "$PSScriptRoot\Cmdlet\Good\bin\Release\net10.0\Good.dll"
 }
 if (Test-Path @Compiled) {
   [hashtable]$Private:Install = @{
-    Destination = "$HOME\code\pwsh\Module\Good"
+    Destination = "$PSScriptRoot\Module\Good"
     Force       = $True
   }
   [hashtable]$Private:ExistingInstall = @{
