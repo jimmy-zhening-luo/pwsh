@@ -72,6 +72,7 @@ function Build-PSProfile {
     ArgumentList     = 'publish'
     WorkingDirectory = "$HOME\code\pwsh"
     NoNewWindow      = $True
+    Wait             = $True
     PassThru         = $True
   }
   Start-Process @Build | Wait-Process

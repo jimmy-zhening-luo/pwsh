@@ -255,6 +255,7 @@ function Invoke-GitRepository {
     FilePath         = "C:\Program Files\Git\cmd\git.exe"
     ArgumentList     = $GitArguments
     NoNewWindow      = $True
+    Wait             = $True
     PassThru         = $True
   }
   Start-Process @Git | Wait-Process

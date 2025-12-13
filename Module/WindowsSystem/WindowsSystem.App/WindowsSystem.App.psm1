@@ -69,6 +69,7 @@ function Add-WinGetApp {
     FilePath         = $WINGET
     ArgumentList     = $ArgumentList
     NoNewWindow      = $True
+    Wait             = $True
     PassThru         = $True
   }
   Start-Process @Add | Wait-Process
@@ -109,6 +110,7 @@ function Update-WinGetApp {
     FilePath         = $WINGET
     ArgumentList     = $ArgumentList
     NoNewWindow      = $True
+    Wait             = $True
     PassThru         = $True
   }
   Start-Process @Update | Wait-Process
@@ -149,6 +151,7 @@ function Find-WinGetApp {
     FilePath         = $WINGET
     ArgumentList     = $ArgumentList
     NoNewWindow      = $True
+    Wait             = $True
     PassThru         = $True
   }
   Start-Process @Find | Wait-Process
@@ -189,11 +192,12 @@ function Remove-WinGetApp {
     FilePath         = $WINGET
     ArgumentList     = $ArgumentList
     NoNewWindow      = $True
+    Wait             = $True
     PassThru         = $True
   }
   Start-Process @Uninstall | Wait-Process
 
-  if ($LASTEXITCODE -ne 0) {
+  if ($LASTEXITCODE) {
     throw "winget.exe error, execution stopped with exit code: $LASTEXITCODE"
   }
 }
