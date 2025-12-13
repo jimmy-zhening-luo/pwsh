@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/Cmdlet/">
+    <Project Path="Cmdlet/Good/Good.csproj" />
+  </Folder>
+</Solution>
