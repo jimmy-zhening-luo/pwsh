@@ -80,7 +80,7 @@ function Set-DirectoryCode {
   )
 
   [hashtable]$Private:FullPath = @{
-    Path = Join-Path $HOME\code $Path
+    Path = Join-Path $HOME code $Path
   }
   Set-Location @FullPath @args
 }

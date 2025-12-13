@@ -85,7 +85,7 @@ function Invoke-DirectoryCode {
   )
 
   [hashtable]$Private:FullPath = @{
-    Path = Join-Path $HOME\code $Path
+    Path = Join-Path $HOME code $Path
   }
   Invoke-Directory @FullPath @args
 }

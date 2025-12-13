@@ -82,7 +82,7 @@ function Get-DirectoryCode {
   )
 
   [hashtable]$Private:FullPath = @{
-    Path = Join-Path $HOME\code $Path
+    Path = Join-Path $HOME code $Path
   }
   Get-ChildItem @FullPath @args
 }
