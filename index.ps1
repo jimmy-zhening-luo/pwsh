@@ -24,6 +24,5 @@ if (Test-Path @Compiled) {
     ).LastWriteTime
   ) {
     Copy-Item @Compiled @Install
-    echo "hi!"
   }
 }
