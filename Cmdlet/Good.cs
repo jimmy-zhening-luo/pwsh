@@ -9,18 +9,24 @@ namespace Good;
 public class Hello : Cmdlet
 {
   [Parameter(
-    Position = 0,
-    Mandatory = true
+    Position = 0
   )]
-  public string Greeting
+  public string? Greeting
   {
     get { return greeting; }
     set { greeting = value; }
   }
-  private string greeting;
+  private string? greeting;
 
   protected override void ProcessRecord()
   {
-    WriteObject(this.Greeting + ", World!");
+    if (greeting == null)
+    {
+      WriteObject("Hello, World!");
+    }
+    else
+    {
+      WriteObject(greeting + ", World!");
+    }
   }
 }
