@@ -116,7 +116,7 @@ function Get-HelpOnline {
           )
         }
 
-        return [string[]]$Global:PSTOOL_HELP_TOPIC.ToArray()
+        return [string[]]$Global:PSTOOL_HELP_TOPIC.ToArray() -notmatch [regex]'[^\w-]'
       }
     )]
     [string[]]$Name,
