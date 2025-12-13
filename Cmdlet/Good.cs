@@ -1,4 +1,4 @@
-﻿using System.Management.Automation;
+using System.Management.Automation;
 
 namespace Good;
 
@@ -8,8 +8,18 @@ namespace Good;
 )]
 public class Hello : Cmdlet
 {
+  [Parameter(
+    Position = 0
+  )]
+  public string Greeting
+  {
+    get { return greeting; }
+    set { greeting = value; }
+  }
+  private string greeting;
+
   protected override void ProcessRecord()
   {
-    WriteObject("Hello, World!");
+    WriteObject(this.Greeting + ", World!");
   }
 }
