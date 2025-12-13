@@ -59,6 +59,22 @@ function Invoke-PSProfile {
   Shell\Invoke-WorkspaceCode @ProfileRepository
 }
 
+function Build-PSProfile {
+
+  [CmdletBinding()]
+
+  [OutputType([void])]
+
+  param()
+
+  [hashtable]$Private:Publish = @{
+    FilePath         = 'dotnet'
+    ArgumentList     = 'publish'
+    WorkingDirectory = "$HOME\code\pwsh"
+  }
+  Start-Process @Publish
+}
+
 New-Alias up Update-PSProfile
 <#
 .SYNOPSIS
@@ -81,8 +97,12 @@ function Update-PSProfile {
   }
   Shell\Get-GitRepository @ProfileRepository
 
+  Build-PSProfile
+
   Update-PSLinter
 }
+
+
 
 function Update-PSLinter {
 
