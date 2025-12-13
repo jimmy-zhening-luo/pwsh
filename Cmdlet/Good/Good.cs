@@ -8,25 +8,8 @@ namespace Good;
 )]
 public class Hello : Cmdlet
 {
-  [Parameter(
-    Position = 0
-  )]
-  public string? Greeting
-  {
-    get { return greeting; }
-    set { greeting = value; }
-  }
-  private string? greeting;
-
   protected override void ProcessRecord()
   {
-    if (greeting == null)
-    {
-      WriteObject("Hello, World!");
-    }
-    else
-    {
-      WriteObject(greeting + ", World!");
-    }
+    WriteObject("Hello, World!");
   }
 }
