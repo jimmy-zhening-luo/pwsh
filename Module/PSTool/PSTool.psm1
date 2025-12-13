@@ -54,7 +54,7 @@ function Invoke-PSProfile {
 
   [hashtable]$Private:ProfileRepository = @{
     Path        = 'pwsh'
-    ProfileName = 'PowerShell'
+    ProfileName = 'Default'
   }
   Shell\Invoke-WorkspaceCode @ProfileRepository
 }
