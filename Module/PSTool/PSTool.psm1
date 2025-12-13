@@ -68,9 +68,10 @@ function Build-PSProfile {
   param()
 
   [hashtable]$Private:Publish = @{
-    FilePath         = 'C:\Program Files\dotnet\dotnet.exe'
-    ArgumentList     = 'publish'
-    WorkingDirectory = "$HOME\code\pwsh"
+    FilePath          = 'C:\Program Files\dotnet\dotnet.exe'
+    ArgumentList      = 'publish'
+    WorkingDirectory  = "$HOME\code\pwsh"
+    InformationAction = 'Continue'
   }
   Start-Process @Publish
 }
@@ -92,17 +93,31 @@ function Update-PSProfile {
 
   param()
 
-  [hashtable]$Private:ProfileRepository = @{
-    WorkingDirectory = Resolve-Path -Path $HOME\code\pwsh
-  }
-  Shell\Get-GitRepository @ProfileRepository
+  $Private:ProfileRepository = Resolve-Path -Path $HOME\code\pwsh
 
-  Build-PSProfile
+  [hashtable]$Private:Pull = @{
+    WorkingDirectory = $ProfileRepository
+  }
+  Shell\Get-GitRepository @Pull
 
   Update-PSLinter
+
+  [hashtable]$Private:Compiled = @{
+    Path = "$ProfileRepository\Cmdlet\Good\bin\Release\net10.0\Good.dll"
+  }
+  [hashtable]$Private:Source = @{
+    Path = "$ProfileRepository\Cmdlet\Good\Good.cs"
+  }
+  if (
+    -not (Test-Path @Compiled) -or (
+      Get-Item @Source
+    ).LastWriteTime -gt (
+      Get-Item @Compiled
+    ).LastWriteTime
+  ) {
+    Build-PSProfile
+  }
 }
-
-
 
 function Update-PSLinter {
 
