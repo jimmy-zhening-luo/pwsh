@@ -50,13 +50,6 @@
   CmdletsToExport       = @()
   VariablesToExport     = @()
   AliasesToExport       = @(
-    '^'
-    'to'
-    'k'
-    'key'
-    'count'
-    'z'
-    'format'
     'oc'
     'op'
     'up'
