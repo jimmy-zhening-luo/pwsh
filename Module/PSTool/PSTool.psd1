@@ -55,6 +55,7 @@
     'up'
     'mc'
     'upman'
+    'psk'
     'm'
     'galc'
   )

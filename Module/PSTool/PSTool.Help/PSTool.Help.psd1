@@ -18,6 +18,7 @@
   VariablesToExport     = @()
   AliasesToExport       = @(
     'upman'
+    'psk'
     'm'
     'galc'
   )

@@ -483,6 +483,7 @@ function Get-VerbList {
 }
 
 New-Alias upman Update-Help
+New-Alias psk Get-PSReadLineKeyHandler
 
 New-Alias m Get-HelpOnline
 New-Alias galc Get-CommandAlias
