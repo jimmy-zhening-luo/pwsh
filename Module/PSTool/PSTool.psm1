@@ -52,7 +52,7 @@ function Invoke-PSProfile {
   Shell\Invoke-WorkspaceCode @ProfileRepository
 }
 
-function Install-DotNet {
+function Install-PSModuleDotNet {
 
   [CmdletBinding(
     SupportsShouldProcess,
@@ -133,7 +133,7 @@ function Build-PSProfile {
 
   if (-not $DotNetExecutable) {
     try {
-      [ApplicationInfo]$Private:DotNetExecutable = Install-DotNet
+      [ApplicationInfo]$Private:DotNetExecutable = Install-PSModuleDotNet
 
       if (-not $DotNetExecutable) {
         throw 'Failed to locate Microsoft.DotNet.SDK.10 executable post-installation'
@@ -189,20 +189,20 @@ function Update-PSProfile {
 
   param()
 
-  $Private:ProfileRepository = Resolve-Path -Path $HOME\code\pwsh
+  $Private:PROJECT_ROOT = Resolve-Path -Path $HOME\code\pwsh
 
   [hashtable]$Private:Pull = @{
-    WorkingDirectory = $ProfileRepository
+    WorkingDirectory = $PROJECT_ROOT
   }
   Shell\Get-GitRepository @Pull
 
   Update-PSLinter
 
   [hashtable]$Private:Compiled = @{
-    Path = "$ProfileRepository\Cmdlet\bin\Release\net10.0\Good.dll"
+    Path = "$PROJECT_ROOT\Cmdlet\bin\Release\netstandard2.0\Good.dll"
   }
   [hashtable]$Private:Source = @{
-    Path = "$ProfileRepository\Cmdlet\Good.cs"
+    Path = "$PROJECT_ROOT\Cmdlet\Good.cs"
   }
   if (
     -not (Test-Path @Compiled) -or (
