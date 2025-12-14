@@ -169,4 +169,57 @@ namespace CompleterBase
       );
     }
   }
+
+  public class Completer : CompleterBase
+  {
+    private readonly List<string> Domain;
+    private readonly CompletionCase Case;
+    private readonly bool Sort;
+    private readonly bool Surrounding;
+
+    public Completer(
+      List<string> domain,
+      CompletionCase caseOption,
+      bool sort,
+      bool surrounding
+    )
+    {
+      if (domain.Count == 0)
+      {
+        throw new ArgumentException("domain");
+      }
+
+      HashSet<string> unique = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+      foreach (string unit in domain)
+      {
+        unique.Add(unit);
+      }
+
+      if (unique.Count != domain.Count)
+      {
+        throw new ArgumentException("domain");
+      }
+
+      Domain = domain;
+      Case = caseOption;
+      Sort = sort;
+      Surrounding = surrounding;
+    }
+
+    public override List<string> FulfillCompletion(
+      string parameterName,
+      string wordToComplete,
+      IDictionary fakeBoundParameters
+    )
+    {
+      return FindCompletion(
+        wordToComplete,
+        Domain,
+        Case,
+        Sort,
+        Surrounding
+      );
+    }
+  }
 }

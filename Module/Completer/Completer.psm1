@@ -4,63 +4,6 @@ using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
 using namespace CompleterBase
 
-class Completer : CompleterBase {
-
-  [List[string]] $Units
-
-  [CompletionCase] $Case
-
-  [bool] $Sort
-
-  [bool] $Surrounding
-
-  Completer(
-
-    [List[string]] $units,
-
-    [CompletionCase] $case,
-
-    [bool] $sort,
-
-    [bool] $surrounding
-
-  ) {
-    if ($units.Count -eq 0) {
-      throw [ArgumentException]::new('units')
-    }
-
-    [string[]]$private:unique = $units |
-      Select-Object -Unique -CaseInsensitive
-
-    if (-not $unique -or $unique.Count -ne $units.Count) {
-      throw [ArgumentException]::new('units')
-    }
-
-    $this.Units = $units
-    $this.Case = $case
-    $this.Sort = $sort
-    $this.Surrounding = $surrounding
-  }
-
-  [List[string]] FulfillCompletion(
-    [string] $parameterName,
-    [string] $wordToComplete,
-    [IDictionary] $fakeBoundParameters
-  ) {
-    # $private:domain = [List[string]]::new(
-    #   [List[string]]$this.Units
-    # )
-
-    return [Completer]::FindCompletion(
-      $wordToComplete,
-      $this.Units,
-      $this.Case,
-      $this.Sort,
-      $this.Surrounding
-    )
-  }
-}
-
 class CompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory {
 
   [scriptblock] $Units
