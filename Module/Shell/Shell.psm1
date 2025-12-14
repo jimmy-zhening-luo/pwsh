@@ -3,6 +3,7 @@ using namespace System.Collections
 using namespace System.Collections.Generic
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
+using namespace CompleterBase
 
 <#
 .FORWARDHELPTARGETNAME Clear-Content
@@ -33,7 +34,7 @@ enum PathItemType {
   Directory
 }
 
-class PathCompleter : CompleterBase.CompleterBase, IArgumentCompleter {
+class PathCompleter : CompleterBase {
 
   static [string] $EasyDirectorySeparator = '/'
 
@@ -74,11 +75,9 @@ class PathCompleter : CompleterBase.CompleterBase, IArgumentCompleter {
     $this.UseNativeDirectorySeparator = $useNativeDirectorySeparator
   }
 
-  [IEnumerable[CompletionResult]] CompleteArgument(
-    [string] $CommandName,
+  [List[string]] FulfillCompletion(
     [string] $parameterName,
     [string] $wordToComplete,
-    [CommandAst] $commandAst,
     [IDictionary] $fakeBoundParameters
   ) {
     [hashtable]$private:matchChild = @{}
@@ -181,9 +180,7 @@ class PathCompleter : CompleterBase.CompleterBase, IArgumentCompleter {
       )
     }
 
-    return [PathCompleter]::CreateCompletionResult(
-      $completionPaths
-    )
+    return $completionPaths
   }
 }
 

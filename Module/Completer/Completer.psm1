@@ -2,12 +2,13 @@ using namespace System.Collections
 using namespace System.Collections.Generic
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
+using namespace CompleterBase
 
-class Completer : CompleterBase.CompleterBase, IArgumentCompleter {
+class Completer : CompleterBase {
 
   [List[string]] $Units
 
-  [CompleterBase.CompletionCase] $Case
+  [CompletionCase] $Case
 
   [bool] $Sort
 
@@ -17,7 +18,7 @@ class Completer : CompleterBase.CompleterBase, IArgumentCompleter {
 
     [List[string]] $units,
 
-    [CompleterBase.CompletionCase] $case,
+    [CompletionCase] $case,
 
     [bool] $sort,
 
@@ -41,21 +42,21 @@ class Completer : CompleterBase.CompleterBase, IArgumentCompleter {
     $this.Surrounding = $surrounding
   }
 
-  [IEnumerable[CompletionResult]] CompleteArgument(
-    [string] $CommandName,
+  [List[string]] FulfillCompletion(
     [string] $parameterName,
     [string] $wordToComplete,
-    [CommandAst] $commandAst,
     [IDictionary] $fakeBoundParameters
   ) {
-    return [Completer]::CreateCompletionResult(
-      [Completer]::FindCompletion(
-        $this.Units,
-        $wordToComplete,
-        $this.Case,
-        $this.Sort,
-        $this.Surrounding
-      )
+    # $private:domain = [List[string]]::new(
+    #   [List[string]]$this.Units
+    # )
+
+    return [Completer]::FindCompletion(
+      $wordToComplete,
+      $this.Units,
+      $this.Case,
+      $this.Sort,
+      $this.Surrounding
     )
   }
 }
@@ -64,7 +65,7 @@ class CompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFacto
 
   [scriptblock] $Units
 
-  [CompleterBase.CompletionCase] $Case
+  [CompletionCase] $Case
 
   [bool] $Sort
 
@@ -74,13 +75,13 @@ class CompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFacto
     [scriptblock] $units
   ) {
     $this.Units = $units
-    $this.Case = [CompleterBase.CompletionCase]::Lower
+    $this.Case = [CompletionCase]::Lower
     $this.Sort = $False
     $this.Surrounding = $True
   }
   CompletionsAttribute(
     [scriptblock] $units,
-    [CompleterBase.CompletionCase] $case
+    [CompletionCase] $case
   ) {
     $this.Units = $units
     $this.Case = $case
@@ -89,7 +90,7 @@ class CompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFacto
   }
   CompletionsAttribute(
     [scriptblock] $units,
-    [CompleterBase.CompletionCase] $case,
+    [CompletionCase] $case,
     [bool] $sort
   ) {
     $this.Units = $units
@@ -99,7 +100,7 @@ class CompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFacto
   }
   CompletionsAttribute(
     [scriptblock] $units,
-    [CompleterBase.CompletionCase] $case,
+    [CompletionCase] $case,
     [bool] $sort,
     [bool] $surrounding
   ) {
@@ -127,7 +128,7 @@ class CompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFacto
       }
     }
 
-    return [CompleterBase.CompleterBase]::new(
+    return [Completer]::new(
       $unitList,
       $this.Case,
       $this.Sort,

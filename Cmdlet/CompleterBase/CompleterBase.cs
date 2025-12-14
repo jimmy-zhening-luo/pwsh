@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Management.Automation;
 using System.Management.Automation.Language;
@@ -12,7 +13,7 @@ namespace CompleterBase
     Upper
   }
 
-  public class CompleterBase
+  public abstract class CompleterBase : IArgumentCompleter
   {
     public static string Unescape(string escapedText)
     {
@@ -39,8 +40,8 @@ namespace CompleterBase
     }
 
     public static List<string> FindCompletion(
-      List<string> domain,
       string wordToComplete,
+      List<string> domain,
       CompletionCase caseOption = CompletionCase.Preserve,
       bool sort = false,
       bool surrounding = false
@@ -125,7 +126,9 @@ namespace CompleterBase
       return completions;
     }
 
-    public static List<CompletionResult> CreateCompletionResult(List<string> completions)
+    public static List<CompletionResult> CreateCompletionResult(
+      List<string> completions
+    )
     {
       List<CompletionResult> completionResults = new List<CompletionResult>();
 
@@ -141,6 +144,29 @@ namespace CompleterBase
       }
 
       return completionResults;
+    }
+
+    public abstract List<string> FulfillCompletion(
+      string parameterName,
+      string wordToComplete,
+      IDictionary fakeBoundParameters
+    );
+
+    public IEnumerable<CompletionResult> CompleteArgument(
+      string commandName,
+      string parameterName,
+      string wordToComplete,
+      CommandAst commandAst,
+      IDictionary fakeBoundParameters
+    )
+    {
+      return CreateCompletionResult(
+        FulfillCompletion(
+          parameterName,
+          wordToComplete,
+          fakeBoundParameters
+        )
+      );
     }
   }
 }
