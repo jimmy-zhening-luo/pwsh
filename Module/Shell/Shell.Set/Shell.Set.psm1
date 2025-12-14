@@ -9,11 +9,11 @@ function Set-Directory {
 
   )
 
-  if ($Path) {
+  if ($Path -or $args) {
     Set-Location @PSBoundParameters @args
   }
   else {
-    Set-Location @args
+    Set-Location -Path (Split-Path $CWD)
   }
 }
 
