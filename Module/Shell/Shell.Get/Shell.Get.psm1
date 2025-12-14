@@ -63,7 +63,7 @@ function Get-Size {
       ParameterSetName = 'Number',
       Position = 1
     )]
-    [GenericCompletions(
+    [Completions(
       {
         return [DiskSizeUnit].GetEnumNames()
       }

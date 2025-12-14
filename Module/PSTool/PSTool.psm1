@@ -199,10 +199,10 @@ function Update-PSProfile {
   Update-PSLinter
 
   [hashtable]$Private:Compiled = @{
-    Path = "$PROJECT_ROOT\Cmdlet\Good\bin\Release\netstandard2.0\Good.dll"
+    Path = "$PROJECT_ROOT\Cmdlet\CompleterBase\bin\Release\netstandard2.0\CompleterBase.dll"
   }
   [hashtable]$Private:Source = @{
-    Path = "$PROJECT_ROOT\Cmdlet\Good\Good.cs"
+    Path = "$PROJECT_ROOT\Cmdlet\CompleterBase\CompleterBase.cs"
   }
   if (
     -not (Test-Path @Compiled) -or (

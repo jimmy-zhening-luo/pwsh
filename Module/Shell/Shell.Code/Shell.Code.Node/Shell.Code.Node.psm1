@@ -227,7 +227,7 @@ function Invoke-NodePackage {
     [Parameter(
       Position = 0
     )]
-    [GenericCompletions(
+    [Completions(
       {
         return @(
           'pkg'
@@ -556,7 +556,7 @@ function Step-NodePackageVersion {
   param(
 
     # New package version, default 'patch'
-    [GenericCompletions(
+    [Completions(
       {
         return [NodePackageNamedVersion].GetEnumNames()
       }

@@ -52,7 +52,7 @@ function Test-Host {
       Position = 1
     )]
     [Alias('TCP')]
-    [GenericCompletions(
+    [Completions(
       {
         return [TestHostWellknownPort].GetEnumNames()
       }
@@ -68,7 +68,7 @@ function Test-Host {
     # The port number to test on the target host.
     [UInt16]$Port,
 
-    [GenericCompletions(
+    [Completions(
       {
         return [TestHostVerbosity].GetEnumNames()
       }

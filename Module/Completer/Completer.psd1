@@ -1,21 +1,16 @@
 @{
-  RootModule            = 'Good.dll'
+  RootModule            = 'Completer.psm1'
   ModuleVersion         = '3.0.0.0'
   CompatiblePSEditions  = @('Desktop', 'Core')
-  GUID                  = '3e553a20-19d7-42d7-aad6-3c819cab06ea'
+  GUID                  = '95f00487-efc3-43e8-adcb-c539f28f0058'
   Author                = 'Jimmy Zhening Luo'
   CompanyName           = 'Jimmy Zhening Luo'
   Copyright             = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
   PowerShellVersion     = '7.5'
   PowerShellHostName    = 'ConsoleHost'
   PowerShellHostVersion = '7.5'
-  RequiredAssemblies    = @(
-    'Good.dll'
-  )
   FunctionsToExport     = @()
-  CmdletsToExport       = @(
-    'Test-Hello'
-  )
+  CmdletsToExport       = @()
   VariablesToExport     = @()
   AliasesToExport       = @()
 }

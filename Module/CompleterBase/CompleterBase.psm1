@@ -9,7 +9,7 @@ enum CompletionCase {
   Upper
 }
 
-class GenericCompleterBase {
+class CompleterBase {
   static [string] Unescape(
 
     [string] $escapedValue
@@ -49,7 +49,7 @@ class GenericCompleterBase {
     [string] $wordToComplete
 
   ) {
-    return [GenericCompleterBase]::FindCompletion(
+    return [CompleterBase]::FindCompletion(
       $values,
       $wordToComplete,
       [CompletionCase]::Preserve,
@@ -67,7 +67,7 @@ class GenericCompleterBase {
     [CompletionCase] $case
 
   ) {
-    return [GenericCompleterBase]::FindCompletion(
+    return [CompleterBase]::FindCompletion(
       $values,
       $wordToComplete,
       $case,
@@ -87,7 +87,7 @@ class GenericCompleterBase {
     [bool] $sort
 
   ) {
-    return [GenericCompleterBase]::FindCompletion(
+    return [CompleterBase]::FindCompletion(
       $values,
       $wordToComplete,
       $case,
@@ -134,7 +134,7 @@ class GenericCompleterBase {
       $normalizedValues.Sort()
     }
 
-    [string]$private:currentValue = [GenericCompleterBase]::Unescape($wordToComplete)
+    [string]$private:currentValue = [CompleterBase]::Unescape($wordToComplete)
 
     if ($currentValue) {
       [string[]]$private:tailCompletions = $normalizedValues -like "$currentValue*"
@@ -178,7 +178,7 @@ class GenericCompleterBase {
     foreach ($private:completion in $completions) {
       $completionResults.Add(
         [CompletionResult]::new(
-          [GenericCompleterBase]::Escape(
+          [CompleterBase]::Escape(
             $completion
           )
         )
@@ -189,143 +189,9 @@ class GenericCompleterBase {
   }
 }
 
-class GenericCompleter : GenericCompleterBase, IArgumentCompleter {
-
-  [List[string]] $Units
-
-  [CompletionCase] $Case
-
-  [bool] $Sort
-
-  [bool] $Surrounding
-
-  GenericCompleter(
-
-    [List[string]] $units,
-
-    [CompletionCase] $case,
-
-    [bool] $sort,
-
-    [bool] $surrounding
-
-  ) {
-    if ($units.Count -eq 0) {
-      throw [ArgumentException]::new('units')
-    }
-
-    [string[]]$private:unique = $units |
-      Select-Object -Unique -CaseInsensitive
-
-    if (-not $unique -or $unique.Count -ne $units.Count) {
-      throw [ArgumentException]::new('units')
-    }
-
-    $this.Units = $units
-    $this.Case = $case
-    $this.Sort = $sort
-    $this.Surrounding = $surrounding
-  }
-
-  [IEnumerable[CompletionResult]] CompleteArgument(
-    [string] $CommandName,
-    [string] $parameterName,
-    [string] $wordToComplete,
-    [CommandAst] $commandAst,
-    [IDictionary] $fakeBoundParameters
-  ) {
-    return [GenericCompleter]::CreateCompletionResult(
-      [GenericCompleter]::FindCompletion(
-        $this.Units,
-        $wordToComplete,
-        $this.Case,
-        $this.Sort,
-        $this.Surrounding
-      )
-    )
-  }
-}
-
-class GenericCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory {
-
-  [scriptblock] $Units
-
-  [CompletionCase] $Case
-
-  [bool] $Sort
-
-  [bool] $Surrounding
-
-  GenericCompletionsAttribute(
-    [scriptblock] $units
-  ) {
-    $this.Units = $units
-    $this.Case = [CompletionCase]::Lower
-    $this.Sort = $False
-    $this.Surrounding = $True
-  }
-  GenericCompletionsAttribute(
-    [scriptblock] $units,
-    [CompletionCase] $case
-  ) {
-    $this.Units = $units
-    $this.Case = $case
-    $this.Sort = $False
-    $this.Surrounding = $True
-  }
-  GenericCompletionsAttribute(
-    [scriptblock] $units,
-    [CompletionCase] $case,
-    [bool] $sort
-  ) {
-    $this.Units = $units
-    $this.Case = $case
-    $this.Sort = $sort
-    $this.Surrounding = $True
-  }
-  GenericCompletionsAttribute(
-    [scriptblock] $units,
-    [CompletionCase] $case,
-    [bool] $sort,
-    [bool] $surrounding
-  ) {
-    $this.Units = $units
-    $this.Case = $case
-    $this.Sort = $sort
-    $this.Surrounding = $surrounding
-  }
-
-  [IArgumentCompleter] Create() {
-    $private:unitList = [List[string]]::new()
-
-    [string[]]$private:invokedUnits = Invoke-Command -ScriptBlock $this.Units
-
-    if ($invokedUnits) {
-      [string[]]$private:cleanedUnits = $invokedUnits.Trim() |
-        Where-Object {
-          -not [string]::IsNullOrEmpty($PSItem)
-        }
-
-      if ($cleanedUnits) {
-        $unitList.AddRange(
-          [List[string]]$cleanedUnits
-        )
-      }
-    }
-
-    return [GenericCompleter]::new(
-      $unitList,
-      $this.Case,
-      $this.Sort,
-      $this.Surrounding
-    )
-  }
-}
-
 $ExportableTypes = @(
   [CompletionCase]
-  [GenericCompleterBase]
-  [GenericCompletionsAttribute]
+  [CompleterBase]
 )
 
 $TypeAcceleratorsClass = [PSObject].Assembly.GetType('System.Management.Automation.TypeAccelerators')

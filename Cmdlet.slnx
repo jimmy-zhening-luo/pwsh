@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/Cmdlet/">
+    <Project Path="Cmdlet/CompleterBase/CompleterBase.csproj" />
     <Project Path="Cmdlet/Good/Good.csproj" />
   </Folder>
 </Solution>

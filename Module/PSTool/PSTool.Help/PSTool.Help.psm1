@@ -60,7 +60,7 @@ function Get-HelpOnline {
       Position = 0,
       ValueFromRemainingArguments
     )]
-    [GenericCompletions(
+    [Completions(
       {
         if ($null -eq $PSTOOL_HELP_TOPIC) {
           [hashtable]$Private:GetModule = @{
@@ -310,7 +310,7 @@ function Get-CommandAlias {
     )]
     [SupportsWildcards()]
     [Alias('Command')]
-    [GenericCompletions({ return @('*') })]
+    [Completions({ return @('*') })]
     # Gets the aliases for the specified item. Enter the name of a cmdlet, function, script, file, or executable file. This parameter is called Definition, because it searches for the item name in the Definition property of the alias object.
     [string[]]$Definition,
 
@@ -318,7 +318,7 @@ function Get-CommandAlias {
       Position = 1
     )]
     [SupportsWildcards()]
-    [GenericCompletions(
+    [Completions(
       {
         return @(
           'Global'
@@ -432,14 +432,14 @@ function Get-VerbList {
       ValueFromPipelineByPropertyName
     )]
     [SupportsWildcards()]
-    [GenericCompletions({ return @('*') })]
+    [Completions({ return @('*') })]
     # Gets only the specified verbs. Enter the name of a verb or a name pattern. Wildcards are allowed.
     [string[]]$Verb,
 
     [Parameter(
       Position = 1
     )]
-    [GenericCompletions(
+    [Completions(
       {
         return [VerbGroup].GetEnumNames()
       }

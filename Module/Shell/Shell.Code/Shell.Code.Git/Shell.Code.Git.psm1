@@ -122,7 +122,7 @@ function Invoke-GitRepository {
 
   param(
 
-    [GenericCompletions(
+    [Completions(
       {
         return @(
           'switch'

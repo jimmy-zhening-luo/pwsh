@@ -11,9 +11,9 @@
   PowerShellHostVersion = '7.5'
   RequiredModules       = @(
     @{
-      ModuleName    = 'GenericArgumentCompleter'
+      ModuleName    = 'Completer'
       ModuleVersion = '3.0.0'
-      GUID          = 'ce7965e6-f9ef-42fb-aa4b-80eb542833de'
+      GUID          = '95f00487-efc3-43e8-adcb-c539f28f0058'
     }
   )
   FunctionsToExport     = @()
