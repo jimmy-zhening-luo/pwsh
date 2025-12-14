@@ -9,6 +9,9 @@
   PowerShellVersion     = '7.5'
   PowerShellHostName    = 'ConsoleHost'
   PowerShellHostVersion = '7.5'
+  RequiredAssemblies    = @(
+    'Good.dll'
+  )
   FunctionsToExport     = @()
   CmdletsToExport       = @(
     'Test-Hello'
