@@ -62,58 +62,10 @@ function Get-HelpOnline {
     )]
     [Completions(
       {
-        if ($null -eq $PSTOOL_HELP_TOPIC) {
-          [hashtable]$Private:GetModule = @{
-            Path      = "$HOME\code\pwsh\Module"
-            Directory = $True
-          }
-          [string[]]$Private:Module = (Get-ChildItem @GetModule).Name
+        [string[]]$Private:About = (Import-PowerShellDataFile -Path $PSScriptRoot\PSHelp.About.psd1).About
+        [string[]]$Private:Function = ((Get-ChildItem -Path Function:).Name -notmatch [regex]'[^\w-]').ToLower()
 
-          if ($Module) {
-            $Module += 'Microsoft.PowerShell.*'
-          }
-          else {
-            [string[]]$Private:Module = @('Microsoft.PowerShell.*')
-          }
-
-          [hashtable]$Private:GetCommand = @{
-            Module = $Module
-            All    = $True
-          }
-          [string[]]$Private:Command = (
-            Get-Command @GetCommand |
-              Sort-Object -Property Name
-          ).Name.ToLowerInvariant()
-
-          [hashtable]$Private:GetAbout = @{
-            Category = 'HelpFile'
-            Name     = 'about_*'
-          }
-          [string[]]$Private:About = (
-            Get-Help @GetAbout
-          ).Name.Substring(6).ToLowerInvariant()
-
-          if ($About) {
-            if ($Command) {
-              $Command += $About
-            }
-            else {
-              [string[]]$Private:Command = $About
-            }
-          }
-
-          $Global:PSTOOL_HELP_TOPIC = (
-            $Command
-          ) ? (
-            [System.Collections.Generic.List[string]]::new(
-              [System.Collections.Generic.List[string]]$Command
-            )
-          ) : (
-            [System.Collections.Generic.List[string]]::new()
-          )
-        }
-
-        return $Global:PSTOOL_HELP_TOPIC
+        return $About + $Function
       },
       'Preserve'
     )]
