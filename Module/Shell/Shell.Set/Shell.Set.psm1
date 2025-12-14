@@ -13,7 +13,7 @@ function Set-Directory {
     Set-Location @PSBoundParameters @args
   }
   else {
-    Set-Location -Path (Split-Path $CWD)
+    Set-Location -Path (Split-Path $PWD)
   }
 }
 
