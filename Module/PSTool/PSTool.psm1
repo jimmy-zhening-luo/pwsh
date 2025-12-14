@@ -190,7 +190,6 @@ function Update-PSProfile {
   param()
 
   $Private:PROJECT_ROOT = Resolve-Path -Path $HOME\code\pwsh
-
   [hashtable]$Private:Pull = @{
     WorkingDirectory = $PROJECT_ROOT
   }
@@ -198,11 +197,12 @@ function Update-PSProfile {
 
   Update-PSLinter
 
+  $Private:CMDLET_ROOT = Join-Path $PROJECT_ROOT Cmdlet
   [hashtable]$Private:Compiled = @{
-    Path = "$PROJECT_ROOT\Cmdlet\CompleterBase\bin\Release\netstandard2.0\CompleterBase.dll"
+    Path = "$CMDLET_ROOT\CompleterBase\bin\Release\netstandard2.0\CompleterBase.dll"
   }
   [hashtable]$Private:Source = @{
-    Path = "$PROJECT_ROOT\Cmdlet\CompleterBase\CompleterBase.cs"
+    Path = "$CMDLET_ROOT\CompleterBase\CompleterBase.cs"
   }
   if (
     -not (Test-Path @Compiled) -or (

@@ -1,11 +1,11 @@
-$Private:PROJECT_ROOT = "$PSScriptRoot\.."
+$Private:CMDLET_ROOT = "$PSScriptRoot\..\Cmdlet"
 
 [hashtable]$Private:Compiled = @{
-  Path = "$PROJECT_ROOT\Cmdlet\CompleterBase\bin\Release\netstandard2.0\CompleterBase.dll"
+  Path = "$CMDLET_ROOT\CompleterBase\bin\Release\netstandard2.0\CompleterBase.dll"
 }
 if (Test-Path @Compiled) {
   [hashtable]$Private:Install = @{
-    Destination = "$PROJECT_ROOT\Module\CompleterBase\"
+    Destination = $CMDLET_ROOT
     Force       = $True
   }
   [hashtable]$Private:ExistingInstall = @{

@@ -1,3 +1,6 @@
+# Project-specific
+*.dll
+
 # MINIMAL: https://github.com/github/gitignore/blob/main/Dotnet.gitignore
 [Dd]ebug/
 [Dd]ebugPublic/

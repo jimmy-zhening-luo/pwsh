@@ -1,15 +1,15 @@
-using module CompleterBase
+# using module CompleterBase
 
 using namespace System.Collections
 using namespace System.Collections.Generic
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
 
-class Completer : CompleterBase, IArgumentCompleter {
+class Completer : CompleterBase.CompleterBase, IArgumentCompleter {
 
   [List[string]] $Units
 
-  [CompletionCase] $Case
+  [CompleterBase.CompletionCase] $Case
 
   [bool] $Sort
 
@@ -19,7 +19,7 @@ class Completer : CompleterBase, IArgumentCompleter {
 
     [List[string]] $units,
 
-    [CompletionCase] $case,
+    [CompleterBase.CompletionCase] $case,
 
     [bool] $sort,
 
@@ -66,7 +66,7 @@ class CompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFacto
 
   [scriptblock] $Units
 
-  [CompletionCase] $Case
+  [CompleterBase.CompletionCase] $Case
 
   [bool] $Sort
 
@@ -76,13 +76,13 @@ class CompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFacto
     [scriptblock] $units
   ) {
     $this.Units = $units
-    $this.Case = [CompletionCase]::Lower
+    $this.Case = [CompleterBase.CompletionCase]::Lower
     $this.Sort = $False
     $this.Surrounding = $True
   }
   CompletionsAttribute(
     [scriptblock] $units,
-    [CompletionCase] $case
+    [CompleterBase.CompletionCase] $case
   ) {
     $this.Units = $units
     $this.Case = $case
@@ -91,7 +91,7 @@ class CompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFacto
   }
   CompletionsAttribute(
     [scriptblock] $units,
-    [CompletionCase] $case,
+    [CompleterBase.CompletionCase] $case,
     [bool] $sort
   ) {
     $this.Units = $units
@@ -101,7 +101,7 @@ class CompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFacto
   }
   CompletionsAttribute(
     [scriptblock] $units,
-    [CompletionCase] $case,
+    [CompleterBase.CompletionCase] $case,
     [bool] $sort,
     [bool] $surrounding
   ) {
@@ -129,7 +129,7 @@ class CompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFacto
       }
     }
 
-    return [Completer]::new(
+    return [CompleterBase.CompleterBase]::new(
       $unitList,
       $this.Case,
       $this.Sort,

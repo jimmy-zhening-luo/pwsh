@@ -1,5 +1,3 @@
-using module CompleterBase
-
 using namespace System.IO
 using namespace System.Collections
 using namespace System.Collections.Generic
@@ -35,7 +33,7 @@ enum PathItemType {
   Directory
 }
 
-class PathCompleter : CompleterBase, IArgumentCompleter {
+class PathCompleter : CompleterBase.CompleterBase, IArgumentCompleter {
 
   static [string] $EasyDirectorySeparator = '/'
 
