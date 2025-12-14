@@ -11,7 +11,7 @@
   PowerShellHostVersion = '7.5'
   FunctionsToExport     = @()
   CmdletsToExport       = @(
-    'Get-Hello'
+    'Test-Hello'
   )
   VariablesToExport     = @()
   AliasesToExport       = @()

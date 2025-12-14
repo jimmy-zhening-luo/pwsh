@@ -1,3 +1,6 @@
+using namespace System.Collections.Generic
+using namespace System.Management.Automation
+
 <#
 .SYNOPSIS
 Open PowerShell command history in a text editor.
@@ -49,6 +52,70 @@ function Invoke-PSProfile {
   Shell\Invoke-WorkspaceCode @ProfileRepository
 }
 
+function Install-DotNet {
+
+  [CmdletBinding(
+    SupportsShouldProcess,
+    ConfirmImpact = 'High'
+  )]
+
+  [OutputType([System.Management.Automation.ApplicationInfo])]
+
+  param()
+
+  begin {
+    $Private:AppId = [List[string]]::new(
+      [List[string]]@(
+        '--id=Microsoft.DotNet.SDK.10'
+      )
+    )
+  }
+
+  process {
+    if ($PSCmdlet.ShouldProcess($AppId.ToArray(), 'winget install')) {
+      & WindowsSystem\Add-WinGetApp @AppId
+
+      if ($LASTEXITCODE -ne 0) {
+        throw 'winget attempted to install Microsoft.DotNet.SDK.10 but returned a non-zero exit code'
+      }
+
+      [hashtable]$Private:CompileCommand = @{
+        All         = $True
+        CommandType = 'Application'
+        Name        = 'dotnet.exe'
+      }
+      [ApplicationInfo]$Private:DotNetExecutable = Get-Command @CompileCommand
+
+      if (-not $DotNetExecutable) {
+        throw 'Failed to locate Microsoft.DotNet.SDK.10 executable post-installation'
+      }
+
+      try {
+        [hashtable]$Private:DotNetInstallDependency = @{
+          FilePath     = Resolve-Path -Path $DotNetExecutable.Source
+          NoNewWindow  = $True
+          PassThru     = $True
+          ErrorAction  = 'Stop'
+          ArgumentList = [List[string]]::new(
+            [string[]]@(
+              'new'
+              'install'
+              'Microsoft.PowerShell.Standard.Module.Template'
+            )
+          )
+        }
+        Start-Process @DotNetInstallDependency |
+          Wait-Process
+      }
+      catch {
+        throw 'Failed to install required dotnet dependency: Microsoft.PowerShell.Standard.Module.Template'
+      }
+
+      return $DotNetExecutable
+    }
+  }
+}
+
 function Build-PSProfile {
 
   [CmdletBinding()]
@@ -57,15 +124,53 @@ function Build-PSProfile {
 
   param()
 
-  [hashtable]$Private:Build = @{
-    FilePath         = 'C:\Program Files\dotnet\dotnet.exe'
-    ArgumentList     = 'publish'
+  [hashtable]$Private:CompileCommand = @{
+    All         = $True
+    CommandType = 'Application'
+    Name        = 'dotnet.exe'
+  }
+  [ApplicationInfo]$Private:DotNetExecutable = Get-Command @CompileCommand
+
+  if (-not $DotNetExecutable) {
+    try {
+      [ApplicationInfo]$Private:DotNetExecutable = Install-DotNet
+
+      if (-not $DotNetExecutable) {
+        throw 'Failed to locate Microsoft.DotNet.SDK.10 executable post-installation'
+      }
+    }
+    catch {
+      throw 'Failed to install Microsoft.DotNet.SDK.10'
+    }
+  }
+
+  [hashtable]$Private:DotNet = @{
+    FilePath         = Resolve-Path -Path $DotNetExecutable.Source
     WorkingDirectory = "$HOME\code\pwsh"
     NoNewWindow      = $True
-    Wait             = $True
     PassThru         = $True
+    ErrorAction      = 'Stop'
   }
-  Start-Process @Build | Wait-Process
+
+  $Private:DotNetClean = [List[string]]::new(
+    [string[]]@(
+      'clean'
+      '--configuration'
+      'Release'
+    )
+  )
+  Start-Process @DotNet -ArgumentList $DotNetClean |
+    Wait-Process
+
+  $Private:DotNetBuild = [List[string]]::new(
+    [string[]]@(
+      'build'
+      '--configuration'
+      'Release'
+    )
+  )
+  Start-Process @DotNet -ArgumentList $DotNetBuild |
+    Wait-Process
 }
 
 <#
@@ -94,10 +199,10 @@ function Update-PSProfile {
   Update-PSLinter
 
   [hashtable]$Private:Compiled = @{
-    Path = "$ProfileRepository\Cmdlet\Good\bin\Release\net10.0\Good.dll"
+    Path = "$ProfileRepository\Cmdlet\bin\Release\net10.0\Good.dll"
   }
   [hashtable]$Private:Source = @{
-    Path = "$ProfileRepository\Cmdlet\Good\Good.cs"
+    Path = "$ProfileRepository\Cmdlet\Good.cs"
   }
   if (
     -not (Test-Path @Compiled) -or (

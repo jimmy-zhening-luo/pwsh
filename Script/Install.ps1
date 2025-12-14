@@ -1,11 +1,11 @@
 $Private:PROJECT_ROOT = "$PSScriptRoot\.."
 
 [hashtable]$Private:Compiled = @{
-  Path = "$PROJECT_ROOT\Cmdlet\Good\bin\Release\net10.0\Good.dll"
+  Path = "$PROJECT_ROOT\Cmdlet\bin\Release\netstandard2.0\Good.dll"
 }
 if (Test-Path @Compiled) {
   [hashtable]$Private:Install = @{
-    Destination = "$PROJECT_ROOT\Module\Good"
+    Destination = "$PROJECT_ROOT\Module\Good\"
     Force       = $True
   }
   [hashtable]$Private:ExistingInstall = @{

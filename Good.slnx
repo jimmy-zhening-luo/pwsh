@@ -1,5 +1,5 @@
 <Solution>
   <Folder Name="/Cmdlet/">
-    <Project Path="Cmdlet/Good/Good.csproj" />
+    <Project Path="Cmdlet/Good.csproj" />
   </Folder>
 </Solution>
