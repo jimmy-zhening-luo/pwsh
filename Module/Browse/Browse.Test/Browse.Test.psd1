@@ -1,37 +1,21 @@
 @{
-  RootModule            = 'Browse.psm1'
+  RootModule            = 'Browse.Test.psm1'
   ModuleVersion         = '3.0.0.0'
   CompatiblePSEditions  = @('Desktop', 'Core')
-  GUID                  = '5a80488d-6a5a-4f24-b3f1-ff9d275ab8b5'
+  GUID                  = 'f9754286-2e29-42e9-997c-221f9ce8e312'
   Author                = 'Jimmy Zhening Luo'
   CompanyName           = 'Jimmy Zhening Luo'
   Copyright             = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
   PowerShellVersion     = '7.5'
   PowerShellHostName    = 'ConsoleHost'
   PowerShellHostVersion = '7.5'
-  RequiredModules       = @(
-    @{
-      ModuleName    = 'GenericArgumentCompleter'
-      ModuleVersion = '3.0.0'
-      GUID          = 'ce7965e6-f9ef-42fb-aa4b-80eb542833de'
-    }
-  )
-  NestedModules         = @(
-    @{
-      ModuleName    = 'Browse.Test'
-      ModuleVersion = '3.0.0'
-      GUID          = 'f9754286-2e29-42e9-997c-221f9ce8e312'
-    }
-  )
   FunctionsToExport     = @(
-    'Open-Url'
     'Test-Host'
     'Test-Url'
   )
   CmdletsToExport       = @()
   VariablesToExport     = @()
   AliasesToExport       = @(
-    'go'
     'tn'
     'tu'
   )
