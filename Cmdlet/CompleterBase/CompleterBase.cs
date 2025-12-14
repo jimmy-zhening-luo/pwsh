@@ -184,11 +184,6 @@ namespace CompleterBase
       bool surrounding
     )
     {
-      if (domain.Count == 0)
-      {
-        throw new ArgumentException("domain");
-      }
-
       HashSet<string> unique = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
       foreach (string unit in domain)
@@ -196,12 +191,14 @@ namespace CompleterBase
         unique.Add(unit);
       }
 
-      if (unique.Count != domain.Count)
+      if (unique.Count == 0)
       {
         throw new ArgumentException("domain");
       }
 
-      Domain = domain;
+      List<string> domainSet = new List<string>(unique);
+
+      Domain = domainSet;
       Case = caseOption;
       Sort = sort;
       Surrounding = surrounding;
