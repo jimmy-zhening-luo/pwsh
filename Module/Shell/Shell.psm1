@@ -195,6 +195,23 @@ function Resolve-Item {
 
 class PathCompleter : PathCompleterCore {
 
+  PathCompleter(
+
+    [string] $root,
+
+    [PathItemType] $type,
+
+    [bool] $flat,
+
+    [bool] $useNativeDirectorySeparator
+
+  ): base(
+    $root,
+    $type,
+    $flat,
+    $useNativeDirectorySeparator
+  ) {}
+
   [List[string]] FindPathCompletion(
     [string] $typedPath
   ) {
