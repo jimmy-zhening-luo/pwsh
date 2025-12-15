@@ -15,7 +15,7 @@ namespace PathCompleter
     Directory
   }
 
-  public abstract class PathCompleterCore : CompleterBase
+  public abstract class PathCompleter : CompleterBase
   {
     public static string EasyDirectorySeparator = "/";
 

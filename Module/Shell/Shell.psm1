@@ -6,7 +6,7 @@ using namespace System.Management.Automation.Language
 using namespace Completer
 using namespace PathCompleter
 
-class PathCompleter : PathCompleterCore {
+class ShellPathCompleter : PathCompleter {
 
   [string] $Root
 
@@ -16,7 +16,7 @@ class PathCompleter : PathCompleterCore {
 
   [bool] $UseNativeDirectorySeparator
 
-  PathCompleter(
+  ShellPathCompleter(
 
     [string] $root,
 
@@ -193,7 +193,7 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
   }
 
   [IArgumentCompleter] Create() {
-    return [PathCompleter]::new(
+    return [ShellPathCompleter]::new(
       $this.Root,
       $this.Type,
       $this.Flat,
