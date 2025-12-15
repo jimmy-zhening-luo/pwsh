@@ -27,7 +27,7 @@ namespace PathCompleter
 
     public static string DescendantPattern = @"^(?>[.\\]*)";
 
-    public static string TildeRootedPattern = @"^(?>[.\\]*)";
+    public static string TildeRootedPattern = @"^~(?=\\|$)";
 
     public static string TildeRootPattern = @"^~(?>\\*)";
   }
