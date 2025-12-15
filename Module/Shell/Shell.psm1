@@ -26,30 +26,27 @@ class PathCompleter : PathCompleterCore {
 
   [List[string]] FindPathCompletion(
     [string] $typedPath,
-    [string] $root,
-    [PathItemType] $type,
-    [bool] $flat,
     [string] $separator
   ) {
-    $private:completions = [List[string]]::new()
+    $private:completionPaths = [List[string]]::new()
 
     [hashtable]$private:isRootContainer = @{
-      Path     = $root
+      Path     = $this.Root
       PathType = 'Container'
     }
     if (-not (Test-Path @isRootContainer)) {
-      return $completions
+      return $completionPaths
     }
 
-    $private:fullRoot = Resolve-Path -Path $root
+    $private:fullRoot = Resolve-Path -Path $this.Root
 
-    [hashtable]$private:matcher = @{}
-    switch ($type) {
+    [hashtable]$private:nextNode = @{}
+    switch ($this.Type) {
       Directory {
-        $matcher.Directory = $True
+        $nextNode.Directory = $True
       }
       File {
-        $matcher.File = $True
+        $nextNode.File = $True
       }
     }
 
@@ -70,16 +67,16 @@ class PathCompleter : PathCompleterCore {
       [string]$private:path = Join-Path $fullRoot $typedAtomicContainer
 
       if (Test-Path -Path $path -PathType Container) {
-        $matcher.Path = $path
-        $matcher['Filter'] = "$typedFragment*"
+        $nextNode.Path = $path
+        $nextNode['Filter'] = "$typedFragment*"
       }
     }
 
-    if (-not $matcher.Path) {
-      $matcher.Path = $fullRoot
+    if (-not $nextNode.Path) {
+      $nextNode.Path = $fullRoot
     }
 
-    [FileSystemInfo[]]$private:leaves = Get-ChildItem @matcher
+    [FileSystemInfo[]]$private:leaves = Get-ChildItem @nextNode
 
     [FileSystemInfo[]]$private:containers, [FileSystemInfo[]]$private:children = $leaves.Where(
       {
@@ -93,7 +90,7 @@ class PathCompleter : PathCompleterCore {
     [string[]]$private:files = $children |
       Select-Object -ExpandProperty Name
 
-    if ($typedAtomicContainer -and -not $flat) {
+    if ($typedAtomicContainer -and -not $this.Flat) {
       $directories += ''
     }
 
@@ -108,7 +105,7 @@ class PathCompleter : PathCompleterCore {
         }
     }
 
-    if (-not $flat) {
+    if (-not $this.Flat) {
       $directories = $directories |
         ForEach-Object {
           $PSItem + [PathCompleter]::NormalDirectorySeparator
@@ -124,17 +121,17 @@ class PathCompleter : PathCompleterCore {
     }
 
     if ($directories) {
-      $completions.AddRange(
+      $completionPaths.AddRange(
         [List[string]]$directories
       )
     }
     if ($files) {
-      $completions.AddRange(
+      $completionPaths.AddRange(
         [List[string]]$files
       )
     }
 
-    return $completions
+    return $completionPaths
   }
 }
 
