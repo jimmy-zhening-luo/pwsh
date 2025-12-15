@@ -249,7 +249,7 @@ namespace Completer
     public Completer Create() {
       Collection<PSObject> generator = Generator.Invoke();
 
-      List<string> span = (List<string>) generator;
+      List<string> span = new List<string>;
 
       foreach (PSObject wrapper in generator)
       {
