@@ -62,8 +62,14 @@ function Get-HelpOnline {
     )]
     [Completions(
       {
-        [string[]]$Private:About = (Import-PowerShellDataFile -Path $PSScriptRoot\PSHelp.About.psd1).About
-        [string[]]$Private:Function = ((Get-ChildItem -Path Function:).Name -notmatch [regex]'[^\w-]').ToLower()
+        [string[]]$Private:About = (
+          Import-PowerShellDataFile -Path $PSScriptRoot\PSHelp.About.psd1
+        ).About
+        [string[]]$Private:Function = (
+          (
+            Get-ChildItem -Path Function:
+          ).Name -notmatch [regex]'[^\w-]'
+        ).ToLower()
 
         return $About + $Function
       },
@@ -76,7 +82,7 @@ function Get-HelpOnline {
   )
 
   if (-not $Name) {
-    return Get-Help -Name 'Get-Help'
+    return Get-Help -Name Get-Help
   }
 
   [string]$Private:Topic = $Name -join '_'
