@@ -4,7 +4,7 @@ function Set-Directory {
 
   param(
 
-    [PathCompletions('.', 'Directory')]
+    [PathCompletions('.', [PathCompleter.PathItemType]::Directory)]
     [string]$Path
 
   )
@@ -23,7 +23,7 @@ function Set-DirectorySibling {
 
   param(
 
-    [PathCompletions('..', 'Directory')]
+    [PathCompletions('..', [PathCompleter.PathItemType]::Directory)]
     [string]$Path
 
   )
@@ -40,7 +40,7 @@ function Set-DirectoryRelative {
 
   param(
 
-    [PathCompletions('..\..', 'Directory')]
+    [PathCompletions('..\..', [PathCompleter.PathItemType]::Directory)]
     [string]$Path
 
   )
@@ -57,7 +57,7 @@ function Set-DirectoryHome {
 
   param(
 
-    [PathCompletions('~', 'Directory')]
+    [PathCompletions('~', [PathCompleter.PathItemType]::Directory)]
     [string]$Path
 
   )
@@ -74,7 +74,7 @@ function Set-DirectoryCode {
 
   param(
 
-    [PathCompletions('~\code', 'Directory')]
+    [PathCompletions('~\code', [PathCompleter.PathItemType]::Directory)]
     [string]$Path
 
   )
@@ -91,7 +91,7 @@ function Set-Drive {
 
   param(
 
-    [PathCompletions('\', 'Directory')]
+    [PathCompletions('\', [PathCompleter.PathItemType]::Directory)]
     [string]$Path
 
   )
@@ -108,7 +108,7 @@ function Set-DriveD {
 
   param(
 
-    [PathCompletions('D:', 'Directory')]
+    [PathCompletions('D:', [PathCompleter.PathItemType]::Directory)]
     [string]$Path
 
   )

@@ -154,7 +154,7 @@ function Invoke-GitRepository {
     # Git command to run.
     [string]$Verb,
 
-    [PathCompletions('.', 'Directory')]
+    [PathCompletions('.', [PathCompleter.PathItemType]::Directory)]
     # Path to local repository. If not specified, defaults to the current location. For all verbs except 'clone', 'config', and 'init', the function will throw an error if there is no Git repository at the path.
     [string]$WorkingDirectory,
 
@@ -267,7 +267,7 @@ function Measure-GitRepository {
 
   param(
 
-    [PathCompletions('.', 'Directory')]
+    [PathCompletions('.', [PathCompleter.PathItemType]::Directory)]
     # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
     [string]$WorkingDirectory
 
@@ -297,7 +297,7 @@ function Import-GitRepository {
     # Remote repository URL or 'org/repo'
     [string]$Repository,
 
-    [PathCompletions('.', 'Directory')]
+    [PathCompletions('.', [PathCompleter.PathItemType]::Directory)]
     # Path to the directory into which the repository will be cloned. If not specified, defaults to the current location. The repository will be cloned into a subdirectory with the same name as the repository. If the path points to a container which does not exist, it will be created. If parent container creation fails, this function will throw an error. If Git encounters an error during cloning, this function will throw an error.
     [string]$WorkingDirectory,
 
@@ -353,7 +353,7 @@ function Get-GitRepository {
 
   param(
 
-    [PathCompletions('.', 'Directory')]
+    [PathCompletions('.', [PathCompleter.PathItemType]::Directory)]
     # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
     [string]$WorkingDirectory
 
@@ -409,7 +409,7 @@ function Add-GitRepository {
 
   param(
 
-    [PathCompletions('.', 'Directory')]
+    [PathCompletions('.', [PathCompleter.PathItemType]::Directory)]
     # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
     [string]$WorkingDirectory,
 
@@ -483,7 +483,7 @@ function Write-GitRepository {
 
   param(
 
-    [PathCompletions('.', 'Directory')]
+    [PathCompletions('.', [PathCompleter.PathItemType]::Directory)]
     # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
     [string]$WorkingDirectory,
 
@@ -587,7 +587,7 @@ function Push-GitRepository {
 
   param(
 
-    [PathCompletions('.', 'Directory')]
+    [PathCompletions('.', [PathCompleter.PathItemType]::Directory)]
     # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
     [string]$WorkingDirectory
 
@@ -637,7 +637,7 @@ function Reset-GitRepository {
 
   param(
 
-    [PathCompletions('.', 'Directory')]
+    [PathCompletions('.', [PathCompleter.PathItemType]::Directory)]
     # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
     [string]$WorkingDirectory,
 
@@ -721,7 +721,7 @@ function Restore-GitRepository {
 
   param(
 
-    [PathCompletions('.', 'Directory')]
+    [PathCompletions('.', [PathCompleter.PathItemType]::Directory)]
     # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
     [string]$WorkingDirectory
 

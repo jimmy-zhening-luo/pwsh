@@ -10,6 +10,7 @@ class PathCompleter : CompleterBase {
 
   [string] $Root
   [PathItemType] $Type
+  [PathProvider] $Provider
   [bool] $Flat
   [bool] $UseNativeDirectorySeparator
 
@@ -17,12 +18,14 @@ class PathCompleter : CompleterBase {
 
     [string] $root,
     [PathItemType] $type,
+    [PathProvider] $provider,
     [bool] $flat,
     [bool] $useNativeDirectorySeparator
 
   ) {
     $this.Root = $root
     $this.Type = $type
+    $this.Provider = $provider
     $this.Flat = $flat
     $this.UseNativeDirectorySeparator = $useNativeDirectorySeparator
   }
@@ -141,6 +144,7 @@ class PathCompleter : CompleterBase {
 class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory {
   [string] $Root
   [PathItemType] $Type
+  [PathProvider] $Provider
   [bool] $Flat
   [bool] $UseNativeDirectorySeparator
 
@@ -149,6 +153,7 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
   ) {
     $this.Root = $root
     $this.Type = [PathItemType]::Any
+    $this.Provider = [PathProvider]::Any
     $this.Flat = $false
     $this.UseNativeDirectorySeparator = $false
   }
@@ -158,27 +163,43 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
   ) {
     $this.Root = $root
     $this.Type = $type
+    $this.Provider = [PathProvider]::Any
     $this.Flat = $false
     $this.UseNativeDirectorySeparator = $false
   }
   PathCompletionsAttribute(
     [string] $root,
     [PathItemType] $type,
+    [PathProvider] $provider
+  ) {
+    $this.Root = $root
+    $this.Type = $type
+    $this.Provider = $provider
+    $this.Flat = $false
+    $this.UseNativeDirectorySeparator = $false
+  }
+  PathCompletionsAttribute(
+    [string] $root,
+    [PathItemType] $type,
+    [PathProvider] $provider,
     [bool] $flat
   ) {
     $this.Root = $root
     $this.Type = $type
+    $this.Provider = $provider
     $this.Flat = $flat
     $this.UseNativeDirectorySeparator = $false
   }
   PathCompletionsAttribute(
     [string] $root,
     [PathItemType] $type,
+    [PathProvider] $provider,
     [bool] $flat,
     [bool] $useNativeDirectorySeparator
   ) {
     $this.Root = $root
     $this.Type = $type
+    $this.Provider = $provider
     $this.Flat = $flat
     $this.UseNativeDirectorySeparator = $useNativeDirectorySeparator
   }
@@ -197,6 +218,7 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
     return [PathCompleter]::new(
       $private:root,
       $this.Type,
+      $this.Provider,
       $this.Flat,
       $this.UseNativeDirectorySeparator
     )
