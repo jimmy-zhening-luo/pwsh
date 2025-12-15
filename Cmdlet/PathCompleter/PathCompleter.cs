@@ -23,11 +23,6 @@ namespace PathCompleter
 
     public static string DuplicateDirectorySeparatorPattern = @"(?<!^)\\+";
 
-    public string Root;
-    public PathItemType Type;
-    public bool Flat;
-    public bool UseNativeDirectorySeparator;
-
     public abstract List<string> FindPathCompletion(
       string typedPath
     );
