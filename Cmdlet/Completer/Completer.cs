@@ -253,7 +253,7 @@ namespace Completer
 
       foreach (PSObject wrapper in generator)
       {
-        span.AddRange((List<string>) wrapper);
+        span.Add((string) wrapper.BaseObject);
       }
 
       return new Completer(
