@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using System.Management.Automation;
 using System.Management.Automation.Language;
 using System.Text.RegularExpressions;
-using Completer;
 
-namespace PathCompleter
+namespace Completer
 {
   public enum PathItemType
   {
