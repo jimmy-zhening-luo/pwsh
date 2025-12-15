@@ -278,8 +278,12 @@ function Test-Item {
 
   )
 
-  $Path = Format-Path -Path $Path -LeadingRelative
-  $Location = Format-Path -Path $Location
+  $Path = [PathSyntax]::Format(
+    $Path,
+    '',
+    $True
+  )
+  $Location = [PathSyntax]::Format($Location)
 
   if ([Path]::IsPathRooted($Path)) {
     if ($Location) {
@@ -395,8 +399,12 @@ function Resolve-Item {
     )
   }
 
-  $Path = Format-Path -Path $Path -LeadingRelative
-  $Location = Format-Path -Path $Location
+  $Path = [PathSyntax]::Format(
+    $Path,
+    '',
+    $True
+  )
+  $Location = [PathSyntax]::Format($Location)
 
   if ([Path]::IsPathRooted($Path)) {
     if ($Location) {
@@ -436,36 +444,6 @@ function Resolve-Item {
   else {
     return [string](Resolve-Path -Path $FullPath -Force)
   }
-}
-
-function Format-Path {
-
-  [OutputType([string])]
-
-  param(
-
-    [string]$Path,
-
-    [string]$Separator,
-
-    [switch]$LeadingRelative,
-
-    [switch]$Trailing
-
-  )
-
-  $Private:AlignedPath = $Path -replace [regex][PathSyntax]::EasyDirectorySeparatorPattern, [PathSyntax]::NormalDirectorySeparator
-  $Private:TrimmedPath = $AlignedPath -replace [regex][PathSyntax]::DuplicateDirectorySeparatorPattern, [PathSyntax]::NormalDirectorySeparator
-
-  if ($LeadingRelative) {
-    $TrimmedPath = $TrimmedPath -replace [regex]'^\.(?>\\+)', ''
-  }
-
-  if ($Trailing) {
-    $TrimmedPath = $TrimmedPath -replace [regex]'(?>\\+)$', ''
-  }
-
-  return $Separator -and $Separator -ne [PathSyntax]::NormalDirectorySeparator ? $TrimmedPath -replace [regex][PathSyntax]::NormalDirectorySeparatorPattern, $Separator : $TrimmedPath
 }
 
 New-Alias cl Clear-Line

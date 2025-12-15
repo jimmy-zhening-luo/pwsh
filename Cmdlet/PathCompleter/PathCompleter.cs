@@ -30,5 +30,48 @@ namespace PathCompleter
     public static string TildeRootedPattern = @"^~(?=\\|$)";
 
     public static string TildeRootPattern = @"^~(?>\\*)";
+
+    public static string CurrentRelativePattern = @"^\.(?>\\+)";
+
+    public static string TrailingSeparatorPattern = @"(?>\\+)$";
+
+    public static string Format(
+      string path,
+      string separator,
+      bool trimLeadingRelative,
+      bool trimTrailing
+    )
+    {
+      string normalPath = Regex.Replace(
+        path.Replace(
+          EasyDirectorySeparator,
+          NormalDirectorySeparator
+        ),
+        DuplicateDirectorySeparatorPattern,
+        NormalDirectorySeparator
+      );
+
+      string pretrimmedNormalPath = trimLeadingRelative
+        ? Regex.Replace(
+            normalPath,
+            CurrentRelativePattern,
+            String.Empty
+          )
+        : normalPath;
+      string trimmedNormalPath = trimTrailing
+        ? Regex.Replace(
+            pretrimmedNormalPath,
+            TrailingSeparatorPattern,
+            String.Empty
+          )
+        : pretrimmedNormalPath;
+
+      return separator.Length != 0 && separator != NormalDirectorySeparator
+        ? trimmedNormalPath.Replace(
+            NormalDirectorySeparator,
+            separator
+          )
+        : trimmedNormalPath;
+    }
   }
 }
