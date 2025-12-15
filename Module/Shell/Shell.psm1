@@ -291,11 +291,7 @@ function Test-Item {
 
   if ([Path]::IsPathRooted($Path)) {
     if ($Location) {
-      [hashtable]$Private:Relative = @{
-        Path     = $Path
-        Location = $Location
-      }
-      if (Trace-RelativePath @Relative) {
+      if ([Path]::GetRelativePath($Path, $Location) -match [regex]'^(?>[.\\]*)$') {
         $Path = [Path]::GetRelativePath($Location, $Path)
       }
       else {
@@ -312,11 +308,7 @@ function Test-Item {
     if ($Location) {
       $Path = Join-Path $HOME $Path
 
-      [hashtable]$Private:Relative = @{
-        Path     = $Path
-        Location = $Location
-      }
-      if (Trace-RelativePath @Relative) {
+      if ([Path]::GetRelativePath($Path, $Location) -match [regex]'^(?>[.\\]*)$') {
         $Path = [Path]::GetRelativePath($Location, $Path)
       }
       else {
@@ -456,21 +448,6 @@ function Format-Path {
   }
 
   return $Separator -and $Separator -ne '\' ? $TrimmedPath -replace [regex]'\\', $Separator : $TrimmedPath
-}
-
-function Trace-RelativePath {
-
-  [OutputType([bool])]
-
-  param(
-
-    [string]$Path,
-
-    [string]$Location
-
-  )
-
-  return [Path]::GetRelativePath($Path, $Location) -match [regex]'^(?>[.\\]*)$'
 }
 
 New-Alias cl Clear-Line
