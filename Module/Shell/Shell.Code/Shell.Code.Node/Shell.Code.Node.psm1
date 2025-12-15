@@ -101,10 +101,12 @@ https://nodejs.org/api/cli.html
 #>
 function Invoke-Node {
 
-  & node.exe @args
+  if ($args) {
+    & node.exe @args
 
-  if ($LASTEXITCODE -ne 0) {
-    throw "Node.exe error, execution stopped with exit code: $LASTEXITCODE"
+    if ($LASTEXITCODE -ne 0) {
+      throw "Node.exe error, execution stopped with exit code: $LASTEXITCODE"
+    }
   }
 }
 
@@ -444,10 +446,12 @@ https://docs.npmjs.com/cli/commands/npx
 #>
 function Invoke-NodeExecutable {
 
-  & npx.ps1 @args
+  if ($args) {
+    & npx.ps1 @args
 
-  if ($LASTEXITCODE -ne 0) {
-    throw "npx error, execution stopped with exit code: $LASTEXITCODE"
+    if ($LASTEXITCODE -ne 0) {
+      throw "npx error, execution stopped with exit code: $LASTEXITCODE"
+    }
   }
 }
 
