@@ -220,7 +220,7 @@ namespace Completer
     }
   }
 
-  public class TestCompletionsAttribute : ArgumentCompleterFactoryAttribute {
+  public class TestCompletionsAttribute : ArgumentCompleterAttribute {
 
     private readonly List<string> Domain;
     private readonly CompletionCase Case;
@@ -232,7 +232,7 @@ namespace Completer
       CompletionCase caseOption,
       bool sort,
       bool surrounding
-    ) : base()
+    ) : base(typeof Completer)
     {
       Domain = domain;
       Case = caseOption;
@@ -240,7 +240,7 @@ namespace Completer
       Surrounding = surrounding;
     }
 
-    public IArgumentCompleter Create() {
+    public Completer Create() {
       return new Completer(
         Domain,
         Case,
