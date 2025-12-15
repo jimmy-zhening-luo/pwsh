@@ -44,9 +44,6 @@ namespace PathCompleter
 
     public abstract List<string> FindPathCompletion(
       string typedPath,
-      string root,
-      PathItemType type,
-      bool flat,
       string separator
     );
 
@@ -68,9 +65,6 @@ namespace PathCompleter
 
       return FindPathCompletion(
         typedPath,
-        Root,
-        Type,
-        Flat,
         UseNativeDirectorySeparator
           ? Path.DirectorySeparatorChar.ToString()
           : EasyDirectorySeparator
