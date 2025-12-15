@@ -251,6 +251,11 @@ namespace Completer
 
       List<string> span = (List<string>) generator;
 
+      foreach (PSObject wrapper in generator)
+      {
+        span.AddRange((List<string>) wrapper);
+      }
+
       return new Completer(
         span,
         Case,
