@@ -11,4 +11,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Completer\Completer.csproj" />
+  </ItemGroup>
+
 </Project>
