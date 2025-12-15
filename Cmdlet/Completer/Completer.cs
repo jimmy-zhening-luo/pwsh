@@ -225,45 +225,4 @@ namespace Completer
       );
     }
   }
-
-  public class TestCompletionsAttribute : ArgumentCompleterAttribute
-  {
-
-    public readonly ScriptBlock Generator;
-    public readonly CompletionCase Case;
-    public readonly bool Sort;
-    public readonly bool Surrounding;
-
-    public TestCompletionsAttribute(
-      ScriptBlock generator,
-      CompletionCase caseOption = CompletionCase.Lower,
-      bool sort = false,
-      bool surrounding = true
-    ) : base(typeof(Completer))
-    {
-      Generator = generator;
-      Case = caseOption;
-      Sort = sort;
-      Surrounding = surrounding;
-    }
-
-    public Completer Create()
-    {
-      Collection<PSObject> generator = Generator.Invoke();
-
-      List<string> span = new List<string>();
-
-      foreach (PSObject wrapper in generator)
-      {
-        span.Add((string)wrapper.BaseObject);
-      }
-
-      return new Completer(
-        span,
-        Case,
-        Sort,
-        Surrounding
-      );
-    }
-  }
 }
