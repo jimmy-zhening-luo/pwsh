@@ -388,7 +388,7 @@ function Get-VerbList {
       ValueFromPipelineByPropertyName
     )]
     [SupportsWildcards()]
-    [Completer.TestCompletions({ return @('*') })]
+    [Completer.TestCompletions({ return '*' })]
     # Gets only the specified verbs. Enter the name of a verb or a name pattern. Wildcards are allowed.
     [string[]]$Verb,
 
