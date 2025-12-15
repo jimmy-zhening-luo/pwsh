@@ -1,5 +1,4 @@
 using namespace System.IO
-using namespace System.Collections
 using namespace System.Collections.Generic
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
@@ -25,6 +24,170 @@ function Clear-Line {
   }
   else {
     Clear-Host
+  }
+}
+
+function Test-Item {
+
+  [OutputType([bool])]
+
+  param(
+
+    [string]$Path,
+
+    [string]$Location,
+
+    [switch]$File,
+
+    [switch]$New,
+
+    [switch]$RequireSubpath
+
+  )
+
+  $Path = Format-Path -Path $Path -LeadingRelative
+  $Location = Format-Path -Path $Location
+
+  if ([Path]::IsPathRooted($Path)) {
+    if ($Location) {
+      [hashtable]$Private:Relative = @{
+        Path     = $Path
+        Location = $Location
+      }
+      if (Trace-RelativePath @Relative) {
+        $Path = Merge-RelativePath @Relative
+      }
+      else {
+        return $False
+      }
+    }
+    else {
+      $Location = [Path]::GetPathRoot($Path)
+    }
+  }
+  elseif ($Path -match [regex]'^~(?=\\|$)') {
+    $Path = $Path -replace [regex]'^~(?>\\*)', ''
+
+    if ($Location) {
+      [hashtable]$Private:Relative = @{
+        Path     = Join-Path $HOME $Path
+        Location = $Location
+      }
+      if (Trace-RelativePath @Relative) {
+        $Path = Merge-RelativePath @Relative
+      }
+      else {
+        return $False
+      }
+    }
+    else {
+      $Location = $HOME
+    }
+  }
+
+  if (-not $Location) {
+    $Location = $PWD.Path
+  }
+
+  [hashtable]$Private:Container = @{
+    Path     = $Location
+    PathType = 'Container'
+  }
+  if (-not (Test-Path @Container)) {
+    return $False
+  }
+
+  [string]$Private:FullLocation = Resolve-Path -Path $Location
+  [string]$Private:FullPath = Join-Path $FullLocation $Path
+  [bool]$Private:HasSubpath = $FullPath.Substring($FullLocation.Length) -notmatch [regex]'^\\*$'
+  $Private:FileLike = $HasSubpath -and -not (
+    $FullPath.EndsWith('\') -or $FullPath.EndsWith('..')
+  )
+
+  if (-not $HasSubpath) {
+    return -not (
+      $RequiresSubpath -or $File -or $New
+    )
+  }
+
+  if ($File -and -not $FileLike) {
+    return $False
+  }
+
+  [hashtable]$Private:Item = @{
+    Path     = $FullPath
+    PathType = $File ? 'Leaf' : 'Container'
+  }
+  if ($New) {
+    return (Test-Path @Item -IsValid) -and -not (Test-Path @Item)
+  }
+  else {
+    return Test-Path @Item
+  }
+}
+
+function Resolve-Item {
+
+  [OutputType([string])]
+
+  param(
+
+    [string]$Path,
+
+    [string]$Location,
+
+    [switch]$File,
+
+    [switch]$New,
+
+    [switch]$RequireSubpath
+
+  )
+
+  if (-not (Test-Item @PSBoundParameters)) {
+    throw "Invalid path '$Path': " + (
+      $PSBoundParameters | ConvertTo-Json -EnumsAsStrings
+    )
+  }
+
+  $Path = Format-Path -Path $Path -LeadingRelative
+  $Location = Format-Path -Path $Location
+
+  if ([Path]::IsPathRooted($Path)) {
+    if ($Location) {
+      $Path = Merge-RelativePath -Path $Path -Location $Location
+    }
+    else {
+      $Location = [Path]::GetPathRoot($Path)
+    }
+  }
+  elseif ($Path -match [regex]'^~(?=\\|$)') {
+    $Path = $Path -replace [regex]'^~(?>\\*)', ''
+
+    if ($Location) {
+      [hashtable]$Private:RelativePath = @{
+        Path     = Join-Path $HOME $Path
+        Location = $Location
+      }
+      $Path = Merge-RelativePath @RelativePath
+    }
+    else {
+      $Location = $HOME
+    }
+  }
+
+  if (-not $Location) {
+    $Location = $PWD
+  }
+
+  [string]$Private:FullLocation = Resolve-Path -Path $Location
+  [string]$Private:FullPath = Join-Path $FullLocation $Path
+
+  if ($New) {
+    return $FullPath
+  }
+  else {
+    return [string](Resolve-Path -Path $FullPath -Force)
   }
 }
 
@@ -239,40 +402,6 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
   }
 }
 
-$ExportableTypes = @(
-  [PathCompletionsAttribute]
-)
-
-$TypeAcceleratorsClass = [PSObject].Assembly.GetType('System.Management.Automation.TypeAccelerators')
-
-$Private:ExistingTypeAccelerators = $TypeAcceleratorsClass::Get
-
-foreach ($Private:Type in $ExportableTypes) {
-  if ($Type.FullName -in $ExistingTypeAccelerators.Keys) {
-    [string]$Private:Message = @(
-      "Unable to register type accelerator '$($Type.FullName)'"
-      'Accelerator already exists.'
-    ) -join ' - '
-
-    throw [System.Management.Automation.ErrorRecord]::new(
-      [System.InvalidOperationException]::new($Message),
-      'TypeAcceleratorAlreadyExists',
-      [System.Management.Automation.ErrorCategory]::InvalidOperation,
-      $Type.FullName
-    )
-  }
-}
-
-foreach ($Private:Type in $ExportableTypes) {
-  $TypeAcceleratorsClass::Add($Type.FullName, $Type)
-}
-
-$MyInvocation.MyCommand.ScriptBlock.Module.OnRemove = {
-  foreach ($Private:Type in $ExportableTypes) {
-    $TypeAcceleratorsClass::Remove($Type.FullName)
-  }
-}.GetNewClosure()
-
 function Format-Path {
 
   [OutputType([string])]
@@ -330,168 +459,38 @@ function Merge-RelativePath {
   return [Path]::GetRelativePath($Location, $Path)
 }
 
-function Test-Item {
-
-  [OutputType([bool])]
-
-  param(
-
-    [string]$Path,
-
-    [string]$Location,
-
-    [switch]$File,
-
-    [switch]$New,
-
-    [switch]$RequireSubpath
-
-  )
-
-  $Path = Format-Path -Path $Path -LeadingRelative
-  $Location = Format-Path -Path $Location
-
-  if ([Path]::IsPathRooted($Path)) {
-    if ($Location) {
-      [hashtable]$Private:Relative = @{
-        Path     = $Path
-        Location = $Location
-      }
-      if (Trace-RelativePath @Relative) {
-        $Path = Merge-RelativePath @Relative
-      }
-      else {
-        return $False
-      }
-    }
-    else {
-      $Location = [Path]::GetPathRoot($Path)
-    }
-  }
-  elseif ($Path -match [regex]'^~(?=\\|$)') {
-    $Path = $Path -replace [regex]'^~(?>\\*)', ''
-
-    if ($Location) {
-      [hashtable]$Private:Relative = @{
-        Path     = Join-Path $HOME $Path
-        Location = $Location
-      }
-      if (Trace-RelativePath @Relative) {
-        $Path = Merge-RelativePath @Relative
-      }
-      else {
-        return $False
-      }
-    }
-    else {
-      $Location = $HOME
-    }
-  }
-
-  if (-not $Location) {
-    $Location = $PWD.Path
-  }
-
-  [hashtable]$Private:Container = @{
-    Path     = $Location
-    PathType = 'Container'
-  }
-  if (-not (Test-Path @Container)) {
-    return $False
-  }
-
-  [string]$Private:FullLocation = Resolve-Path -Path $Location
-  [string]$Private:FullPath = Join-Path $FullLocation $Path
-  [bool]$Private:HasSubpath = $FullPath.Substring($FullLocation.Length) -notmatch [regex]'^\\*$'
-  $Private:FileLike = $HasSubpath -and -not (
-    $FullPath.EndsWith('\') -or $FullPath.EndsWith('..')
-  )
-
-  if (-not $HasSubpath) {
-    return -not (
-      $RequiresSubpath -or $File -or $New
-    )
-  }
-
-  if ($File -and -not $FileLike) {
-    return $False
-  }
-
-  [hashtable]$Private:Item = @{
-    Path     = $FullPath
-    PathType = $File ? 'Leaf' : 'Container'
-  }
-  if ($New) {
-    return (Test-Path @Item -IsValid) -and -not (Test-Path @Item)
-  }
-  else {
-    return Test-Path @Item
-  }
-}
-
-function Resolve-Item {
-
-  [OutputType([string])]
-
-  param(
-
-    [string]$Path,
-
-    [string]$Location,
-
-    [switch]$File,
-
-    [switch]$New,
-
-    [switch]$RequireSubpath
-
-  )
-
-  if (-not (Test-Item @PSBoundParameters)) {
-    throw "Invalid path '$Path': " + (
-      $PSBoundParameters | ConvertTo-Json -EnumsAsStrings
-    )
-  }
-
-  $Path = Format-Path -Path $Path -LeadingRelative
-  $Location = Format-Path -Path $Location
-
-  if ([Path]::IsPathRooted($Path)) {
-    if ($Location) {
-      $Path = Merge-RelativePath -Path $Path -Location $Location
-    }
-    else {
-      $Location = [Path]::GetPathRoot($Path)
-    }
-  }
-  elseif ($Path -match [regex]'^~(?=\\|$)') {
-    $Path = $Path -replace [regex]'^~(?>\\*)', ''
-
-    if ($Location) {
-      [hashtable]$Private:RelativePath = @{
-        Path     = Join-Path $HOME $Path
-        Location = $Location
-      }
-      $Path = Merge-RelativePath @RelativePath
-    }
-    else {
-      $Location = $HOME
-    }
-  }
-
-  if (-not $Location) {
-    $Location = $PWD
-  }
-
-  [string]$Private:FullLocation = Resolve-Path -Path $Location
-  [string]$Private:FullPath = Join-Path $FullLocation $Path
-
-  if ($New) {
-    return $FullPath
-  }
-  else {
-    return [string](Resolve-Path -Path $FullPath -Force)
-  }
-}
-
 New-Alias cl Clear-Line
+
+$ExportableTypes = @(
+  [PathCompletionsAttribute]
+)
+
+$TypeAcceleratorsClass = [PSObject].Assembly.GetType('System.Management.Automation.TypeAccelerators')
+
+$ExistingTypeAccelerators = $TypeAcceleratorsClass::Get
+
+foreach ($Type in $ExportableTypes) {
+  if ($Type.FullName -in $ExistingTypeAccelerators.Keys) {
+    [string]$Message = @(
+      "Unable to register type accelerator '$($Type.FullName)'"
+      'Accelerator already exists.'
+    ) -join ' - '
+
+    throw [System.Management.Automation.ErrorRecord]::new(
+      [System.InvalidOperationException]::new($Message),
+      'TypeAcceleratorAlreadyExists',
+      [System.Management.Automation.ErrorCategory]::InvalidOperation,
+      $Type.FullName
+    )
+  }
+}
+
+foreach ($Type in $ExportableTypes) {
+  $TypeAcceleratorsClass::Add($Type.FullName, $Type)
+}
+
+$MyInvocation.MyCommand.ScriptBlock.Module.OnRemove = {
+  foreach ($Type in $ExportableTypes) {
+    $TypeAcceleratorsClass::Remove($Type.FullName)
+  }
+}.GetNewClosure()

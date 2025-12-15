@@ -1,4 +1,3 @@
-using namespace System.Collections
 using namespace System.Collections.Generic
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
@@ -86,11 +85,11 @@ $ExportableTypes = @(
 
 $TypeAcceleratorsClass = [PSObject].Assembly.GetType('System.Management.Automation.TypeAccelerators')
 
-$Private:ExistingTypeAccelerators = $TypeAcceleratorsClass::Get
+$ExistingTypeAccelerators = $TypeAcceleratorsClass::Get
 
-foreach ($Private:Type in $ExportableTypes) {
+foreach ($Type in $ExportableTypes) {
   if ($Type.FullName -in $ExistingTypeAccelerators.Keys) {
-    [string]$Private:Message = @(
+    [string]$Message = @(
       "Unable to register type accelerator '$($Type.FullName)'"
       'Accelerator already exists.'
     ) -join ' - '
@@ -104,12 +103,12 @@ foreach ($Private:Type in $ExportableTypes) {
   }
 }
 
-foreach ($Private:Type in $ExportableTypes) {
+foreach ($Type in $ExportableTypes) {
   $TypeAcceleratorsClass::Add($Type.FullName, $Type)
 }
 
 $MyInvocation.MyCommand.ScriptBlock.Module.OnRemove = {
-  foreach ($Private:Type in $ExportableTypes) {
+  foreach ($Type in $ExportableTypes) {
     $TypeAcceleratorsClass::Remove($Type.FullName)
   }
 }.GetNewClosure()
