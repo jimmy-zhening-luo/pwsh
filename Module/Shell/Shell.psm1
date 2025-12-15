@@ -3,7 +3,6 @@ using namespace System.Collections
 using namespace System.Collections.Generic
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
-using namespace Completer
 using namespace PathCompleter
 
 class ShellPathCompleter : PathCompleter {
