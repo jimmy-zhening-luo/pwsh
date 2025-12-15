@@ -247,7 +247,7 @@ namespace Completer
         string cleanedMember = member.Trim();
 
         if (cleanedMember != String.Empty) {
-          cleanSpan.Add(cleanedMember)
+          cleanSpan.Add(cleanedMember);
         }
       }
 
