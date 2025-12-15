@@ -6,8 +6,7 @@ using namespace System.Management.Automation.Language
 using namespace Completer
 using namespace PathCompleter
 
-class PathCompleter : CompleterBase {
-
+class PathSyntax {
   static [string] $EasyDirectorySeparator = '/'
 
   static [regex] $EasyDirectorySeparatorPattern = [regex]'/'
@@ -23,6 +22,9 @@ class PathCompleter : CompleterBase {
   static [regex] $TildeRootedPattern = [regex]'^(?>[.\\]*)$'
 
   static [regex] $TildeRootPattern = [regex]'^~(?>\\*)'
+}
+
+class PathCompleter : CompleterBase {
 
   [string] $Root
   [PathItemType] $Type
@@ -61,14 +63,14 @@ class PathCompleter : CompleterBase {
 
     [string]$private:currentValue = [PathCompleter]::Unescape($wordToComplete)
 
-    [string]$private:currentPathValue = $currentValue -replace [PathCompleter]::EasyDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator
+    [string]$private:currentPathValue = $currentValue -replace [PathSyntax]::EasyDirectorySeparatorPattern, [PathSyntax]::NormalDirectorySeparator -replace [PathSyntax]::DuplicateDirectorySeparatorPattern, [PathSyntax]::NormalDirectorySeparator
 
     [string]$private:currentDirectoryValue = ''
 
     if ($currentPathValue) {
       if (
         $currentPathValue.EndsWith(
-          [PathCompleter]::NormalDirectorySeparator
+          [PathSyntax]::NormalDirectorySeparator
         )
       ) {
         $currentPathValue += '*'
@@ -125,17 +127,17 @@ class PathCompleter : CompleterBase {
     if (-not $this.Flat) {
       $directories = $directories |
         ForEach-Object {
-          $PSItem + [PathCompleter]::NormalDirectorySeparator
+          $PSItem + [PathSyntax]::NormalDirectorySeparator
         }
     }
 
-    $directories = $directories -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator
-    $files = $files -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator
+    $directories = $directories -replace [PathSyntax]::DuplicateDirectorySeparatorPattern, [PathSyntax]::NormalDirectorySeparator
+    $files = $files -replace [PathSyntax]::DuplicateDirectorySeparatorPattern, [PathSyntax]::NormalDirectorySeparator
 
-    [string]$private:separator = $this.UseNativeDirectorySeparator ? [Path]::DirectorySeparatorChar : [PathCompleter]::EasyDirectorySeparator
-    if ($separator -ne [PathCompleter]::NormalDirectorySeparator) {
-      $directories = $directories -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, $separator
-      $files = $files -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, $separator
+    [string]$private:separator = $this.UseNativeDirectorySeparator ? [Path]::DirectorySeparatorChar : [PathSyntax]::EasyDirectorySeparator
+    if ($separator -ne [PathSyntax]::NormalDirectorySeparator) {
+      $directories = $directories -replace [PathSyntax]::DuplicateDirectorySeparatorPattern, $separator
+      $files = $files -replace [PathSyntax]::DuplicateDirectorySeparatorPattern, $separator
     }
 
     $private:completionPaths = [List[string]]::new()
@@ -303,7 +305,7 @@ function Test-Item {
         [Path]::GetRelativePath(
           $Path,
           $Location
-        ) -match [PathCompleter]::DescendantPattern
+        ) -match [PathSyntax]::DescendantPattern
       ) {
         $Path = [Path]::GetRelativePath(
           $Location,
@@ -318,8 +320,8 @@ function Test-Item {
       $Location = [Path]::GetPathRoot($Path)
     }
   }
-  elseif ($Path -match [PathCompleter]::TildeRootedPattern) {
-    $Path = $Path -replace [PathCompleter]::TildeRootPattern, ''
+  elseif ($Path -match [PathSyntax]::TildeRootedPattern) {
+    $Path = $Path -replace [PathSyntax]::TildeRootPattern, ''
 
     if ($Location) {
       $Path = Join-Path $HOME $Path
@@ -328,7 +330,7 @@ function Test-Item {
         [Path]::GetRelativePath(
           $Path,
           $Location
-        ) -match [PathCompleter]::DescendantPattern
+        ) -match [PathSyntax]::DescendantPattern
       ) {
         $Path = [Path]::GetRelativePath(
           $Location,
@@ -361,7 +363,7 @@ function Test-Item {
   [bool]$Private:HasSubpath = $FullPath.Substring($FullLocation.Length) -notmatch [regex]'^\\*$'
   [bool]$Private:FileLike = $HasSubpath -and -not (
     $FullPath.EndsWith(
-      [PathCompleter]::NormalDirectorySeparator
+      [PathSyntax]::NormalDirectorySeparator
     ) -or $FullPath.EndsWith('..')
   )
 
@@ -425,8 +427,8 @@ function Resolve-Item {
       $Location = [Path]::GetPathRoot($Path)
     }
   }
-  elseif ($Path -match [PathCompleter]::TildeRootedPattern) {
-    $Path = $Path -replace [PathCompleter]::TildeRootPattern, ''
+  elseif ($Path -match [PathSyntax]::TildeRootedPattern) {
+    $Path = $Path -replace [PathSyntax]::TildeRootPattern, ''
 
     if ($Location) {
       $Path = [Path]::GetRelativePath(
@@ -470,8 +472,8 @@ function Format-Path {
 
   )
 
-  $Private:AlignedPath = $Path -replace [PathCompleter]::EasyDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator
-  $Private:TrimmedPath = $AlignedPath -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator
+  $Private:AlignedPath = $Path -replace [PathSyntax]::EasyDirectorySeparatorPattern, [PathSyntax]::NormalDirectorySeparator
+  $Private:TrimmedPath = $AlignedPath -replace [PathSyntax]::DuplicateDirectorySeparatorPattern, [PathSyntax]::NormalDirectorySeparator
 
   if ($LeadingRelative) {
     $TrimmedPath = $TrimmedPath -replace [regex]'^\.(?>\\+)', ''
@@ -481,7 +483,7 @@ function Format-Path {
     $TrimmedPath = $TrimmedPath -replace [regex]'(?>\\+)$', ''
   }
 
-  return $Separator -and $Separator -ne [PathCompleter]::NormalDirectorySeparator ? $TrimmedPath -replace [PathCompleter]::NormalDirectorySeparatorPattern, $Separator : $TrimmedPath
+  return $Separator -and $Separator -ne [PathSyntax]::NormalDirectorySeparator ? $TrimmedPath -replace [PathSyntax]::NormalDirectorySeparatorPattern, $Separator : $TrimmedPath
 }
 
 New-Alias cl Clear-Line
