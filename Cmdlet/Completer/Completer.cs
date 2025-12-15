@@ -186,9 +186,9 @@ namespace Completer
     {
       HashSet<string> unique = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
-      foreach (string unit in domain)
+      foreach (string member in domain)
       {
-        unique.Add(unit);
+        unique.Add(member);
       }
 
       if (unique.Count == 0)
