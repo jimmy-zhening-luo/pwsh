@@ -24,10 +24,10 @@ namespace PathCompleter
 
     public static string DuplicateDirectorySeparatorPattern = @"(?<!^)\\+";
 
-    public readonly string Root;
-    public readonly PathItemType Type;
-    public readonly bool Flat;
-    public readonly bool UseNativeDirectorySeparator;
+    public string Root;
+    public PathItemType Type;
+    public bool Flat;
+    public bool UseNativeDirectorySeparator;
 
     public PathCompleterCore(
       string root,
