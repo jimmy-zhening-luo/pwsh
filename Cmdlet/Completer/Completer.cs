@@ -246,7 +246,7 @@ namespace Completer
         Case,
         Sort,
         Surrounding
-      )
+      );
     }
   }
 }
