@@ -10,26 +10,30 @@ class PathCompleter : CompleterBase {
 
   static [string] $EasyDirectorySeparator = '/'
 
+  static [regex] $EasyDirectorySeparatorPattern = [regex]'/'
+
   static [string] $NormalDirectorySeparator = '\'
+
+  static [regex] $NormalDirectorySeparatorPattern = [regex]'\\'
 
   static [regex] $DuplicateDirectorySeparatorPattern = [regex]'(?<!^)\\+'
 
+  static [regex] $DescendantPattern = [regex]'^(?>[.\\]*)$'
+
+  static [regex] $TildeRootedPattern = [regex]'^(?>[.\\]*)$'
+
+  static [regex] $TildeRootPattern = [regex]'^~(?>\\*)'
+
   [string] $Root
-
   [PathItemType] $Type
-
   [bool] $Flat
-
   [bool] $UseNativeDirectorySeparator
 
   PathCompleter(
 
     [string] $root,
-
     [PathItemType] $type,
-
     [bool] $flat,
-
     [bool] $useNativeDirectorySeparator
 
   ) {
@@ -57,12 +61,16 @@ class PathCompleter : CompleterBase {
 
     [string]$private:currentValue = [PathCompleter]::Unescape($wordToComplete)
 
-    [string]$private:currentPathValue = $currentValue -replace [regex][PathCompleter]::EasyDirectorySeparator, [PathCompleter]::NormalDirectorySeparator -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator
+    [string]$private:currentPathValue = $currentValue -replace [PathCompleter]::EasyDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator
 
     [string]$private:currentDirectoryValue = ''
 
     if ($currentPathValue) {
-      if ($currentPathValue.EndsWith([PathCompleter]::NormalDirectorySeparator)) {
+      if (
+        $currentPathValue.EndsWith(
+          [PathCompleter]::NormalDirectorySeparator
+        )
+      ) {
         $currentPathValue += '*'
       }
 
@@ -73,7 +81,7 @@ class PathCompleter : CompleterBase {
         $fragment = ''
       }
 
-      [string]$private:path = Join-Path $private:root $currentDirectoryValue
+      [string]$private:path = Join-Path $this.Root $currentDirectoryValue
 
       if (Test-Path -Path $path -PathType Container) {
         $matchChild.Path = $path
@@ -82,7 +90,7 @@ class PathCompleter : CompleterBase {
     }
 
     if (-not $matchChild.Path) {
-      $matchChild.Path = $private:root
+      $matchChild.Path = $this.Root
     }
 
     [FileSystemInfo[]]$private:leaves = Get-ChildItem @matchChild
@@ -126,8 +134,8 @@ class PathCompleter : CompleterBase {
 
     [string]$private:separator = $this.UseNativeDirectorySeparator ? [Path]::DirectorySeparatorChar : [PathCompleter]::EasyDirectorySeparator
     if ($separator -ne [PathCompleter]::NormalDirectorySeparator) {
-      $directories = $directories -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::EasyDirectorySeparator
-      $files = $files -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::EasyDirectorySeparator
+      $directories = $directories -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, $separator
+      $files = $files -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, $separator
     }
 
     $private:completionPaths = [List[string]]::new()
@@ -291,8 +299,16 @@ function Test-Item {
 
   if ([Path]::IsPathRooted($Path)) {
     if ($Location) {
-      if ([Path]::GetRelativePath($Path, $Location) -match [regex]'^(?>[.\\]*)$') {
-        $Path = [Path]::GetRelativePath($Location, $Path)
+      if (
+        [Path]::GetRelativePath(
+          $Path,
+          $Location
+        ) -match [PathCompleter]::DescendantPattern
+      ) {
+        $Path = [Path]::GetRelativePath(
+          $Location,
+          $Path
+        )
       }
       else {
         return $False
@@ -302,14 +318,22 @@ function Test-Item {
       $Location = [Path]::GetPathRoot($Path)
     }
   }
-  elseif ($Path -match [regex]'^~(?=\\|$)') {
-    $Path = $Path -replace [regex]'^~(?>\\*)', ''
+  elseif ($Path -match [PathCompleter]::TildeRootedPattern) {
+    $Path = $Path -replace [PathCompleter]::TildeRootPattern, ''
 
     if ($Location) {
       $Path = Join-Path $HOME $Path
 
-      if ([Path]::GetRelativePath($Path, $Location) -match [regex]'^(?>[.\\]*)$') {
-        $Path = [Path]::GetRelativePath($Location, $Path)
+      if (
+        [Path]::GetRelativePath(
+          $Path,
+          $Location
+        ) -match [PathCompleter]::DescendantPattern
+      ) {
+        $Path = [Path]::GetRelativePath(
+          $Location,
+          $Path
+        )
       }
       else {
         return $False
@@ -336,7 +360,9 @@ function Test-Item {
   [string]$Private:FullPath = Join-Path $FullLocation $Path
   [bool]$Private:HasSubpath = $FullPath.Substring($FullLocation.Length) -notmatch [regex]'^\\*$'
   [bool]$Private:FileLike = $HasSubpath -and -not (
-    $FullPath.EndsWith('\') -or $FullPath.EndsWith('..')
+    $FullPath.EndsWith(
+      [PathCompleter]::NormalDirectorySeparator
+    ) -or $FullPath.EndsWith('..')
   )
 
   if (-not $HasSubpath) {
@@ -390,18 +416,23 @@ function Resolve-Item {
 
   if ([Path]::IsPathRooted($Path)) {
     if ($Location) {
-      $Path = [Path]::GetRelativePath($Location, $Path)
+      $Path = [Path]::GetRelativePath(
+        $Location,
+        $Path
+      )
     }
     else {
       $Location = [Path]::GetPathRoot($Path)
     }
   }
-  elseif ($Path -match [regex]'^~(?=\\|$)') {
-    $Path = $Path -replace [regex]'^~(?>\\*)', ''
+  elseif ($Path -match [PathCompleter]::TildeRootedPattern) {
+    $Path = $Path -replace [PathCompleter]::TildeRootPattern, ''
 
     if ($Location) {
-      $Path = Join-Path $HOME $Path
-      $Path = [Path]::GetRelativePath($Location, $Path)
+      $Path = [Path]::GetRelativePath(
+        $Location,
+        (Join-Path $HOME $Path)
+      )
     }
     else {
       $Location = $HOME
@@ -430,14 +461,17 @@ function Format-Path {
   param(
 
     [string]$Path,
+
     [string]$Separator,
+
     [switch]$LeadingRelative,
+
     [switch]$Trailing
 
   )
 
-  $Private:AlignedPath = $Path -replace [regex]'[/\\]', '\'
-  $Private:TrimmedPath = $AlignedPath -replace [regex]'(?<!^)\\+', '\'
+  $Private:AlignedPath = $Path -replace [PathCompleter]::EasyDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator
+  $Private:TrimmedPath = $AlignedPath -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator
 
   if ($LeadingRelative) {
     $TrimmedPath = $TrimmedPath -replace [regex]'^\.(?>\\+)', ''
@@ -447,7 +481,7 @@ function Format-Path {
     $TrimmedPath = $TrimmedPath -replace [regex]'(?>\\+)$', ''
   }
 
-  return $Separator -and $Separator -ne '\' ? $TrimmedPath -replace [regex]'\\', $Separator : $TrimmedPath
+  return $Separator -and $Separator -ne [PathCompleter]::NormalDirectorySeparator ? $TrimmedPath -replace [PathCompleter]::NormalDirectorySeparatorPattern, $Separator : $TrimmedPath
 }
 
 New-Alias cl Clear-Line
