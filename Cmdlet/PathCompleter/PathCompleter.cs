@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using System.Management.Automation;
@@ -29,22 +28,8 @@ namespace PathCompleter
     public bool Flat;
     public bool UseNativeDirectorySeparator;
 
-    public PathCompleterCore(
-      string root,
-      PathItemType type,
-      bool flat,
-      bool useNativeDirectorySeparator
-    )
-    {
-      Root = root;
-      Type = type;
-      Flat = flat;
-      UseNativeDirectorySeparator = useNativeDirectorySeparator;
-    }
-
     public abstract List<string> FindPathCompletion(
-      string typedPath,
-      string separator
+      string typedPath
     );
 
     public override List<string> FulfillCompletion(
@@ -60,14 +45,11 @@ namespace PathCompleter
       string typedPath = Regex.Replace(
         normalizedWordToComplete,
         DuplicateDirectorySeparatorPattern,
-        NormalDirectorySeparator.ToString()
+        NormalDirectorySeparator
       );
 
       return FindPathCompletion(
-        typedPath,
-        UseNativeDirectorySeparator
-          ? Path.DirectorySeparatorChar.ToString()
-          : EasyDirectorySeparator
+        typedPath
       );
     }
   }

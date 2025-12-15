@@ -8,6 +8,14 @@ using namespace PathCompleter
 
 class PathCompleter : PathCompleterCore {
 
+  [string] $Root
+
+  [PathItemType] $Type
+
+  [bool] $Flat
+
+  [bool] $UseNativeDirectorySeparator
+
   PathCompleter(
 
     [string] $root,
@@ -18,28 +26,27 @@ class PathCompleter : PathCompleterCore {
 
     [bool] $useNativeDirectorySeparator
 
-  ): base(
-    $root,
-    $type,
-    $flat,
-    $useNativeDirectorySeparator
-  ) {}
-
-  [List[string]] FindPathCompletion(
-    [string] $typedPath,
-    [string] $separator
   ) {
-    $private:completionPaths = [List[string]]::new()
 
     [hashtable]$private:isRootContainer = @{
-      Path     = $this.Root
+      Path     = $root
       PathType = 'Container'
     }
     if (-not (Test-Path @isRootContainer)) {
-      return $completionPaths
+      throw [ArgumentException]::new('root')
     }
 
-    $private:fullRoot = Resolve-Path -Path $this.Root
+    $this.Root = $root
+    $this.Type = $type
+    $this.Flat = $flat
+    $this.UseNativeDirectorySeparator = $useNativeDirectorySeparator
+  }
+
+  [List[string]] FindPathCompletion(
+    [string] $typedPath
+  ) {
+
+    [string]$private:fullRoot = Resolve-Path -Path $this.Root
 
     [hashtable]$private:nextNode = @{}
     switch ($this.Type) {
@@ -116,10 +123,14 @@ class PathCompleter : PathCompleterCore {
     $directories = $directories -replace [regex][PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator
     $files = $files -replace [regex][PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator
 
+    [string]$private:separator = $this.UseNativeDirectorySeparator ? [Path]::DirectorySeparatorChar : [PathCompleter]::EasyDirectorySeparator
+
     if ($separator -ne [PathCompleter]::NormalDirectorySeparator) {
       $directories = $directories -replace [regex][PathCompleter]::NormalDirectorySeparator, [PathCompleter]::EasyDirectorySeparator
       $files = $files -replace [regex][PathCompleter]::NormalDirectorySeparator, [PathCompleter]::EasyDirectorySeparator
     }
+
+    $private:completionPaths = [List[string]]::new()
 
     if ($directories) {
       $completionPaths.AddRange(
