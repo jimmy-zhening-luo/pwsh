@@ -207,29 +207,27 @@ $TYPES = @(
   [PathCompletionsAttribute]
 )
 
-$TypeAcceleratorsClass = [PSObject].Assembly.GetType('System.Management.Automation.TypeAccelerators')
-$ExistingTypeAccelerators = $TypeAcceleratorsClass::Get
-foreach ($Type in $TYPES) {
-  if ($Type.FullName -in $ExistingTypeAccelerators.Keys) {
-    [string]$Message = @(
-      "Unable to register type accelerator '$($Type.FullName)'"
-      'Accelerator already exists.'
-    ) -join ' - '
-
+$TypeAccelerators = [PSObject].Assembly.GetType('System.Management.Automation.TypeAccelerators')
+$ExistingTypes = $TypeAccelerators::Get
+foreach ($Private:Type in $TYPES) {
+  if ($Type.FullName -in $ExistingTypes.Keys) {
     throw [System.Management.Automation.ErrorRecord]::new(
-      [System.InvalidOperationException]::new($Message),
+      [System.InvalidOperationException]::new(
+        [string]"Unable to register type accelerator '$($Type.FullName)' - Accelerator already exists."
+      ),
       'TypeAcceleratorAlreadyExists',
       [System.Management.Automation.ErrorCategory]::InvalidOperation,
       $Type.FullName
     )
   }
 }
-foreach ($Type in $TYPES) {
-  $TypeAcceleratorsClass::Add($Type.FullName, $Type)
+foreach ($Private:Type in $TYPES) {
+  $TypeAccelerators::Add($Type.FullName, $Type)
 }
+
 $MyInvocation.MyCommand.ScriptBlock.Module.OnRemove = {
-  foreach ($Type in $TYPES) {
-    $TypeAcceleratorsClass::Remove($Type.FullName)
+  foreach ($Private:Type in $TYPES) {
+    $TypeAccelerators::Remove($Type.FullName)
   }
 }.GetNewClosure()
 

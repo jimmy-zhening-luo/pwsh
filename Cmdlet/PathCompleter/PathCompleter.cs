@@ -9,6 +9,7 @@ namespace PathCompleter
 {
   public enum PathProvider
   {
+    Any,
     FileSystem,
     Registry,
     Environment,
