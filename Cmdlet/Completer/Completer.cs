@@ -222,27 +222,37 @@ namespace Completer
 
   public class TestCompletionsAttribute : ArgumentCompleterAttribute {
 
-    private readonly List<string> Domain;
+    private readonly List<string> Span;
     private readonly CompletionCase Case;
     private readonly bool Sort;
     private readonly bool Surrounding;
 
     public TestCompletionsAttribute(
-      List<string> domain,
-      CompletionCase caseOption,
-      bool sort,
-      bool surrounding
+      List<string> span,
+      CompletionCase caseOption = CompletionCase.Lower,
+      bool sort = false,
+      bool surrounding = true
     ) : base(typeof (Completer))
     {
-      Domain = domain;
+      Span = span;
       Case = caseOption;
       Sort = sort;
       Surrounding = surrounding;
     }
 
     public Completer Create() {
+      List<string> cleanSpan = new List<string>();
+
+      foreach (string member in Span) {
+        string cleanedMember = member.Trim();
+
+        if (cleanedMember != String.Empty) {
+          cleanSpan.Add(cleanedMember)
+        }
+      }
+
       return new Completer(
-        Domain,
+        cleanSpan,
         Case,
         Sort,
         Surrounding
