@@ -63,8 +63,6 @@ class PathCompleter : CompleterBase {
       }
     }
 
-    $private:root = Resolve-Path -Path $this.Root
-
     [string]$private:currentValue = [PathCompleter]::Unescape($wordToComplete)
 
     [string]$private:currentPathValue = $currentValue -replace [regex][PathCompleter]::EasyDirectorySeparator, [PathCompleter]::NormalDirectorySeparator -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator
@@ -296,7 +294,7 @@ function Test-Item {
         Location = $Location
       }
       if (Trace-RelativePath @Relative) {
-        $Path = Merge-RelativePath @Relative
+        $Path = [Path]::GetRelativePath($Location, $Path)
       }
       else {
         return $False
@@ -310,12 +308,14 @@ function Test-Item {
     $Path = $Path -replace [regex]'^~(?>\\*)', ''
 
     if ($Location) {
+      $Path = Join-Path $HOME $Path
+
       [hashtable]$Private:Relative = @{
-        Path     = Join-Path $HOME $Path
+        Path     = $Path
         Location = $Location
       }
       if (Trace-RelativePath @Relative) {
-        $Path = Merge-RelativePath @Relative
+        $Path = [Path]::GetRelativePath($Location, $Path)
       }
       else {
         return $False
@@ -396,7 +396,7 @@ function Resolve-Item {
 
   if ([Path]::IsPathRooted($Path)) {
     if ($Location) {
-      $Path = Merge-RelativePath -Path $Path -Location $Location
+      $Path = [Path]::GetRelativePath($Location, $Path)
     }
     else {
       $Location = [Path]::GetPathRoot($Path)
@@ -406,11 +406,8 @@ function Resolve-Item {
     $Path = $Path -replace [regex]'^~(?>\\*)', ''
 
     if ($Location) {
-      [hashtable]$Private:RelativePath = @{
-        Path     = Join-Path $HOME $Path
-        Location = $Location
-      }
-      $Path = Merge-RelativePath @RelativePath
+      $Path = Join-Path $HOME $Path
+      $Path = [Path]::GetRelativePath($Location, $Path)
     }
     else {
       $Location = $HOME
@@ -445,7 +442,7 @@ function Format-Path {
 
   )
 
-  $Private:AlignedPath = $Path -replace [regex]'[\\\/]', '\'
+  $Private:AlignedPath = $Path -replace [regex]'[/\\]', '\'
   $Private:TrimmedPath = $AlignedPath -replace [regex]'(?<!^)\\+', '\'
 
   if ($LeadingRelative) {
@@ -472,21 +469,6 @@ function Trace-RelativePath {
   )
 
   return [Path]::GetRelativePath($Path, $Location) -match [regex]'^(?>[.\\]*)$'
-}
-
-function Merge-RelativePath {
-
-  [OutputType([string])]
-
-  param(
-
-    [string]$Path,
-
-    [string]$Location
-
-  )
-
-  return [Path]::GetRelativePath($Location, $Path)
 }
 
 New-Alias cl Clear-Line
