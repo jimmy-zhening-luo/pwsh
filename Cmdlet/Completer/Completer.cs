@@ -19,8 +19,8 @@ namespace Completer
     {
       return (
         escapedText.Length > 1
-        && escapedText.StartsWith('\'')
-        && escapedText.EndsWith('\'')
+        && escapedText.StartsWith("'")
+        && escapedText.EndsWith("'")
       )
         ? escapedText.Substring(
             1,
@@ -34,7 +34,7 @@ namespace Completer
 
     public static string Escape(string text)
     {
-      return text.Contains(' ')
+      return text.Contains(" ")
         ? "'" + CodeGeneration.EscapeSingleQuotedStringContent(text) + "'"
         : text;
     }
