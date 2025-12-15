@@ -18,7 +18,7 @@ namespace PathCompleter
   {
     public static char EasyDirectorySeparator = '/';
 
-    public static char NormalDirectorySeparator = '\';
+    public static char NormalDirectorySeparator = '\\';
 
     public static string DuplicateDirectorySeparatorPattern = @"(?<!^)\\+";
 
