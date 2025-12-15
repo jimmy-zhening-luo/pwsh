@@ -100,7 +100,7 @@ function Test-Item {
   [string]$Private:FullLocation = Resolve-Path -Path $Location
   [string]$Private:FullPath = Join-Path $FullLocation $Path
   [bool]$Private:HasSubpath = $FullPath.Substring($FullLocation.Length) -notmatch [regex]'^\\*$'
-  $Private:FileLike = $HasSubpath -and -not (
+  [bool]$Private:FileLike = $HasSubpath -and -not (
     $FullPath.EndsWith('\') -or $FullPath.EndsWith('..')
   )
 

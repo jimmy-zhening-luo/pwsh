@@ -1,23 +1,39 @@
-$Private:CMDLET_ROOT = "$PSScriptRoot\..\Cmdlet"
+[string]$Private:PROJECT_ROOT = Split-Path $PSScriptRoot
+[string]$Private:CMDLET_ROOT = "$PROJECT_ROOT\Cmdlet"
 
-[hashtable]$Private:Compiled = @{
-  Path = "$CMDLET_ROOT\CompleterBase\bin\Release\netstandard2.0\CompleterBase.dll"
+[string[]]$Private:MANIFEST = (
+  Import-PowerShellDataFile -Path $PROJECT_ROOT\Data\Cmdlet.psd1
+).Cmdlet
+
+[hashtable]$Private:Install = @{
+  Destination = $CMDLET_ROOT
+  Force       = $True
 }
-if (Test-Path @Compiled) {
-  [hashtable]$Private:Install = @{
-    Destination = $CMDLET_ROOT
-    Force       = $True
+foreach ($Private:Project in $MANIFEST) {
+  [hashtable]$Private:Built = @{
+    Path = "$CMDLET_ROOT\$Project\bin\Release\netstandard2.0\$Project.dll"
   }
-  [hashtable]$Private:ExistingInstall = @{
-    Path = Join-Path $Install.Destination CompleterBase.dll
+  if (Test-Path @Built) {
+    [hashtable]$Private:Installation = @{
+      Path = "$($Install.Destination)\$Project.dll"
+    }
+    if (
+      -not (Test-Path @Installation) -or (
+        Get-FileHash @Installation
+      ).Hash -ne (
+        Get-FileHash @Built
+      ).Hash
+    ) {
+      Copy-Item @Built @Install
+    }
   }
-  if (
-    -not (Test-Path @ExistingInstall) -or (
-      Get-FileHash @ExistingInstall
-    ).Hash -ne (
-      Get-FileHash @Compiled
-    ).Hash
-  ) {
-    Copy-Item @Compiled @Install
+}
+
+foreach ($Private:Type in $MANIFEST) {
+  $Private:Assembly = @{
+    Path = "$CMDLET_ROOT\$Type.dll"
+  }
+  if (Test-Path @Assembly -Leaf) {
+    Add-Type @Assembly 
   }
 }

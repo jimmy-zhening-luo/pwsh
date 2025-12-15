@@ -190,6 +190,7 @@ function Update-PSProfile {
   param()
 
   $Private:PROJECT_ROOT = Resolve-Path -Path $HOME\code\pwsh
+
   [hashtable]$Private:Pull = @{
     WorkingDirectory = $PROJECT_ROOT
   }
@@ -197,20 +198,33 @@ function Update-PSProfile {
 
   Update-PSLinter
 
-  $Private:CMDLET_ROOT = Join-Path $PROJECT_ROOT Cmdlet
-  [hashtable]$Private:Compiled = @{
-    Path = "$CMDLET_ROOT\CompleterBase\bin\Release\netstandard2.0\CompleterBase.dll"
+  [string]$Private:CMDLET_ROOT = "$PROJECT_ROOT\Cmdlet"
+
+  [string[]]$Private:MANIFEST = (
+    Import-PowerShellDataFile -Path $PROJECT_ROOT\Data\Cmdlet.psd1
+  ).Cmdlet
+
+  $Private:Modified = [List[string]]::new()
+
+  foreach ($Private:Project in $MANIFEST) {
+    [hashtable]$Private:Built = @{
+      Path = "$CMDLET_ROOT\$Project\bin\Release\netstandard2.0\$Project.dll"
+    }
+    [hashtable]$Private:Source = @{
+      Path = "$CMDLET_ROOT\$Project\$Project.cs"
+    }
+    if (
+      -not (Test-Path @Built) -or (
+        Get-Item @Built
+      ).LastWriteTime -lt (
+        Get-Item @Source
+      ).LastWriteTime
+    ) {
+      $Modified.Add([string]$Project)
+    }
   }
-  [hashtable]$Private:Source = @{
-    Path = "$CMDLET_ROOT\CompleterBase\CompleterBase.cs"
-  }
-  if (
-    -not (Test-Path @Compiled) -or (
-      Get-Item @Source
-    ).LastWriteTime -gt (
-      Get-Item @Compiled
-    ).LastWriteTime
-  ) {
+
+  if ($Modified.Count -ne 0) {
     Build-PSProfile
   }
 }
