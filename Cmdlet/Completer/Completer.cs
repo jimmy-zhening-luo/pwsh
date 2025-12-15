@@ -222,28 +222,30 @@ namespace Completer
 
   public class TestCompletionsAttribute : ArgumentCompleterAttribute {
 
-    private readonly List<string> Span;
+    private readonly ScriptBlock Generator;
     private readonly CompletionCase Case;
     private readonly bool Sort;
     private readonly bool Surrounding;
 
     public TestCompletionsAttribute(
-      List<string> span,
+      ScriptBlock generator,
       CompletionCase caseOption = CompletionCase.Lower,
       bool sort = false,
       bool surrounding = true
     ) : base(typeof (Completer))
     {
-      Span = span;
+      Generator = generator;
       Case = caseOption;
       Sort = sort;
       Surrounding = surrounding;
     }
 
     public Completer Create() {
+      List<string> span = Generator.Invoke();
+
       List<string> cleanSpan = new List<string>();
 
-      foreach (string member in Span) {
+      foreach (string member in span) {
         string cleanedMember = member.Trim();
 
         if (cleanedMember != String.Empty) {
