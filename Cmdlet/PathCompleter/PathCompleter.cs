@@ -15,9 +15,9 @@ namespace PathCompleter
   }
 
   public static class PathSyntax {
-    public static char EasyDirectorySeparator = '/';
+    public static string EasyDirectorySeparator = "/";
 
-    public static char NormalDirectorySeparator = '\\';
+    public static string NormalDirectorySeparator = @"\";
 
     public static string EasyDirectorySeparatorPattern = "/";
 
