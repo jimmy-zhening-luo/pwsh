@@ -208,9 +208,7 @@ $ExportableTypes = @(
 )
 
 $TypeAcceleratorsClass = [PSObject].Assembly.GetType('System.Management.Automation.TypeAccelerators')
-
 $ExistingTypeAccelerators = $TypeAcceleratorsClass::Get
-
 foreach ($Type in $ExportableTypes) {
   if ($Type.FullName -in $ExistingTypeAccelerators.Keys) {
     [string]$Message = @(
@@ -226,11 +224,9 @@ foreach ($Type in $ExportableTypes) {
     )
   }
 }
-
 foreach ($Type in $ExportableTypes) {
   $TypeAcceleratorsClass::Add($Type.FullName, $Type)
 }
-
 $MyInvocation.MyCommand.ScriptBlock.Module.OnRemove = {
   foreach ($Type in $ExportableTypes) {
     $TypeAcceleratorsClass::Remove($Type.FullName)
