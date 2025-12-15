@@ -72,7 +72,7 @@ namespace PathCompleter
         Type,
         Flat,
         UseNativeDirectorySeparator
-          ? Path.DirectorySeparatorChar
+          ? Path.DirectorySeparatorChar.ToString()
           : EasyDirectorySeparator
       );
     }
