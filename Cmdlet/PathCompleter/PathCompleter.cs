@@ -44,6 +44,7 @@ namespace PathCompleter
 
     public abstract List<string> FindPathCompletion(
       string typedPath,
+      string root,
       PathItemType type,
       bool flat,
       string separator
