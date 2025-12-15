@@ -232,7 +232,7 @@ namespace Completer
       CompletionCase caseOption,
       bool sort,
       bool surrounding
-    ) : base(typeof Completer)
+    ) : base(typeof (Completer))
     {
       Domain = domain;
       Case = caseOption;
