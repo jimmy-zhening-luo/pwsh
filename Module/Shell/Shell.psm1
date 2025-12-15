@@ -4,6 +4,7 @@ using namespace System.Collections.Generic
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
 using namespace Completer
+using namespace PathCompleter
 
 <#
 .FORWARDHELPTARGETNAME Clear-Content
@@ -190,12 +191,6 @@ function Resolve-Item {
   else {
     return [string](Resolve-Path -Path $FullPath -Force)
   }
-}
-
-enum PathItemType {
-  Any
-  File
-  Directory
 }
 
 class PathCompleter : CompleterBase {
