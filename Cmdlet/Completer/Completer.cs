@@ -179,28 +179,33 @@ namespace Completer
     private readonly bool Surrounding;
 
     public Completer(
-      List<string> domain,
-      CompletionCase caseOption,
+      List<string> span,
+      CompletionCase casing,
       bool sort,
       bool surrounding
     )
     {
-      HashSet<string> unique = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+      HashSet<string> set = new HashSet<string>(
+        StringComparer.OrdinalIgnoreCase
+      );
 
-      foreach (string member in domain)
+      foreach (string candidate in span)
       {
-        unique.Add(member);
+        string trimmedCandidate = candidate.Trim();
+
+        if (trimmedCandidate != String.Empty)
+        {
+          set.Add(trimmedCandidate);
+        }
       }
 
-      if (unique.Count == 0)
+      if (set.Count == 0)
       {
         throw new ArgumentException("domain");
       }
 
-      List<string> domainSet = new List<string>(unique);
-
-      Domain = domainSet;
-      Case = caseOption;
+      Domain = new List<string>(set);
+      Case = casing;
       Sort = sort;
       Surrounding = surrounding;
     }
@@ -244,24 +249,10 @@ namespace Completer
     public Completer Create() {
       Collection<PSObject> generator = Generator.Invoke();
 
-      List<string> span = new List<string>();
-
-      foreach (PSObject member in generator) {
-        span.Add(member.ToString());
-      }
-
-      List<string> cleanSpan = new List<string>();
-
-      foreach (string member in span) {
-        string cleanedMember = member.Trim();
-
-        if (cleanedMember != String.Empty) {
-          cleanSpan.Add(cleanedMember);
-        }
-      }
+      List<string> span = (List<string>) generator;
 
       return new Completer(
-        cleanSpan,
+        span,
         Case,
         Sort,
         Surrounding
