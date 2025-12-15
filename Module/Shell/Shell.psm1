@@ -4,8 +4,15 @@ using namespace System.Collections.Generic
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
 using namespace Completer
+using namespace PathCompleter
 
-class ShellPathCompleter : PathCompleter {
+class PathCompleter : CompleterBase {
+
+  static [string] $EasyDirectorySeparator = '/'
+
+  static [string] $NormalDirectorySeparator = '\'
+
+  static [regex] $DuplicateDirectorySeparatorPattern = [regex]'(?<!^)\\+'
 
   [string] $Root
 
@@ -15,7 +22,7 @@ class ShellPathCompleter : PathCompleter {
 
   [bool] $UseNativeDirectorySeparator
 
-  ShellPathCompleter(
+  PathCompleter(
 
     [string] $root,
 
@@ -26,12 +33,11 @@ class ShellPathCompleter : PathCompleter {
     [bool] $useNativeDirectorySeparator
 
   ) {
-
-    [hashtable]$private:isRootContainer = @{
+    [hashtable]$private:rootIsContainer = @{
       Path     = $root
       PathType = 'Container'
     }
-    if (-not (Test-Path @isRootContainer)) {
+    if (-not $root -or -not (Test-Path @rootIsContainer)) {
       throw [ArgumentException]::new('root')
     }
 
@@ -41,49 +47,55 @@ class ShellPathCompleter : PathCompleter {
     $this.UseNativeDirectorySeparator = $useNativeDirectorySeparator
   }
 
-  [List[string]] FindPathCompletion(
-    [string] $typedPath
+  [List[string]] FulfillCompletion(
+    [string] $parameterName,
+    [string] $wordToComplete,
+    [IDictionary] $fakeBoundParameters
   ) {
+    [hashtable]$private:matchChild = @{}
 
-    [string]$private:fullRoot = Resolve-Path -Path $this.Root
-
-    [hashtable]$private:nextNode = @{}
     switch ($this.Type) {
       Directory {
-        $nextNode.Directory = $True
+        $matchChild.Directory = $True
       }
       File {
-        $nextNode.File = $True
+        $matchChild.File = $True
       }
     }
 
-    [string]$private:typedAtomicContainer = ''
+    $private:root = Resolve-Path -Path $this.Root
 
-    if ($typedPath) {
-      if ($typedPath.EndsWith([PathCompleter]::NormalDirectorySeparator)) {
-        $typedPath += '*'
+    [string]$private:currentValue = [PathCompleter]::Unescape($wordToComplete)
+
+    [string]$private:currentPathValue = $currentValue -replace [regex][PathCompleter]::EasyDirectorySeparator, [PathCompleter]::NormalDirectorySeparator -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator
+
+    [string]$private:currentDirectoryValue = ''
+
+    if ($currentPathValue) {
+      if ($currentPathValue.EndsWith([PathCompleter]::NormalDirectorySeparator)) {
+        $currentPathValue += '*'
       }
 
-      $typedAtomicContainer = Split-Path $typedPath
-      [string]$private:typedFragment = Split-Path $typedPath -Leaf
+      $currentDirectoryValue = Split-Path $currentPathValue
+      [string]$private:fragment = Split-Path $currentPathValue -Leaf
 
-      if ($typedFragment -eq '*') {
-        $typedFragment = ''
+      if ($fragment -eq '*') {
+        $fragment = ''
       }
 
-      [string]$private:path = Join-Path $fullRoot $typedAtomicContainer
+      [string]$private:path = Join-Path $private:root $currentDirectoryValue
 
       if (Test-Path -Path $path -PathType Container) {
-        $nextNode.Path = $path
-        $nextNode['Filter'] = "$typedFragment*"
+        $matchChild.Path = $path
+        $matchChild['Filter'] = "$fragment*"
       }
     }
 
-    if (-not $nextNode.Path) {
-      $nextNode.Path = $fullRoot
+    if (-not $matchChild.Path) {
+      $matchChild.Path = $private:root
     }
 
-    [FileSystemInfo[]]$private:leaves = Get-ChildItem @nextNode
+    [FileSystemInfo[]]$private:leaves = Get-ChildItem @matchChild
 
     [FileSystemInfo[]]$private:containers, [FileSystemInfo[]]$private:children = $leaves.Where(
       {
@@ -97,18 +109,18 @@ class ShellPathCompleter : PathCompleter {
     [string[]]$private:files = $children |
       Select-Object -ExpandProperty Name
 
-    if ($typedAtomicContainer -and -not $this.Flat) {
+    if ($currentDirectoryValue -and -not $this.Flat) {
       $directories += ''
     }
 
-    if ($typedAtomicContainer) {
+    if ($currentDirectoryValue) {
       $directories = $directories |
         ForEach-Object {
-          Join-Path $typedAtomicContainer $PSItem
+          Join-Path $currentDirectoryValue $PSItem
         }
       $files = $files |
         ForEach-Object {
-          Join-Path $typedAtomicContainer $PSItem
+          Join-Path $currentDirectoryValue $PSItem
         }
     }
 
@@ -119,18 +131,16 @@ class ShellPathCompleter : PathCompleter {
         }
     }
 
-    $directories = $directories -replace [regex][PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator
-    $files = $files -replace [regex][PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator
+    $directories = $directories -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator
+    $files = $files -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator
 
     [string]$private:separator = $this.UseNativeDirectorySeparator ? [Path]::DirectorySeparatorChar : [PathCompleter]::EasyDirectorySeparator
-
     if ($separator -ne [PathCompleter]::NormalDirectorySeparator) {
-      $directories = $directories -replace [regex][PathCompleter]::NormalDirectorySeparator, [PathCompleter]::EasyDirectorySeparator
-      $files = $files -replace [regex][PathCompleter]::NormalDirectorySeparator, [PathCompleter]::EasyDirectorySeparator
+      $directories = $directories -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::EasyDirectorySeparator
+      $files = $files -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::EasyDirectorySeparator
     }
 
     $private:completionPaths = [List[string]]::new()
-
     if ($directories) {
       $completionPaths.AddRange(
         [List[string]]$directories
@@ -192,7 +202,7 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
   }
 
   [IArgumentCompleter] Create() {
-    return [ShellPathCompleter]::new(
+    return [PathCompleter]::new(
       $this.Root,
       $this.Type,
       $this.Flat,
@@ -200,6 +210,40 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
     )
   }
 }
+
+$ExportableTypes = @(
+  [PathCompletionsAttribute]
+)
+
+$TypeAcceleratorsClass = [PSObject].Assembly.GetType('System.Management.Automation.TypeAccelerators')
+
+$ExistingTypeAccelerators = $TypeAcceleratorsClass::Get
+
+foreach ($Type in $ExportableTypes) {
+  if ($Type.FullName -in $ExistingTypeAccelerators.Keys) {
+    [string]$Message = @(
+      "Unable to register type accelerator '$($Type.FullName)'"
+      'Accelerator already exists.'
+    ) -join ' - '
+
+    throw [System.Management.Automation.ErrorRecord]::new(
+      [System.InvalidOperationException]::new($Message),
+      'TypeAcceleratorAlreadyExists',
+      [System.Management.Automation.ErrorCategory]::InvalidOperation,
+      $Type.FullName
+    )
+  }
+}
+
+foreach ($Type in $ExportableTypes) {
+  $TypeAcceleratorsClass::Add($Type.FullName, $Type)
+}
+
+$MyInvocation.MyCommand.ScriptBlock.Module.OnRemove = {
+  foreach ($Type in $ExportableTypes) {
+    $TypeAcceleratorsClass::Remove($Type.FullName)
+  }
+}.GetNewClosure()
 
 <#
 .FORWARDHELPTARGETNAME Clear-Content
@@ -446,37 +490,3 @@ function Merge-RelativePath {
 }
 
 New-Alias cl Clear-Line
-
-$ExportableTypes = @(
-  [PathCompletionsAttribute]
-)
-
-$TypeAcceleratorsClass = [PSObject].Assembly.GetType('System.Management.Automation.TypeAccelerators')
-
-$ExistingTypeAccelerators = $TypeAcceleratorsClass::Get
-
-foreach ($Type in $ExportableTypes) {
-  if ($Type.FullName -in $ExistingTypeAccelerators.Keys) {
-    [string]$Message = @(
-      "Unable to register type accelerator '$($Type.FullName)'"
-      'Accelerator already exists.'
-    ) -join ' - '
-
-    throw [System.Management.Automation.ErrorRecord]::new(
-      [System.InvalidOperationException]::new($Message),
-      'TypeAcceleratorAlreadyExists',
-      [System.Management.Automation.ErrorCategory]::InvalidOperation,
-      $Type.FullName
-    )
-  }
-}
-
-foreach ($Type in $ExportableTypes) {
-  $TypeAcceleratorsClass::Add($Type.FullName, $Type)
-}
-
-$MyInvocation.MyCommand.ScriptBlock.Module.OnRemove = {
-  foreach ($Type in $ExportableTypes) {
-    $TypeAcceleratorsClass::Remove($Type.FullName)
-  }
-}.GetNewClosure()
