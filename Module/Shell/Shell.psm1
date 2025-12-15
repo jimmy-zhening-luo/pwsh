@@ -45,7 +45,7 @@ class PathCompleter : CompleterBase {
 
     [string]$private:currentValue = [PathCompleter]::Unescape($wordToComplete)
 
-    [string]$private:currentPathValue = $currentValue -replace [PathSyntax]::EasyDirectorySeparatorPattern, [PathSyntax]::NormalDirectorySeparator -replace [PathSyntax]::DuplicateDirectorySeparatorPattern, [PathSyntax]::NormalDirectorySeparator
+    [string]$private:currentPathValue = $currentValue -replace [regex][Pa]thSyntax]::EasyDirectorySeparatorPattern, [PathSyntax]::NormalDirectorySeparator -replace [regex][Pa]thSyntax]::DuplicateDirectorySeparatorPattern, [PathSyntax]::NormalDirectorySeparator
 
     [string]$private:currentDirectoryValue = ''
 
@@ -113,13 +113,13 @@ class PathCompleter : CompleterBase {
         }
     }
 
-    $directories = $directories -replace [PathSyntax]::DuplicateDirectorySeparatorPattern, [PathSyntax]::NormalDirectorySeparator
-    $files = $files -replace [PathSyntax]::DuplicateDirectorySeparatorPattern, [PathSyntax]::NormalDirectorySeparator
+    $directories = $directories -replace [regex][Pa]thSyntax]::DuplicateDirectorySeparatorPattern, [PathSyntax]::NormalDirectorySeparator
+    $files = $files -replace [regex][Pa]thSyntax]::DuplicateDirectorySeparatorPattern, [PathSyntax]::NormalDirectorySeparator
 
     [string]$private:separator = $this.UseNativeDirectorySeparator ? [Path]::DirectorySeparatorChar : [PathSyntax]::EasyDirectorySeparator
     if ($separator -ne [PathSyntax]::NormalDirectorySeparator) {
-      $directories = $directories -replace [PathSyntax]::DuplicateDirectorySeparatorPattern, $separator
-      $files = $files -replace [PathSyntax]::DuplicateDirectorySeparatorPattern, $separator
+      $directories = $directories -replace [regex][Pa]thSyntax]::DuplicateDirectorySeparatorPattern, $separator
+      $files = $files -replace [regex][Pa]thSyntax]::DuplicateDirectorySeparatorPattern, $separator
     }
 
     $private:completionPaths = [List[string]]::new()
@@ -287,7 +287,7 @@ function Test-Item {
         [Path]::GetRelativePath(
           $Path,
           $Location
-        ) -match [PathSyntax]::DescendantPattern
+        ) -match [regex][Pa]thSyntax]::DescendantPattern
       ) {
         $Path = [Path]::GetRelativePath(
           $Location,
@@ -302,8 +302,8 @@ function Test-Item {
       $Location = [Path]::GetPathRoot($Path)
     }
   }
-  elseif ($Path -match [PathSyntax]::TildeRootedPattern) {
-    $Path = $Path -replace [PathSyntax]::TildeRootPattern, ''
+  elseif ($Path -match [regex][Pa]thSyntax]::TildeRootedPattern) {
+    $Path = $Path -replace [regex][Pa]thSyntax]::TildeRootPattern, ''
 
     if ($Location) {
       $Path = Join-Path $HOME $Path
@@ -312,7 +312,7 @@ function Test-Item {
         [Path]::GetRelativePath(
           $Path,
           $Location
-        ) -match [PathSyntax]::DescendantPattern
+        ) -match [regex][Pa]thSyntax]::DescendantPattern
       ) {
         $Path = [Path]::GetRelativePath(
           $Location,
@@ -409,8 +409,8 @@ function Resolve-Item {
       $Location = [Path]::GetPathRoot($Path)
     }
   }
-  elseif ($Path -match [PathSyntax]::TildeRootedPattern) {
-    $Path = $Path -replace [PathSyntax]::TildeRootPattern, ''
+  elseif ($Path -match [regex][Pa]thSyntax]::TildeRootedPattern) {
+    $Path = $Path -replace [regex][Pa]thSyntax]::TildeRootPattern, ''
 
     if ($Location) {
       $Path = [Path]::GetRelativePath(
@@ -454,8 +454,8 @@ function Format-Path {
 
   )
 
-  $Private:AlignedPath = $Path -replace [PathSyntax]::EasyDirectorySeparatorPattern, [PathSyntax]::NormalDirectorySeparator
-  $Private:TrimmedPath = $AlignedPath -replace [PathSyntax]::DuplicateDirectorySeparatorPattern, [PathSyntax]::NormalDirectorySeparator
+  $Private:AlignedPath = $Path -replace [regex][Pa]thSyntax]::EasyDirectorySeparatorPattern, [PathSyntax]::NormalDirectorySeparator
+  $Private:TrimmedPath = $AlignedPath -replace [regex][Pa]thSyntax]::DuplicateDirectorySeparatorPattern, [PathSyntax]::NormalDirectorySeparator
 
   if ($LeadingRelative) {
     $TrimmedPath = $TrimmedPath -replace [regex]'^\.(?>\\+)', ''
@@ -465,7 +465,7 @@ function Format-Path {
     $TrimmedPath = $TrimmedPath -replace [regex]'(?>\\+)$', ''
   }
 
-  return $Separator -and $Separator -ne [PathSyntax]::NormalDirectorySeparator ? $TrimmedPath -replace [PathSyntax]::NormalDirectorySeparatorPattern, $Separator : $TrimmedPath
+  return $Separator -and $Separator -ne [PathSyntax]::NormalDirectorySeparator ? $TrimmedPath -replace [regex][Pa]thSyntax]::NormalDirectorySeparatorPattern, $Separator : $TrimmedPath
 }
 
 New-Alias cl Clear-Line
