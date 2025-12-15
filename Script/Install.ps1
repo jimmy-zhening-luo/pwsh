@@ -5,6 +5,7 @@
   Import-PowerShellDataFile -Path $PROJECT_ROOT\Data\Cmdlet.psd1
 ).Cmdlet
 
+#region Install
 [hashtable]$Private:Install = @{
   Destination = $CMDLET_ROOT
   Force       = $True
@@ -30,12 +31,15 @@ foreach ($Private:Project in $MANIFEST) {
     }
   }
 }
+#endregion
 
+#region Type
 foreach ($Private:Type in $MANIFEST) {
   $Private:Assembly = @{
     Path = "$CMDLET_ROOT\$Type.dll"
   }
   if (Test-Path @Assembly -PathType Leaf) {
-    Add-Type @Assembly 
+    Add-Type @Assembly
   }
 }
+#endregion

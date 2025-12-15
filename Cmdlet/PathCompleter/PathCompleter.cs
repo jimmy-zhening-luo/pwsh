@@ -29,7 +29,8 @@ namespace PathCompleter
     Function
   }
 
-  public static class PathSyntax {
+  public static class PathSyntax
+  {
     public static string EasyDirectorySeparator = "/";
 
     public static string NormalDirectorySeparator = @"\";

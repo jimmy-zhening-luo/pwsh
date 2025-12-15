@@ -1,3 +1,4 @@
+#region Helper
 [hashtable]$Private:Readonly = @{
   Option = 'ReadOnly'
 }
@@ -7,6 +8,7 @@
     'AllScope'
   )
 }
+#endregion
 
 #region Reassign
 Set-Alias clear Shell\Clear-Line # was: Microsoft.PowerShell.Core\Clear-Host

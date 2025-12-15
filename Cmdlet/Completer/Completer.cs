@@ -226,7 +226,8 @@ namespace Completer
     }
   }
 
-  public class TestCompletionsAttribute : ArgumentCompleterAttribute {
+  public class TestCompletionsAttribute : ArgumentCompleterAttribute
+  {
 
     public readonly ScriptBlock Generator;
     public readonly CompletionCase Case;
@@ -238,7 +239,7 @@ namespace Completer
       CompletionCase caseOption = CompletionCase.Lower,
       bool sort = false,
       bool surrounding = true
-    ) : base(typeof (Completer))
+    ) : base(typeof(Completer))
     {
       Generator = generator;
       Case = caseOption;
@@ -246,14 +247,15 @@ namespace Completer
       Surrounding = surrounding;
     }
 
-    public Completer Create() {
+    public Completer Create()
+    {
       Collection<PSObject> generator = Generator.Invoke();
 
       List<string> span = new List<string>();
 
       foreach (PSObject wrapper in generator)
       {
-        span.Add((string) wrapper.BaseObject);
+        span.Add((string)wrapper.BaseObject);
       }
 
       return new Completer(
