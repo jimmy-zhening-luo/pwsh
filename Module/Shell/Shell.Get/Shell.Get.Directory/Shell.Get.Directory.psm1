@@ -1,4 +1,5 @@
 using namespace System.IO
+using namespace PathCompleter
 
 function Get-Directory {
 
@@ -6,7 +7,7 @@ function Get-Directory {
 
   param(
 
-    [PathCompletions('.', [PathCompleter.PathItemType]::Directory)]
+    [PathCompletions('.', [PathItemType]::Directory)]
     [string]$Path
 
   )
@@ -25,7 +26,7 @@ function Get-DirectorySibling {
 
   param(
 
-    [PathCompletions('..', [PathCompleter.PathItemType]::Directory)]
+    [PathCompletions('..', [PathItemType]::Directory)]
     [string]$Path
 
   )
@@ -42,7 +43,7 @@ function Get-DirectoryRelative {
 
   param(
 
-    [PathCompletions('..\..', [PathCompleter.PathItemType]::Directory)]
+    [PathCompletions('..\..', [PathItemType]::Directory)]
     [string]$Path
 
   )
@@ -59,7 +60,7 @@ function Get-DirectoryHome {
 
   param(
 
-    [PathCompletions('~', [PathCompleter.PathItemType]::Directory)]
+    [PathCompletions('~', [PathItemType]::Directory)]
     [string]$Path
 
   )
@@ -76,7 +77,7 @@ function Get-DirectoryCode {
 
   param(
 
-    [PathCompletions('~\code', [PathCompleter.PathItemType]::Directory)]
+    [PathCompletions('~\code', [PathItemType]::Directory)]
     [string]$Path
 
   )
@@ -93,7 +94,7 @@ function Get-DirectoryDrive {
 
   param(
 
-    [PathCompletions('\', [PathCompleter.PathItemType]::Directory)]
+    [PathCompletions('\', [PathItemType]::Directory)]
     [string]$Path
 
   )

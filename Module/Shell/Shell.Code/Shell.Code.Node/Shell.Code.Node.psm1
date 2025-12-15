@@ -1,5 +1,6 @@
 using namespace System.Collections.Generic
 using namespace System.Management.Automation
+using namespace PathCompleter
 
 <#
 .SYNOPSIS
@@ -308,8 +309,8 @@ function Invoke-NodePackage {
 
     [PathCompletions(
       '~\code',
-      [PathCompleter.PathItemType]::Directory,
-      [PathCompleter.PathProvider]::FileSystem,
+      [PathItemType]::Directory,
+      [PathProvider]::FileSystem,
       $True
     )]
     # Node package root at which to run the command
@@ -503,8 +504,8 @@ function Compare-NodeModule {
 
     [PathCompletions(
       '~\code',
-      [PathCompleter.PathItemType]::Directory,
-      [PathCompleter.PathProvider]::FileSystem,
+      [PathItemType]::Directory,
+      [PathProvider]::FileSystem,
       $True
     )]
     # Node package root at which to run the command
@@ -571,8 +572,8 @@ function Step-NodePackageVersion {
 
     [PathCompletions(
       '~\code',
-      [PathCompleter.PathItemType]::Directory,
-      [PathCompleter.PathProvider]::FileSystem,
+      [PathItemType]::Directory,
+      [PathProvider]::FileSystem,
       $True
     )]
     # Node package root at which to run the command
@@ -654,8 +655,8 @@ function Invoke-NodePackageScript {
 
     [PathCompletions(
       '~\code',
-      [PathCompleter.PathItemType]::Directory,
-      [PathCompleter.PathProvider]::FileSystem,
+      [PathItemType]::Directory,
+      [PathProvider]::FileSystem,
       $True
     )]
     # Node package root at which to run the command
@@ -710,8 +711,8 @@ function Test-NodePackage {
 
     [PathCompletions(
       '~\code',
-      [PathCompleter.PathItemType]::Directory,
-      [PathCompleter.PathProvider]::FileSystem,
+      [PathItemType]::Directory,
+      [PathProvider]::FileSystem,
       $True
     )]
     # Node package root at which to run the command
