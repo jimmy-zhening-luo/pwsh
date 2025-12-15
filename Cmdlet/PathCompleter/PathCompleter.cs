@@ -7,11 +7,26 @@ using System.Text.RegularExpressions;
 
 namespace PathCompleter
 {
+  public enum PathProvider
+  {
+    FileSystem,
+    Registry,
+    Environment,
+    Variable,
+    Alias,
+    Function
+  }
+
   public enum PathItemType
   {
     Any,
     File,
-    Directory
+    Directory,
+    RegistryKey,
+    EnvironmentVariable,
+    Variable,
+    Alias,
+    Function
   }
 
   public static class PathSyntax {
