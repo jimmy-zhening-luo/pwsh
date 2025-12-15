@@ -148,6 +148,7 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
   [bool] $Flat
   [bool] $UseNativeDirectorySeparator
 
+  PathCompletionsAttribute() {}
   PathCompletionsAttribute(
     [string] $root
   ) {

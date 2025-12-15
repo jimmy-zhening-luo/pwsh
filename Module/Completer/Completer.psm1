@@ -13,6 +13,7 @@ class CompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFacto
 
   [bool] $Surrounding
 
+  CompletionsAttribute() {}
   CompletionsAttribute(
     [scriptblock] $units
   ) {
