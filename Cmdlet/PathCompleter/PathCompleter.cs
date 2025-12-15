@@ -43,9 +43,17 @@ namespace PathCompleter
         NormalDirectorySeparator
       );
 
-      return FindPathCompletion(
+      List<string> completionPaths = FindPathCompletion(
         typedPath
       );
+      List<string> completions = new List<string>();
+
+      foreach (string completion in completionPaths)
+      {
+        completions.Add(completion);
+      }
+
+      return completions;
     }
   }
 }
