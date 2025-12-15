@@ -37,9 +37,9 @@ namespace PathCompleter
 
     public static string Format(
       string path,
-      string separator,
-      bool trimLeadingRelative,
-      bool trimTrailing
+      string separator = "",
+      bool trimLeadingRelative = false,
+      bool trimTrailing = false
     )
     {
       string normalPath = Regex.Replace(
