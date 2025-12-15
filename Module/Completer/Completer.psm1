@@ -79,13 +79,13 @@ class CompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFacto
   }
 }
 
-$ExportableTypes = @(
+$TYPES = @(
   [CompletionsAttribute]
 )
 
 $TypeAcceleratorsClass = [PSObject].Assembly.GetType('System.Management.Automation.TypeAccelerators')
 $ExistingTypeAccelerators = $TypeAcceleratorsClass::Get
-foreach ($Type in $ExportableTypes) {
+foreach ($Type in $TYPES) {
   if ($Type.FullName -in $ExistingTypeAccelerators.Keys) {
     [string]$Message = @(
       "Unable to register type accelerator '$($Type.FullName)'"
@@ -99,12 +99,12 @@ foreach ($Type in $ExportableTypes) {
     )
   }
 }
-foreach ($Type in $ExportableTypes) {
+foreach ($Type in $TYPES) {
   $TypeAcceleratorsClass::Add($Type.FullName, $Type)
 }
 
 $MyInvocation.MyCommand.ScriptBlock.Module.OnRemove = {
-  foreach ($Type in $ExportableTypes) {
+  foreach ($Type in $TYPES) {
     $TypeAcceleratorsClass::Remove($Type.FullName)
   }
 }.GetNewClosure()
