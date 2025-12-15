@@ -13,7 +13,7 @@ function Set-Directory {
     Set-Location @PSBoundParameters @args
   }
   else {
-    Set-Location -Path (Split-Path $PWD)
+    Set-Location -Path (Split-Path $PWD.Path)
   }
 }
 
@@ -29,7 +29,7 @@ function Set-DirectorySibling {
   )
 
   [hashtable]$Private:FullPath = @{
-    Path = Join-Path ($PWD | Split-Path) $Path
+    Path = Join-Path (Split-Path $PWD.Path) $Path
   }
   Set-Location @FullPath @args
 }
@@ -46,7 +46,7 @@ function Set-DirectoryRelative {
   )
 
   [hashtable]$Private:FullPath = @{
-    Path = Join-Path ($PWD | Split-Path | Split-Path) $Path
+    Path = Join-Path ($PWD.Path | Split-Path | Split-Path) $Path
   }
   Set-Location @FullPath @args
 }

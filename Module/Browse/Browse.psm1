@@ -70,7 +70,7 @@ function Open-Url {
 
   end {
     if ($Path) {
-      [string]$Private:Target = $Path ? (Test-Path @PSBoundParameters) ? (Resolve-Path @PSBoundParameters) : [uri]$Path : $PWD
+      [string]$Private:Target = $Path ? (Test-Path @PSBoundParameters) ? (Resolve-Path @PSBoundParameters).Path : [uri]$Path : $PWD.Path
 
       if (
         $PSCmdlet.ShouldProcess(

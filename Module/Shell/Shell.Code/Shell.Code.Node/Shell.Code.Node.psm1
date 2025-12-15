@@ -30,7 +30,7 @@ function Test-NodePackageDirectory {
   )
 
   if (-not $WorkingDirectory) {
-    $WorkingDirectory = $PWD
+    $WorkingDirectory = $PWD.Path
   }
 
   [hashtable]$Private:HasPackageJson = @{
@@ -76,7 +76,7 @@ function Resolve-NodePackageDirectory {
       [hashtable]$Private:ResolveWorkingDirectory = @{
         Path = $WorkingDirectory
       }
-      [string]$Private:WorkingDirectoryPath = Resolve-Path @ResolveWorkingDirectory
+      [string]$Private:WorkingDirectoryPath = (Resolve-Path @ResolveWorkingDirectory).Path
 
       return "--prefix=$WorkingDirectoryPath"
     }

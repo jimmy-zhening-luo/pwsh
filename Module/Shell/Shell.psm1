@@ -192,7 +192,7 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
       throw [ArgumentException]::new('root')
     }
 
-    [string]$private:root = Resolve-Path -Path $this.Root
+    [string]$private:root = (Resolve-Path -Path $this.Root).Path
 
     return [PathCompleter]::new(
       $private:root,
@@ -344,7 +344,7 @@ function Test-Item {
     return $False
   }
 
-  [string]$Private:FullLocation = Resolve-Path -Path $Location
+  [string]$Private:FullLocation = (Resolve-Path -Path $Location).Path
   [string]$Private:FullPath = Join-Path $FullLocation $Path
   [bool]$Private:HasSubpath = $FullPath.Substring($FullLocation.Length) -notmatch [regex]'^\\*$'
   [bool]$Private:FileLike = $HasSubpath -and -not (
@@ -432,17 +432,17 @@ function Resolve-Item {
   }
 
   if (-not $Location) {
-    $Location = $PWD
+    $Location = $PWD.Path
   }
 
-  [string]$Private:FullLocation = Resolve-Path -Path $Location
+  [string]$Private:FullLocation = (Resolve-Path -Path $Location).Path
   [string]$Private:FullPath = Join-Path $FullLocation $Path
 
   if ($New) {
     return $FullPath
   }
   else {
-    return [string](Resolve-Path -Path $FullPath -Force)
+    return [string](Resolve-Path -Path $FullPath -Force).Path
   }
 }
 

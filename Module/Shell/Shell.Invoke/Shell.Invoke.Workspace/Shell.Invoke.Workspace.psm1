@@ -36,7 +36,7 @@ function Invoke-Workspace {
     [string]$Private:Target = $Location ? (Join-Path $Location $Path) : $Path
 
     if (Test-Path -Path $Target) {
-      [string]$Private:FullPath = Resolve-Path $Target
+      [string]$Private:FullPath = (Resolve-Path $Target).Path
 
       $ArgumentList.Insert(0, $FullPath)
     }
@@ -106,7 +106,7 @@ function Invoke-WorkspaceSibling {
   )
 
   [hashtable]$Private:Location = @{
-    Location = $PWD | Split-Path
+    Location = Split-Path $PWD.Path
   }
   Invoke-Workspace @PSBoundParameters @Location @args
 }
@@ -128,7 +128,7 @@ function Invoke-WorkspaceRelative {
   )
 
   [hashtable]$Private:Location = @{
-    Location = $PWD | Split-Path | Split-Path
+    Location = $PWD.Path | Split-Path | Split-Path
   }
   Invoke-Workspace @PSBoundParameters @Location @args
 }

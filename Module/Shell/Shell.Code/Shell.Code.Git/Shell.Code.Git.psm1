@@ -218,7 +218,7 @@ function Invoke-GitRepository {
     if ($WorkingDirectory) {
       $GitArguments.Insert(0, $WorkingDirectory)
 
-      $Resolve.WorkingDirectory = $PWD
+      $Resolve.WorkingDirectory = $PWD.Path
       $Repository = Resolve-GitRepository @Resolve
     }
 

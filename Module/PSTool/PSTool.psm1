@@ -92,7 +92,7 @@ function Install-PSModuleDotNet {
 
       try {
         [hashtable]$Private:DotNetInstallDependency = @{
-          FilePath     = Resolve-Path -Path $DotNetExecutable.Source
+          FilePath     = (Resolve-Path -Path $DotNetExecutable.Source).Path
           NoNewWindow  = $True
           PassThru     = $True
           ErrorAction  = 'Stop'
@@ -145,7 +145,7 @@ function Build-PSProfile {
   }
 
   [hashtable]$Private:DotNet = @{
-    FilePath         = Resolve-Path -Path $DotNetExecutable.Source
+    FilePath         = (Resolve-Path -Path $DotNetExecutable.Source).Path
     WorkingDirectory = "$HOME\code\pwsh"
     NoNewWindow      = $True
     PassThru         = $True
@@ -189,7 +189,7 @@ function Update-PSProfile {
 
   param()
 
-  $Private:PROJECT_ROOT = Resolve-Path -Path $HOME\code\pwsh
+  $Private:PROJECT_ROOT = "$HOME\code\pwsh"
 
   [hashtable]$Private:Pull = @{
     WorkingDirectory = $PROJECT_ROOT

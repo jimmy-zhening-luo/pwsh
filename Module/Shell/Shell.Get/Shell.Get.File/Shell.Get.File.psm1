@@ -38,7 +38,7 @@ function Get-File {
     }
 
     [hashtable]$Private:FullPath = @{
-      Path = Resolve-Path -Path $Target
+      Path = (Resolve-Path -Path $Target).Path
     }
     [hashtable]$Private:Container = @{
       PathType = 'Container'
@@ -52,7 +52,7 @@ function Get-File {
   }
   else {
     [hashtable]$Private:Directory = @{
-      Path = $Location ? (Resolve-Path -Path $Location) : $PWD.Path
+      Path = ($Location ? (Resolve-Path -Path $Location) : $PWD).Path
     }
     return Get-ChildItem @Directory @ArgumentList
   }
@@ -70,7 +70,7 @@ function Get-FileSibling {
   )
 
   [hashtable]$Private:Location = @{
-    Location = $PWD | Split-Path
+    Location = Split-Path $PWD.Path
   }
   Get-File @PSBoundParameters @Location @args
 }
@@ -87,7 +87,7 @@ function Get-FileRelative {
   )
 
   [hashtable]$Private:Location = @{
-    Location = $PWD | Split-Path | Split-Path
+    Location = $PWD.Path | Split-Path | Split-Path
   }
   Get-File @PSBoundParameters @Location @args
 }

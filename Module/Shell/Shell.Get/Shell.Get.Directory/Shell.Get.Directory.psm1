@@ -31,7 +31,7 @@ function Get-DirectorySibling {
   )
 
   [hashtable]$Private:FullPath = @{
-    Path = Join-Path ($PWD | Split-Path) $Path
+    Path = Join-Path (Split-Path $PWD.Path) $Path
   }
   Get-ChildItem @FullPath @args
 }
@@ -48,7 +48,7 @@ function Get-DirectoryRelative {
   )
 
   [hashtable]$Private:FullPath = @{
-    Path = Join-Path ($PWD | Split-Path | Split-Path) $Path
+    Path = Join-Path ($PWD.Path | Split-Path | Split-Path) $Path
   }
   Get-ChildItem @FullPath @args
 }
