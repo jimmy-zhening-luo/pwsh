@@ -193,96 +193,60 @@ function Resolve-Item {
   }
 }
 
-class PathCompleter : CompleterBase {
+class PathCompleter : PathCompleterCore {
 
-  static [string] $EasyDirectorySeparator = '/'
-
-  static [string] $NormalDirectorySeparator = '\'
-
-  static [regex] $DuplicateDirectorySeparatorPattern = [regex]'(?<!^)\\+'
-
-  [string] $Root
-
-  [PathItemType] $Type
-
-  [bool] $Flat
-
-  [bool] $UseNativeDirectorySeparator
-
-  PathCompleter(
-
-    [string] $root,
-
-    [PathItemType] $type,
-
-    [bool] $flat,
-
-    [bool] $useNativeDirectorySeparator
-
+  [List[string]] FindPathCompletion(
+    [string] $typedPath
   ) {
+    $private:completions = [List[string]]::new()
+
     [hashtable]$private:rootIsContainer = @{
-      Path     = $root
+      Path     = $this.Root
       PathType = 'Container'
     }
-    if (-not $root -or -not (Test-Path @rootIsContainer)) {
-      throw [ArgumentException]::new('root')
-    }
-
-    $this.Root = $root
-    $this.Type = $type
-    $this.Flat = $flat
-    $this.UseNativeDirectorySeparator = $useNativeDirectorySeparator
-  }
-
-  [List[string]] FulfillCompletion(
-    [string] $parameterName,
-    [string] $wordToComplete,
-    [IDictionary] $fakeBoundParameters
-  ) {
-    [hashtable]$private:matchChild = @{}
-
-    switch ($this.Type) {
-      Directory {
-        $matchChild.Directory = $True
-      }
-      File {
-        $matchChild.File = $True
-      }
+    if (-not (Test-Path @rootIsContainer)) {
+      return $completions
     }
 
     $private:root = Resolve-Path -Path $this.Root
 
-    [string]$private:currentValue = [PathCompleter]::Unescape($wordToComplete)
+    [hashtable]$private:matcher = @{}
+    switch ($this.Type) {
+      Directory {
+        $matcher.Directory = $True
+      }
+      File {
+        $matcher.File = $True
+      }
+    }
 
-    [string]$private:currentPathValue = $currentValue -replace [regex][PathCompleter]::EasyDirectorySeparator, [PathCompleter]::NormalDirectorySeparator -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator
+    [string]$private:typedAtomicContainer = ''
 
-    [string]$private:currentDirectoryValue = ''
-
-    if ($currentPathValue) {
-      if ($currentPathValue.EndsWith([PathCompleter]::NormalDirectorySeparator)) {
-        $currentPathValue += '*'
+    if ($typedPath) {
+      if ($typedPath.EndsWith([PathCompleter]::NormalDirectorySeparator)) {
+        $typedPath += '*'
       }
 
-      $currentDirectoryValue = Split-Path $currentPathValue
-      [string]$private:fragment = Split-Path $currentPathValue -Leaf
+      $typedAtomicContainer = Split-Path $typedPath
+      [string]$private:typedFragment = Split-Path $typedPath -Leaf
 
-      if ($fragment -eq '*') {
-        $fragment = ''
+      if ($typedFragment -eq '*') {
+        $typedFragment = ''
       }
 
-      [string]$private:path = Join-Path $private:root $currentDirectoryValue
+      [string]$private:path = Join-Path $private:root $typedAtomicContainer
 
       if (Test-Path -Path $path -PathType Container) {
-        $matchChild.Path = $path
-        $matchChild['Filter'] = "$fragment*"
+        $matcher.Path = $path
+        $matcher['Filter'] = "$typedFragment*"
       }
     }
 
-    if (-not $matchChild.Path) {
-      $matchChild.Path = $private:root
+    if (-not $matcher.Path) {
+      $matcher.Path = $private:root
     }
 
-    [FileSystemInfo[]]$private:leaves = Get-ChildItem @matchChild
+    [FileSystemInfo[]]$private:leaves = Get-ChildItem @matcher
 
     [FileSystemInfo[]]$private:containers, [FileSystemInfo[]]$private:children = $leaves.Where(
       {
@@ -296,18 +260,18 @@ class PathCompleter : CompleterBase {
     [string[]]$private:files = $children |
       Select-Object -ExpandProperty Name
 
-    if ($currentDirectoryValue -and -not $this.Flat) {
+    if ($typedAtomicContainer -and -not $this.Flat) {
       $directories += ''
     }
 
-    if ($currentDirectoryValue) {
+    if ($typedAtomicContainer) {
       $directories = $directories |
         ForEach-Object {
-          Join-Path $currentDirectoryValue $PSItem
+          Join-Path $typedAtomicContainer $PSItem
         }
       $files = $files |
         ForEach-Object {
-          Join-Path $currentDirectoryValue $PSItem
+          Join-Path $typedAtomicContainer $PSItem
         }
     }
 
@@ -327,19 +291,18 @@ class PathCompleter : CompleterBase {
       $files = $files -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::EasyDirectorySeparator
     }
 
-    $private:completionPaths = [List[string]]::new()
     if ($directories) {
-      $completionPaths.AddRange(
+      $completions.AddRange(
         [List[string]]$directories
       )
     }
     if ($files) {
-      $completionPaths.AddRange(
+      $completions.AddRange(
         [List[string]]$files
       )
     }
 
-    return $completionPaths
+    return $completions
   }
 }
 
