@@ -1,36 +1,34 @@
 @{
-  RootModule            = 'Browse.psm1'
-  ModuleVersion         = '3.0.0.0'
-  CompatiblePSEditions  = @('Desktop', 'Core')
-  GUID                  = '5a80488d-6a5a-4f24-b3f1-ff9d275ab8b5'
-  Author                = 'Jimmy Zhening Luo'
-  CompanyName           = 'Jimmy Zhening Luo'
-  Copyright             = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
-  PowerShellVersion     = '7.5'
-  PowerShellHostName    = 'ConsoleHost'
-  PowerShellHostVersion = '7.5'
-  RequiredModules       = @(
+  RootModule           = 'Browse.psm1'
+  ModuleVersion        = '3.0.0.0'
+  CompatiblePSEditions = @('Desktop', 'Core')
+  GUID                 = '5a80488d-6a5a-4f24-b3f1-ff9d275ab8b5'
+  Author               = 'Jimmy Zhening Luo'
+  CompanyName          = 'Jimmy Zhening Luo'
+  Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
+  PowerShellVersion    = '7.5'
+  RequiredModules      = @(
     @{
       ModuleName    = 'Completer'
       ModuleVersion = '3.0.0'
       GUID          = '95f00487-efc3-43e8-adcb-c539f28f0058'
     }
   )
-  NestedModules         = @(
+  NestedModules        = @(
     @{
       ModuleName    = 'Browse.Test'
       ModuleVersion = '3.0.0'
       GUID          = 'f9754286-2e29-42e9-997c-221f9ce8e312'
     }
   )
-  FunctionsToExport     = @(
+  FunctionsToExport    = @(
     'Open-Url'
     'Test-Host'
     'Test-Url'
   )
-  CmdletsToExport       = @()
-  VariablesToExport     = @()
-  AliasesToExport       = @(
+  CmdletsToExport      = @()
+  VariablesToExport    = @()
+  AliasesToExport      = @(
     'go'
     'tn'
     'tu'

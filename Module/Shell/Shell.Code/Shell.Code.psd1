@@ -1,14 +1,12 @@
 @{
-  ModuleVersion         = '3.0.0.0'
-  CompatiblePSEditions  = @('Desktop', 'Core')
-  GUID                  = 'a5751c41-5026-444f-8c2a-f13a2ac354f2'
-  Author                = 'Jimmy Zhening Luo'
-  CompanyName           = 'Jimmy Zhening Luo'
-  Copyright             = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
-  PowerShellVersion     = '7.5'
-  PowerShellHostName    = 'ConsoleHost'
-  PowerShellHostVersion = '7.5'
-  NestedModules         = @(
+  ModuleVersion        = '3.0.0.0'
+  CompatiblePSEditions = @('Desktop', 'Core')
+  GUID                 = 'a5751c41-5026-444f-8c2a-f13a2ac354f2'
+  Author               = 'Jimmy Zhening Luo'
+  CompanyName          = 'Jimmy Zhening Luo'
+  Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
+  PowerShellVersion    = '7.5'
+  NestedModules        = @(
     @{
       ModuleName    = 'Shell.Code.Git'
       ModuleVersion = '3.0.0.0'
@@ -20,7 +18,7 @@
       GUID          = '47836d9e-49bd-4405-bdc6-1900f3108d10'
     }
   )
-  FunctionsToExport     = @(
+  FunctionsToExport    = @(
     'Invoke-GitRepository'
     'Measure-GitRepository'
     'Import-GitRepository'
@@ -40,9 +38,9 @@
     'Invoke-NodePackageScript'
     'Test-NodePackage'
   )
-  CmdletsToExport       = @()
-  VariablesToExport     = @()
-  AliasesToExport       = @(
+  CmdletsToExport      = @()
+  VariablesToExport    = @()
+  AliasesToExport      = @(
     'g'
     'gg'
     'gitcl'

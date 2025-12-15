@@ -1,22 +1,20 @@
 @{
-  RootModule            = 'Shell.psm1'
-  ModuleVersion         = '3.0.0.0'
-  CompatiblePSEditions  = @('Desktop', 'Core')
-  GUID                  = 'e4d07654-6759-4a2f-8293-39df2b809ba7'
-  Author                = 'Jimmy Zhening Luo'
-  CompanyName           = 'Jimmy Zhening Luo'
-  Copyright             = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
-  PowerShellVersion     = '7.5'
-  PowerShellHostName    = 'ConsoleHost'
-  PowerShellHostVersion = '7.5'
-  RequiredModules       = @(
+  RootModule           = 'Shell.psm1'
+  ModuleVersion        = '3.0.0.0'
+  CompatiblePSEditions = @('Desktop', 'Core')
+  GUID                 = 'e4d07654-6759-4a2f-8293-39df2b809ba7'
+  Author               = 'Jimmy Zhening Luo'
+  CompanyName          = 'Jimmy Zhening Luo'
+  Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
+  PowerShellVersion    = '7.5'
+  RequiredModules      = @(
     @{
       ModuleName    = 'Completer'
       ModuleVersion = '3.0.0'
       GUID          = '95f00487-efc3-43e8-adcb-c539f28f0058'
     }
   )
-  NestedModules         = @(
+  NestedModules        = @(
     @{
       ModuleName    = 'Shell.New'
       ModuleVersion = '3.0.0.0'
@@ -48,7 +46,7 @@
       GUID          = 'a5751c41-5026-444f-8c2a-f13a2ac354f2'
     }
   )
-  FunctionsToExport     = @(
+  FunctionsToExport    = @(
     'Clear-Line'
     'Test-Item'
     'Resolve-Item'
@@ -106,9 +104,9 @@
     'Invoke-NodePackageScript'
     'Test-NodePackage'
   )
-  CmdletsToExport       = @()
-  VariablesToExport     = @()
-  AliasesToExport       = @(
+  CmdletsToExport      = @()
+  VariablesToExport    = @()
+  AliasesToExport      = @(
     'cl'
     'touch'
     'mk'
