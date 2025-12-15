@@ -1,5 +1,6 @@
 @{
   Cmdlet = @(
     'Completer'
+    'PathCompleter'
   )
 }
