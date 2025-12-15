@@ -214,7 +214,9 @@ function Update-PSProfile {
       Path = "$CMDLET_ROOT\$Project\$Project.cs"
     }
     if (
-      -not (Test-Path @Built) -or (
+      -not (
+        Test-Path @Built -PathType Leaf
+      ) -or (
         Get-Item @Built
       ).LastWriteTime -lt (
         Get-Item @Source

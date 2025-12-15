@@ -18,7 +18,9 @@ foreach ($Private:Project in $MANIFEST) {
       Path = "$($Install.Destination)\$Project.dll"
     }
     if (
-      -not (Test-Path @Installation) -or (
+      -not (
+        Test-Path @Installation -PathType Leaf
+      ) -or (
         Get-FileHash @Installation
       ).Hash -ne (
         Get-FileHash @Built
@@ -33,7 +35,7 @@ foreach ($Private:Type in $MANIFEST) {
   $Private:Assembly = @{
     Path = "$CMDLET_ROOT\$Type.dll"
   }
-  if (Test-Path @Assembly -Leaf) {
+  if (Test-Path @Assembly -PathType Leaf) {
     Add-Type @Assembly 
   }
 }

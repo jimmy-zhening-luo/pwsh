@@ -4,9 +4,7 @@ using namespace System.Management.Automation
 [hashtable]$CUSTOM_HELP_FILE = @{
   Path = "$PSScriptRoot\PSHelp.psd1"
 }
-[hashtable]$CUSTOM_HELP = (
-  Test-Path @CUSTOM_HELP_FILE -Type Leaf
-) ? (Import-PowerShellDataFile @CUSTOM_HELP_FILE) : @{}
+[hashtable]$CUSTOM_HELP = Import-PowerShellDataFile @CUSTOM_HELP_FILE
 
 [string]$ABOUT_BASE_URL = 'https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about'
 
