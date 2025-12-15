@@ -219,4 +219,34 @@ namespace Completer
       );
     }
   }
+
+  public class TestCompletionsAttribute : ArgumentCompleterAttribute {
+
+    private readonly List<string> Domain;
+    private readonly CompletionCase Case;
+    private readonly bool Sort;
+    private readonly bool Surrounding;
+
+    public TestCompletionsAttribute(
+      List<string> domain,
+      CompletionCase caseOption,
+      bool sort,
+      bool surrounding
+    ) : base()
+    {
+      Domain = domain;
+      Case = caseOption;
+      Sort = sort;
+      Surrounding = surrounding;
+    }
+
+    public IArgumentCompleter Create() {
+      return new Completer(
+        Domain,
+        Case,
+        Sort,
+        Surrounding
+      )
+    }
+  }
 }
