@@ -3,8 +3,195 @@ using namespace System.Collections
 using namespace System.Collections.Generic
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
-using namespace Completer
 using namespace PathCompleter
+
+class PathCompleter : PathCompleterCore {
+
+  PathCompleter(
+
+    [string] $root,
+
+    [PathItemType] $type,
+
+    [bool] $flat,
+
+    [bool] $useNativeDirectorySeparator
+
+  ): base(
+    $root,
+    $type,
+    $flat,
+    $useNativeDirectorySeparator
+  ) {}
+
+  [List[string]] FindPathCompletion(
+    [string] $typedPath,
+    [string] $root,
+    [PathItemType] $type,
+    [bool] $flat,
+    [string] $separator
+  ) {
+    $private:completions = [List[string]]::new()
+
+    [hashtable]$private:isRootContainer = @{
+      Path     = $root
+      PathType = 'Container'
+    }
+    if (-not (Test-Path @isRootContainer)) {
+      return $completions
+    }
+
+    $private:fullRoot = Resolve-Path -Path $root
+
+    [hashtable]$private:matcher = @{}
+    switch ($type) {
+      Directory {
+        $matcher.Directory = $True
+      }
+      File {
+        $matcher.File = $True
+      }
+    }
+
+    [string]$private:typedAtomicContainer = ''
+
+    if ($typedPath) {
+      if ($typedPath.EndsWith([PathCompleter]::NormalDirectorySeparator)) {
+        $typedPath += '*'
+      }
+
+      $typedAtomicContainer = Split-Path $typedPath
+      [string]$private:typedFragment = Split-Path $typedPath -Leaf
+
+      if ($typedFragment -eq '*') {
+        $typedFragment = ''
+      }
+
+      [string]$private:path = Join-Path $fullRoot $typedAtomicContainer
+
+      if (Test-Path -Path $path -PathType Container) {
+        $matcher.Path = $path
+        $matcher['Filter'] = "$typedFragment*"
+      }
+    }
+
+    if (-not $matcher.Path) {
+      $matcher.Path = $fullRoot
+    }
+
+    [FileSystemInfo[]]$private:leaves = Get-ChildItem @matcher
+
+    [FileSystemInfo[]]$private:containers, [FileSystemInfo[]]$private:children = $leaves.Where(
+      {
+        $PSItem.PSIsContainer
+      },
+      'Split'
+    )
+
+    [string[]]$private:directories = $containers |
+      Select-Object -ExpandProperty Name
+    [string[]]$private:files = $children |
+      Select-Object -ExpandProperty Name
+
+    if ($typedAtomicContainer -and -not $flat) {
+      $directories += ''
+    }
+
+    if ($typedAtomicContainer) {
+      $directories = $directories |
+        ForEach-Object {
+          Join-Path $typedAtomicContainer $PSItem
+        }
+      $files = $files |
+        ForEach-Object {
+          Join-Path $typedAtomicContainer $PSItem
+        }
+    }
+
+    if (-not $flat) {
+      $directories = $directories |
+        ForEach-Object {
+          $PSItem + [PathCompleter]::NormalDirectorySeparator
+        }
+    }
+
+    $directories = $directories -replace [regex][PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator
+    $files = $files -replace [regex][PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator
+
+    if ($separator -ne [PathCompleter]::NormalDirectorySeparator) {
+      $directories = $directories -replace [regex][PathCompleter]::NormalDirectorySeparator, [PathCompleter]::EasyDirectorySeparator
+      $files = $files -replace [regex][PathCompleter]::NormalDirectorySeparator, [PathCompleter]::EasyDirectorySeparator
+    }
+
+    if ($directories) {
+      $completions.AddRange(
+        [List[string]]$directories
+      )
+    }
+    if ($files) {
+      $completions.AddRange(
+        [List[string]]$files
+      )
+    }
+
+    return $completions
+  }
+}
+
+class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory {
+  [string] $Root
+  [PathItemType] $Type
+  [bool] $Flat
+  [bool] $UseNativeDirectorySeparator
+
+  PathCompletionsAttribute(
+    [string] $root
+  ) {
+    $this.Root = $root
+    $this.Type = [PathItemType]::Any
+    $this.Flat = $false
+    $this.UseNativeDirectorySeparator = $false
+  }
+  PathCompletionsAttribute(
+    [string] $root,
+    [PathItemType] $type
+  ) {
+    $this.Root = $root
+    $this.Type = $type
+    $this.Flat = $false
+    $this.UseNativeDirectorySeparator = $false
+  }
+  PathCompletionsAttribute(
+    [string] $root,
+    [PathItemType] $type,
+    [bool] $flat
+  ) {
+    $this.Root = $root
+    $this.Type = $type
+    $this.Flat = $flat
+    $this.UseNativeDirectorySeparator = $false
+  }
+  PathCompletionsAttribute(
+    [string] $root,
+    [PathItemType] $type,
+    [bool] $flat,
+    [bool] $useNativeDirectorySeparator
+  ) {
+    $this.Root = $root
+    $this.Type = $type
+    $this.Flat = $flat
+    $this.UseNativeDirectorySeparator = $useNativeDirectorySeparator
+  }
+
+  [IArgumentCompleter] Create() {
+    return [PathCompleter]::new(
+      $this.Root,
+      $this.Type,
+      $this.Flat,
+      $this.UseNativeDirectorySeparator
+    )
+  }
+}
 
 <#
 .FORWARDHELPTARGETNAME Clear-Content
@@ -190,191 +377,6 @@ function Resolve-Item {
   }
   else {
     return [string](Resolve-Path -Path $FullPath -Force)
-  }
-}
-
-class PathCompleter : PathCompleterCore {
-
-  PathCompleter(
-
-    [string] $root,
-
-    [PathItemType] $type,
-
-    [bool] $flat,
-
-    [bool] $useNativeDirectorySeparator
-
-  ): base(
-    $root,
-    $type,
-    $flat,
-    $useNativeDirectorySeparator
-  ) {}
-
-  [List[string]] FindPathCompletion(
-    [string] $typedPath
-  ) {
-    $private:completions = [List[string]]::new()
-
-    [hashtable]$private:rootIsContainer = @{
-      Path     = $this.Root
-      PathType = 'Container'
-    }
-    if (-not (Test-Path @rootIsContainer)) {
-      return $completions
-    }
-
-    $private:root = Resolve-Path -Path $this.Root
-
-    [hashtable]$private:matcher = @{}
-    switch ($this.Type) {
-      Directory {
-        $matcher.Directory = $True
-      }
-      File {
-        $matcher.File = $True
-      }
-    }
-
-    [string]$private:typedAtomicContainer = ''
-
-    if ($typedPath) {
-      if ($typedPath.EndsWith([PathCompleter]::NormalDirectorySeparator)) {
-        $typedPath += '*'
-      }
-
-      $typedAtomicContainer = Split-Path $typedPath
-      [string]$private:typedFragment = Split-Path $typedPath -Leaf
-
-      if ($typedFragment -eq '*') {
-        $typedFragment = ''
-      }
-
-      [string]$private:path = Join-Path $private:root $typedAtomicContainer
-
-      if (Test-Path -Path $path -PathType Container) {
-        $matcher.Path = $path
-        $matcher['Filter'] = "$typedFragment*"
-      }
-    }
-
-    if (-not $matcher.Path) {
-      $matcher.Path = $private:root
-    }
-
-    [FileSystemInfo[]]$private:leaves = Get-ChildItem @matcher
-
-    [FileSystemInfo[]]$private:containers, [FileSystemInfo[]]$private:children = $leaves.Where(
-      {
-        $PSItem.PSIsContainer
-      },
-      'Split'
-    )
-
-    [string[]]$private:directories = $containers |
-      Select-Object -ExpandProperty Name
-    [string[]]$private:files = $children |
-      Select-Object -ExpandProperty Name
-
-    if ($typedAtomicContainer -and -not $this.Flat) {
-      $directories += ''
-    }
-
-    if ($typedAtomicContainer) {
-      $directories = $directories |
-        ForEach-Object {
-          Join-Path $typedAtomicContainer $PSItem
-        }
-      $files = $files |
-        ForEach-Object {
-          Join-Path $typedAtomicContainer $PSItem
-        }
-    }
-
-    if (-not $this.Flat) {
-      $directories = $directories |
-        ForEach-Object {
-          $PSItem + [PathCompleter]::NormalDirectorySeparator
-        }
-    }
-
-    $directories = $directories -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator
-    $files = $files -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::NormalDirectorySeparator
-
-    [string]$private:separator = $this.UseNativeDirectorySeparator ? [Path]::DirectorySeparatorChar : [PathCompleter]::EasyDirectorySeparator
-    if ($separator -ne [PathCompleter]::NormalDirectorySeparator) {
-      $directories = $directories -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::EasyDirectorySeparator
-      $files = $files -replace [PathCompleter]::DuplicateDirectorySeparatorPattern, [PathCompleter]::EasyDirectorySeparator
-    }
-
-    if ($directories) {
-      $completions.AddRange(
-        [List[string]]$directories
-      )
-    }
-    if ($files) {
-      $completions.AddRange(
-        [List[string]]$files
-      )
-    }
-
-    return $completions
-  }
-}
-
-class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory {
-  [string] $Root
-  [PathItemType] $Type
-  [bool] $Flat
-  [bool] $UseNativeDirectorySeparator
-
-  PathCompletionsAttribute(
-    [string] $root
-  ) {
-    $this.Root = $root
-    $this.Type = [PathItemType]::Any
-    $this.Flat = $false
-    $this.UseNativeDirectorySeparator = $false
-  }
-  PathCompletionsAttribute(
-    [string] $root,
-    [PathItemType] $type
-  ) {
-    $this.Root = $root
-    $this.Type = $type
-    $this.Flat = $false
-    $this.UseNativeDirectorySeparator = $false
-  }
-  PathCompletionsAttribute(
-    [string] $root,
-    [PathItemType] $type,
-    [bool] $flat
-  ) {
-    $this.Root = $root
-    $this.Type = $type
-    $this.Flat = $flat
-    $this.UseNativeDirectorySeparator = $false
-  }
-  PathCompletionsAttribute(
-    [string] $root,
-    [PathItemType] $type,
-    [bool] $flat,
-    [bool] $useNativeDirectorySeparator
-  ) {
-    $this.Root = $root
-    $this.Type = $type
-    $this.Flat = $flat
-    $this.UseNativeDirectorySeparator = $useNativeDirectorySeparator
-  }
-
-  [IArgumentCompleter] Create() {
-    return [PathCompleter]::new(
-      $this.Root,
-      $this.Type,
-      $this.Flat,
-      $this.UseNativeDirectorySeparator
-    )
   }
 }
 
