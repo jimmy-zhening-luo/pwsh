@@ -33,14 +33,6 @@ class PathCompleter : CompleterBase {
     [bool] $useNativeDirectorySeparator
 
   ) {
-    [hashtable]$private:rootIsContainer = @{
-      Path     = $root
-      PathType = 'Container'
-    }
-    if (-not $root -or -not (Test-Path @rootIsContainer)) {
-      throw [ArgumentException]::new('root')
-    }
-
     $this.Root = $root
     $this.Type = $type
     $this.Flat = $flat
@@ -200,8 +192,18 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
   }
 
   [IArgumentCompleter] Create() {
+    [hashtable]$private:isRootContainer = @{
+      Path     = $this.Root
+      PathType = 'Container'
+    }
+    if (-not $this.Root -or -not (Test-Path @isRootContainer)) {
+      throw [ArgumentException]::new('root')
+    }
+
+    [string]$private:root = Resolve-Path -Path $this.Root
+
     return [PathCompleter]::new(
-      $this.Root,
+      $private:root,
       $this.Type,
       $this.Flat,
       $this.UseNativeDirectorySeparator
