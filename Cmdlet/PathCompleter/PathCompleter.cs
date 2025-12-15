@@ -14,21 +14,35 @@ namespace PathCompleter
     Directory
   }
 
-  public class TestPathCompleter : CompleterBase
+  public abstract class PathCompleterCore : CompleterBase
   {
+    public static char EasyDirectorySeparator = '/';
+
+    public static char NormalDirectorySeparator = '\';
+
+    public static string DuplicateDirectorySeparatorPattern = @"(?<!^)\\+";
+
     private readonly string Root;
     private readonly PathItemType Type;
+    private readonly bool Flat;
+    private readonly bool UseNativeDirectorySeparator;
 
-    public TestPathCompleter(
+    public PathCompleterCore(
       string root,
       PathItemType type,
-      bool sort,
-      bool surrounding
+      bool flat,
+      bool useNativeDirectorySeparator
     )
     {
       Root = root;
       Type = type;
+      Flat = flat;
+      UseNativeDirectorySeparator = useNativeDirectorySeparator;
     }
+
+    public abstract List<string> FindPathCompletion(
+      string typedPath
+    );
 
     public override List<string> FulfillCompletion(
       string parameterName,
@@ -36,7 +50,22 @@ namespace PathCompleter
       IDictionary fakeBoundParameters
     )
     {
-      return new List<string>();
+      string unescapedWordToComplete = Unescape(wordToComplete);
+
+      string normalizedWordToComplete = unescapedWordToComplete.Replace(
+        EasyDirectorySeparator,
+        NormalDirectorySeparator
+      );
+
+      string trimmedWordToComplete = Regex.Replace(
+        normalizedWordToComplete,
+        DuplicateDirectorySeparatorPattern,
+        NormalDirectorySeparator.ToString()
+      );
+
+      return FindPathCompletion(
+        typedPath
+      );
     }
   }
 }
