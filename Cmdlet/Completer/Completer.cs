@@ -223,10 +223,10 @@ namespace Completer
 
   public class TestCompletionsAttribute : ArgumentCompleterAttribute {
 
-    private readonly ScriptBlock Generator;
-    private readonly CompletionCase Case;
-    private readonly bool Sort;
-    private readonly bool Surrounding;
+    public readonly ScriptBlock Generator;
+    public readonly CompletionCase Case;
+    public readonly bool Sort;
+    public readonly bool Surrounding;
 
     public TestCompletionsAttribute(
       ScriptBlock generator,
