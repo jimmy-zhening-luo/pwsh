@@ -220,7 +220,7 @@ namespace Completer
     }
   }
 
-  public class TestCompletionsAttribute : ArgumentCompleterAttribute {
+  public class TestCompletionsAttribute : ArgumentCompleterFactoryAttribute {
 
     private readonly List<string> Domain;
     private readonly CompletionCase Case;
