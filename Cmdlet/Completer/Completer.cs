@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Management.Automation;
 using System.Management.Automation.Language;
 
-namespace CompleterBase
+namespace Completer
 {
   public enum CompletionCase
   {

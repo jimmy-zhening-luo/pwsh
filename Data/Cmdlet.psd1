@@ -1,5 +1,5 @@
 @{
   Cmdlet = @(
-    'CompleterBase'
+    'Completer'
   )
 }
