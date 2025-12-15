@@ -55,19 +55,15 @@ class CompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFacto
   [IArgumentCompleter] Create() {
     $private:unitList = [List[string]]::new()
 
-    [string[]]$private:invokedUnits = Invoke-Command -ScriptBlock $this.Units
+    [string[]]$private:invokedUnits = Invoke-Command -ScriptBlock $this.Units |
+      Where-Object {
+        -not [string]::IsNullOrEmpty($PSItem)
+      }
 
     if ($invokedUnits) {
-      [string[]]$private:cleanedUnits = $invokedUnits.Trim() |
-        Where-Object {
-          -not [string]::IsNullOrEmpty($PSItem)
-        }
-
-      if ($cleanedUnits) {
-        $unitList.AddRange(
-          [List[string]]$cleanedUnits
-        )
-      }
+      $unitList.AddRange(
+        [List[string]]$invokedUnits
+      )
     }
 
     return [Completer]::new(
