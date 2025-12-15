@@ -6,24 +6,6 @@ using namespace System.Management.Automation.Language
 using namespace Completer
 using namespace PathCompleter
 
-class PathSyntax {
-  static [string] $EasyDirectorySeparator = '/'
-
-  static [regex] $EasyDirectorySeparatorPattern = [regex]'/'
-
-  static [string] $NormalDirectorySeparator = '\'
-
-  static [regex] $NormalDirectorySeparatorPattern = [regex]'\\'
-
-  static [regex] $DuplicateDirectorySeparatorPattern = [regex]'(?<!^)\\+'
-
-  static [regex] $DescendantPattern = [regex]'^(?>[.\\]*)$'
-
-  static [regex] $TildeRootedPattern = [regex]'^(?>[.\\]*)$'
-
-  static [regex] $TildeRootPattern = [regex]'^~(?>\\*)'
-}
-
 class PathCompleter : CompleterBase {
 
   [string] $Root
