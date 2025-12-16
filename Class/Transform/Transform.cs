@@ -18,12 +18,12 @@ namespace Transform
       )]
       [AllowEmptyCollection]
       [Alias("Integer")]
-      public UInt64[] Number
+      public UInt32[] Number
       {
         get => numbers;
         set => numbers = value;
       }
-      private UInt64[] numbers;
+      private UInt32[] numbers;
 
       [Parameter]
       [Alias("Case")]
@@ -36,7 +36,7 @@ namespace Transform
 
       protected override void ProcessRecord()
       {
-        foreach (UInt64 number in numbers)
+        foreach (UInt32 number in numbers)
         {
           string hex = number.ToString("X");
           string print = lowercase ? hex.ToLower() : hex;
