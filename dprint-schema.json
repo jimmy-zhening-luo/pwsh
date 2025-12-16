@@ -1,0 +1,15 @@
+{
+  "$id": "https://raw.githubusercontent.com/jimmy-zhening-luo/pwsh/refs/heads/main/dprint-schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "dprint configuration schema",
+  "allOf": [
+    {
+      "$ref": "dprint://schemas/config.json"
+    },
+    {
+      "$ref": "https://raw.githubusercontent.com/jimmy-zhening-luo/pwsh/refs/heads/main/dprint-schema-csharp.json"
+    }
+  ],
+  "additionalProperties": true,
+  "allowTrailingCommas": true
+}
