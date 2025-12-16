@@ -230,49 +230,18 @@ namespace Completer
   [AttributeUsage(AttributeTargets.Parameter)]
   public class StaticCompletionsAttribute(
       string Units,
-      CompletionCase Casing,
-      bool Sort,
-      bool Surrounding
+      CompletionCase? Casing,
+      bool? Sort,
+      bool? Surrounding
     ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
   {
-    StaticCompletionsAttribute(
-      string units
-    ) : this(
-      units,
-      CompletionCase.Preserve,
-      false,
-      true
-    )
-    { }
-    StaticCompletionsAttribute(
-      string units,
-      CompletionCase casing
-    ) : this(
-      units,
-      casing,
-      false,
-      true
-    )
-    { }
-    StaticCompletionsAttribute(
-      string units,
-      CompletionCase casing,
-      bool sort
-    ) : this(
-      units,
-      casing,
-      sort,
-      true
-    )
-    { }
-
     public IArgumentCompleter Create()
     {
       return new Completer(
         [.. Units.Split(",")],
-        Casing,
-        Sort,
-        Surrounding
+        Casing ?? CompletionCase.Lower,
+        Sort ?? false,
+        Surrounding ?? true
       );
     }
   }
