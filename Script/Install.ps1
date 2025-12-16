@@ -22,14 +22,14 @@ param (
   )]
   [AllowEmptyCollection()]
   [ValidateNotNull()]
-  [string[]]$Types,
+  [hashtable[]]$Types,
 
   [Parameter(
     Mandatory
   )]
   [AllowEmptyCollection()]
   [ValidateNotNull()]
-  [string[]]$Modules
+  [hashtable[]]$Modules
 
 )
 
