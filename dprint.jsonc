@@ -15,7 +15,7 @@
     // DOC:[source] https://github.com/dotnet/roslyn/blob/main/src/Workspaces/CSharp/Portable/Formatting/CSharpFormattingOptions.cs
     "csharp.indentBlock": true,
     "csharp.indentBraces": false,
-    "csharp.indentSwitchSection": false,
+    "csharp.indentSwitchSection": true,
     "csharp.indentSwitchCaseSection": true,
     "csharp.indentSwitchCaseSectionWhenBlock": true,
     "csharp.newLineForElse": true,
@@ -56,9 +56,9 @@
     "csharp.spaceWithinMethodDeclarationParenthesis": false,
     "csharp.spaceWithinOtherParentheses": false,
     "csharp.spaceWithinSquareBrackets": false,
-    // "csharp.spacingAfterMethodDeclarationName": true,
+    "csharp.spacingAfterMethodDeclarationName": false,
     "csharp.spacingAroundBinaryOperator": "Single" /* 0 */,
-    // "csharp.wrappingKeepStatementsOnSingleLine": true,
-    // "csharp.wrappingPreserveSingleLine": true,
+    "csharp.wrappingKeepStatementsOnSingleLine": true,
+    "csharp.wrappingPreserveSingleLine": true,
   },
 }
