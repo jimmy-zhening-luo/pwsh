@@ -19,8 +19,8 @@ namespace Completer
     {
       return (
         escapedText.Length > 1
-        && escapedText.StartsWith("'")
-        && escapedText.EndsWith("'")
+        && escapedText.StartsWith('\'')
+        && escapedText.EndsWith('\'')
       )
         ? escapedText.Substring(
             1,
