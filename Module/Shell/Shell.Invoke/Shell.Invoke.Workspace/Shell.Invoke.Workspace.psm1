@@ -8,10 +8,14 @@ function Invoke-Workspace {
 
     [PathCompletions('.')]
     [string]$Path,
+
     [Alias('Name')]
     [string]$ProfileName,
+
     [switch]$Window,
+
     [switch]$ReuseWindow,
+
     [string]$Location
 
   )
