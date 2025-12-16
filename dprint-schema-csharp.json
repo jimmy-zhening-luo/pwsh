@@ -6,19 +6,6 @@
     "roslyn": {
       "type": "object",
       "properties": {
-        "$help": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          ]
-        },
         "csharp.indentBlock": {
           "type": "boolean"
         },
