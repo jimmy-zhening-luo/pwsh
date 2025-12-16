@@ -284,49 +284,8 @@ function Invoke-WorkspaceCode {
   Invoke-Workspace @PSBoundParameters @Location
 }
 
-function Invoke-WorkspaceDrive {
-
-  [CmdletBinding()]
-
-  [OutputType([void])]
-
-  param(
-
-    [Parameter(
-      Position = 0
-    )]
-    [AllowEmptyString()]
-    [PathCompletions('\')]
-    [string]$Path,
-
-    [Parameter(
-      Position = 1
-    )]
-    [AllowEmptyString()]
-    [string]$Name,
-
-    [Parameter(
-      Position = 2,
-      ValueFromRemainingArguments
-    )]
-    [string[]]$CodeArgument,
-
-    [switch]$Window,
-
-    [Alias('rw')]
-    [switch]$ReuseWindow
-
-  )
-
-  [hashtable]$Private:Location = @{
-    Location = $PWD.Drive.Root
-  }
-  Invoke-Workspace @PSBoundParameters @Location
-}
-
 New-Alias i Invoke-Workspace
 New-Alias i. Invoke-WorkspaceSibling
 New-Alias i.. Invoke-WorkspaceRelative
 New-Alias ih Invoke-WorkspaceHome
 New-Alias ic Invoke-WorkspaceCode
-New-Alias i/ Invoke-WorkspaceDrive

@@ -14,7 +14,6 @@
     'Invoke-WorkspaceRelative'
     'Invoke-WorkspaceHome'
     'Invoke-WorkspaceCode'
-    'Invoke-WorkspaceDrive'
   )
   CmdletsToExport      = @()
   VariablesToExport    = @()
@@ -24,6 +23,5 @@
     'i..'
     'ih'
     'ic'
-    'i/'
   )
 }
