@@ -58,7 +58,7 @@
     "csharp.spaceWithinSquareBrackets": false,
     "csharp.spacingAfterMethodDeclarationName": false,
     "csharp.spacingAroundBinaryOperator": "Single" /* 0 */,
-    // "csharp.wrappingKeepStatementsOnSingleLine": false,
-    // "csharp.wrappingPreserveSingleLine": false,
+    "csharp.wrappingKeepStatementsOnSingleLine": true,
+    "csharp.wrappingPreserveSingleLine": true,
   },
 }
