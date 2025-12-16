@@ -1,7 +1,7 @@
 {
   "$id": "https://raw.githubusercontent.com/jimmy-zhening-luo/pwsh/refs/heads/main/dprint-schema-csharp.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "dprint C# Rosalyn plugin rules schema",
+  "title": "dprint C# Roslyn plugin rules schema",
   "properties": {
     "roslyn": {
       "type": "object",
