@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Management.Automation;
 using System.Management.Automation.Language;
 
@@ -220,6 +221,56 @@ namespace Completer
         wordToComplete,
         Domain,
         Case,
+        Sort,
+        Surrounding
+      );
+    }
+  }
+
+  [AttributeUsage(AttributeTargets.Parameter)]
+  public class TestCompletionsAttribute(
+      string Units,
+      CompletionCase Casing,
+      bool Sort,
+      bool Surrounding
+    ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
+  {
+    TestCompletionsAttribute(
+      string units
+    ) : this(
+      units,
+      CompletionCase.Preserve,
+      false,
+      true
+    )
+    { }
+    TestCompletionsAttribute(
+      string units,
+      CompletionCase casing
+    ) : this(
+      units,
+      casing,
+      false,
+      true
+    )
+    { }
+    TestCompletionsAttribute(
+      string units,
+      CompletionCase casing,
+      bool sort
+    ) : this(
+      units,
+      casing,
+      sort,
+      true
+    )
+    { }
+
+    public IArgumentCompleter Create()
+    {
+      return new Completer(
+        [.. Units.Split(",")],
+        Casing,
         Sort,
         Surrounding
       );
