@@ -6,7 +6,7 @@ using System.Management.Automation;
 using System.Management.Automation.Language;
 using System.Text.RegularExpressions;
 
-namespace PathCompleter
+namespace Transform
 {
   namespace Commands
   {
