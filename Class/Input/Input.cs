@@ -20,10 +20,8 @@ namespace Input
         && escapedText.StartsWith(Quote)
         && escapedText.EndsWith(Quote)
       )
-        ? escapedText.Substring(
-            1,
-            escapedText.Length - 2
-          ).Replace(
+        ? escapedText[1..^1]
+          .Replace(
             EscapedQuoteString,
             QuoteString
           )

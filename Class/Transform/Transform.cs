@@ -44,7 +44,9 @@ namespace Transform
         )
         {
           string hex = number.ToString("X");
-          string print = lowercase ? hex.ToLower() : hex;
+          string print = lowercase
+            ? hex.ToLower()
+            : hex;
 
           WriteObject(print, true);
         }

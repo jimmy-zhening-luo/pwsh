@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Language;
 using Input;
@@ -24,79 +25,78 @@ namespace Completer
       bool surrounding = false
     )
     {
-      List<string> completions = new List<string>();
-      List<string> domainCased = new List<string>();
-
-      if (domain.Count != 0)
+      List<string> ordinalDomain = domain.Count == 0 ? [] : caseOption switch
       {
-        switch (caseOption)
-        {
-          case CompletionCase.Upper:
-            foreach (string member in domain)
-            {
-              domainCased.Add(member.ToUpperInvariant());
-            }
-            break;
-          case CompletionCase.Lower:
-            foreach (string member in domain)
-            {
-              domainCased.Add(member.ToLowerInvariant());
-            }
-            break;
-          default:
-            domainCased.AddRange(domain);
-            break;
-        }
-      }
+        CompletionCase.Upper => [
+          ..domain.Select(member => member.ToUpperInvariant())
+        ],
+        CompletionCase.Lower => [
+          ..domain.Select(member => member.ToLowerInvariant())
+        ],
+        _ => domain,
+      };
 
       if (sort)
       {
-        domainCased.Sort();
+        ordinalDomain.Sort();
       }
+
+      List<string> completions = [];
 
       string typed = Text.Unescape(wordToComplete);
 
-      if (!string.IsNullOrWhiteSpace(typed))
+      if (string.IsNullOrWhiteSpace(typed))
       {
-        foreach (string member in domainCased)
+        if (ordinalDomain.Count != 0)
         {
-          if (member.StartsWith(typed, StringComparison.OrdinalIgnoreCase))
-          {
-            completions.Add(member);
-          }
-        }
-
-        if (
-          surrounding
-          && (
-            completions.Count == 0
-            || (
-              completions.Count == 1
-              && completions[0].Equals(
-                typed,
-                StringComparison.OrdinalIgnoreCase
-              )
-            )
-          )
-        )
-        {
-          foreach (string member in domainCased)
-          {
-            if (
-              member.IndexOf(typed, StringComparison.OrdinalIgnoreCase) >= 0
-              && !member.Equals(typed, StringComparison.OrdinalIgnoreCase)
-            )
-            {
-              completions.Add(member);
-            }
-          }
+          completions.AddRange(ordinalDomain);
         }
       }
       else
       {
-        if (domainCased.Count != 0)
+        completions.AddRange(
+          ordinalDomain.Where(
+            member => member.Equals(
+              typed,
+              StringComparison.OrdinalIgnoreCase
+            )
+          )
+        );
+
+        bool hasExactMatch = completions.Count != 0;
+
+        completions.AddRange(
+          ordinalDomain.Where(
+            member => member.StartsWith(
+                typed,
+                StringComparison.Ordinal
+              )
+              && !member.Equals(
+                typed,
+                StringComparison.OrdinalIgnoreCase
+              )
+          )
+        );
+
+        if (surrounding)
         {
-          completions.AddRange(domainCased);
+          if (
+            completions.Count == 0
+            || completions.Count == 1 && hasExactMatch
+          )
+          {
+            completions.InsertRange(
+              0,
+              ordinalDomain.Where(
+                member => !member.StartsWith(typed)
+                  && member.Contains(
+                    typed,
+                    StringComparison.OrdinalIgnoreCase
+                  )
+              )
+            );
+          }
+
         }
       }
 
@@ -107,7 +107,7 @@ namespace Completer
       List<string> completions
     )
     {
-      List<CompletionResult> completionResults = new List<CompletionResult>();
+      List<CompletionResult> completionResults = [];
 
       foreach (string completion in completions)
       {
@@ -161,26 +161,22 @@ namespace Completer
       bool surrounding
     )
     {
-      HashSet<string> set = new HashSet<string>(
+      HashSet<string> set = new
+      (
+        span
+          .Select(s => s.Trim())
+          .Where(
+            trimmedCandidate => trimmedCandidate != string.Empty
+          ),
         StringComparer.OrdinalIgnoreCase
       );
-
-      foreach (string candidate in span)
-      {
-        string trimmedCandidate = candidate.Trim();
-
-        if (trimmedCandidate != string.Empty)
-        {
-          set.Add(trimmedCandidate);
-        }
-      }
 
       if (set.Count == 0)
       {
         throw new ArgumentException("domain");
       }
 
-      Domain = new List<string>(set);
+      Domain = [.. set];
       Case = casing;
       Sort = sort;
       Surrounding = surrounding;
@@ -232,7 +228,7 @@ namespace Completer
     public IArgumentCompleter Create()
     {
       var invokedUnits = Units.Invoke();
-      List<string> unitList = new List<string>();
+      List<string> unitList = [];
 
       foreach (var unit in invokedUnits)
       {

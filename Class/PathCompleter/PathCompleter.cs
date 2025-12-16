@@ -60,14 +60,14 @@ namespace PathCompleter
         ? Regex.Replace(
             normalPath,
             CurrentRelativePattern,
-            String.Empty
+            string.Empty
           )
         : normalPath;
       string trimmedNormalPath = trimTrailing
         ? Regex.Replace(
             pretrimmedNormalPath,
             TrailingSeparatorPattern,
-            String.Empty
+            string.Empty
           )
         : pretrimmedNormalPath;
 
