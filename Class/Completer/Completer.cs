@@ -236,7 +236,34 @@ namespace Completer
     public IArgumentCompleter Create()
     {
       return new Completer(
-        new List<string>(Units.Split(",")),
+          [.. Units.Split(",")],
+        Casing ?? CompletionCase.Preserve,
+        Sort ?? false,
+        Surrounding ?? true
+      );
+    }
+  }
+
+  [AttributeUsage(AttributeTargets.Parameter)]
+  public class DynamicCompletionsAttribute(
+      ScriptBlock Units,
+      CompletionCase? Casing,
+      bool? Sort,
+      bool? Surrounding
+    ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
+  {
+    public IArgumentCompleter Create()
+    {
+      var invokedUnits = Units.Invoke();
+      List<string> unitList = new List<string>();
+
+      foreach (var unit in invokedUnits)
+      {
+        unitList.Add(unit.BaseObject.ToString());
+      }
+
+      return new Completer(
+        [.. unitList],
         Casing ?? CompletionCase.Preserve,
         Sort ?? false,
         Surrounding ?? true
