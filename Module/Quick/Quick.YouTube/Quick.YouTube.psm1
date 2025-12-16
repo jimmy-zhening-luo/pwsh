@@ -32,7 +32,7 @@ function Get-YouTube {
     '?v=' + $Matches.Video
   ).Uri : [uri]$Video
 
-  if (Browse\Test-Url -Uri $VideoUri) {
+  if (Test-Url -Uri $VideoUri) {
     & yt-dlp.exe @args -- [string]$VideoUri
 
     if ($LASTEXITCODE -ne 0) {
@@ -151,11 +151,11 @@ function Invoke-YouTubeConfig {
   param()
 
   [hashtable]$Private:YouTubeConfig = @{
-    Path        = 'util\bin\yt\yt-dlp.conf'
-    ProfileName = 'Setting'
-    Window      = $True
+    Path   = 'util\bin\yt\yt-dlp.conf'
+    Name   = 'Setting'
+    Window = $True
   }
-  Shell\Invoke-WorkspaceHome @YouTubeConfig @args
+  Shell\Invoke-WorkspaceHome @YouTubeConfig
 }
 
 New-Alias yt Get-YouTube
