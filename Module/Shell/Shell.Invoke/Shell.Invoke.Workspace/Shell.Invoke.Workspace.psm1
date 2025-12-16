@@ -102,9 +102,12 @@ function Invoke-WorkspaceSibling {
 
     [PathCompletions('..')]
     [string]$Path,
+
     [Alias('Name', 'pn')]
     [string]$ProfileName,
+
     [switch]$Window,
+
     [Alias('rw')]
     [switch]$ReuseWindow
 
@@ -124,9 +127,12 @@ function Invoke-WorkspaceRelative {
 
     [PathCompletions('..\..')]
     [string]$Path,
+
     [Alias('Name', 'pn')]
     [string]$ProfileName,
+
     [switch]$Window,
+
     [Alias('rw')]
     [switch]$ReuseWindow
 
@@ -146,9 +152,12 @@ function Invoke-WorkspaceHome {
 
     [PathCompletions('~')]
     [string]$Path,
+
     [Alias('Name', 'pn')]
     [string]$ProfileName,
+
     [switch]$Window,
+
     [Alias('rw')]
     [switch]$ReuseWindow
 
@@ -168,9 +177,12 @@ function Invoke-WorkspaceCode {
 
     [PathCompletions('~\code')]
     [string]$Path,
+
     [Alias('Name', 'pn')]
     [string]$ProfileName,
+
     [switch]$Window,
+
     [Alias('rw')]
     [switch]$ReuseWindow
 
@@ -190,9 +202,12 @@ function Invoke-WorkspaceDrive {
 
     [PathCompletions('\')]
     [string]$Path,
+
     [Alias('Name', 'pn')]
     [string]$ProfileName,
+
     [switch]$Window,
+
     [Alias('rw')]
     [switch]$ReuseWindow
 
