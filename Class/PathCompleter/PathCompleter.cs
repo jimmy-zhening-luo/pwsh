@@ -42,7 +42,7 @@ namespace PathCompleter
 
     public static string DuplicateDirectorySeparatorPattern = @"(?<!^)\\+";
 
-    public static string DescendantPattern = @"^(?>[.\\]*)$";
+    public static string DescendantPattern = @"^(?=(?>[.\\]*)$)";
 
     public static string TildeRootedPattern = @"^(?=~(?>$|\\))";
 
