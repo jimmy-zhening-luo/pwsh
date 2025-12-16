@@ -3,6 +3,7 @@ using namespace System.Collections
 using namespace System.Collections.Generic
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
+using namespace Input
 using namespace Completer
 using namespace PathCompleter
 
@@ -46,7 +47,7 @@ class PathCompleter : CompleterBase {
       }
     }
 
-    [string]$private:currentValue = [PathCompleter]::Unescape($wordToComplete)
+    [string]$private:currentValue = [Text]::Unescape($wordToComplete)
 
     [string]$private:currentPathValue = $currentValue -replace [regex][PathSyntax]::FriendlyDirectorySeparatorPattern, [PathSyntax]::DirectorySeparator -replace [regex][PathSyntax]::DuplicateDirectorySeparatorPattern, [PathSyntax]::DirectorySeparator
 

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Management.Automation;
 using System.Management.Automation.Language;
+using Input;
 
 namespace Completer
 {
@@ -15,30 +16,6 @@ namespace Completer
 
   public abstract class CompleterBase : IArgumentCompleter
   {
-    public static string Unescape(string escapedText)
-    {
-      return (
-        escapedText.Length > 1
-        && escapedText.StartsWith('\'')
-        && escapedText.EndsWith('\'')
-      )
-        ? escapedText.Substring(
-            1,
-            escapedText.Length - 2
-          ).Replace(
-            "''",
-            "'"
-          )
-        : escapedText;
-    }
-
-    public static string Escape(string text)
-    {
-      return text.Contains(" ")
-        ? "'" + CodeGeneration.EscapeSingleQuotedStringContent(text) + "'"
-        : text;
-    }
-
     public static List<string> FindCompletion(
       string wordToComplete,
       List<string> domain,
@@ -77,7 +54,7 @@ namespace Completer
         domainCased.Sort();
       }
 
-      string typed = Unescape(wordToComplete);
+      string typed = Text.Unescape(wordToComplete);
 
       if (!string.IsNullOrWhiteSpace(typed))
       {
@@ -136,7 +113,7 @@ namespace Completer
       {
         completionResults.Add(
           new CompletionResult(
-            Escape(
+            Text.Escape(
               completion
             )
           )
