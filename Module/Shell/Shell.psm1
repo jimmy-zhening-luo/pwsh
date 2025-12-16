@@ -48,14 +48,14 @@ class PathCompleter : CompleterBase {
 
     [string]$private:currentValue = [PathCompleter]::Unescape($wordToComplete)
 
-    [string]$private:currentPathValue = $currentValue -replace [regex][PathSyntax]::EasyDirectorySeparatorPattern, [PathSyntax]::NormalDirectorySeparator -replace [regex][PathSyntax]::DuplicateDirectorySeparatorPattern, [PathSyntax]::NormalDirectorySeparator
+    [string]$private:currentPathValue = $currentValue -replace [regex][PathSyntax]::FriendlyDirectorySeparatorPattern, [PathSyntax]::DirectorySeparator -replace [regex][PathSyntax]::DuplicateDirectorySeparatorPattern, [PathSyntax]::DirectorySeparator
 
     [string]$private:currentDirectoryValue = ''
 
     if ($currentPathValue) {
       if (
         $currentPathValue.EndsWith(
-          [PathSyntax]::NormalDirectorySeparator
+          [PathSyntax]::DirectorySeparator
         )
       ) {
         $currentPathValue += '*'
@@ -113,16 +113,16 @@ class PathCompleter : CompleterBase {
       $directories = $directories |
         ForEach-Object {
           $PSItem.EndsWith(
-            [PathSyntax]::NormalDirectorySeparator
-          ) ? $PSItem :   $PSItem + [PathSyntax]::NormalDirectorySeparator
+            [PathSyntax]::DirectorySeparator
+          ) ? $PSItem :   $PSItem + [PathSyntax]::DirectorySeparator
         }
     }
 
-    $directories = $directories -replace [regex][PathSyntax]::DuplicateDirectorySeparatorPattern, [PathSyntax]::NormalDirectorySeparator
-    $files = $files -replace [regex][PathSyntax]::DuplicateDirectorySeparatorPattern, [PathSyntax]::NormalDirectorySeparator
+    $directories = $directories -replace [regex][PathSyntax]::DuplicateDirectorySeparatorPattern, [PathSyntax]::DirectorySeparator
+    $files = $files -replace [regex][PathSyntax]::DuplicateDirectorySeparatorPattern, [PathSyntax]::DirectorySeparator
 
-    [string]$private:separator = $this.UseNativeDirectorySeparator ? [Path]::DirectorySeparatorChar : [PathSyntax]::EasyDirectorySeparator
-    if ($separator -ne [PathSyntax]::NormalDirectorySeparator) {
+    [string]$private:separator = $this.UseNativeDirectorySeparator ? [Path]::DirectorySeparatorChar : [PathSyntax]::FriendlyDirectorySeparator
+    if ($separator -ne [PathSyntax]::DirectorySeparator) {
       $directories = $directories -replace [regex][PathSyntax]::DuplicateDirectorySeparatorPattern, $separator
       $files = $files -replace [regex][PathSyntax]::DuplicateDirectorySeparatorPattern, $separator
     }
@@ -368,7 +368,7 @@ function Test-Item {
   [bool]$Private:HasSubpath = $FullPath.Substring($FullLocation.Length) -notmatch [regex]'^\\*$'
   [bool]$Private:FileLike = $HasSubpath -and -not (
     $FullPath.EndsWith(
-      [PathSyntax]::NormalDirectorySeparator
+      [PathSyntax]::DirectorySeparator
     ) -or $FullPath.EndsWith('..')
   )
 

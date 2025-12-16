@@ -30,9 +30,9 @@ namespace PathCompleter
   public static class PathSyntax
   {
     public readonly static string DirectorySeparator = @"\";
-    public readonly static string EasyDirectorySeparator = "/";
+    public readonly static string FriendlyDirectorySeparator = "/";
     public readonly static string DirectorySeparatorPattern = @"\\";
-    public readonly static string EasyDirectorySeparatorPattern = "/";
+    public readonly static string FriendlyDirectorySeparatorPattern = "/";
     public readonly static string DuplicateDirectorySeparatorPattern = @"(?<!^)\\\\+";
     public readonly static string DescendantPattern = @"^(?=(?>[.\\]*)$)";
     public readonly static string TildeRootedPattern = @"^(?=~(?>$|\\))";
@@ -49,7 +49,7 @@ namespace PathCompleter
     {
       string normalPath = Regex.Replace(
         path.Replace(
-          EasyDirectorySeparator,
+          FriendlyDirectorySeparator,
           DirectorySeparator
         ),
         DuplicateDirectorySeparatorPattern,
