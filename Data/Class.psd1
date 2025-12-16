@@ -3,5 +3,7 @@
     'Completer'
     'PathCompleter'
   )
-  Modules = @()
+  Modules = @(
+    'Transform'
+  )
 }
