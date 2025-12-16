@@ -201,7 +201,7 @@ function Update-PSProfile {
       Path = "$ProjectBaseName.cs"
     }
     [hashtable]$Private:Manifest = @{
-      Path = "$ProjectBaseName.psd1"
+      Path = "$ProjectBaseName.csproj"
     }
 
     [hashtable]$Private:Built = @{
