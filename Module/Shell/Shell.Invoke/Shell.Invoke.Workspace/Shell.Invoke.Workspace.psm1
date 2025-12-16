@@ -8,24 +8,41 @@ function Invoke-Workspace {
 
   param(
 
+    [Parameter(
+      Position = 0
+    )]
+    [AllowEmptyString()]
     [PathCompletions('.')]
     [string]$Path,
 
-    [Alias('Name')]
-    [string]$ProfileName,
+    [Parameter(
+      Position = 1
+    )]
+    [AllowEmptyString()]
+    [string]$Name,
+
+    [Parameter(
+      Position = 2,
+      ValueFromRemainingArguments
+    )]
+    [string[]]$CodeArgument,
+
+    [Parameter()]
+    [AllowEmptyString()]
+    [string]$Location,
 
     [switch]$Window,
 
     [switch]$ReuseWindow,
 
-    [string]$Location
+    [switch]$Empty
 
   )
 
   [List[string]]$Private:ArgumentList = [List[string]]::new()
-  if ($args) {
+  if ($CodeArgument) {
     $ArgumentList.AddRange(
-      [List[string]]$args
+      [List[string]]$CodeArgument
     )
   }
 
@@ -39,44 +56,54 @@ function Invoke-Workspace {
   }
 
   if ($Path) {
-    [string]$Private:Target = $Location ? (Join-Path $Location $Path) : $Path
-
+    [string]$Private:Target = $Location ? (
+      Join-Path $Location $Path
+    ) : $Path
     if (Test-Path -Path $Target) {
-      [string]$Private:FullPath = (Resolve-Path $Target).Path
-
-      $ArgumentList.Insert(0, $FullPath)
+      $ArgumentList.Insert(
+        0,
+        [string](Resolve-Path -Path $Target).Path
+      )
     }
     else {
       if (-not $Path.StartsWith('-')) {
-        throw "Path '$Target' does not exist."
+        throw "Path '$Path' does not exist."
       }
 
-      if (-not $Location) {
-        $Location = $PWD.Path
-      }
-
-      $ArgumentList.Insert(0, $Location)
+      $ArgumentList.Insert(0, $Path)
+      $Path = ''
     }
   }
-  else {
-    if (-not $Location) {
-      $Location = $PWD.Path
-    }
 
-    $ArgumentList.Insert(0, $Location)
+  if (-not $Path) {
+    if (-not $ReuseWindow -and ($Empty -or -not $Location)) {
+      #
+    }
+    else {
+      $ArgumentList.Insert(
+        0,
+        [string](
+          $Location ? (
+            Resolve-Path -Path $Location
+          ) : (
+            $PWD
+          )
+        ).Path
+      )
+    }
   }
 
   if ($env:SSH_CLIENT) {
     throw 'Cannot open VSCode from SSH session'
   }
 
-  if ($ProfileName) {
+  if ($Name) {
     $Window = $True
     $ArgumentList.Add(
-      $ProfileName.StartsWith('-') ? (
-        $ProfileName
+      $Name.StartsWith('-') ? (
+        $Name
       ) : (
-        "--profile=$ProfileName"
+        "--profile=$Name"
       )
     )
   }
@@ -104,11 +131,24 @@ function Invoke-WorkspaceSibling {
 
   param(
 
+    [Parameter(
+      Position = 0
+    )]
+    [AllowEmptyString()]
     [PathCompletions('..')]
     [string]$Path,
 
-    [Alias('Name', 'pn')]
-    [string]$ProfileName,
+    [Parameter(
+      Position = 1
+    )]
+    [AllowEmptyString()]
+    [string]$Name,
+
+    [Parameter(
+      Position = 2,
+      ValueFromRemainingArguments
+    )]
+    [string[]]$CodeArgument,
 
     [switch]$Window,
 
@@ -119,8 +159,9 @@ function Invoke-WorkspaceSibling {
 
   [hashtable]$Private:Location = @{
     Location = Split-Path $PWD.Path
+    Empty = $True
   }
-  Invoke-Workspace @PSBoundParameters @Location @args
+  Invoke-Workspace @PSBoundParameters @Location
 }
 
 function Invoke-WorkspaceRelative {
@@ -131,11 +172,24 @@ function Invoke-WorkspaceRelative {
 
   param(
 
+    [Parameter(
+      Position = 0
+    )]
+    [AllowEmptyString()]
     [PathCompletions('..\..')]
     [string]$Path,
 
-    [Alias('Name', 'pn')]
-    [string]$ProfileName,
+    [Parameter(
+      Position = 1
+    )]
+    [AllowEmptyString()]
+    [string]$Name,
+
+    [Parameter(
+      Position = 2,
+      ValueFromRemainingArguments
+    )]
+    [string[]]$CodeArgument,
 
     [switch]$Window,
 
@@ -147,7 +201,7 @@ function Invoke-WorkspaceRelative {
   [hashtable]$Private:Location = @{
     Location = $PWD.Path | Split-Path | Split-Path
   }
-  Invoke-Workspace @PSBoundParameters @Location @args
+  Invoke-Workspace @PSBoundParameters @Location
 }
 
 function Invoke-WorkspaceHome {
@@ -158,11 +212,24 @@ function Invoke-WorkspaceHome {
 
   param(
 
+    [Parameter(
+      Position = 0
+    )]
+    [AllowEmptyString()]
     [PathCompletions('~')]
     [string]$Path,
 
-    [Alias('Name', 'pn')]
-    [string]$ProfileName,
+    [Parameter(
+      Position = 1
+    )]
+    [AllowEmptyString()]
+    [string]$Name,
+
+    [Parameter(
+      Position = 2,
+      ValueFromRemainingArguments
+    )]
+    [string[]]$CodeArgument,
 
     [switch]$Window,
 
@@ -174,7 +241,7 @@ function Invoke-WorkspaceHome {
   [hashtable]$Private:Location = @{
     Location = $HOME
   }
-  Invoke-Workspace @PSBoundParameters @Location @args
+  Invoke-Workspace @PSBoundParameters @Location
 }
 
 function Invoke-WorkspaceCode {
@@ -185,11 +252,24 @@ function Invoke-WorkspaceCode {
 
   param(
 
+    [Parameter(
+      Position = 0
+    )]
+    [AllowEmptyString()]
     [PathCompletions('~\code')]
     [string]$Path,
 
-    [Alias('Name', 'pn')]
-    [string]$ProfileName,
+    [Parameter(
+      Position = 1
+    )]
+    [AllowEmptyString()]
+    [string]$Name,
+
+    [Parameter(
+      Position = 2,
+      ValueFromRemainingArguments
+    )]
+    [string[]]$CodeArgument,
 
     [switch]$Window,
 
@@ -201,7 +281,7 @@ function Invoke-WorkspaceCode {
   [hashtable]$Private:Location = @{
     Location = "$HOME\code"
   }
-  Invoke-Workspace @PSBoundParameters @Location @args
+  Invoke-Workspace @PSBoundParameters @Location
 }
 
 function Invoke-WorkspaceDrive {
@@ -223,8 +303,7 @@ function Invoke-WorkspaceDrive {
       Position = 1
     )]
     [AllowEmptyString()]
-    [Alias('Name', 'pn')]
-    [string]$ProfileName,
+    [string]$Name,
 
     [Parameter(
       Position = 2,
@@ -242,7 +321,7 @@ function Invoke-WorkspaceDrive {
   [hashtable]$Private:Location = @{
     Location = $PWD.Drive.Root
   }
-  Invoke-Workspace @PSBoundParameters @Location @args
+  Invoke-Workspace @PSBoundParameters @Location
 }
 
 New-Alias i Invoke-Workspace
