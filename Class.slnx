@@ -2,5 +2,6 @@
   <Folder Name="/Class/">
     <Project Path="Class/Completer/Completer.csproj" />
     <Project Path="Class/PathCompleter/PathCompleter.csproj" />
+    <Project Path="Class/Transform/Transform.csproj" />
   </Folder>
 </Solution>
