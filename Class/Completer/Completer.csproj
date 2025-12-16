@@ -5,6 +5,6 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="PowerShellStandard.Library" Version="5.1.1.0" PrivateAssets="All"/>
-    <PackageReference Include="System.Management.Automation" Version="7.4.0" PrivateAssets="All"/>
+    <PackageReference Include="System.Management.Automation" Version="7.4.13" PrivateAssets="All"/>
   </ItemGroup>
 </Project>
