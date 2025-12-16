@@ -275,18 +275,9 @@ function Get-CommandAlias {
       Position = 1
     )]
     [SupportsWildcards()]
-    [Completions(
-      {
-        return @(
-          'Global'
-          'Local'
-          'Script'
-          '0'
-          '1'
-          '2'
-          '3'
-        )
-      }
+    [StaticCompletions(
+      'Global,Local,Script,0,1,2,3',
+      $null, $null, $null
     )]
     # Specifies the scope for which this cmdlet gets aliases. The acceptable values for this parameter are: Global, Local, Script, and a positive integer relative to the current scope (0 through the number of scopes, where 0 is the current scope and 1 is its parent). Global is the default, which differs from Get-Alias where Local is the default.
     [string]$Scope,
