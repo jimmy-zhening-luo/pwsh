@@ -52,7 +52,7 @@ function Invoke-PSProfile {
   [hashtable]$Private:CodeEdit = @{
     FilePath     = "$HOME\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd"
     ArgumentList = @(
-      [string](Get-PSReadLineOption).HistorySavePath
+      "$HOME\code\pwsh"
       '--profile=Default'
     )
     NoNewWindow  = $True
