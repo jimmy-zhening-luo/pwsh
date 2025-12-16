@@ -13,6 +13,6 @@
     // $help: https://learn.microsoft.com/en-us/dotnet/api/microsoft.codeanalysis.csharp.formatting.csharpformattingoptions#properties
     // DOC:[source] https://github.com/dotnet/roslyn/blob/main/src/Workspaces/CSharp/Portable/Formatting/CSharpFormattingOptions.cs
     "csharp.indentBlock": false,
-    "csharp.indentBraces": true,
+    "csharp.indentBraces": false,
   },
 }
