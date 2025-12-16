@@ -194,7 +194,7 @@ namespace Completer
       {
         string trimmedCandidate = candidate.Trim();
 
-        if (trimmedCandidate != String.Empty)
+        if (trimmedCandidate != string.Empty)
         {
           set.Add(trimmedCandidate);
         }
@@ -238,8 +238,8 @@ namespace Completer
     public IArgumentCompleter Create()
     {
       return new Completer(
-        [.. Units.Split(",")],
-        Casing ?? CompletionCase.Lower,
+        new List<string>(Units.Split(",")),
+        Casing ?? CompletionCase.Preserve,
         Sort ?? false,
         Surrounding ?? true
       );

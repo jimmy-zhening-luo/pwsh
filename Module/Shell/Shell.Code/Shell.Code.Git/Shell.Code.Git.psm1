@@ -1,4 +1,5 @@
 using namespace System.Collections.Generic
+using namespace Completer
 using namespace PathCompleter
 
 function Resolve-GitRepository {
@@ -123,34 +124,9 @@ function Invoke-GitRepository {
 
   param(
 
-    [Completions(
-      {
-        return @(
-          'switch'
-          'merge'
-          'diff'
-          'stash'
-          'tag'
-          'config'
-          'remote'
-          'submodule'
-          'fetch'
-          'checkout'
-          'branch'
-          'rm'
-          'mv'
-          'ls-files'
-          'ls-tree'
-          'init'
-          'status'
-          'clone'
-          'pull'
-          'add'
-          'commit'
-          'push'
-          'reset'
-        )
-      }
+    [StaticCompletions(
+      'switch,merge,diff,stash,tag,config,remote,submodule,fetch,checkout,branch,rm,mv,ls-files,ls-tree,init,status,clone,pull,add,commit,push,reset',
+      $null, $null, $null
     )]
     # Git command to run.
     [string]$Verb,

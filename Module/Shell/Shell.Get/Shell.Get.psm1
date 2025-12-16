@@ -1,5 +1,6 @@
 using namespace System.IO
 using namespace System.Collections.Generic
+using namespace Completer
 
 enum DiskSizeUnit {
   B
@@ -63,10 +64,9 @@ function Get-Size {
       ParameterSetName = 'Number',
       Position = 1
     )]
-    [Completions(
-      {
-        return [DiskSizeUnit].GetEnumNames()
-      }
+    [StaticCompletions(
+      'b,kb,mb,gb,tb,pb',
+      $null, $null, $null
     )]
     # The unit in which to return the size.
     [string]$Unit,

@@ -1,5 +1,6 @@
 using namespace System.Collections.Generic
 using namespace System.Management.Automation
+using namespace Completer
 using namespace PathCompleter
 
 <#
@@ -230,79 +231,9 @@ function Invoke-NodePackage {
     [Parameter(
       Position = 0
     )]
-    [Completions(
-      {
-        return @(
-          'pkg'
-          'i'
-          'it'
-          'cit'
-          'rm'
-          'access'
-          'adduser'
-          'audit'
-          'bugs'
-          'cache'
-          'ci'
-          'completion'
-          'config'
-          'dedupe'
-          'deprecate'
-          'diff'
-          'dist-tag'
-          'docs'
-          'doctor'
-          'edit'
-          'exec'
-          'explain'
-          'explore'
-          'find-dupes'
-          'fund'
-          'help'
-          'help-search'
-          'init'
-          'install'
-          'install-ci-test'
-          'install-test'
-          'link'
-          'login'
-          'logout'
-          'ls'
-          'org'
-          'outdated'
-          'owner'
-          'pack'
-          'ping'
-          'prefix'
-          'profile'
-          'prune'
-          'publish'
-          'query'
-          'rebuild'
-          'repo'
-          'restart'
-          'root'
-          'run'
-          'sbom'
-          'search'
-          'shrinkwrap'
-          'star'
-          'stars'
-          'start'
-          'stop'
-          'team'
-          'test'
-          'token'
-          'undeprecate'
-          'uninstall'
-          'unpublish'
-          'unstar'
-          'update'
-          'version'
-          'view'
-          'whoami'
-        )
-      }
+    [StaticCompletions(
+      'pkg,i,it,cit,rm,access,adduser,audit,bugs,cache,ci,completion,config,dedupe,deprecate,diff,dist-tag,docs,doctor,edit,exec,explain,explore,find-dupes,fund,help,help-search,init,install,install-ci-test,install-test,link,login,logout,ls,org,outdated,owner,pack,ping,prefix,profile,prune,publish,query,rebuild,repo,restart,root,run,sbom,search,shrinkwrap,star,stars,start,stop,team,test,token,undeprecate,uninstall,unpublish,unstar,update,version,view,whoami',
+      $null, $null, $null
     )]
     # npm command verb
     [string]$Command,
@@ -563,10 +494,9 @@ function Step-NodePackageVersion {
   param(
 
     # New package version, default 'patch'
-    [Completions(
-      {
-        return [NodePackageNamedVersion].GetEnumNames()
-      }
+    [StaticCompletions(
+      'patch,minor,major,prerelease,preminor,premajor',
+      $null, $null, $null
     )]
     [string]$Version,
 

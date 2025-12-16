@@ -72,7 +72,7 @@ function Get-HelpOnline {
 
         return $About + $Function
       },
-      'Preserve'
+      [CompletionCase]::Preserve
     )]
     [string[]]$Name,
 
@@ -276,7 +276,7 @@ function Get-CommandAlias {
     )]
     [SupportsWildcards()]
     [StaticCompletions(
-      'Global,Local,Script,0,1,2,3',
+      'global,local,script,0,1,2,3',
       $null, $null, $null
     )]
     # Specifies the scope for which this cmdlet gets aliases. The acceptable values for this parameter are: Global, Local, Script, and a positive integer relative to the current scope (0 through the number of scopes, where 0 is the current scope and 1 is its parent). Global is the default, which differs from Get-Alias where Local is the default.
@@ -330,19 +330,6 @@ function Get-CommandAlias {
   }
 }
 
-enum VerbGroup {
-  Communications
-  Data
-  Diagnostic
-  Lifecycle
-  Security
-  Service
-  Settings
-  Support
-  System
-  Utility
-}
-
 <#
 .SYNOPSIS
 Gets a list of approved PowerShell verbs.
@@ -387,10 +374,9 @@ function Get-VerbList {
     [Parameter(
       Position = 1
     )]
-    [Completions(
-      {
-        return [VerbGroup].GetEnumNames()
-      }
+    [StaticCompletions(
+      'communications,data,diagnostic,lifecycle,security,service,settings,support,system,utility',
+      $null, $null, $null
     )]
     # Gets only the specified group. Enter the name of a group. Wildcards aren't allowed.
     [string]$Group

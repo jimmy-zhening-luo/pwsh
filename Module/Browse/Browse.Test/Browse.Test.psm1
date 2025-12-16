@@ -1,4 +1,5 @@
 using namespace System.Collections.Generic
+using namespace Completer
 
 enum TestHostVerbosity {
   Quiet
@@ -52,10 +53,9 @@ function Test-Host {
       Position = 1
     )]
     [Alias('TCP')]
-    [Completions(
-      {
-        return [TestHostWellknownPort].GetEnumNames()
-      }
+    [StaticCompletions(
+      'http,rdp,smb,winrm',
+      $null, $null, $null
     )]
     [string]$CommonTCPPort,
 
@@ -68,10 +68,9 @@ function Test-Host {
     # The port number to test on the target host.
     [UInt16]$Port,
 
-    [Completions(
-      {
-        return [TestHostVerbosity].GetEnumNames()
-      }
+    [StaticCompletions(
+      'quiet,detailed',
+      $null, $null, $null
     )]
     # The level of information to return, can be Quiet or Detailed. Will not take effect if Detailed switch is set. Defaults to Quiet.
     [string]$InformationLevel,
