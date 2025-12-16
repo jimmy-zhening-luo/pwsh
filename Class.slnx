@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/Class/">
+    <Project Path="Class/Completer/Completer.csproj" />
+    <Project Path="Class/PathCompleter/PathCompleter.csproj" />
+  </Folder>
+</Solution>

@@ -39,8 +39,8 @@
   FunctionsToExport    = @(
     'Invoke-PSHistory'
     'Invoke-PSProfile'
-    'Update-PSProfile'
     'Measure-PSProfile'
+    'Update-PSProfile'
     'Get-HelpOnline'
     'Get-CommandAlias'
     'Get-VerbList'
@@ -50,8 +50,8 @@
   AliasesToExport      = @(
     'oc'
     'op'
-    'up'
     'mc'
+    'up'
     'upman'
     'psk'
     'm'

@@ -1,23 +1,51 @@
-[string]$Private:PROJECT_ROOT = Split-Path $PSScriptRoot
-[string]$Private:CMDLET_ROOT = "$PROJECT_ROOT\Cmdlet"
+using namespace System.Collections.Generic
 
-[string[]]$Private:MANIFEST = (
-  Import-PowerShellDataFile -Path $PROJECT_ROOT\Data\Cmdlet.psd1
-).Cmdlet
+[CmdletBinding()]
+param (
+  [Parameter(
+    Mandatory,
+    Position = 0
+  )]
+  [ValidateNotNullOrEmpty()]
+  [string]$ClassRoot,
+  [Parameter(
+    Mandatory
+  )]
+  [AllowEmptyCollection()]
+  [ValidateNotNull()]
+  [string[]]$Types,
+  [Parameter(
+    Mandatory
+  )]
+  [AllowEmptyCollection()]
+  [ValidateNotNull()]
+  [string[]]$Modules
+)
 
 #region Install
-[hashtable]$Private:Install = @{
-  Destination = $CMDLET_ROOT
-  Force       = $True
+$Private:FoundTypes = [List[string]]::new()
+
+foreach ($Private:Type in $Types) {
+  if (-not [string]::IsNullOrWhiteSpace($Type)) {
+    if (Test-Path -Path "$ClassRoot\$Type" -PathType Container) {
+      $Private:FoundTypes.Add($Type)
+    }
+  }
 }
-foreach ($Private:Project in $MANIFEST) {
+
+[hashtable]$Private:InstallType = @{
+  Destination = $ClassRoot
+  Force       = $true
+}
+foreach ($Private:Type in $FoundTypes) {
   [hashtable]$Private:Built = @{
-    Path = "$CMDLET_ROOT\$Project\bin\Release\netstandard2.0\$Project.dll"
+    Path = "$ClassRoot\$Type\bin\Release\netstandard2.0\$Type.dll"
   }
   if (Test-Path @Built) {
     [hashtable]$Private:Installation = @{
-      Path = "$($Install.Destination)\$Project.dll"
+      Path = "$($InstallType.Destination)\$Type.dll"
     }
+
     if (
       -not (
         Test-Path @Installation -PathType Leaf
@@ -27,16 +55,26 @@ foreach ($Private:Project in $MANIFEST) {
         Get-FileHash @Built
       ).Hash
     ) {
-      Copy-Item @Built @Install
+      try {
+        Copy-Item @Built @InstallType
+      }
+      catch {
+        $Message = "Failed to install $Type to $($InstallType.Destination)."
+        Write-Error -Message $Message -Exception $_.Exception
+      }
     }
+  }
+  else {
+    $Message = "Built assembly for $Type not found at $($Built.Path)."
+    Write-Warning -Message $Message
   }
 }
 #endregion
 
 #region Type
-foreach ($Private:Type in $MANIFEST) {
-  $Private:Assembly = @{
-    Path = "$CMDLET_ROOT\$Type.dll"
+foreach ($Private:Type in $Types) {
+  [hashtable]$Private:Assembly = @{
+    Path = "$ClassRoot\$Type.dll"
   }
   if (Test-Path @Assembly -PathType Leaf) {
     Add-Type @Assembly

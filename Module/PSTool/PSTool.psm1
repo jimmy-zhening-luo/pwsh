@@ -52,206 +52,6 @@ function Invoke-PSProfile {
   Shell\Invoke-WorkspaceCode @ProfileRepository
 }
 
-function Install-PSModuleDotNet {
-
-  [CmdletBinding(
-    SupportsShouldProcess,
-    ConfirmImpact = 'High'
-  )]
-
-  [OutputType([System.Management.Automation.ApplicationInfo])]
-
-  param()
-
-  begin {
-    $Private:AppId = [List[string]]::new(
-      [List[string]]@(
-        '--id=Microsoft.DotNet.SDK.10'
-      )
-    )
-  }
-
-  process {
-    if ($PSCmdlet.ShouldProcess($AppId.ToArray(), 'winget install')) {
-      & WindowsSystem\Add-WinGetApp @AppId
-
-      if ($LASTEXITCODE -ne 0) {
-        throw 'winget attempted to install Microsoft.DotNet.SDK.10 but returned a non-zero exit code'
-      }
-
-      [hashtable]$Private:CompileCommand = @{
-        All         = $True
-        CommandType = 'Application'
-        Name        = 'dotnet.exe'
-      }
-      [ApplicationInfo]$Private:DotNetExecutable = Get-Command @CompileCommand
-
-      if (-not $DotNetExecutable) {
-        throw 'Failed to locate Microsoft.DotNet.SDK.10 executable post-installation'
-      }
-
-      try {
-        [hashtable]$Private:DotNetInstallDependency = @{
-          FilePath     = (Resolve-Path -Path $DotNetExecutable.Source).Path
-          NoNewWindow  = $True
-          PassThru     = $True
-          ErrorAction  = 'Stop'
-          ArgumentList = [List[string]]::new(
-            [string[]]@(
-              'new'
-              'install'
-              'Microsoft.PowerShell.Standard.Module.Template'
-            )
-          )
-        }
-        Start-Process @DotNetInstallDependency |
-          Wait-Process
-      }
-      catch {
-        throw 'Failed to install required dotnet dependency: Microsoft.PowerShell.Standard.Module.Template'
-      }
-
-      return $DotNetExecutable
-    }
-  }
-}
-
-function Build-PSProfile {
-
-  [CmdletBinding()]
-
-  [OutputType([void])]
-
-  param()
-
-  [hashtable]$Private:CompileCommand = @{
-    All         = $True
-    CommandType = 'Application'
-    Name        = 'dotnet.exe'
-  }
-  [ApplicationInfo]$Private:DotNetExecutable = Get-Command @CompileCommand
-
-  if (-not $DotNetExecutable) {
-    try {
-      [ApplicationInfo]$Private:DotNetExecutable = Install-PSModuleDotNet
-
-      if (-not $DotNetExecutable) {
-        throw 'Failed to locate Microsoft.DotNet.SDK.10 executable post-installation'
-      }
-    }
-    catch {
-      throw 'Failed to install Microsoft.DotNet.SDK.10'
-    }
-  }
-
-  [hashtable]$Private:DotNet = @{
-    FilePath         = (Resolve-Path -Path $DotNetExecutable.Source).Path
-    WorkingDirectory = "$HOME\code\pwsh"
-    NoNewWindow      = $True
-    PassThru         = $True
-    ErrorAction      = 'Stop'
-  }
-
-  $Private:DotNetClean = [List[string]]::new(
-    [string[]]@(
-      'clean'
-      '--configuration'
-      'Release'
-    )
-  )
-  Start-Process @DotNet -ArgumentList $DotNetClean |
-    Wait-Process
-
-  $Private:DotNetBuild = [List[string]]::new(
-    [string[]]@(
-      'build'
-      '--configuration'
-      'Release'
-    )
-  )
-  Start-Process @DotNet -ArgumentList $DotNetBuild |
-    Wait-Process
-}
-
-<#
-.SYNOPSIS
-Update PowerShell profile repository.
-
-.DESCRIPTION
-This function updates the PowerShell profile repository by pulling the latest changes from the remote Git repository and updating the PSScriptAnalyzer settings file in the user's home directory.
-
-.COMPONENT
-PSTool
-#>
-function Update-PSProfile {
-
-  [CmdletBinding()]
-
-  param()
-
-  $Private:PROJECT_ROOT = "$HOME\code\pwsh"
-
-  [hashtable]$Private:Pull = @{
-    WorkingDirectory = $PROJECT_ROOT
-  }
-  Shell\Get-GitRepository @Pull
-
-  Update-PSLinter
-
-  [string]$Private:CMDLET_ROOT = "$PROJECT_ROOT\Cmdlet"
-
-  [string[]]$Private:MANIFEST = (
-    Import-PowerShellDataFile -Path $PROJECT_ROOT\Data\Cmdlet.psd1
-  ).Cmdlet
-
-  $Private:Modified = [List[string]]::new()
-
-  foreach ($Private:Project in $MANIFEST) {
-    [hashtable]$Private:Built = @{
-      Path = "$CMDLET_ROOT\$Project\bin\Release\netstandard2.0\$Project.dll"
-    }
-    [hashtable]$Private:Source = @{
-      Path = "$CMDLET_ROOT\$Project\$Project.cs"
-    }
-    if (
-      -not (
-        Test-Path @Built -PathType Leaf
-      ) -or (
-        Get-Item @Built
-      ).LastWriteTime -lt (
-        Get-Item @Source
-      ).LastWriteTime
-    ) {
-      $Modified.Add([string]$Project)
-    }
-  }
-
-  if ($Modified.Count -ne 0) {
-    Build-PSProfile
-  }
-}
-
-function Update-PSLinter {
-
-  [CmdletBinding()]
-
-  [OutputType([void])]
-
-  param()
-
-  [hashtable]$Private:Linter = @{
-    Path     = "$HOME\code\pwsh\PSScriptAnalyzerSettings.psd1"
-    PathType = 'Leaf'
-  }
-  if (Test-Path @Linter) {
-    [hashtable]$Private:Copy = @{
-      Path        = $Linter.Path
-      Destination = $HOME
-    }
-    Copy-Item @Copy
-  }
-}
-
 <#
 .SYNOPSIS
 Measure PowerShell profile load time.
@@ -327,6 +127,199 @@ function Measure-PSProfile {
   }
   else {
     return "$Performance ms`n(Base: $MeanNormalStartup ms)"
+  }
+}
+
+<#
+.SYNOPSIS
+Update PowerShell profile repository.
+
+.DESCRIPTION
+This function updates the PowerShell profile repository by pulling the latest changes from the remote Git repository and updating the PSScriptAnalyzer settings file in the user's home directory.
+
+.COMPONENT
+PSTool
+#>
+function Update-PSProfile {
+
+  [CmdletBinding()]
+
+  param()
+
+  #region Git Pull
+  $Private:PROFILE_ROOT = "$HOME\code\pwsh"
+
+  [hashtable]$Private:Pull = @{
+    WorkingDirectory = $PROFILE_ROOT
+  }
+  Shell\Get-GitRepository @Pull
+  #endregion
+
+  #region Linter
+  [hashtable]$Private:Linter = @{
+    Path     = "$PROFILE_ROOT\PSScriptAnalyzerSettings.psd1"
+    PathType = 'Leaf'
+  }
+  if (Test-Path @Linter) {
+    [hashtable]$Private:Copy = @{
+      Path        = $Linter.Path
+      Destination = $HOME
+    }
+    Copy-Item @Copy
+  }
+  #endregion
+
+  #region Build
+  [string]$Private:CLASS_ROOT = "$PROFILE_ROOT\Class"
+  [hashtable]$Private:CLASSES = Import-PowerShellDataFile -Path $PROFILE_ROOT\Data\Class.psd1
+  [string[]]$Projects = $CLASSES.Types + $CLASSES.Modules
+
+  $Private:Modified = [List[string]]::new()
+
+  foreach ($Private:Project in $Projects) {
+    [hashtable]$Private:Built = @{
+      Path = "$CLASS_ROOT\$Project\bin\Release\netstandard2.0\$Project.dll"
+    }
+    [hashtable]$Private:Source = @{
+      Path = "$CLASS_ROOT\$Project\$Project.cs"
+    }
+    if (
+      -not (
+        Test-Path @Built -PathType Leaf
+      ) -or (
+        Get-Item @Built
+      ).LastWriteTime -lt (
+        Get-Item @Source
+      ).LastWriteTime
+    ) {
+      $Modified.Add([string]$Project)
+    }
+  }
+
+  if ($Modified.Count -ne 0) {
+    Build-PSProfile
+  }
+  #endregion
+}
+
+function Build-PSProfile {
+
+  [CmdletBinding()]
+
+  [OutputType([void])]
+
+  param()
+
+  [hashtable]$Private:CompileCommand = @{
+    All         = $True
+    CommandType = 'Application'
+    Name        = 'dotnet.exe'
+  }
+  [ApplicationInfo]$Private:DotNetExecutable = Get-Command @CompileCommand
+
+  if (-not $DotNetExecutable) {
+    try {
+      [ApplicationInfo]$Private:DotNetExecutable = Install-PSModuleDotNet
+
+      if (-not $DotNetExecutable) {
+        throw 'Failed to locate Microsoft.DotNet.SDK.10 executable post-installation'
+      }
+    }
+    catch {
+      throw 'Failed to install Microsoft.DotNet.SDK.10'
+    }
+  }
+
+  [hashtable]$Private:DotNet = @{
+    FilePath         = (Resolve-Path -Path $DotNetExecutable.Source).Path
+    WorkingDirectory = "$HOME\code\pwsh"
+    NoNewWindow      = $True
+    PassThru         = $True
+    ErrorAction      = 'Stop'
+  }
+
+  $Private:DotNetClean = [List[string]]::new(
+    [string[]]@(
+      'clean'
+      '--configuration'
+      'Release'
+    )
+  )
+  Start-Process @DotNet -ArgumentList $DotNetClean |
+    Wait-Process
+
+  $Private:DotNetBuild = [List[string]]::new(
+    [string[]]@(
+      'build'
+      '--configuration'
+      'Release'
+    )
+  )
+  Start-Process @DotNet -ArgumentList $DotNetBuild |
+    Wait-Process
+}
+
+function Install-PSModuleDotNet {
+
+  [CmdletBinding(
+    SupportsShouldProcess,
+    ConfirmImpact = 'High'
+  )]
+
+  [OutputType([System.Management.Automation.ApplicationInfo])]
+
+  param()
+
+  begin {
+    $Private:AppId = [List[string]]::new(
+      [List[string]]@(
+        '--id=Microsoft.DotNet.SDK.10'
+      )
+    )
+  }
+
+  process {
+    if ($PSCmdlet.ShouldProcess($AppId.ToArray(), 'winget install')) {
+      & WindowsSystem\Add-WinGetApp @AppId
+
+      if ($LASTEXITCODE -ne 0) {
+        throw 'winget attempted to install Microsoft.DotNet.SDK.10 but returned a non-zero exit code'
+      }
+
+      [hashtable]$Private:CompileCommand = @{
+        All         = $True
+        CommandType = 'Application'
+        Name        = 'dotnet.exe'
+      }
+      [ApplicationInfo]$Private:DotNetExecutable = Get-Command @CompileCommand
+
+      if (-not $DotNetExecutable) {
+        throw 'Failed to locate Microsoft.DotNet.SDK.10 executable post-installation'
+      }
+
+      try {
+        [hashtable]$Private:DotNetInstallDependency = @{
+          FilePath     = (Resolve-Path -Path $DotNetExecutable.Source).Path
+          NoNewWindow  = $True
+          PassThru     = $True
+          ErrorAction  = 'Stop'
+          ArgumentList = [List[string]]::new(
+            [string[]]@(
+              'new'
+              'install'
+              'Microsoft.PowerShell.Standard.Module.Template'
+            )
+          )
+        }
+        Start-Process @DotNetInstallDependency |
+          Wait-Process
+      }
+      catch {
+        throw 'Failed to install required dotnet dependency: Microsoft.PowerShell.Standard.Module.Template'
+      }
+
+      return $DotNetExecutable
+    }
   }
 }
 

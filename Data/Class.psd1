@@ -1,6 +1,7 @@
 @{
-  Cmdlet = @(
+  Types   = @(
     'Completer'
     'PathCompleter'
   )
+  Modules = @()
 }
