@@ -1,9 +1,18 @@
 @{
   Types   = @(
-    'Completer'
-    'PathCompleter'
+    @{
+      Name    = 'Completer'
+      Runtime = 'netstandard2.0'
+    }
+    @{
+      Name    = 'PathCompleter'
+      Runtime = 'netstandard2.0'
+    }
   )
   Modules = @(
-    'Transform'
+    @{
+      Name    = 'Transform'
+      Runtime = 'netstandard2.0'
+    }
   )
 }

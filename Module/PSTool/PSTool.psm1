@@ -188,16 +188,19 @@ function Update-PSProfile {
   #region Build
   [string]$Private:CLASS_ROOT = "$PROFILE_ROOT\Class"
   [hashtable]$Private:CLASSES = Import-PowerShellDataFile -Path $PROFILE_ROOT\Data\Class.psd1
-  [string[]]$Projects = $CLASSES.Types + $CLASSES.Modules
+  $Projects = $CLASSES.Types + $CLASSES.Modules
 
   [List[string]]$Private:Modified = [List[string]]::new()
 
   foreach ($Private:Project in $Projects) {
+    [string]$Private:Name = $Project.Name
+    [string]$Private:Runtime = $Project.Runtime
+
     [hashtable]$Private:Built = @{
-      Path = "$CLASS_ROOT\$Project\bin\Release\netstandard2.0\$Project.dll"
+      Path = "$CLASS_ROOT\$Name\bin\Release\$Runtime\$Name.dll"
     }
     [hashtable]$Private:Source = @{
-      Path = "$CLASS_ROOT\$Project\$Project.cs"
+      Path = "$CLASS_ROOT\$Name\$Name.cs"
     }
     if (
       -not (
@@ -208,7 +211,7 @@ function Update-PSProfile {
         Get-Item @Source
       ).LastWriteTime
     ) {
-      $Modified.Add([string]$Project)
+      $Modified.Add([string]$Name)
     }
   }
 
