@@ -1,10 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Management.Automation;
-using System.Management.Automation.Language;
-using System.Text.RegularExpressions;
 
 namespace Transform
 {
