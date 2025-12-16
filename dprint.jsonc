@@ -6,6 +6,7 @@
   "includes": [
     "Class/**/*.cs",
   ],
+  "lineWidth": 180,
   "indentWidth": 2,
   "newLineKind": "lf",
   "useTabs": false,
