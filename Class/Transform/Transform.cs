@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Management.Automation;
 
 namespace Transform
@@ -18,12 +19,12 @@ namespace Transform
       )]
       [AllowEmptyCollection]
       [Alias("Integer")]
-      public UInt32[] Number
+      public long[] Number
       {
         get => numbers;
         set => numbers = value;
       }
-      private UInt32[] numbers;
+      private long[] numbers;
 
       [Parameter]
       [Alias("Case")]
@@ -36,7 +37,11 @@ namespace Transform
 
       protected override void ProcessRecord()
       {
-        foreach (UInt32 number in numbers)
+        foreach (
+          long number in numbers.Where(
+            n => n >= 0
+          )
+        )
         {
           string hex = number.ToString("X");
           string print = lowercase ? hex.ToLower() : hex;
