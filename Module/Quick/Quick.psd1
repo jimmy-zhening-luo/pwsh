@@ -28,7 +28,6 @@
   )
   FunctionsToExport    = @(
     'Copy-Guid'
-    'ConvertTo-Hex'
     'Get-YouTube'
     'Get-YouTubeAudio'
     'Get-YouTubeFormat'
@@ -39,7 +38,6 @@
   VariablesToExport    = @()
   AliasesToExport      = @(
     'guid'
-    'hex'
     'yt'
     'yta'
     'ytf'

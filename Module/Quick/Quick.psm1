@@ -44,47 +44,4 @@ function Copy-Guid {
   }
 }
 
-<#
-.SYNOPSIS
-Convert integer(s) to hexadecimal string(s).
-
-.DESCRIPTION
-This function converts one or more integer values to their corresponding hexadecimal string representations.
-
-.COMPONENT
-PSTool
-#>
-function ConvertTo-Hex {
-
-  [CmdletBinding()]
-
-  [OutputType([string])]
-
-  param(
-
-    [Parameter(
-      Mandatory,
-      Position = 0,
-      ValueFromRemainingArguments
-    )]
-    [AllowEmptyCollection()]
-    [Alias('Number')]
-    # Integer(s) to convert to hexadecimal
-    [int[]]$Integer,
-
-    [Alias('Case')]
-    # Output lowercase hexadecimal string
-    [switch]$Lowercase
-
-  )
-
-  [string]$Private:Hex = $Integer |
-    ForEach-Object { '{0:X}' -f $PSItem }
-
-  if ($Hex) {
-    return $Lowercase ? $Hex.ToLowerInvariant() : $Hex
-  }
-}
-
 New-Alias guid Copy-Guid
-New-Alias hex ConvertTo-Hex
