@@ -40,7 +40,7 @@ namespace PathCompleter
 
     public static string NormalDirectorySeparatorPattern = @"\\";
 
-    public static string DuplicateDirectorySeparatorPattern = @"(?<!^)\\+";
+    public static string DuplicateDirectorySeparatorPattern = @"(?<!^)\\\\+";
 
     public static string DescendantPattern = @"^(?=(?>[.\\]*)$)";
 
