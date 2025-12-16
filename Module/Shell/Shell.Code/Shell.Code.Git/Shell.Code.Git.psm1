@@ -140,9 +140,9 @@ function Invoke-GitRepository {
 
   )
 
-  [List[string]]$Private:GitArguments = [List[string]]::new()
+  [List[string]]$Private:GitArgument = [List[string]]::new()
   if ($args) {
-    $GitArguments.AddRange(
+    $GitArgument.AddRange(
       [List[string]]$args
     )
   }
@@ -151,7 +151,7 @@ function Invoke-GitRepository {
     if ($Verb -in $GIT_VERB) {
       if ($Verb -in $NEWABLE_GIT_VERB) {
         if ($WorkingDirectory -match $GIT_ARGUMENT) {
-          $GitArguments.Insert(0, $WorkingDirectory)
+          $GitArgument.Insert(0, $WorkingDirectory)
           $WorkingDirectory = ''
         }
       }
@@ -165,14 +165,14 @@ function Invoke-GitRepository {
             $Verb | Resolve-GitRepository
           )
         ) {
-          $GitArguments.Insert(0, $WorkingDirectory)
+          $GitArgument.Insert(0, $WorkingDirectory)
           $Verb, $WorkingDirectory = 'status', $Verb
         }
       }
     }
     else {
-      if ($WorkingDirectory -or $GitArguments) {
-        $GitArguments.Insert(0, $Verb)
+      if ($WorkingDirectory -or $GitArgument) {
+        $GitArgument.Insert(0, $Verb)
       }
       else {
         $WorkingDirectory = $Verb
@@ -193,7 +193,7 @@ function Invoke-GitRepository {
 
   if (-not $Repository) {
     if ($WorkingDirectory) {
-      $GitArguments.Insert(0, $WorkingDirectory)
+      $GitArgument.Insert(0, $WorkingDirectory)
 
       $Resolve.WorkingDirectory = $PWD.Path
       $Repository = Resolve-GitRepository @Resolve
@@ -211,12 +211,12 @@ function Invoke-GitRepository {
     $Repository
     $Verb
   )
-  $GitArguments.InsertRange(
+  $GitArgument.InsertRange(
     0,
     [List[string]]$GitCommandManifest
   )
 
-  & 'C:\Program Files\Git\cmd\git.exe' @GitArguments
+  & 'C:\Program Files\Git\cmd\git.exe' @GitArgument
 
   if ($LASTEXITCODE -ne 0) {
     [string]$Private:Exception = "git command error, execution returned exit code: $LASTEXITCODE"
@@ -235,7 +235,7 @@ function Invoke-GitRepository {
 Use Git to get the status of a local repository.
 
 .DESCRIPTION
-This function is an alias for 'git status [arguments]'.
+This function is an alias for 'git status [argument]'.
 
 .LINK
 https://git-scm.com/docs/git-status
@@ -300,11 +300,11 @@ function Import-GitRepository {
     $RepositoryPathSegments -join '/'
   )
 
-  [List[string]]$Private:CloneArguments = [List[string]]::new()
-  $CloneArguments.Add($Origin)
+  [List[string]]$Private:CloneArgument = [List[string]]::new()
+  $CloneArgument.Add($Origin)
 
   if ($args) {
-    $CloneArguments.AddRange(
+    $CloneArgument.AddRange(
       [List[string]]$args
     )
   }
@@ -313,7 +313,7 @@ function Import-GitRepository {
     Verb             = 'clone'
     WorkingDirectory = $WorkingDirectory
   }
-  Invoke-GitRepository @Clone @CloneArguments
+  Invoke-GitRepository @Clone @CloneArgument
 }
 
 <#
@@ -321,7 +321,7 @@ function Import-GitRepository {
 Use Git to pull changes from a repository.
 
 .DESCRIPTION
-This function is an alias for 'git pull [arguments]'.
+This function is an alias for 'git pull [argument]'.
 
 .LINK
 https://git-scm.com/docs/git-pull
@@ -348,7 +348,7 @@ function Get-GitRepository {
 Use Git to pull changes for all repositories in the top level of %USERPROFILE%\code'.
 
 .DESCRIPTION
-This function runs 'git pull [arguments]' in each child repository in %USERPROFILE%\code'.
+This function runs 'git pull [argument]' in each child repository in %USERPROFILE%\code'.
 
 .LINK
 https://git-scm.com/docs/git-pull
@@ -398,9 +398,9 @@ function Add-GitRepository {
 
   )
 
-  [List[string]]$Private:AddArguments = [List[string]]::new()
+  [List[string]]$Private:AddArgument = [List[string]]::new()
   if ($args) {
-    $AddArguments.AddRange(
+    $AddArgument.AddRange(
       [List[string]]$args
     )
   }
@@ -410,7 +410,7 @@ function Add-GitRepository {
   }
 
   if ($Name -match $GIT_ARGUMENT) {
-    $AddArguments.Insert(0, $Name)
+    $AddArgument.Insert(0, $Name)
     $Name = ''
   }
 
@@ -422,7 +422,7 @@ function Add-GitRepository {
     )
   ) {
     if ($Name) {
-      $AddArguments.Insert(0, $WorkingDirectory)
+      $AddArgument.Insert(0, $WorkingDirectory)
     }
     else {
       $Name = $WorkingDirectory
@@ -432,18 +432,18 @@ function Add-GitRepository {
   }
 
   if ($Name) {
-    $AddArguments.Insert(0, $Name)
+    $AddArgument.Insert(0, $Name)
   }
 
-  if ($Renormalize -and '--renormalize' -notin $AddArguments) {
-    $AddArguments.Add('--renormalize')
+  if ($Renormalize -and '--renormalize' -notin $AddArgument) {
+    $AddArgument.Add('--renormalize')
   }
 
   [hashtable]$Private:Add = @{
     Verb             = 'add'
     WorkingDirectory = $WorkingDirectory
   }
-  Invoke-GitRepository @Add @AddArguments
+  Invoke-GitRepository @Add @AddArgument
 }
 
 <#
@@ -475,10 +475,10 @@ function Write-GitRepository {
 
   )
 
-  [List[string]]$Private:CommitArguments = [List[string]]::new()
+  [List[string]]$Private:CommitArgument = [List[string]]::new()
   [List[string]]$Private:Messages = [List[string]]::new()
 
-  [string[]]$Private:Arguments, [string[]]$Private:MessageWords = (
+  [string[]]$Private:Argument, [string[]]$Private:MessageWord = (
     $Message ? (, $Message + $args) : $args
   ).Where(
     {
@@ -491,14 +491,14 @@ function Write-GitRepository {
     'Split'
   )
 
-  if ($Arguments) {
-    $CommitArguments.AddRange(
-      [List[string]]$Arguments
+  if ($Argument) {
+    $CommitArgument.AddRange(
+      [List[string]]$Argument
     )
   }
-  if ($MessageWords) {
+  if ($MessageWord) {
     $Messages.AddRange(
-      [List[string]]$MessageWords
+      [List[string]]$MessageWord
     )
   }
 
@@ -510,7 +510,7 @@ function Write-GitRepository {
     )
   ) {
     if ($WorkingDirectory -match $GIT_ARGUMENT -and $Messages.Count -eq 0) {
-      $CommitArguments.Insert(0, $WorkingDirectory)
+      $CommitArgument.Insert(0, $WorkingDirectory)
     }
     else {
       $Messages.Insert(0, $WorkingDirectory)
@@ -519,19 +519,19 @@ function Write-GitRepository {
     $WorkingDirectory = ''
   }
 
-  if ($AllowEmpty -and '--allow-empty' -notin $CommitArguments) {
-    $CommitArguments.Add('--allow-empty')
+  if ($AllowEmpty -and '--allow-empty' -notin $CommitArgument) {
+    $CommitArgument.Add('--allow-empty')
   }
 
   if ($Messages.Count -eq 0) {
-    if ('--allow-empty' -in $CommitArguments) {
+    if ('--allow-empty' -in $CommitArgument) {
       $Messages.Add('No message.')
     }
     else {
       throw 'Missing commit message.'
     }
   }
-  $CommitArguments.InsertRange(
+  $CommitArgument.InsertRange(
     0,
     [List[string]]@(
       '-m'
@@ -547,7 +547,7 @@ function Write-GitRepository {
   }
 
   $Repository.Verb = 'commit'
-  Invoke-GitRepository @Repository @CommitArguments
+  Invoke-GitRepository @Repository @CommitArgument
 }
 
 <#
@@ -570,7 +570,7 @@ function Push-GitRepository {
 
   )
 
-  [List[string]]$Private:PushArguments = [List[string]]::new()
+  [List[string]]$Private:PushArgument = [List[string]]::new()
 
   if (
     $WorkingDirectory -and (
@@ -579,12 +579,12 @@ function Push-GitRepository {
       $WorkingDirectory | Resolve-GitRepository
     )
   ) {
-    $PushArguments.Add($WorkingDirectory)
+    $PushArgument.Add($WorkingDirectory)
     $WorkingDirectory = ''
   }
 
   if ($args) {
-    $PushArguments.AddRange(
+    $PushArgument.AddRange(
       [List[string]]$args
     )
   }
@@ -595,7 +595,7 @@ function Push-GitRepository {
   Get-GitRepository @Repository
 
   $Repository.Verb = 'push'
-  Invoke-GitRepository @Repository @PushArguments
+  Invoke-GitRepository @Repository @PushArgument
 }
 
 [regex]$TREE_SPEC = '^(?=.)(?>HEAD)?(?<Branching>(?>~|\^)?)(?<Step>(?>\d{0,10}))$'
@@ -626,9 +626,9 @@ function Reset-GitRepository {
 
   )
 
-  [List[string]]$Private:ResetArguments = [List[string]]::new()
+  [List[string]]$Private:ResetArgument = [List[string]]::new()
   if ($args) {
-    $ResetArguments.AddRange(
+    $ResetArgument.AddRange(
       [List[string]]$args
     )
   }
@@ -643,7 +643,7 @@ function Reset-GitRepository {
       $Tree = 'HEAD' + $Branching + $Matches.Step
     }
     else {
-      $ResetArguments.Insert(0, $Tree)
+      $ResetArgument.Insert(0, $Tree)
       $Tree = ''
     }
   }
@@ -664,16 +664,16 @@ function Reset-GitRepository {
       $Tree = 'HEAD' + $Branching + $Matches.Step
     }
     else {
-      $ResetArguments.Insert(0, $WorkingDirectory)
+      $ResetArgument.Insert(0, $WorkingDirectory)
     }
 
     $WorkingDirectory = ''
   }
 
   if ($Tree) {
-    $ResetArguments.Insert(0, $Tree)
+    $ResetArgument.Insert(0, $Tree)
   }
-  $ResetArguments.Insert(0, '--hard')
+  $ResetArgument.Insert(0, '--hard')
 
   [hashtable]$Private:Repository = @{
     WorkingDirectory = $WorkingDirectory
@@ -681,7 +681,7 @@ function Reset-GitRepository {
   Add-GitRepository @Repository
 
   $Repository.Verb = 'reset'
-  Invoke-GitRepository @Repository @ResetArguments
+  Invoke-GitRepository @Repository @ResetArgument
 }
 
 <#
@@ -704,7 +704,7 @@ function Restore-GitRepository {
 
   )
 
-  [List[string]]$Private:ResetArguments = [List[string]]::new()
+  [List[string]]$Private:ResetArgument = [List[string]]::new()
 
   if (
     $WorkingDirectory -and (
@@ -713,12 +713,12 @@ function Restore-GitRepository {
       $WorkingDirectory | Resolve-GitRepository
     )
   ) {
-    $ResetArguments.Add($WorkingDirectory)
+    $ResetArgument.Add($WorkingDirectory)
     $WorkingDirectory = ''
   }
 
   if ($args) {
-    $ResetArguments.AddRange(
+    $ResetArgument.AddRange(
       [List[string]]$args
     )
   }
@@ -726,7 +726,7 @@ function Restore-GitRepository {
   [hashtable]$Private:Repository = @{
     WorkingDirectory = $WorkingDirectory
   }
-  Reset-GitRepository @Repository @ResetArguments
+  Reset-GitRepository @Repository @ResetArgument
 
   Get-GitRepository @Repository
 }

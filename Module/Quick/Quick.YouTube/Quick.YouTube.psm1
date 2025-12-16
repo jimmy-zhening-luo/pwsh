@@ -66,7 +66,7 @@ function Get-YouTubeAudio {
 
   )
 
-  [string[]]$Private:YouTubeArguments = @(
+  [string[]]$Private:YouTubeArgument = @(
     '--format'
     'bestaudio'
     '--extract-audio'
@@ -77,7 +77,7 @@ function Get-YouTubeAudio {
     '--postprocessor-args'
     '-ar 44100'
   )
-  Get-YouTube @PSBoundParameters @args @YouTubeArguments
+  Get-YouTube @PSBoundParameters @args @YouTubeArgument
 }
 
 <#
@@ -102,10 +102,10 @@ function Get-YouTubeFormat {
 
   )
 
-  [string[]]$Private:YouTubeArguments = @(
+  [string[]]$Private:YouTubeArgument = @(
     '-F'
   )
-  Get-YouTube @PSBoundParameters @args @YouTubeArguments
+  Get-YouTube @PSBoundParameters @args @YouTubeArgument
 }
 
 <#
