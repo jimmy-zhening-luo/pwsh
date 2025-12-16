@@ -2,7 +2,7 @@ using namespace System.Collections.Generic
 using namespace System.Management.Automation
 
 [hashtable]$CUSTOM_HELP_FILE = @{
-  Path = "$PSScriptRoot\PSHelp.psd1"
+  Path = "$PSScriptRoot\PSHelpTopic.psd1"
 }
 [hashtable]$CUSTOM_HELP = Import-PowerShellDataFile @CUSTOM_HELP_FILE
 
@@ -38,7 +38,7 @@ One or more parameters can also be specified to get help for specific parameters
 If a single parameter is specified and there is exactly one online documentation link available, the parameter name will be appended to the link as a fragment identifier as a best-effort attempt to direct the user to the relevant section of the documentation.
 
 .COMPONENT
-PSTool.Help
+PSHelp
 
 .LINK
 https://learn.microsoft.com/powershell/module/microsoft.powershell.core/get-help
@@ -61,7 +61,7 @@ function Get-HelpOnline {
     [Completions(
       {
         [string[]]$Private:About = (
-          Import-PowerShellDataFile -Path $PSScriptRoot\PSHelp.About.psd1
+          Import-PowerShellDataFile -Path $PSScriptRoot\PSHelpTopic.Local.psd1
         ).About
         [string[]]$Private:Function = (
           (
@@ -175,7 +175,7 @@ function Get-HelpOnline {
 
           [uri]$Private:about_Article = "$ABOUT_BASE_URL/$Topic"
 
-          if (Browse\Test-Url -Uri $about_Article) {
+          if (Test-Url -Uri $about_Article) {
             return $about_Article
           }
         }
@@ -243,7 +243,7 @@ Gets global aliases by command.
 Get-Alias but Definition is the default parameter, it auto-appends/prepends wildcards, defaults to all aliases, and defaults to Global scope.
 
 .COMPONENT
-PSTool.Help
+PSHelp
 
 .LINK
 https://learn.microsoft.com/powershell/module/microsoft.powershell.utility/get-alias
@@ -366,7 +366,7 @@ It supports both parameters of Get-Verb, 'Verb' and 'Group', but it treats 'Verb
 Specifies the verb to search for. The default value is '*'. If the value contains a wildcard, it is passed to 'Get-Verb' as-is. If the value is shorter than 3 characters, a wildcard is appended ('Verb*'). If the value is 3 characters or longer, wildcards are prepended and appended ('*Verb*').
 
 .COMPONENT
-PSTool.Help
+PSHelp
 
 .LINK
 http://learn.microsoft.com/powershell/module/microsoft.powershell.utility/get-verb
@@ -438,8 +438,8 @@ function Get-VerbList {
   }
 }
 
-New-Alias upman Update-Help
 New-Alias psk Get-PSReadLineKeyHandler
+New-Alias upman Update-Help
 
 New-Alias m Get-HelpOnline
 New-Alias galc Get-CommandAlias

@@ -65,13 +65,14 @@ function Invoke-Workspace {
   }
 
   if ($ProfileName) {
-    if (-not $ProfileName.StartsWith('-')) {
-      $Window = $True
-
-      $ArgumentList.Add('--profile')
-    }
-
-    $ArgumentList.Add($ProfileName)
+    $Window = $True
+    $ArgumentList.Add(
+      $ProfileName.StartsWith('-') ? (
+        $ProfileName
+      ) : (
+        "--profile=$ProfileName"
+      )
+    )
   }
 
   if ($Window) {
@@ -82,7 +83,7 @@ function Invoke-Workspace {
   }
 
   [hashtable]$Private:Process = @{
-    FilePath     =   "$HOME\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd"
+    FilePath     = "$HOME\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd"
     ArgumentList = $ArgumentList
     NoNewWindow  = $True
   }

@@ -19,12 +19,16 @@ function Invoke-PSHistory {
 
   param()
 
-  [hashtable]$Private:History = @{
-    Path        = (Get-PSReadLineOption).HistorySavePath
-    ProfileName = 'PowerShell'
-    Window      = $True
+  [hashtable]$Private:CodeEdit = @{
+    FilePath     = "$HOME\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd"
+    ArgumentList = @(
+      [string](Get-PSReadLineOption).HistorySavePath
+      '--profile=PowerShell'
+      '--new-window'
+    )
+    NoNewWindow  = $True
   }
-  Shell\Invoke-Workspace @History
+  Start-Process @CodeEdit
 }
 
 <#
@@ -45,11 +49,15 @@ function Invoke-PSProfile {
 
   param()
 
-  [hashtable]$Private:ProfileRepository = @{
-    Path        = 'pwsh'
-    ProfileName = 'Default'
+  [hashtable]$Private:CodeEdit = @{
+    FilePath     = "$HOME\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd"
+    ArgumentList = @(
+      [string](Get-PSReadLineOption).HistorySavePath
+      '--profile=Default'
+    )
+    NoNewWindow  = $True
   }
-  Shell\Invoke-WorkspaceCode @ProfileRepository
+  Start-Process @CodeEdit
 }
 
 <#
@@ -146,13 +154,21 @@ function Update-PSProfile {
 
   param()
 
-  #region Git Pull
   $Private:PROFILE_ROOT = "$HOME\code\pwsh"
 
-  [hashtable]$Private:Pull = @{
-    WorkingDirectory = $PROFILE_ROOT
+  #region Git Pull
+  [string[]]$GitCommandManifest = @(
+    '-c'
+    'color.ui=always'
+    '-C'
+    $PROFILE_ROOT
+    'pull'
+  )
+  & 'C:\Program Files\Git\cmd\git.exe' @GitCommandManifest
+
+  if ($LASTEXITCODE -ne 0) {
+    throw "Failed to pull pwsh profile repository at '$PROFILE_ROOT'. Git returned exit code: $LASTEXITCODE"
   }
-  Shell\Get-GitRepository @Pull
   #endregion
 
   #region Linter
@@ -279,8 +295,13 @@ function Install-PSModuleDotNet {
   }
 
   process {
-    if ($PSCmdlet.ShouldProcess($AppId.ToArray(), 'winget install')) {
-      & WindowsSystem\Add-WinGetApp @AppId
+    if (
+      $PSCmdlet.ShouldProcess(
+        $AppId.ToArray(),
+        'winget install'
+      )
+    ) {
+      & "$HOME\AppData\Local\Microsoft\WindowsApps\winget.exe" @AppId
 
       if ($LASTEXITCODE -ne 0) {
         throw 'winget attempted to install Microsoft.DotNet.SDK.10 but returned a non-zero exit code'
