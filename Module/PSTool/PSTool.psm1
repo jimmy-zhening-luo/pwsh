@@ -195,22 +195,34 @@ function Update-PSProfile {
   foreach ($Private:Project in $Projects) {
     [string]$Private:Name = $Project.Name
     [string]$Private:Runtime = $Project.Runtime
+    [string]$Private:ProjectBaseName = "$CLASS_ROOT\$Name\$Name"
+
+    [hashtable]$Private:Source = @{
+      Path = "$ProjectBaseName.cs"
+    }
+    [hashtable]$Private:Manifest = @{
+      Path = "$ProjectBaseName.psd1"
+    }
 
     [hashtable]$Private:Built = @{
       Path = "$CLASS_ROOT\$Name\bin\Release\$Runtime\$Name.dll"
     }
-    [hashtable]$Private:Source = @{
-      Path = "$CLASS_ROOT\$Name\$Name.cs"
-    }
-    if (
-      -not (
-        Test-Path @Built -PathType Leaf
-      ) -or (
+    if (Test-Path @Built -PathType Leaf) {
+      [datetime]$Private:BuiltTime = (
         Get-Item @Built
-      ).LastWriteTime -lt (
-        Get-Item @Source
       ).LastWriteTime
-    ) {
+
+      if (
+        (
+          Get-Item @Source
+        ).LastWriteTime -gt $BuiltTime -or (
+          Get-Item @Manifest
+        ).LastWriteTime -gt $BuiltTime
+      ) {
+        $Modified.Add([string]$Name)
+      }
+    }
+    else {
       $Modified.Add([string]$Name)
     }
   }
