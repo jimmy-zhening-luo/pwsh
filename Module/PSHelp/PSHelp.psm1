@@ -85,8 +85,8 @@ function Get-HelpOnline {
 
   [string]$Private:Topic = $Name -join '_'
   $Private:Help = ''
-  $Private:HelpLinkArticleList = [List[uri]]::new()
-  $Private:ArticleList = [List[uri]]::new()
+  [List[uri]]$Private:HelpLinkArticleList = [List[uri]]::new()
+  [List[uri]]$Private:ArticleList = [List[uri]]::new()
   [hashtable]$Private:Command = @{
     Name        = $Topic
     ErrorAction = 'SilentlyContinue'
@@ -221,7 +221,7 @@ function Get-HelpOnline {
 
   if (-not $env:SSH_CLIENT) {
     if ($Articles) {
-      $Private:ArticleUrls = [List[uri]]::new(
+      [List[uri]]$Private:ArticleUrls = [List[uri]]::new(
         [List[uri]]$Articles
       )
 
@@ -304,7 +304,7 @@ function Get-CommandAlias {
       $Scope = 'Global'
     }
 
-    $Private:AliasList = [List[CommandInfo]]::new()
+    [List[CommandInfo]]$Private:AliasList = [List[CommandInfo]]::new()
   }
 
   process {
@@ -406,7 +406,7 @@ function Get-VerbList {
   )
 
   begin {
-    $Private:VerbList = [List[string]]::new()
+    [List[string]]$Private:VerbList = [List[string]]::new()
   }
 
   process {

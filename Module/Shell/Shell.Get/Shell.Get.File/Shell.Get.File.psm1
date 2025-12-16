@@ -14,7 +14,7 @@ function Get-File {
 
   )
 
-  $Private:ArgumentList = [List[string]]::new()
+  [List[string]]$Private:ArgumentList = [List[string]]::new()
   if ($args) {
     $ArgumentList.AddRange(
       [List[string]]$args

@@ -85,7 +85,7 @@ function Get-Size {
 
     [UInt64]$Private:Factor = $DISK_SIZE_FACTORS[$CanonicalUnit]
 
-    $Sizes = [List[UInt64]]::new()
+    [List[UInt64]]$Sizes = [List[UInt64]]::new()
   }
 
   process {

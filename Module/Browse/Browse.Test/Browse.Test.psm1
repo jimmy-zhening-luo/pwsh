@@ -82,7 +82,7 @@ function Test-Host {
   )
 
   begin {
-    $Private:Results = [List[System.Object]]::new()
+    [List[System.Object]]$Private:Results = [List[System.Object]]::new()
 
     if ($Detailed) {
       $InformationLevel = [TestHostVerbosity]::Detailed

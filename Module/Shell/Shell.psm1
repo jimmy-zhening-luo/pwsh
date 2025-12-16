@@ -125,7 +125,7 @@ class PathCompleter : CompleterBase {
       $files = $files -replace [regex][PathSyntax]::DuplicateDirectorySeparatorPattern, $separator
     }
 
-    $private:completionPaths = [List[string]]::new()
+    [List[string]]$private:completionPaths = [List[string]]::new()
     if ($directories) {
       $completionPaths.AddRange(
         [List[string]]$directories

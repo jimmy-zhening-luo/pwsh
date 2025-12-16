@@ -54,7 +54,7 @@ class CompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFacto
   }
 
   [IArgumentCompleter] Create() {
-    $private:unitList = [List[string]]::new()
+    [List[string]]$private:unitList = [List[string]]::new()
 
     [string[]]$private:invokedUnits = Invoke-Command -ScriptBlock $this.Units |
       Where-Object {

@@ -26,7 +26,7 @@ function Resolve-GitRepository {
   begin {
     [string]$Private:CODE_PATH = "$HOME\code"
 
-    $Private:WorkingDirectories = [List[string]]::new()
+    [List[string]]$Private:WorkingDirectories = [List[string]]::new()
   }
 
   process {
@@ -164,7 +164,7 @@ function Invoke-GitRepository {
 
   )
 
-  $Private:GitArguments = [List[string]]::new()
+  [List[string]]$Private:GitArguments = [List[string]]::new()
   if ($args) {
     $GitArguments.AddRange(
       [List[string]]$args
@@ -324,7 +324,7 @@ function Import-GitRepository {
     $RepositoryPathSegments -join '/'
   )
 
-  $Private:CloneArguments = [List[string]]::new()
+  [List[string]]$Private:CloneArguments = [List[string]]::new()
   $CloneArguments.Add($Origin)
 
   if ($args) {
@@ -422,7 +422,7 @@ function Add-GitRepository {
 
   )
 
-  $Private:AddArguments = [List[string]]::new()
+  [List[string]]$Private:AddArguments = [List[string]]::new()
   if ($args) {
     $AddArguments.AddRange(
       [List[string]]$args
@@ -499,8 +499,8 @@ function Write-GitRepository {
 
   )
 
-  $Private:CommitArguments = [List[string]]::new()
-  $Private:Messages = [List[string]]::new()
+  [List[string]]$Private:CommitArguments = [List[string]]::new()
+  [List[string]]$Private:Messages = [List[string]]::new()
 
   [string[]]$Private:Arguments, [string[]]$Private:MessageWords = (
     $Message ? (, $Message + $args) : $args
@@ -594,7 +594,7 @@ function Push-GitRepository {
 
   )
 
-  $Private:PushArguments = [List[string]]::new()
+  [List[string]]$Private:PushArguments = [List[string]]::new()
 
   if (
     $WorkingDirectory -and (
@@ -650,7 +650,7 @@ function Reset-GitRepository {
 
   )
 
-  $Private:ResetArguments = [List[string]]::new()
+  [List[string]]$Private:ResetArguments = [List[string]]::new()
   if ($args) {
     $ResetArguments.AddRange(
       [List[string]]$args
@@ -728,7 +728,7 @@ function Restore-GitRepository {
 
   )
 
-  $Private:ResetArguments = [List[string]]::new()
+  [List[string]]$Private:ResetArguments = [List[string]]::new()
 
   if (
     $WorkingDirectory -and (

@@ -346,13 +346,13 @@ function Invoke-NodePackage {
 
   )
 
-  $Private:NodeArgumentList = [List[string]]::new(
+  [List[string]]$Private:NodeArgumentList = [List[string]]::new(
     [List[string]]@(
       '--color=always'
     )
   )
 
-  $Private:CallerNodeArguments = [List[string]]::new()
+  [List[string]]$Private:CallerNodeArguments = [List[string]]::new()
   if ($NodeArguments) {
     $CallerNodeArguments.AddRange(
       [List[string]]$NodeArguments
@@ -469,7 +469,7 @@ https://docs.npmjs.com/cli/commands/npm-cache
 #>
 function Clear-NodeModuleCache {
 
-  $Private:NodeArguments = [List[string]]::new(
+  [List[string]]$Private:NodeArguments = [List[string]]::new(
     [List[string]]@(
       'clean'
       '--force'
@@ -513,7 +513,7 @@ function Compare-NodeModule {
 
   )
 
-  $Private:NodeArguments = [List[string]]::new()
+  [List[string]]$Private:NodeArguments = [List[string]]::new()
 
   if ($WorkingDirectory) {
     if (-not (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)) {
@@ -609,7 +609,7 @@ function Step-NodePackageVersion {
     $Version = [NodePackageNamedVersion]::patch
   }
 
-  $Private:NodeArguments = [List[string]]::new(
+  [List[string]]$Private:NodeArguments = [List[string]]::new(
     [List[string]]@(
       $Version.ToLowerInvariant()
     )
@@ -668,7 +668,7 @@ function Invoke-NodePackageScript {
     throw 'Script name is required.'
   }
 
-  $Private:NodeArguments = [List[string]]::new(
+  [List[string]]$Private:NodeArguments = [List[string]]::new(
     [List[string]]@(
       $Script
     )
@@ -720,7 +720,7 @@ function Test-NodePackage {
 
   )
 
-  $Private:NodeArguments = [List[string]]::new()
+  [List[string]]$Private:NodeArguments = [List[string]]::new()
 
   if ($WorkingDirectory) {
     if (-not (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)) {

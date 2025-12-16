@@ -190,7 +190,7 @@ function Update-PSProfile {
   [hashtable]$Private:CLASSES = Import-PowerShellDataFile -Path $PROFILE_ROOT\Data\Class.psd1
   [string[]]$Projects = $CLASSES.Types + $CLASSES.Modules
 
-  $Private:Modified = [List[string]]::new()
+  [List[string]]$Private:Modified = [List[string]]::new()
 
   foreach ($Private:Project in $Projects) {
     [hashtable]$Private:Built = @{
@@ -254,7 +254,7 @@ function Build-PSProfile {
     ErrorAction      = 'Stop'
   }
 
-  $Private:DotNetClean = [List[string]]::new(
+  [List[string]]$Private:DotNetClean = [List[string]]::new(
     [string[]]@(
       'clean'
       '--configuration'
@@ -264,7 +264,7 @@ function Build-PSProfile {
   Start-Process @DotNet -ArgumentList $DotNetClean |
     Wait-Process
 
-  $Private:DotNetBuild = [List[string]]::new(
+  [List[string]]$Private:DotNetBuild = [List[string]]::new(
     [string[]]@(
       'build'
       '--configuration'
@@ -287,7 +287,7 @@ function Install-PSModuleDotNet {
   param()
 
   begin {
-    $Private:AppId = [List[string]]::new(
+    [List[string]]$Private:AppId = [List[string]]::new(
       [List[string]]@(
         '--id=Microsoft.DotNet.SDK.10'
       )
