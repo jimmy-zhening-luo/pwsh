@@ -228,14 +228,14 @@ namespace Completer
   }
 
   [AttributeUsage(AttributeTargets.Parameter)]
-  public class TestCompletionsAttribute(
+  public class StaticCompletionsAttribute(
       string Units,
       CompletionCase Casing,
       bool Sort,
       bool Surrounding
     ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
   {
-    TestCompletionsAttribute(
+    StaticCompletionsAttribute(
       string units
     ) : this(
       units,
@@ -244,7 +244,7 @@ namespace Completer
       true
     )
     { }
-    TestCompletionsAttribute(
+    StaticCompletionsAttribute(
       string units,
       CompletionCase casing
     ) : this(
@@ -254,7 +254,7 @@ namespace Completer
       true
     )
     { }
-    TestCompletionsAttribute(
+    StaticCompletionsAttribute(
       string units,
       CompletionCase casing,
       bool sort
