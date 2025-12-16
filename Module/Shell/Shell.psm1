@@ -112,7 +112,9 @@ class PathCompleter : CompleterBase {
     if (-not $this.Flat) {
       $directories = $directories |
         ForEach-Object {
-          $PSItem + [PathSyntax]::NormalDirectorySeparator
+          $PSItem.EndsWith(
+            [PathSyntax]::NormalDirectorySeparator
+          ) ? $PSItem :   $PSItem + [PathSyntax]::NormalDirectorySeparator
         }
     }
 
