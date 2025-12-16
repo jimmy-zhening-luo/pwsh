@@ -29,25 +29,25 @@ namespace PathCompleter
 
   public static class PathSyntax
   {
-    public static string EasyDirectorySeparator = "/";
+    public readonly static string EasyDirectorySeparator = "/";
 
-    public static string NormalDirectorySeparator = @"\";
+    public readonly static string NormalDirectorySeparator = @"\";
 
-    public static string EasyDirectorySeparatorPattern = "/";
+    public readonly static string EasyDirectorySeparatorPattern = "/";
 
-    public static string NormalDirectorySeparatorPattern = @"\\";
+    public readonly static string NormalDirectorySeparatorPattern = @"\\";
 
-    public static string DuplicateDirectorySeparatorPattern = @"(?<!^)\\\\+";
+    public readonly static string DuplicateDirectorySeparatorPattern = @"(?<!^)\\\\+";
 
-    public static string DescendantPattern = @"^(?=(?>[.\\]*)$)";
+    public readonly static string DescendantPattern = @"^(?=(?>[.\\]*)$)";
 
-    public static string TildeRootedPattern = @"^(?=~(?>$|\\))";
+    public readonly static string TildeRootedPattern = @"^(?=~(?>$|\\))";
 
-    public static string TildeRootPattern = @"^~(?>\\*)";
+    public readonly static string TildeRootPattern = @"^~(?>\\*)";
 
-    public static string CurrentRelativePattern = @"^\.(?>\\+)";
+    public readonly static string CurrentRelativePattern = @"^\.(?>\\+)";
 
-    public static string TrailingSeparatorPattern = @"(?>\\+)$";
+    public readonly static string TrailingSeparatorPattern = @"(?>\\+)$";
 
     public static string Format(
       string path,
