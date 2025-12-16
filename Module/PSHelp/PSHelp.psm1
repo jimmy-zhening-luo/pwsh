@@ -1,5 +1,6 @@
 using namespace System.Collections.Generic
 using namespace System.Management.Automation
+using namespace Completer
 
 [hashtable]$CUSTOM_HELP_FILE = @{
   Path = "$PSScriptRoot\PSHelpTopic.psd1"
@@ -266,7 +267,7 @@ function Get-CommandAlias {
     )]
     [SupportsWildcards()]
     [Alias('Command')]
-    [Completions({ return @('*') })]
+    [StaticCompletions('*', $null, $null, $null)]
     # Gets the aliases for the specified item. Enter the name of a cmdlet, function, script, file, or executable file. This parameter is called Definition, because it searches for the item name in the Definition property of the alias object.
     [string[]]$Definition,
 
@@ -388,7 +389,7 @@ function Get-VerbList {
       ValueFromPipelineByPropertyName
     )]
     [SupportsWildcards()]
-    [Completions({ return @('*') })]
+    [StaticCompletions('*', $null, $null, $null)]
     # Gets only the specified verbs. Enter the name of a verb or a name pattern. Wildcards are allowed.
     [string[]]$Verb,
 
