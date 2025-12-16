@@ -1,6 +1,10 @@
 @{
   Types   = @(
     @{
+      Name    = 'Input'
+      Runtime = 'net9.0'
+    }
+    @{
       Name    = 'Completer'
       Runtime = 'net9.0'
     }
