@@ -21,7 +21,7 @@ namespace PathCompleter
         ValueFromPipelineByPropertyName = true,
         ValueFromRemainingArguments = true
       )]
-      [AllowEmptyCollection()]
+      [AllowEmptyCollection]
       [Alias("Integer")]
       public UInt64[] Number
       {
@@ -30,7 +30,7 @@ namespace PathCompleter
       }
       private UInt64[] numbers;
 
-      [Parameter()]
+      [Parameter]
       [Alias("Case")]
       public SwitchParameter Lowercase
       {
