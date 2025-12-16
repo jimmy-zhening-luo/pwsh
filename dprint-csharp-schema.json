@@ -1,0 +1,192 @@
+{
+  "$id": "https://raw.githubusercontent.com/jimmy-zhening-luo/pwsh/refs/heads/main/dprint-csharp-schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "dprint C# Rosalyn plugin rules schema",
+  "properties": {
+    "csharp.indentBlock": {
+      "type": "boolean"
+    },
+    "csharp.indentBraces": {
+      "type": "boolean"
+    },
+    "csharp.indentSwitchCaseSection": {
+      "type": "boolean"
+    },
+    "csharp.indentSwitchCaseSectionWhenBlock": {
+      "type": "boolean"
+    },
+    "csharp.indentSwitchSection": {
+      "type": "boolean"
+    },
+    "csharp.labelPositioning": {
+      "$ref": "#/$defs/position"
+    },
+    "csharp.newLineForCatch": {
+      "type": "boolean"
+    },
+    "csharp.newLineForClausesInQuery": {
+      "type": "boolean"
+    },
+    "csharp.newLineForElse": {
+      "type": "boolean"
+    },
+    "csharp.newLineForFinally": {
+      "type": "boolean"
+    },
+    "csharp.newLineForMembersInAnonymousTypes": {
+      "type": "boolean"
+    },
+    "csharp.newLineForMembersInObjectInit": {
+      "type": "boolean"
+    },
+    "csharp.newLinesForBracesInAccessors": {
+      "type": "boolean"
+    },
+    "csharp.newLinesForBracesInAnonymousMethods": {
+      "type": "boolean"
+    },
+    "csharp.newLinesForBracesInAnonymousTypes": {
+      "type": "boolean"
+    },
+    "csharp.newLinesForBracesInControlBlocks": {
+      "type": "boolean"
+    },
+    "csharp.newLinesForBracesInLambdaExpressionBody": {
+      "type": "boolean"
+    },
+    "csharp.newLinesForBracesInMethods": {
+      "type": "boolean"
+    },
+    "csharp.newLinesForBracesInObjectCollectionArrayInitializers": {
+      "type": "boolean"
+    },
+    "csharp.newLinesForBracesInProperties": {
+      "type": "boolean"
+    },
+    "csharp.newLinesForBracesInTypes": {
+      "type": "boolean"
+    },
+    "csharp.spaceAfterCast": {
+      "type": "boolean"
+    },
+    "csharp.spaceAfterColonInBaseTypeDeclaration": {
+      "type": "boolean"
+    },
+    "csharp.spaceAfterComma": {
+      "type": "boolean"
+    },
+    "csharp.spaceAfterControlFlowStatementKeyword": {
+      "type": "boolean"
+    },
+    "csharp.spaceAfterDot": {
+      "type": "boolean"
+    },
+    "csharp.spaceAfterMethodCallName": {
+      "type": "boolean"
+    },
+    "csharp.spaceAfterSemicolonsInForStatement": {
+      "type": "boolean"
+    },
+    "csharp.spaceBeforeColonInBaseTypeDeclaration": {
+      "type": "boolean"
+    },
+    "csharp.spaceBeforeComma": {
+      "type": "boolean"
+    },
+    "csharp.spaceBeforeDot": {
+      "type": "boolean"
+    },
+    "csharp.spaceBeforeOpenSquareBracket": {
+      "type": "boolean"
+    },
+    "csharp.spaceBeforeSemicolonsInForStatement": {
+      "type": "boolean"
+    },
+    "csharp.spaceBetweenEmptyMethodCallParentheses": {
+      "type": "boolean"
+    },
+    "csharp.spaceBetweenEmptyMethodDeclarationParentheses": {
+      "type": "boolean"
+    },
+    "csharp.spaceBetweenEmptySquareBrackets": {
+      "type": "boolean"
+    },
+    "csharp.spacesIgnoreAroundVariableDeclaration": {
+      "type": "boolean"
+    },
+    "csharp.spaceWithinCastParentheses": {
+      "type": "boolean"
+    },
+    "csharp.spaceWithinExpressionParentheses": {
+      "type": "boolean"
+    },
+    "csharp.spaceWithinMethodCallParentheses": {
+      "type": "boolean"
+    },
+    "csharp.spaceWithinMethodDeclarationParenthesis": {
+      "type": "boolean"
+    },
+    "csharp.spaceWithinOtherParentheses": {
+      "type": "boolean"
+    },
+    "csharp.spaceWithinSquareBrackets": {
+      "type": "boolean"
+    },
+    "csharp.spacingAfterMethodDeclarationName": {
+      "type": "boolean"
+    },
+    "csharp.spacingAroundBinaryOperator": {
+      "$ref": "#/$defs/spacing"
+    },
+    "csharp.wrappingKeepStatementsOnSingleLine": {
+      "type": "boolean"
+    },
+    "csharp.wrappingPreserveSingleLine": {
+      "type": "boolean"
+    }
+  },
+  "$defs": {
+    "position": {
+      "anyOf": [
+        {
+          "type": "string",
+          "enum": [
+            "LeftMost",
+            "OneLess",
+            "NoIndent"
+          ]
+        },
+        {
+          "type": "integer",
+          "enum": [
+            0,
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    "spacing": {
+      "anyOf": [
+        {
+          "type": "string",
+          "enum": [
+            "Single",
+            "Ignore",
+            "Remove"
+          ]
+        },
+        {
+          "type": "integer",
+          "enum": [
+            0,
+            1,
+            2
+          ]
+        }
+      ]
+    }
+  },
+  "additionalProperties": true,
+  "allowTrailingCommas": true
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "dprint://schemas/config.json",
+  "plugins": [
+    "https://plugins.dprint.dev/roslyn-0.19.1.json@a5daf2404c57680374f255c78f1956916482aa4b4e90825f1a48eb5a7e343b35",
+  ],
+  "includes": [
+    "Class/**/*.cs",
+  ],
+  "indentWidth": 2,
+  "newLineKind": "lf",
+  "useTabs": false,
+  "roslyn": {
+    "$schema": "https://raw.githubusercontent.com/jimmy-zhening-luo/pwsh/refs/heads/main/dprint-csharp-schema.json",
+    // $help: https://learn.microsoft.com/en-us/dotnet/api/microsoft.codeanalysis.csharp.formatting.csharpformattingoptions#properties
+    // DOC:[source] https://github.com/dotnet/roslyn/blob/main/src/Workspaces/CSharp/Portable/Formatting/CSharpFormattingOptions.cs
+    "csharp.indentBlock": false,
+    "csharp.indentBraces": true,
+  },
+}
