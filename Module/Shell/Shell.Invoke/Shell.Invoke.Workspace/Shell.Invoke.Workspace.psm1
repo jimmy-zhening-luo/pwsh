@@ -2,6 +2,8 @@ using namespace System.Collections.Generic
 
 function Invoke-Workspace {
 
+  [CmdletBinding()]
+
   [OutputType([void])]
 
   param(
@@ -96,6 +98,8 @@ function Invoke-Workspace {
 
 function Invoke-WorkspaceSibling {
 
+  [CmdletBinding()]
+
   [OutputType([void])]
 
   param(
@@ -120,6 +124,8 @@ function Invoke-WorkspaceSibling {
 }
 
 function Invoke-WorkspaceRelative {
+
+  [CmdletBinding()]
 
   [OutputType([void])]
 
@@ -146,6 +152,8 @@ function Invoke-WorkspaceRelative {
 
 function Invoke-WorkspaceHome {
 
+  [CmdletBinding()]
+
   [OutputType([void])]
 
   param(
@@ -170,6 +178,8 @@ function Invoke-WorkspaceHome {
 }
 
 function Invoke-WorkspaceCode {
+
+  [CmdletBinding()]
 
   [OutputType([void])]
 
@@ -196,15 +206,31 @@ function Invoke-WorkspaceCode {
 
 function Invoke-WorkspaceDrive {
 
+  [CmdletBinding()]
+
   [OutputType([void])]
 
   param(
 
+    [Parameter(
+      Position = 0
+    )]
+    [AllowEmptyString()]
     [PathCompletions('\')]
     [string]$Path,
 
+    [Parameter(
+      Position = 1
+    )]
+    [AllowEmptyString()]
     [Alias('Name', 'pn')]
     [string]$ProfileName,
+
+    [Parameter(
+      Position = 2,
+      ValueFromRemainingArguments
+    )]
+    [string[]]$CodeArgument,
 
     [switch]$Window,
 
