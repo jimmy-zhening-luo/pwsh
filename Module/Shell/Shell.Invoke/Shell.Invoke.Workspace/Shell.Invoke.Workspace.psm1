@@ -115,12 +115,12 @@ function Invoke-Workspace {
     $ArgumentList.Add('--reuse-window')
   }
 
-  [hashtable]$Private:Process = @{
+  [hashtable]$Private:VSCode = @{
     FilePath     = "$HOME\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd"
     ArgumentList = $ArgumentList
     NoNewWindow  = $True
   }
-  Start-Process @Process
+  Start-Process @VSCode
 }
 
 function Invoke-WorkspaceSibling {
