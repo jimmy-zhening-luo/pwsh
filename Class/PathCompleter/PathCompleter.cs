@@ -29,10 +29,10 @@ namespace PathCompleter
 
   public static class PathSyntax
   {
-    public readonly static string EasyDirectorySeparator = "/";
     public readonly static string NormalDirectorySeparator = @"\";
-    public readonly static string EasyDirectorySeparatorPattern = "/";
+    public readonly static string EasyDirectorySeparator = "/";
     public readonly static string NormalDirectorySeparatorPattern = @"\\";
+    public readonly static string EasyDirectorySeparatorPattern = "/";
     public readonly static string DuplicateDirectorySeparatorPattern = @"(?<!^)\\\\+";
     public readonly static string DescendantPattern = @"^(?=(?>[.\\]*)$)";
     public readonly static string TildeRootedPattern = @"^(?=~(?>$|\\))";
