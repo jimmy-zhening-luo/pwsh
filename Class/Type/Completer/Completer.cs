@@ -20,14 +20,14 @@ namespace Completer
   ) : IArgumentCompleter
   {
     private static IEnumerable<CompletionResult> WrapCompletionResult(
-      IEnumerable<string> completions
+      IEnumerable<string> completedStrings
     )
     {
-      foreach (string completionString in completionStrings)
+      foreach (string completedString in completedStrings)
       {
         yield return new CompletionResult(
           Typed.Typed.Escape(
-            completionString
+            completedString
           )
         );
       }
