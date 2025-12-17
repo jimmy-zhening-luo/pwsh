@@ -59,7 +59,7 @@ function Get-HelpOnline {
       Position = 0,
       ValueFromRemainingArguments
     )]
-    [Completions(
+    [DynamicCompletions(
       {
         [string[]]$Private:About = (
           Import-PowerShellDataFile -Path $PSScriptRoot\PSHelpTopic.Local.psd1
@@ -72,7 +72,7 @@ function Get-HelpOnline {
 
         return $About + $Function
       },
-      [CompletionCase]::Preserve
+      $null, $null, $null
     )]
     [string[]]$Name,
 

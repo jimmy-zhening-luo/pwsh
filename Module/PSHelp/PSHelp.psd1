@@ -9,11 +9,6 @@
   PowerShellVersion    = '7.5'
   RequiredModules      = @(
     @{
-      ModuleName    = 'Completer'
-      ModuleVersion = '3.0.0'
-      GUID          = '95f00487-efc3-43e8-adcb-c539f28f0058'
-    }
-    @{
       ModuleName    = 'Browse'
       ModuleVersion = '3.0.0'
       GUID          = '5a80488d-6a5a-4f24-b3f1-ff9d275ab8b5'
