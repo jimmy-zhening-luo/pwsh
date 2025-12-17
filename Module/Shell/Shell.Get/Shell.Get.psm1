@@ -69,7 +69,7 @@ function Get-Size {
     )]
     [StaticCompletions(
       'b,kb,mb,gb,tb,pb',
-      $null, $null, $null
+      $null, $null
     )]
     # The unit in which to return the size.
     [string]$Unit,

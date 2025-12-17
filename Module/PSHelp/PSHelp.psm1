@@ -71,7 +71,7 @@ function Get-HelpOnline {
 
         return $About + $Function
       },
-      $null, $null, $null
+      $null, $null
     )]
     [string[]]$Name,
 
@@ -264,7 +264,7 @@ function Get-CommandAlias {
     )]
     [SupportsWildcards()]
     [Alias('Command')]
-    [StaticCompletions('*', $null, $null, $null)]
+    [StaticCompletions('*', $null, $null)]
     # Gets the aliases for the specified item. Enter the name of a cmdlet, function, script, file, or executable file. This parameter is called Definition, because it searches for the item name in the Definition property of the alias object.
     [string[]]$Definition,
 
@@ -274,7 +274,7 @@ function Get-CommandAlias {
     [SupportsWildcards()]
     [StaticCompletions(
       'global,local,script,0,1,2,3',
-      $null, $null, $null
+      $null, $null
     )]
     # Specifies the scope for which this cmdlet gets aliases. The acceptable values for this parameter are: Global, Local, Script, and a positive integer relative to the current scope (0 through the number of scopes, where 0 is the current scope and 1 is its parent). Global is the default, which differs from Get-Alias where Local is the default.
     [string]$Scope,
@@ -364,7 +364,7 @@ function Get-VerbList {
       ValueFromPipelineByPropertyName
     )]
     [SupportsWildcards()]
-    [StaticCompletions('*', $null, $null, $null)]
+    [StaticCompletions('*', $null, $null)]
     # Gets only the specified verbs. Enter the name of a verb or a name pattern. Wildcards are allowed.
     [string[]]$Verb,
 
@@ -373,7 +373,7 @@ function Get-VerbList {
     )]
     [StaticCompletions(
       'communications,data,diagnostic,lifecycle,security,service,settings,support,system,utility',
-      $null, $null, $null
+      $null, $null
     )]
     # Gets only the specified group. Enter the name of a group. Wildcards aren't allowed.
     [string]$Group

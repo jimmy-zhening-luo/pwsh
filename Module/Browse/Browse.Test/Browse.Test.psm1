@@ -55,7 +55,7 @@ function Test-Host {
     [Alias('TCP')]
     [StaticCompletions(
       'http,rdp,smb,winrm',
-      $null, $null, $null
+      $null, $null
     )]
     [string]$CommonTCPPort,
 
@@ -70,7 +70,7 @@ function Test-Host {
 
     [StaticCompletions(
       'quiet,detailed',
-      $null, $null, $null
+      $null, $null
     )]
     # The level of information to return, can be Quiet or Detailed. Will not take effect if Detailed switch is set. Defaults to Quiet.
     [string]$InformationLevel,
