@@ -16,9 +16,7 @@ function Clear-Line {
 
     [PathCompletions(
       '.',
-      [PathItemType]::Any,
-      $False,
-      $False
+      $null, $null, $null
     )]
     [string]$Path
 

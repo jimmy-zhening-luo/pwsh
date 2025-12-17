@@ -54,9 +54,7 @@ function Get-Size {
     )]
     [PathCompletions(
       '.',
-      [PathItemType]::Any,
-      $False,
-      $False
+      $null, $null, $null
     )]
     # The path of the file or directory to be measured.
     [string]$Path,

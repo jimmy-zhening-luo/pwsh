@@ -8,9 +8,7 @@ function Invoke-Directory {
 
     [PathCompletions(
       '.',
-      [PathItemType]::Any,
-      $False,
-      $False
+      $null, $null, $null
     )]
     [string]$Path
 
@@ -37,9 +35,7 @@ function Invoke-DirectorySibling {
 
     [PathCompletions(
       '..',
-      [PathItemType]::Any,
-      $False,
-      $False
+      $null, $null, $null
     )]
     [string]$Path
 
@@ -59,9 +55,7 @@ function Invoke-DirectoryRelative {
 
     [PathCompletions(
       '..\..',
-      [PathItemType]::Any,
-      $False,
-      $False
+      $null, $null, $null
     )]
     [string]$Path
 
@@ -81,9 +75,7 @@ function Invoke-DirectoryHome {
 
     [PathCompletions(
       '~',
-      [PathItemType]::Any,
-      $False,
-      $False
+      $null, $null, $null
     )]
     [string]$Path
 
@@ -103,9 +95,7 @@ function Invoke-DirectoryCode {
 
     [PathCompletions(
       '~\code',
-      [PathItemType]::Any,
-      $False,
-      $False
+      $null, $null, $null
     )]
     [string]$Path
 
@@ -125,9 +115,7 @@ function Invoke-DirectoryDrive {
 
     [PathCompletions(
       '\',
-      [PathItemType]::Any,
-      $False,
-      $False
+      $null, $null, $null
     )]
     [string]$Path
 

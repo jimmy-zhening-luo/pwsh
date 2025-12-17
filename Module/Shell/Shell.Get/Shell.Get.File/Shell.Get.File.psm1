@@ -9,9 +9,7 @@ function Get-File {
 
     [PathCompletions(
       '.',
-      [PathItemType]::Any,
-      $False,
-      $False
+      $null, $null, $null
     )]
     [string]$Path,
 
@@ -71,9 +69,7 @@ function Get-FileSibling {
 
     [PathCompletions(
       '..',
-      [PathItemType]::Any,
-      $False,
-      $False
+      $null, $null, $null
     )]
     [string]$Path
 
@@ -93,9 +89,7 @@ function Get-FileRelative {
 
     [PathCompletions(
       '..\..',
-      [PathItemType]::Any,
-      $False,
-      $False
+      $null, $null, $null
     )]
     [string]$Path
 
@@ -115,9 +109,7 @@ function Get-FileHome {
 
     [PathCompletions(
       '~',
-      [PathItemType]::Any,
-      $False,
-      $False
+      $null, $null, $null
     )]
     [string]$Path
 
@@ -137,9 +129,7 @@ function Get-FileCode {
 
     [PathCompletions(
       '~\code',
-      [PathItemType]::Any,
-      $False,
-      $False
+      $null, $null, $null
     )]
     [string]$Path
 
@@ -159,9 +149,7 @@ function Get-FileDrive {
 
     [PathCompletions(
       '\',
-      [PathItemType]::Any,
-      $False,
-      $False
+      $null, $null, $null
     )]
     [string]$Path
 
