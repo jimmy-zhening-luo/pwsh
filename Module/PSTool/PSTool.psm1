@@ -186,61 +186,6 @@ function Update-PSProfile {
   #endregion
 
   #region Build
-  [string]$Private:CLASS_ROOT = "$PROFILE_ROOT\Class"
-  [hashtable]$Private:CLASSES = Import-PowerShellDataFile -Path $PROFILE_ROOT\Data\Class.psd1
-  $Projects = $CLASSES.Types + $CLASSES.Modules
-
-  [List[string]]$Private:Modified = [List[string]]::new()
-
-  foreach ($Private:Project in $Projects) {
-    [string]$Private:Name = $Project.Name
-    [string]$Private:Runtime = $Project.Runtime
-    [string]$Private:ProjectBaseName = "$CLASS_ROOT\$Name\$Name"
-
-    [hashtable]$Private:Source = @{
-      Path = "$ProjectBaseName.cs"
-    }
-    [hashtable]$Private:Manifest = @{
-      Path = "$ProjectBaseName.csproj"
-    }
-
-    [hashtable]$Private:Built = @{
-      Path = "$CLASS_ROOT\$Name\bin\Release\$Runtime\$Name.dll"
-    }
-    if (Test-Path @Built -PathType Leaf) {
-      [datetime]$Private:BuiltTime = (
-        Get-Item @Built
-      ).LastWriteTime
-
-      if (
-        (
-          Get-Item @Source
-        ).LastWriteTime -gt $BuiltTime -or (
-          Get-Item @Manifest
-        ).LastWriteTime -gt $BuiltTime
-      ) {
-        $Modified.Add([string]$Name)
-      }
-    }
-    else {
-      $Modified.Add([string]$Name)
-    }
-  }
-
-  if ($Modified.Count -ne 0) {
-    Build-PSProfile
-  }
-  #endregion
-}
-
-function Build-PSProfile {
-
-  [CmdletBinding()]
-
-  [OutputType([void])]
-
-  param()
-
   [hashtable]$Private:CompileCommand = @{
     All         = $True
     CommandType = 'Application'
@@ -288,6 +233,7 @@ function Build-PSProfile {
   )
   Start-Process @DotNet -ArgumentList $DotNetBuild |
     Wait-Process
+  #endregion
 }
 
 function Install-PSModuleDotNet {
