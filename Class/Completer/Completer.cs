@@ -172,7 +172,7 @@ namespace Completer
 
       if (set.Count == 0)
       {
-        throw new ArgumentException("domain");
+        throw new ArgumentException("Domain");
       }
 
       Domain = [.. set];
