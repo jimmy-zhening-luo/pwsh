@@ -26,7 +26,7 @@
     @{
       ModuleName    = 'Shell.Invoke'
       ModuleVersion = '3.0.0.0'
-      GUID          = '130b56d3-229a-4ec1-be75-d31a615147c8'
+      GUID          = '6f610e9b-3218-49e5-93e7-f9242095f7c9'
     }
     @{
       ModuleName    = 'Shell.Remove'
