@@ -199,16 +199,16 @@ namespace Completer
 
   [AttributeUsage(AttributeTargets.Parameter)]
   public class StaticCompletionsAttribute(
-      string Units,
-      CompletionCase? Casing,
-      bool? Sort,
-      bool? Surrounding
-    ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
+    string Units,
+    CompletionCase? Casing,
+    bool? Sort,
+    bool? Surrounding
+  ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
   {
     public IArgumentCompleter Create()
     {
       return new Completer(
-          [.. Units.Split(",")],
+        [.. Units.Split(",")],
         Casing ?? CompletionCase.Preserve,
         Sort ?? false,
         Surrounding ?? true
@@ -218,11 +218,11 @@ namespace Completer
 
   [AttributeUsage(AttributeTargets.Parameter)]
   public class DynamicCompletionsAttribute(
-      ScriptBlock Units,
-      CompletionCase? Casing,
-      bool? Sort,
-      bool? Surrounding
-    ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
+    ScriptBlock Units,
+    CompletionCase? Casing,
+    bool? Sort,
+    bool? Surrounding
+  ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
   {
     public IArgumentCompleter Create()
     {
