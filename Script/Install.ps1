@@ -104,7 +104,7 @@ foreach ($Private:Type in $Types) {
 
 #region Load Type
 foreach ($Private:Type in $Types) {
-  [string]$Private:TypeAssembly = @{
+  [hashtable]$Private:TypeAssembly = @{
     Path = "$SourceRoot\$Type.dll"
   }
 
