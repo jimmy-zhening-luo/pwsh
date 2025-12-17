@@ -47,18 +47,13 @@ namespace Completer
       IDictionary fakeBoundParameters
     )
     {
-      foreach (
-        CompletionResult completionResult in WrapCompletionResult(
-          FulfillCompletion(
-            parameterName,
-            wordToComplete,
-            fakeBoundParameters
-          )
+      return WrapCompletionResult(
+        FulfillCompletion(
+          parameterName,
+          wordToComplete,
+          fakeBoundParameters
         )
-      )
-      {
-        yield return completionResult;
-      }
+      );
     }
 
     public IEnumerable<string> FindCompletion(
