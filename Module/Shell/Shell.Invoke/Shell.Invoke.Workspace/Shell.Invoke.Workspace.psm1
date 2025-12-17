@@ -14,8 +14,7 @@ function Invoke-Workspace {
     )]
     [AllowEmptyString()]
     [PathCompletions(
-      '.',
-      $null, $null, $null
+      $null, $null, $null, $null
     )]
     [string]$Path,
 

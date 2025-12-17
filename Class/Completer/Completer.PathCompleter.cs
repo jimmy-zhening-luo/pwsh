@@ -260,9 +260,11 @@ namespace Completer
       }
     }
 
+#nullable enable
     [AttributeUsage(AttributeTargets.Parameter)]
     public class PathCompletionsAttribute(
-      string Root,
+
+      string? Root,
       PathItemType? ItemType,
       bool? Flat,
       bool? UseNativePathSeparator
@@ -271,12 +273,13 @@ namespace Completer
       public IArgumentCompleter Create()
       {
         return new PathCompleter(
-          Root,
+          Root ?? "",
           ItemType ?? PathItemType.Any,
           Flat ?? false,
           UseNativePathSeparator ?? false
         );
       }
     }
+#nullable disable
   }
 }

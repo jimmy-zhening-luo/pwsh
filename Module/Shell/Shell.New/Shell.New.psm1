@@ -45,8 +45,7 @@ function New-Directory {
     )]
     [Alias('Target')]
     [PathCompletions(
-      '.',
-      $null, $null, $null
+      $null, $null, $null, $null
     )]
     [System.Object]$Value,
     [switch]$Force,
@@ -126,8 +125,7 @@ function New-Junction {
     )]
     [Alias('Target')]
     [PathCompletions(
-      '.',
-      $null, $null, $null
+      $null, $null, $null, $null
     )]
     [System.Object]$Value
 

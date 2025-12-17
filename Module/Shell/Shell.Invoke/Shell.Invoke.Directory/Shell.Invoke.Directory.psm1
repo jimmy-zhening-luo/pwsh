@@ -7,8 +7,7 @@ function Invoke-Directory {
   param(
 
     [PathCompletions(
-      '.',
-      $null, $null, $null
+      $null, $null, $null, $null
     )]
     [string]$Path
 
