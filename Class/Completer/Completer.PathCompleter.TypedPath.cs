@@ -18,7 +18,7 @@ namespace Completer
       public readonly static string TildeRootPattern = @"^~(?>\\*)";
       public readonly static string IsPathDescendantPattern = @"^(?=(?>[.\\]*)$)";
       public readonly static string IsPathTildeRootedPattern = @"^(?=~(?>$|\\))";
-  
+
       public static string Normalize(
         string path,
         string separator = "",
@@ -36,7 +36,7 @@ namespace Completer
           DuplicatePathSeparatorPattern,
           PathSeparator
         );
-  
+
         string pretrimmedNormalPath = trimLeadingRelative
           ? Regex.Replace(
               normalPath,
@@ -51,7 +51,7 @@ namespace Completer
               string.Empty
             )
           : pretrimmedNormalPath;
-  
+
         return separator != string.Empty && separator != PathSeparator
           ? trimmedNormalPath.Replace(
               PathSeparator,
