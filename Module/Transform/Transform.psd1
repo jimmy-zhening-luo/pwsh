@@ -10,7 +10,6 @@
   RequiredAssemblies   = @(
     'Transform.dll'
   )
-  RequiredModules      = @()
   NestedModules        = @(
     'Transform.dll'
   )

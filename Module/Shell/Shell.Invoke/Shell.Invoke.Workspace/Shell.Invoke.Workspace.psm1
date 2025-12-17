@@ -1,5 +1,3 @@
-using namespace System.Collections.Generic
-
 function Invoke-Workspace {
 
   [CmdletBinding()]
@@ -39,10 +37,10 @@ function Invoke-Workspace {
 
   )
 
-  [List[string]]$Private:ArgumentList = [List[string]]::new()
+  [System.Collections.Generic.List[string]]$Private:ArgumentList = [System.Collections.Generic.List[string]]::new()
   if ($CodeArgument) {
     $ArgumentList.AddRange(
-      [List[string]]$CodeArgument
+      [System.Collections.Generic.List[string]]$CodeArgument
     )
   }
 

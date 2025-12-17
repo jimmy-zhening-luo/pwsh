@@ -6,7 +6,6 @@
   CompanyName          = 'Jimmy Zhening Luo'
   Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
   PowerShellVersion    = '7.5'
-  RequiredModules      = @()
   NestedModules        = @(
     @{
       ModuleName    = 'Shell.Invoke.Directory'
