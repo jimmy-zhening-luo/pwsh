@@ -364,7 +364,7 @@ function Get-VerbList {
       ValueFromPipelineByPropertyName
     )]
     [SupportsWildcards()]
-    [StaticCompletions('*', $null, $null, $null)]
+    [DynamicCompletions({ return '*' }, $null, $null, $null)]
     # Gets only the specified verbs. Enter the name of a verb or a name pattern. Wildcards are allowed.
     [string[]]$Verb,
 
