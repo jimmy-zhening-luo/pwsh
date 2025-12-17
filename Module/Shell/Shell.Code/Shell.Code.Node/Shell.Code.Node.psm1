@@ -1,5 +1,4 @@
 using namespace System.Collections.Generic
-using namespace System.Management.Automation
 using namespace Completer
 using namespace Completer.PathCompleter
 

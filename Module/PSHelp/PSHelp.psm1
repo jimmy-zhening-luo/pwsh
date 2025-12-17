@@ -1,5 +1,4 @@
 using namespace System.Collections.Generic
-using namespace System.Management.Automation
 using namespace Completer
 
 [hashtable]$CUSTOM_HELP_FILE = @{
@@ -154,13 +153,11 @@ function Get-HelpOnline {
     else {
       $Private:about_Article = ''
 
-      if ($Help) {
-        if ($Help -is [pscustomobject]) {
-          [string]$Private:LocalHelpTopic = $Help.Name
+      if ($Help -and $Help.Name) {
+        [string]$Private:LocalHelpTopic = $Help.Name
 
-          if ($LocalHelpTopic.StartsWith('about_')) {
-            $about_Article = [uri]"$ABOUT_BASE_URL/$LocalHelpTopic"
-          }
+        if ($LocalHelpTopic.StartsWith('about_')) {
+          $about_Article = [uri]"$ABOUT_BASE_URL/$LocalHelpTopic"
         }
       }
       else {

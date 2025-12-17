@@ -1,4 +1,3 @@
-using namespace System.Management.Automation
 using namespace Completer.PathCompleter
 
 <#
@@ -52,7 +51,7 @@ function New-Directory {
     [Parameter(
       ValueFromPipelineByPropertyName
     )]
-    [PSCredential]$Credential
+    [System.Management.Automation.PSCredential]$Credential
 
   )
 
@@ -60,7 +59,7 @@ function New-Directory {
     [hashtable]$Private:DirectoryType = @{
       ItemType = 'Directory'
     }
-    $Private:wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [CommandTypes]::Cmdlet)
+    $Private:wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [System.Management.Automation.CommandTypes]::Cmdlet)
     $Private:scriptCmd = { & $wrappedCmd @DirectoryType @PSBoundParameters }
     $Private:steppablePipeline = $scriptCmd.GetSteppablePipeline()
 
@@ -133,7 +132,7 @@ function New-Junction {
       ItemType = 'Junction'
       Force    = $True
     }
-    $Private:wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [CommandTypes]::Cmdlet)
+    $Private:wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [System.Management.Automation.CommandTypes]::Cmdlet)
     $Private:scriptCmd = { & $wrappedCmd @PSBoundParameters @JunctionType }
     $Private:steppablePipeline = $scriptCmd.GetSteppablePipeline()
 
