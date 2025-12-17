@@ -20,12 +20,12 @@ param (
   [Parameter(Mandatory)]
   [AllowEmptyCollection()]
   [ValidateNotNull()]
-  [string[]]$Types,
+  [string[]]$Cmdlets,
 
   [Parameter(Mandatory)]
   [AllowEmptyCollection()]
   [ValidateNotNull()]
-  [string[]]$Modules
+  [string[]]$Types
 
 )
 
@@ -41,10 +41,14 @@ function Install-PSProject {
 
     [Parameter(Mandatory)]
     [ValidateNotNullOrWhiteSpace()]
+    [string]$Folder,
+
+    [Parameter(Mandatory)]
+    [ValidateNotNullOrWhiteSpace()]
     [string]$InstallPath
   )
 
-  [string]$Private:BuildOutput = "$SourceRoot\$Project\bin\Release\net9.0\$Project.dll"
+  [string]$Private:BuildOutput = "$SourceRoot\$Folder\$Project\bin\Release\net9.0\$Project.dll"
 
   if (Test-Path -Path $BuildOutput) {
     [string]$Private:InstalledAssembly = "$InstallPath\$Project.dll"
@@ -68,30 +72,32 @@ function Install-PSProject {
     }
   }
   else {
-    Write-Warning -Message "Project '$Project' is not built, skipping."
+    Write-Warning -Message "Project '$Folder\$Project' is not built, skipping."
   }
 }
 #endregion
 
 
 #region Install/Module
-foreach ($Private:Module in $Modules) {
-  [hashtable]$Private:ModuleDistro = @{
-    Project     = $Module
-    InstallPath = "$ModuleRoot\$Module"
+foreach ($Private:BinaryModule in $Cmdlets) {
+  [hashtable]$Private:BinaryModuleManifest = @{
+    Project     = $BinaryModule
+    Folder      = 'Cmdlet'
+    InstallPath = "$ModuleRoot\$BinaryModule"
   }
-  Install-PSProject @ModuleDistro
+  Install-PSProject @BinaryModuleManifest
 }
 #endregion
 
 
 #region Install/Type
 foreach ($Private:Type in $Types) {
-  [hashtable]$Private:TypeDistro = @{
+  [hashtable]$Private:TypeManifest = @{
     Project     = $Type
+    Folder      = 'Type'
     InstallPath = $SourceRoot
   }
-  Install-PSProject @TypeDistro
+  Install-PSProject @TypeManifest
 }
 #endregion
 

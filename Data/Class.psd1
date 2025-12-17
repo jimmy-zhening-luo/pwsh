@@ -1,8 +1,8 @@
 @{
+  Cmdlets = @(
+    'Transform'
+  )
   Types   = @(
     'Completer'
-  )
-  Modules = @(
-    'Transform'
   )
 }
