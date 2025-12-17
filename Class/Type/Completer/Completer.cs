@@ -48,7 +48,7 @@ namespace Completer
     )
     {
       foreach (
-        string completionResult in WrapCompletionResult(
+        CompletionResult completionResult in WrapCompletionResult(
           FulfillCompletion(
             parameterName,
             wordToComplete,
@@ -182,7 +182,7 @@ namespace Completer
     public IArgumentCompleter Create()
     {
       return new Completer(
-        Units
+        StringifiedDomain
           .Split(",")
           .Select(
             member => member.Trim()
