@@ -1,14 +1,8 @@
 @{
   Types   = @(
-    @{
-      Name    = 'Completer'
-      Runtime = 'net9.0'
-    }
+    'Completer'
   )
   Modules = @(
-    @{
-      Name    = 'Transform'
-      Runtime = 'net9.0'
-    }
+    'Transform'
   )
 }
