@@ -8,24 +8,24 @@ param (
     Position = 0
   )]
   [ValidateNotNullOrWhiteSpace()]
-  [string]$SourceRoot,
+  [string]$Local:SourceRoot,
 
   [Parameter(
     Mandatory,
     Position = 1
   )]
   [ValidateNotNullOrWhiteSpace()]
-  [string]$Private:ModuleRoot,
+  [string]$Local:ModuleRoot,
 
   [Parameter(Mandatory)]
   [AllowEmptyCollection()]
   [ValidateNotNull()]
-  [string[]]$Private:Types,
+  [string[]]$Local:Types,
 
   [Parameter(Mandatory)]
   [AllowEmptyCollection()]
   [ValidateNotNull()]
-  [string[]]$Private:Modules
+  [string[]]$Local:Modules
 
 )
 
