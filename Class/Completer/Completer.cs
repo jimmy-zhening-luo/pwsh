@@ -231,7 +231,9 @@ namespace Completer
 
       foreach (var unit in invokedUnits)
       {
-        unitList.Add(unit.BaseObject.ToString());
+        unitList.Add(
+          unit.BaseObject.ToString()
+        );
       }
 
       return new Completer(
