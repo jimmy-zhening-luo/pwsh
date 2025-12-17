@@ -1,7 +1,6 @@
 using namespace System.Collections.Generic
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
-using namespace Completer.Typed
 using namespace Completer.PathCompleter
 
 class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory {
