@@ -269,5 +269,25 @@ namespace Completer
         return completions;
       }
     }
+
+    [AttributeUsage(AttributeTargets.Parameter)]
+    public class PathLocationCompletionsAttribute(
+      string Root,
+      PathItemType? ItemType,
+      bool? Flat,
+      bool? UseNativePathSeparator
+    ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
+    {
+      public IArgumentCompleter Create()
+      {
+        return new PathCompleter(
+          "",
+          Root,
+          ItemType ?? PathItemType.Any,
+          Flat ?? false,
+          UseNativePathSeparator ?? false
+        );
+      }
+    }
   }
 }
