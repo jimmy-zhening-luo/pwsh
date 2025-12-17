@@ -12,10 +12,12 @@
   )
   FunctionsToExport    = @()
   CmdletsToExport      = @(
+    'Test-Sandbox'
     'ConvertTo-Hex'
   )
   VariablesToExport    = @()
   AliasesToExport      = @(
+    'test'
     'hex'
   )
 }

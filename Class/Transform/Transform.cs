@@ -6,50 +6,71 @@ namespace Transform
 {
   namespace Commands
   {
-    [Cmdlet(VerbsData.ConvertTo, "Hex")]
-    [OutputType(typeof(string[]))]
-    public class ConvertToHex : Cmdlet
+    [Cmdlet(VerbsDiagnostic.Test, "Sandbox")]
+    [OutputType(typeof(string))]
+    public class TestSandbox : Cmdlet
     {
       [Parameter(
-        Mandatory = true,
-        Position = 0,
-        ValueFromPipeline = true,
-        ValueFromPipelineByPropertyName = true,
-        ValueFromRemainingArguments = true
+        Position = 0
       )]
-      [AllowEmptyCollection]
-      [Alias("Integer")]
-      public long[] Number
+      [AllowEmptyString]
+      public string Name
       {
-        get => numbers;
-        set => numbers = value;
+        get => name;
+        set => name = value;
       }
-      private long[] numbers;
+      private string name = "";
 
-      [Parameter]
-      [Alias("Case")]
-      public SwitchParameter Lowercase
+      protected override void EndProcessing()
       {
-        get => lowercase;
-        set => lowercase = value;
+        WriteObject(name);
       }
-      private bool lowercase;
+    }
+  }
 
-      protected override void ProcessRecord()
-      {
-        foreach (
-          long number in numbers.Where(
-            n => n >= 0
-          )
+  [Cmdlet(VerbsData.ConvertTo, "Hex")]
+  [OutputType(typeof(string[]))]
+  public class ConvertToHex : Cmdlet
+  {
+    [Parameter(
+      Mandatory = true,
+      Position = 0,
+      ValueFromPipeline = true,
+      ValueFromPipelineByPropertyName = true,
+      ValueFromRemainingArguments = true
+    )]
+    [AllowEmptyCollection]
+    [Alias("Integer")]
+    public long[] Number
+    {
+      get => numbers;
+      set => numbers = value;
+    }
+    private long[] numbers;
+
+    [Parameter]
+    [Alias("Case")]
+    public SwitchParameter Lowercase
+    {
+      get => lowercase;
+      set => lowercase = value;
+    }
+    private bool lowercase;
+
+    protected override void ProcessRecord()
+    {
+      foreach (
+        long number in numbers.Where(
+          n => n >= 0
         )
-        {
-          string hex = number.ToString("X");
-          string print = lowercase
-            ? hex.ToLower()
-            : hex;
+      )
+      {
+        string hex = number.ToString("X");
+        string print = lowercase
+          ? hex.ToLower()
+          : hex;
 
-          WriteObject(print, true);
-        }
+        WriteObject(print, true);
       }
     }
   }
