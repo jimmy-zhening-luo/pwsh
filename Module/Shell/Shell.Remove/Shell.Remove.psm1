@@ -11,7 +11,7 @@ function Remove-Directory {
   param(
 
     [PathCompletions(
-      '.', $null, $null, $null
+      '.'
     )]
     [string]$Path
 

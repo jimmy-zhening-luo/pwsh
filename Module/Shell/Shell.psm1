@@ -4,6 +4,63 @@ using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
 using namespace Completer.PathCompleter
 
+class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory {
+  [string] $Root
+  [PathItemType] $Type
+  [bool] $Flat
+  [bool] $UseNativePathSeparator
+
+  PathCompletionsAttribute() {}
+  PathCompletionsAttribute(
+    [string] $root
+  ) {
+    $this.Root = $root
+    $this.Type = [PathItemType]::Any
+    $this.Flat = $false
+    $this.UseNativePathSeparator = $false
+  }
+  PathCompletionsAttribute(
+    [string] $root,
+    [PathItemType] $type
+  ) {
+    $this.Root = $root
+    $this.Type = $type
+    $this.Flat = $false
+    $this.UseNativePathSeparator = $false
+  }
+  PathCompletionsAttribute(
+    [string] $root,
+    [PathItemType] $type,
+    [bool] $flat
+  ) {
+    $this.Root = $root
+    $this.Type = $type
+    $this.Flat = $flat
+    $this.UseNativePathSeparator = $false
+  }
+  PathCompletionsAttribute(
+    [string] $root,
+    [PathItemType] $type,
+    [bool] $flat,
+    [bool] $useNativePathSeparator
+  ) {
+    $this.Root = $root
+    $this.Type = $type
+    $this.Flat = $flat
+    $this.UseNativePathSeparator = $useNativePathSeparator
+  }
+
+  [IArgumentCompleter] Create() {
+    return [PathCompleter]::new(
+      [string]$PWD.Path,
+      $this.Root,
+      $this.Type,
+      $this.Flat,
+      $this.UseNativePathSeparator
+    )
+  }
+}
+
 <#
 .FORWARDHELPTARGETNAME Clear-Content
 .FORWARDHELPCATEGORY Cmdlet
@@ -15,7 +72,7 @@ function Clear-Line {
   param(
 
     [PathCompletions(
-      '.', $null, $null, $null
+      '.'
     )]
     [string]$Path
 
@@ -47,12 +104,12 @@ function Test-Item {
 
   )
 
-  $Path = [TypedPath]::Format(
+  $Path = [TypedPath]::Normalize(
     $Path,
     '',
     $True
   )
-  $Location = [TypedPath]::Format($Location)
+  $Location = [TypedPath]::Normalize($Location)
 
   if ([System.IO.Path]::IsPathRooted($Path)) {
     if ($Location) {
@@ -168,12 +225,12 @@ function Resolve-Item {
     )
   }
 
-  $Path = [TypedPath]::Format(
+  $Path = [TypedPath]::Normalize(
     $Path,
     '',
     $True
   )
-  $Location = [TypedPath]::Format($Location)
+  $Location = [TypedPath]::Normalize($Location)
 
   if ([System.IO.Path]::IsPathRooted($Path)) {
     if ($Location) {
@@ -216,3 +273,27 @@ function Resolve-Item {
 }
 
 New-Alias cl Clear-Line
+
+#region Accelerate
+$PATHCOMPLETIONS_NAME = [PathCompletionsAttribute].FullName
+
+$TypeAccelerators = [psobject].Assembly.GetType('System.Management.Automation.TypeAccelerators')
+
+$ExistingTypes = $TypeAccelerators::Get
+if ($PATHCOMPLETIONS_NAME -in $ExistingTypes.Keys) {
+  throw [ErrorRecord]::new(
+    [System.InvalidOperationException]::new(
+      [string]"Unable to register type accelerator '$PATHCOMPLETIONS_NAME' - Accelerator already exists."
+    ),
+    'TypeAcceleratorAlreadyExists',
+    [ErrorCategory]::InvalidOperation,
+    $PATHCOMPLETIONS_NAME
+  )
+}
+
+$TypeAccelerators::Add($PATHCOMPLETIONS_NAME, [PathCompletionsAttribute])
+
+$MyInvocation.MyCommand.ScriptBlock.Module.OnRemove = {
+  $TypeAccelerators::Remove($PATHCOMPLETIONS_NAME)
+}.GetNewClosure()
+#endregion

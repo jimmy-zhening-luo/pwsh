@@ -240,7 +240,7 @@ function Invoke-NodePackage {
     [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
-      $True, $null
+      $True
     )]
     # Node package root at which to run the command
     [string]$WorkingDirectory,
@@ -434,7 +434,7 @@ function Compare-NodeModule {
     [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
-      $True, $null
+      $True
     )]
     # Node package root at which to run the command
     [string]$WorkingDirectory
@@ -500,7 +500,7 @@ function Step-NodePackageVersion {
     [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
-      $True, $null
+      $True
     )]
     # Node package root at which to run the command
     [string]$WorkingDirectory
@@ -582,7 +582,7 @@ function Invoke-NodePackageScript {
     [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
-      $True, $null
+      $True
     )]
     # Node package root at which to run the command
     [string]$WorkingDirectory
@@ -637,7 +637,7 @@ function Test-NodePackage {
     [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
-      $True, $null
+      $True
     )]
     # Node package root at which to run the command
     [string]$WorkingDirectory

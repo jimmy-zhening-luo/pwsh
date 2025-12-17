@@ -37,18 +37,21 @@ namespace Completer
 
     public class PathCompleter : CompleterBase
     {
+      private readonly string CurrentDirectory;
       private readonly string Root;
       private readonly PathItemType Type;
       private readonly bool Flat;
       private readonly bool UseNativePathSeparator;
 
       public PathCompleter(
+        string currentDirectory,
         string root,
         PathItemType type,
         bool flat,
         bool useNativePathSeparator
       )
       {
+        CurrentDirectory = currentDirectory;
         Root = root;
         Type = type;
         Flat = flat;
@@ -63,24 +66,44 @@ namespace Completer
       {
         List<string> completions = [];
 
-        string normalizedUnescapedRoot = TypedPath.Format(
-          Typed.Typed.Unescape(Root)
+        string normalizedUnescapedRoot = TypedPath.Normalize(
+          Typed.Typed.Unescape(Root),
+          TypedPath.PathSeparator,
+          true,
+          true
         );
+
+        string untildedNormalizedEscapedRoot = Regex.IsMatch(
+            normalizedUnescapedRoot,
+            TypedPath.IsPathTildeRootedPattern
+          )
+          ? Regex.Replace(
+            normalizedUnescapedRoot,
+            TypedPath.TildeRootPattern,
+            Environment.GetFolderPath(
+              Environment.SpecialFolder.UserProfile
+            )
+          )
+            + (
+              normalizedUnescapedRoot == "~"
+                ? string.Empty
+                : TypedPath.PathSeparator
+            )
+          : normalizedUnescapedRoot;
+
+        string undottedUntildedNormalizedEscapedRoot = untildedNormalizedEscapedRoot.Contains(':')
+        || untildedNormalizedEscapedRoot.StartsWith(
+          TypedPath.PathSeparator
+        )
+          ? untildedNormalizedEscapedRoot
+          : untildedNormalizedEscapedRoot == string.Empty
+            ? CurrentDirectory
+            : CurrentDirectory
+              + TypedPath.PathSeparator
+              + untildedNormalizedEscapedRoot;
+
         string fullRoot = Path.GetFullPath(
-          normalizedUnescapedRoot == string.Empty
-            ? "."
-            : Regex.IsMatch(
-                normalizedUnescapedRoot,
-                TypedPath.IsPathTildeRootedPattern
-              )
-              ? Regex.Replace(
-                normalizedUnescapedRoot,
-                TypedPath.TildeRootPattern,
-                Environment.GetFolderPath(
-                  Environment.SpecialFolder.UserProfile
-                )
-              )
-              : normalizedUnescapedRoot
+          undottedUntildedNormalizedEscapedRoot
         );
 
         bool constrainToDirectories = (
@@ -90,17 +113,11 @@ namespace Completer
           Type == PathItemType.File
         );
 
-        string currentPathValue = Regex.Replace(
-          Typed.Typed
-            .Unescape(
-              wordToComplete
-            )
-            .Replace(
-              TypedPath.FriendlyPathSeparatorChar,
-              TypedPath.PathSeparatorChar
-            ),
-          TypedPath.DuplicatePathSeparatorPattern,
-          TypedPath.PathSeparator
+        string currentPathValue = TypedPath.Normalize(
+          wordToComplete,
+          TypedPath.PathSeparator,
+          true,
+          false
         );
 
         List<string> currentDirectoryValue = [];
@@ -259,27 +276,5 @@ namespace Completer
         return completions;
       }
     }
-
-#nullable enable
-    [AttributeUsage(AttributeTargets.Parameter)]
-    public class PathCompletionsAttribute(
-
-      string? Root,
-      PathItemType? ItemType,
-      bool? Flat,
-      bool? UseNativePathSeparator
-  ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
-    {
-      public IArgumentCompleter Create()
-      {
-        return new PathCompleter(
-          Root ?? "",
-          ItemType ?? PathItemType.Any,
-          Flat ?? false,
-          UseNativePathSeparator ?? false
-        );
-      }
-    }
-#nullable disable
   }
 }

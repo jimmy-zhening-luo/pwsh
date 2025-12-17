@@ -15,11 +15,11 @@ namespace Typed
     public readonly static string DuplicatePathSeparatorPattern = @"(?<!^)\\\\+";
     public readonly static string TrailingPathSeparatorPattern = @"(?>\\+)$";
     public readonly static string RelativeRootPattern = @"^\.(?>\\+)";
-    public readonly static string TildeRootPattern = @"^~(?=(?>$|\\))";
+    public readonly static string TildeRootPattern = @"^~(?>\\*)";
     public readonly static string IsPathDescendantPattern = @"^(?=(?>[.\\]*)$)";
     public readonly static string IsPathTildeRootedPattern = @"^(?=~(?>$|\\))";
 
-    public static string Format(
+    public static string Normalize(
       string path,
       string separator = "",
       bool trimLeadingRelative = false,
@@ -27,10 +27,12 @@ namespace Typed
     )
     {
       string normalPath = Regex.Replace(
-        path.Replace(
-          FriendlyPathSeparatorChar,
-          PathSeparatorChar
-        ),
+        Typed
+          .Unescape(path)
+          .Replace(
+            FriendlyPathSeparatorChar,
+            PathSeparatorChar
+          ),
         DuplicatePathSeparatorPattern,
         PathSeparator
       );
