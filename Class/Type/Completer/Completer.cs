@@ -204,10 +204,9 @@ namespace Completer
     {
       return new Completer(
         DomainGenerator
-          .Invoke()
+          .InvokeReturnAsIs()
           .Select(
             member => member
-              .BaseObject
               .ToString()
           ),
         Casing ?? CompletionCase.Preserve,
