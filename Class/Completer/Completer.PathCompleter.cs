@@ -75,8 +75,8 @@ namespace Completer
         )
           ? untildedNormalizedEscapedRoot
           : untildedNormalizedEscapedRoot == string.Empty
-            ? CurrentDirectory
-            : CurrentDirectory
+            ? currentDirectory
+            : currentDirectory
               + TypedPath.PathSeparator
               + untildedNormalizedEscapedRoot;
 
