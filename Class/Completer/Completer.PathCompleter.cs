@@ -35,7 +35,7 @@ namespace Completer
       Function
     }
 
-    public abstract class TestPathCompleter : CompleterBase
+    public class TestPathCompleter : CompleterBase
     {
       private readonly string Root;
       private readonly PathItemType Type;
@@ -156,7 +156,9 @@ namespace Completer
             searchLocation[0],
             searchFilter[0],
             SearchOption.TopDirectoryOnly
-          );
+          ).Select(
+            d => Path.GetFileName(d)
+          ).ToArray();
 
           if (directories.Length != 0)
           {
@@ -170,7 +172,9 @@ namespace Completer
             searchLocation[0],
             searchFilter[0],
             SearchOption.TopDirectoryOnly
-          );
+          ).Select(
+            f => Path.GetFileName(f)
+          ).ToArray();
 
           if (files.Length != 0)
           {
@@ -209,20 +213,30 @@ namespace Completer
             )
           ];
 
-        List<string> unnormalizedCompletions = [
-          .. appendedDirectories,
-          .. prependedFiles
-        ];
-        completions.AddRange(
-          UseNativePathSeparator
-            ? unnormalizedCompletions
-            : unnormalizedCompletions.Select(
-                item => item.Replace(
-                  TypedPath.PathSeparatorChar,
-                  TypedPath.FriendlyPathSeparatorChar
+        List<string> unnormalizedCompletions = [];
+
+        if (appendedDirectories.Count != 0)
+        {
+          unnormalizedCompletions.AddRange(appendedDirectories);
+        }
+        if (prependedFiles.Count != 0)
+        {
+          unnormalizedCompletions.AddRange(prependedFiles);
+        }
+
+        if (unnormalizedCompletions.Count != 0)
+        {
+          completions.AddRange(
+            UseNativePathSeparator
+              ? unnormalizedCompletions
+              : unnormalizedCompletions.Select(
+                  item => item.Replace(
+                    TypedPath.PathSeparatorChar,
+                    TypedPath.FriendlyPathSeparatorChar
+                  )
                 )
-              )
-        );
+          );
+        }
 
         return completions;
       }
