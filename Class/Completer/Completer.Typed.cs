@@ -11,7 +11,7 @@ namespace Completer
       public readonly static string Space = " ";
       public readonly static string Quote = "'";
       public readonly static string EscapedQuote = "''";
-  
+
       public static string Unescape(string escapedText)
       {
         return (
@@ -26,7 +26,7 @@ namespace Completer
             )
           : escapedText;
       }
-  
+
       public static string Escape(string text)
       {
         return text.Contains(SpaceChar)
