@@ -10,7 +10,12 @@ function Remove-Directory {
 
   param(
 
-    [PathCompletions('.')]
+    [PathCompletions(
+      '.',
+      [PathItemType]::Any,
+      $False,
+      $False
+    )]
     [string]$Path
 
   )

@@ -6,7 +6,12 @@ function Get-Directory {
 
   param(
 
-    [PathCompletions('.', [PathItemType]::Directory)]
+    [PathCompletions(
+      '.',
+      [PathItemType]::Directory,
+      $False,
+      $False
+    )]
     [string]$Path
 
   )
@@ -25,7 +30,12 @@ function Get-DirectorySibling {
 
   param(
 
-    [PathCompletions('..', [PathItemType]::Directory)]
+    [PathCompletions(
+      '..',
+      [PathItemType]::Directory,
+      $False,
+      $False
+    )]
     [string]$Path
 
   )
@@ -42,7 +52,12 @@ function Get-DirectoryRelative {
 
   param(
 
-    [PathCompletions('..\..', [PathItemType]::Directory)]
+    [PathCompletions(
+      '..\..',
+      [PathItemType]::Directory,
+      $False,
+      $False
+    )]
     [string]$Path
 
   )
@@ -59,7 +74,12 @@ function Get-DirectoryHome {
 
   param(
 
-    [PathCompletions('~', [PathItemType]::Directory)]
+    [PathCompletions(
+      '~',
+      [PathItemType]::Directory,
+      $False,
+      $False
+    )]
     [string]$Path
 
   )
@@ -76,7 +96,12 @@ function Get-DirectoryCode {
 
   param(
 
-    [PathCompletions('~\code', [PathItemType]::Directory)]
+    [PathCompletions(
+      '~\code',
+      [PathItemType]::Directory,
+      $False,
+      $False
+    )]
     [string]$Path
 
   )
@@ -93,7 +118,12 @@ function Get-DirectoryDrive {
 
   param(
 
-    [PathCompletions('\', [PathItemType]::Directory)]
+    [PathCompletions(
+      '\',
+      [PathItemType]::Directory,
+      $False,
+      $False
+    )]
     [string]$Path
 
   )

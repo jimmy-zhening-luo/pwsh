@@ -134,7 +134,6 @@ function Invoke-GitRepository {
     [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
-      [PathProvider]::FileSystem,
       $True,
       $False
     )]
@@ -253,7 +252,6 @@ function Measure-GitRepository {
     [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
-      [PathProvider]::FileSystem,
       $True,
       $False
     )]
@@ -289,7 +287,6 @@ function Import-GitRepository {
     [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
-      [PathProvider]::FileSystem,
       $True,
       $False
     )]
@@ -351,7 +348,6 @@ function Get-GitRepository {
     [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
-      [PathProvider]::FileSystem,
       $True,
       $False
     )]
@@ -413,7 +409,6 @@ function Add-GitRepository {
     [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
-      [PathProvider]::FileSystem,
       $True,
       $False
     )]
@@ -493,7 +488,6 @@ function Write-GitRepository {
     [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
-      [PathProvider]::FileSystem,
       $True,
       $False
     )]
@@ -603,7 +597,6 @@ function Push-GitRepository {
     [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
-      [PathProvider]::FileSystem,
       $True,
       $False
     )]
@@ -659,7 +652,6 @@ function Reset-GitRepository {
     [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
-      [PathProvider]::FileSystem,
       $True,
       $False
     )]
@@ -749,7 +741,6 @@ function Restore-GitRepository {
     [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
-      [PathProvider]::FileSystem,
       $True,
       $False
     )]

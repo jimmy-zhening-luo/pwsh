@@ -9,7 +9,6 @@ using namespace Completer.PathCompleter
 class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory {
   [string] $Root
   [PathItemType] $Type
-  [PathProvider] $Provider
   [bool] $Flat
   [bool] $UseNativePathSeparator
 
@@ -19,7 +18,6 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
   ) {
     $this.Root = $root
     $this.Type = [PathItemType]::Any
-    $this.Provider = [PathProvider]::Any
     $this.Flat = $false
     $this.UseNativePathSeparator = $false
   }
@@ -29,60 +27,34 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
   ) {
     $this.Root = $root
     $this.Type = $type
-    $this.Provider = [PathProvider]::Any
     $this.Flat = $false
     $this.UseNativePathSeparator = $false
   }
   PathCompletionsAttribute(
     [string] $root,
     [PathItemType] $type,
-    [PathProvider] $provider
-  ) {
-    $this.Root = $root
-    $this.Type = $type
-    $this.Provider = $provider
-    $this.Flat = $false
-    $this.UseNativePathSeparator = $false
-  }
-  PathCompletionsAttribute(
-    [string] $root,
-    [PathItemType] $type,
-    [PathProvider] $provider,
     [bool] $flat
   ) {
     $this.Root = $root
     $this.Type = $type
-    $this.Provider = $provider
     $this.Flat = $flat
     $this.UseNativePathSeparator = $false
   }
   PathCompletionsAttribute(
     [string] $root,
     [PathItemType] $type,
-    [PathProvider] $provider,
     [bool] $flat,
     [bool] $useNativePathSeparator
   ) {
     $this.Root = $root
     $this.Type = $type
-    $this.Provider = $provider
     $this.Flat = $flat
     $this.UseNativePathSeparator = $useNativePathSeparator
   }
 
   [IArgumentCompleter] Create() {
-    [hashtable]$private:isRootContainer = @{
-      Path     = $this.Root
-      PathType = 'Container'
-    }
-    if (-not $this.Root -or -not (Test-Path @isRootContainer)) {
-      throw [ArgumentException]::new('root')
-    }
-
-    [string]$private:root = (Resolve-Path -Path $this.Root).Path
-
     return [PathCompleter.PathCompleter]::new(
-      $private:root,
+      $this.Root,
       $this.Type,
       $this.Flat,
       $this.UseNativePathSeparator

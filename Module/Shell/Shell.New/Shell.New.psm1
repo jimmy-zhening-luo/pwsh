@@ -44,7 +44,12 @@ function New-Directory {
       ValueFromPipelineByPropertyName
     )]
     [Alias('Target')]
-    [PathCompletions('.')]
+    [PathCompletions(
+      '.',
+      [PathItemType]::Any,
+      $False,
+      $False
+    )]
     [System.Object]$Value,
     [switch]$Force,
 
@@ -122,7 +127,12 @@ function New-Junction {
       ValueFromPipelineByPropertyName
     )]
     [Alias('Target')]
-    [PathCompletions('.')]
+    [PathCompletions(
+      '.',
+      [PathItemType]::Any,
+      $False,
+      $False
+    )]
     [System.Object]$Value
 
   )
