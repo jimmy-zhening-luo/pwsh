@@ -63,7 +63,25 @@ namespace Completer
       {
         List<string> completions = [];
 
-        string fullRoot = Path.GetFullPath(Root);
+        string normalizedUnescapedRoot = TypedPath.Format(
+          Typed.Typed.Unescape(Root)
+        );
+        string fullRoot = Path.GetFullPath(
+          normalizedUnescapedRoot == string.Empty
+            ? "."
+            : Regex.IsMatch(
+                normalizedUnescapedRoot,
+                TypedPath.IsPathTildeRootedPattern
+              )
+              ? Regex.Replace(
+                normalizedUnescapedRoot,
+                TypedPath.TildeRootPattern,
+                Environment.GetFolderPath(
+                  Environment.SpecialFolder.UserProfile
+                )
+              )
+              : normalizedUnescapedRoot
+        );
 
         bool constrainToDirectories = (
           Type == PathItemType.Directory
