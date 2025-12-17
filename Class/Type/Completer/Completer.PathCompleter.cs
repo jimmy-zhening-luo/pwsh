@@ -305,21 +305,9 @@ namespace Completer
       public IArgumentCompleter Create()
       {
         var resolved = CurrentDirectory.Invoke();
-        List<string> container = [];
-
-        foreach (var wrapper in resolved)
-        {
-          container.Add(
-            wrapper.BaseObject.ToString()
-          );
-        }
-
-        if (container.Count == 0) {
-          throw new ArgumentException("CurrentDirectory");
-        }
 
         return new PathCompleter(
-          container[0],
+          resolved[0].BaseObject.ToString(),
           ".",
           ItemType ?? PathItemType.Any,
           Flat ?? false,
