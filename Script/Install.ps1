@@ -8,7 +8,7 @@ param (
     Position = 0
   )]
   [ValidateNotNullOrWhiteSpace()]
-  [string]$Private:SourceRoot,
+  [string]$SourceRoot,
 
   [Parameter(
     Mandatory,
