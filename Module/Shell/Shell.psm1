@@ -2,93 +2,7 @@ using namespace System.Collections
 using namespace System.Collections.Generic
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
-using namespace Typed
-using namespace Completer
 using namespace Completer.PathCompleter
-
-class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory {
-  [string] $Root
-  [PathItemType] $Type
-  [bool] $Flat
-  [bool] $UseNativePathSeparator
-
-  PathCompletionsAttribute() {}
-  PathCompletionsAttribute(
-    [string] $root
-  ) {
-    $this.Root = $root
-    $this.Type = [PathItemType]::Any
-    $this.Flat = $false
-    $this.UseNativePathSeparator = $false
-  }
-  PathCompletionsAttribute(
-    [string] $root,
-    [PathItemType] $type
-  ) {
-    $this.Root = $root
-    $this.Type = $type
-    $this.Flat = $false
-    $this.UseNativePathSeparator = $false
-  }
-  PathCompletionsAttribute(
-    [string] $root,
-    [PathItemType] $type,
-    [bool] $flat
-  ) {
-    $this.Root = $root
-    $this.Type = $type
-    $this.Flat = $flat
-    $this.UseNativePathSeparator = $false
-  }
-  PathCompletionsAttribute(
-    [string] $root,
-    [PathItemType] $type,
-    [bool] $flat,
-    [bool] $useNativePathSeparator
-  ) {
-    $this.Root = $root
-    $this.Type = $type
-    $this.Flat = $flat
-    $this.UseNativePathSeparator = $useNativePathSeparator
-  }
-
-  [IArgumentCompleter] Create() {
-    return [PathCompleter.PathCompleter]::new(
-      $this.Root,
-      $this.Type,
-      $this.Flat,
-      $this.UseNativePathSeparator
-    )
-  }
-}
-
-$TYPES = @(
-  [PathCompletionsAttribute]
-)
-
-$TypeAccelerators = [psobject].Assembly.GetType('System.Management.Automation.TypeAccelerators')
-$ExistingTypes = $TypeAccelerators::Get
-foreach ($Private:Type in $TYPES) {
-  if ($Type.FullName -in $ExistingTypes.Keys) {
-    throw [System.Management.Automation.ErrorRecord]::new(
-      [System.InvalidOperationException]::new(
-        [string]"Unable to register type accelerator '$($Type.FullName)' - Accelerator already exists."
-      ),
-      'TypeAcceleratorAlreadyExists',
-      [System.Management.Automation.ErrorCategory]::InvalidOperation,
-      $Type.FullName
-    )
-  }
-}
-foreach ($Private:Type in $TYPES) {
-  $TypeAccelerators::Add($Type.FullName, $Type)
-}
-
-$MyInvocation.MyCommand.ScriptBlock.Module.OnRemove = {
-  foreach ($Private:Type in $TYPES) {
-    $TypeAccelerators::Remove($Type.FullName)
-  }
-}.GetNewClosure()
 
 <#
 .FORWARDHELPTARGETNAME Clear-Content
@@ -100,7 +14,12 @@ function Clear-Line {
 
   param(
 
-    [PathCompletions('.')]
+    [PathCompletions(
+      '.',
+      [PathItemType]::Any,
+      $False,
+      $False
+    )]
     [string]$Path
 
   )

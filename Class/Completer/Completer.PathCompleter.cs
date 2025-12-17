@@ -138,11 +138,11 @@ namespace Completer
 
           if (currentDirectoryValue.Count != 0)
           {
-            string testPath = Path.GetFullPath(currentDirectoryValue[0], fullRoot);
+            string fullPathAndCurrentDirectory = Path.GetFullPath(currentDirectoryValue[0], fullRoot);
 
-            if (Directory.Exists(testPath))
+            if (Directory.Exists(fullPathAndCurrentDirectory))
             {
-              searchLocation.Add(testPath);
+              searchLocation.Add(fullPathAndCurrentDirectory);
 
             }
           }
@@ -261,7 +261,7 @@ namespace Completer
     }
 
     [AttributeUsage(AttributeTargets.Parameter)]
-    public class TestPathCompletionsAttribute(
+    public class PathCompletionsAttribute(
       string Root,
       PathItemType? ItemType,
       bool? Flat,
