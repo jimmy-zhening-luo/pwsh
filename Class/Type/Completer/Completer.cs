@@ -33,7 +33,7 @@ namespace Completer
       }
     }
 
-    public abstract List<string> FulfillCompletion(
+    public abstract IEnumerable<string> FulfillCompletion(
       string parameterName,
       string wordToComplete,
       IDictionary fakeBoundParameters

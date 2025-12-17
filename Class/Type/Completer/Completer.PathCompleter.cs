@@ -91,7 +91,7 @@ namespace Completer
         UseNativePathSeparator = useNativePathSeparator;
       }
 
-      public override List<string> FulfillCompletion(
+      public override IEnumerable<string> FulfillCompletion(
         string parameterName,
         string wordToComplete,
         IDictionary fakeBoundParameters
