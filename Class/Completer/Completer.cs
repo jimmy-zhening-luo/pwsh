@@ -148,10 +148,10 @@ namespace Completer
 
   public class Completer : CompleterBase
   {
-    private readonly List<string> Domain;
-    private readonly CompletionCase Case;
-    private readonly bool Sort;
-    private readonly bool Surrounding;
+    public readonly List<string> Domain;
+    public readonly CompletionCase Case;
+    public readonly bool Sort;
+    public readonly bool Surrounding;
 
     public Completer(
       List<string> span,

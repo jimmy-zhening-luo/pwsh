@@ -35,11 +35,11 @@ namespace Completer
 
     public class PathCompleter : CompleterBase
     {
-      private readonly string CurrentDirectory;
-      private readonly string Root;
-      private readonly PathItemType Type;
-      private readonly bool Flat;
-      private readonly bool UseNativePathSeparator;
+      public readonly string CurrentDirectory;
+      public readonly string Root;
+      public readonly PathItemType Type;
+      public readonly bool Flat;
+      public readonly bool UseNativePathSeparator;
 
       public PathCompleter(
         string currentDirectory,
