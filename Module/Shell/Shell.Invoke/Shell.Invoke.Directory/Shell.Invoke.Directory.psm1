@@ -32,9 +32,10 @@ function Invoke-DirectorySibling {
 
   param(
 
-    [PathCompletions(
-      '..'
-    )]
+    [PathLocationCompletions(
+      '..',
+      $null, $null, $null
+
     [string]$Path
 
   )
@@ -51,9 +52,10 @@ function Invoke-DirectoryRelative {
 
   param(
 
-    [PathCompletions(
-      '..\..'
-    )]
+    [PathLocationCompletions(
+      '..\..',
+      $null, $null, $null
+
     [string]$Path
 
   )
@@ -70,9 +72,10 @@ function Invoke-DirectoryHome {
 
   param(
 
-    [PathCompletions(
-      '~'
-    )]
+    [PathLocationCompletions(
+      '~',
+      $null, $null, $null
+
     [string]$Path
 
   )
@@ -89,9 +92,10 @@ function Invoke-DirectoryCode {
 
   param(
 
-    [PathCompletions(
-      '~\code'
-    )]
+    [PathLocationCompletions(
+      '~\code',
+      $null, $null, $null
+
     [string]$Path
 
   )
@@ -108,9 +112,10 @@ function Invoke-DirectoryDrive {
 
   param(
 
-    [PathCompletions(
-      '\'
-    )]
+    [PathLocationCompletions(
+      '\',
+      $null, $null, $null
+
     [string]$Path
 
   )

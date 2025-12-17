@@ -66,9 +66,10 @@ function Get-FileSibling {
 
   param(
 
-    [PathCompletions(
-      '..'
-    )]
+    [PathLocationCompletions(
+      '..',
+      $null, $null, $null
+
     [string]$Path
 
   )
@@ -85,9 +86,10 @@ function Get-FileRelative {
 
   param(
 
-    [PathCompletions(
-      '..\..'
-    )]
+    [PathLocationCompletions(
+      '..\..',
+      $null, $null, $null
+
     [string]$Path
 
   )
@@ -104,9 +106,10 @@ function Get-FileHome {
 
   param(
 
-    [PathCompletions(
-      '~'
-    )]
+    [PathLocationCompletions(
+      '~',
+      $null, $null, $null
+
     [string]$Path
 
   )
@@ -123,9 +126,10 @@ function Get-FileCode {
 
   param(
 
-    [PathCompletions(
-      '~\code'
-    )]
+    [PathLocationCompletions(
+      '~\code',
+      $null, $null, $null
+
     [string]$Path
 
   )
@@ -142,9 +146,10 @@ function Get-FileDrive {
 
   param(
 
-    [PathCompletions(
-      '\'
-    )]
+    [PathLocationCompletions(
+      '\',
+      $null, $null, $null
+
     [string]$Path
 
   )

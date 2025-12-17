@@ -138,9 +138,10 @@ function Invoke-WorkspaceSibling {
       Position = 0
     )]
     [AllowEmptyString()]
-    [PathCompletions(
-      '..'
-    )]
+    [PathLocationCompletions(
+      '..',
+      $null, $null, $null
+
     [string]$Path,
 
     [Parameter(
@@ -181,9 +182,10 @@ function Invoke-WorkspaceRelative {
       Position = 0
     )]
     [AllowEmptyString()]
-    [PathCompletions(
-      '..\..'
-    )]
+    [PathLocationCompletions(
+      '..\..',
+      $null, $null, $null
+
     [string]$Path,
 
     [Parameter(
@@ -223,9 +225,10 @@ function Invoke-WorkspaceHome {
       Position = 0
     )]
     [AllowEmptyString()]
-    [PathCompletions(
-      '~'
-    )]
+    [PathLocationCompletions(
+      '~',
+      $null, $null, $null
+
     [string]$Path,
 
     [Parameter(
@@ -265,9 +268,10 @@ function Invoke-WorkspaceCode {
       Position = 0
     )]
     [AllowEmptyString()]
-    [PathCompletions(
-      '~\code'
-    )]
+    [PathLocationCompletions(
+      '~\code',
+      $null, $null, $null
+
     [string]$Path,
 
     [Parameter(
