@@ -41,11 +41,7 @@ function Install-PSProject {
 
     [Parameter(Mandatory)]
     [ValidateNotNullOrWhiteSpace()]
-    [string]$InstallPath,
-
-    [Parameter(Mandatory)]
-    [ValidateNotNullOrWhiteSpace()]
-    [string]$SourceRoot
+    [string]$InstallPath
   )
 
   [string]$Private:BuildOutput = "$SourceRoot\$Project\bin\Release\net9.0\$Project.dll"
@@ -83,7 +79,6 @@ foreach ($Private:Module in $Modules) {
   [hashtable]$Private:ModuleDistro = @{
     Project     = $Module
     InstallPath = "$ModuleRoot\$Module"
-    SourceRoot  = $SourceRoot
   }
   Install-PSProject @ModuleDistro
 }
@@ -95,7 +90,6 @@ foreach ($Private:Type in $Types) {
   [hashtable]$Private:TypeDistro = @{
     Project     = $Type
     InstallPath = $SourceRoot
-    SourceRoot  = $SourceRoot
   }
   Install-PSProject @TypeDistro
 }
