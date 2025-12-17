@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation.Language;
 using System.Text.RegularExpressions;
-using Typed;
 
 namespace Completer
 {

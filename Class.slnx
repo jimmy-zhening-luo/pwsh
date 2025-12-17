@@ -1,7 +1,6 @@
 <Solution>
   <Folder Name="/Class/">
     <!-- Types -->
-    <Project Path="Class/Typed/Typed.csproj"/>
     <Project Path="Class/Completer/Completer.csproj"/>
     <!-- Modules -->
     <Project Path="Class/Transform/Transform.csproj"/>
