@@ -108,7 +108,7 @@ foreach ($Private:Type in $Types) {
     Path = "$SourceRoot\$Type.dll"
   }
 
-  if (Test-Path @TypeAssembly)
+  if (Test-Path @TypeAssembly) {
     Add-Type @TypeAssembly
   }
 }
