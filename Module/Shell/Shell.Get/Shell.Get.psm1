@@ -52,8 +52,9 @@ function Get-Size {
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
-    [PathCompletions(
-      '.'
+    [TestPathCompletions(
+      { return '.' },
+      $null, $null, $null
     )]
     # The path of the file or directory to be measured.
     [string]$Path,
