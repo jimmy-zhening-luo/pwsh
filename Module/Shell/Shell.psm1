@@ -10,7 +10,6 @@ class PathCompleter : CompleterBase {
 
   [string] $Root
   [PathItemType] $Type
-  [PathProvider] $Provider
   [bool] $Flat
   [bool] $UseNativePathSeparator
 
@@ -18,14 +17,12 @@ class PathCompleter : CompleterBase {
 
     [string] $root,
     [PathItemType] $type,
-    [PathProvider] $provider,
     [bool] $flat,
     [bool] $useNativePathSeparator
 
   ) {
     $this.Root = $root
     $this.Type = $type
-    $this.Provider = $provider
     $this.Flat = $flat
     $this.UseNativePathSeparator = $useNativePathSeparator
   }
@@ -221,7 +218,6 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
     return [PathCompleter]::new(
       $private:root,
       $this.Type,
-      $this.Provider,
       $this.Flat,
       $this.UseNativePathSeparator
     )
