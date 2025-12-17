@@ -290,5 +290,39 @@ namespace Completer
         );
       }
     }
+
+    [AttributeUsage(AttributeTargets.Parameter)]
+    public class TestPathCompletionsAttribute(
+      ScriptBlock CurrentDirectory,
+      PathItemType? ItemType,
+      bool? Flat,
+      bool? UseNativePathSeparator
+    ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
+    {
+      public IArgumentCompleter Create()
+      {
+        var resolved = CurrentDirectory.Invoke();
+        List<string> container = [];
+
+        foreach (var wrapper in resolved)
+        {
+          container.Add(
+            wrapper.BaseObject.ToString()
+          );
+        }
+
+        if (container.Count == 0) {
+          throw new ArgumentException("CurrentDirectory");
+        }
+
+        return new PathCompleter(
+          container[0],
+          ".",
+          ItemType ?? PathItemType.Any,
+          Flat ?? false,
+          UseNativePathSeparator ?? false
+        );
+      }
+    }
   }
 }
