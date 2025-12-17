@@ -1,3 +1,4 @@
+using namespace System.IO
 using namespace System.Collections.Generic
 using namespace System.Management.Automation
 using namespace Completer.PathCompleter
@@ -109,15 +110,15 @@ function Test-Item {
   )
   $Location = [TypedPath]::Normalize($Location)
 
-  if ([System.IO.Path]::IsPathRooted($Path)) {
+  if ([Path]::IsPathRooted($Path)) {
     if ($Location) {
       if (
-        [System.IO.Path]::GetRelativePath(
+        [Path]::GetRelativePath(
           $Path,
           $Location
         ) -match [regex][TypedPath]::IsPathDescendantPattern
       ) {
-        $Path = [System.IO.Path]::GetRelativePath(
+        $Path = [Path]::GetRelativePath(
           $Location,
           $Path
         )
@@ -127,22 +128,24 @@ function Test-Item {
       }
     }
     else {
-      $Location = [System.IO.Path]::GetPathRoot($Path)
+      $Location = [Path]::GetPathRoot($Path)
     }
   }
-  elseif ($Path -match [regex][TypedPath]::IsPathTildeRootedPattern) {
-    $Path = $Path -replace [regex][TypedPath]::TildeRootPattern, ''
+  elseif (
+    $Path -match [regex][TypedPath]::IsPathTildeRootedPattern
+  ) {
+    $Path = $Path -replace [regex][TypedPath]::RemoveTildeRootPattern, ''
 
     if ($Location) {
       $Path = Join-Path $HOME $Path
 
       if (
-        [System.IO.Path]::GetRelativePath(
+        [Path]::GetRelativePath(
           $Path,
           $Location
         ) -match [regex][TypedPath]::IsPathDescendantPattern
       ) {
-        $Path = [System.IO.Path]::GetRelativePath(
+        $Path = [Path]::GetRelativePath(
           $Location,
           $Path
         )
@@ -225,27 +228,29 @@ function Resolve-Item {
 
   $Path = [TypedPath]::Normalize(
     $Path,
-    '',
+    [TypedPath]::PathSeparator,
     $True
   )
   $Location = [TypedPath]::Normalize($Location)
 
-  if ([System.IO.Path]::IsPathRooted($Path)) {
+  if ([Path]::IsPathRooted($Path)) {
     if ($Location) {
-      $Path = [System.IO.Path]::GetRelativePath(
+      $Path = [Path]::GetRelativePath(
         $Location,
         $Path
       )
     }
     else {
-      $Location = [System.IO.Path]::GetPathRoot($Path)
+      $Location = [Path]::GetPathRoot($Path)
     }
   }
-  elseif ($Path -match [regex][TypedPath]::IsPathTildeRootedPattern) {
-    $Path = $Path -replace [regex][TypedPath]::TildeRootPattern, ''
+  elseif (
+    $Path -match [regex][TypedPath]::IsPathTildeRootedPattern
+  ) {
+    $Path = $Path -replace [regex][TypedPath]::RemoveTildeRootPattern, ''
 
     if ($Location) {
-      $Path = [System.IO.Path]::GetRelativePath(
+      $Path = [Path]::GetRelativePath(
         $Location,
         (Join-Path $HOME $Path)
       )

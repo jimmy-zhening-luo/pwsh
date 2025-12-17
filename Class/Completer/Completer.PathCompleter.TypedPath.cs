@@ -13,11 +13,15 @@ namespace Completer
       public readonly static string PathSeparatorPattern = @"\\";
       public readonly static string FriendlyPathSeparatorPattern = "/";
       public readonly static string DuplicatePathSeparatorPattern = @"(?<!^)\\\\+";
-      public readonly static string TrailingPathSeparatorPattern = @"(?>\\+)$";
-      public readonly static string RelativeRootPattern = @"^\.(?>\\+)";
-      public readonly static string TildeRootPattern = @"^~(?>\\*)";
-      public readonly static string IsPathDescendantPattern = @"^(?=(?>[.\\]*)$)";
       public readonly static string IsPathTildeRootedPattern = @"^(?=~(?>$|\\))";
+      public readonly static string IsPathRelativelyRootedPattern = @"^(?=\.(?>$|\\))";
+      public readonly static string IsPathDescendantPattern = @"^(?=(?>[.\\]*)$)";
+      public readonly static string HasTrailingPathSeparatorPattern = @"(?<=(?<!^)(?<!:)\\)$";
+      public readonly static string RemoveTildeRootPattern = @"^~(?>$|\\+)";
+      public readonly static string RemoveRelativeRootPattern = @"^\.(?>$|\\+)";
+      public readonly static string RemoveTrailingPathSeparatorPattern = @"(?>(?<!^)(?<!:)\\+)$";
+      public readonly static string SubstituteTildeRootPattern = @"^~(?=$|\\)";
+      public readonly static string SubstituteRelativeRootPattern = @"^\.(?=$|\\)";
 
       public static string Normalize(
         string path,
@@ -40,14 +44,14 @@ namespace Completer
         string pretrimmedNormalPath = trimLeadingRelative
           ? Regex.Replace(
               normalPath,
-              RelativeRootPattern,
+              RemoveRelativeRootPattern,
               string.Empty
             )
           : normalPath;
         string trimmedNormalPath = trimTrailing
           ? Regex.Replace(
               pretrimmedNormalPath,
-              TrailingPathSeparatorPattern,
+              RemoveTrailingPathSeparatorPattern,
               string.Empty
             )
           : pretrimmedNormalPath;

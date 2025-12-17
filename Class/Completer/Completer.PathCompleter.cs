@@ -49,8 +49,39 @@ namespace Completer
         bool useNativePathSeparator
       )
       {
+        string normalizedUnescapedRoot = TypedPath.Normalize(
+          Typed.Typed.Unescape(root),
+          TypedPath.PathSeparator,
+          true,
+          true
+        );
+
+        string untildedNormalizedEscapedRoot = Regex.IsMatch(
+            normalizedUnescapedRoot,
+            TypedPath.IsPathTildeRootedPattern
+          )
+          ? Regex.Replace(
+            normalizedUnescapedRoot,
+            TypedPath.SubstituteTildeRootPattern,
+            Environment.GetFolderPath(
+              Environment.SpecialFolder.UserProfile
+            )
+          )
+          : normalizedUnescapedRoot;
+
+        string undottedUntildedNormalizedEscapedRoot = untildedNormalizedEscapedRoot.Contains(value: ':')
+        || untildedNormalizedEscapedRoot.StartsWith(
+          TypedPath.PathSeparator
+        )
+          ? untildedNormalizedEscapedRoot
+          : untildedNormalizedEscapedRoot == string.Empty
+            ? CurrentDirectory
+            : CurrentDirectory
+              + TypedPath.PathSeparator
+              + untildedNormalizedEscapedRoot;
+
         CurrentDirectory = currentDirectory;
-        Root = root;
+        Root = undottedUntildedNormalizedEscapedRoot;
         Type = type;
         Flat = flat;
         UseNativePathSeparator = useNativePathSeparator;
@@ -63,46 +94,6 @@ namespace Completer
       )
       {
         List<string> completions = [];
-
-        string normalizedUnescapedRoot = TypedPath.Normalize(
-          Typed.Typed.Unescape(Root),
-          TypedPath.PathSeparator,
-          true,
-          true
-        );
-
-        string untildedNormalizedEscapedRoot = Regex.IsMatch(
-            normalizedUnescapedRoot,
-            TypedPath.IsPathTildeRootedPattern
-          )
-          ? Regex.Replace(
-            normalizedUnescapedRoot,
-            TypedPath.TildeRootPattern,
-            Environment.GetFolderPath(
-              Environment.SpecialFolder.UserProfile
-            )
-          )
-            + (
-              normalizedUnescapedRoot == "~"
-                ? string.Empty
-                : TypedPath.PathSeparator
-            )
-          : normalizedUnescapedRoot;
-
-        string undottedUntildedNormalizedEscapedRoot = untildedNormalizedEscapedRoot.Contains(':')
-        || untildedNormalizedEscapedRoot.StartsWith(
-          TypedPath.PathSeparator
-        )
-          ? untildedNormalizedEscapedRoot
-          : untildedNormalizedEscapedRoot == string.Empty
-            ? CurrentDirectory
-            : CurrentDirectory
-              + TypedPath.PathSeparator
-              + untildedNormalizedEscapedRoot;
-
-        string fullRoot = Path.GetFullPath(
-          undottedUntildedNormalizedEscapedRoot
-        );
 
         bool constrainToDirectories = (
           Type == PathItemType.Directory
@@ -153,7 +144,7 @@ namespace Completer
 
           if (currentDirectoryValue.Count != 0)
           {
-            string fullPathAndCurrentDirectory = Path.GetFullPath(currentDirectoryValue[0], fullRoot);
+            string fullPathAndCurrentDirectory = Path.GetFullPath(currentDirectoryValue[0], Root);
 
             if (Directory.Exists(fullPathAndCurrentDirectory))
             {
@@ -172,7 +163,7 @@ namespace Completer
 
         if (searchLocation.Count == 0)
         {
-          searchLocation.Add(fullRoot);
+          searchLocation.Add(Root);
         }
 
         if (searchFilter.Count == 0)
