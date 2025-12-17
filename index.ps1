@@ -10,10 +10,10 @@ $Global:PSDefaultParameterValues = Import-PowerShellDataFile -Path $PSScriptRoot
 
 
 #region Script
-[hashtable]$Private:ClassRoot = @{
-  ClassRoot  = "$PSScriptRoot\Class"
+[hashtable]$Private:Solution = @{
+  SourceRoot = "$PSScriptRoot\Class"
   ModuleRoot = "$PSScriptRoot\Module"
 }
-. $PSScriptRoot\Script\Install.ps1 @ClassRoot @PROJECTS
+. $PSScriptRoot\Script\Install.ps1 @Solution @PROJECTS
 . $PSScriptRoot\Script\Alias.ps1
 #endregion

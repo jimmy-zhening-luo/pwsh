@@ -8,28 +8,26 @@ param (
     Position = 0
   )]
   [ValidateNotNullOrWhiteSpace()]
-  [string]$ClassRoot,
+  [string]$Private:SourceRoot,
 
   [Parameter(
     Mandatory,
     Position = 1
   )]
   [ValidateNotNullOrWhiteSpace()]
-  [string]$ModuleRoot,
+  [string]$Private:ModuleRoot,
 
   [Parameter(Mandatory)]
   [AllowEmptyCollection()]
   [ValidateNotNull()]
-  [string[]]$Types,
+  [string[]]$Private:Types,
 
   [Parameter(Mandatory)]
   [AllowEmptyCollection()]
   [ValidateNotNull()]
-  [string[]]$Modules
+  [string[]]$Private:Modules
 
 )
-
-[string]$Private:DOTNET_RUNTIME = 'net9.0'
 
 
 #region Installer
@@ -43,10 +41,14 @@ function Install-PSProject {
 
     [Parameter(Mandatory)]
     [ValidateNotNullOrWhiteSpace()]
-    [string]$InstallPath
+    [string]$InstallPath,
+
+    [Parameter(Mandatory)]
+    [ValidateNotNullOrWhiteSpace()]
+    [string]$SourceRoot
   )
 
-  [string]$Private:BuildOutput = "$ClassRoot\$Project\bin\Release\$DOTNET_RUNTIME\$Project.dll"
+  [string]$Private:BuildOutput = "$SourceRoot\$Project\bin\Release\net9.0\$Project.dll"
 
   if (Test-Path -Path $BuildOutput) {
     [string]$Private:InstalledAssembly = "$InstallPath\$Project.dll"
@@ -81,6 +83,7 @@ foreach ($Private:Module in $Modules) {
   [hashtable]$Private:ModuleDistro = @{
     Project     = $Module
     InstallPath = "$ModuleRoot\$Module"
+    SourceRoot  = $SourceRoot
   }
   Install-PSProject @ModuleDistro
 }
@@ -91,7 +94,8 @@ foreach ($Private:Module in $Modules) {
 foreach ($Private:Type in $Types) {
   [hashtable]$Private:TypeDistro = @{
     Project     = $Type
-    InstallPath = $ClassRoot
+    InstallPath = $SourceRoot
+    SourceRoot  = $SourceRoot
   }
   Install-PSProject @TypeDistro
 }
@@ -101,7 +105,7 @@ foreach ($Private:Type in $Types) {
 #region Load Type
 foreach ($Private:Type in $Types) {
   [string]$Private:TypeAssembly = @{
-    Path = "$ClassRoot\$Type.dll"
+    Path = "$SourceRoot\$Type.dll"
   }
   if (Test-Path @TypeAssembly -PathType Leaf) {
     Add-Type @TypeAssembly
