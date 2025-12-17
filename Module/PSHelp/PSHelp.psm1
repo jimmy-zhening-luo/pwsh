@@ -86,8 +86,8 @@ function Get-HelpOnline {
 
   [string]$Private:Topic = $Name -join '_'
   $Private:Help = ''
-  [List[uri]]$Private:HelpLinkArticleList = [List[uri]]::new()
-  [List[uri]]$Private:ArticleList = [List[uri]]::new()
+  $Private:HelpLinkArticleList = [List[uri]]::new()
+  $Private:ArticleList = [List[uri]]::new()
   [hashtable]$Private:Command = @{
     Name        = $Topic
     ErrorAction = 'SilentlyContinue'
@@ -222,7 +222,7 @@ function Get-HelpOnline {
 
   if (-not $env:SSH_CLIENT) {
     if ($Articles) {
-      [List[uri]]$Private:ArticleUrls = [List[uri]]::new(
+      $Private:ArticleUrls = [List[uri]]::new(
         [List[uri]]$Articles
       )
 
@@ -296,7 +296,7 @@ function Get-CommandAlias {
       $Scope = 'Global'
     }
 
-    [List[CommandInfo]]$Private:AliasList = [List[CommandInfo]]::new()
+    $Private:AliasList = [List[System.Management.Automation.CommandInfo]]::new()
   }
 
   process {
@@ -309,17 +309,17 @@ function Get-CommandAlias {
       $AliasQuery.Exclude = $Exclude
     }
 
-    [CommandInfo[]]$Private:AliasResults = Get-Alias @Private:AliasQuery
+    [System.Management.Automation.CommandInfo[]]$Private:AliasResults = Get-Alias @Private:AliasQuery
 
     if ($AliasResults) {
       $AliasList.AddRange(
-        [List[CommandInfo]]$AliasResults
+        [List[System.Management.Automation.CommandInfo]]$AliasResults
       )
     }
   }
 
   end {
-    [CommandInfo[]]$Private:UniqueAliases = $AliasList.ToArray() |
+    [System.Management.Automation.CommandInfo[]]$Private:UniqueAliases = $AliasList.ToArray() |
       Sort-Object -Property DisplayName |
       Group-Object -Property DisplayName |
       ForEach-Object {
@@ -384,7 +384,7 @@ function Get-VerbList {
   )
 
   begin {
-    [List[string]]$Private:VerbList = [List[string]]::new()
+    $Private:VerbList = [List[string]]::new()
   }
 
   process {

@@ -1,4 +1,3 @@
-using namespace System.IO
 using namespace System.Collections.Generic
 using namespace Completer.PathCompleter
 
@@ -15,7 +14,7 @@ function Get-File {
 
   )
 
-  [List[string]]$Private:ArgumentList = [List[string]]::new()
+  $Private:ArgumentList = [List[string]]::new()
   if ($args) {
     $ArgumentList.AddRange(
       [List[string]]$args

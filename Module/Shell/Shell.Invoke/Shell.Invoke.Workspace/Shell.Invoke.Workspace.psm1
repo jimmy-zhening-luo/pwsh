@@ -40,7 +40,7 @@ function Invoke-Workspace {
 
   )
 
-  [List[string]]$Private:ArgumentList = [List[string]]::new()
+  $Private:ArgumentList = [List[string]]::new()
   if ($CodeArgument) {
     $ArgumentList.AddRange(
       [List[string]]$CodeArgument

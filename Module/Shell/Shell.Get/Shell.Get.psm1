@@ -1,4 +1,3 @@
-using namespace System.IO
 using namespace System.Collections.Generic
 using namespace Completer
 using namespace Completer.PathCompleter
@@ -86,7 +85,7 @@ function Get-Size {
 
     [UInt64]$Private:Factor = $DISK_SIZE_FACTORS[$CanonicalUnit]
 
-    [List[UInt64]]$Sizes = [List[UInt64]]::new()
+    $Sizes = [List[UInt64]]::new()
   }
 
   process {
@@ -101,7 +100,7 @@ function Get-Size {
     [hashtable]$Private:Target = @{
       Path = $Path
     }
-    [FileSystemInfo]$Private:Item = Get-Item @Target
+    [System.IO.FileSystemInfo]$Private:Item = Get-Item @Target
 
     [UInt64]$Private:Size = $Item.PSIsContainer ? (
       Get-ChildItem @Target -Recurse -File |

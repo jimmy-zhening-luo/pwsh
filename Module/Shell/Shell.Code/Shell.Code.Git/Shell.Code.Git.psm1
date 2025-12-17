@@ -27,7 +27,7 @@ function Resolve-GitRepository {
   begin {
     [string]$Private:CODE_PATH = "$HOME\code"
 
-    [List[string]]$Private:WorkingDirectories = [List[string]]::new()
+    $Private:WorkingDirectories = [List[string]]::new()
   }
 
   process {
@@ -146,7 +146,7 @@ function Invoke-GitRepository {
 
   )
 
-  [List[string]]$Private:GitArgument = [List[string]]::new()
+  $Private:GitArgument = [List[string]]::new()
   if ($args) {
     $GitArgument.AddRange(
       [List[string]]$args
@@ -318,7 +318,7 @@ function Import-GitRepository {
     $RepositoryPathSegments -join '/'
   )
 
-  [List[string]]$Private:CloneArgument = [List[string]]::new()
+  $Private:CloneArgument = [List[string]]::new()
   $CloneArgument.Add($Origin)
 
   if ($args) {
@@ -428,7 +428,7 @@ function Add-GitRepository {
 
   )
 
-  [List[string]]$Private:AddArgument = [List[string]]::new()
+  $Private:AddArgument = [List[string]]::new()
   if ($args) {
     $AddArgument.AddRange(
       [List[string]]$args
@@ -511,8 +511,8 @@ function Write-GitRepository {
 
   )
 
-  [List[string]]$Private:CommitArgument = [List[string]]::new()
-  [List[string]]$Private:Messages = [List[string]]::new()
+  $Private:CommitArgument = [List[string]]::new()
+  $Private:Messages = [List[string]]::new()
 
   [string[]]$Private:Argument, [string[]]$Private:MessageWord = (
     $Message ? (, $Message + $args) : $args
@@ -612,7 +612,7 @@ function Push-GitRepository {
 
   )
 
-  [List[string]]$Private:PushArgument = [List[string]]::new()
+  $Private:PushArgument = [List[string]]::new()
 
   if (
     $WorkingDirectory -and (
@@ -674,7 +674,7 @@ function Reset-GitRepository {
 
   )
 
-  [List[string]]$Private:ResetArgument = [List[string]]::new()
+  $Private:ResetArgument = [List[string]]::new()
   if ($args) {
     $ResetArgument.AddRange(
       [List[string]]$args
@@ -758,7 +758,7 @@ function Restore-GitRepository {
 
   )
 
-  [List[string]]$Private:ResetArgument = [List[string]]::new()
+  $Private:ResetArgument = [List[string]]::new()
 
   if (
     $WorkingDirectory -and (

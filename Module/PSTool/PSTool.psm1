@@ -1,5 +1,4 @@
 using namespace System.Collections.Generic
-using namespace System.Management.Automation
 
 <#
 .SYNOPSIS
@@ -191,11 +190,11 @@ function Update-PSProfile {
     CommandType = 'Application'
     Name        = 'dotnet.exe'
   }
-  [ApplicationInfo]$Private:DotNetExecutable = Get-Command @CompileCommand
+  [System.Management.Automation.ApplicationInfo]$Private:DotNetExecutable = Get-Command @CompileCommand
 
   if (-not $DotNetExecutable) {
     try {
-      [ApplicationInfo]$Private:DotNetExecutable = Install-PSModuleDotNet
+      [System.Management.Automation.ApplicationInfo]$Private:DotNetExecutable = Install-PSModuleDotNet
 
       if (-not $DotNetExecutable) {
         throw 'Failed to locate Microsoft.DotNet.SDK.10 executable post-installation'
@@ -214,7 +213,7 @@ function Update-PSProfile {
     ErrorAction      = 'Stop'
   }
 
-  [List[string]]$Private:DotNetClean = [List[string]]::new(
+  $Private:DotNetClean = [List[string]]::new(
     [string[]]@(
       'clean'
       '--configuration'
@@ -224,7 +223,7 @@ function Update-PSProfile {
   Start-Process @DotNet -ArgumentList $DotNetClean |
     Wait-Process
 
-  [List[string]]$Private:DotNetBuild = [List[string]]::new(
+  $Private:DotNetBuild = [List[string]]::new(
     [string[]]@(
       'build'
       '--configuration'
@@ -248,7 +247,7 @@ function Install-PSModuleDotNet {
   param()
 
   begin {
-    [List[string]]$Private:AppId = [List[string]]::new(
+    $Private:AppId = [List[string]]::new(
       [List[string]]@(
         '--id=Microsoft.DotNet.SDK.10'
       )
@@ -273,7 +272,7 @@ function Install-PSModuleDotNet {
         CommandType = 'Application'
         Name        = 'dotnet.exe'
       }
-      [ApplicationInfo]$Private:DotNetExecutable = Get-Command @CompileCommand
+      [System.Management.Automation.ApplicationInfo]$Private:DotNetExecutable = Get-Command @CompileCommand
 
       if (-not $DotNetExecutable) {
         throw 'Failed to locate Microsoft.DotNet.SDK.10 executable post-installation'

@@ -1,4 +1,3 @@
-using namespace System.IO
 using namespace System.Collections
 using namespace System.Collections.Generic
 using namespace System.Management.Automation
@@ -81,9 +80,9 @@ class PathCompleter : CompleterBase {
       $matchChild.Path = $this.Root
     }
 
-    [FileSystemInfo[]]$private:leaves = Get-ChildItem @matchChild
+    [System.IO.FileSystemInfo[]]$private:leaves = Get-ChildItem @matchChild
 
-    [FileSystemInfo[]]$private:containers, [FileSystemInfo[]]$private:children = $leaves.Where(
+    [System.IO.FileSystemInfo[]]$private:containers, [System.IO.FileSystemInfo[]]$private:children = $leaves.Where(
       {
         $PSItem.PSIsContainer
       },
@@ -128,7 +127,7 @@ class PathCompleter : CompleterBase {
       $files = $files -replace [regex][TypedPath]::PathSeparatorPattern, $separator
     }
 
-    [List[string]]$private:completionPaths = [List[string]]::new()
+    $private:completionPaths = [List[string]]::new()
     if ($directories) {
       $completionPaths.AddRange(
         [List[string]]$directories
@@ -233,7 +232,7 @@ $TYPES = @(
   [PathCompletionsAttribute]
 )
 
-$TypeAccelerators = [PSObject].Assembly.GetType('System.Management.Automation.TypeAccelerators')
+$TypeAccelerators = [psobject].Assembly.GetType('System.Management.Automation.TypeAccelerators')
 $ExistingTypes = $TypeAccelerators::Get
 foreach ($Private:Type in $TYPES) {
   if ($Type.FullName -in $ExistingTypes.Keys) {
@@ -305,15 +304,15 @@ function Test-Item {
   )
   $Location = [TypedPath]::Format($Location)
 
-  if ([Path]::IsPathRooted($Path)) {
+  if ([System.IO.Path]::IsPathRooted($Path)) {
     if ($Location) {
       if (
-        [Path]::GetRelativePath(
+        [System.IO.Path]::GetRelativePath(
           $Path,
           $Location
         ) -match [regex][TypedPath]::IsPathDescendantPattern
       ) {
-        $Path = [Path]::GetRelativePath(
+        $Path = [System.IO.Path]::GetRelativePath(
           $Location,
           $Path
         )
@@ -323,7 +322,7 @@ function Test-Item {
       }
     }
     else {
-      $Location = [Path]::GetPathRoot($Path)
+      $Location = [System.IO.Path]::GetPathRoot($Path)
     }
   }
   elseif ($Path -match [regex][TypedPath]::IsPathTildeRootedPattern) {
@@ -333,12 +332,12 @@ function Test-Item {
       $Path = Join-Path $HOME $Path
 
       if (
-        [Path]::GetRelativePath(
+        [System.IO.Path]::GetRelativePath(
           $Path,
           $Location
         ) -match [regex][TypedPath]::IsPathDescendantPattern
       ) {
-        $Path = [Path]::GetRelativePath(
+        $Path = [System.IO.Path]::GetRelativePath(
           $Location,
           $Path
         )
@@ -426,22 +425,22 @@ function Resolve-Item {
   )
   $Location = [TypedPath]::Format($Location)
 
-  if ([Path]::IsPathRooted($Path)) {
+  if ([System.IO.Path]::IsPathRooted($Path)) {
     if ($Location) {
-      $Path = [Path]::GetRelativePath(
+      $Path = [System.IO.Path]::GetRelativePath(
         $Location,
         $Path
       )
     }
     else {
-      $Location = [Path]::GetPathRoot($Path)
+      $Location = [System.IO.Path]::GetPathRoot($Path)
     }
   }
   elseif ($Path -match [regex][TypedPath]::IsPathTildeRootedPattern) {
     $Path = $Path -replace [regex][TypedPath]::TildeRootPattern, ''
 
     if ($Location) {
-      $Path = [Path]::GetRelativePath(
+      $Path = [System.IO.Path]::GetRelativePath(
         $Location,
         (Join-Path $HOME $Path)
       )

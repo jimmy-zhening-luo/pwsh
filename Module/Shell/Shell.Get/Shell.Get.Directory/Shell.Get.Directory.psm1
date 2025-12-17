@@ -1,4 +1,3 @@
-using namespace System.IO
 using namespace Completer.PathCompleter
 
 function Get-Directory {
