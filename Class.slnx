@@ -1,9 +1,8 @@
 <Solution>
   <Folder Name="/Class/">
     <!-- Types -->
-    <Project Path="Class/Input/Input.csproj"/>
+    <Project Path="Class/Typed/Typed.csproj"/>
     <Project Path="Class/Completer/Completer.csproj"/>
-    <Project Path="Class/PathCompleter/PathCompleter.csproj"/>
     <!-- Modules -->
     <Project Path="Class/Transform/Transform.csproj"/>
   </Folder>

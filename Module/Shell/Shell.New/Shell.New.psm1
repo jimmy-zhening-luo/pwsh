@@ -1,5 +1,6 @@
 using namespace System.IO
 using namespace System.Management.Automation
+using namespace Completer.PathCompleter
 
 <#
 .FORWARDHELPTARGETNAME New-Item

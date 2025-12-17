@@ -1,7 +1,7 @@
 using namespace System.Collections.Generic
 using namespace System.Management.Automation
 using namespace Completer
-using namespace PathCompleter
+using namespace Completer.PathCompleter
 
 <#
 .SYNOPSIS

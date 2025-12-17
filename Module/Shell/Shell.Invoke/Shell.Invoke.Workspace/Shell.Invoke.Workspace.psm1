@@ -1,3 +1,5 @@
+using namespace Completer.PathCompleter
+
 function Invoke-Workspace {
 
   [CmdletBinding()]
@@ -157,7 +159,7 @@ function Invoke-WorkspaceSibling {
 
   [hashtable]$Private:Location = @{
     Location = Split-Path $PWD.Path
-    Empty = $True
+    Empty    = $True
   }
   Invoke-Workspace @PSBoundParameters @Location
 }

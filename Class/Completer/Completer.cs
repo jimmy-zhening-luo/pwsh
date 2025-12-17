@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Language;
-using Input;
 
 namespace Completer
 {
@@ -43,7 +42,7 @@ namespace Completer
 
       List<string> completions = [];
 
-      string typed = Text.Unescape(wordToComplete);
+      string typed = Typed.Typed.Unescape(wordToComplete);
 
       if (string.IsNullOrWhiteSpace(typed))
       {
@@ -113,7 +112,7 @@ namespace Completer
       {
         completionResults.Add(
           new CompletionResult(
-            Text.Escape(
+            Typed.Typed.Escape(
               completion
             )
           )

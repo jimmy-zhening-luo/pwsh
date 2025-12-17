@@ -1,15 +1,11 @@
 @{
   Types   = @(
     @{
-      Name    = 'Input'
+      Name    = 'Typed'
       Runtime = 'net9.0'
     }
     @{
       Name    = 'Completer'
-      Runtime = 'net9.0'
-    }
-    @{
-      Name    = 'PathCompleter'
       Runtime = 'net9.0'
     }
   )

@@ -8,6 +8,6 @@
     <PackageReference Include="System.Management.Automation" Version="7.4.13" PrivateAssets="All"/>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Input\Input.csproj"/>
+    <ProjectReference Include="..\Typed\Typed.csproj"/>
   </ItemGroup>
 </Project>

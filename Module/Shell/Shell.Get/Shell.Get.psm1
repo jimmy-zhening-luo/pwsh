@@ -1,6 +1,7 @@
 using namespace System.IO
 using namespace System.Collections.Generic
 using namespace Completer
+using namespace Completer.PathCompleter
 
 enum DiskSizeUnit {
   B

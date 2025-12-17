@@ -1,4 +1,4 @@
-using namespace PathCompleter
+using namespace Completer.PathCompleter
 
 function Set-Directory {
 

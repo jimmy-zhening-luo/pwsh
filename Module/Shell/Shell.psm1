@@ -3,9 +3,9 @@ using namespace System.Collections
 using namespace System.Collections.Generic
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
-using namespace Input
+using namespace Typed
 using namespace Completer
-using namespace PathCompleter
+using namespace Completer.PathCompleter
 
 class PathCompleter : CompleterBase {
 
@@ -47,16 +47,16 @@ class PathCompleter : CompleterBase {
       }
     }
 
-    [string]$private:currentValue = [Text]::Unescape($wordToComplete)
+    [string]$private:currentValue = [Typed]::Unescape($wordToComplete)
 
-    [string]$private:currentPathValue = $currentValue -replace [regex][PathText]::FriendlyPathSeparatorPattern, [PathText]::PathSeparator -replace [regex][PathText]::DuplicatePathSeparatorPattern, [PathText]::PathSeparator
+    [string]$private:currentPathValue = $currentValue -replace [regex][TypedPath]::FriendlyPathSeparatorPattern, [TypedPath]::PathSeparator -replace [regex][TypedPath]::DuplicatePathSeparatorPattern, [TypedPath]::PathSeparator
 
     [string]$private:currentDirectoryValue = ''
 
     if ($currentPathValue) {
       if (
         $currentPathValue.EndsWith(
-          [PathText]::PathSeparator
+          [TypedPath]::PathSeparator
         )
       ) {
         $currentPathValue += '*'
@@ -114,18 +114,18 @@ class PathCompleter : CompleterBase {
       $directories = $directories |
         ForEach-Object {
           $PSItem.EndsWith(
-            [PathText]::PathSeparator
-          ) ? $PSItem :   $PSItem + [PathText]::PathSeparator
+            [TypedPath]::PathSeparator
+          ) ? $PSItem :   $PSItem + [TypedPath]::PathSeparator
         }
     }
 
-    $directories = $directories -replace [regex][PathText]::DuplicatePathSeparatorPattern, [PathText]::PathSeparator
-    $files = $files -replace [regex][PathText]::DuplicatePathSeparatorPattern, [PathText]::PathSeparator
+    $directories = $directories -replace [regex][TypedPath]::DuplicatePathSeparatorPattern, [TypedPath]::PathSeparator
+    $files = $files -replace [regex][TypedPath]::DuplicatePathSeparatorPattern, [TypedPath]::PathSeparator
 
-    [string]$private:separator = $this.UseNativePathSeparator ? [PathText]::PathSeparator : [PathText]::FriendlyPathSeparator
-    if ($separator -ne [PathText]::PathSeparator) {
-      $directories = $directories -replace [regex][PathText]::PathSeparatorPattern, $separator
-      $files = $files -replace [regex][PathText]::PathSeparatorPattern, $separator
+    [string]$private:separator = $this.UseNativePathSeparator ? [TypedPath]::PathSeparator : [TypedPath]::FriendlyPathSeparator
+    if ($separator -ne [TypedPath]::PathSeparator) {
+      $directories = $directories -replace [regex][TypedPath]::PathSeparatorPattern, $separator
+      $files = $files -replace [regex][TypedPath]::PathSeparatorPattern, $separator
     }
 
     [List[string]]$private:completionPaths = [List[string]]::new()
@@ -298,12 +298,12 @@ function Test-Item {
 
   )
 
-  $Path = [PathText]::Format(
+  $Path = [TypedPath]::Format(
     $Path,
     '',
     $True
   )
-  $Location = [PathText]::Format($Location)
+  $Location = [TypedPath]::Format($Location)
 
   if ([Path]::IsPathRooted($Path)) {
     if ($Location) {
@@ -311,7 +311,7 @@ function Test-Item {
         [Path]::GetRelativePath(
           $Path,
           $Location
-        ) -match [regex][PathText]::IsPathDescendantPattern
+        ) -match [regex][TypedPath]::IsPathDescendantPattern
       ) {
         $Path = [Path]::GetRelativePath(
           $Location,
@@ -326,8 +326,8 @@ function Test-Item {
       $Location = [Path]::GetPathRoot($Path)
     }
   }
-  elseif ($Path -match [regex][PathText]::IsPathTildeRootedPattern) {
-    $Path = $Path -replace [regex][PathText]::TildeRootPattern, ''
+  elseif ($Path -match [regex][TypedPath]::IsPathTildeRootedPattern) {
+    $Path = $Path -replace [regex][TypedPath]::TildeRootPattern, ''
 
     if ($Location) {
       $Path = Join-Path $HOME $Path
@@ -336,7 +336,7 @@ function Test-Item {
         [Path]::GetRelativePath(
           $Path,
           $Location
-        ) -match [regex][PathText]::IsPathDescendantPattern
+        ) -match [regex][TypedPath]::IsPathDescendantPattern
       ) {
         $Path = [Path]::GetRelativePath(
           $Location,
@@ -369,7 +369,7 @@ function Test-Item {
   [bool]$Private:HasSubpath = $FullPath.Substring($FullLocation.Length) -notmatch [regex]'^\\*$'
   [bool]$Private:FileLike = $HasSubpath -and -not (
     $FullPath.EndsWith(
-      [PathText]::PathSeparator
+      [TypedPath]::PathSeparator
     ) -or $FullPath.EndsWith('..')
   )
 
@@ -419,12 +419,12 @@ function Resolve-Item {
     )
   }
 
-  $Path = [PathText]::Format(
+  $Path = [TypedPath]::Format(
     $Path,
     '',
     $True
   )
-  $Location = [PathText]::Format($Location)
+  $Location = [TypedPath]::Format($Location)
 
   if ([Path]::IsPathRooted($Path)) {
     if ($Location) {
@@ -437,8 +437,8 @@ function Resolve-Item {
       $Location = [Path]::GetPathRoot($Path)
     }
   }
-  elseif ($Path -match [regex][PathText]::IsPathTildeRootedPattern) {
-    $Path = $Path -replace [regex][PathText]::TildeRootPattern, ''
+  elseif ($Path -match [regex][TypedPath]::IsPathTildeRootedPattern) {
+    $Path = $Path -replace [regex][TypedPath]::TildeRootPattern, ''
 
     if ($Location) {
       $Path = [Path]::GetRelativePath(

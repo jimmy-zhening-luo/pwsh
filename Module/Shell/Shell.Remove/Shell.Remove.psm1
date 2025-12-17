@@ -1,3 +1,5 @@
+using namespace Completer.PathCompleter
+
 <#
 .FORWARDHELPTARGETNAME Remove-Item
 .FORWARDHELPCATEGORY Cmdlet

@@ -1,5 +1,5 @@
 using namespace System.IO
-using namespace PathCompleter
+using namespace Completer.PathCompleter
 
 function Get-Directory {
 

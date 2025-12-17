@@ -1,3 +1,5 @@
+using namespace Completer.PathCompleter
+
 function Invoke-Directory {
 
   [OutputType([void])]
