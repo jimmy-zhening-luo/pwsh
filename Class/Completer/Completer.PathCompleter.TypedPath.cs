@@ -1,7 +1,6 @@
 using System;
 using System.Management.Automation;
 using System.Text.RegularExpressions;
-using Completer.Typed;
 
 namespace Completer
 {
@@ -30,7 +29,7 @@ namespace Completer
       )
       {
         string normalPath = Regex.Replace(
-          Typed
+          Typed.Typed
             .Unescape(path)
             .Replace(
               FriendlyPathSeparatorChar,
