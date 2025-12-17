@@ -185,13 +185,15 @@ namespace Completer
 
         if (constrainToDirectories || !constrainToFiles)
         {
-          string[] directories = Directory.GetDirectories(
-            searchLocation[0],
-            searchFilter[0],
-            SearchOption.TopDirectoryOnly
-          ).Select(
-            d => Path.GetFileName(d)
-          ).ToArray();
+          string[] directories = [
+            ..Directory.GetDirectories(
+              searchLocation[0],
+              searchFilter[0],
+              SearchOption.TopDirectoryOnly
+            ).Select(
+              d => Path.GetFileName(d)
+            )
+          ];
 
           if (directories.Length != 0)
           {
@@ -201,13 +203,15 @@ namespace Completer
 
         if (constrainToFiles || !constrainToDirectories)
         {
-          string[] files = Directory.GetFiles(
-            searchLocation[0],
-            searchFilter[0],
-            SearchOption.TopDirectoryOnly
-          ).Select(
-            f => Path.GetFileName(f)
-          ).ToArray();
+          string[] files = [
+            ..Directory.GetFiles(
+              searchLocation[0],
+              searchFilter[0],
+              SearchOption.TopDirectoryOnly
+            ).Select(
+              f => Path.GetFileName(f)
+            )
+          ];
 
           if (files.Length != 0)
           {
