@@ -14,31 +14,72 @@ namespace Completer
     Upper
   }
 
-  public abstract class CompleterBase : IArgumentCompleter
+  public abstract class CompleterBase(
+    CompletionCase Casing,
+    bool Surrounding
+  ) : IArgumentCompleter
   {
-    public static List<string> FindCompletion(
-      string wordToComplete,
-      List<string> domain,
-      CompletionCase casing = CompletionCase.Preserve,
-      bool sort = false,
-      bool surrounding = false
+    private static IEnumerable<CompletionResult> WrapCompletionResult(
+      IEnumerable<string> completions
     )
     {
-      List<string> ordinalDomain = domain.Count == 0 ? [] : casing switch
+      foreach (string completionString in completionStrings)
+      {
+        yield return new CompletionResult(
+          Typed.Typed.Escape(
+            completionString
+          )
+        );
+      }
+    }
+
+    public abstract List<string> FulfillCompletion(
+      string parameterName,
+      string wordToComplete,
+      IDictionary fakeBoundParameters
+    );
+
+    public IEnumerable<CompletionResult> CompleteArgument(
+      string commandName,
+      string parameterName,
+      string wordToComplete,
+      CommandAst commandAst,
+      IDictionary fakeBoundParameters
+    )
+    {
+      foreach (
+        string completionResult in WrapCompletionResult(
+          FulfillCompletion(
+            parameterName,
+            wordToComplete,
+            fakeBoundParameters
+          )
+        )
+      )
+      {
+        yield return completionResult;
+      }
+    }
+
+    public IEnumerable<string> FindCompletion(
+      string wordToComplete,
+      IEnumerable<string> domain
+    )
+    {
+      List<string> ordinalDomain = Casing switch
       {
         CompletionCase.Upper => [
-          ..domain.Select(member => member.ToUpperInvariant())
+          .. domain.Select(
+            member => member.ToUpperInvariant()
+          )
         ],
         CompletionCase.Lower => [
-          ..domain.Select(member => member.ToLowerInvariant())
+          ..domain.Select(
+            member => member.ToLowerInvariant()
+          )
         ],
-        _ => domain,
+        _ => [.. domain],
       };
-
-      if (sort)
-      {
-        ordinalDomain.Sort();
-      }
 
       List<string> completions = [];
 
@@ -77,7 +118,7 @@ namespace Completer
           )
         );
 
-        if (surrounding)
+        if (Surrounding)
         {
           if (
             completions.Count == 0
@@ -100,87 +141,25 @@ namespace Completer
 
       return completions;
     }
-
-    public static List<CompletionResult> CreateCompletionResult(
-      List<string> completions
-    )
-    {
-      List<CompletionResult> completionResults = [];
-
-      foreach (string completion in completions)
-      {
-        completionResults.Add(
-          new CompletionResult(
-            Typed.Typed.Escape(
-              completion
-            )
-          )
-        );
-      }
-
-      return completionResults;
-    }
-
-    public abstract List<string> FulfillCompletion(
-      string parameterName,
-      string wordToComplete,
-      IDictionary fakeBoundParameters
-    );
-
-    public IEnumerable<CompletionResult> CompleteArgument(
-      string commandName,
-      string parameterName,
-      string wordToComplete,
-      CommandAst commandAst,
-      IDictionary fakeBoundParameters
-    )
-    {
-      return CreateCompletionResult(
-        FulfillCompletion(
-          parameterName,
-          wordToComplete,
-          fakeBoundParameters
-        )
-      );
-    }
   }
 
   public class Completer : CompleterBase
   {
-    public readonly List<string> Domain;
-    public readonly CompletionCase Case;
-    public readonly bool Sort;
-    public readonly bool Surrounding;
+    public readonly IEnumerable<string> Domain;
 
     public Completer(
-      List<string> span,
+      IEnumerable<string> domain,
       CompletionCase casing,
-      bool sort,
       bool surrounding
+    ): base(
+      casing,
+      surrounding
     )
     {
-      HashSet<string> set = new
-      (
-        span
-          .Select(s => s.Trim())
-          .Where(
-            trimmedCandidate => trimmedCandidate != string.Empty
-          ),
-        StringComparer.OrdinalIgnoreCase
-      );
-
-      if (set.Count == 0)
-      {
-        throw new ArgumentException("Domain");
-      }
-
-      Domain = [.. set];
-      Case = casing;
-      Sort = sort;
-      Surrounding = surrounding;
+      Domain = domain;
     }
 
-    public override List<string> FulfillCompletion(
+    public override IEnumerable<string> FulfillCompletion(
       string parameterName,
       string wordToComplete,
       IDictionary fakeBoundParameters
@@ -188,28 +167,27 @@ namespace Completer
     {
       return FindCompletion(
         wordToComplete,
-        Domain,
-        Case,
-        Sort,
-        Surrounding
+        Domain
       );
     }
   }
 
   [AttributeUsage(AttributeTargets.Parameter)]
   public class StaticCompletionsAttribute(
-    string Units,
+    string StringifiedDomain,
     CompletionCase? Casing,
-    bool? Sort,
     bool? Surrounding
   ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
   {
     public IArgumentCompleter Create()
     {
       return new Completer(
-        [.. Units.Split(",")],
+        Units
+          .Split(",")
+          .Select(
+            member => member.Trim()
+          ),
         Casing ?? CompletionCase.Preserve,
-        Sort ?? false,
         Surrounding ?? true
       );
     }
@@ -217,28 +195,22 @@ namespace Completer
 
   [AttributeUsage(AttributeTargets.Parameter)]
   public class DynamicCompletionsAttribute(
-    ScriptBlock Units,
+    ScriptBlock DomainGenerator,
     CompletionCase? Casing,
-    bool? Sort,
     bool? Surrounding
   ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
   {
     public IArgumentCompleter Create()
     {
-      var invokedUnits = Units.Invoke();
-      List<string> unitList = [];
-
-      foreach (var unit in invokedUnits)
-      {
-        unitList.Add(
-          unit.BaseObject.ToString()
-        );
-      }
-
       return new Completer(
-        [.. unitList],
+        DomainGenerator
+          .Invoke()
+          .Select(
+            member => member
+              .BaseObject
+              .ToString()
+          ),
         Casing ?? CompletionCase.Preserve,
-        Sort ?? false,
         Surrounding ?? true
       );
     }
