@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
@@ -124,7 +125,7 @@ namespace Completer
     public abstract List<string> FulfillCompletion(
       string parameterName,
       string wordToComplete,
-      System.Collections.IDictionary fakeBoundParameters
+      IDictionary fakeBoundParameters
     );
 
     public IEnumerable<CompletionResult> CompleteArgument(

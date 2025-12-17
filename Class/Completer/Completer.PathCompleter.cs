@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation.Language;
@@ -58,7 +59,7 @@ namespace Completer
       public override List<string> FulfillCompletion(
         string parameterName,
         string wordToComplete,
-        System.Collections.IDictionary fakeBoundParameters
+        IDictionary fakeBoundParameters
       )
       {
         List<string> completions = [];
