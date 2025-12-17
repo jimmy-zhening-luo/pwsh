@@ -35,14 +35,14 @@ namespace Completer
       Function
     }
 
-    public class TestPathCompleter : CompleterBase
+    public class PathCompleter : CompleterBase
     {
       private readonly string Root;
       private readonly PathItemType Type;
       private readonly bool Flat;
       private readonly bool UseNativePathSeparator;
 
-      public TestPathCompleter(
+      public PathCompleter(
         string root,
         PathItemType type,
         bool flat,

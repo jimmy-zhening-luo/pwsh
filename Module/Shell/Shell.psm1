@@ -6,140 +6,6 @@ using namespace Typed
 using namespace Completer
 using namespace Completer.PathCompleter
 
-class PathCompleter : CompleterBase {
-
-  [string] $Root
-  [PathItemType] $Type
-  [bool] $Flat
-  [bool] $UseNativePathSeparator
-
-  PathCompleter(
-
-    [string] $root,
-    [PathItemType] $type,
-    [bool] $flat,
-    [bool] $useNativePathSeparator
-
-  ) {
-    $this.Root = $root
-    $this.Type = $type
-    $this.Flat = $flat
-    $this.UseNativePathSeparator = $useNativePathSeparator
-  }
-
-  [List[string]] FulfillCompletion(
-    [string] $parameterName,
-    [string] $wordToComplete,
-    [IDictionary] $fakeBoundParameters
-  ) {
-    [hashtable]$private:matchChild = @{}
-
-    switch ($this.Type) {
-      Directory {
-        $matchChild.Directory = $True
-      }
-      File {
-        $matchChild.File = $True
-      }
-    }
-
-    [string]$private:currentValue = [Typed]::Unescape($wordToComplete)
-
-    [string]$private:currentPathValue = $currentValue -replace [regex][TypedPath]::FriendlyPathSeparatorPattern, [TypedPath]::PathSeparator -replace [regex][TypedPath]::DuplicatePathSeparatorPattern, [TypedPath]::PathSeparator
-
-    [string]$private:currentDirectoryValue = ''
-
-    if ($currentPathValue) {
-      if (
-        $currentPathValue.EndsWith(
-          [TypedPath]::PathSeparator
-        )
-      ) {
-        $currentPathValue += '*'
-      }
-
-      $currentDirectoryValue = Split-Path $currentPathValue
-      [string]$private:fragment = Split-Path $currentPathValue -Leaf
-
-      if ($fragment -eq '*') {
-        $fragment = ''
-      }
-
-      [string]$private:path = Join-Path $this.Root $currentDirectoryValue
-
-      if (Test-Path -Path $path -PathType Container) {
-        $matchChild.Path = $path
-        $matchChild['Filter'] = "$fragment*"
-      }
-    }
-
-    if (-not $matchChild.Path) {
-      $matchChild.Path = $this.Root
-    }
-
-    [System.IO.FileSystemInfo[]]$private:leaves = Get-ChildItem @matchChild
-
-    [System.IO.FileSystemInfo[]]$private:containers, [System.IO.FileSystemInfo[]]$private:children = $leaves.Where(
-      {
-        $PSItem.PSIsContainer
-      },
-      'Split'
-    )
-
-    [string[]]$private:directories = $containers |
-      Select-Object -ExpandProperty Name
-    [string[]]$private:files = $children |
-      Select-Object -ExpandProperty Name
-
-    if ($currentDirectoryValue -and -not $this.Flat) {
-      $directories += ''
-    }
-
-    if ($currentDirectoryValue) {
-      $directories = $directories |
-        ForEach-Object {
-          Join-Path $currentDirectoryValue $PSItem
-        }
-      $files = $files |
-        ForEach-Object {
-          Join-Path $currentDirectoryValue $PSItem
-        }
-    }
-
-    if (-not $this.Flat) {
-      $directories = $directories |
-        ForEach-Object {
-          $PSItem.EndsWith(
-            [TypedPath]::PathSeparator
-          ) ? $PSItem :   $PSItem + [TypedPath]::PathSeparator
-        }
-    }
-
-    $directories = $directories -replace [regex][TypedPath]::DuplicatePathSeparatorPattern, [TypedPath]::PathSeparator
-    $files = $files -replace [regex][TypedPath]::DuplicatePathSeparatorPattern, [TypedPath]::PathSeparator
-
-    [string]$private:separator = $this.UseNativePathSeparator ? [TypedPath]::PathSeparator : [TypedPath]::FriendlyPathSeparator
-    if ($separator -ne [TypedPath]::PathSeparator) {
-      $directories = $directories -replace [regex][TypedPath]::PathSeparatorPattern, $separator
-      $files = $files -replace [regex][TypedPath]::PathSeparatorPattern, $separator
-    }
-
-    $private:completionPaths = [List[string]]::new()
-    if ($directories) {
-      $completionPaths.AddRange(
-        [List[string]]$directories
-      )
-    }
-    if ($files) {
-      $completionPaths.AddRange(
-        [List[string]]$files
-      )
-    }
-
-    return $completionPaths
-  }
-}
-
 class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory {
   [string] $Root
   [PathItemType] $Type
@@ -215,7 +81,7 @@ class PathCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterF
 
     [string]$private:root = (Resolve-Path -Path $this.Root).Path
 
-    return [PathCompleter]::new(
+    return [PathCompleter.PathCompleter]::new(
       $private:root,
       $this.Type,
       $this.Flat,
