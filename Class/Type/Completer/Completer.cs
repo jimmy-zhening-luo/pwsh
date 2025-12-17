@@ -19,12 +19,12 @@ namespace Completer
     public static List<string> FindCompletion(
       string wordToComplete,
       List<string> domain,
-      CompletionCase caseOption = CompletionCase.Preserve,
+      CompletionCase casing = CompletionCase.Preserve,
       bool sort = false,
       bool surrounding = false
     )
     {
-      List<string> ordinalDomain = domain.Count == 0 ? [] : caseOption switch
+      List<string> ordinalDomain = domain.Count == 0 ? [] : casing switch
       {
         CompletionCase.Upper => [
           ..domain.Select(member => member.ToUpperInvariant())
