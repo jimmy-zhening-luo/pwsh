@@ -8,7 +8,8 @@ function Get-File {
   param(
 
     [PathCompletions(
-      '.'
+      { return [string]$PWD.Path },
+      $null, $null, $null
     )]
     [string]$Path,
 

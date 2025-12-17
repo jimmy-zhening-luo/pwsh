@@ -7,7 +7,8 @@ function Get-Directory {
   param(
 
     [PathCompletions(
-      '.',
+      { return [string]$PWD.Path },
+      $null, $null, $null,
       [PathItemType]::Directory
     )]
     [string]$Path

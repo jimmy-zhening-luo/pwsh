@@ -292,7 +292,7 @@ namespace Completer
     }
 
     [AttributeUsage(AttributeTargets.Parameter)]
-    public class TestPathCompletionsAttribute(
+    public class PathCompletionsAttribute(
       ScriptBlock CurrentDirectory,
       PathItemType? ItemType,
       bool? Flat,
