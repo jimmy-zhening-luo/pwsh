@@ -15,7 +15,7 @@ namespace Typed
     public readonly static string DuplicatePathSeparatorPattern = @"(?<!^)\\\\+";
     public readonly static string TrailingPathSeparatorPattern = @"(?>\\+)$";
     public readonly static string RelativeRootPattern = @"^\.(?>\\+)";
-    public readonly static string TildeRootPattern = @"^~(?>\\*)";
+    public readonly static string TildeRootPattern = @"^~(?=(?>$|\\))";
     public readonly static string IsPathDescendantPattern = @"^(?=(?>[.\\]*)$)";
     public readonly static string IsPathTildeRootedPattern = @"^(?=~(?>$|\\))";
 
