@@ -15,7 +15,7 @@ function Clear-Line {
   param(
 
     [PathCompletions(
-      $null, $null, $null, $null
+      '.', $null, $null, $null
     )]
     [string]$Path
 
