@@ -1,3 +1,4 @@
+using namespace System.Collections.Generic
 using namespace Completer.PathCompleter
 
 function Invoke-Workspace {
@@ -39,10 +40,10 @@ function Invoke-Workspace {
 
   )
 
-  [System.Collections.Generic.List[string]]$Private:ArgumentList = [System.Collections.Generic.List[string]]::new()
+  [List[string]]$Private:ArgumentList = [List[string]]::new()
   if ($CodeArgument) {
     $ArgumentList.AddRange(
-      [System.Collections.Generic.List[string]]$CodeArgument
+      [List[string]]$CodeArgument
     )
   }
 
