@@ -48,10 +48,7 @@ namespace Completer
         PathItemType type,
         bool flat,
         bool useNativePathSeparator
-      ): base(
-        CompletionCase.Preserve,
-        false
-      )
+      ): base(CompletionCase.Preserve)
       {
         string normalizedUnescapedRoot = TypedPath.Normalize(
           Typed.Typed.Unescape(root),

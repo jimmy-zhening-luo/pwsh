@@ -15,8 +15,7 @@ namespace Completer
   }
 
   public abstract class CompleterBase(
-    CompletionCase Casing,
-    bool Surrounding
+    CompletionCase Casing
   ) : IArgumentCompleter
   {
     private static IEnumerable<CompletionResult> WrapCompletionResult(
@@ -27,7 +26,12 @@ namespace Completer
       {
         yield return new CompletionResult(
           Typed.Typed.Escape(
-            completedString
+            Casing switch
+            {
+              CompletionCase.Upper => completedString.ToUpper(),
+              CompletionCase.Lower => completedString.ToLower(),
+              _ => completedString,
+            }
           )
         );
       }
@@ -55,10 +59,34 @@ namespace Completer
         )
       );
     }
+  }
+
+  public class Completer : CompleterBase
+  {
+    public readonly IEnumerable<string> Domain;
+    public readonly bool Surrounding;
+
+    public Completer(
+      IEnumerable<string> domain,
+      CompletionCase casing,
+      bool surrounding
+    ): base(casing)
+    {
+      Domain = domain;
+      Surrounding = surrounding;
+    }
+
+    public override IEnumerable<string> FulfillCompletion(
+      string parameterName,
+      string wordToComplete,
+      IDictionary fakeBoundParameters
+    )
+    {
+      return FindCompletion(wordToComplete);
+    }
 
     public IEnumerable<string> FindCompletion(
-      string wordToComplete,
-      IEnumerable<string> domain
+      string wordToComplete
     )
     {
       string unescapedWordToComplete = Typed.Typed.Unescape(wordToComplete);
@@ -69,14 +97,9 @@ namespace Completer
         )
       )
       {
-        foreach (string member in domain)
+        foreach (string member in Domain)
         {
-          yield return Casing switch
-          {
-            CompletionCase.Upper => member.ToUpper(),
-            CompletionCase.Lower => member.ToLower(),
-            _ => member,
-          };
+          yield return member;
         }
 
         yield break;
@@ -85,7 +108,7 @@ namespace Completer
       {
         int matched = 0;
 
-        foreach (string member in domain)
+        foreach (string member in Domain)
         {
           if (
             member.StartsWith(
@@ -96,18 +119,13 @@ namespace Completer
           {
             ++matched;
 
-            yield return Casing switch
-            {
-              CompletionCase.Upper => member.ToUpper(),
-              CompletionCase.Lower => member.ToLower(),
-              _ => member,
-            };
+            yield return member;
           }
         }
 
         if (Surrounding && matched <= 1)
         {
-          foreach (string member in domain)
+          foreach (string member in Domain)
           {
             if (
               member.Length > unescapedWordToComplete.Length
@@ -118,48 +136,13 @@ namespace Completer
               ) >= 1
             )
             {
-              yield return Casing switch
-              {
-                CompletionCase.Upper => member.ToUpper(),
-                CompletionCase.Lower => member.ToLower(),
-                _ => member,
-              };
+              yield return member;
             }
           }
         }
 
         yield break;
       }
-    }
-  }
-
-  public class Completer : CompleterBase
-  {
-    public readonly IEnumerable<string> Domain;
-
-    public Completer(
-      IEnumerable<string> domain,
-      CompletionCase casing,
-      bool surrounding
-    ): base(
-      casing,
-      surrounding
-    )
-    {
-      Domain = domain;
-    }
-
-    public override IEnumerable<string> FulfillCompletion(
-      string parameterName,
-      string wordToComplete,
-      IDictionary fakeBoundParameters
-    )
-    {
-      return FindCompletion(
-        wordToComplete,
-        Domain
-      );
-    }
   }
 
   [AttributeUsage(AttributeTargets.Parameter)]
