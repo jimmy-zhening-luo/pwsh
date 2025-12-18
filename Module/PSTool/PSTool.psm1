@@ -241,7 +241,7 @@ function Install-PSModuleDotNet {
   param()
 
   begin {
-    [string[]$Private:AppId = @(
+    [string[]]$Private:AppId = @(
       '--id=Microsoft.DotNet.SDK.10'
     )
   }
