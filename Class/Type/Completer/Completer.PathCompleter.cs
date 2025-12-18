@@ -121,7 +121,7 @@ namespace Completer
           if (currentDirectoryValue != string.Empty)
           {
             string fullPathAndCurrentDirectory = Path.GetFullPath(
-              currentDirectoryValue[0],
+              currentDirectoryValue,
               Root
             );
 
