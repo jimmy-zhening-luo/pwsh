@@ -273,7 +273,7 @@ namespace Completer
 
     [AttributeUsage(AttributeTargets.Parameter)]
     public class PathLocationCompletionsAttribute(
-      string Root,
+      string Location,
       PathItemType? ItemType,
       bool? Flat,
       bool? UseNativePathSeparator
@@ -283,7 +283,7 @@ namespace Completer
       {
         return new PathCompleter(
           "",
-          Root,
+          Location,
           ItemType ?? PathItemType.Any,
           Flat ?? false,
           UseNativePathSeparator ?? false
