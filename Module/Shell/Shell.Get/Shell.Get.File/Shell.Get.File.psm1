@@ -18,18 +18,13 @@ function Get-File {
   )
 
   $Private:ArgumentList = [List[string]]::new()
-  if ($args) {
-    $ArgumentList.AddRange(
-      [List[string]]$args
-    )
-  }
 
   if (
     $Location -and -not (
       Test-Path -Path $Location -PathType Container
     )
   ) {
-    $ArgumentList.Insert(0, $Location)
+    $ArgumentList.Add($Location)
     $Location = ''
   }
 
@@ -47,17 +42,17 @@ function Get-File {
       PathType = 'Container'
     }
     if (Test-Path @FullPath @Container) {
-      return Get-ChildItem @FullPath @Private:args
+      return Get-ChildItem @FullPath @args
     }
     else {
-      return Get-Content @FullPath @Private:args
+      return Get-Content @FullPath @args
     }
   }
   else {
     [hashtable]$Private:Directory = @{
       Path = ($Location ? (Resolve-Path -Path $Location) : $PWD).Path
     }
-    return Get-ChildItem @Directory @ArgumentList
+    return Get-ChildItem @Directory @ArgumentList @args
   }
 }
 

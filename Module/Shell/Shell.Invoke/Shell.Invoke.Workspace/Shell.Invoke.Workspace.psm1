@@ -43,19 +43,18 @@ function Invoke-Workspace {
 
   )
 
-  $Private:ArgumentList = [List[string]]::new()
-  if ($CodeArgument) {
-    $ArgumentList.AddRange(
-      [List[string]]$CodeArgument
-    )
+  if ($env:SSH_CLIENT) {
+    throw 'Cannot open VSCode from SSH session'
   }
+
+  $Private:ArgumentList = [List[string]]::new()
 
   if (
     $Location -and -not (
       Test-Path -Path $Location -PathType Container
     )
   ) {
-    $ArgumentList.Insert(0, $Location)
+    $ArgumentList.Add($Location)
     $Location = ''
   }
 
@@ -97,8 +96,10 @@ function Invoke-Workspace {
     }
   }
 
-  if ($env:SSH_CLIENT) {
-    throw 'Cannot open VSCode from SSH session'
+  if ($CodeArgument) {
+    $ArgumentList.AddRange(
+      [List[string]]$CodeArgument
+    )
   }
 
   if ($Name) {

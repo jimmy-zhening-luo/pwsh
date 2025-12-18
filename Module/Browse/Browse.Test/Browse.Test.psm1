@@ -81,7 +81,7 @@ function Test-Host {
   )
 
   begin {
-    $Private:Results = [List[System.Object]]::new()
+    [System.Object[]]$Private:Results = @()
 
     if ($Detailed) {
       $InformationLevel = [TestHostVerbosity]::Detailed
@@ -117,7 +117,7 @@ function Test-Host {
       $Private:Result = Test-NetConnection @Connection @Verbosity
 
       if ($Result) {
-        $Results.Add($Result)
+        $Results += $Result
       }
     }
   }
@@ -130,11 +130,11 @@ function Test-Host {
       $Private:Result = Test-NetConnection @Connection @Verbosity
 
       if ($Result) {
-        $Results.Add($Result)
+        $Results += $Result
       }
     }
 
-    return $Results.ToArray()
+    return $Results
   }
 }
 
