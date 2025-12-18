@@ -49,7 +49,7 @@ namespace Transform
             ? hex.ToLower()
             : hex;
 
-          WriteObject(print, true);
+          WriteObject(print);
         }
       }
     }
