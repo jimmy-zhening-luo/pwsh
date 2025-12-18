@@ -18,25 +18,6 @@ namespace Completer
     CompletionCase Casing
   ) : IArgumentCompleter
   {
-    private static IEnumerable<CompletionResult> WrapCompletionResult(
-      IEnumerable<string> completedStrings
-    )
-    {
-      foreach (string completedString in completedStrings)
-      {
-        yield return new CompletionResult(
-          Typed.Typed.Escape(
-            Casing switch
-            {
-              CompletionCase.Upper => completedString.ToUpper(),
-              CompletionCase.Lower => completedString.ToLower(),
-              _ => completedString,
-            }
-          )
-        );
-      }
-    }
-
     public abstract IEnumerable<string> FulfillCompletion(
       string parameterName,
       string wordToComplete,
@@ -58,6 +39,25 @@ namespace Completer
           fakeBoundParameters
         )
       );
+    }
+
+    private IEnumerable<CompletionResult> WrapCompletionResult(
+      IEnumerable<string> completedStrings
+    )
+    {
+      foreach (string completedString in completedStrings)
+      {
+        yield return new CompletionResult(
+          Typed.Typed.Escape(
+            Casing switch
+            {
+              CompletionCase.Upper => completedString.ToUpper(),
+              CompletionCase.Lower => completedString.ToLower(),
+              _ => completedString,
+            }
+          )
+        );
+      }
     }
   }
 
