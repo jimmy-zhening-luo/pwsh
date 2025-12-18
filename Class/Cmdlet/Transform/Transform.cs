@@ -5,9 +5,9 @@ namespace Transform
 {
   namespace Commands
   {
-    [Cmdlet(VerbsDiagnostic.Test, "Sandbox")]
+    [Cmdlet(VerbsDiagnostic.Test, "Cmdlet")]
     [OutputType(typeof(string))]
-    public class TestSandbox : Cmdlet
+    public class TestCmdlet : Cmdlet
     {
       [Parameter(
         Position = 0

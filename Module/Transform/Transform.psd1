@@ -10,13 +10,16 @@
   NestedModules        = @(
     'Transform.dll'
   )
-  FunctionsToExport    = @()
+  FunctionsToExport    = @(
+    'Test-Function'
+  )
   CmdletsToExport      = @(
-    'Test-Sandbox'
+    'Test-Cmdlet'
     'ConvertTo-Hex'
   )
   VariablesToExport    = @()
   AliasesToExport      = @(
+    'fest'
     'test'
     'hex'
   )
