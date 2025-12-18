@@ -43,9 +43,9 @@ namespace Completer
 
       public PathCompleter(
         string root,
-        PathItemType type,
-        bool flat,
-        bool useNativePathSeparator
+        PathItemType? type,
+        bool? flat,
+        bool? useNativePathSeparator
       ): base(CompletionCase.Preserve)
       {
         string normalizedUnescapedRoot = TypedPath.Normalize(
@@ -69,9 +69,9 @@ namespace Completer
             )
           )
           : normalizedUnescapedRoot;
-        Type = type;
-        Flat = flat;
-        UseNativePathSeparator = useNativePathSeparator;
+        Type = type ?? PathItemType.Any;
+        Flat = flat ?? false;
+        UseNativePathSeparator = useNativePathSeparator ?? false;
       }
 
       protected override IEnumerable<string> FulfillArgumentCompletion(
@@ -269,9 +269,9 @@ namespace Completer
       {
         return new PathCompleter(
           Location,
-          ItemType ?? PathItemType.Any,
-          Flat ?? false,
-          UseNativePathSeparator ?? false
+          ItemType,
+          Flat,
+          UseNativePathSeparator
         );
       }
     }
@@ -291,9 +291,9 @@ namespace Completer
             .Invoke()[0]
             .BaseObject
             .ToString(),
-          ItemType ?? PathItemType.Any,
-          Flat ?? false,
-          UseNativePathSeparator ?? false
+          ItemType,
+          Flat,
+          UseNativePathSeparator
         );
       }
     }
