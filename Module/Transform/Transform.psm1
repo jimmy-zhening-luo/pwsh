@@ -19,7 +19,7 @@ function Test-Function {
 
   )
 
-  return $ArgumentList -is [string]
+  return PSBoundParameters | ConvertTo-Json -EnumsAsStrings -Depth 6
 }
 
 New-Alias fest Test-Function
