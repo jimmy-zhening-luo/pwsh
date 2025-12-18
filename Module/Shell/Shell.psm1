@@ -164,7 +164,7 @@ function Resolve-Item {
 
   if (-not (Test-Item @PSBoundParameters)) {
     throw "Invalid path '$Path': " + (
-      $PSBoundParameters | ConvertTo-Json -EnumsAsStrings
+      $PSBoundParameters | ConvertTo-Json -EnumsAsStrings -Depth 6
     )
   }
 
