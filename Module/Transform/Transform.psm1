@@ -1,6 +1,6 @@
 function Test-Function {
 
-  # [CmdletBinding()]
+  [CmdletBinding()]
 
   [OutputType([string])]
 
