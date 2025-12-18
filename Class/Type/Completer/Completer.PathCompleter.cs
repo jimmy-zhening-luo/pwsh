@@ -88,7 +88,7 @@ namespace Completer
         UseNativePathSeparator = useNativePathSeparator;
       }
 
-      public override IEnumerable<string> FulfillArgumentCompletion(
+      protected override IEnumerable<string> FulfillArgumentCompletion(
         string parameterName,
         string wordToComplete,
         IDictionary fakeBoundParameters
