@@ -81,9 +81,6 @@ namespace Completer
           true,
           false
         );
-
-        List<string> completions = [];
-
         string currentDirectoryValue = "";
         string searchLocation = "";
         string searchFilter = "";
@@ -141,12 +138,11 @@ namespace Completer
         }
 
         searchFilter = searchFilter + "*";
-
-        List<string> matchedDirectories = [];
-        List<string> matchedFiles = [];
-
         EnumerationOptions attributes = new EnumerationOptions();
+
         attributes.IgnoreInaccessible = false;
+
+        List<string> completions = [];
 
         if (Type != PathItemType.File)
         {
@@ -158,14 +154,17 @@ namespace Completer
             ).Select(
               directory => Path.Join(
                 currentDirectoryValue,
-                Path.GetFileName(directory)
+                Path.GetFileName(directory),
+                Flat
+                  ? string.Empty
+                  : TypedPath.PathSeparator
               )
             )
           ];
 
           if (directories.Length != 0)
           {
-            matchedDirectories.AddRange(directories);
+            completions.AddRange(directories);
           }
         }
 
@@ -186,30 +185,12 @@ namespace Completer
 
           if (files.Length != 0)
           {
-            matchedFiles.AddRange(files);
+            completions.AddRange(files);
           }
         }
 
-        List<string> appendedDirectories = Flat
-          ? matchedDirectories
-          : [
-            .. matchedDirectories.Select(
-              directory => directory.EndsWith(
-                TypedPath.PathSeparatorChar
-              )
-                ? directory
-                : directory + TypedPath.PathSeparator
-            )
-          ];
-
-        if (appendedDirectories.Count != 0)
-        {
-          completions.AddRange(appendedDirectories);
-        }
-        if (matchedFiles.Count != 0)
-        {
-          completions.AddRange(matchedFiles);
-        }
+        // if currentdirvalue, add dir itself
+        // go-backwards ..
 
         return completions;
       }
