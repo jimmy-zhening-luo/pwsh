@@ -19,7 +19,7 @@ function Test-Function {
 
   )
 
-  return $ArgumentList.GetType()
+  return $null -eq $ArgumentList
 }
 
 New-Alias fest Test-Function
