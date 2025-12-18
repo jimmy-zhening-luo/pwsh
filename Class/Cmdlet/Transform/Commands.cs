@@ -38,7 +38,7 @@ namespace Transform
       public SwitchParameter Lowercase;
 
       [Parameter(DontShow = true)]
-      public SwitchParameter Nothing;
+      public SwitchParameter zNothing;
 
       protected override void ProcessRecord()
       {
