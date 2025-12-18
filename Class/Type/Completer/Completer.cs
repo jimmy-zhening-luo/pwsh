@@ -69,7 +69,7 @@ namespace Completer
         )
       )
       {
-        foreach (member in domain)
+        foreach (string member in domain)
         {
           yield return member;
         }
@@ -80,7 +80,7 @@ namespace Completer
       {
         int matched = 0;
 
-        foreach (member in domain)
+        foreach (string member in domain)
         {
           if (
             member.StartsWith(
@@ -97,7 +97,7 @@ namespace Completer
 
         if (Surrounding && matched <= 1)
         {
-          foreach (member in doamin)
+          foreach (string member in doamin)
           {
             if (
               member.length > unescapedWordToComplete.length
