@@ -2,7 +2,7 @@ function Test-Function {
 
   # [CmdletBinding()]
 
-  [OutputType([string])]
+  [OutputType([string[]])]
 
   param(
 
