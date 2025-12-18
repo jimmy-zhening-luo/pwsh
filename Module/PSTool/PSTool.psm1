@@ -140,7 +140,7 @@ function Measure-PSProfile {
 Update PowerShell profile repository.
 
 .DESCRIPTION
-This function updates the PowerShell profile repository by pulling the latest changes from the remote Git repository and updating the PSScriptAnalyzer settings file in the user's home directory.
+This function updates the PowerShell profile repository by pulling the latest changes from the remote Git repository, updating the PSScriptAnalyzer settings file in the user's home directory, and rebuilding the profile's .NET dependencies unless the SkipBuild switch is specified.
 
 .COMPONENT
 PSTool
@@ -149,7 +149,12 @@ function Update-PSProfile {
 
   [CmdletBinding()]
 
-  param()
+  param(
+
+    # If specified, skips the build step after pulling the latest changes.
+    [switch]$SkipBuild
+
+  )
 
   $Private:PROFILE_ROOT = "$HOME\code\pwsh"
 
@@ -168,7 +173,8 @@ function Update-PSProfile {
   }
   #endregion
 
-  #region Linter
+
+  #region Copy Linter
   [hashtable]$Private:Linter = @{
     Path     = "$PROFILE_ROOT\PSScriptAnalyzerSettings.psd1"
     PathType = 'Leaf'
@@ -182,50 +188,53 @@ function Update-PSProfile {
   }
   #endregion
 
+
   #region Build
-  [hashtable]$Private:CompileCommand = @{
-    All         = $True
-    CommandType = 'Application'
-    Name        = 'dotnet.exe'
-  }
-  [System.Management.Automation.ApplicationInfo]$Private:DotNetExecutable = Get-Command @CompileCommand
+  if (-not $SkipBuild) {
+    [hashtable]$Private:CompileCommand = @{
+      All         = $True
+      CommandType = 'Application'
+      Name        = 'dotnet.exe'
+    }
+    [System.Management.Automation.ApplicationInfo]$Private:DotNetExecutable = Get-Command @CompileCommand
 
-  if (-not $DotNetExecutable) {
-    try {
-      [System.Management.Automation.ApplicationInfo]$Private:DotNetExecutable = Install-PSModuleDotNet
+    if (-not $DotNetExecutable) {
+      try {
+        [System.Management.Automation.ApplicationInfo]$Private:DotNetExecutable = Install-PSModuleDotNet
 
-      if (-not $DotNetExecutable) {
-        throw 'Failed to locate Microsoft.DotNet.SDK.10 executable post-installation'
+        if (-not $DotNetExecutable) {
+          throw 'Failed to locate Microsoft.DotNet.SDK.10 executable post-installation'
+        }
+      }
+      catch {
+        throw 'Failed to install Microsoft.DotNet.SDK.10'
       }
     }
-    catch {
-      throw 'Failed to install Microsoft.DotNet.SDK.10'
+
+    [hashtable]$Private:DotNet = @{
+      FilePath         = (Resolve-Path -Path $DotNetExecutable.Source).Path
+      WorkingDirectory = "$HOME\code\pwsh"
+      NoNewWindow      = $True
+      PassThru         = $True
+      ErrorAction      = 'Stop'
     }
+
+    [string[]]$Private:DotNetClean = @(
+      'clean'
+      '--configuration'
+      'Release'
+    )
+    Start-Process @DotNet -ArgumentList $DotNetClean |
+      Wait-Process
+
+    [string[]]$Private:DotNetBuild = @(
+      'build'
+      '--configuration'
+      'Release'
+    )
+    Start-Process @DotNet -ArgumentList $DotNetBuild |
+      Wait-Process
   }
-
-  [hashtable]$Private:DotNet = @{
-    FilePath         = (Resolve-Path -Path $DotNetExecutable.Source).Path
-    WorkingDirectory = "$HOME\code\pwsh"
-    NoNewWindow      = $True
-    PassThru         = $True
-    ErrorAction      = 'Stop'
-  }
-
-  [string[]]$Private:DotNetClean = @(
-    'clean'
-    '--configuration'
-    'Release'
-  )
-  Start-Process @DotNet -ArgumentList $DotNetClean |
-    Wait-Process
-
-  [string[]]$Private:DotNetBuild = @(
-    'build'
-    '--configuration'
-    'Release'
-  )
-  Start-Process @DotNet -ArgumentList $DotNetBuild |
-    Wait-Process
   #endregion
 }
 
