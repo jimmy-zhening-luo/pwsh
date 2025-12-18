@@ -15,7 +15,12 @@ function Test-Function {
       Position = 1,
       ValueFromRemainingArguments
     )]
-    [string[]]$ArgumentList
+    [string[]]$ArgumentList,
+
+    [Parameter(
+      DontShow = $true
+    )]
+    [Switch]$Nothing
 
   )
 
