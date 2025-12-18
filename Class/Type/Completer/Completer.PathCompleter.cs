@@ -142,57 +142,48 @@ namespace Completer
 
         attributes.IgnoreInaccessible = false;
 
-        List<string> completions = [];
-
         if (Type != PathItemType.File)
         {
-          string[] directories = [
-            ..Directory.GetDirectories(
+          foreach (
+            string directory in Directory.EnumerateDirectories(
               searchLocation,
               searchFilter,
               attributes
-            ).Select(
-              directory => Path.Join(
-                currentDirectoryValue,
-                Path.GetFileName(directory),
-                Flat
-                  ? string.Empty
-                  : TypedPath.PathSeparator
-              )
             )
-          ];
-
-          if (directories.Length != 0)
+          )
           {
-            completions.AddRange(directories);
+            yield return Path.Join(
+              currentDirectoryValue,
+              Path.GetFileName(directory),
+              Flat
+                ? string.Empty
+                : TypedPath.PathSeparator
+            );
           }
         }
 
+        // go-backwards ..
+
         if (Type != PathItemType.Directory)
         {
-          string[] files = [
-            ..Directory.GetFiles(
+          foreach (
+            string files in Directory.EnumerateFiles(
               searchLocation,
               searchFilter,
               attributes
-            ).Select(
-              file => Path.Join(
-                currentDirectoryValue,
-                Path.GetFileName(file)
-              )
             )
-          ];
-
-          if (files.Length != 0)
+          )
           {
-            completions.AddRange(files);
+            yield return Path.Join(
+              currentDirectoryValue,
+              Path.GetFileName(file)
+            );
           }
         }
 
         // if currentdirvalue, add dir itself
-        // go-backwards ..
 
-        return completions;
+        yield break;
       }
 
       protected override IEnumerable<string> FulfillArgumentCompletion(
