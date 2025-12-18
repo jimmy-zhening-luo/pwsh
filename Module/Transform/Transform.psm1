@@ -19,7 +19,7 @@ function Test-Function {
 
   )
 
-  return PSBoundParameters | ConvertTo-Json -EnumsAsStrings -Depth 6
+  return $PSBoundParameters | ConvertTo-Json -EnumsAsStrings -Depth 6
 }
 
 New-Alias fest Test-Function
