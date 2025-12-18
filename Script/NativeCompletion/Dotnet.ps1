@@ -1,7 +1,7 @@
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
 
-Register-ArgumentCompleter -Native -CommandName 'dotnet', 'dot' -ScriptBlock {
+Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
   param($wordToComplete, $commandAst, $cursorPosition)
 
   $commandElements = $commandAst.CommandElements
@@ -20,7 +20,7 @@ Register-ArgumentCompleter -Native -CommandName 'dotnet', 'dot' -ScriptBlock {
 
   $completions = @()
   switch ($command) {
-    'dotnet' {
+    dotnet {
       $staticCompletions = @(
         [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Show command line help.')
         [CompletionResult]::new('--help', '-h', [CompletionResultType]::ParameterName, 'Show command line help.')

@@ -16,4 +16,5 @@ $Global:PSDefaultParameterValues = Import-PowerShellDataFile -Path $PSScriptRoot
 }
 . $PSScriptRoot\Script\Install.ps1 @Workspace @DOTNET_SOLUTION
 . $PSScriptRoot\Script\Alias.ps1
+. $PSScriptRoot\Script\Native.ps1
 #endregion
