@@ -9,7 +9,7 @@ function Get-Directory {
     [PathCompletions(
       { return [string]$PWD.Path },
       [PathItemType]::Directory,
-      $null, $null
+      $null
     )]
     [string]$Path
 
@@ -32,7 +32,7 @@ function Get-DirectorySibling {
     [PathLocationCompletions(
       '..',
       [PathItemType]::Directory,
-      $null, $null
+      $null
     )]
     [string]$Path
 
@@ -53,7 +53,7 @@ function Get-DirectoryRelative {
     [PathLocationCompletions(
       '..\..',
       [PathItemType]::Directory,
-      $null, $null
+      $null
     )]
     [string]$Path
 
@@ -74,7 +74,7 @@ function Get-DirectoryHome {
     [PathLocationCompletions(
       '~',
       [PathItemType]::Directory,
-      $null, $null
+      $null
     )]
     [string]$Path
 
@@ -95,7 +95,7 @@ function Get-DirectoryCode {
     [PathLocationCompletions(
       '~\code',
       [PathItemType]::Directory,
-      $null, $null
+      $null
     )]
     [string]$Path
 
@@ -116,7 +116,7 @@ function Get-DirectoryDrive {
     [PathLocationCompletions(
       '\',
       [PathItemType]::Directory,
-      $null, $null
+      $null
     )]
     [string]$Path
 

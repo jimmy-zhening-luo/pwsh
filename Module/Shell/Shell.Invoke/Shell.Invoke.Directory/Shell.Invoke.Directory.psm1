@@ -8,7 +8,7 @@ function Invoke-Directory {
 
     [PathCompletions(
       { return [string]$PWD.Path },
-      $null, $null, $null
+      $null, $null
     )]
     [string]$Path
 
@@ -35,7 +35,7 @@ function Invoke-DirectorySibling {
 
     [PathLocationCompletions(
       '..',
-      $null, $null, $null
+      $null, $null
     )]
     [string]$Path
 
@@ -55,7 +55,7 @@ function Invoke-DirectoryRelative {
 
     [PathLocationCompletions(
       '..\..',
-      $null, $null, $null
+      $null, $null
     )]
     [string]$Path
 
@@ -75,7 +75,7 @@ function Invoke-DirectoryHome {
 
     [PathLocationCompletions(
       '~',
-      $null, $null, $null
+      $null, $null
     )]
     [string]$Path
 
@@ -95,7 +95,7 @@ function Invoke-DirectoryCode {
 
     [PathLocationCompletions(
       '~\code',
-      $null, $null, $null
+      $null, $null
     )]
     [string]$Path
 
@@ -115,7 +115,7 @@ function Invoke-DirectoryDrive {
 
     [PathLocationCompletions(
       '\',
-      $null, $null, $null
+      $null, $null
     )]
     [string]$Path
 

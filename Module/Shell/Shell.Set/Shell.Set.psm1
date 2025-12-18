@@ -9,7 +9,7 @@ function Set-Directory {
     [PathCompletions(
       { return [string]$PWD.Path },
       [PathItemType]::Directory,
-      $null, $null
+      $null
     )]
     [string]$Path
 
@@ -32,7 +32,7 @@ function Set-DirectorySibling {
     [PathLocationCompletions(
       '..',
       [PathItemType]::Directory,
-      $null, $null
+      $null
     )]
     [string]$Path
 
@@ -53,7 +53,7 @@ function Set-DirectoryRelative {
     [PathLocationCompletions(
       '..\..',
       [PathItemType]::Directory,
-      $null, $null
+      $null
     )]
     [string]$Path
 
@@ -74,7 +74,7 @@ function Set-DirectoryHome {
     [PathLocationCompletions(
       '~',
       [PathItemType]::Directory,
-      $null, $null
+      $null
     )]
     [string]$Path
 
@@ -95,7 +95,7 @@ function Set-DirectoryCode {
     [PathLocationCompletions(
       '~\code',
       [PathItemType]::Directory,
-      $null, $null
+      $null
     )]
     [string]$Path
 
@@ -116,7 +116,7 @@ function Set-Drive {
     [PathLocationCompletions(
       '\',
       [PathItemType]::Directory,
-      $null, $null
+      $null
     )]
     [string]$Path
 
@@ -137,7 +137,7 @@ function Set-DriveD {
     [PathLocationCompletions(
       'D:',
       [PathItemType]::Directory,
-      $null, $null
+      $null
     )]
     [string]$Path
 

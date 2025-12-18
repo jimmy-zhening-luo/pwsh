@@ -54,7 +54,7 @@ function Get-Size {
     )]
     [PathCompletions(
       { return [string]$PWD.Path },
-      $null, $null, $null
+      $null, $null
     )]
     # The path of the file or directory to be measured.
     [string]$Path,

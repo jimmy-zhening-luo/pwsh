@@ -15,7 +15,7 @@ function Clear-Line {
 
     [PathCompletions(
       { return [string]$PWD.Path },
-      $null, $null, $null
+      $null, $null
     )]
     [string]$Path
 

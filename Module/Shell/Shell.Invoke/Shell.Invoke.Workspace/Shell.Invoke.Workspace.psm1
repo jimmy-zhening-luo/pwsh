@@ -15,7 +15,7 @@ function Invoke-Workspace {
     [AllowEmptyString()]
     [PathCompletions(
       { return [string]$PWD.Path },
-      $null, $null, $null
+      $null, $null
     )]
     [string]$Path,
 
@@ -141,7 +141,7 @@ function Invoke-WorkspaceSibling {
     [AllowEmptyString()]
     [PathLocationCompletions(
       '..',
-      $null, $null, $null
+      $null, $null
     )]
     [string]$Path,
 
@@ -185,7 +185,7 @@ function Invoke-WorkspaceRelative {
     [AllowEmptyString()]
     [PathLocationCompletions(
       '..\..',
-      $null, $null, $null
+      $null, $null
     )]
     [string]$Path,
 
@@ -228,7 +228,7 @@ function Invoke-WorkspaceHome {
     [AllowEmptyString()]
     [PathLocationCompletions(
       '~',
-      $null, $null, $null
+      $null, $null
     )]
     [string]$Path,
 
@@ -271,7 +271,7 @@ function Invoke-WorkspaceCode {
     [AllowEmptyString()]
     [PathLocationCompletions(
       '~\code',
-      $null, $null, $null
+      $null, $null
     )]
     [string]$Path,
 

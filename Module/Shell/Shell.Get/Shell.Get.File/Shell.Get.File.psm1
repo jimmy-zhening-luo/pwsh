@@ -9,7 +9,7 @@ function Get-File {
 
     [PathCompletions(
       { return [string]$PWD.Path },
-      $null, $null, $null
+      $null, $null
     )]
     [string]$Path,
 
@@ -69,7 +69,7 @@ function Get-FileSibling {
 
     [PathLocationCompletions(
       '..',
-      $null, $null, $null
+      $null, $null
     )]
     [string]$Path
 
@@ -89,7 +89,7 @@ function Get-FileRelative {
 
     [PathLocationCompletions(
       '..\..',
-      $null, $null, $null
+      $null, $null
     )]
     [string]$Path
 
@@ -109,7 +109,7 @@ function Get-FileHome {
 
     [PathLocationCompletions(
       '~',
-      $null, $null, $null
+      $null, $null
     )]
     [string]$Path
 
@@ -129,7 +129,7 @@ function Get-FileCode {
 
     [PathLocationCompletions(
       '~\code',
-      $null, $null, $null
+      $null, $null
     )]
     [string]$Path
 
@@ -149,7 +149,7 @@ function Get-FileDrive {
 
     [PathLocationCompletions(
       '\',
-      $null, $null, $null
+      $null, $null
     )]
     [string]$Path
 
