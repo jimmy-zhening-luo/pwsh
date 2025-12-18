@@ -81,10 +81,7 @@ function Invoke-Workspace {
   }
 
   if (-not $Path) {
-    if (-not $ReuseWindow -and ($Empty -or -not $Location)) {
-      #
-    }
-    else {
+    if ($Location -and -not $Empty -or $ReuseWindow) {
       $ArgumentList.Insert(
         0,
         [string](
