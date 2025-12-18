@@ -39,13 +39,11 @@ namespace Completer
       public readonly string Root;
       public readonly PathItemType Type;
       public readonly bool Flat;
-      public readonly bool UseNativePathSeparator;
 
       public PathCompleter(
         string root,
         PathItemType? type,
-        bool? flat,
-        bool? useNativePathSeparator
+        bool? flat
       ): base(CompletionCase.Preserve)
       {
         string normalizedUnescapedRoot = TypedPath.Normalize(
@@ -71,7 +69,6 @@ namespace Completer
           : normalizedUnescapedRoot;
         Type = type ?? PathItemType.Any;
         Flat = flat ?? false;
-        UseNativePathSeparator = useNativePathSeparator ?? false;
       }
 
       protected override IEnumerable<string> FulfillArgumentCompletion(
@@ -80,15 +77,6 @@ namespace Completer
         IDictionary fakeBoundParameters
       )
       {
-        List<string> completions = [];
-
-        bool constrainToDirectories = (
-          Type == PathItemType.Directory
-        );
-        bool constrainToFiles = (
-          Type == PathItemType.File
-        );
-
         string currentPathValue = TypedPath.Normalize(
           wordToComplete,
           TypedPath.PathSeparator,
@@ -96,10 +84,11 @@ namespace Completer
           false
         );
 
-        List<string> currentDirectoryValue = [];
-        List<string> fragment = [];
-        List<string> searchLocation = [];
-        List<string> searchFilter = [];
+        List<string> completions = [];
+
+        string currentDirectoryValue = "";
+        string searchLocation = "";
+        string searchFilter = "";
 
         if (!string.IsNullOrWhiteSpace(currentPathValue))
         {
@@ -116,112 +105,96 @@ namespace Completer
 
             if (!string.IsNullOrWhiteSpace(beforeSeparator))
             {
-              currentDirectoryValue.Add(beforeSeparator);
+              currentDirectoryValue = beforeSeparator;
             }
 
             if (!string.IsNullOrWhiteSpace(afterSeparator))
             {
-              fragment.Add(afterSeparator);
+              searchFilter = afterSeparator;
             }
           }
           else
           {
-            fragment.Add(currentPathValue);
+            searchFilter = currentPathValue;
           }
 
-          if (currentDirectoryValue.Count != 0)
+          if (currentDirectoryValue != string.Empty)
           {
-            string fullPathAndCurrentDirectory = Path.GetFullPath(currentDirectoryValue[0], Root);
+            string fullPathAndCurrentDirectory = Path.GetFullPath(
+              currentDirectoryValue[0],
+              Root
+            );
 
-            if (Directory.Exists(fullPathAndCurrentDirectory))
+            if (
+              Directory.Exists(
+                fullPathAndCurrentDirectory
+              )
+            )
             {
-              searchLocation.Add(fullPathAndCurrentDirectory);
+              searchLocation = fullPathAndCurrentDirectory;
 
             }
           }
-
-          if (fragment.Count != 0)
-          {
-            searchFilter.Add(
-              fragment[0] + "*"
-            );
-          }
         }
 
-        if (searchLocation.Count == 0)
+        if (searchLocation == string.Empty)
         {
-          searchLocation.Add(Root);
+          searchLocation = Root;
         }
 
-        if (searchFilter.Count == 0)
-        {
-          searchFilter.Add("*");
-        }
+        searchFilter = searchFilter + "*"
 
-        List<string> matchedDirectoryNames = [];
-        List<string> matchedDirectoryFiles = [];
+        List<string> matchedDirectories = [];
+        List<string> matchedFiles = [];
 
-        if (constrainToDirectories || !constrainToFiles)
+        if (Type != PathItemType.File)
         {
           string[] directories = [
             ..Directory.GetDirectories(
-              searchLocation[0],
-              searchFilter[0],
+              searchLocation,
+              searchFilter,
               SearchOption.TopDirectoryOnly
             ).Select(
-              d => Path.GetFileName(d)
+              directory => Path.Join(
+                currentDirectoryValue,
+                Path.GetFileName(directory)
+              )
             )
           ];
 
           if (directories.Length != 0)
           {
-            matchedDirectoryNames.AddRange(directories);
+            matchedDirectories.AddRange(directories);
           }
         }
 
-        if (constrainToFiles || !constrainToDirectories)
+        if (Type != PathItemType.Directory)
         {
           string[] files = [
             ..Directory.GetFiles(
-              searchLocation[0],
-              searchFilter[0],
+              searchLocation,
+              searchFilter,
               SearchOption.TopDirectoryOnly
             ).Select(
-              f => Path.GetFileName(f)
+              file => Path.Join(
+                currentDirectoryValue,
+                Path.GetFileName(file)
+              )
             )
           ];
 
           if (files.Length != 0)
           {
-            matchedDirectoryFiles.AddRange(files);
+            matchedFiles.AddRange(files);
           }
         }
 
-        string prepender = currentDirectoryValue.Count == 0
-          ? string.Empty
-          : currentDirectoryValue[0] + TypedPath.PathSeparator;
-
-        List<string> prependedDirectories = prepender == string.Empty
-          ? matchedDirectoryNames
-          : [
-            .. matchedDirectoryNames.Select(
-              directory => prepender + directory
-            )
-          ];
-        List<string> prependedFiles = prepender == string.Empty
-          ? matchedDirectoryFiles
-          : [
-            .. matchedDirectoryFiles.Select(
-              file => prepender + file
-            )
-          ];
-
         List<string> appendedDirectories = Flat
-          ? prependedDirectories
+          ? matchedDirectories
           : [
-            .. prependedDirectories.Select(
+            .. matchedDirectories.Select(
               directory => directory.EndsWith(
-                TypedPath.PathSeparator
+                TypedPath.PathSeparatorChar
               )
                 ? directory
                 : directory + TypedPath.PathSeparator
@@ -234,22 +207,20 @@ namespace Completer
         {
           unnormalizedCompletions.AddRange(appendedDirectories);
         }
-        if (prependedFiles.Count != 0)
+        if (matchedFiles.Count != 0)
         {
-          unnormalizedCompletions.AddRange(prependedFiles);
+          unnormalizedCompletions.AddRange(matchedFiles);
         }
 
         if (unnormalizedCompletions.Count != 0)
         {
           completions.AddRange(
-            UseNativePathSeparator
-              ? unnormalizedCompletions
-              : unnormalizedCompletions.Select(
-                  item => item.Replace(
-                    TypedPath.PathSeparatorChar,
-                    TypedPath.FriendlyPathSeparatorChar
-                  )
-                )
+            unnormalizedCompletions.Select(
+              item => item.Replace(
+                TypedPath.PathSeparatorChar,
+                TypedPath.FriendlyPathSeparatorChar
+              )
+            )
           );
         }
 
@@ -261,8 +232,7 @@ namespace Completer
     public class PathLocationCompletionsAttribute(
       string Location,
       PathItemType? ItemType,
-      bool? Flat,
-      bool? UseNativePathSeparator
+      bool? Flat
     ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
     {
       public IArgumentCompleter Create()
@@ -270,8 +240,7 @@ namespace Completer
         return new PathCompleter(
           Location,
           ItemType,
-          Flat,
-          UseNativePathSeparator
+          Flat
         );
       }
     }
@@ -280,8 +249,7 @@ namespace Completer
     public class PathCompletionsAttribute(
       ScriptBlock CurrentDirectory,
       PathItemType? ItemType,
-      bool? Flat,
-      bool? UseNativePathSeparator
+      bool? Flat
     ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
     {
       public IArgumentCompleter Create()
@@ -292,8 +260,7 @@ namespace Completer
             .BaseObject
             .ToString(),
           ItemType,
-          Flat,
-          UseNativePathSeparator
+          Flat
         );
       }
     }
