@@ -71,7 +71,12 @@ namespace Completer
       {
         foreach (string member in domain)
         {
-          yield return member;
+          yield return Casing switch
+          {
+            CompletionCase.Upper => member.ToUpper(),
+            CompletionCase.Lower => member.ToLower(),
+            _ => member,
+          }
         }
 
         yield break;
@@ -91,7 +96,12 @@ namespace Completer
           {
             ++matched;
 
-            yield return member;
+            yield return Casing switch
+            {
+              CompletionCase.Upper => member.ToUpper(),
+              CompletionCase.Lower => member.ToLower(),
+              _ => member,
+            }
           }
         }
 
@@ -108,7 +118,12 @@ namespace Completer
               ) >= 1
             )
             {
-              yield return member;
+              yield return Casing switch
+              {
+                CompletionCase.Upper => member.ToUpper(),
+                CompletionCase.Lower => member.ToLower(),
+                _ => member,
+              }
             }
           }
         }
