@@ -19,7 +19,7 @@ function Test-Function {
 
   )
 
-  return $null -eq $ArgumentList
+  return $ArgumentList -is [string]
 }
 
 New-Alias fest Test-Function
