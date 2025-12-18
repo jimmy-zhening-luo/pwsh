@@ -1,5 +1,3 @@
-using namespace System.Collections.Generic
-
 <#
 .SYNOPSIS
 Open a file path or URL in Google Chrome.
