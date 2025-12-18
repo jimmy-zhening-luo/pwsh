@@ -1,5 +1,3 @@
-using namespace System.Collections.Generic
-
 <#
 .SYNOPSIS
 Open PowerShell command history in a text editor.
@@ -213,22 +211,18 @@ function Update-PSProfile {
     ErrorAction      = 'Stop'
   }
 
-  $Private:DotNetClean = [List[string]]::new(
-    [string[]]@(
-      'clean'
-      '--configuration'
-      'Release'
-    )
+  [string[]]$Private:DotNetClean = @(
+    'clean'
+    '--configuration'
+    'Release'
   )
   Start-Process @DotNet -ArgumentList $DotNetClean |
     Wait-Process
 
-  $Private:DotNetBuild = [List[string]]::new(
-    [string[]]@(
-      'build'
-      '--configuration'
-      'Release'
-    )
+  [string[]]$Private:DotNetBuild = @(
+    'build'
+    '--configuration'
+    'Release'
   )
   Start-Process @DotNet -ArgumentList $DotNetBuild |
     Wait-Process
@@ -247,17 +241,15 @@ function Install-PSModuleDotNet {
   param()
 
   begin {
-    $Private:AppId = [List[string]]::new(
-      [List[string]]@(
-        '--id=Microsoft.DotNet.SDK.10'
-      )
+    [string[]$Private:AppId = @(
+      '--id=Microsoft.DotNet.SDK.10'
     )
   }
 
   process {
     if (
       $PSCmdlet.ShouldProcess(
-        $AppId.ToArray(),
+        $AppId,
         'winget install'
       )
     ) {
@@ -284,12 +276,10 @@ function Install-PSModuleDotNet {
           NoNewWindow  = $True
           PassThru     = $True
           ErrorAction  = 'Stop'
-          ArgumentList = [List[string]]::new(
-            [string[]]@(
-              'new'
-              'install'
-              'Microsoft.PowerShell.Standard.Module.Template'
-            )
+          ArgumentList = [string[]]@(
+            'new'
+            'install'
+            'Microsoft.PowerShell.Standard.Module.Template'
           )
         }
         Start-Process @DotNetInstallDependency |

@@ -1,4 +1,3 @@
-using namespace System.Collections.Generic
 using namespace Completer.PathCompleter
 
 function Get-File {
@@ -17,14 +16,14 @@ function Get-File {
 
   )
 
-  $Private:ArgumentList = [List[string]]::new()
+  [string[]]$Private:ArgumentList = @()
 
   if (
     $Location -and -not (
       Test-Path -Path $Location -PathType Container
     )
   ) {
-    $ArgumentList.Add($Location)
+    $ArgumentList += $Location
     $Location = ''
   }
 
