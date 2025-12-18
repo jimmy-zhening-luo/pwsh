@@ -14,8 +14,7 @@ https://www.chromium.org/developers/how-tos/run-chromium-with-flags/
 function Open-Url {
 
   [CmdletBinding(
-    DefaultParameterSetName = 'Path',
-    SupportsShouldProcess
+    DefaultParameterSetName = 'Path'
   )]
 
   [OutputType([void])]
@@ -39,52 +38,42 @@ function Open-Url {
     )]
     [AllowEmptyCollection()]
     # The URL(s) to open.
-    [uri[]]$Uri,
-
-    [Parameter(DontShow)][switch]$zNothing
+    [uri[]]$Uri
 
   )
 
   begin {
     [bool]$Private:Interactive = -not $env:SSH_CLIENT
+    [hashtable]$Private:Browser = @{
+      FilePath = 'C:\Program Files\Google\Chrome\Application\chrome.exe'
+    }
   }
 
   process {
-    if ($Uri) {
-      if (
-        $PSCmdlet.ShouldProcess(
-          $Uri,
-          "[ui=$Interactive] $($Interactive ? 'Open' : 'Print') URI"
-        )
-      ) {
-        if ($Interactive) {
-          [hashtable]$Private:Browser = @{
-            FilePath     = 'C:\Program Files\Google\Chrome\Application\chrome.exe'
-            ArgumentList = $Uri
+    if ($PSCmdlet.ParameterSetName -eq 'Uri') {
+      foreach ($Private:link in $Uri) {
+        if ($link) {
+          if ($Interactive) {
+            Start-Process @Browser -ArgumentList $link
           }
-          Start-Process @Browser
+          else {
+            Write-Information $link
+          }
         }
       }
     }
   }
 
   end {
-    if ($Path) {
-      [string]$Private:Target = $Path ? (Test-Path @PSBoundParameters) ? (Resolve-Path @PSBoundParameters).Path : [uri]$Path : $PWD.Path
+    if ($PSCmdlet.ParameterSetName -eq 'Path') {
+      [string]$Private:Target = $Path ? (
+        Test-Path @PSBoundParameters
+      ) ? (
+        Resolve-Path @PSBoundParameters
+      ).Path : [uri]$Path : $PWD.Path
 
-      if (
-        $PSCmdlet.ShouldProcess(
-          $Target,
-          "[ui=$Interactive] $($Interactive ? 'Open' : 'Print') path"
-        )
-      ) {
-        if ($Interactive) {
-          [hashtable]$Private:Browser = @{
-            FilePath     = 'C:\Program Files\Google\Chrome\Application\chrome.exe'
-            ArgumentList = $Target
-          }
-          Start-Process @Browser
-        }
+      if ($Interactive) {
+        Start-Process @Browser -ArgumentList $Target
       }
     }
   }

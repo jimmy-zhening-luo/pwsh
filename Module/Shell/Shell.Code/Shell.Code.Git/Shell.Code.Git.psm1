@@ -24,53 +24,45 @@ function Resolve-GitRepository {
 
   )
 
-  begin {
-    [string]$Private:CODE_PATH = "$HOME\code"
-
-    $Private:WorkingDirectories = [List[string]]::new()
-  }
-
   process {
-    if ($New) {
-      [hashtable]$Private:TestWorkingDirectory = @{
-        Path = $WorkingDirectory
-      }
-      if (Test-Item @TestWorkingDirectory) {
-        $WorkingDirectories.Add([string](Resolve-Item @TestWorkingDirectory))
-      }
-      else {
-        $TestWorkingDirectory.Location = $CODE_PATH
-        $TestWorkingDirectory.New = $True
-
+    foreach ($Private:directory in $WorkingDirectory) {
+      if ($New) {
+        [hashtable]$Private:TestWorkingDirectory = @{
+          Path = $WorkingDirectory
+        }
         if (Test-Item @TestWorkingDirectory) {
-          $WorkingDirectories.Add([string](Resolve-Item @TestWorkingDirectory))
+          Write-Output ([string](Resolve-Item @TestWorkingDirectory))
+        }
+        else {
+          $TestWorkingDirectory.Location = "$HOME\code"
+          $TestWorkingDirectory.New = $True
+
+          if (Test-Item @TestWorkingDirectory) {
+            Write-Output ([string](Resolve-Item @TestWorkingDirectory))
+          }
         }
       }
-    }
-    else {
-      [hashtable]$Private:ResolveRepository = @{
-        Path = $WorkingDirectory
-      }
-      [hashtable]$Private:TestRepository = @{
-        Path           = $WorkingDirectory ? (Join-Path $WorkingDirectory .git) : '.git'
-        RequireSubpath = $True
-      }
-
-      if (Test-Item @TestRepository) {
-        $WorkingDirectories.Add([string](Resolve-Item @ResolveRepository))
-      }
       else {
-        $TestRepository.Location = $ResolveRepository.Location = $CODE_PATH
+        [hashtable]$Private:ResolveRepository = @{
+          Path = $WorkingDirectory
+        }
+        [hashtable]$Private:TestRepository = @{
+          Path           = $WorkingDirectory ? (Join-Path $WorkingDirectory .git) : '.git'
+          RequireSubpath = $True
+        }
 
         if (Test-Item @TestRepository) {
-          $WorkingDirectories.Add([string](Resolve-Item @ResolveRepository))
+          Write-Output ([string](Resolve-Item @ResolveRepository))
+        }
+        else {
+          $TestRepository.Location = $ResolveRepository.Location = "$HOME\code"
+
+          if (Test-Item @TestRepository) {
+            Write-Output ([string](Resolve-Item @ResolveRepository))
+          }
         }
       }
     }
-  }
-
-  end {
-    return [string[]]$WorkingDirectories.ToArray()
   }
 }
 

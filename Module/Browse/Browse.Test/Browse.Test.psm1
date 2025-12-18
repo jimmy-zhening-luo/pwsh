@@ -5,7 +5,7 @@ enum TestHostVerbosity {
   Detailed
 }
 
-enum TestHostWellknownPort {
+enum TestHostWellKnownPort {
   HTTP = -4
   RDP
   SMB
@@ -45,7 +45,7 @@ function Test-Host {
     )]
     [Alias('ComputerName', 'RemoteAddress', 'cn', 'HostName', 'IpAddress')]
     # The hostname or IP address of the target host.
-    [string]$Name,
+    [string[]]$Name,
 
     [Parameter(
       ParameterSetName = 'CommonTCPPort',
@@ -63,7 +63,7 @@ function Test-Host {
       Mandatory,
       ValueFromPipelineByPropertyName
     )]
-    [ValidateRange(1, 65535)]
+    [ValidateRange('Positive')]
     # The port number to test on the target host.
     [ushort]$Port,
 
@@ -81,8 +81,6 @@ function Test-Host {
   )
 
   begin {
-    [System.Object[]]$Private:Results = @()
-
     if ($Detailed) {
       $InformationLevel = [TestHostVerbosity]::Detailed
     }
@@ -92,49 +90,39 @@ function Test-Host {
   }
 
   process {
-    if ($Name) {
-      [hashtable]$Private:Connection = @{
-        ComputerName = $Name
-      }
-      switch ($PSCmdlet.ParameterSetName) {
-        RemotePort {
-          $Connection.Port = $Port
+    foreach ($Private:computerName in $Name) {
+      if ($computerName) {
+        [hashtable]$Private:Connection = @{
+          ComputerName = $computerName
         }
-        CommonTCPPort {
-          if ($CommonTCPPort) {
-            if ([TestHostWellknownPort]::$CommonTCPPort) {
-              $Connection.CommonTCPPort = [TestHostWellknownPort]::$CommonTCPPort
-            }
-            elseif (
-              $CommonTCPPort -match [regex]'^(?>\d{1,5})$' -and $CommonTCPPort -as [ushort]
-            ) {
-              $Connection.Port = [ushort]$CommonTCPPort
+        switch ($PSCmdlet.ParameterSetName) {
+          RemotePort {
+            $Connection.Port = $Port
+          }
+          CommonTCPPort {
+            if ($CommonTCPPort) {
+              if ([TestHostWellKnownPort]::$CommonTCPPort) {
+                $Connection.CommonTCPPort = [TestHostWellKnownPort]::$CommonTCPPort
+              }
+              elseif ($CommonTCPPort -as [ushort]) {
+                $Connection.Port = [ushort]$CommonTCPPort
+              }
             }
           }
         }
-      }
 
-      $Private:Result = Test-NetConnection @Connection @Verbosity
-
-      if ($Result) {
-        $Results += $Result
+        Test-NetConnection @Connection @Verbosity
       }
     }
   }
 
   end {
-    if ($Results.Count -eq 0) {
-      [hashtable]$Private:Connection = @{
+    if (-not $Name) {
+      [hashtable]$Private:Connectivity = @{
         ComputerName = 'google.com'
       }
-      $Private:Result = Test-NetConnection @Connection @Verbosity
-
-      if ($Result) {
-        $Results += $Result
-      }
+      return Test-NetConnection @Connectivity @Verbosity
     }
-
-    return $Results
   }
 }
 
@@ -162,16 +150,20 @@ function Test-Url {
 
   [CmdletBinding()]
 
-  [OutputType([bool])]
+  [OutputType([uri[]])]
 
   param(
 
     [Parameter(
       Mandatory,
-      Position = 0
+      Position = 0,
+      ValueFromPipeline,
+      ValueFromPipelineByPropertyName,
+      ValueFromRemainingArguments
     )]
-    [AllowNull()]
+    [AllowEmptyCollection()]
     [AllowEmptyString()]
+    [AllowNull()]
     # The URL to test. If the URL has no scheme, it defaults to 'http'.
     [uri]$Uri,
 
@@ -179,27 +171,34 @@ function Test-Url {
 
   )
 
-  if (-not $Uri) {
-    return $False
+  begin {
+    [hashtable]$Private:Request = @{
+      Method                       = 'HEAD'
+      PreserveHttpMethodOnRedirect = $True
+      DisableKeepAlive             = $True
+      ConnectionTimeoutSeconds     = 5
+      MaximumRetryCount            = 0
+      ErrorAction                  = 'Stop'
+    }
   }
 
-  [hashtable]$Private:Request = @{
-    Method                       = 'HEAD'
-    PreserveHttpMethodOnRedirect = $True
-    DisableKeepAlive             = $True
-    ConnectionTimeoutSeconds     = 5
-    MaximumRetryCount            = 0
-    ErrorAction                  = 'Stop'
-  }
-  try {
-    [int]$Private:Status = Invoke-WebRequest @PSBoundParameters @Request |
-      Select-Object -ExpandProperty StatusCode
-  }
-  catch {
-    $Private:Status = $PSItem.Exception.Response.StatusCode.value__
-  }
+  process {
+    foreach ($private:link in $Uri) {
+      if ($link) {
+        try {
+          [int]$Private:Status = Invoke-WebRequest @PSBoundParameters @Request |
+            Select-Object -ExpandProperty StatusCode
+        }
+        catch {
+          $Private:Status = $PSItem.Exception.Response.StatusCode.value__
+        }
 
-  return $Status -ge 200 -and $Status -lt 300
+        if ($Status -as [int] -and $Status -ge 200 -and $Status -lt 300) {
+          Write-Output [uri]$link
+        }
+      }
+    }
+  }
 }
 
 New-Alias tn Test-Host

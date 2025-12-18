@@ -2,7 +2,11 @@ using namespace Completer.PathCompleter
 
 function Get-File {
 
-  [OutputType([string[]], [System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
+  [OutputType(
+    [string[]],
+    [System.IO.DirectoryInfo[]],
+    [System.IO.FileInfo[]]
+  )]
 
   param(
 

@@ -143,59 +143,73 @@ function Stop-Task {
 
   )
 
-  begin {
-    if ($PSCmdlet.ParameterSetName -eq 'Self') {
-      if ($Self) {
-        [hashtable]$Private:Process = @{
-          Name  = 'windowsterminal'
-          Force = $True
-        }
-        if (
-          $PSCmdlet.ShouldProcess(
-            'Process Name: ' + $Process.Name,
-            'Stop-Process (-Self flag = Windows Terminal)'
-          )
-        ) {
-          Stop-Process @Process
+  process {
+    switch ($PSCmdlet.ParameterSetName) {
+      Id {
+        foreach ($Private:ProcessId in $Id) {
+          Stop-Process -Id $ProcessId -Force
         }
       }
+      Name {
+        foreach ($Private:ProcessHandle in $Name) {
+          if ($ProcessHandle) {
+            [hashtable]$Private:Process = @{
+              Force = $True
+            }
+            if ($ProcessHandle -match [regex]'^(?>\d{1,10})$' -and $ProcessHandle -as [uint]) {
+              $Process.Id = [uint]$ProcessHandle
+            }
+            else {
+              $Process.Name = $ProcessHandle
+            }
 
-      return
+            if (
+              $PSCmdlet.ShouldProcess(
+                $Process.Id ? "Process ID: $($Process.Id)" : "Process Name: $($Process.Name)",
+                'Stop-Process'
+              )
+            ) {
+              Stop-Process @Process
+            }
+          }
+        }
+      }
     }
   }
 
-  process {
-    if ($PSCmdlet.ParameterSetName -ne 'Self') {
-      [hashtable]$Private:Process = @{
-        Force = $True
-      }
-
-      switch ($PSCmdlet.ParameterSetName) {
-        Id {
-          $Process.Id = $Id
-        }
-        Name {
-          if ($Name) {
-            if ($Name -match [regex]'^(?>\d{1,10})$' -and $Name -as [uint]) {
-              $Process.Id = [uint]$Name
-            }
-            else {
-              $Process.Name = $Name
-            }
+  end {
+    switch ($PSCmdlet.ParameterSetName) {
+      Name {
+        if (-not $Name) {
+          [hashtable]$Private:Process = @{
+            Name  = 'explorer.exe'
+            Force = $True
           }
-          else {
-            $Process.Name = 'explorer'
+          if (
+            $PSCmdlet.ShouldProcess(
+              'Process Name: ' + $Process.Name,
+              'Stop-Process (default => explorer.exe)'
+            )
+          ) {
+            Stop-Process @Process
           }
         }
       }
-
-      if (
-        $PSCmdlet.ShouldProcess(
-          $Process.Id ? "Process ID: $($Process.Id)" : "Process Name: $($Process.Name)",
-          'Stop-Process'
-        )
-      ) {
-        Stop-Process @Process
+      Self {
+        if ($Self) {
+          [hashtable]$Private:Process = @{
+            Name  = 'WindowsTerminal.exe'
+            Force = $True
+          }
+          if (
+            $PSCmdlet.ShouldProcess(
+              'Process Name: ' + $Process.Name,
+              'Stop-Process (-Self => WindowsTerminal.exe)'
+            )
+          ) {
+            Stop-Process @Process
+          }
+        }
       }
     }
   }

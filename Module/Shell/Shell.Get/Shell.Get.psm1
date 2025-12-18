@@ -56,7 +56,7 @@ function Get-Size {
       $null, $null
     )]
     # The path of the file or directory to be measured.
-    [string]$Path,
+    [string[]]$Path,
 
     [Parameter(
       ParameterSetName = 'String',
@@ -86,54 +86,55 @@ function Get-Size {
 
   begin {
     [DiskSizeUnit]$CanonicalUnit = $null -eq [DiskSizeUnit]::$Unit ? $DISK_SIZE_UNIT_ALIAS.ContainsKey($Unit) ? [DiskSizeUnit]::($DISK_SIZE_UNIT_ALIAS[$Unit]) : [DiskSizeUnit]::KB : [DiskSizeUnit]::$Unit
-
     [ulong]$Private:Factor = $DISK_SIZE_FACTORS[$CanonicalUnit]
-
-    [ulong[]]$Private:Sizes = @()
   }
 
   process {
-    if (-not $Path) {
-      $Path = $PWD.Path
+    foreach ($Private:filepath in $Path) {
+      if (-not (Test-Path -Path $filepath)) {
+        throw "Path '$filepath' does not exist."
+      }
+
+      [hashtable]$Private:Target = @{
+        Path = $filepath
+      }
+      [System.IO.FileSystemInfo]$Private:Item = Get-Item @Target
+
+      [ulong]$Private:Size = $Item.PSIsContainer ? (
+        Get-ChildItem @Target -Recurse -File |
+          Measure-Object -Property Length -Sum |
+          Select-Object -ExpandProperty Sum
+      ) : $Item.Length
+
+      [double]$Private:ScaledSize = $Size / $Factor
+
+      Write-Output (
+        $Number ? $ScaledSize : (
+          [System.Math]::Round(
+            $ScaledSize,
+            3
+          ).ToString() + ' ' + $CanonicalUnit
+        )
+      )
     }
-
-    if (-not (Test-Path -Path $Path)) {
-      throw "Path '$Path' does not exist."
-    }
-
-    [hashtable]$Private:Target = @{
-      Path = $Path
-    }
-    [System.IO.FileSystemInfo]$Private:Item = Get-Item @Target
-
-    [ulong]$Private:Size = $Item.PSIsContainer ? (
-      Get-ChildItem @Target -Recurse -File |
-        Measure-Object -Property Length -Sum
-    ).Sum : $Item.Length
-
-    $Sizes += $Size
   }
 
   end {
-    [double[]]$Private:ScaledSizes = $Sizes |
-      ForEach-Object {
-        $PSItem / $Factor
-      }
+    if (-not $Path) {
+      [ulong]$Private:Size = Get-ChildItem -Path $PWD.Path -Recurse -File |
+        Measure-Object -Property Length -Sum |
+        Select-Object -ExpandProperty Sum
 
-    if ($Number) {
-      return $ScaledSizes
-    }
-    else {
-      [double[]]$RoundedSizes = $ScaledSizes |
-        ForEach-Object {
-          [System.Math]::Round($PSItem, 3)
-        }
-      [string[]]$Private:PrintedSizes = $RoundedSizes |
-        ForEach-Object {
-          "$PSItem $CanonicalUnit"
-        }
+      [double]$Private:ScaledSize = $Size / $Factor
 
-      return $PrintedSizes
+      return (
+        $Number ? $ScaledSize : (
+          [System.Math]::Round(
+            $ScaledSize,
+            3
+          ).ToString() + ' ' + $CanonicalUnit
+        )
+      )
     }
   }
 }
