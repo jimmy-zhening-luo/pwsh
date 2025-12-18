@@ -1,4 +1,3 @@
-using namespace System.Collections.Generic
 using namespace Completer
 
 enum TestHostVerbosity {
