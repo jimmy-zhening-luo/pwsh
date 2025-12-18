@@ -1,11 +1,13 @@
-using System.Linq;
 using System.Management.Automation;
 
 namespace Transform
 {
   namespace Commands
   {
-    [Cmdlet(VerbsData.ConvertTo, "Hex")]
+    [Cmdlet(
+      VerbsData.ConvertTo,
+      "Hex"
+    )]
     [OutputType(typeof(string[]))]
     public class ConvertToHex : Cmdlet
     {
@@ -14,7 +16,8 @@ namespace Transform
         Position = 0,
         ValueFromPipeline = true,
         ValueFromPipelineByPropertyName = true,
-        ValueFromRemainingArguments = true
+        ValueFromRemainingArguments = true,
+        HelpMessage = "Integer(s) to convert to hexadecimal"
       )]
       [AllowEmptyCollection]
       [Alias("Integer")]
@@ -26,7 +29,9 @@ namespace Transform
       }
       private long[] numbers;
 
-      [Parameter]
+      [Parameter(
+        HelpMessage = "Output hexadecimal letters in lowercase"
+      )]
       [Alias("Case")]
       public SwitchParameter Lowercase
       {
