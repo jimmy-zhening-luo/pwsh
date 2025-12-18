@@ -143,6 +143,7 @@ namespace Completer
 
         yield break;
       }
+    }
   }
 
   [AttributeUsage(AttributeTargets.Parameter)]
