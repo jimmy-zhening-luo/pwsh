@@ -153,6 +153,7 @@ function Update-PSProfile {
 
   param(
 
+    [Alias('NoBuild')]
     # If specified, skips the build step after pulling the latest changes.
     [switch]$SkipBuild,
 
