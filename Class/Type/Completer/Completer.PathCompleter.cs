@@ -142,7 +142,7 @@ namespace Completer
           searchLocation = Root;
         }
 
-        searchFilter = searchFilter + "*"
+        searchFilter = searchFilter + "*";
 
         List<string> matchedDirectories = [];
         List<string> matchedFiles = [];
