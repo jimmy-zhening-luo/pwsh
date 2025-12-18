@@ -36,14 +36,12 @@ namespace Completer
 
     public class PathCompleter : CompleterBase
     {
-      public readonly string CurrentDirectory;
       public readonly string Root;
       public readonly PathItemType Type;
       public readonly bool Flat;
       public readonly bool UseNativePathSeparator;
 
       public PathCompleter(
-        string currentDirectory,
         string root,
         PathItemType type,
         bool flat,
@@ -57,7 +55,7 @@ namespace Completer
           true
         );
 
-        string untildedNormalizedEscapedRoot = Regex.IsMatch(
+        Root = Regex.IsMatch(
             normalizedUnescapedRoot,
             TypedPath.IsPathTildeRootedPattern
           )
@@ -65,24 +63,12 @@ namespace Completer
             normalizedUnescapedRoot,
             TypedPath.SubstituteTildeRootPattern,
             Environment.GetFolderPath(
-              Environment.SpecialFolder.UserProfile
+              Environment
+                .SpecialFolder
+                .UserProfile
             )
           )
           : normalizedUnescapedRoot;
-
-        string undottedUntildedNormalizedEscapedRoot = untildedNormalizedEscapedRoot.Contains(value: ':')
-        || untildedNormalizedEscapedRoot.StartsWith(
-          TypedPath.PathSeparator
-        )
-          ? untildedNormalizedEscapedRoot
-          : untildedNormalizedEscapedRoot == string.Empty
-            ? currentDirectory
-            : currentDirectory
-              + TypedPath.PathSeparator
-              + untildedNormalizedEscapedRoot;
-
-        CurrentDirectory = currentDirectory;
-        Root = undottedUntildedNormalizedEscapedRoot;
         Type = type;
         Flat = flat;
         UseNativePathSeparator = useNativePathSeparator;
@@ -282,7 +268,6 @@ namespace Completer
       public IArgumentCompleter Create()
       {
         return new PathCompleter(
-          "",
           Location,
           ItemType ?? PathItemType.Any,
           Flat ?? false,
@@ -306,7 +291,6 @@ namespace Completer
             .Invoke()[0]
             .BaseObject
             .ToString(),
-          ".",
           ItemType ?? PathItemType.Any,
           Flat ?? false,
           UseNativePathSeparator ?? false
