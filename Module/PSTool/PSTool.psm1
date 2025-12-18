@@ -201,13 +201,13 @@ function Update-PSProfile {
       CommandType = 'Application'
       Name        = 'dotnet.exe'
     }
-    [System.Management.Automation.ApplicationInfo]$Private:DotNetExecutable = Get-Command @CompileCommand
+    [System.Management.Automation.ApplicationInfo]$Private:DotnetExecutable = Get-Command @CompileCommand
 
-    if (-not $DotNetExecutable) {
+    if (-not $Private:DotnetExecutable) {
       try {
-        [System.Management.Automation.ApplicationInfo]$Private:DotNetExecutable = Install-PSModuleDotNet
+        [System.Management.Automation.ApplicationInfo]$Private:DotnetExecutable = Install-PSModuleDotnet
 
-        if (-not $DotNetExecutable) {
+        if (-not $Private:DotnetExecutable) {
           throw 'Failed to locate Microsoft.DotNet.SDK.10 executable post-installation'
         }
       }
@@ -216,34 +216,34 @@ function Update-PSProfile {
       }
     }
 
-    [hashtable]$Private:DotNet = @{
-      FilePath         = (Resolve-Path -Path $DotNetExecutable.Source).Path
-      WorkingDirectory = $PROFILE_REPO_ROOT
+    [hashtable]$Private:Dotnet = @{
+      FilePath         = (Resolve-Path -Path $Private:DotnetExecutable.Source).Path
+      WorkingDirectory = "$PROFILE_REPO_ROOT\Class"
       NoNewWindow      = $True
       PassThru         = $True
       ErrorAction      = 'Stop'
     }
 
-    [string[]]$Private:DotNetClean = @(
+    [string[]]$Private:DotnetClean = @(
       'clean'
       '--configuration'
       'Release'
     )
-    Start-Process @DotNet -ArgumentList $DotNetClean |
+    Start-Process @Private:Dotnet -ArgumentList $Private:DotnetClean |
       Wait-Process
 
-    [string[]]$Private:DotNetBuild = @(
+    [string[]]$Private:DotnetBuild = @(
       'build'
       '--configuration'
       'Release'
     )
-    Start-Process @DotNet -ArgumentList $DotNetBuild |
+    Start-Process @Private:Dotnet -ArgumentList $Private:DotnetBuild |
       Wait-Process
   }
   #endregion
 }
 
-function Install-PSModuleDotNet {
+function Install-PSModuleDotnet {
 
   [CmdletBinding(
     SupportsShouldProcess,
@@ -278,15 +278,15 @@ function Install-PSModuleDotNet {
         CommandType = 'Application'
         Name        = 'dotnet.exe'
       }
-      [System.Management.Automation.ApplicationInfo]$Private:DotNetExecutable = Get-Command @CompileCommand
+      [System.Management.Automation.ApplicationInfo]$Private:DotnetExecutable = Get-Command @CompileCommand
 
-      if (-not $DotNetExecutable) {
+      if (-not $Private:DotnetExecutable) {
         throw 'Failed to locate Microsoft.DotNet.SDK.10 executable post-installation'
       }
 
       try {
-        [hashtable]$Private:DotNetInstallDependency = @{
-          FilePath     = (Resolve-Path -Path $DotNetExecutable.Source).Path
+        [hashtable]$Private:DotnetInstallDependency = @{
+          FilePath     = (Resolve-Path -Path $Private:DotnetExecutable.Source).Path
           NoNewWindow  = $True
           PassThru     = $True
           ErrorAction  = 'Stop'
@@ -296,14 +296,14 @@ function Install-PSModuleDotNet {
             'Microsoft.PowerShell.Standard.Module.Template'
           )
         }
-        Start-Process @DotNetInstallDependency |
+        Start-Process @Private:DotnetInstallDependency |
           Wait-Process
       }
       catch {
         throw 'Failed to install required dotnet dependency: Microsoft.PowerShell.Standard.Module.Template'
       }
 
-      return $DotNetExecutable
+      return $Private:DotnetExecutable
     }
   }
 }
