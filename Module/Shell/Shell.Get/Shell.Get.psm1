@@ -1,4 +1,3 @@
-using namespace System.Collections.Generic
 using namespace Completer
 using namespace Completer.PathCompleter
 
@@ -86,9 +85,9 @@ function Get-Size {
   begin {
     [DiskSizeUnit]$CanonicalUnit = $null -eq [DiskSizeUnit]::$Unit ? $DISK_SIZE_UNIT_ALIAS.ContainsKey($Unit) ? [DiskSizeUnit]::($DISK_SIZE_UNIT_ALIAS[$Unit]) : [DiskSizeUnit]::KB : [DiskSizeUnit]::$Unit
 
-    [UInt64]$Private:Factor = $DISK_SIZE_FACTORS[$CanonicalUnit]
+    [ulong]$Private:Factor = $DISK_SIZE_FACTORS[$CanonicalUnit]
 
-    $Sizes = [List[UInt64]]::new()
+    [ulong[]]$Private:Sizes = @()
   }
 
   process {
@@ -105,12 +104,12 @@ function Get-Size {
     }
     [System.IO.FileSystemInfo]$Private:Item = Get-Item @Target
 
-    [UInt64]$Private:Size = $Item.PSIsContainer ? (
+    [ulong]$Private:Size = $Item.PSIsContainer ? (
       Get-ChildItem @Target -Recurse -File |
         Measure-Object -Property Length -Sum
     ).Sum : $Item.Length
 
-    $Sizes.Add($Size)
+    $Sizes += $Size
   }
 
   end {
