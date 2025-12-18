@@ -61,7 +61,7 @@ namespace Completer
       IEnumerable<string> domain
     )
     {
-      const string unescapedWordToComplete = Typed.Typed.Unescape(wordToComplete);
+      string unescapedWordToComplete = Typed.Typed.Unescape(wordToComplete);
 
       if (
         string.IsNullOrWhiteSpace(
@@ -100,7 +100,7 @@ namespace Completer
           foreach (string member in doamin)
           {
             if (
-              member.length > unescapedWordToComplete.length
+              member.Length > unescapedWordToComplete.Length
               && member.IndexOf(
                 unescapedWordToComplete,
                 1,
