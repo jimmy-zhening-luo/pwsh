@@ -71,10 +71,8 @@ namespace Completer
         Flat = flat ?? false;
       }
 
-      protected override IEnumerable<string> FulfillArgumentCompletion(
-        string parameterName,
-        string wordToComplete,
-        IDictionary fakeBoundParameters
+      public IEnumerable<string> FindDescendant(
+        string wordToComplete
       )
       {
         string currentPathValue = TypedPath.Normalize(
@@ -225,6 +223,15 @@ namespace Completer
         }
 
         return completions;
+      }
+
+      protected override IEnumerable<string> FulfillArgumentCompletion(
+        string parameterName,
+        string wordToComplete,
+        IDictionary fakeBoundParameters
+      )
+      {
+        return FindDescendant(wordToComplete);
       }
     }
 
