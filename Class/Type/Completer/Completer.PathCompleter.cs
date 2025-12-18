@@ -162,8 +162,6 @@ namespace Completer
           }
         }
 
-        // go-backwards ..
-
         if (Type != PathItemType.Directory)
         {
           foreach (
@@ -181,7 +179,18 @@ namespace Completer
           }
         }
 
-        // if currentdirvalue, add dir itself
+        yield return Path.Join(
+          currentDirectoryValue,
+          @"..\"
+        );
+
+        if (currentDirectoryValue != string.Empty)
+        {
+          yield return Path.Join(
+            currentDirectoryValue,
+            TypedPath.PathSeparator
+          );
+        }
 
         yield break;
       }
@@ -193,7 +202,7 @@ namespace Completer
       )
       {
         foreach (
-          string descendant in  FindDescendant(
+          string descendant in FindDescendant(
             wordToComplete
           )
         )
