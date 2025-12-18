@@ -1,8 +1,0 @@
-<Solution>
-  <Folder Name="/Class/Cmdlet/">
-    <Project Path="Class/Cmdlet/Transform/Transform.csproj"/>
-  </Folder>
-  <Folder Name="/Class/Type/">
-    <Project Path="Class/Type/Completer/Completer.csproj"/>
-  </Folder>
-</Solution>
