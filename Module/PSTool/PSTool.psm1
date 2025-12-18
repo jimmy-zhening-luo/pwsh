@@ -96,7 +96,9 @@ function Measure-PSProfile {
       Mandatory
     )]
     # If specified, returns only the numeric performance value in milliseconds.
-    [switch]$Number
+    [switch]$Number,
+
+    [Parameter(DontShow)][switch]$zNothing
 
   )
 
@@ -152,13 +154,15 @@ function Update-PSProfile {
   param(
 
     # If specified, skips the build step after pulling the latest changes.
-    [switch]$SkipBuild
+    [switch]$SkipBuild,
+
+    [Parameter(DontShow)][switch]$zNothing
 
   )
 
   $Private:PROFILE_ROOT = "$HOME\code\pwsh"
 
-  #region Git Pull
+  #region Pull Repo
   [string[]]$GitCommandManifest = @(
     '-c'
     'color.ui=always'

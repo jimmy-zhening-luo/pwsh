@@ -39,7 +39,9 @@ function Invoke-Workspace {
 
     [switch]$ReuseWindow,
 
-    [switch]$Empty
+    [switch]$Empty,
+
+    [Parameter(DontShow)][switch]$zNothing
 
   )
 
@@ -161,7 +163,9 @@ function Invoke-WorkspaceSibling {
     [switch]$Window,
 
     [Alias('rw')]
-    [switch]$ReuseWindow
+    [switch]$ReuseWindow,
+
+    [Parameter(DontShow)][switch]$zNothing
 
   )
 
@@ -205,7 +209,9 @@ function Invoke-WorkspaceRelative {
     [switch]$Window,
 
     [Alias('rw')]
-    [switch]$ReuseWindow
+    [switch]$ReuseWindow,
+
+    [Parameter(DontShow)][switch]$zNothing
 
   )
 
@@ -248,7 +254,9 @@ function Invoke-WorkspaceHome {
     [switch]$Window,
 
     [Alias('rw')]
-    [switch]$ReuseWindow
+    [switch]$ReuseWindow,
+
+    [Parameter(DontShow)][switch]$zNothing
 
   )
 
@@ -291,7 +299,9 @@ function Invoke-WorkspaceCode {
     [switch]$Window,
 
     [Alias('rw')]
-    [switch]$ReuseWindow
+    [switch]$ReuseWindow,
+
+    [Parameter(DontShow)][switch]$zNothing
 
   )
 

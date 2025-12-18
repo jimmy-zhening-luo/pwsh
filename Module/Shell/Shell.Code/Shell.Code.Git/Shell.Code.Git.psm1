@@ -140,7 +140,9 @@ function Invoke-GitRepository {
     [string]$WorkingDirectory,
 
     # When git command execution results in a non-zero exit code, write a warning and continue instead of the default behavior of throwing a terminating error.
-    [switch]$NoThrow
+    [switch]$NoThrow,
+
+    [Parameter(DontShow)][switch]$zNothing
 
   )
 

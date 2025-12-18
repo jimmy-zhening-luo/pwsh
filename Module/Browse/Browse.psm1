@@ -39,7 +39,9 @@ function Open-Url {
     )]
     [AllowEmptyCollection()]
     # The URL(s) to open.
-    [uri[]]$Uri
+    [uri[]]$Uri,
+
+    [Parameter(DontShow)][switch]$zNothing
 
   )
 

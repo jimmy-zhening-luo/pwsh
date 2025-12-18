@@ -75,7 +75,9 @@ function Get-HelpOnline {
     )]
     [string[]]$Name,
 
-    [string[]]$Parameter
+    [string[]]$Parameter,
+
+    [Parameter(DontShow)][switch]$zNothing
 
   )
 
@@ -284,7 +286,9 @@ function Get-CommandAlias {
     )]
     [SupportsWildcards()]
     # Omits the specified items. The value of this parameter qualifies the Definition parameter. Enter a name, a definition, or a pattern, such as "s*". Wildcards are permitted.
-    [string[]]$Exclude
+    [string[]]$Exclude,
+
+    [Parameter(DontShow)][switch]$zNothing
 
   )
 
@@ -376,7 +380,9 @@ function Get-VerbList {
       $null, $null
     )]
     # Gets only the specified group. Enter the name of a group. Wildcards aren't allowed.
-    [string]$Group
+    [string]$Group,
+
+    [Parameter(DontShow)][switch]$zNothing
 
   )
 

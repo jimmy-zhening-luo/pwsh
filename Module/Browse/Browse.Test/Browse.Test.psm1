@@ -75,8 +75,9 @@ function Test-Host {
     [string]$InformationLevel,
 
     # Shorthand for InformationLevel Detailed
-    [switch]$Detailed
+    [switch]$Detailed,
 
+    [Parameter(DontShow)][switch]$zNothing
   )
 
   begin {
@@ -172,7 +173,9 @@ function Test-Url {
     [AllowNull()]
     [AllowEmptyString()]
     # The URL to test. If the URL has no scheme, it defaults to 'http'.
-    [uri]$Uri
+    [uri]$Uri,
+
+    [Parameter(DontShow)][switch]$zNothing
 
   )
 

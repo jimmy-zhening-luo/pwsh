@@ -137,7 +137,9 @@ function Stop-Task {
       ParameterSetName = 'Self',
       Mandatory
     )]
-    [switch]$Self
+    [switch]$Self,
+
+    [Parameter(DontShow)][switch]$zNothing
 
   )
 

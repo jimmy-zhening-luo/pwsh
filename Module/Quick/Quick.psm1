@@ -27,7 +27,9 @@ function Copy-Guid {
     [switch]$Uppercase,
 
     # Only copy GUID to clipboard; do not output to the console
-    [switch]$Silent
+    [switch]$Silent,
+
+    [Parameter(DontShow)][switch]$zNothing
 
   )
 

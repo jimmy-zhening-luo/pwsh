@@ -54,7 +54,9 @@ function New-Directory {
     [Parameter(
       ValueFromPipelineByPropertyName
     )]
-    [System.Management.Automation.PSCredential]$Credential
+    [System.Management.Automation.PSCredential]$Credential,
+
+    [Parameter(DontShow)][switch]$zNothing
 
   )
 
@@ -129,7 +131,9 @@ function New-Junction {
       { return [string]$PWD.Path },
       $null, $null
     )]
-    [System.Object]$Value
+    [System.Object]$Value,
+
+    [Parameter(DontShow)][switch]$zNothing
 
   )
 

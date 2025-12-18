@@ -17,11 +17,7 @@ function Test-Function {
     )]
     [string[]]$ArgumentList,
 
-    [Parameter(
-      DontShow = $true
-    )]
-    [Switch]$Nothing
-
+    [Parameter(DontShow)][switch]$zNothing
   )
 
   return $PSBoundParameters | ConvertTo-Json -EnumsAsStrings -Depth 6

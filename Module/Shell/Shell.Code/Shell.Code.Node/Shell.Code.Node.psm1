@@ -225,6 +225,8 @@ https://docs.npmjs.com/cli/commands/npm
 #>
 function Invoke-NodePackage {
 
+  [CmdletBinding()]
+
   param(
 
     [Parameter(
@@ -271,7 +273,9 @@ function Invoke-NodePackage {
     [switch]$O,
 
     # Pass the -P flag as an argument to npm
-    [switch]$P
+    [switch]$P,
+
+    [Parameter(DontShow)][switch]$zNothing
 
   )
 
@@ -437,7 +441,9 @@ function Compare-NodeModule {
       $True
     )]
     # Node package root at which to run the command
-    [string]$WorkingDirectory
+    [string]$WorkingDirectory,
+
+    [Parameter(DontShow)][switch]$zNothing
 
   )
 
@@ -503,7 +509,9 @@ function Step-NodePackageVersion {
       $True
     )]
     # Node package root at which to run the command
-    [string]$WorkingDirectory
+    [string]$WorkingDirectory,
+
+    [Parameter(DontShow)][switch]$zNothing
 
   )
 
@@ -585,7 +593,9 @@ function Invoke-NodePackageScript {
       $True
     )]
     # Node package root at which to run the command
-    [string]$WorkingDirectory
+    [string]$WorkingDirectory,
+
+    [Parameter(DontShow)][switch]$zNothing
 
   )
 
@@ -640,7 +650,9 @@ function Test-NodePackage {
       $True
     )]
     # Node package root at which to run the command
-    [string]$WorkingDirectory
+    [string]$WorkingDirectory,
+
+    [Parameter(DontShow)][switch]$zNothing
 
   )
 
