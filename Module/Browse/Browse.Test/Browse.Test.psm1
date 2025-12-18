@@ -65,7 +65,7 @@ function Test-Host {
     )]
     [ValidateRange(1, 65535)]
     # The port number to test on the target host.
-    [UInt16]$Port,
+    [ushort]$Port,
 
     [StaticCompletions(
       'quiet,detailed',
@@ -105,9 +105,9 @@ function Test-Host {
               $Connection.CommonTCPPort = [TestHostWellknownPort]::$CommonTCPPort
             }
             elseif (
-              $CommonTCPPort -match [regex]'^(?>\d{1,5})$' -and $CommonTCPPort -as [UInt16]
+              $CommonTCPPort -match [regex]'^(?>\d{1,5})$' -and $CommonTCPPort -as [ushort]
             ) {
-              $Connection.Port = [UInt16]$CommonTCPPort
+              $Connection.Port = [ushort]$CommonTCPPort
             }
           }
         }

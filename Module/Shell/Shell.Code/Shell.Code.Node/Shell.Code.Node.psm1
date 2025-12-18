@@ -511,9 +511,9 @@ function Step-NodePackageVersion {
     if ($null -eq [NodePackageNamedVersion]::$Version) {
       if ($Version -match $VERSION_SPEC) {
         [hashtable]$Private:FullVersion = @{
-          Major = [UInt32]$Matches.Major
-          Minor = $Matches.Minor ? [UInt32]$Matches.Minor : [UInt32]0
-          Patch = $Matches.Patch ? [UInt32]$Matches.Patch : [UInt32]0
+          Major = [uint]$Matches.Major
+          Minor = $Matches.Minor ? [uint]$Matches.Minor : [uint]0
+          Patch = $Matches.Patch ? [uint]$Matches.Patch : [uint]0
           Pre   = $Matches.Pre ? [string]$Matches.Pre : ''
         }
 

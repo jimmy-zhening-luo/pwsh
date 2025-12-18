@@ -383,7 +383,7 @@ function Get-ChildGitRepository {
     Get-GitRepository -WorkingDirectory $Repository @args
   }
 
-  [UInt16]$Private:Count = $Repositories.Count
+  [ushort]$Private:Count = $Repositories.Count
 
   return "`nPulled $Count repositor" + ($Count -eq 1 ? 'y' : 'ies')
 }
@@ -668,7 +668,7 @@ function Reset-GitRepository {
   if ($Tree) {
     if (
       $Tree -match $TREE_SPEC -and (
-        -not $Matches.Step -or $Matches.Step -as [uint32]
+        -not $Matches.Step -or $Matches.Step -as [uint]
       )
     ) {
       [string]$Private:Branching = $Matches.Branching ? $Matches.Branching : '~'
@@ -689,7 +689,7 @@ function Reset-GitRepository {
   ) {
     if (
       -not $Tree -and $WorkingDirectory -match $TREE_SPEC -and (
-        -not $Matches.Step -or $Matches.Step -as [uint32]
+        -not $Matches.Step -or $Matches.Step -as [uint]
       )
     ) {
       [string]$Private:Branching = $Matches.Branching ? $Matches.Branching : '~'

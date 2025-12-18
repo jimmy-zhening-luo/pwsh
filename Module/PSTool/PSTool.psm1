@@ -89,7 +89,7 @@ function Measure-PSProfile {
     )]
     [ValidateRange(1, 50)]
     # The number of iterations to perform, maximum 50. Default is 1.
-    [UInt16]$Iterations,
+    [ushort]$Iterations,
 
     [Parameter(
       ParameterSetName = 'Number',
@@ -110,7 +110,7 @@ function Measure-PSProfile {
   [hashtable]$Private:Test = @{
     Command = '1'
   }
-  for ([UInt16]$i = 0; $i -lt $Iterations; ++$i) {
+  for ([ushort]$i = 0; $i -lt $Iterations; ++$i) {
     $StartupLoadProfile += [double](
       Measure-Command { pwsh @Test }
     ).TotalMilliseconds

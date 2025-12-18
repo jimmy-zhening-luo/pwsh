@@ -131,7 +131,7 @@ function Stop-Task {
       ValueFromPipelineByPropertyName
     )]
     # The process ID(s) of the process to stop.
-    [UInt32[]]$Id,
+    [uint[]]$Id,
 
     [Parameter(
       ParameterSetName = 'Self',
@@ -174,8 +174,8 @@ function Stop-Task {
         }
         Name {
           if ($Name) {
-            if ($Name -match [regex]'^(?>\d{1,10})$' -and $Name -as [UInt32]) {
-              $Process.Id = [UInt32]$Name
+            if ($Name -match [regex]'^(?>\d{1,10})$' -and $Name -as [uint]) {
+              $Process.Id = [uint]$Name
             }
             else {
               $Process.Name = $Name
