@@ -9,7 +9,7 @@ function Test-Function {
     [Parameter(
       Position = 0
     )]
-    [string]$Name
+    [string]$Name,
 
     [Parameter(
       Position = 1,
