@@ -301,10 +301,11 @@ namespace Completer
     {
       public IArgumentCompleter Create()
       {
-        var resolved = CurrentDirectory.Invoke();
-
         return new PathCompleter(
-          resolved[0].BaseObject.ToString(),
+          CurrentDirectory
+            .Invoke()[0]
+            .BaseObject
+            .ToString(),
           ".",
           ItemType ?? PathItemType.Any,
           Flat ?? false,
