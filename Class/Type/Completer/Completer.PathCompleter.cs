@@ -145,13 +145,16 @@ namespace Completer
         List<string> matchedDirectories = [];
         List<string> matchedFiles = [];
 
+        EnumerationOptions attributes = new EnumerationOptions();
+        attributes.IgnoreInaccessible = false;
+
         if (Type != PathItemType.File)
         {
           string[] directories = [
             ..Directory.GetDirectories(
               searchLocation,
               searchFilter,
-              SearchOption.TopDirectoryOnly
+              attributes
             ).Select(
               directory => Path.Join(
                 currentDirectoryValue,
@@ -172,7 +175,7 @@ namespace Completer
             ..Directory.GetFiles(
               searchLocation,
               searchFilter,
-              SearchOption.TopDirectoryOnly
+              attributes
             ).Select(
               file => Path.Join(
                 currentDirectoryValue,
