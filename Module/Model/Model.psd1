@@ -2,12 +2,14 @@
   RootModule           = 'Model.psm1'
   ModuleVersion        = '3.0.0.0'
   CompatiblePSEditions = @('Desktop', 'Core')
-  GUID                 = '95295970-cd48-492b-83f9-f2327927e0ca'
+  GUID                 = '47fc780c-b20d-4b81-b175-1013df449293'
   Author               = 'Jimmy Zhening Luo'
   CompanyName          = 'Jimmy Zhening Luo'
   Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
   PowerShellVersion    = '7.4'
-  FunctionsToExport    = @()
+  FunctionsToExport    = @(
+    'Copy-Guid'
+  )
   CmdletsToExport      = @()
   VariablesToExport    = @()
   AliasesToExport      = @(
@@ -19,5 +21,6 @@
     'count'
     'z'
     'format'
+    'guid'
   )
 }

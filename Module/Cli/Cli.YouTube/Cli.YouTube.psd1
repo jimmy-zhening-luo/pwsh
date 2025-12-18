@@ -1,8 +1,8 @@
 @{
-  RootModule           = 'Quick.YouTube.psm1'
+  RootModule           = 'Cli.YouTube.psm1'
   ModuleVersion        = '3.0.0.0'
   CompatiblePSEditions = @('Desktop', 'Core')
-  GUID                 = 'bc355ec2-c3a4-4e99-abe1-4e9e2aeb2635'
+  GUID                 = 'e5eeffaf-374b-419e-a610-68015eaee174'
   Author               = 'Jimmy Zhening Luo'
   CompanyName          = 'Jimmy Zhening Luo'
   Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'

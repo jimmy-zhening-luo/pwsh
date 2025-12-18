@@ -6,7 +6,7 @@ Use yt-dlp to download YouTube videos.
 This function is an alias for 'yt-dlp' and allows you to download YouTube videos or extract audio from them.
 
 .COMPONENT
-Quick.YouTube
+Cli.YouTube
 
 .LINK
 https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#usage-and-options
@@ -52,7 +52,7 @@ Use yt-dlp to extract audio from a YouTube video.
 This function is an alias for 'yt-dlp' and extracts audio from a YouTube video.
 
 .COMPONENT
-Quick.YouTube
+Cli.YouTube
 
 .LINK
 https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#post-processing-options
@@ -88,7 +88,7 @@ Use yt-dlp to get available formats for a YouTube video.
 This function is an alias for 'yt-dlp -F' and lists all available formats for a YouTube video.
 
 .COMPONENT
-Quick.YouTube
+Cli.YouTube
 
 .LINK
 https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#video-format-options
@@ -116,7 +116,7 @@ Opens yt-dlp download location in File Explorer.
 Opens yt-dlp download location in File Explorer, not by config though lmao.
 
 .COMPONENT
-Quick.YouTube
+Cli.YouTube
 #>
 function Invoke-YouTubeDirectory {
 
@@ -140,7 +140,7 @@ Opens yt-dlp configuration file for editing.
 Opens yt-dlp configuration file for editing.
 
 .COMPONENT
-Quick.YouTube
+Cli.YouTube
 #>
 function Invoke-YouTubeConfig {
 

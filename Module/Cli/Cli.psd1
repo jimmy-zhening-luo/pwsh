@@ -1,8 +1,7 @@
 @{
-  RootModule           = 'Quick.psm1'
   ModuleVersion        = '3.0.0.0'
   CompatiblePSEditions = @('Desktop', 'Core')
-  GUID                 = '8984f438-f595-48c1-92a1-b893106bbfe2'
+  GUID                 = 'f6405b67-31f3-4633-ba81-feb8364d2395'
   Author               = 'Jimmy Zhening Luo'
   CompanyName          = 'Jimmy Zhening Luo'
   Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
@@ -21,13 +20,12 @@
   )
   NestedModules        = @(
     @{
-      ModuleName    = 'Quick.YouTube'
+      ModuleName    = 'Cli.YouTube'
       ModuleVersion = '3.0.0'
-      GUID          = 'bc355ec2-c3a4-4e99-abe1-4e9e2aeb2635'
+      GUID          = 'e5eeffaf-374b-419e-a610-68015eaee174'
     }
   )
   FunctionsToExport    = @(
-    'Copy-Guid'
     'Get-YouTube'
     'Get-YouTubeAudio'
     'Get-YouTubeFormat'
@@ -37,7 +35,6 @@
   CmdletsToExport      = @()
   VariablesToExport    = @()
   AliasesToExport      = @(
-    'guid'
     'yt'
     'yta'
     'ytf'
