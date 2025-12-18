@@ -15,7 +15,8 @@ namespace Transform
       public class TestCmdlet : Cmdlet
       {
         [Parameter(
-          Position = 0
+          Position = 0,
+          HelpMessage = "Name to be displayed"
         )]
         [AllowEmptyString]
         public string Name
@@ -24,6 +25,9 @@ namespace Transform
           set => name = value;
         }
         private string name = "";
+
+        [Parameter(DontShow = true)]
+        public SwitchParameter Nothing;
 
         protected override void EndProcessing()
         {

@@ -37,6 +37,9 @@ namespace Transform
       [Alias("Case")]
       public SwitchParameter Lowercase;
 
+      [Parameter(DontShow = true)]
+      public SwitchParameter Nothing;
+
       protected override void ProcessRecord()
       {
         foreach (long number in numbers)
