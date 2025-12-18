@@ -1,7 +1,7 @@
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
 
-Register-ArgumentCompleter -Native -CommandName 'dotnet' -ScriptBlock {
+Register-ArgumentCompleter -Native -CommandName 'dotnet', 'dot' -ScriptBlock {
   param($wordToComplete, $commandAst, $cursorPosition)
 
   $commandElements = $commandAst.CommandElements
