@@ -17,7 +17,7 @@ function Invoke-PSHistory {
   param()
 
   [hashtable]$Private:CodeEdit = @{
-    FilePath     = "$HOME\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd"
+    FilePath     = "$env:LOCALAPPDATA\Programs\Microsoft VS Code\bin\code.cmd"
     ArgumentList = @(
       [string](Get-PSReadLineOption).HistorySavePath
       '--profile=PowerShell'
@@ -27,6 +27,8 @@ function Invoke-PSHistory {
   }
   Start-Process @CodeEdit
 }
+
+[string]$PROFILE_REPO_ROOT = "$REPO_ROOT\pwsh"
 
 <#
 .SYNOPSIS
@@ -47,9 +49,9 @@ function Invoke-PSProfile {
   param()
 
   [hashtable]$Private:CodeEdit = @{
-    FilePath     = "$HOME\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd"
+    FilePath     = "$env:LOCALAPPDATA\Programs\Microsoft VS Code\bin\code.cmd"
     ArgumentList = @(
-      "$HOME\code\pwsh"
+      "$PROFILE_REPO_ROOT"
       '--profile=Default'
     )
     NoNewWindow  = $True
@@ -161,8 +163,6 @@ function Update-PSProfile {
 
   )
 
-  $Private:PROFILE_ROOT = "$HOME\code\pwsh"
-
   #region Pull Repo
   [string[]]$GitCommandManifest = @(
     '-c'
@@ -171,7 +171,7 @@ function Update-PSProfile {
     $PROFILE_ROOT
     'pull'
   )
-  & 'C:\Program Files\Git\cmd\git.exe' @GitCommandManifest
+  & "$env:ProgramFiles\Git\cmd\git.exe" @GitCommandManifest
 
   if ($LASTEXITCODE -ne 0) {
     throw "Failed to pull pwsh profile repository at '$PROFILE_ROOT'. Git returned exit code: $LASTEXITCODE"
@@ -218,7 +218,7 @@ function Update-PSProfile {
 
     [hashtable]$Private:DotNet = @{
       FilePath         = (Resolve-Path -Path $DotNetExecutable.Source).Path
-      WorkingDirectory = "$HOME\code\pwsh"
+      WorkingDirectory = $PROFILE_REPO_ROOT
       NoNewWindow      = $True
       PassThru         = $True
       ErrorAction      = 'Stop'
@@ -267,7 +267,7 @@ function Install-PSModuleDotNet {
         'winget install'
       )
     ) {
-      & "$HOME\AppData\Local\Microsoft\WindowsApps\winget.exe" @AppId
+      & $env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe @AppId
 
       if ($LASTEXITCODE -ne 0) {
         throw 'winget attempted to install Microsoft.DotNet.SDK.10 but returned a non-zero exit code'

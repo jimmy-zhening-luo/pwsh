@@ -27,8 +27,6 @@ function Update-StoreApp {
   Start-Process @Store
 }
 
-$WINGET = "$HOME\AppData\Local\Microsoft\WindowsApps\winget.exe"
-
 <#
 .SYNOPSIS
 Use WinGet to install a new package or upgrade an existing package.
@@ -45,10 +43,10 @@ https://learn.microsoft.com/en-us/windows/package-manager/winget/install
 function Add-WinGetApp {
 
   if ($args) {
-    & $WINGET install @args
+    & $env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe install @args
   }
   else {
-    & $WINGET upgrade
+    & $env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe upgrade
   }
 
   if ($LASTEXITCODE -ne 0) {
@@ -71,7 +69,7 @@ https://learn.microsoft.com/en-us/windows/package-manager/winget/upgrade
 #>
 function Update-WinGetApp {
 
-  & $WINGET upgrade @args
+  & $env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe upgrade @args
 
   if ($LASTEXITCODE -ne 0) {
     throw "winget.exe error, execution stopped with exit code: $LASTEXITCODE"
@@ -94,10 +92,10 @@ https://learn.microsoft.com/en-us/windows/package-manager/winget/search
 function Find-WinGetApp {
 
   if ($args) {
-    & $WINGET search @args
+    & $env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe search @args
   }
   else {
-    & $WINGET list
+    & $env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe list
   }
 
   if ($LASTEXITCODE -ne 0) {
@@ -120,7 +118,7 @@ https://learn.microsoft.com/en-us/windows/package-manager/winget/uninstall
 #>
 function Remove-WinGetApp {
 
-  & $WINGET uninstall @args
+  & $env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe uninstall @args
 
   if ($LASTEXITCODE -ne 0) {
     throw "winget.exe error, execution stopped with exit code: $LASTEXITCODE"
@@ -131,7 +129,7 @@ New-Alias gapx Appx\Get-AppxPackage
 New-Alias remapx Appx\Remove-AppxPackage
 
 New-Alias su Update-StoreApp
-New-Alias wget $WINGET
+New-Alias wget $env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe
 New-Alias wga Add-WinGetApp
 New-Alias wgu Update-WinGetApp
 New-Alias wgf Find-WinGetApp

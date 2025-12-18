@@ -14,7 +14,7 @@ https://learn.microsoft.com/en-us/windows-server/administration/windows-commands
 #>
 function Invoke-CommandPrompt {
 
-  & cmd.exe /c @args
+  & $env:ComSpec /c @args
 
   if ($LASTEXITCODE -ne 0) {
     throw "cmd.exe error, execution stopped with exit code: $LASTEXITCODE"

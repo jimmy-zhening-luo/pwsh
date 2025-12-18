@@ -45,7 +45,7 @@ function Open-Url {
   begin {
     [bool]$Private:Interactive = -not $env:SSH_CLIENT
     [hashtable]$Private:Browser = @{
-      FilePath = 'C:\Program Files\Google\Chrome\Application\chrome.exe'
+      FilePath = "$env:ProgramFiles\Google\Chrome\Application\chrome.exe"
     }
   }
 

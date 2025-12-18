@@ -120,7 +120,7 @@ function Invoke-Workspace {
   }
 
   [hashtable]$Private:VSCode = @{
-    FilePath     = "$HOME\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd"
+    FilePath     = "$env:LOCALAPPDATA\Programs\Microsoft VS Code\bin\code.cmd"
     ArgumentList = $ArgumentList
     NoNewWindow  = $True
   }
