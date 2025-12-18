@@ -18,12 +18,6 @@ namespace Completer
     CompletionCase Casing
   ) : IArgumentCompleter
   {
-    public abstract IEnumerable<string> FulfillCompletion(
-      string parameterName,
-      string wordToComplete,
-      IDictionary fakeBoundParameters
-    );
-
     public IEnumerable<CompletionResult> CompleteArgument(
       string commandName,
       string parameterName,
@@ -32,8 +26,8 @@ namespace Completer
       IDictionary fakeBoundParameters
     )
     {
-      return WrapCompletionResult(
-        FulfillCompletion(
+      return WrapArgumentCompletionResult(
+        FulfillArgumentCompletion(
           parameterName,
           wordToComplete,
           fakeBoundParameters
@@ -41,7 +35,13 @@ namespace Completer
       );
     }
 
-    private IEnumerable<CompletionResult> WrapCompletionResult(
+    protected abstract IEnumerable<string> FulfillArgumentCompletion(
+      string parameterName,
+      string wordToComplete,
+      IDictionary fakeBoundParameters
+    );
+
+    private IEnumerable<CompletionResult> WrapArgumentCompletionResult(
       IEnumerable<string> completedStrings
     )
     {
@@ -74,15 +74,6 @@ namespace Completer
     {
       Domain = domain;
       Surrounding = surrounding;
-    }
-
-    public override IEnumerable<string> FulfillCompletion(
-      string parameterName,
-      string wordToComplete,
-      IDictionary fakeBoundParameters
-    )
-    {
-      return FindCompletion(wordToComplete);
     }
 
     public IEnumerable<string> FindCompletion(
@@ -143,6 +134,15 @@ namespace Completer
 
         yield break;
       }
+    }
+
+    protected override IEnumerable<string> FulfillArgumentCompletion(
+      string parameterName,
+      string wordToComplete,
+      IDictionary fakeBoundParameters
+    )
+    {
+      return FindCompletion(wordToComplete);
     }
   }
 
