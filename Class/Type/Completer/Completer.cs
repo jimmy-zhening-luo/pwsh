@@ -76,7 +76,7 @@ namespace Completer
             CompletionCase.Upper => member.ToUpper(),
             CompletionCase.Lower => member.ToLower(),
             _ => member,
-          }
+          };
         }
 
         yield break;
@@ -101,7 +101,7 @@ namespace Completer
               CompletionCase.Upper => member.ToUpper(),
               CompletionCase.Lower => member.ToLower(),
               _ => member,
-            }
+            };
           }
         }
 
@@ -123,7 +123,7 @@ namespace Completer
                 CompletionCase.Upper => member.ToUpper(),
                 CompletionCase.Lower => member.ToLower(),
                 _ => member,
-              }
+              };
             }
           }
         }
