@@ -167,7 +167,7 @@ namespace Completer
         if (Type != PathItemType.Directory)
         {
           foreach (
-            string files in Directory.EnumerateFiles(
+            string file in Directory.EnumerateFiles(
               searchLocation,
               searchFilter,
               attributes
