@@ -61,80 +61,60 @@ namespace Completer
       IEnumerable<string> domain
     )
     {
-      List<string> ordinalDomain = Casing switch
+      const string unescapedWordToComplete = Typed.Typed.Unescape(wordToComplete);
+
+      if (
+        string.IsNullOrWhiteSpace(
+          unescapedWordToComplete
+        )
+      )
       {
-        CompletionCase.Upper => [
-          .. domain.Select(
-            member => member.ToUpperInvariant()
-          )
-        ],
-        CompletionCase.Lower => [
-          ..domain.Select(
-            member => member.ToLowerInvariant()
-          )
-        ],
-        _ => [.. domain],
-      };
-
-      List<string> completions = [];
-
-      string typed = Typed.Typed.Unescape(wordToComplete);
-
-      if (string.IsNullOrWhiteSpace(typed))
-      {
-        if (ordinalDomain.Count != 0)
+        foreach (member in domain)
         {
-          completions.AddRange(ordinalDomain);
+          yield return member;
         }
+
+        yield break;
       }
       else
       {
-        completions.AddRange(
-          ordinalDomain.Where(
-            member => member.Equals(
-              typed,
+        int matched = 0;
+
+        foreach (member in domain)
+        {
+          if (
+            member.StartsWith(
+              unescapedWordToComplete,
               StringComparison.OrdinalIgnoreCase
             )
           )
-        );
-
-        bool hasExactMatch = completions.Count != 0;
-
-        completions.AddRange(
-          ordinalDomain.Where(
-            member => member.StartsWith(
-                typed,
-                StringComparison.Ordinal
-              )
-              && !member.Equals(
-                typed,
-                StringComparison.OrdinalIgnoreCase
-              )
-          )
-        );
-
-        if (Surrounding)
-        {
-          if (
-            completions.Count == 0
-            || completions.Count == 1 && hasExactMatch
-          )
           {
-            completions.InsertRange(
-              0,
-              ordinalDomain.Where(
-                member => !member.StartsWith(typed)
-                  && member.Contains(
-                    typed,
-                    StringComparison.OrdinalIgnoreCase
-                  )
-              )
-            );
+            ++matched;
+
+            yield return member;
           }
         }
-      }
 
-      return completions;
+        if (Surrounding && matched <= 1)
+        {
+          foreach (member in doamin)
+          {
+            if (
+              member.length > unescapedWordToComplete.length
+              && member.IndexOf(
+                unescapedWordToComplete,
+                1,
+                StringComparison.OrdinalIgnoreCase
+              ) >= 1
+            )
+            {
+              yield return member;
+            }
+          }
+        }
+
+        yield break;
+      }
     }
   }
 
