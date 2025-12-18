@@ -97,7 +97,7 @@ namespace Completer
 
         if (Surrounding && matched <= 1)
         {
-          foreach (string member in doamin)
+          foreach (string member in domain)
           {
             if (
               member.Length > unescapedWordToComplete.Length
