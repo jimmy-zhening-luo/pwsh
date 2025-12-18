@@ -114,8 +114,13 @@ https://git-scm.com/docs
 #>
 function Invoke-GitRepository {
 
+  [CmdletBinding()]
+
   param(
 
+    [Parameter(
+      Position = 0
+    )]
     [StaticCompletions(
       'switch,merge,diff,stash,tag,config,remote,submodule,fetch,checkout,branch,rm,mv,ls-files,ls-tree,init,status,clone,pull,add,commit,push,reset',
       $null, $null
@@ -123,6 +128,9 @@ function Invoke-GitRepository {
     # Git command to run.
     [string]$Verb,
 
+    [Parameter(
+      Position = 1
+    )]
     [PathLocationCompletions(
       '~\code',
       [PathItemType]::Directory,
@@ -131,25 +139,26 @@ function Invoke-GitRepository {
     # Path to local repository. If not specified, defaults to the current location. For all verbs except 'clone', 'config', and 'init', the function will throw an error if there is no Git repository at the path.
     [string]$WorkingDirectory,
 
-    # When git command execution results in a non-zero exit code, write a warning and continue instead of the default behavior of throwing a terminating error.
-    [switch]$NoThrow,
+    [Parameter(
+      Position = 2,
+      ValueFromRemainingArguments,
+      DontShow
+    )]
+    # Additional arguments to pass to the git command.
+    [string[]]$Argument,
 
-    [Parameter(DontShow)][switch]$zNothing
+    # When git command execution results in a non-zero exit code, write a warning and continue instead of the default behavior of throwing a terminating error.
+    [switch]$NoThrow
 
   )
 
   $Private:GitArgument = [List[string]]::new()
-  if ($args) {
-    $GitArgument.AddRange(
-      [List[string]]$args
-    )
-  }
 
   if ($Verb) {
     if ($Verb -in $GIT_VERB) {
       if ($Verb -in $NEWABLE_GIT_VERB) {
         if ($WorkingDirectory -match $GIT_ARGUMENT) {
-          $GitArgument.Insert(0, $WorkingDirectory)
+          $GitArgument.Add($WorkingDirectory)
           $WorkingDirectory = ''
         }
       }
@@ -163,14 +172,14 @@ function Invoke-GitRepository {
             $Verb | Resolve-GitRepository
           )
         ) {
-          $GitArgument.Insert(0, $WorkingDirectory)
+          $GitArgument.Add($WorkingDirectory)
           $Verb, $WorkingDirectory = 'status', $Verb
         }
       }
     }
     else {
-      if ($WorkingDirectory -or $GitArgument) {
-        $GitArgument.Insert(0, $Verb)
+      if ($WorkingDirectory -or $Argument) {
+        $GitArgument.Add($Verb)
       }
       else {
         $WorkingDirectory = $Verb
@@ -202,19 +211,21 @@ function Invoke-GitRepository {
     }
   }
 
-  [string[]]$GitCommandManifest = @(
+  [string[]]$Private:GitCommand = @(
     '-c'
     'color.ui=always'
     '-C'
     $Repository
     $Verb
   )
-  $GitArgument.InsertRange(
-    0,
-    [List[string]]$GitCommandManifest
-  )
 
-  & 'C:\Program Files\Git\cmd\git.exe' @GitArgument
+  if ($Argument) {
+    $GitArgument.AddRange(
+      [List[string]]$Argument
+    )
+  }
+
+  & 'C:\Program Files\Git\cmd\git.exe' @GitCommand @GitArgument
 
   if ($LASTEXITCODE -ne 0) {
     [string]$Private:Exception = "git command error, execution returned exit code: $LASTEXITCODE"
