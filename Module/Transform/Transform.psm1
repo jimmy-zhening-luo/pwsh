@@ -1,7 +1,5 @@
 function Test-Function {
 
-  [CmdletBinding()]
-
   [OutputType([string])]
 
   param(
