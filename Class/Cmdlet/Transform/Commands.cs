@@ -20,8 +20,10 @@ namespace Transform
         HelpMessage = "Integer(s) to convert to hexadecimal"
       )]
       [AllowEmptyCollection]
-      [Alias("Integer")]
-      [ValidateRange(0, long.MaxValue)]
+      [ValidateRange(
+        0,
+        long.MaxValue
+      )]
       public long[] Number
       {
         get => numbers;
