@@ -202,27 +202,13 @@ namespace Completer
             )
           ];
 
-        List<string> unnormalizedCompletions = [];
-
         if (appendedDirectories.Count != 0)
         {
-          unnormalizedCompletions.AddRange(appendedDirectories);
+          completions.AddRange(appendedDirectories);
         }
         if (matchedFiles.Count != 0)
         {
-          unnormalizedCompletions.AddRange(matchedFiles);
-        }
-
-        if (unnormalizedCompletions.Count != 0)
-        {
-          completions.AddRange(
-            unnormalizedCompletions.Select(
-              item => item.Replace(
-                TypedPath.PathSeparatorChar,
-                TypedPath.FriendlyPathSeparatorChar
-              )
-            )
-          );
+          completions.AddRange(matchedFiles);
         }
 
         return completions;
@@ -234,7 +220,17 @@ namespace Completer
         IDictionary fakeBoundParameters
       )
       {
-        return FindDescendant(wordToComplete);
+        foreach (
+          string descendant in  FindDescendant(
+            wordToComplete
+          )
+        )
+        {
+          yield return descendant.Replace(
+            TypedPath.PathSeparatorChar,
+            TypedPath.FriendlyPathSeparatorChar
+          );
+        }
       }
     }
 
