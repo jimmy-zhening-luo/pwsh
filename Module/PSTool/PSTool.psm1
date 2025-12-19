@@ -211,7 +211,7 @@ function Update-PSProfile {
 
   #region Copy Linter
   [hashtable]$Private:Linter = @{
-    Path     = "$PROFILE_REPO_ROOT\PSScriptAnalyzerSettings.psd1"
+    Path     = "$PROFILE_REPO_ROOT\Data\PSScriptAnalyzerSettings.psd1"
     PathType = 'Leaf'
   }
   if (Test-Path @Private:Linter) {
