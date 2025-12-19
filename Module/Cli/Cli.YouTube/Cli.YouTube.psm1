@@ -32,15 +32,15 @@ function Get-YouTube {
     '?v=' + $Matches.Video
   ).Uri : [uri]$Video
 
-  if (Test-Url -Uri $VideoUri) {
-    & yt-dlp.exe @args -- [string]$VideoUri
+  if (Test-Url -Uri $Private:VideoUri) {
+    & yt-dlp.exe @args -- [string]$Private:VideoUri
 
     if ($LASTEXITCODE -ne 0) {
       throw "ytdlp error, execution stopped with exit code: $LASTEXITCODE"
     }
   }
   else {
-    throw 'The specified video URL is unreachable: ' + [string]$VideoUri
+    throw 'The specified video URL is unreachable: ' + [string]$Private:VideoUri
   }
 }
 
@@ -77,7 +77,7 @@ function Get-YouTubeAudio {
     '--postprocessor-args'
     '-ar 44100'
   )
-  Get-YouTube @PSBoundParameters @args @YouTubeArgument
+  Get-YouTube @PSBoundParameters @args @Private:YouTubeArgument
 }
 
 <#
@@ -105,7 +105,7 @@ function Get-YouTubeFormat {
   [string[]]$Private:YouTubeArgument = @(
     '-F'
   )
-  Get-YouTube @PSBoundParameters @args @YouTubeArgument
+  Get-YouTube @PSBoundParameters @args @Private:YouTubeArgument
 }
 
 <#
@@ -129,7 +129,7 @@ function Invoke-YouTubeDirectory {
   [hashtable]$Private:YouTubeDownloads = @{
     Path = 'Videos\YouTube'
   }
-  Shell\Invoke-DirectoryHome @YouTubeDownloads
+  Invoke-DirectoryHome @Private:YouTubeDownloads
 }
 
 <#
@@ -155,7 +155,7 @@ function Invoke-YouTubeConfig {
     Name   = 'Setting'
     Window = $True
   }
-  Shell\Invoke-WorkspaceHome @YouTubeConfig
+  Invoke-WorkspaceHome @Private:YouTubeConfig
 }
 
 New-Alias yt Get-YouTube

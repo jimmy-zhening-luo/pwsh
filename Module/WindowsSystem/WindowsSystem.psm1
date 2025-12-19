@@ -46,7 +46,7 @@ function Update-Windows {
   [hashtable]$Private:WindowsUpdate = @{
     FilePath = 'ms-settings:windowsupdate'
   }
-  Start-Process @WindowsUpdate
+  Start-Process @Private:WindowsUpdate
 }
 
 <#
@@ -77,16 +77,16 @@ function Edit-SystemPath {
   }
 
   [hashtable]$Private:ControlPanel = @{
-    FilePath     = 'rundll32'
+    FilePath     = "$env:SystemRoot\System32\rundll32.exe"
     ArgumentList = @(
       'sysdm.cpl'
       'EditEnvironmentVariables'
     )
   }
   if ($Administrator) {
-    $ControlPanel.Verb = 'RunAs'
+    $Private:ControlPanel.Verb = 'RunAs'
   }
-  Start-Process @ControlPanel
+  Start-Process @Private:ControlPanel
 }
 
 <#
@@ -147,29 +147,29 @@ function Stop-Task {
     switch ($PSCmdlet.ParameterSetName) {
       Id {
         foreach ($Private:ProcessId in $Id) {
-          Stop-Process -Id $ProcessId -Force
+          Stop-Process -Id $Private:ProcessId -Force
         }
       }
       Name {
         foreach ($Private:ProcessHandle in $Name) {
-          if ($ProcessHandle) {
+          if ($Private:ProcessHandle) {
             [hashtable]$Private:Process = @{
               Force = $True
             }
-            if ($ProcessHandle -match [regex]'^(?>\d{1,10})$' -and $ProcessHandle -as [uint]) {
-              $Process.Id = [uint]$ProcessHandle
+            if ($Private:ProcessHandle -match [regex]'^(?>\d{1,10})$' -and $Private:ProcessHandle -as [uint]) {
+              $Private:Process.Id = [uint]$Private:ProcessHandle
             }
             else {
-              $Process.Name = $ProcessHandle
+              $Private:Process.Name = $Private:ProcessHandle
             }
 
             if (
               $PSCmdlet.ShouldProcess(
-                $Process.Id ? "Process ID: $($Process.Id)" : "Process Name: $($Process.Name)",
+                $Private:Process.Id ? "Process ID: $($Private:Process.Id)" : "Process Name: $($Private:Process.Name)",
                 'Stop-Process'
               )
             ) {
-              Stop-Process @Process
+              Stop-Process @Private:Process
             }
           }
         }
@@ -181,33 +181,25 @@ function Stop-Task {
     switch ($PSCmdlet.ParameterSetName) {
       Name {
         if (-not $Name) {
-          [hashtable]$Private:Process = @{
-            Name  = 'explorer.exe'
-            Force = $True
-          }
           if (
             $PSCmdlet.ShouldProcess(
-              'Process Name: ' + $Process.Name,
+              'Process Name: explorer.exe',
               'Stop-Process (default => explorer.exe)'
             )
           ) {
-            Stop-Process @Process
+            Stop-Process -Name explorer.exe -Force
           }
         }
       }
       Self {
         if ($Self) {
-          [hashtable]$Private:Process = @{
-            Name  = 'WindowsTerminal.exe'
-            Force = $True
-          }
           if (
             $PSCmdlet.ShouldProcess(
-              'Process Name: ' + $Process.Name,
+              'Process Name: WindowsTerminal.exe',
               'Stop-Process (-Self => WindowsTerminal.exe)'
             )
           ) {
-            Stop-Process @Process
+            Stop-Process -Name WindowsTerminal.exe -Force
           }
         }
       }

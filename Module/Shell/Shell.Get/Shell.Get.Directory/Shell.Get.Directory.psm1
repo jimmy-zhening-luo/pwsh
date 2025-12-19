@@ -41,7 +41,7 @@ function Get-DirectorySibling {
   [hashtable]$Private:FullPath = @{
     Path = Join-Path (Split-Path $PWD.Path) $Path
   }
-  Get-ChildItem @FullPath @args
+  Get-ChildItem @Private:FullPath @args
 }
 
 function Get-DirectoryRelative {
@@ -62,7 +62,7 @@ function Get-DirectoryRelative {
   [hashtable]$Private:FullPath = @{
     Path = Join-Path ($PWD.Path | Split-Path | Split-Path) $Path
   }
-  Get-ChildItem @FullPath @args
+  Get-ChildItem @Private:FullPath @args
 }
 
 function Get-DirectoryHome {
@@ -83,7 +83,7 @@ function Get-DirectoryHome {
   [hashtable]$Private:FullPath = @{
     Path = Join-Path $HOME $Path
   }
-  Get-ChildItem @FullPath @args
+  Get-ChildItem @Private:FullPath @args
 }
 
 function Get-DirectoryCode {
@@ -102,9 +102,9 @@ function Get-DirectoryCode {
   )
 
   [hashtable]$Private:FullPath = @{
-    Path = Join-Path $HOME code $Path
+    Path = Join-Path $REPO_ROOT $Path
   }
-  Get-ChildItem @FullPath @args
+  Get-ChildItem @Private:FullPath @args
 }
 
 function Get-DirectoryDrive {
@@ -125,7 +125,7 @@ function Get-DirectoryDrive {
   [hashtable]$Private:FullPath = @{
     Path = Join-Path $PWD.Drive.Root $Path
   }
-  Get-ChildItem @FullPath @args
+  Get-ChildItem @Private:FullPath @args
 }
 
 New-Alias l Get-Directory

@@ -25,7 +25,7 @@ function Invoke-PSHistory {
     )
     NoNewWindow  = $True
   }
-  Start-Process @CodeEdit
+  Start-Process @Private:CodeEdit
 }
 
 [string]$PROFILE_REPO_ROOT = "$REPO_ROOT\pwsh"
@@ -56,7 +56,7 @@ function Invoke-PSProfile {
     )
     NoNewWindow  = $True
   }
-  Start-Process @CodeEdit
+  Start-Process @Private:CodeEdit
 }
 
 <#
@@ -114,28 +114,27 @@ function Measure-PSProfile {
   [hashtable]$Private:Test = @{
     Command = '1'
   }
-  for ([ushort]$i = 0; $i -lt $Iterations; ++$i) {
-    $StartupLoadProfile += [double](
-      Measure-Command { pwsh @Test }
+  for ([ushort]$Private:i = 0; $Private:i -lt $Iterations; ++$Private:i) {
+    $Private:StartupLoadProfile += [double](
+      Measure-Command { pwsh @Private:Test }
     ).TotalMilliseconds
-    $NormalStartup += [double](
-      Measure-Command { pwsh -NoProfile @Test }
+    $Private:NormalStartup += [double](
+      Measure-Command { pwsh -NoProfile @Private:Test }
     ).TotalMilliseconds
   }
 
   [int]$Private:Performance = [System.Math]::Max(
     [int][System.Math]::Round(
-      ($StartupLoadProfile - $NormalStartup) / $Iterations
+      ($Private:StartupLoadProfile - $Private:NormalStartup) / $Iterations
     ),
     0
   )
-  [int]$Private:MeanNormalStartup = [System.Math]::Round($NormalStartup / $Iterations)
-
+  [int]$Private:MeanNormalStartup = [System.Math]::Round($Private:NormalStartup / $Iterations)
   if ($Number) {
-    return $Performance
+    return $Private:Performance
   }
   else {
-    return "$Performance ms`n(Base: $MeanNormalStartup ms)"
+    return "$Private:Performance ms`n(Base: $Private:MeanNormalStartup ms)"
   }
 }
 
@@ -164,32 +163,32 @@ function Update-PSProfile {
   )
 
   #region Pull Repo
-  [string[]]$GitCommandManifest = @(
+  [string[]]$Private:GitCommandManifest = @(
     '-c'
     'color.ui=always'
     '-C'
-    $PROFILE_ROOT
+    $PROFILE_REPO_ROOT
     'pull'
   )
-  & "$env:ProgramFiles\Git\cmd\git.exe" @GitCommandManifest
+  & "$env:ProgramFiles\Git\cmd\git.exe" @Private:GitCommandManifest
 
   if ($LASTEXITCODE -ne 0) {
-    throw "Failed to pull pwsh profile repository at '$PROFILE_ROOT'. Git returned exit code: $LASTEXITCODE"
+    throw "Failed to pull pwsh profile repository at '$PROFILE_REPO_ROOT'. Git returned exit code: $LASTEXITCODE"
   }
   #endregion
 
 
   #region Copy Linter
   [hashtable]$Private:Linter = @{
-    Path     = "$PROFILE_ROOT\PSScriptAnalyzerSettings.psd1"
+    Path     = "$PROFILE_REPO_ROOT\PSScriptAnalyzerSettings.psd1"
     PathType = 'Leaf'
   }
-  if (Test-Path @Linter) {
+  if (Test-Path @Private:Linter) {
     [hashtable]$Private:Copy = @{
-      Path        = $Linter.Path
+      Path        = $Private:Linter.Path
       Destination = $HOME
     }
-    Copy-Item @Copy
+    Copy-Item @Private:Copy
   }
   #endregion
 
@@ -201,7 +200,7 @@ function Update-PSProfile {
       CommandType = 'Application'
       Name        = 'dotnet.exe'
     }
-    [System.Management.Automation.ApplicationInfo]$Private:DotnetExecutable = Get-Command @CompileCommand
+    [System.Management.Automation.ApplicationInfo]$Private:DotnetExecutable = Get-Command @Private:CompileCommand
 
     if (-not $Private:DotnetExecutable) {
       try {
@@ -254,20 +253,14 @@ function Install-PSModuleDotnet {
 
   param()
 
-  begin {
-    [string[]]$Private:AppId = @(
-      '--id=Microsoft.DotNet.SDK.10'
-    )
-  }
-
   process {
     if (
       $PSCmdlet.ShouldProcess(
-        $AppId,
+        '--id=Microsoft.DotNet.SDK.10',
         'winget install'
       )
     ) {
-      & $env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe @AppId
+      & $env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe '--id=Microsoft.DotNet.SDK.10'
 
       if ($LASTEXITCODE -ne 0) {
         throw 'winget attempted to install Microsoft.DotNet.SDK.10 but returned a non-zero exit code'
@@ -278,7 +271,7 @@ function Install-PSModuleDotnet {
         CommandType = 'Application'
         Name        = 'dotnet.exe'
       }
-      [System.Management.Automation.ApplicationInfo]$Private:DotnetExecutable = Get-Command @CompileCommand
+      [System.Management.Automation.ApplicationInfo]$Private:DotnetExecutable = Get-Command @Private:CompileCommand
 
       if (-not $Private:DotnetExecutable) {
         throw 'Failed to locate Microsoft.DotNet.SDK.10 executable post-installation'

@@ -22,5 +22,5 @@ function Remove-Directory {
     Recurse = $True
     Force   = $True
   }
-  Remove-Item @Hard @PSBoundParameters
+  Remove-Item @Private:Hard @PSBoundParameters
 }

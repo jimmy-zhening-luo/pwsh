@@ -29,7 +29,7 @@ function Invoke-Workspace {
       Position = 2,
       ValueFromRemainingArguments
     )]
-    [string[]]$CodeArgument,
+    [string[]]$Argument,
 
     [Parameter()]
     [AllowEmptyString()]
@@ -56,7 +56,7 @@ function Invoke-Workspace {
       Test-Path -Path $Location -PathType Container
     )
   ) {
-    $ArgumentList.Add($Location)
+    $Private:ArgumentList.Add($Location)
     $Location = ''
   }
 
@@ -64,8 +64,8 @@ function Invoke-Workspace {
     [string]$Private:Target = $Location ? (
       Join-Path $Location $Path
     ) : $Path
-    if (Test-Path -Path $Target) {
-      $ArgumentList.Insert(
+    if (Test-Path -Path $Private:Target) {
+      $Private:ArgumentList.Insert(
         0,
         [string](Resolve-Path -Path $Target).Path
       )
@@ -75,14 +75,14 @@ function Invoke-Workspace {
         throw "Path '$Path' does not exist."
       }
 
-      $ArgumentList.Insert(0, $Path)
+      $Private:ArgumentList.Insert(0, $Path)
       $Path = ''
     }
   }
 
   if (-not $Path) {
     if ($Location -and -not $Empty -or $ReuseWindow) {
-      $ArgumentList.Insert(
+      $Private:ArgumentList.Insert(
         0,
         [string](
           $Location ? (
@@ -95,15 +95,15 @@ function Invoke-Workspace {
     }
   }
 
-  if ($CodeArgument) {
-    $ArgumentList.AddRange(
-      [List[string]]$CodeArgument
+  if ($Argument) {
+    $Private:ArgumentList.AddRange(
+      [List[string]]$Argument
     )
   }
 
   if ($Name) {
     $Window = $True
-    $ArgumentList.Add(
+    $Private:ArgumentList.Add(
       $Name.StartsWith('-') ? (
         $Name
       ) : (
@@ -113,18 +113,18 @@ function Invoke-Workspace {
   }
 
   if ($Window) {
-    $ArgumentList.Add('--new-window')
+    $Private:ArgumentList.Add('--new-window')
   }
   elseif ($ReuseWindow) {
-    $ArgumentList.Add('--reuse-window')
+    $Private:ArgumentList.Add('--reuse-window')
   }
 
   [hashtable]$Private:VSCode = @{
     FilePath     = "$env:LOCALAPPDATA\Programs\Microsoft VS Code\bin\code.cmd"
-    ArgumentList = $ArgumentList
+    ArgumentList = $Private:ArgumentList
     NoNewWindow  = $True
   }
-  Start-Process @VSCode
+  Start-Process @Private:VSCode
 }
 
 function Invoke-WorkspaceSibling {
@@ -155,7 +155,7 @@ function Invoke-WorkspaceSibling {
       Position = 2,
       ValueFromRemainingArguments
     )]
-    [string[]]$CodeArgument,
+    [string[]]$Argument,
 
     [switch]$Window,
 
@@ -170,7 +170,7 @@ function Invoke-WorkspaceSibling {
     Location = Split-Path $PWD.Path
     Empty    = $True
   }
-  Invoke-Workspace @PSBoundParameters @Location
+  Invoke-Workspace @PSBoundParameters @Private:Location
 }
 
 function Invoke-WorkspaceRelative {
@@ -201,7 +201,7 @@ function Invoke-WorkspaceRelative {
       Position = 2,
       ValueFromRemainingArguments
     )]
-    [string[]]$CodeArgument,
+    [string[]]$Argument,
 
     [switch]$Window,
 
@@ -215,7 +215,7 @@ function Invoke-WorkspaceRelative {
   [hashtable]$Private:Location = @{
     Location = $PWD.Path | Split-Path | Split-Path
   }
-  Invoke-Workspace @PSBoundParameters @Location
+  Invoke-Workspace @PSBoundParameters @Private:Location
 }
 
 function Invoke-WorkspaceHome {
@@ -246,7 +246,7 @@ function Invoke-WorkspaceHome {
       Position = 2,
       ValueFromRemainingArguments
     )]
-    [string[]]$CodeArgument,
+    [string[]]$Argument,
 
     [switch]$Window,
 
@@ -260,7 +260,7 @@ function Invoke-WorkspaceHome {
   [hashtable]$Private:Location = @{
     Location = $HOME
   }
-  Invoke-Workspace @PSBoundParameters @Location
+  Invoke-Workspace @PSBoundParameters @Private:Location
 }
 
 function Invoke-WorkspaceCode {
@@ -291,7 +291,7 @@ function Invoke-WorkspaceCode {
       Position = 2,
       ValueFromRemainingArguments
     )]
-    [string[]]$CodeArgument,
+    [string[]]$Argument,
 
     [switch]$Window,
 
@@ -303,9 +303,9 @@ function Invoke-WorkspaceCode {
   )
 
   [hashtable]$Private:Location = @{
-    Location = "$HOME\code"
+    Location = $REPO_ROOT
   }
-  Invoke-Workspace @PSBoundParameters @Location
+  Invoke-Workspace @PSBoundParameters @Private:Location
 }
 
 New-Alias i Invoke-Workspace

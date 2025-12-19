@@ -21,7 +21,7 @@ function Invoke-Directory {
     [hashtable]$Private:Container = @{
       PathType = 'Container'
     }
-    if (Test-Path @PSBoundParameters @Container) {
+    if (Test-Path @PSBoundParameters @Private:Container) {
       Invoke-Item @PSBoundParameters @args
     }
   }
@@ -44,7 +44,7 @@ function Invoke-DirectorySibling {
   [hashtable]$Private:FullPath = @{
     Path = Join-Path (Split-Path $PWD.Path) $Path
   }
-  Invoke-Directory @FullPath @args
+  Invoke-Directory @Private:FullPath @args
 }
 
 function Invoke-DirectoryRelative {
@@ -64,7 +64,7 @@ function Invoke-DirectoryRelative {
   [hashtable]$Private:FullPath = @{
     Path = Join-Path ($PWD.Path | Split-Path | Split-Path) $Path
   }
-  Invoke-Directory @FullPath @args
+  Invoke-Directory @Private:FullPath @args
 }
 
 function Invoke-DirectoryHome {
@@ -84,7 +84,7 @@ function Invoke-DirectoryHome {
   [hashtable]$Private:FullPath = @{
     Path = Join-Path $HOME $Path
   }
-  Invoke-Directory @FullPath @args
+  Invoke-Directory @Private:FullPath @args
 }
 
 function Invoke-DirectoryCode {
@@ -102,9 +102,9 @@ function Invoke-DirectoryCode {
   )
 
   [hashtable]$Private:FullPath = @{
-    Path = Join-Path $HOME code $Path
+    Path = Join-Path $REPO_ROOT $Path
   }
-  Invoke-Directory @FullPath @args
+  Invoke-Directory @Private:FullPath @args
 }
 
 function Invoke-DirectoryDrive {
@@ -124,7 +124,7 @@ function Invoke-DirectoryDrive {
   [hashtable]$Private:FullPath = @{
     Path = Join-Path $PWD.Drive.Root $Path
   }
-  Invoke-Directory @FullPath @args
+  Invoke-Directory @Private:FullPath @args
 }
 
 New-Alias e Invoke-Directory

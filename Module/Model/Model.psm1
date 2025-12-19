@@ -33,16 +33,16 @@ function Copy-Guid {
 
   )
 
-  [guid]$Private:Guid = New-Guid
+  [string]$Private:Guid = (New-Guid).Guid
 
   if ($Uppercase) {
-    $Guid = [guid]$Guid.Guid.ToUpperInvariant()
+    [string]$Private:Guid = $Private:Guid.ToUpperInvariant()
   }
 
-  $Guid | Set-Clipboard
+  $Private:Guid | Set-Clipboard
 
   if (-not $Silent) {
-    return [string]$Guid.Guid
+    return $Private:Guid
   }
 }
 

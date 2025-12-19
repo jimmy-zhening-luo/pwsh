@@ -52,12 +52,12 @@ function Open-Url {
   process {
     if ($PSCmdlet.ParameterSetName -eq 'Uri') {
       foreach ($Private:link in $Uri) {
-        if ($link) {
-          if ($Interactive) {
-            Start-Process @Browser -ArgumentList $link
+        if ($Private:link) {
+          if ($Private:Interactive) {
+            Start-Process @Private:Browser -ArgumentList $Private:link
           }
           else {
-            Write-Information $link
+            Write-Information $Private:link
           }
         }
       }
@@ -72,8 +72,8 @@ function Open-Url {
         Resolve-Path @PSBoundParameters
       ).Path : [uri]$Path : $PWD.Path
 
-      if ($Interactive) {
-        Start-Process @Browser -ArgumentList $Target
+      if ($Private:Interactive) {
+        Start-Process @Private:Browser -ArgumentList $Private:Target
       }
     }
   }

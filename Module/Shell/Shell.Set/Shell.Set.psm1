@@ -41,7 +41,7 @@ function Set-DirectorySibling {
   [hashtable]$Private:FullPath = @{
     Path = Join-Path (Split-Path $PWD.Path) $Path
   }
-  Set-Location @FullPath @args
+  Set-Location @Private:FullPath @args
 }
 
 function Set-DirectoryRelative {
@@ -62,7 +62,7 @@ function Set-DirectoryRelative {
   [hashtable]$Private:FullPath = @{
     Path = Join-Path ($PWD.Path | Split-Path | Split-Path) $Path
   }
-  Set-Location @FullPath @args
+  Set-Location @Private:FullPath @args
 }
 
 function Set-DirectoryHome {
@@ -83,7 +83,7 @@ function Set-DirectoryHome {
   [hashtable]$Private:FullPath = @{
     Path = Join-Path $HOME $Path
   }
-  Set-Location @FullPath @args
+  Set-Location @Private:FullPath @args
 }
 
 function Set-DirectoryCode {
@@ -102,9 +102,9 @@ function Set-DirectoryCode {
   )
 
   [hashtable]$Private:FullPath = @{
-    Path = Join-Path $HOME code $Path
+    Path = Join-Path $REPO_ROOT $Path
   }
-  Set-Location @FullPath @args
+  Set-Location @Private:FullPath @args
 }
 
 function Set-Drive {
@@ -125,7 +125,7 @@ function Set-Drive {
   [hashtable]$Private:FullPath = @{
     Path = Join-Path $PWD.Drive.Root $Path
   }
-  Set-Location @FullPath @args
+  Set-Location @Private:FullPath @args
 }
 
 function Set-DriveD {
@@ -146,7 +146,7 @@ function Set-DriveD {
   [hashtable]$Private:FullPath = @{
     Path = Join-Path D: $Path
   }
-  Set-Location @FullPath @args
+  Set-Location @Private:FullPath @args
 }
 
 New-Alias c Set-Directory

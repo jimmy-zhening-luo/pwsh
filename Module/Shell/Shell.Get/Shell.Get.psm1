@@ -85,35 +85,35 @@ function Get-Size {
   )
 
   begin {
-    [DiskSizeUnit]$CanonicalUnit = $null -eq [DiskSizeUnit]::$Unit ? $DISK_SIZE_UNIT_ALIAS.ContainsKey($Unit) ? [DiskSizeUnit]::($DISK_SIZE_UNIT_ALIAS[$Unit]) : [DiskSizeUnit]::KB : [DiskSizeUnit]::$Unit
-    [ulong]$Private:Factor = $DISK_SIZE_FACTORS[$CanonicalUnit]
+    [DiskSizeUnit]$Private:CanonicalUnit = $null -eq [DiskSizeUnit]::$Unit ? $DISK_SIZE_UNIT_ALIAS.ContainsKey($Unit) ? [DiskSizeUnit]::($DISK_SIZE_UNIT_ALIAS[$Unit]) : [DiskSizeUnit]::KB : [DiskSizeUnit]::$Unit
+    [ulong]$Private:Factor = $DISK_SIZE_FACTORS[$Private:CanonicalUnit]
   }
 
   process {
     foreach ($Private:filepath in $Path) {
-      if (-not (Test-Path -Path $filepath)) {
-        throw "Path '$filepath' does not exist."
+      if (-not (Test-Path -Path $Private:filepath)) {
+        throw "Path '$Private:filepath' does not exist."
       }
 
       [hashtable]$Private:Target = @{
-        Path = $filepath
+        Path = $Private:filepath
       }
-      [System.IO.FileSystemInfo]$Private:Item = Get-Item @Target
+      [System.IO.FileSystemInfo]$Private:Item = Get-Item @Private:Target
 
-      [ulong]$Private:Size = $Item.PSIsContainer ? (
-        Get-ChildItem @Target -Recurse -File |
+      [ulong]$Private:Size = $Private:Item.PSIsContainer ? (
+        Get-ChildItem @Private:Target -Recurse -File |
           Measure-Object -Property Length -Sum |
           Select-Object -ExpandProperty Sum
-      ) : $Item.Length
+      ) : $Private:Item.Length
 
-      [double]$Private:ScaledSize = $Size / $Factor
+      [double]$Private:ScaledSize = $Private:Size / $Private:Factor
 
       Write-Output (
-        $Number ? $ScaledSize : (
+        $Number ? $Private:ScaledSize : (
           [System.Math]::Round(
-            $ScaledSize,
+            $Private:ScaledSize,
             3
-          ).ToString() + ' ' + $CanonicalUnit
+          ).ToString() + ' ' + $Private:CanonicalUnit
         )
       )
     }
@@ -125,14 +125,14 @@ function Get-Size {
         Measure-Object -Property Length -Sum |
         Select-Object -ExpandProperty Sum
 
-      [double]$Private:ScaledSize = $Size / $Factor
+      [double]$Private:ScaledSize = $Private:Size / $Private:Factor
 
       return (
-        $Number ? $ScaledSize : (
+        $Number ? $Private:ScaledSize : (
           [System.Math]::Round(
-            $ScaledSize,
+            $Private:ScaledSize,
             3
-          ).ToString() + ' ' + $CanonicalUnit
+          ).ToString() + ' ' + $Private:CanonicalUnit
         )
       )
     }

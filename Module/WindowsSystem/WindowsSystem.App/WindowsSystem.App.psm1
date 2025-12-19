@@ -24,7 +24,7 @@ function Update-StoreApp {
   [hashtable]$Private:Store = @{
     FilePath = 'ms-windows-store://downloadsandupdates'
   }
-  Start-Process @Store
+  Start-Process @Private:Store
 }
 
 <#

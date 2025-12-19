@@ -109,20 +109,20 @@ function Test-Item {
     Path     = $Location
     PathType = 'Container'
   }
-  if (-not (Test-Path @Container)) {
+  if (-not (Test-Path @Private:Container)) {
     return $False
   }
 
   [string]$Private:FullLocation = (Resolve-Path -Path $Location).Path
-  [string]$Private:FullPath = Join-Path $FullLocation $Path
-  [bool]$Private:HasSubpath = $FullPath.Substring($FullLocation.Length) -notmatch [regex]'^\\*$'
-  [bool]$Private:FileLike = $HasSubpath -and -not (
-    $FullPath.EndsWith(
+  [string]$Private:FullPath = Join-Path $Private:FullLocation $Path
+  [bool]$Private:HasSubpath = $Private:FullPath.Substring($Private:FullLocation.Length) -notmatch [regex]'^\\*$'
+  [bool]$Private:FileLike = $Private:HasSubpath -and -not (
+    $Private:FullPath.EndsWith(
       [TypedPath]::PathSeparator
-    ) -or $FullPath.EndsWith('..')
+    ) -or $Private:FullPath.EndsWith('..')
   )
 
-  if (-not $HasSubpath) {
+  if (-not $Private:HasSubpath) {
     return -not (
       $RequiresSubpath -or $File -or $New
     )
@@ -133,14 +133,14 @@ function Test-Item {
   }
 
   [hashtable]$Private:Item = @{
-    Path     = $FullPath
+    Path     = $Private:FullPath
     PathType = $File ? 'Leaf' : 'Container'
   }
   if ($New) {
-    return (Test-Path @Item -IsValid) -and -not (Test-Path @Item)
+    return (Test-Path @Private:Item -IsValid) -and -not (Test-Path @Private:Item)
   }
   else {
-    return Test-Path @Item
+    return Test-Path @Private:Item
   }
 }
 
@@ -207,13 +207,13 @@ function Resolve-Item {
   }
 
   [string]$Private:FullLocation = (Resolve-Path -Path $Location).Path
-  [string]$Private:FullPath = Join-Path $FullLocation $Path
+  [string]$Private:FullPath = Join-Path $Private:FullLocation $Path
 
   if ($New) {
-    return $FullPath
+    return $Private:FullPath
   }
   else {
-    return [string](Resolve-Path -Path $FullPath -Force).Path
+    return [string](Resolve-Path -Path $Private:FullPath -Force).Path
   }
 }
 

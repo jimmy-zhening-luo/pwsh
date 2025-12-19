@@ -91,27 +91,27 @@ function Test-Host {
 
   process {
     foreach ($Private:computerName in $Name) {
-      if ($computerName) {
+      if ($Private:computerName) {
         [hashtable]$Private:Connection = @{
-          ComputerName = $computerName
+          ComputerName = $Private:computerName
         }
         switch ($PSCmdlet.ParameterSetName) {
           RemotePort {
-            $Connection.Port = $Port
+            $Private:Connection.Port = $Port
           }
           CommonTCPPort {
             if ($CommonTCPPort) {
               if ([TestHostWellKnownPort]::$CommonTCPPort) {
-                $Connection.CommonTCPPort = [TestHostWellKnownPort]::$CommonTCPPort
+                $Private:Connection.CommonTCPPort = [TestHostWellKnownPort]::$CommonTCPPort
               }
               elseif ($CommonTCPPort -as [ushort]) {
-                $Connection.Port = [ushort]$CommonTCPPort
+                $Private:Connection.Port = [ushort]$CommonTCPPort
               }
             }
           }
         }
 
-        Test-NetConnection @Connection @Verbosity
+        Test-NetConnection @Private:Connection @Private:Verbosity
       }
     }
   }
@@ -121,7 +121,7 @@ function Test-Host {
       [hashtable]$Private:Connectivity = @{
         ComputerName = 'google.com'
       }
-      return Test-NetConnection @Connectivity @Verbosity
+      return Test-NetConnection @Private:Connectivity @Private:Verbosity
     }
   }
 }
@@ -183,18 +183,18 @@ function Test-Url {
   }
 
   process {
-    foreach ($private:link in $Uri) {
-      if ($link) {
+    foreach ($Private:link in $Uri) {
+      if ($Private:link) {
         try {
-          [int]$Private:Status = Invoke-WebRequest @PSBoundParameters @Request |
+          [int]$Private:Status = Invoke-WebRequest @PSBoundParameters @Private:Request |
             Select-Object -ExpandProperty StatusCode
         }
         catch {
           $Private:Status = $PSItem.Exception.Response.StatusCode.value__
         }
 
-        if ($Status -as [int] -and $Status -ge 200 -and $Status -lt 300) {
-          Write-Output [uri]$link
+        if ($Private:Status -as [int] -and $Private:Status -ge 200 -and $Private:Status -lt 300) {
+          Write-Output [uri]$Private:link
         }
       }
     }
