@@ -30,15 +30,15 @@ function Resolve-GitRepository {
         [hashtable]$Private:TestWorkingDirectory = @{
           Path = $WorkingDirectory
         }
-        if (Test-Item @Private:TestWorkingDirectory) {
-          Write-Output ([string](Resolve-Item @Private:TestWorkingDirectory))
+        if (Test-RelativePath @Private:TestWorkingDirectory) {
+          Write-Output ([string](Resolve-RelativePath @Private:TestWorkingDirectory))
         }
         else {
           $Private:TestWorkingDirectory.Location = $REPO_ROOT
           $Private:TestWorkingDirectory.New = $True
 
-          if (Test-Item @Private:TestWorkingDirectory) {
-            Write-Output ([string](Resolve-Item @Private:TestWorkingDirectory))
+          if (Test-RelativePath @Private:TestWorkingDirectory) {
+            Write-Output ([string](Resolve-RelativePath @Private:TestWorkingDirectory))
           }
         }
       }
@@ -51,13 +51,13 @@ function Resolve-GitRepository {
           RequireSubpath = $True
         }
 
-        if (Test-Item @Private:TestRepository) {
-          Write-Output ([string](Resolve-Item @Private:ResolveRepository))
+        if (Test-RelativePath @Private:TestRepository) {
+          Write-Output ([string](Resolve-RelativePath @Private:ResolveRepository))
         }
         else {
           $Private:TestRepository.Location = $Private:ResolveRepository.Location = $REPO_ROOT
-          if (Test-Item @Private:TestRepository) {
-            Write-Output ([string](Resolve-Item @Private:ResolveRepository))
+          if (Test-RelativePath @Private:TestRepository) {
+            Write-Output ([string](Resolve-RelativePath @Private:ResolveRepository))
           }
         }
       }

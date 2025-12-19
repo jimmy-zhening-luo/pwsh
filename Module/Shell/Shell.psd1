@@ -36,8 +36,8 @@
   )
   FunctionsToExport    = @(
     'Clear-Line'
-    'Test-Item'
-    'Resolve-Item'
+    'Test-RelativePath'
+    'Resolve-RelativePath'
     'New-Directory'
     'New-Junction'
     'Get-Size'

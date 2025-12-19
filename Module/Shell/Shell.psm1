@@ -27,7 +27,7 @@ function Clear-Line {
   }
 }
 
-function Test-Item {
+function Test-RelativePath {
 
   [OutputType([bool])]
 
@@ -144,7 +144,7 @@ function Test-Item {
   }
 }
 
-function Resolve-Item {
+function Resolve-RelativePath {
 
   [OutputType([string])]
 
@@ -162,7 +162,7 @@ function Resolve-Item {
 
   )
 
-  if (-not (Test-Item @PSBoundParameters)) {
+  if (-not (Test-RelativePath @PSBoundParameters)) {
     throw "Invalid path '$Path': " + (
       $PSBoundParameters | ConvertTo-Json -EnumsAsStrings -Depth 6
     )
