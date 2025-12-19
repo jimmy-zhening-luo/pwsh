@@ -10,12 +10,12 @@ namespace Completer
         string path,
         string location = "",
         PathItemType itemType = PathItemType.Any
-        bool nonexistent = false,
+        bool newable = false,
         bool requireSubpath = false
       )
       {
         // placeholder
-        if (nonexistent && requireSubpath && itemType == PathItemType.Any)
+        if (newable && requireSubpath && itemType == PathItemType.Any)
         {
           return path;
         }
@@ -28,12 +28,13 @@ namespace Completer
       public static string Resolve(
         string path,
         string location = "",
-        bool nonexistent = false,
+        PathItemType itemType = PathItemType.Any
+        bool newable = false,
         bool requireSubpath = false
       )
       {
         // placeholder
-        if (nonexistent && requireSubpath && itemType == PathItemType.Any)
+        if (newable && requireSubpath && itemType == PathItemType.Any)
         {
           return path;
         }
