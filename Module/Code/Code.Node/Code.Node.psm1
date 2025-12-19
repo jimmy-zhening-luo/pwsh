@@ -18,7 +18,6 @@ https://docs.npmjs.com/cli/commands
 function Test-NodePackageDirectory {
 
   [CmdletBinding()]
-
   [OutputType([bool])]
 
   param(
@@ -37,11 +36,7 @@ function Test-NodePackageDirectory {
     $WorkingDirectory = $PWD.Path
   }
 
-  [hashtable]$Private:HasPackageJson = @{
-    Path     = Join-Path $WorkingDirectory package.json
-    PathType = 'Leaf'
-  }
-  return Test-Path @Private:HasPackageJson
+  return Test-Path -Path (Join-Path $WorkingDirectory package.json) -PathType Leaf
 }
 
 <#
@@ -60,7 +55,6 @@ https://docs.npmjs.com/cli/commands
 function Resolve-NodePackageDirectory {
 
   [CmdletBinding()]
-
   [OutputType([string])]
 
   param(
@@ -238,7 +232,6 @@ https://docs.npmjs.com/cli/commands/npm
 function Invoke-NodePackage {
 
   [CmdletBinding()]
-
   param(
 
     [Parameter(

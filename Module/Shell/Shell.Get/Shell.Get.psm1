@@ -32,7 +32,6 @@ function Get-Size {
   [CmdletBinding(
     DefaultParameterSetName = 'String'
   )]
-
   [OutputType([string[]])]
 
   [OutputType([double[]], ParameterSetName = 'Number')]

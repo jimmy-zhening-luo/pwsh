@@ -12,7 +12,6 @@ WindowsSystem.App
 function Update-StoreApp {
 
   [CmdletBinding()]
-
   [OutputType([void])]
 
   param()

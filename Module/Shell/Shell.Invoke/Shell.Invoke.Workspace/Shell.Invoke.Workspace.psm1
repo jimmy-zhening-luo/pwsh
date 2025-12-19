@@ -4,7 +4,6 @@ using namespace Completer.PathCompleter
 function Invoke-Workspace {
 
   [CmdletBinding()]
-
   [OutputType([void])]
 
   param(
@@ -130,7 +129,6 @@ function Invoke-Workspace {
 function Invoke-WorkspaceSibling {
 
   [CmdletBinding()]
-
   [OutputType([void])]
 
   param(
@@ -176,7 +174,6 @@ function Invoke-WorkspaceSibling {
 function Invoke-WorkspaceRelative {
 
   [CmdletBinding()]
-
   [OutputType([void])]
 
   param(
@@ -221,7 +218,6 @@ function Invoke-WorkspaceRelative {
 function Invoke-WorkspaceHome {
 
   [CmdletBinding()]
-
   [OutputType([void])]
 
   param(
@@ -266,7 +262,6 @@ function Invoke-WorkspaceHome {
 function Invoke-WorkspaceCode {
 
   [CmdletBinding()]
-
   [OutputType([void])]
 
   param(

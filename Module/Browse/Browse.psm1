@@ -16,7 +16,6 @@ function Open-Url {
   [CmdletBinding(
     DefaultParameterSetName = 'Path'
   )]
-
   [OutputType([void])]
 
   param(

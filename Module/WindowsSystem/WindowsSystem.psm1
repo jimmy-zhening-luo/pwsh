@@ -34,7 +34,6 @@ WindowsSystem
 function Update-Windows {
 
   [CmdletBinding()]
-
   [OutputType([void])]
 
   param()
@@ -62,7 +61,6 @@ WindowsSystem
 function Edit-SystemPath {
 
   [CmdletBinding()]
-
   [OutputType([void])]
 
   param(
@@ -108,7 +106,6 @@ function Stop-Task {
     SupportsShouldProcess,
     ConfirmImpact = 'Medium'
   )]
-
   [OutputType([void])]
 
   param(

@@ -121,7 +121,6 @@ Cli.YouTube
 function Invoke-YouTubeDirectory {
 
   [CmdletBinding()]
-
   [OutputType([void])]
 
   param()
@@ -145,7 +144,6 @@ Cli.YouTube
 function Invoke-YouTubeConfig {
 
   [CmdletBinding()]
-
   [OutputType([void])]
 
   param()

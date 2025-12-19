@@ -49,7 +49,6 @@ Get-Help
 function Get-HelpOnline {
 
   [CmdletBinding()]
-
   [OutputType([string], [System.Object])]
 
   param(
@@ -236,7 +235,6 @@ Get-Alias
 function Get-CommandAlias {
 
   [CmdletBinding()]
-
   [OutputType([System.Management.Automation.CommandInfo[]])]
 
   param(
@@ -339,7 +337,6 @@ Get-Verb
 function Get-VerbList {
 
   [CmdletBinding()]
-
   [OutputType([string[]])]
 
   param(

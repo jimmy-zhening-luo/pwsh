@@ -17,7 +17,6 @@ New-Guid
 function Copy-Guid {
 
   [CmdletBinding()]
-
   [OutputType([string])]
 
   param(

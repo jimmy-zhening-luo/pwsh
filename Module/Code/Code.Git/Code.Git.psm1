@@ -5,7 +5,6 @@ using namespace Completer.PathCompleter
 function Resolve-GitRepository {
 
   [CmdletBinding()]
-
   [OutputType([string[]])]
 
   param(
@@ -117,7 +116,6 @@ https://git-scm.com/docs
 function Invoke-GitRepository {
 
   [CmdletBinding()]
-
   param(
 
     [Parameter(

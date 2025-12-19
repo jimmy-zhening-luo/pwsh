@@ -13,7 +13,6 @@ PSTool
 function Invoke-PSHistory {
 
   [CmdletBinding()]
-
   [OutputType([void])]
 
   param()
@@ -45,7 +44,6 @@ PSTool
 function Invoke-PSProfile {
 
   [CmdletBinding()]
-
   [OutputType([void])]
 
   param()
@@ -76,7 +74,6 @@ function Measure-PSProfile {
   [CmdletBinding(
     DefaultParameterSetName = 'String'
   )]
-
   [OutputType([string])]
 
   [OutputType([double], ParameterSetName = 'Number')]
@@ -182,7 +179,6 @@ PSTool
 function Update-PSProfile {
 
   [CmdletBinding()]
-
   param(
 
     [Alias('NoBuild')]
@@ -279,7 +275,6 @@ function Install-PSModuleDotnet {
     SupportsShouldProcess,
     ConfirmImpact = 'High'
   )]
-
   [OutputType([System.Management.Automation.ApplicationInfo])]
 
   param()

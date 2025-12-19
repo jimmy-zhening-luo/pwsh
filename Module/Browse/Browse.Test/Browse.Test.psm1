@@ -33,7 +33,6 @@ function Test-Host {
   [CmdletBinding(
     DefaultParameterSetName = 'CommonTCPPort'
   )]
-
   [OutputType([System.Object[]])]
 
   param(
@@ -149,7 +148,6 @@ Invoke-WebRequest
 function Test-Url {
 
   [CmdletBinding()]
-
   [OutputType([uri[]])]
 
   param(

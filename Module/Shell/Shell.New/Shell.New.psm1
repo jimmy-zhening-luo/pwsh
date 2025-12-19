@@ -12,7 +12,6 @@ function New-Directory {
     SupportsTransactions,
     ConfirmImpact = 'Medium'
   )]
-
   [OutputType([System.IO.DirectoryInfo])]
 
   param(
@@ -108,7 +107,6 @@ function New-Junction {
     SupportsTransactions,
     ConfirmImpact = 'Medium'
   )]
-
   [OutputType([System.IO.DirectoryInfo])]
 
   param(
