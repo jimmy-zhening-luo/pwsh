@@ -50,7 +50,7 @@ namespace Completer
     }
 
     [AttributeUsage(AttributeTargets.Parameter)]
-    public class PathCompletionsAttribute(
+    public class RelativePathCompletionsAttribute(
       ScriptBlock CurrentDirectory,
       PathItemType? ItemType,
       bool? Flat

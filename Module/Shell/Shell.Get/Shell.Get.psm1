@@ -51,7 +51,7 @@ function Get-Size {
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
-    [PathCompletions(
+    [RelativePathCompletions(
       { return [string]$PWD.Path },
       $null, $null
     )]

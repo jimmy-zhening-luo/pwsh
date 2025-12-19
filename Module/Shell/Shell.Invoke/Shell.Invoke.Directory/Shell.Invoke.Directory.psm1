@@ -6,7 +6,7 @@ function Invoke-Directory {
 
   param(
 
-    [PathCompletions(
+    [RelativePathCompletions(
       { return [string]$PWD.Path },
       $null, $null
     )]
@@ -33,8 +33,8 @@ function Invoke-DirectorySibling {
 
   param(
 
-    [PathLocationCompletions(
-      '..',
+    [RelativePathCompletions(
+      { return [string](Split-Path $PWD.Path) },
       $null, $null
     )]
     [string]$Path
@@ -53,8 +53,8 @@ function Invoke-DirectoryRelative {
 
   param(
 
-    [PathLocationCompletions(
-      '..\..',
+    [RelativePathCompletions(
+      { return [string]($PWD.Path | Split-Path | Split-Path) },
       $null, $null
     )]
     [string]$Path

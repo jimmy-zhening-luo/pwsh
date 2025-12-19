@@ -13,7 +13,7 @@ function Invoke-Workspace {
       Position = 0
     )]
     [AllowEmptyString()]
-    [PathCompletions(
+    [RelativePathCompletions(
       { return [string]$PWD.Path },
       $null, $null
     )]
@@ -139,8 +139,8 @@ function Invoke-WorkspaceSibling {
       Position = 0
     )]
     [AllowEmptyString()]
-    [PathLocationCompletions(
-      '..',
+    [RelativePathCompletions(
+      { return [string](Split-Path $PWD.Path) },
       $null, $null
     )]
     [string]$Workspace,
@@ -185,8 +185,8 @@ function Invoke-WorkspaceRelative {
       Position = 0
     )]
     [AllowEmptyString()]
-    [PathLocationCompletions(
-      '..\..',
+    [RelativePathCompletions(
+      { return [string]($PWD.Path | Split-Path | Split-Path) },
       $null, $null
     )]
     [string]$Workspace,

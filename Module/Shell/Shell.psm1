@@ -11,7 +11,7 @@ function Clear-Line {
 
   param(
 
-    [PathCompletions(
+    [RelativePathCompletions(
       { return [string]$PWD.Path },
       $null, $null
     )]

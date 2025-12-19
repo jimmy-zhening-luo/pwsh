@@ -10,7 +10,7 @@ function Get-File {
 
   param(
 
-    [PathCompletions(
+    [RelativePathCompletions(
       { return [string]$PWD.Path },
       $null, $null
     )]
@@ -65,8 +65,8 @@ function Get-FileSibling {
 
   param(
 
-    [PathLocationCompletions(
-      '..',
+    [RelativePathCompletions(
+      { return [string](Split-Path $PWD.Path) },
       $null, $null
     )]
     [string]$Path
@@ -85,8 +85,8 @@ function Get-FileRelative {
 
   param(
 
-    [PathLocationCompletions(
-      '..\..',
+    [RelativePathCompletions(
+      { return [string]($PWD.Path | Split-Path | Split-Path) },
       $null, $null
     )]
     [string]$Path

@@ -6,7 +6,7 @@ function Set-Directory {
 
   param(
 
-    [PathCompletions(
+    [RelativePathCompletions(
       { return [string]$PWD.Path },
       [PathItemType]::Directory,
       $null
@@ -29,8 +29,8 @@ function Set-DirectorySibling {
 
   param(
 
-    [PathLocationCompletions(
-      '..',
+    [RelativePathCompletions(
+      { return [string](Split-Path $PWD.Path) },
       [PathItemType]::Directory,
       $null
     )]
@@ -50,8 +50,8 @@ function Set-DirectoryRelative {
 
   param(
 
-    [PathLocationCompletions(
-      '..\..',
+    [RelativePathCompletions(
+      { return [string]($PWD.Path | Split-Path | Split-Path) },
       [PathItemType]::Directory,
       $null
     )]

@@ -10,7 +10,7 @@ function Remove-Directory {
 
   param(
 
-    [PathCompletions(
+    [RelativePathCompletions(
       { return [string]$PWD.Path },
       $null, $null
     )]

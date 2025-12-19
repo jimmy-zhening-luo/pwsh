@@ -44,7 +44,7 @@ function New-Directory {
       ValueFromPipelineByPropertyName
     )]
     [Alias('Target')]
-    [PathCompletions(
+    [RelativePathCompletions(
       { return [string]$PWD.Path },
       $null, $null
     )]
@@ -127,7 +127,7 @@ function New-Junction {
       ValueFromPipelineByPropertyName
     )]
     [Alias('Target')]
-    [PathCompletions(
+    [RelativePathCompletions(
       { return [string]$PWD.Path },
       $null, $null
     )]
