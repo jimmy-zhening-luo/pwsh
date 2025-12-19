@@ -204,7 +204,7 @@ function Get-HelpOnline {
     $Private:Help
   }
 
-  [string[]]$Private:Articles = $Private:ArticleList.ToArray() -replace [regex]'^(?>https?:\/\/)?', 'https://' -replace [regex]'^https:\/\/learn\.microsoft\.com\/en-us\/', 'https://learn.microsoft.com/' |
+  [string[]]$Private:Articles = $Private:ArticleList.ToArray() -replace [regex]'^(?>https?:\/\/)?', 'https://' -replace [regex]'(?<=^https:\/\/learn\.microsoft\.com\/)en-us\/', '' |
     Select-Object -Unique -CaseInsensitive
 
   if ($Private:Articles) {
