@@ -64,10 +64,10 @@ function Get-HelpOnline {
           Import-PowerShellDataFile -Path $PSScriptRoot\PSHelpTopic.Local.psd1
         ).About
         [string[]]$Private:Function = Get-ChildItem -Path Function: |
-          Where-Object {
-            $PSItem.Name -notmatch [regex]'[^\w-]'
-          } |
           Select-Object -ExpandProperty Name |
+          Where-Object {
+            $PSItem -notmatch [regex]'[^\w-]'
+          } |
           ForEach-Object {
             $PSItem.ToLower()
           }
