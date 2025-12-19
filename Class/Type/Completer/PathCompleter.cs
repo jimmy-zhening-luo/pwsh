@@ -2,10 +2,8 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Language;
-using System.Text.RegularExpressions;
 
 namespace Completer
 {
@@ -90,19 +88,14 @@ namespace Completer
           true
         );
 
-        Root = Regex.IsMatch(
-            normalizedUnescapedRoot,
-            TypedPath.IsPathTildeRootedPattern
-          )
-          ? Regex.Replace(
-            normalizedUnescapedRoot,
-            TypedPath.SubstituteTildeRootPattern,
-            Environment.GetFolderPath(
+        Root = normalizedUnescapedRoot == "~"
+        || normalizedUnescapedRoot.StartsWith(@"~\")
+          ? Environment.GetFolderPath(
               Environment
                 .SpecialFolder
                 .UserProfile
             )
-          )
+            + normalizedUnescapedRoot[1..]
           : normalizedUnescapedRoot;
         Type = type ?? PathItemType.Any;
         Flat = flat ?? false;
