@@ -101,7 +101,7 @@ function Get-Size {
       [System.IO.FileSystemInfo]$Private:Item = Get-Item @Private:Target
 
       [ulong]$Private:Size = $Private:Item.PSIsContainer ? (
-        Get-ChildItem @Private:Target -Recurse -File |
+        Get-ChildItem @Private:Target -Recurse -Force -File |
           Measure-Object -Property Length -Sum |
           Select-Object -ExpandProperty Sum
       ) : $Private:Item.Length
