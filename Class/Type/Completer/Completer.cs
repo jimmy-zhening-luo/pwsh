@@ -59,7 +59,7 @@ namespace Completer
       IEnumerable<string> domain,
       CompletionCase casing,
       bool surrounding
-    ): base(casing)
+    ) : base(casing)
     {
       Domain = domain;
       Surrounding = surrounding;

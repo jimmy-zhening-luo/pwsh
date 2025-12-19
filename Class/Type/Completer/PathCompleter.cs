@@ -79,7 +79,7 @@ namespace Completer
         string root,
         PathItemType? type,
         bool? flat
-      ): base(CompletionCase.Preserve)
+      ) : base(CompletionCase.Preserve)
       {
         string normalizedUnescapedRoot = TypedPath.Normalize(
           Typed.Typed.Unescape(root),
