@@ -5,7 +5,7 @@ namespace Completer
 {
   namespace PathCompleter
   {
-    public static class Canonicalizer
+    public partial static class Canonicalizer
     {
       public readonly static char PathSeparatorChar = '\\';
       public readonly static char FriendlyPathSeparatorChar = '/';
