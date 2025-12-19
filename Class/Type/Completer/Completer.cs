@@ -8,27 +8,6 @@ using System.Management.Automation.Language;
 namespace Completer
 {
   [AttributeUsage(AttributeTargets.Parameter)]
-  public class StaticCompletionsAttribute(
-    string StringifiedDomain,
-    CompletionCase? Casing,
-    bool? Surrounding
-  ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
-  {
-    public IArgumentCompleter Create()
-    {
-      return new Completer(
-        StringifiedDomain
-          .Split(",")
-          .Select(
-            member => member.Trim()
-          ),
-        Casing ?? CompletionCase.Preserve,
-        Surrounding ?? true
-      );
-    }
-  }
-
-  [AttributeUsage(AttributeTargets.Parameter)]
   public class DynamicCompletionsAttribute(
     ScriptBlock DomainGenerator,
     CompletionCase? Casing,
@@ -44,6 +23,27 @@ namespace Completer
             member => member
               .BaseObject
               .ToString()
+          ),
+        Casing ?? CompletionCase.Preserve,
+        Surrounding ?? true
+      );
+    }
+  }
+
+  [AttributeUsage(AttributeTargets.Parameter)]
+  public class StaticCompletionsAttribute(
+    string StringifiedDomain,
+    CompletionCase? Casing,
+    bool? Surrounding
+  ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
+  {
+    public IArgumentCompleter Create()
+    {
+      return new Completer(
+        StringifiedDomain
+          .Split(",")
+          .Select(
+            member => member.Trim()
           ),
         Casing ?? CompletionCase.Preserve,
         Surrounding ?? true
