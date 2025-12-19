@@ -9,6 +9,9 @@ Test whether a path is the root directory of a Node package.
 .DESCRIPTION
 This function tests returns true if the supplied path is the root directory of a Node package, otherwise false.
 
+.COMPONENT
+Code.Node
+
 .LINK
 https://docs.npmjs.com/cli/commands
 #>
@@ -47,6 +50,9 @@ Resolve a Node package at its root directory.
 
 .DESCRIPTION
 This function resolves the supplied path to a qualified, rooted path if it is a Node package root. If the supplied path is not a Node package root, an error is thrown.
+
+.COMPONENT
+Code.Node
 
 .LINK
 https://docs.npmjs.com/cli/commands
@@ -96,6 +102,9 @@ Run Node.
 
 .DESCRIPTION
 This function is an alias shim for 'node [args]'.
+
+.COMPONENT
+Code.Node
 
 .LINK
 https://nodejs.org/api/cli.html
@@ -216,6 +225,9 @@ Use Node Package Manager (npm) to run a command in a Node package.
 
 .DESCRIPTION
 This function runs an npm command in a specified Node package directory, or the current directory if no path is specified.
+
+.COMPONENT
+Code.Node
 
 .LINK
 https://docs.npmjs.com/cli/commands
@@ -375,6 +387,9 @@ Use 'npx' to run a command from a local or remote npm module.
 .DESCRIPTION
 This function is an alias shim for 'npx [args]'.
 
+.COMPONENT
+Code.Node
+
 .LINK
 https://docs.npmjs.com/cli/commands/npx
 #>
@@ -395,6 +410,9 @@ Use Node Package Manager (npm) to clear the global Node module cache.
 
 .DESCRIPTION
 This function is an alias for 'npm cache clean --force'.
+
+.COMPONENT
+Code.Node
 
 .LINK
 https://docs.npmjs.com/cli/commands/npm-cache
@@ -426,6 +444,9 @@ Use Node Package Manager (npm) to check for outdated packages in a Node package.
 
 .DESCRIPTION
 This function is an alias for 'npm outdated [--prefix $WorkingDirectory]'.
+
+.COMPONENT
+Code.Node
 
 .LINK
 https://docs.npmjs.com/cli/commands/npm-outdated
@@ -487,6 +508,9 @@ Use Node Package Manager (npm) to increment the package version of the current N
 
 .DESCRIPTION
 This function is an alias for 'npm version [--prefix $WorkingDirectory] [version=patch]'.
+
+.COMPONENT
+Code.Node
 
 .LINK
 https://docs.npmjs.com/cli/commands/npm-version
@@ -576,6 +600,9 @@ Use Node Package Manager (npm) to run a script defined in a Node package's 'pack
 .DESCRIPTION
 This function is an alias for 'npm run [script] [--prefix $WorkingDirectory] [--args]'.
 
+.COMPONENT
+Code.Node
+
 .LINK
 https://docs.npmjs.com/cli/commands/npm-run
 #>
@@ -635,6 +662,9 @@ Use Node Package Manager (npm) to run the 'test' script defined in a Node packag
 
 .DESCRIPTION
 This function is an alias for 'npm test [--prefix $WorkingDirectory] [--args]'.
+
+.COMPONENT
+Code.Node
 
 .LINK
 https://docs.npmjs.com/cli/commands/npm-test

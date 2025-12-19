@@ -108,6 +108,9 @@ For every verb except for 'clone', 'config', and 'init', the function will throw
 
 For every verb, if the Git command returns a non-zero exit code, the function will throw an error by default.
 
+.COMPONENT
+Code.Git
+
 .LINK
 https://git-scm.com/docs
 #>
@@ -281,6 +284,9 @@ Use Git to get the status of a local repository.
 .DESCRIPTION
 This function is an alias for 'git status [argument]'.
 
+.COMPONENT
+Code.Git
+
 .LINK
 https://git-scm.com/docs/git-status
 #>
@@ -311,6 +317,9 @@ Use Git to clone a repository.
 
 .DESCRIPTION
 This function is an alias for 'git clone' and allows you to clone a repository into a specified path.
+
+.COMPONENT
+Code.Git
 
 .LINK
 https://git-scm.com/docs/git-clone
@@ -374,6 +383,9 @@ Use Git to pull changes from a repository.
 .DESCRIPTION
 This function is an alias for 'git pull [argument]'.
 
+.COMPONENT
+Code.Git
+
 .LINK
 https://git-scm.com/docs/git-pull
 #>
@@ -405,6 +417,9 @@ Use Git to pull changes for all repositories in the top level of %USERPROFILE%\c
 .DESCRIPTION
 This function runs 'git pull [argument]' in each child repository in %USERPROFILE%\code'.
 
+.COMPONENT
+Code.Git
+
 .LINK
 https://git-scm.com/docs/git-pull
 #>
@@ -433,6 +448,9 @@ Use Git to stage all changes in a repository.
 
 .DESCRIPTION
 This function is an alias for 'git add [.]' and stages all changes in the repository.
+
+.COMPONENT
+Code.Git
 
 .LINK
 https://git-scm.com/docs/git-add
@@ -511,6 +529,9 @@ Commit changes to a Git repository.
 
 .DESCRIPTION
 This function commits changes to a Git repository using the 'git commit' command.
+
+.COMPONENT
+Code.Git
 
 .LINK
 https://git-scm.com/docs/git-commit
@@ -620,6 +641,9 @@ Use Git to push changes to a repository.
 .DESCRIPTION
 This function is an alias for 'git push'.
 
+.COMPONENT
+Code.Git
+
 .LINK
 https://git-scm.com/docs/git-push
 #>
@@ -673,6 +697,9 @@ Use Git to undo changes in a repository.
 
 .DESCRIPTION
 This function is an alias for 'git add . && git reset --hard [HEAD]([~]|^)[n]'.
+
+.COMPONENT
+Code.Git
 
 .LINK
 https://git-scm.com/docs/git-reset
@@ -761,6 +788,9 @@ Use Git to restore a repository to its previous state.
 
 .DESCRIPTION
 This function is an alias for 'git add . && git reset --hard && git pull'.
+
+.COMPONENT
+Code.Git
 
 .LINK
 https://git-scm.com/docs/git-reset
