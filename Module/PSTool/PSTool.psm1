@@ -1,3 +1,5 @@
+using namespace System.Collections.Generic
+
 <#
 .SYNOPSIS
 Open PowerShell command history in a text editor.
@@ -77,7 +79,7 @@ function Measure-PSProfile {
 
   [OutputType([string])]
 
-  [OutputType([int], ParameterSetName = 'Number')]
+  [OutputType([double], ParameterSetName = 'Number')]
 
   param(
 
@@ -91,7 +93,7 @@ function Measure-PSProfile {
     )]
     [ValidateRange(1, 50)]
     # The number of iterations to perform, maximum 50. Default is 1.
-    [ushort]$Iterations,
+    [int]$Iterations,
 
     [Parameter(
       ParameterSetName = 'Number',
@@ -108,33 +110,62 @@ function Measure-PSProfile {
     $Iterations = 1
   }
 
-  [double]$Private:StartupLoadProfile = 0
-  [double]$Private:NormalStartup = 0
+  [List[long]]$Private:BareStartupTicks = [List[long]]::new()
+  [List[long]]$Private:StartupWithProfileTicks = [List[long]]::new()
 
-  [hashtable]$Private:Test = @{
-    Command = '1'
-  }
-  for ([ushort]$Private:i = 0; $Private:i -lt $Iterations; ++$Private:i) {
-    $Private:StartupLoadProfile += [double](
-      Measure-Command { pwsh @Private:Test }
-    ).TotalMilliseconds
-    $Private:NormalStartup += [double](
-      Measure-Command { pwsh -NoProfile @Private:Test }
-    ).TotalMilliseconds
+  for (
+    [int]$Private:i = 0
+    $Private:i -lt $Iterations
+    ++$Private:i
+  ) {
+    [int]$Private:Command1 = Get-Random 500
+    $Private:StartupWithProfileTicks.Add(
+      [long](
+        Measure-Command {
+          pwsh -Command "$Private:Command1"
+        }
+      ).Ticks
+    )
+
+    [int]$Private:Command2 = Get-Random 500
+    $Private:BareStartupTicks.Add(
+      [long](
+        Measure-Command {
+          pwsh -NoProfile -Command "$Private:Command2"
+        }
+      ).Ticks
+    )
   }
 
-  [int]$Private:Performance = [System.Math]::Max(
-    [int][System.Math]::Round(
-      ($Private:StartupLoadProfile - $Private:NormalStartup) / $Iterations
-    ),
-    0
+  [long]$Private:TotalBareStartupTicks = [long][System.Linq.Enumerable]::Sum(
+    [List[long]]$Private:BareStartupTicks
   )
-  [int]$Private:MeanNormalStartup = [System.Math]::Round($Private:NormalStartup / $Iterations)
+  [long]$Private:AverageBareStartupTicks = [long](
+    $Private:TotalBareStartupTicks / $Iterations
+  )
+  [timespan]$Private:AverageBareStartup = [timespan]::new(
+    [long]$Private:AverageBareStartupTicks
+  )
+
+  [long]$Private:TotalStartupWithProfileTicks = [long][System.Linq.Enumerable]::Sum(
+    [List[long]]$Private:StartupWithProfileTicks
+  )
+
+  [long]$Private:TotalProfileCostTicks = [long](
+    [long]$Private:TotalStartupWithProfileTicks - [long]$Private:TotalBareStartupTicks
+  )
+  [long]$Private:AverageProfileCostTicks = [long](
+    $Private:TotalProfileCostTicks / $Iterations
+  )
+  [timespan]$AverageProfileCost = [timespan]::new(
+    [long]$Private:AverageProfileCostTicks
+  )
+
   if ($Number) {
-    return $Private:Performance
+    return $AverageProfileCost.TotalMilliseconds
   }
   else {
-    return "$Private:Performance ms`n(Base: $Private:MeanNormalStartup ms)"
+    return "$([long]$AverageProfileCost.TotalMilliseconds) ms`n(Base: $([long]$AverageBareStartup.TotalMilliseconds) ms)"
   }
 }
 
