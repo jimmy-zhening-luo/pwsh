@@ -45,12 +45,12 @@ function Test-Item {
 
   )
 
-  $Path = [TypedPath]::Normalize(
+  $Path = [Canonicalizer]::Normalize(
     $Path,
     '',
     $True
   )
-  $Location = [TypedPath]::Normalize($Location)
+  $Location = [Canonicalizer]::Normalize($Location)
 
   if ([Path]::IsPathRooted($Path)) {
     if ($Location) {
@@ -58,7 +58,7 @@ function Test-Item {
         [Path]::GetRelativePath(
           $Path,
           $Location
-        ) -match [regex][TypedPath]::IsPathDescendantPattern
+        ) -match [regex][Canonicalizer]::IsPathDescendantPattern
       ) {
         $Path = [Path]::GetRelativePath(
           $Location,
@@ -74,9 +74,9 @@ function Test-Item {
     }
   }
   elseif (
-    $Path -match [regex][TypedPath]::IsPathTildeRootedPattern
+    $Path -match [regex][Canonicalizer]::IsPathTildeRootedPattern
   ) {
-    $Path = $Path -replace [regex][TypedPath]::RemoveTildeRootPattern, ''
+    $Path = $Path -replace [regex][Canonicalizer]::RemoveTildeRootPattern, ''
 
     if ($Location) {
       $Path = Join-Path $HOME $Path
@@ -85,7 +85,7 @@ function Test-Item {
         [Path]::GetRelativePath(
           $Path,
           $Location
-        ) -match [regex][TypedPath]::IsPathDescendantPattern
+        ) -match [regex][Canonicalizer]::IsPathDescendantPattern
       ) {
         $Path = [Path]::GetRelativePath(
           $Location,
@@ -118,7 +118,7 @@ function Test-Item {
   [bool]$Private:HasSubpath = $Private:FullPath.Substring($Private:FullLocation.Length) -notmatch [regex]'^\\*$'
   [bool]$Private:FileLike = $Private:HasSubpath -and -not (
     $Private:FullPath.EndsWith(
-      [TypedPath]::PathSeparator
+      [Canonicalizer]::PathSeparator
     ) -or $Private:FullPath.EndsWith('..')
   )
 
@@ -168,12 +168,12 @@ function Resolve-Item {
     )
   }
 
-  $Path = [TypedPath]::Normalize(
+  $Path = [Canonicalizer]::Normalize(
     $Path,
-    [TypedPath]::PathSeparator,
+    [Canonicalizer]::PathSeparator,
     $True
   )
-  $Location = [TypedPath]::Normalize($Location)
+  $Location = [Canonicalizer]::Normalize($Location)
 
   if ([Path]::IsPathRooted($Path)) {
     if ($Location) {
@@ -187,9 +187,9 @@ function Resolve-Item {
     }
   }
   elseif (
-    $Path -match [regex][TypedPath]::IsPathTildeRootedPattern
+    $Path -match [regex][Canonicalizer]::IsPathTildeRootedPattern
   ) {
-    $Path = $Path -replace [regex][TypedPath]::RemoveTildeRootPattern, ''
+    $Path = $Path -replace [regex][Canonicalizer]::RemoveTildeRootPattern, ''
 
     if ($Location) {
       $Path = [Path]::GetRelativePath(

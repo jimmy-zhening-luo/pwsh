@@ -81,9 +81,9 @@ namespace Completer
         bool? flat
       ) : base(CompletionCase.Preserve)
       {
-        string normalizedUnescapedRoot = TypedPath.Normalize(
+        string normalizedUnescapedRoot = Canonicalizer.Normalize(
           Stringifier.Unescape(root),
-          TypedPath.PathSeparator,
+          Canonicalizer.PathSeparator,
           true,
           true
         );
@@ -105,9 +105,9 @@ namespace Completer
         string wordToComplete
       )
       {
-        string currentPathValue = TypedPath.Normalize(
+        string currentPathValue = Canonicalizer.Normalize(
           wordToComplete,
-          TypedPath.PathSeparator,
+          Canonicalizer.PathSeparator,
           true,
           false
         );
@@ -118,7 +118,7 @@ namespace Completer
         if (!string.IsNullOrWhiteSpace(currentPathValue))
         {
           int lastSeparatorIndex = currentPathValue.LastIndexOf(
-            TypedPath.PathSeparatorChar
+            Canonicalizer.PathSeparatorChar
           );
 
           if (lastSeparatorIndex >= 0)
@@ -187,7 +187,7 @@ namespace Completer
               Path.GetFileName(directory),
               Flat
                 ? string.Empty
-                : TypedPath.PathSeparator
+                : Canonicalizer.PathSeparator
             );
           }
         }
@@ -218,7 +218,7 @@ namespace Completer
         {
           yield return Path.Join(
             currentDirectoryValue,
-            TypedPath.PathSeparator
+            Canonicalizer.PathSeparator
           );
         }
 
@@ -238,8 +238,8 @@ namespace Completer
         )
         {
           yield return descendant.Replace(
-            TypedPath.PathSeparatorChar,
-            TypedPath.FriendlyPathSeparatorChar
+            Canonicalizer.PathSeparatorChar,
+            Canonicalizer.FriendlyPathSeparatorChar
           );
         }
       }
