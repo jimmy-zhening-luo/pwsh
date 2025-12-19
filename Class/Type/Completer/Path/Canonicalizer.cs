@@ -112,17 +112,17 @@ namespace Completer
       } // method Canonicalizer.AnchorRelative
 
       [GeneratedRegex(
-        DuplicatePathSeparatorPattern
+        @"(?<!^)\\\\+"
       )]
       private static partial Regex DuplicatePathSeparatorRegex();
 
       [GeneratedRegex(
-        RemoveRelativeRootPattern
+        @"^\.(?>$|\\+)"
       )]
       private static partial Regex RemoveRelativeRootRegex();
 
       [GeneratedRegex(
-        RemoveTrailingPathSeparatorPattern
+        @"(?>(?<!^)(?<!:)\\+)$"
       )]
       private static partial Regex RemoveTrailingPathSeparatorRegex();
     } // class Canonicalizer
