@@ -50,6 +50,6 @@ namespace Transform
           );
         }
       }
-    }
-  }
-}
+    } // class ConvertToHex
+  } // namespace Commands
+} // namespace Transform

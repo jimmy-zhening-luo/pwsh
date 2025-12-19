@@ -18,7 +18,7 @@ namespace Completer
       Variable,
       Alias,
       Function
-    }
+    } // enum PathProvider
 
     public enum PathItemType
     {
@@ -30,7 +30,7 @@ namespace Completer
       Variable,
       Alias,
       Function
-    }
+    } // enum PathItemType
 
     [AttributeUsage(AttributeTargets.Parameter)]
     public class RelativePathCompletionsAttribute(
@@ -50,7 +50,7 @@ namespace Completer
           Flat
         );
       }
-    }
+    } // class RelativePathCompletionsAttribute
 
     [AttributeUsage(AttributeTargets.Parameter)]
     public class PathLocationCompletionsAttribute(
@@ -67,7 +67,7 @@ namespace Completer
           Flat
         );
       }
-    }
+    } // class PathLocationCompletionsAttribute
 
     internal class PathCompleter : CompleterBase
     {
@@ -81,22 +81,14 @@ namespace Completer
         bool? flat
       ) : base(CompletionCase.Preserve)
       {
-        string normalizedUnescapedRoot = Canonicalizer.Normalize(
-          Stringifier.Unescape(root),
-          Canonicalizer.PathSeparator,
-          true,
-          true
-        );
-
-        Root = normalizedUnescapedRoot == "~"
-        || normalizedUnescapedRoot.StartsWith(@"~\")
-          ? Environment.GetFolderPath(
-              Environment
-                .SpecialFolder
-                .UserProfile
-            )
-            + normalizedUnescapedRoot[1..]
-          : normalizedUnescapedRoot;
+        Root = Canonicalizer.AnchorHome(
+          Canonicalizer.Normalize(
+            Stringifier.Unescape(root),
+            Canonicalizer.PathSeparator,
+            true,
+            true
+          )
+        ),
         Type = type ?? PathItemType.Any;
         Flat = flat ?? false;
       }
@@ -243,6 +235,6 @@ namespace Completer
           );
         }
       }
-    }
-  }
-}
+    } // class PathCompleter
+  } // namespace PathCompleter
+} // namespace Completer

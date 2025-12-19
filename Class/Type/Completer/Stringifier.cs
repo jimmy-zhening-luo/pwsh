@@ -33,5 +33,5 @@ namespace Completer
           + Quote
         : text;
     }
-  }
-}
+  } // class Stringifier
+} // namespace Completer

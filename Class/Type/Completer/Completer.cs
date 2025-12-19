@@ -28,7 +28,7 @@ namespace Completer
         Surrounding ?? true
       );
     }
-  }
+  } // class DynamicCompletionsAttribute
 
   [AttributeUsage(AttributeTargets.Parameter)]
   public class StaticCompletionsAttribute(
@@ -50,7 +50,7 @@ namespace Completer
         Surrounding ?? true
       );
     }
-  }
+  } // class StaticCompletionsAttribute
 
   internal class Completer : CompleterBase
   {
@@ -126,5 +126,5 @@ namespace Completer
     {
       return FindCompletion(wordToComplete);
     }
-  }
-}
+  } // class Completer
+} // namespace Completer

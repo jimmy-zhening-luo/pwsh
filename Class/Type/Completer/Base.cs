@@ -11,7 +11,7 @@ namespace Completer
     Preserve,
     Lower,
     Upper
-  }
+  } // enum CompletionCase
 
   public abstract class CompleterBase(
     CompletionCase Casing
@@ -58,5 +58,5 @@ namespace Completer
         );
       }
     }
-  }
-}
+  } // class CompleterBase
+} // namespace Completer

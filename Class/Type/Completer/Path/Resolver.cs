@@ -23,7 +23,7 @@ namespace Completer
         {
           return location;
         }
-      }
+      } // method Resolver.Test
 
       public static string Resolve(
         string path,
@@ -42,7 +42,7 @@ namespace Completer
         {
           return location;
         }
-      }
-    }
-  }
-}
+      } // method Resolver.Resolve
+    } // class Resolver
+  } // namespace PathCompleter
+} // namespace Completer

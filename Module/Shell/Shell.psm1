@@ -74,9 +74,9 @@ function Test-RelativePath {
     }
   }
   elseif (
-    $Path -match [regex][Canonicalizer]::IsPathTildeRootedPattern
+    $Path -match [regex][Canonicalizer]::IsPathHomeRootedPattern
   ) {
-    $Path = $Path -replace [regex][Canonicalizer]::RemoveTildeRootPattern, ''
+    $Path = $Path -replace [regex][Canonicalizer]::RemoveHomeRootPattern, ''
 
     if ($Location) {
       $Path = Join-Path $HOME $Path
@@ -187,9 +187,9 @@ function Resolve-RelativePath {
     }
   }
   elseif (
-    $Path -match [regex][Canonicalizer]::IsPathTildeRootedPattern
+    $Path -match [regex][Canonicalizer]::IsPathHomeRootedPattern
   ) {
-    $Path = $Path -replace [regex][Canonicalizer]::RemoveTildeRootPattern, ''
+    $Path = $Path -replace [regex][Canonicalizer]::RemoveHomeRootPattern, ''
 
     if ($Location) {
       $Path = [Path]::GetRelativePath(
