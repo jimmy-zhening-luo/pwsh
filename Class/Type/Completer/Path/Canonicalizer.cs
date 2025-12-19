@@ -104,7 +104,7 @@ namespace Completer
 
       public static string AnchorRelative(
         string path,
-        string currentDirectory,
+        string currentDirectory
       )
       {
         // placeholder
