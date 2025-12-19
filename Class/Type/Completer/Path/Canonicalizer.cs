@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Text.RegularExpressions;
 
@@ -53,7 +54,7 @@ namespace Completer
             )
           : normalPath;
         string trimmedNormalPath = trimTrailing
-          ? RemoveTrailingPathSeparatorRegex.Replace(
+          ? RemoveTrailingPathSeparatorRegex().Replace(
               pretrimmedNormalPath,
               string.Empty
             )
