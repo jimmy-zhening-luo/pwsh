@@ -1,23 +1,12 @@
 @{
+  RootModule           = 'Code.Git.psm1'
   ModuleVersion        = '3.0.0.0'
   CompatiblePSEditions = @('Desktop', 'Core')
-  GUID                 = 'a5751c41-5026-444f-8c2a-f13a2ac354f2'
+  GUID                 = 'e76317a1-f5d7-42d8-90c7-87ac23270155'
   Author               = 'Jimmy Zhening Luo'
   CompanyName          = 'Jimmy Zhening Luo'
   Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
   PowerShellVersion    = '7.4'
-  NestedModules        = @(
-    @{
-      ModuleName    = 'Shell.Code.Git'
-      ModuleVersion = '3.0.0.0'
-      GUID          = '26c82360-9443-447e-8436-b1afe0e5a086'
-    }
-    @{
-      ModuleName    = 'Shell.Code.Node'
-      ModuleVersion = '3.0.0.0'
-      GUID          = '47836d9e-49bd-4405-bdc6-1900f3108d10'
-    }
-  )
   FunctionsToExport    = @(
     'Invoke-GitRepository'
     'Measure-GitRepository'
@@ -29,14 +18,6 @@
     'Push-GitRepository'
     'Reset-GitRepository'
     'Restore-GitRepository'
-    'Invoke-Node'
-    'Invoke-NodePackage'
-    'Invoke-NodeExecutable'
-    'Clear-NodeModuleCache'
-    'Compare-NodeModule'
-    'Step-NodePackageVersion'
-    'Invoke-NodePackageScript'
-    'Test-NodePackage'
   )
   CmdletsToExport      = @()
   VariablesToExport    = @()
@@ -49,13 +30,5 @@
     'gs'
     'gr'
     'grp'
-    'no'
-    'n'
-    'nx'
-    'ncc'
-    'npo'
-    'nu'
-    'nr'
-    'nt'
   )
 }

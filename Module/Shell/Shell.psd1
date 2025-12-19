@@ -33,11 +33,6 @@
       ModuleVersion = '3.0.0.0'
       GUID          = '1099153a-7f76-415c-8b8f-d18f5351d581'
     }
-    @{
-      ModuleName    = 'Shell.Code'
-      ModuleVersion = '3.0.0.0'
-      GUID          = 'a5751c41-5026-444f-8c2a-f13a2ac354f2'
-    }
   )
   FunctionsToExport    = @(
     'Clear-Line'
@@ -78,24 +73,6 @@
     'Invoke-WorkspaceCode'
     'Invoke-WorkspaceDrive'
     'Remove-Directory'
-    'Invoke-GitRepository'
-    'Measure-GitRepository'
-    'Import-GitRepository'
-    'Get-GitRepository'
-    'Get-ChildGitRepository'
-    'Add-GitRepository'
-    'Write-GitRepository'
-    'Push-GitRepository'
-    'Reset-GitRepository'
-    'Restore-GitRepository'
-    'Invoke-Node'
-    'Invoke-NodePackage'
-    'Invoke-NodeExecutable'
-    'Clear-NodeModuleCache'
-    'Compare-NodeModule'
-    'Step-NodePackageVersion'
-    'Invoke-NodePackageScript'
-    'Test-NodePackage'
   )
   CmdletsToExport      = @()
   VariablesToExport    = @()
@@ -139,21 +116,5 @@
     'ih'
     'ic'
     'i/'
-    'g'
-    'gg'
-    'gitcl'
-    'gpp'
-    'ga'
-    'gs'
-    'gr'
-    'grp'
-    'no'
-    'n'
-    'nx'
-    'ncc'
-    'npo'
-    'nu'
-    'nr'
-    'nt'
   )
 }

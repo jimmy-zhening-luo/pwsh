@@ -1,8 +1,8 @@
 @{
-  RootModule           = 'Shell.Code.Node.psm1'
+  RootModule           = 'Code.Node.psm1'
   ModuleVersion        = '3.0.0.0'
   CompatiblePSEditions = @('Desktop', 'Core')
-  GUID                 = '47836d9e-49bd-4405-bdc6-1900f3108d10'
+  GUID                 = '886a95dd-cf5d-4016-8015-5f9a9345d66c'
   Author               = 'Jimmy Zhening Luo'
   CompanyName          = 'Jimmy Zhening Luo'
   Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
