@@ -17,13 +17,13 @@ function Invoke-Workspace {
       { return [string]$PWD.Path },
       $null, $null
     )]
-    [string]$Path,
+    [string]$Workspace,
 
     [Parameter(
       Position = 1
     )]
     [AllowEmptyString()]
-    [string]$Name,
+    [string]$ProfileName,
 
     [Parameter(
       Position = 2,
@@ -60,10 +60,10 @@ function Invoke-Workspace {
     $Location = ''
   }
 
-  if ($Path) {
+  if ($Workspace) {
     [string]$Private:Target = $Location ? (
-      Join-Path $Location $Path
-    ) : $Path
+      Join-Path $Location $Workspace
+    ) : $Workspace
     if (Test-Path -Path $Private:Target) {
       $Private:ArgumentList.Insert(
         0,
@@ -71,16 +71,16 @@ function Invoke-Workspace {
       )
     }
     else {
-      if (-not $Path.StartsWith('-')) {
-        throw "Path '$Path' does not exist."
+      if (-not $Workspace.StartsWith('-')) {
+        throw "Path '$Workspace' does not exist."
       }
 
-      $Private:ArgumentList.Insert(0, $Path)
-      $Path = ''
+      $Private:ArgumentList.Insert(0, $Workspace)
+      $Workspace = ''
     }
   }
 
-  if (-not $Path) {
+  if (-not $Workspace) {
     if ($Location -and -not $Empty -or $ReuseWindow) {
       $Private:ArgumentList.Insert(
         0,
@@ -101,13 +101,13 @@ function Invoke-Workspace {
     )
   }
 
-  if ($Name) {
+  if ($ProfileName) {
     $Window = $True
     $Private:ArgumentList.Add(
-      $Name.StartsWith('-') ? (
-        $Name
+      $ProfileName.StartsWith('-') ? (
+        $ProfileName
       ) : (
-        "--profile=$Name"
+        "--profile=$ProfileName"
       )
     )
   }
@@ -143,13 +143,13 @@ function Invoke-WorkspaceSibling {
       '..',
       $null, $null
     )]
-    [string]$Path,
+    [string]$Workspace,
 
     [Parameter(
       Position = 1
     )]
     [AllowEmptyString()]
-    [string]$Name,
+    [string]$ProfileName,
 
     [Parameter(
       Position = 2,
@@ -189,13 +189,13 @@ function Invoke-WorkspaceRelative {
       '..\..',
       $null, $null
     )]
-    [string]$Path,
+    [string]$Workspace,
 
     [Parameter(
       Position = 1
     )]
     [AllowEmptyString()]
-    [string]$Name,
+    [string]$ProfileName,
 
     [Parameter(
       Position = 2,
@@ -234,13 +234,13 @@ function Invoke-WorkspaceHome {
       '~',
       $null, $null
     )]
-    [string]$Path,
+    [string]$Workspace,
 
     [Parameter(
       Position = 1
     )]
     [AllowEmptyString()]
-    [string]$Name,
+    [string]$ProfileName,
 
     [Parameter(
       Position = 2,
@@ -279,13 +279,13 @@ function Invoke-WorkspaceCode {
       '~\code',
       $null, $null
     )]
-    [string]$Path,
+    [string]$Workspace,
 
     [Parameter(
       Position = 1
     )]
     [AllowEmptyString()]
-    [string]$Name,
+    [string]$ProfileName,
 
     [Parameter(
       Position = 2,

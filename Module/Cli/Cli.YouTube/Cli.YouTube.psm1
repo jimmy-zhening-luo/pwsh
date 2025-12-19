@@ -151,9 +151,9 @@ function Invoke-YouTubeConfig {
   param()
 
   [hashtable]$Private:YouTubeConfig = @{
-    Path   = 'util\bin\yt\yt-dlp.conf'
-    Name   = 'Setting'
-    Window = $True
+    Workspace   = 'util\bin\yt\yt-dlp.conf'
+    ProfileName = 'Setting'
+    Window      = $True
   }
   Invoke-WorkspaceHome @Private:YouTubeConfig
 }
