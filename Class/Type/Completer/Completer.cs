@@ -68,7 +68,7 @@ namespace Completer
       string wordToComplete
     )
     {
-      string unescapedWordToComplete = Typed.Typed.Unescape(wordToComplete);
+      string unescapedWordToComplete = Typed.Unescape(wordToComplete);
       if (
         string.IsNullOrWhiteSpace(
           unescapedWordToComplete

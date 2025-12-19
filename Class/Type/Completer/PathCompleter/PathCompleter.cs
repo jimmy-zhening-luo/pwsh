@@ -82,7 +82,7 @@ namespace Completer
       ) : base(CompletionCase.Preserve)
       {
         string normalizedUnescapedRoot = TypedPath.Normalize(
-          Typed.Typed.Unescape(root),
+          Typed.Unescape(root),
           TypedPath.PathSeparator,
           true,
           true

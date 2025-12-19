@@ -31,7 +31,7 @@ namespace Completer
       )
       {
         string normalPath = Regex.Replace(
-          Typed.Typed
+          Typed
             .Unescape(path)
             .Replace(
               FriendlyPathSeparatorChar,
