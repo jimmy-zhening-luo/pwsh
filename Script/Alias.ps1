@@ -9,10 +9,10 @@ Set-Alias rd Shell\Remove-Directory
 Set-Alias man PSHelp\Get-HelpOnline
 
 # was: Get-ItemProperty
-Set-Alias gp Shell\Get-GitRepository -Force -Option ReadOnly
+Set-Alias gp Code\Get-GitRepository -Force -Option ReadOnly
 
 # was: Get-Member
-Set-Alias gm Shell\Write-GitRepository -Force -Option ReadOnly
+Set-Alias gm Code\Write-GitRepository -Force -Option ReadOnly
 
 #endregion
 
