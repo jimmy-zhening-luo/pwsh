@@ -33,23 +33,6 @@ namespace Completer
     }
 
     [AttributeUsage(AttributeTargets.Parameter)]
-    public class PathLocationCompletionsAttribute(
-      string Location,
-      PathItemType? ItemType,
-      bool? Flat
-    ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
-    {
-      public IArgumentCompleter Create()
-      {
-        return new PathCompleter(
-          Location,
-          ItemType,
-          Flat
-        );
-      }
-    }
-
-    [AttributeUsage(AttributeTargets.Parameter)]
     public class RelativePathCompletionsAttribute(
       ScriptBlock CurrentDirectory,
       PathItemType? ItemType,
@@ -63,6 +46,23 @@ namespace Completer
             .Invoke()[0]
             .BaseObject
             .ToString(),
+          ItemType,
+          Flat
+        );
+      }
+    }
+
+    [AttributeUsage(AttributeTargets.Parameter)]
+    public class PathLocationCompletionsAttribute(
+      string Location,
+      PathItemType? ItemType,
+      bool? Flat
+    ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
+    {
+      public IArgumentCompleter Create()
+      {
+        return new PathCompleter(
+          Location,
           ItemType,
           Flat
         );
