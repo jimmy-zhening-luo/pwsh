@@ -52,7 +52,7 @@ function Invoke-PSProfile {
     FilePath     = "$env:LOCALAPPDATA\Programs\Microsoft VS Code\bin\code.cmd"
     ArgumentList = @(
       "$PROFILE_REPO_ROOT"
-      '--profile=Default'
+      '--profile=PowerShell'
     )
     NoNewWindow  = $True
   }
