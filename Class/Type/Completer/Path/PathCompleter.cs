@@ -88,7 +88,7 @@ namespace Completer
             true,
             true
           )
-        ),
+        );
         Type = type ?? PathItemType.Any;
         Flat = flat ?? false;
       }
