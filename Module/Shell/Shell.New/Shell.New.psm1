@@ -5,7 +5,6 @@ using namespace Completer.PathCompleter
 .FORWARDHELPCATEGORY Cmdlet
 #>
 function New-Directory {
-
   [CmdletBinding(
     DefaultParameterSetName = 'pathSet',
     SupportsShouldProcess,
@@ -13,7 +12,6 @@ function New-Directory {
     ConfirmImpact = 'Medium'
   )]
   [OutputType([System.IO.DirectoryInfo])]
-
   param(
 
     [Parameter(
@@ -100,7 +98,6 @@ function New-Directory {
 .FORWARDHELPCATEGORY Cmdlet
 #>
 function New-Junction {
-
   [CmdletBinding(
     DefaultParameterSetName = 'pathSet',
     SupportsShouldProcess,
@@ -108,7 +105,6 @@ function New-Junction {
     ConfirmImpact = 'Medium'
   )]
   [OutputType([System.IO.DirectoryInfo])]
-
   param(
 
     [Parameter(

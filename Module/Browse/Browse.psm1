@@ -12,12 +12,10 @@ Browse
 https://www.chromium.org/developers/how-tos/run-chromium-with-flags/
 #>
 function Open-Url {
-
   [CmdletBinding(
     DefaultParameterSetName = 'Path'
   )]
   [OutputType([void])]
-
   param(
 
     [Parameter(

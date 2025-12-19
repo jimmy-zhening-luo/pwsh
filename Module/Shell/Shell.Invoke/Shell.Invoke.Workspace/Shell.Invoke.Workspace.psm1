@@ -2,10 +2,8 @@ using namespace System.Collections.Generic
 using namespace Completer.PathCompleter
 
 function Invoke-Workspace {
-
   [CmdletBinding()]
   [OutputType([void])]
-
   param(
 
     [Parameter(
@@ -127,10 +125,8 @@ function Invoke-Workspace {
 }
 
 function Invoke-WorkspaceSibling {
-
   [CmdletBinding()]
   [OutputType([void])]
-
   param(
 
     [Parameter(
@@ -172,10 +168,8 @@ function Invoke-WorkspaceSibling {
 }
 
 function Invoke-WorkspaceRelative {
-
   [CmdletBinding()]
   [OutputType([void])]
-
   param(
 
     [Parameter(
@@ -216,10 +210,8 @@ function Invoke-WorkspaceRelative {
 }
 
 function Invoke-WorkspaceHome {
-
   [CmdletBinding()]
   [OutputType([void])]
-
   param(
 
     [Parameter(
@@ -260,10 +252,8 @@ function Invoke-WorkspaceHome {
 }
 
 function Invoke-WorkspaceCode {
-
   [CmdletBinding()]
   [OutputType([void])]
-
   param(
 
     [Parameter(

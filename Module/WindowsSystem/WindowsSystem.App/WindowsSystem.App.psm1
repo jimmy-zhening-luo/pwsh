@@ -10,10 +10,8 @@ This function invokes the URI 'ms-windows-store://downloadsandupdates' to open t
 WindowsSystem.App
 #>
 function Update-StoreApp {
-
   [CmdletBinding()]
   [OutputType([void])]
-
   param()
 
   if ($env:SSH_CLIENT) {

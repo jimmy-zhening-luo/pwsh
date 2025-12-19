@@ -32,10 +32,8 @@ This function invokes the URI 'ms-settings:windowsupdate' to open the 'Windows U
 WindowsSystem
 #>
 function Update-Windows {
-
   [CmdletBinding()]
   [OutputType([void])]
-
   param()
 
   if ($env:SSH_CLIENT) {
@@ -59,10 +57,8 @@ This function invokes 'rundll32' on 'sysdm.cpl' ('System Properties' control pan
 WindowsSystem
 #>
 function Edit-SystemPath {
-
   [CmdletBinding()]
   [OutputType([void])]
-
   param(
 
     # Launch Environment Variables control panel as administrator to edit system variables
@@ -100,14 +96,12 @@ If the Self switch is used, the function stops the Windows Terminal process itse
 WindowsSystem
 #>
 function Stop-Task {
-
   [CmdletBinding(
     DefaultParameterSetName = 'Name',
     SupportsShouldProcess,
     ConfirmImpact = 'Medium'
   )]
   [OutputType([void])]
-
   param(
 
     [Parameter(

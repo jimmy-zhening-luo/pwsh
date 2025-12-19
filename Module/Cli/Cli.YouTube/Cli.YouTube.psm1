@@ -119,10 +119,8 @@ Opens yt-dlp download location in File Explorer, not by config though lmao.
 Cli.YouTube
 #>
 function Invoke-YouTubeDirectory {
-
   [CmdletBinding()]
   [OutputType([void])]
-
   param()
 
   [hashtable]$Private:YouTubeDownloads = @{
@@ -142,10 +140,8 @@ Opens yt-dlp configuration file for editing.
 Cli.YouTube
 #>
 function Invoke-YouTubeConfig {
-
   [CmdletBinding()]
   [OutputType([void])]
-
   param()
 
   [hashtable]$Private:YouTubeConfig = @{

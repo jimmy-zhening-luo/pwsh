@@ -11,10 +11,8 @@ This function opens the PowerShell command history file in Visual Studio Code.
 PSTool
 #>
 function Invoke-PSHistory {
-
   [CmdletBinding()]
   [OutputType([void])]
-
   param()
 
   [hashtable]$Private:CodeEdit = @{
@@ -42,10 +40,8 @@ This function opens the PowerShell profile repository in Visual Studio Code.
 PSTool
 #>
 function Invoke-PSProfile {
-
   [CmdletBinding()]
   [OutputType([void])]
-
   param()
 
   [hashtable]$Private:CodeEdit = @{
@@ -70,12 +66,10 @@ This function measures the load time of the PowerShell profile by comparing the 
 PSTool
 #>
 function Measure-PSProfile {
-
   [CmdletBinding(
     DefaultParameterSetName = 'String'
   )]
   [OutputType([string])]
-
   [OutputType([double], ParameterSetName = 'Number')]
 
   param(
@@ -270,13 +264,11 @@ function Update-PSProfile {
 }
 
 function Install-PSModuleDotnet {
-
   [CmdletBinding(
     SupportsShouldProcess,
     ConfirmImpact = 'High'
   )]
   [OutputType([System.Management.Automation.ApplicationInfo])]
-
   param()
 
   process {

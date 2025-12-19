@@ -47,10 +47,8 @@ https://learn.microsoft.com/powershell/module/microsoft.powershell.core/get-help
 Get-Help
 #>
 function Get-HelpOnline {
-
   [CmdletBinding()]
   [OutputType([string], [System.Object])]
-
   param(
 
     [Parameter(
@@ -233,10 +231,8 @@ https://learn.microsoft.com/powershell/module/microsoft.powershell.utility/get-a
 Get-Alias
 #>
 function Get-CommandAlias {
-
   [CmdletBinding()]
   [OutputType([System.Management.Automation.CommandInfo[]])]
-
   param(
 
     [Parameter(
@@ -335,10 +331,8 @@ http://learn.microsoft.com/powershell/module/microsoft.powershell.utility/get-ve
 Get-Verb
 #>
 function Get-VerbList {
-
   [CmdletBinding()]
   [OutputType([string[]])]
-
   param(
 
     [Parameter(

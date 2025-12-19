@@ -16,10 +16,8 @@ Code.Node
 https://docs.npmjs.com/cli/commands
 #>
 function Test-NodePackageDirectory {
-
   [CmdletBinding()]
   [OutputType([bool])]
-
   param(
 
     [Parameter(
@@ -53,10 +51,8 @@ Code.Node
 https://docs.npmjs.com/cli/commands
 #>
 function Resolve-NodePackageDirectory {
-
   [CmdletBinding()]
   [OutputType([string])]
-
   param(
 
     [Parameter(

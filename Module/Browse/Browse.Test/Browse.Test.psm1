@@ -29,12 +29,10 @@ https://learn.microsoft.com/powershell/module/nettcpip/test-netconnection
 Test-NetConnection
 #>
 function Test-Host {
-
   [CmdletBinding(
     DefaultParameterSetName = 'CommonTCPPort'
   )]
   [OutputType([System.Object[]])]
-
   param(
 
     [Parameter(
@@ -146,10 +144,8 @@ https://learn.microsoft.com/powershell/module/microsoft.powershell.utility/invok
 Invoke-WebRequest
 #>
 function Test-Url {
-
   [CmdletBinding()]
   [OutputType([uri[]])]
-
   param(
 
     [Parameter(

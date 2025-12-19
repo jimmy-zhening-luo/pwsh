@@ -3,10 +3,8 @@ using namespace Completer
 using namespace Completer.PathCompleter
 
 function Resolve-GitRepository {
-
   [CmdletBinding()]
   [OutputType([string[]])]
-
   param(
 
     [Parameter(

@@ -15,10 +15,8 @@ https://learn.microsoft.com/powershell/module/microsoft.powershell.utility/new-g
 New-Guid
 #>
 function Copy-Guid {
-
   [CmdletBinding()]
   [OutputType([string])]
-
   param(
 
     [Alias('Case')]
