@@ -41,9 +41,10 @@ namespace Completer
     {
       return new Completer(
         StringifiedDomain
-          .Split(",")
-          .Select(
-            member => member.Trim()
+          .Split(
+            ',',
+            StringSplitOptions.RemoveEmptyEntries
+            | StringSplitOptions.TrimEntries
           ),
         Casing ?? CompletionCase.Preserve,
         Surrounding ?? true
@@ -68,7 +69,7 @@ namespace Completer
       string wordToComplete
     )
     {
-      string unescapedWordToComplete = Typed.Unescape(wordToComplete);
+      string unescapedWordToComplete = Stringifier.Unescape(wordToComplete);
       if (
         string.IsNullOrWhiteSpace(
           unescapedWordToComplete

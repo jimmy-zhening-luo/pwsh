@@ -2,7 +2,7 @@ using System.Management.Automation.Language;
 
 namespace Completer
 {
-  public static class Typed
+  public static class Stringifier
   {
     public readonly static char SpaceChar = ' ';
     public readonly static char QuoteChar = '\'';
