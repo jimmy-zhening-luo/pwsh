@@ -99,8 +99,6 @@ namespace Completer
         {
           return path;
         }
-
-        return home + path[1..];
       } // method Canonicalizer.AnchorHome
 
       public static string AnchorRelative(
