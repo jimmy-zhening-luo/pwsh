@@ -60,19 +60,13 @@ function Get-HelpOnline {
     )]
     [DynamicCompletions(
       {
-        [string[]]$Private:About = (
+        return (
           Import-PowerShellDataFile -Path $PSScriptRoot\PSHelpTopic.Local.psd1
-        ).About
-        [string[]]$Private:Function = Get-ChildItem -Path Function: |
-          Select-Object -ExpandProperty Name |
-          Where-Object {
-            $PSItem -notmatch [regex]'[^\w-]'
-          } |
-          ForEach-Object {
-            $PSItem.ToLower()
-          }
-
-        return $Private:About + $Private:Function
+        ).About + (
+          (
+            Get-ChildItem -Path Function:
+          ).Name.ToLower() -notmatch [regex]'[^\w-]'
+        ).ToLower()
       },
       $null, $null
     )]
