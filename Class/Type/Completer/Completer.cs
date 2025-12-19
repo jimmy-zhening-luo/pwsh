@@ -7,6 +7,50 @@ using System.Management.Automation.Language;
 
 namespace Completer
 {
+  [AttributeUsage(AttributeTargets.Parameter)]
+  public class StaticCompletionsAttribute(
+    string StringifiedDomain,
+    CompletionCase? Casing,
+    bool? Surrounding
+  ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
+  {
+    public IArgumentCompleter Create()
+    {
+      return new Completer(
+        StringifiedDomain
+          .Split(",")
+          .Select(
+            member => member.Trim()
+          ),
+        Casing ?? CompletionCase.Preserve,
+        Surrounding ?? true
+      );
+    }
+  }
+
+  [AttributeUsage(AttributeTargets.Parameter)]
+  public class DynamicCompletionsAttribute(
+    ScriptBlock DomainGenerator,
+    CompletionCase? Casing,
+    bool? Surrounding
+  ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
+  {
+    public IArgumentCompleter Create()
+    {
+      return new Completer(
+        DomainGenerator
+          .Invoke()
+          .Select(
+            member => member
+              .BaseObject
+              .ToString()
+          ),
+        Casing ?? CompletionCase.Preserve,
+        Surrounding ?? true
+      );
+    }
+  }
+
   internal class Completer : CompleterBase
   {
     public readonly IEnumerable<string> Domain;
@@ -80,50 +124,6 @@ namespace Completer
     )
     {
       return FindCompletion(wordToComplete);
-    }
-  }
-
-  [AttributeUsage(AttributeTargets.Parameter)]
-  public class StaticCompletionsAttribute(
-    string StringifiedDomain,
-    CompletionCase? Casing,
-    bool? Surrounding
-  ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
-  {
-    public IArgumentCompleter Create()
-    {
-      return new Completer(
-        StringifiedDomain
-          .Split(",")
-          .Select(
-            member => member.Trim()
-          ),
-        Casing ?? CompletionCase.Preserve,
-        Surrounding ?? true
-      );
-    }
-  }
-
-  [AttributeUsage(AttributeTargets.Parameter)]
-  public class DynamicCompletionsAttribute(
-    ScriptBlock DomainGenerator,
-    CompletionCase? Casing,
-    bool? Surrounding
-  ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
-  {
-    public IArgumentCompleter Create()
-    {
-      return new Completer(
-        DomainGenerator
-          .Invoke()
-          .Select(
-            member => member
-              .BaseObject
-              .ToString()
-          ),
-        Casing ?? CompletionCase.Preserve,
-        Surrounding ?? true
-      );
     }
   }
 }

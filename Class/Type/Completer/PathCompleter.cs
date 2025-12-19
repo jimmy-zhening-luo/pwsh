@@ -34,7 +34,44 @@ namespace Completer
       Function
     }
 
-    public class PathCompleter : CompleterBase
+    [AttributeUsage(AttributeTargets.Parameter)]
+    public class PathLocationCompletionsAttribute(
+      string Location,
+      PathItemType? ItemType,
+      bool? Flat
+    ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
+    {
+      public IArgumentCompleter Create()
+      {
+        return new PathCompleter(
+          Location,
+          ItemType,
+          Flat
+        );
+      }
+    }
+
+    [AttributeUsage(AttributeTargets.Parameter)]
+    public class PathCompletionsAttribute(
+      ScriptBlock CurrentDirectory,
+      PathItemType? ItemType,
+      bool? Flat
+    ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
+    {
+      public IArgumentCompleter Create()
+      {
+        return new PathCompleter(
+          CurrentDirectory
+            .Invoke()[0]
+            .BaseObject
+            .ToString(),
+          ItemType,
+          Flat
+        );
+      }
+    }
+
+    internal class PathCompleter : CompleterBase
     {
       public readonly string Root;
       public readonly PathItemType Type;
@@ -212,43 +249,6 @@ namespace Completer
             TypedPath.FriendlyPathSeparatorChar
           );
         }
-      }
-    }
-
-    [AttributeUsage(AttributeTargets.Parameter)]
-    public class PathLocationCompletionsAttribute(
-      string Location,
-      PathItemType? ItemType,
-      bool? Flat
-    ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
-    {
-      public IArgumentCompleter Create()
-      {
-        return new PathCompleter(
-          Location,
-          ItemType,
-          Flat
-        );
-      }
-    }
-
-    [AttributeUsage(AttributeTargets.Parameter)]
-    public class PathCompletionsAttribute(
-      ScriptBlock CurrentDirectory,
-      PathItemType? ItemType,
-      bool? Flat
-    ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
-    {
-      public IArgumentCompleter Create()
-      {
-        return new PathCompleter(
-          CurrentDirectory
-            .Invoke()[0]
-            .BaseObject
-            .ToString(),
-          ItemType,
-          Flat
-        );
       }
     }
   }
