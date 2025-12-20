@@ -16,7 +16,7 @@
   CmdletsToExport      = @()
   VariablesToExport    = @()
   AliasesToExport      = @(
-    'mc'
+    'mcp'
     'oc'
     'op'
     'up'
