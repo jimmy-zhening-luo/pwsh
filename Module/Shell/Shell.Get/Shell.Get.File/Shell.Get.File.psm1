@@ -90,7 +90,7 @@ function Get-FileHome {
   [OutputType([string[]])]
   param(
 
-    [PathLocationCompletions(
+    [LocationPathCompletions(
       '~',
       $null, $null
     )]
@@ -105,7 +105,7 @@ function Get-FileCode {
   [OutputType([string[]])]
   param(
 
-    [PathLocationCompletions(
+    [LocationPathCompletions(
       '~\code',
       $null, $null
     )]
@@ -120,7 +120,7 @@ function Get-FileDrive {
   [OutputType([string[]])]
   param(
 
-    [PathLocationCompletions(
+    [LocationPathCompletions(
       '\',
       $null, $null
     )]

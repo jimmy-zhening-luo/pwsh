@@ -58,7 +58,7 @@ function Get-DirectoryHome {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param(
 
-    [PathLocationCompletions(
+    [LocationPathCompletions(
       '~',
       [PathItemType]::Directory,
       $null
@@ -74,7 +74,7 @@ function Get-DirectoryCode {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param(
 
-    [PathLocationCompletions(
+    [LocationPathCompletions(
       '~\code',
       [PathItemType]::Directory,
       $null
@@ -90,7 +90,7 @@ function Get-DirectoryDrive {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param(
 
-    [PathLocationCompletions(
+    [LocationPathCompletions(
       '\',
       [PathItemType]::Directory,
       $null

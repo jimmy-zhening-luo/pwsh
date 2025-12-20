@@ -74,7 +74,7 @@ function Invoke-DirectoryHome {
   [OutputType([void])]
   param(
 
-    [PathLocationCompletions(
+    [LocationPathCompletions(
       '~',
       $null, $null
     )]
@@ -89,7 +89,7 @@ function Invoke-DirectoryCode {
   [OutputType([void])]
   param(
 
-    [PathLocationCompletions(
+    [LocationPathCompletions(
       '~\code',
       $null, $null
     )]
@@ -104,7 +104,7 @@ function Invoke-DirectoryDrive {
   [OutputType([void])]
   param(
 
-    [PathLocationCompletions(
+    [LocationPathCompletions(
       '\',
       $null, $null
     )]

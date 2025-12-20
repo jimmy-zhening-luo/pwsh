@@ -227,7 +227,7 @@ function Invoke-NodePackage {
     # npm command verb
     [string]$Command,
 
-    [PathLocationCompletions(
+    [LocationPathCompletions(
       '~\code',
       [PathItemType]::Directory,
       $True
@@ -426,7 +426,7 @@ function Compare-NodeModule {
 
   param(
 
-    [PathLocationCompletions(
+    [LocationPathCompletions(
       '~\code',
       [PathItemType]::Directory,
       $True
@@ -490,7 +490,7 @@ function Step-NodePackageVersion {
     )]
     [string]$Version,
 
-    [PathLocationCompletions(
+    [LocationPathCompletions(
       '~\code',
       [PathItemType]::Directory,
       $True
@@ -571,7 +571,7 @@ function Invoke-NodePackageScript {
     # Name of the npm script to run
     [string]$Script,
 
-    [PathLocationCompletions(
+    [LocationPathCompletions(
       '~\code',
       [PathItemType]::Directory,
       $True
@@ -625,7 +625,7 @@ function Test-NodePackage {
 
   param(
 
-    [PathLocationCompletions(
+    [LocationPathCompletions(
       '~\code',
       [PathItemType]::Directory,
       $True

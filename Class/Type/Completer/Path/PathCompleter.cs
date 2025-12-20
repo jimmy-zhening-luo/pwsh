@@ -53,7 +53,7 @@ namespace Completer
     } // class RelativePathCompletionsAttribute
 
     [AttributeUsage(AttributeTargets.Parameter)]
-    public class PathLocationCompletionsAttribute(
+    public class LocationPathCompletionsAttribute(
       string Location,
       PathItemType? ItemType,
       bool? Flat
@@ -67,7 +67,7 @@ namespace Completer
           Flat
         );
       }
-    } // class PathLocationCompletionsAttribute
+    } // class LocationPathCompletionsAttribute
 
     internal class PathCompleter : CompleterBase
     {

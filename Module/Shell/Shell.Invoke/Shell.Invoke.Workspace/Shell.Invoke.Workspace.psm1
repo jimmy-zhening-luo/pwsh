@@ -203,7 +203,7 @@ function Invoke-WorkspaceHome {
       Position = 0
     )]
     [AllowEmptyString()]
-    [PathLocationCompletions(
+    [LocationPathCompletions(
       '~',
       $null, $null
     )]
@@ -241,7 +241,7 @@ function Invoke-WorkspaceCode {
       Position = 0
     )]
     [AllowEmptyString()]
-    [PathLocationCompletions(
+    [LocationPathCompletions(
       '~\code',
       $null, $null
     )]
