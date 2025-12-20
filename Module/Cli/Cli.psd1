@@ -19,9 +19,6 @@
       GUID          = 'e4d07654-6759-4a2f-8293-39df2b809ba7'
     }
   )
-  ScriptsToProcess     = @(
-    'Cli.Dotnet.ps1'
-  )
   NestedModules        = @(
     @{
       ModuleName    = 'Cli.YouTube'
