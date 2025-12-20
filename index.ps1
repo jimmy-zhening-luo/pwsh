@@ -1,5 +1,5 @@
-if (-not $Env:PSModulePath.EndsWith(";$PSScriptRoot\Module")) {
-  $Env:PSModulePath += ";$PSScriptRoot\Module"
+if (-not $Env:PSModulePath.EndsWith(";$PSScriptRoot\Module;")) {
+  $Env:PSModulePath += ";$PSScriptRoot\Module;"
 }
 
 if (-not $Global:PSDefaultParameterValue) {
