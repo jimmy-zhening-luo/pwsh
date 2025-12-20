@@ -325,10 +325,10 @@ function Invoke-PSProfile {
 
 <#
 .SYNOPSIS
-Update PowerShell profile repository.
+Update the local PowerShell profile repository.
 
 .DESCRIPTION
-This function updates the PowerShell profile repository by pulling the latest changes from the remote Git repository, updating the PSScriptAnalyzer settings file in the user's home directory, and rebuilding the profile's .NET dependencies unless the SkipBuild switch is specified.
+This function updates the local PowerShell profile repository by invoking Publish-PSProfile, which pulls the latest changes from the remote Git repository and updating the PSScriptAnalyzer settings file in the user's home directory. It specifies the SkipBuild flag, thereby skipping the build step.
 
 .COMPONENT
 PSTool
@@ -336,10 +336,32 @@ PSTool
 function Update-PSProfile {
 
   [CmdletBinding()]
+  [OutputType([void])]
+  param(
+    [Parameter(DontShow)][switch]$zNothing
+  )
+
+  Publish-PSProfile -SkipBuild
+}
+
+<#
+.SYNOPSIS
+Update and publish the local PowerShell profile repository.
+
+.DESCRIPTION
+This function updates the local PowerShell profile repository by pulling the latest changes from the remote Git repository and updating the PSScriptAnalyzer settings file in the user's home directory. It also locally publishes the profile by rebuilding its .NET assemblies unless the SkipBuild switch is specified.
+
+.COMPONENT
+PSTool
+#>
+function Publish-PSProfile {
+
+  [CmdletBinding()]
+  [OutputType([void])]
   param(
 
     [Alias('NoBuild')]
-    # If specified, skips the build step after pulling the latest changes.
+    # If specified, skips the build step after syncing the repository and linter.
     [switch]$SkipBuild,
 
     [Parameter(DontShow)][switch]$zNothing
@@ -459,3 +481,4 @@ New-Alias mcp Measure-PSProfile
 New-Alias oc Invoke-PSHistory
 New-Alias op Invoke-PSProfile
 New-Alias up Update-PSProfile
+New-Alias upp Publish-PSProfile

@@ -13,6 +13,7 @@
     'Invoke-PSHistory'
     'Invoke-PSProfile'
     'Update-PSProfile'
+    'Publish-PSProfile'
   )
   CmdletsToExport      = @()
   VariablesToExport    = @()
@@ -22,5 +23,6 @@
     'oc'
     'op'
     'up'
+    'upp'
   )
 }
