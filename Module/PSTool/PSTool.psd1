@@ -8,6 +8,7 @@
   Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
   PowerShellVersion    = '7.4'
   FunctionsToExport    = @(
+    'Measure-Performance'
     'Measure-PSProfile'
     'Invoke-PSHistory'
     'Invoke-PSProfile'
@@ -16,6 +17,7 @@
   CmdletsToExport      = @()
   VariablesToExport    = @()
   AliasesToExport      = @(
+    'mc'
     'mcp'
     'oc'
     'op'

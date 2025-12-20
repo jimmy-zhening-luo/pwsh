@@ -2,6 +2,66 @@ using namespace System.Collections.Generic
 
 <#
 .SYNOPSIS
+Measure PowerShell command performance.
+
+.DESCRIPTION
+This function measures the performance of a PowerShell command by invoking it in a new PowerShell process and comparing its execution time over the PowerShell process invocation time as a baseline.
+
+It can perform multiple iterations to calculate a mean command performance value.
+
+The invoked PowerShell process will not load the user profile, so any commands or modules defined in the profile will not be available during measurement.
+
+.COMPONENT
+PSTool
+
+.LINK
+https://learn.microsoft.com/powershell/module/microsoft.powershell.utility/measure-command
+
+.LINK
+Measure-Command
+#>
+function Measure-Performance {
+  [CmdletBinding(
+    DefaultParameterSetName = 'Display'
+  )]
+  [OutputType([string])]
+  [OutputType([double], ParameterSetName = 'Numeric')]
+  param(
+
+    [Parameter(
+      ParameterSetName = 'Display',
+      Position = 0,
+      ValueFromRemainingArguments
+    )]
+    [Parameter(
+      ParameterSetName = 'Numeric',
+      Position = 0,
+      ValueFromRemainingArguments
+    )]
+    # The PowerShell command to measure. The command must be available in a new PowerShell process without loading the user profile. Multiple strings will be concatenated with spaces.
+    [string[]]$Command,
+
+    [Parameter()]
+    [ValidateRange(1, 50)]
+    # The number of iterations to perform, maximum 50. Default is 8.
+    [int]$Iterations,
+
+    [Parameter(
+      ParameterSetName = 'Numeric',
+      Mandatory
+    )]
+    # If specified, returns only the numeric performance value in milliseconds.
+    [switch]$Numeric,
+
+    [Parameter(DontShow)][switch]$zNothing
+
+  )
+
+}
+
+
+<#
+.SYNOPSIS
 Measure PowerShell profile load overhead.
 
 .DESCRIPTION
