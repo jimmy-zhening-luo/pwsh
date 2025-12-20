@@ -42,7 +42,7 @@ function Measure-PSProfile {
       ParameterSetName = 'Number',
       Mandatory
     )]
-    # If specified, returns only the numeric performance value in milliseconds.
+    # If specified, returns only the numeric profile overhead in milliseconds.
     [switch]$Number,
 
     [Parameter(DontShow)][switch]$zNothing
