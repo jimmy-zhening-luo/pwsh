@@ -23,7 +23,7 @@ function Resolve-GitRepository {
   process {
     foreach ($Private:directory in $WorkingDirectory) {
       if ($New) {
-        if (-not $Path) {
+        if (-not $WorkingDirectory) {
           Write-Output $PWD.Path
         }
         elseif (Test-Path -Path $WorkingDirectory -PathType Container) {
@@ -42,7 +42,7 @@ function Resolve-GitRepository {
         }
       }
       else {
-        if (-not $Path) {
+        if (-not $WorkingDirectory) {
           if (Test-Path -Path .git -PathType Container) {
             Write-Output $PWD.Path
           }
