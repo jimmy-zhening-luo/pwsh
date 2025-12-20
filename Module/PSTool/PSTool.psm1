@@ -106,15 +106,15 @@ function Measure-PSProfile {
   [long]$Private:AverageProfileCostTicks = [long](
     $Private:TotalProfileCostTicks / $Iterations
   )
-  [timespan]$AverageProfileCost = [timespan]::new(
+  [timespan]$Private:AverageProfileCost = [timespan]::new(
     [long]$Private:AverageProfileCostTicks
   )
 
   if ($Numeric) {
-    return $Baseline ? $AverageBareStartup.TotalMilliseconds : $AverageProfileCost.TotalMilliseconds
+    return $Baseline ? $Private:AverageBareStartup.TotalMilliseconds : $Private:AverageProfileCost.TotalMilliseconds
   }
   else {
-    return "$([long]$AverageProfileCost.TotalMilliseconds) ms`n(Base: $([long]$AverageBareStartup.TotalMilliseconds) ms)"
+    return "$([long]$Private:AverageProfileCost.TotalMilliseconds) ms`n(Base: $([long]$Private:AverageBareStartup.TotalMilliseconds) ms)"
   }
 }
 
