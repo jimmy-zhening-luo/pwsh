@@ -20,7 +20,7 @@ Determine if a host is reachable.
 This function checks if a host is reachable by testing the network connection to the specified hostname or IP address, optionally on a specified port (number or well-known TCP service).
 
 .COMPONENT
-Browse
+Browse.Test
 
 .LINK
 https://learn.microsoft.com/powershell/module/nettcpip/test-netconnection
@@ -135,7 +135,7 @@ It returns true if the URL returns a status code between 200 to 300, otherwise f
 The function times out if it receives no response after five (5) (lol) seconds, returning false.
 
 .COMPONENT
-Browse
+Browse.Test
 
 .LINK
 https://learn.microsoft.com/powershell/module/microsoft.powershell.utility/invoke-webrequest
