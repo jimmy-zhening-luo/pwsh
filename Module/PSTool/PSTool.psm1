@@ -2,13 +2,21 @@ using namespace System.Collections.Generic
 
 <#
 .SYNOPSIS
-Measure PowerShell profile load time.
+Measure PowerShell profile load overhead.
 
 .DESCRIPTION
-This function measures the load time of the PowerShell profile by comparing the startup time with and without the profile loaded. It performs multiple iterations to calculate an average load time.
+This function measures the load overhead of the PowerShell profile by comparing PowerShell startup time with and without loading the profile.
+
+It can perform multiple iterations to calculate a mean load overhead.
 
 .COMPONENT
 PSTool
+
+.LINK
+https://learn.microsoft.com/powershell/module/microsoft.powershell.utility/measure-command
+
+.LINK
+Measure-Command
 #>
 function Measure-PSProfile {
   [CmdletBinding(
