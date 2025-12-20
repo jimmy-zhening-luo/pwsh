@@ -162,7 +162,7 @@ function Measure-PSProfile {
     [long]$Private:TotalStartupWithProfileTicks - [long]$Private:TotalBareStartupTicks
   )
   [long]$Private:AverageProfileCostTicks = [long](
-    $Private:TotalProfileCostTicks / $Iterations
+    [long]$Private:TotalProfileCostTicks / [long]$Iterations
   )
   [timespan]$Private:AverageProfileCost = [timespan]::new(
     [long]$Private:AverageProfileCostTicks
