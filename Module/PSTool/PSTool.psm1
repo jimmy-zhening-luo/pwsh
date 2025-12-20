@@ -93,7 +93,7 @@ function Measure-Performance {
     $Private:CommandTicks.Add(
       [long](
         Measure-Command {
-          pwsh -Command "$Private:FullCommand"
+          pwsh -NoProfile -Command "$Private:FullCommand"
         }
       ).Ticks
     )
@@ -217,14 +217,16 @@ function Measure-PSProfile {
     $Private:i -lt $Iterations
     ++$Private:i
   ) {
-    [int]$Private:Command1 = Get-Random 500
-    $Private:StartupWithProfileTicks.Add(
-      [long](
-        Measure-Command {
-          pwsh -Command "$Private:Command1"
-        }
-      ).Ticks
-    )
+    if (-not $Baseline) {
+      [int]$Private:Command1 = Get-Random 500
+      $Private:StartupWithProfileTicks.Add(
+        [long](
+          Measure-Command {
+            pwsh -Command "$Private:Command1"
+          }
+        ).Ticks
+      )
+    }
 
     [int]$Private:Command2 = Get-Random 500
     $Private:BareStartupTicks.Add(
@@ -246,28 +248,40 @@ function Measure-PSProfile {
     [long]$Private:AverageBareStartupTicks
   )
 
-  [long]$Private:TotalStartupWithProfileTicks = [long][System.Linq.Enumerable]::Sum(
-    [List[long]]$Private:StartupWithProfileTicks
-  )
-
-  [long]$Private:TotalProfileCostTicks = [long](
-    [long]$Private:TotalStartupWithProfileTicks - [long]$Private:TotalBareStartupTicks
-  )
-  [long]$Private:AverageProfileCostTicks = [long](
-    [long]$Private:TotalProfileCostTicks / [long]$Iterations
-  )
-  [timespan]$Private:AverageProfileCost = [timespan]::new(
-    [long]$Private:AverageProfileCostTicks
-  )
-
-  if ($Numeric) {
-    return $Baseline ? $Private:AverageBareStartup.TotalMilliseconds : $Private:AverageProfileCost.TotalMilliseconds
-  }
-  elseif ($Timespan) {
-    return $Baseline ? [timespan]$Private:AverageBareStartup : [timespan]$Private:AverageProfileCost
+  if ($Baseline) {
+    switch ($PSCmdlet.ParameterSetName) {
+      Numeric {
+        return $Private:AverageBareStartup.TotalMilliseconds
+      }
+      Timespan {
+        return [timespan]$Private:AverageBareStartup
+      }
+    }
   }
   else {
-    return "$([long]$Private:AverageProfileCost.TotalMilliseconds) ms`n(Base: $([long]$Private:AverageBareStartup.TotalMilliseconds) ms)"
+    [long]$Private:TotalStartupWithProfileTicks = [long][System.Linq.Enumerable]::Sum(
+      [List[long]]$Private:StartupWithProfileTicks
+    )
+
+    [long]$Private:TotalProfileCostTicks = [long](
+      [long]$Private:TotalStartupWithProfileTicks - [long]$Private:TotalBareStartupTicks
+    )
+    [long]$Private:AverageProfileCostTicks = [long](
+      [long]$Private:TotalProfileCostTicks / [long]$Iterations
+    )
+    [timespan]$Private:AverageProfileCost = [timespan]::new(
+      [long]$Private:AverageProfileCostTicks
+    )
+
+    if ($Numeric) {
+      return $Private:AverageProfileCost.TotalMilliseconds
+    }
+    elseif ($Timespan) {
+      return [timespan]$Private:AverageProfileCost
+    }
+    else {
+      return "$([long]$Private:AverageProfileCost.TotalMilliseconds) ms`n(Base: $([long]$Private:AverageBareStartup.TotalMilliseconds) ms)"
+    }
   }
 }
 
