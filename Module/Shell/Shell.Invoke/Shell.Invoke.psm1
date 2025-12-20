@@ -1,3 +1,120 @@
+using namespace System.Collections.Generic
+using namespace Completer.PathCompleter
+
+function Invoke-Directory {
+
+  [OutputType([void])]
+  param(
+
+    [RelativePathCompletions(
+      { return [string]$PWD.Path },
+      $null, $null
+    )]
+    [string]$Path
+  )
+  if (-not $env:SSH_CLIENT) {
+    if (-not $Path) {
+      Invoke-Item -Path $PWD.Path @args
+    }
+    elseif (Test-Path -Path $Path -PathType Container) {
+      Invoke-Item -Path $Path @args
+    }
+    else {
+      throw (Test-Path -Path $Path -PathType Leaf) ? (
+        [System.IO.IOException]::new(
+          "The path '$Path' is a file, not a directory."
+        )
+      ) : (
+        [System.IO.DirectoryNotFoundException]::new(
+          "The directory path '$Path' does not exist."
+        )
+      )
+    }
+  }
+  else {
+    Write-Warning -Message 'Cannot open File Explorer over SSH session'
+  }
+}
+
+function Invoke-DirectorySibling {
+
+  [OutputType([void])]
+  param(
+
+    [RelativePathCompletions(
+      { return [string](Split-Path $PWD.Path) },
+      $null, $null
+    )]
+    [string]$Path
+  )
+
+  Invoke-Directory -Path (
+    Join-Path (Split-Path $PWD.Path) $Path
+  ) @args
+}
+
+function Invoke-DirectoryRelative {
+
+  [OutputType([void])]
+  param(
+
+    [RelativePathCompletions(
+      { return [string]($PWD.Path | Split-Path | Split-Path) },
+      $null, $null
+    )]
+    [string]$Path
+  )
+
+  Invoke-Directory -Path (
+    Join-Path ($PWD.Path | Split-Path | Split-Path) $Path
+  ) @args
+}
+
+function Invoke-DirectoryHome {
+
+  [OutputType([void])]
+  param(
+
+    [LocationPathCompletions(
+      '~',
+      $null, $null
+    )]
+    [string]$Path
+  )
+
+  Invoke-Directory -Path (Join-Path $HOME $Path) @args
+}
+
+function Invoke-DirectoryCode {
+
+  [OutputType([void])]
+  param(
+
+    [LocationPathCompletions(
+      '~\code',
+      $null, $null
+    )]
+    [string]$Path
+  )
+
+  Invoke-Directory -Path (Join-Path $REPO_ROOT $Path) @args
+}
+
+function Invoke-DirectoryDrive {
+
+  [OutputType([void])]
+  param(
+
+    [LocationPathCompletions(
+      '\',
+      $null, $null
+    )]
+    [string]$Path
+  )
+
+  Invoke-Directory -Path (Join-Path $PWD.Drive.Root $Path) @args
+}
+
 function Invoke-Workspace {
   [CmdletBinding()]
   [OutputType([void])]
@@ -266,6 +383,13 @@ function Invoke-WorkspaceCode {
 
   Invoke-Workspace @PSBoundParameters -Location $REPO_ROOT
 }
+
+New-Alias e Invoke-Directory
+New-Alias e. Invoke-DirectorySibling
+New-Alias e.. Invoke-DirectoryRelative
+New-Alias eh Invoke-DirectoryHome
+New-Alias ec Invoke-DirectoryCode
+New-Alias e/ Invoke-DirectoryDrive
 
 New-Alias i Invoke-Workspace
 New-Alias i. Invoke-WorkspaceSibling
