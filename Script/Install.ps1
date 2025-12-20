@@ -43,9 +43,9 @@ using namespace System.Collections.Generic
         -not (
           Test-Path -Path $Private:InstalledAssembly -PathType Leaf
         ) -or (
-          Get-FileHash -Path $Private:InstalledAssembly
+          Get-FileHash -Path $Private:InstalledAssembly -Algorithm MD5
         ).Hash -ne (
-          Get-FileHash -Path $Private:BuildOutput
+          Get-FileHash -Path $Private:BuildOutput -Algorithm MD5
         ).Hash
       ) {
         Copy-Item -Path $Private:BuildOutput -Destination $InstallPath -Force -ErrorAction Continue
