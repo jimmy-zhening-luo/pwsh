@@ -14,15 +14,25 @@ function Invoke-Directory {
   )
   if (-not $env:SSH_CLIENT) {
     if (-not $Path) {
-      $PSBoundParameters.Path = $PWD
+      Invoke-Item -Path $PWD.Path @args
     }
-
-    [hashtable]$Private:Container = @{
-      PathType = 'Container'
+    elseif (Test-Path -Path $Path -PathType Container) {
+      Invoke-Item -Path $Path @args
     }
-    if (Test-Path @PSBoundParameters @Private:Container) {
-      Invoke-Item @PSBoundParameters @args
+    else {
+      throw (Test-Path -Path $Path -PathType Leaf) ? (
+        [System.IO.IOException]::new(
+          "The path '$Path' is a file, not a directory."
+        )
+      ) : (
+        [System.IO.DirectoryNotFoundException]::new(
+          "The directory path '$Path' does not exist."
+        )
+      )
     }
+  }
+  else {
+    Write-Warning -Message 'Cannot open File Explorer over SSH session'
   }
 }
 
