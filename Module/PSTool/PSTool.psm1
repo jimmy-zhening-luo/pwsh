@@ -75,6 +75,56 @@ function Measure-Performance {
     [Parameter(DontShow)][switch]$zNothing
   )
 
+  [string]$Private:FullCommand = $Command -join ' '
+
+  if (-not $Iterations) {
+    $Iterations = 8
+  }
+
+  [List[long]]$Private:CommandTicks = [List[long]]::new()
+
+  for (
+    [int]$Private:i = 0
+    $Private:i -lt $Iterations
+    ++$Private:i
+  ) {
+    $Private:CommandTicks.Add(
+      [long](
+        Measure-Command {
+          pwsh -Command "$Private:FullCommand"
+        }
+      ).Ticks
+    )
+  }
+
+  [timespan]$Private:AverageBaseline = Measure-PSProfile -Iterations $Iterations -Timespan -Baseline
+  [long]$Private:TotalBaselineTicks = [long](
+    [long]$Private:AverageBaseline.Ticks * [long]$Iterations
+  )
+
+  [long]$Private:TotalCommandTicks = [long][System.Linq.Enumerable]::Sum(
+    [List[long]]$Private:CommandTicks
+  )
+
+  [long]$TotalCommandCostTicks = [long](
+    [long]$Private:TotalCommandTicks - [long]$Private:TotalBaselineTicks
+  )
+  [long]$Private:AverageCommandCostTicks = [long](
+    [long]$TotalCommandCostTicks / [long]$Iterations
+  )
+  [timespan]$Private:AverageCommandCost = [timespan]::new(
+    [long]$Private:AverageCommandCostTicks
+  )
+
+  if ($Numeric) {
+    return $Private:AverageCommandCost.TotalMilliseconds
+  }
+  elseif ($Timespan) {
+    return [timespan]$Private:AverageCommandCost
+  }
+  else {
+    return "$([long]$Private:AverageCommandCost.TotalMilliseconds) ms`n(Base: $([long]$Private:AverageBaseline.TotalMilliseconds) ms)"
+  }
 }
 
 
