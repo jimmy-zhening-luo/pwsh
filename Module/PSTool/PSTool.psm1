@@ -45,6 +45,12 @@ function Measure-PSProfile {
     # If specified, returns only the numeric profile overhead in milliseconds.
     [switch]$Number,
 
+    [Parameter(
+      ParameterSetName = 'Number'
+    )]
+    # If specified along with Number, returns the numeric baseline value in milliseconds instead of the profile overhead.
+    [switch]$Baseline,
+
     [Parameter(DontShow)][switch]$zNothing
 
   )
@@ -105,7 +111,7 @@ function Measure-PSProfile {
   )
 
   if ($Number) {
-    return $AverageProfileCost.TotalMilliseconds
+    return $Baseline ? $AverageBareStartup.TotalMilliseconds : $AverageProfileCost.TotalMilliseconds
   }
   else {
     return "$([long]$AverageProfileCost.TotalMilliseconds) ms`n(Base: $([long]$AverageBareStartup.TotalMilliseconds) ms)"
