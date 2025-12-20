@@ -383,11 +383,6 @@ function Publish-PSProfile {
     [string]$Private:Solution = "$PROFILE_REPO_ROOT\Class\Class.slnx"
 
     try {
-      [string[]]$Private:DotnetClean = @(
-        'clean'
-        '--configuration'
-        'Release'
-      )
       & $Private:DotnetNativeCommand.Source clean $Private:Solution --configuration Release
 
       if ($LASTEXITCODE -notin 0, 1) {
