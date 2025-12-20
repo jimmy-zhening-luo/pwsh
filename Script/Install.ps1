@@ -43,10 +43,6 @@ using namespace System.Collections.Generic
         -not (
           Test-Path -Path $Private:InstalledAssembly -PathType Leaf
         ) -or (
-          Get-Item -Path $Private:InstalledAssembly
-        ).Length -ne (
-          Get-Item -Path $Private:BuildOutput
-        ).Length -and (
           Get-FileHash -Path $Private:InstalledAssembly
         ).Hash -ne (
           Get-FileHash -Path $Private:BuildOutput
