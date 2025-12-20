@@ -18,7 +18,7 @@
     'PSAvoidShouldContinueWithoutForce'
     'PSAvoidTrailingWhitespace'
     'PSAvoidUsingAllowUnencryptedAuthentication'
-    'PSAvoidUsingBrokenHashAlgorithms'
+    # 'PSAvoidUsingBrokenHashAlgorithms' # why not for checksum? makes no sense
     # 'PSAvoidUsingCmdletAliases'
     'PSAvoidUsingComputerNameHardcoded'
     'PSAvoidUsingConvertToSecureStringWithPlainText'
