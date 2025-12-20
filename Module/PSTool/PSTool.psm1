@@ -365,44 +365,49 @@ function Publish-PSProfile {
 
   #region Build
   if (-not $SkipBuild) {
-    [System.Management.Automation.ApplicationInfo]$Private:DotnetExecutable = Get-Command -Name dotnet.exe -CommandType Application -All
+    [System.Management.Automation.ApplicationInfo]$Private:DotnetNativeCommand = Get-Command -Name dotnet.exe -CommandType Application -All
 
-    if (-not $Private:DotnetExecutable) {
+    if (-not $Private:DotnetNativeCommand) {
       try {
-        [System.Management.Automation.ApplicationInfo]$Private:DotnetExecutable = Install-PSModuleDotnet
+        [System.Management.Automation.ApplicationInfo]$Private:DotnetNativeCommand = Install-PSModuleDotnet
 
-        if (-not $Private:DotnetExecutable) {
+        if (-not $Private:DotnetNativeCommand) {
           throw 'Failed to locate Microsoft.DotNet.SDK.10 executable post-installation'
         }
       }
       catch {
-        throw 'Failed to install Microsoft.DotNet.SDK.10'
+        throw 'Failed to install Microsoft.DotNet.SDK.10' + $PSItem.Exception
       }
     }
 
-    [hashtable]$Private:Dotnet = @{
-      FilePath         = (Resolve-Path -Path $Private:DotnetExecutable.Source).Path
-      WorkingDirectory = "$PROFILE_REPO_ROOT\Class"
-      NoNewWindow      = $True
-      PassThru         = $True
-      ErrorAction      = 'Stop'
+    [string]$Private:Solution = "$PROFILE_REPO_ROOT\Class\Class.slnx"
+
+    try {
+      [string[]]$Private:DotnetClean = @(
+        'clean'
+        '--configuration'
+        'Release'
+      )
+      & $Private:DotnetNativeCommand.Source clean $Private:Solution --configuration Release
+
+      if ($LASTEXITCODE -notin 0, 1) {
+        throw "dotnet.exe returned a non-zero exit code ($LASTEXITCODE) when trying to clean the project."
+      }
+    }
+    catch {
+      throw 'Failed to clean project. ' + $PSItem.Exception
     }
 
-    [string[]]$Private:DotnetClean = @(
-      'clean'
-      '--configuration'
-      'Release'
-    )
-    Start-Process @Private:Dotnet -ArgumentList $Private:DotnetClean |
-      Wait-Process
+    try {
+      & $Private:DotnetNativeCommand.Source build $Private:Solution --configuration Release
 
-    [string[]]$Private:DotnetBuild = @(
-      'build'
-      '--configuration'
-      'Release'
-    )
-    Start-Process @Private:Dotnet -ArgumentList $Private:DotnetBuild |
-      Wait-Process
+      if ($LASTEXITCODE -notin 0, 1) {
+        throw "dotnet.exe returned a non-zero exit code ($LASTEXITCODE) when trying to build the project."
+      }
+    }
+    catch {
+      throw 'Failed to clean project. ' + $PSItem.Exception
+    }
   }
   #endregion
 }
@@ -425,24 +430,27 @@ function Install-PSModuleDotnet {
       & $env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe '--id=Microsoft.DotNet.SDK.10'
 
       if ($LASTEXITCODE -notin 0, 1) {
-        throw 'winget attempted to install Microsoft.DotNet.SDK.10 but returned a non-zero exit code'
+        throw "winget attempted to install Microsoft.DotNet.SDK.10 but returned a non-zero exit code ($LASTEXITCODE)"
       }
 
-      [System.Management.Automation.ApplicationInfo]$Private:DotnetExecutable = Get-Command -Name dotnet.exe -CommandType Application -All
+      [System.Management.Automation.ApplicationInfo]$Private:DotnetNativeCommand = Get-Command -Name dotnet.exe -CommandType Application -All
 
-      if (-not $Private:DotnetExecutable) {
+      if (-not $Private:DotnetNativeCommand) {
         throw 'Failed to locate Microsoft.DotNet.SDK.10 executable post-installation'
       }
 
       try {
-        Start-Process -FilePath $Private:DotnetExecutable.Source -NoNewWindow -PassThru -ErrorAction Stop -ArgumentList new, install, Microsoft.PowerShell.Standard.Module.Template |
-          Wait-Process
+        & $Private:DotnetNativeCommand.Source new install Microsoft.PowerShell.Standard.Module.Template
+
+        if ($LASTEXITCODE -notin 0, 1) {
+          throw "dotnet.exe returned a non-zero exit code ($LASTEXITCODE) when trying to install Microsoft.PowerShell.Standard.Module.Template"
+        }
       }
       catch {
-        throw 'Failed to install required dotnet dependency: Microsoft.PowerShell.Standard.Module.Template'
+        throw 'Failed to install required dotnet dependency: Microsoft.PowerShell.Standard.Module.Template ' + $PSItem.Exception
       }
 
-      return $Private:DotnetExecutable
+      return $Private:DotnetNativeCommand
     }
   }
 }
