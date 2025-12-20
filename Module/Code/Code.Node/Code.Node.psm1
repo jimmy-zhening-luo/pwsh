@@ -406,7 +406,7 @@ function Clear-NodeModuleCache {
     )
   }
 
-  Invoke-NodePackage -Command clean -Argument $Private:NodeArgument
+  Invoke-NodePackage -Command cache -Argument $Private:NodeArgument
 }
 
 <#
