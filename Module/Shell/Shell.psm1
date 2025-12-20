@@ -103,11 +103,7 @@ function Test-RelativePath {
     $Location = $PWD.Path
   }
 
-  [hashtable]$Private:Container = @{
-    Path     = $Location
-    PathType = 'Container'
-  }
-  if (-not (Test-Path @Private:Container)) {
+  if (-not (Test-Path -Path $Location -PathType Container)) {
     return $False
   }
 

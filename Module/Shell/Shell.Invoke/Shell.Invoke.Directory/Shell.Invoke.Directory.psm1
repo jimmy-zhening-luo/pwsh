@@ -49,10 +49,9 @@ function Invoke-DirectorySibling {
 
   )
 
-  [hashtable]$Private:FullPath = @{
-    Path = Join-Path (Split-Path $PWD.Path) $Path
-  }
-  Invoke-Directory @Private:FullPath @args
+  Invoke-Directory -Path (
+    Join-Path (Split-Path $PWD.Path) $Path
+  ) @args
 }
 
 function Invoke-DirectoryRelative {
@@ -68,10 +67,9 @@ function Invoke-DirectoryRelative {
 
   )
 
-  [hashtable]$Private:FullPath = @{
-    Path = Join-Path ($PWD.Path | Split-Path | Split-Path) $Path
-  }
-  Invoke-Directory @Private:FullPath @args
+  Invoke-Directory -Path (
+    Join-Path ($PWD.Path | Split-Path | Split-Path) $Path
+  ) @args
 }
 
 function Invoke-DirectoryHome {

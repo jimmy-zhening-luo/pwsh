@@ -36,7 +36,7 @@ using namespace System.Collections.Generic
 
     [string]$Private:BuildOutput = "$SourceRoot\$Folder\$Project\bin\Release\net9.0\$Project.dll"
 
-    if (Test-Path -Path $Private:BuildOutput) {
+    if (Test-Path -Path $Private:BuildOutput -PathType Leaf) {
       [string]$Private:InstalledAssembly = "$InstallPath\$Project.dll"
 
       if (
@@ -52,13 +52,7 @@ using namespace System.Collections.Generic
           Get-FileHash -Path $Private:BuildOutput
         ).Hash
       ) {
-        [hashtable]$Private:Install = @{
-          Path        = $Private:BuildOutput
-          Destination = $InstallPath
-          Force       = $True
-          ErrorAction = 'Continue'
-        }
-        Copy-Item @Private:Install
+        Copy-Item -Path $Private:BuildOutput -Destination $InstallPath -Force -ErrorAction Continue
       }
     }
     else {
@@ -97,7 +91,7 @@ using namespace System.Collections.Generic
       Path = "$Private:SourceRoot\$Private:Type.dll"
     }
 
-    if (Test-Path @Private:TypeAssembly) {
+    if (Test-Path @Private:TypeAssembly -PathType Leaf) {
       Add-Type @Private:TypeAssembly
     }
   }

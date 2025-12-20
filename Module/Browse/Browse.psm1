@@ -64,9 +64,9 @@ function Open-Url {
   end {
     if ($PSCmdlet.ParameterSetName -eq 'Path') {
       [string]$Private:Target = $Path ? (
-        Test-Path @PSBoundParameters
+        Test-Path -Path $Path
       ) ? (
-        Resolve-Path @PSBoundParameters
+        Resolve-Path -Path $Path
       ).Path : [uri]$Path : $PWD.Path
 
       if ($Private:Interactive) {
