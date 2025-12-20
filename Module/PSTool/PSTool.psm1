@@ -99,7 +99,7 @@ function Measure-Performance {
     )
   }
 
-  [timespan]$Private:AverageBaseline = Measure-PSProfile -Iterations $Iterations -Timespan -Baseline
+  [timespan]$Private:AverageBaseline = Measure-PSProfile -Iterations $Iterations -Baseline -Timespan
   [long]$Private:TotalBaselineTicks = [long](
     [long]$Private:AverageBaseline.Ticks * [long]$Iterations
   )
