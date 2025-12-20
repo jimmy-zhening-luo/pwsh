@@ -383,6 +383,7 @@ function Install-PSModuleDotnet {
   }
 }
 
+New-Alias mc Measure-Performance
 New-Alias mcp Measure-PSProfile
 New-Alias oc Invoke-PSHistory
 New-Alias op Invoke-PSProfile
