@@ -23,11 +23,14 @@ function Resolve-GitRepository {
   process {
     foreach ($Private:directory in $WorkingDirectory) {
       if ($New) {
-        if (Test-RelativePath -Path $WorkingDirectory) {
+        if (-not $Path) {
+          Write-Output $PWD.Path
+        }
+        elseif (Test-Path -Path $WorkingDirectory -PathType Container) {
           Write-Output (
             [string](
-              Resolve-RelativePath -Path $WorkingDirectory
-            )
+              Resolve-Path -Path $WorkingDirectory
+            ).Path
           )
         }
         elseif (Test-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT -New) {
@@ -39,16 +42,27 @@ function Resolve-GitRepository {
         }
       }
       else {
-        [string]$Private:IsRepository = $WorkingDirectory ? (Join-Path $WorkingDirectory .git) : '.git'
-
-        if (Test-RelativePath -Path $Private:IsRepository -RequireSubpath) {
+        if (-not Path) {
+          if (Test-Path -Path .git -PathType Container) {
+            Write-Output $PWD.Path
+          }
+        }
+        elseif (
+          Test-Path -Path (
+            Join-Path $WorkingDirectory .git
+          ) -PathType Container
+        ) {
           Write-Output (
             [string](
-              Resolve-RelativePath -Path $WorkingDirectory
-            )
+              Resolve-Path -Path $WorkingDirectory
+            ).Path
           )
         }
-        elseif (Test-RelativePath -Path $Private:IsRepository -Location $REPO_ROOT -RequireSubpath) {
+        elseif (
+          Test-RelativePath -Path (
+            Join-Path $WorkingDirectory .git
+          ) -Location $REPO_ROOT
+        ) {
           Write-Output (
             [string](
               Resolve-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT
