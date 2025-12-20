@@ -56,7 +56,6 @@ function Measure-Performance {
     # The PowerShell command to measure. The command must be available in a new PowerShell process without loading the user profile. Multiple strings will be concatenated with spaces.
     [string[]]$Command,
 
-    [Parameter()]
     [ValidateRange(1, 50)]
     # The number of iterations to perform, maximum 50. Default is 8.
     [int]$Iterations,
@@ -181,6 +180,15 @@ function Measure-PSProfile {
     [int]$Iterations,
 
     [Parameter(
+      ParameterSetName = 'Numeric'
+    )]
+    [Parameter(
+      ParameterSetName = 'Timespan'
+    )]
+    # If specified along with Numeric or with Timespan, returns the baseline instead of the profile overhead.
+    [switch]$Baseline,
+
+    [Parameter(
       ParameterSetName = 'Numeric',
       Mandatory
     )]
@@ -193,15 +201,6 @@ function Measure-PSProfile {
     )]
     # If specified, returns only the profile overhead as a timespan. Cannot be specified with Numeric.
     [switch]$Timespan,
-
-    [Parameter(
-      ParameterSetName = 'Numeric'
-    )]
-    [Parameter(
-      ParameterSetName = 'Baseline'
-    )]
-    # If specified along with Numeric or with Timespan, returns the baseline instead of the profile overhead.
-    [switch]$Baseline,
 
     [Parameter(DontShow)][switch]$zNothing
   )
