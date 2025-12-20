@@ -157,7 +157,7 @@ function Test-Url {
     [AllowEmptyString()]
     [AllowNull()]
     # The URL to test. If the URL has no scheme, it defaults to 'http'.
-    [uri]$Uri,
+    [uri[]]$Uri,
 
     [Parameter(DontShow)][switch]$zNothing
   )
