@@ -18,10 +18,7 @@ function Update-StoreApp {
     throw 'Cannot launch Microsoft Store app during SSH session'
   }
 
-  [hashtable]$Private:Store = @{
-    FilePath = 'ms-windows-store://downloadsandupdates'
-  }
-  Start-Process @Private:Store
+  Start-Process -FilePath ms-windows-store://downloadsandupdates
 }
 
 <#

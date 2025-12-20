@@ -16,9 +16,5 @@ function Remove-Directory {
     [string]$Path
   )
 
-  [hashtable]$Private:Hard = @{
-    Recurse = $True
-    Force   = $True
-  }
-  Remove-Item @Private:Hard @PSBoundParameters
+  Remove-Item -Path $Path -Recurse -Force
 }

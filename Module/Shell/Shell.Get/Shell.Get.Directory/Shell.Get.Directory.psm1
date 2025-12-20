@@ -14,7 +14,7 @@ function Get-Directory {
   )
 
   if ($Path) {
-    Get-ChildItem @PSBoundParameters @args
+    Get-ChildItem -Path $Path @args
   }
   else {
     Get-ChildItem @args
@@ -34,10 +34,7 @@ function Get-DirectorySibling {
     [string]$Path
   )
 
-  [hashtable]$Private:FullPath = @{
-    Path = Join-Path (Split-Path $PWD.Path) $Path
-  }
-  Get-ChildItem @Private:FullPath @args
+  Get-ChildItem -Path (Join-Path (Split-Path $PWD.Path) $Path) @args
 }
 
 function Get-DirectoryRelative {
@@ -53,10 +50,7 @@ function Get-DirectoryRelative {
     [string]$Path
   )
 
-  [hashtable]$Private:FullPath = @{
-    Path = Join-Path ($PWD.Path | Split-Path | Split-Path) $Path
-  }
-  Get-ChildItem @Private:FullPath @args
+  Get-ChildItem -Path (Join-Path ($PWD.Path | Split-Path | Split-Path) $Path) @args
 }
 
 function Get-DirectoryHome {
@@ -72,10 +66,7 @@ function Get-DirectoryHome {
     [string]$Path
   )
 
-  [hashtable]$Private:FullPath = @{
-    Path = Join-Path $HOME $Path
-  }
-  Get-ChildItem @Private:FullPath @args
+  Get-ChildItem -Path (Join-Path $HOME $Path) @args
 }
 
 function Get-DirectoryCode {
@@ -91,10 +82,7 @@ function Get-DirectoryCode {
     [string]$Path
   )
 
-  [hashtable]$Private:FullPath = @{
-    Path = Join-Path $REPO_ROOT $Path
-  }
-  Get-ChildItem @Private:FullPath @args
+  Get-ChildItem -Path (Join-Path $REPO_ROOT $Path) @args
 }
 
 function Get-DirectoryDrive {
@@ -110,10 +98,7 @@ function Get-DirectoryDrive {
     [string]$Path
   )
 
-  [hashtable]$Private:FullPath = @{
-    Path = Join-Path $PWD.Drive.Root $Path
-  }
-  Get-ChildItem @Private:FullPath @args
+  Get-ChildItem -Path (Join-Path $PWD.Drive.Root $Path) @args
 }
 
 New-Alias l Get-Directory

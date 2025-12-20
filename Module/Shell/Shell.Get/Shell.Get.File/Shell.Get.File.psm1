@@ -35,17 +35,11 @@ function Get-File {
       throw "Path '$Private:Target' does not exist."
     }
 
-    [hashtable]$Private:FullPath = @{
-      Path = (Resolve-Path -Path $Private:Target).Path
-    }
-    [hashtable]$Private:Container = @{
-      PathType = 'Container'
-    }
-    if (Test-Path @Private:FullPath @Private:Container) {
-      return Get-ChildItem @Private:FullPath @args
+    if (Test-Path -Path $Private:FullPath -PathType Container) {
+      return Get-ChildItem -Path $Private:FullPath @args
     }
     else {
-      return Get-Content @Private:FullPath @args
+      return Get-Content -Path $Private:FullPath @args
     }
   }
   else {
@@ -68,10 +62,7 @@ function Get-FileSibling {
     [string]$Path
   )
 
-  [hashtable]$Private:Location = @{
-    Location = Split-Path $PWD.Path
-  }
-  Get-File @PSBoundParameters @Private:Location @args
+  Get-File -Path $Path -Location (Split-Path $PWD.Path) @args
 }
 
 function Get-FileRelative {
@@ -86,10 +77,7 @@ function Get-FileRelative {
     [string]$Path
   )
 
-  [hashtable]$Private:Location = @{
-    Location = $PWD.Path | Split-Path | Split-Path
-  }
-  Get-File @PSBoundParameters @Private:Location @args
+  Get-File -Path $Path -Location ($PWD.Path | Split-Path | Split-Path) @args
 }
 
 function Get-FileHome {
@@ -104,10 +92,7 @@ function Get-FileHome {
     [string]$Path
   )
 
-  [hashtable]$Private:Location = @{
-    Location = $HOME
-  }
-  Get-File @PSBoundParameters @Private:Location @args
+  Get-File -Path $Path -Location $HOME @args
 }
 
 function Get-FileCode {
@@ -122,10 +107,7 @@ function Get-FileCode {
     [string]$Path
   )
 
-  [hashtable]$Private:Location = @{
-    Location = $REPO_ROOT
-  }
-  Get-File @PSBoundParameters @Private:Location @args
+  Get-File -Path $Path -Location $REPO_ROOT @args
 }
 
 function Get-FileDrive {
@@ -140,10 +122,7 @@ function Get-FileDrive {
     [string]$Path
   )
 
-  [hashtable]$Private:Location = @{
-    Location = $PWD.Drive.Root
-  }
-  Get-File @PSBoundParameters @Private:Location @args
+  Get-File -Path $Path -Location $PWD.Drive.Root @args
 }
 
 New-Alias p Get-File

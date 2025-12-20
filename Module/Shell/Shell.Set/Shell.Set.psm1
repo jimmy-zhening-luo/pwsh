@@ -13,8 +13,11 @@ function Set-Directory {
     [string]$Path
   )
 
-  if ($Path -or $args) {
-    Set-Location @PSBoundParameters @args
+  if ($Path) {
+    Set-Location -Path $Path @args
+  }
+  elseif ($args) {
+    Set-Location @args
   }
   else {
     Set-Location -Path (Split-Path $PWD.Path)
@@ -34,10 +37,7 @@ function Set-DirectorySibling {
     [string]$Path
   )
 
-  [hashtable]$Private:FullPath = @{
-    Path = Join-Path (Split-Path $PWD.Path) $Path
-  }
-  Set-Location @Private:FullPath @args
+  Set-Location -Path (Join-Path (Split-Path $PWD.Path) $Path) @args
 }
 
 function Set-DirectoryRelative {
@@ -53,10 +53,7 @@ function Set-DirectoryRelative {
     [string]$Path
   )
 
-  [hashtable]$Private:FullPath = @{
-    Path = Join-Path ($PWD.Path | Split-Path | Split-Path) $Path
-  }
-  Set-Location @Private:FullPath @args
+  Set-Location -Path (Join-Path ($PWD.Path | Split-Path | Split-Path) $Path) @args
 }
 
 function Set-DirectoryHome {
@@ -72,10 +69,7 @@ function Set-DirectoryHome {
     [string]$Path
   )
 
-  [hashtable]$Private:FullPath = @{
-    Path = Join-Path $HOME $Path
-  }
-  Set-Location @Private:FullPath @args
+  Set-Location -Path (Join-Path $HOME $Path) @args
 }
 
 function Set-DirectoryCode {
@@ -91,10 +85,7 @@ function Set-DirectoryCode {
     [string]$Path
   )
 
-  [hashtable]$Private:FullPath = @{
-    Path = Join-Path $REPO_ROOT $Path
-  }
-  Set-Location @Private:FullPath @args
+  Set-Location -Path (Join-Path $REPO_ROOT $Path) @args
 }
 
 function Set-Drive {
@@ -110,10 +101,7 @@ function Set-Drive {
     [string]$Path
   )
 
-  [hashtable]$Private:FullPath = @{
-    Path = Join-Path $PWD.Drive.Root $Path
-  }
-  Set-Location @Private:FullPath @args
+  Set-Location -Path (Join-Path $PWD.Drive.Root $Path) @args
 }
 
 function Set-DriveD {
@@ -129,10 +117,7 @@ function Set-DriveD {
     [string]$Path
   )
 
-  [hashtable]$Private:FullPath = @{
-    Path = Join-Path D: $Path
-  }
-  Set-Location @Private:FullPath @args
+  Set-Location -Path (Join-Path D: $Path) @args
 }
 
 New-Alias c Set-Directory

@@ -33,7 +33,9 @@ function Test-NodePackageDirectory {
     $WorkingDirectory = $PWD.Path
   }
 
-  return Test-Path -Path (Join-Path $WorkingDirectory package.json) -PathType Leaf
+  return Test-Path -Path (
+    Join-Path $WorkingDirectory package.json
+  ) -PathType Leaf
 }
 
 <#
@@ -63,21 +65,8 @@ function Resolve-NodePackageDirectory {
     [string]$WorkingDirectory
   )
 
-  [hashtable]$Private:TestWorkingDirectory = @{
-    WorkingDirectory = $WorkingDirectory
-  }
-  if (Test-NodePackageDirectory @Private:TestWorkingDirectory) {
-    if ($WorkingDirectory) {
-      [hashtable]$Private:ResolveWorkingDirectory = @{
-        Path = $WorkingDirectory
-      }
-      [string]$Private:WorkingDirectoryPath = (Resolve-Path @Private:ResolveWorkingDirectory).Path
-
-      return "--prefix=$WorkingDirectoryPath"
-    }
-    else {
-      return ''
-    }
+  if (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory) {
+    return $WorkingDirectory ? "--prefix=$((Resolve-Path -Path $WorkingDirectory).Path)" : ''
   }
   else {
     throw "Path '$WorkingDirectory' is not a Node package directory."
@@ -417,11 +406,7 @@ function Clear-NodeModuleCache {
     )
   }
 
-  [hashtable]$Private:CacheClean = @{
-    Command      = 'cache'
-    NodeArgument = $Private:NodeArgument
-  }
-  Invoke-NodePackage @Private:CacheClean
+  Invoke-NodePackage -Command clean -Argument $Private:NodeArgument
 }
 
 <#
@@ -467,13 +452,7 @@ function Compare-NodeModule {
     )
   }
 
-  [hashtable]$Private:Outdated = @{
-    Command          = 'outdated'
-    WorkingDirectory = $WorkingDirectory
-    NodeArgument     = $Private:NodeArgument
-    NoThrow          = $True
-  }
-  Invoke-NodePackage @Private:Outdated
+  Invoke-NodePackage -Command outdated -WorkingDirectory $WorkingDirectory -NoThrow -Argument $Private:NodeArgument
 }
 
 enum NodePackageNamedVersion {
@@ -569,12 +548,7 @@ function Step-NodePackageVersion {
     )
   }
 
-  [hashtable]$Private:StepVersion = @{
-    Command          = 'version'
-    WorkingDirectory = $WorkingDirectory
-    NodeArgument     = $Private:NodeArgument
-  }
-  Invoke-NodePackage @Private:StepVersion
+  Invoke-NodePackage -Command version -WorkingDirectory $WorkingDirectory -Argument $Private:NodeArgument
 }
 
 <#
@@ -631,12 +605,7 @@ function Invoke-NodePackageScript {
     )
   }
 
-  [hashtable]$Private:RunScript = @{
-    Command          = 'run'
-    WorkingDirectory = $WorkingDirectory
-    NodeArgument     = $Private:NodeArgument
-  }
-  Invoke-NodePackage @Private:RunScript
+  Invoke-NodePackage -Command run -WorkingDirectory $WorkingDirectory -Argument $Private:NodeArgument
 }
 
 <#
@@ -682,12 +651,7 @@ function Test-NodePackage {
     )
   }
 
-  [hashtable]$Private:Test = @{
-    Command          = 'test'
-    WorkingDirectory = $WorkingDirectory
-    NodeArgument     = $Private:NodeArgument
-  }
-  Invoke-NodePackage @Private:Test
+  Invoke-NodePackage -Command test -WorkingDirectory $WorkingDirectory -Argument $Private:NodeArgument
 }
 
 New-Alias no Invoke-Node

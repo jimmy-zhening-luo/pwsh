@@ -81,10 +81,7 @@ function Invoke-DirectoryHome {
     [string]$Path
   )
 
-  [hashtable]$Private:FullPath = @{
-    Path = Join-Path $HOME $Path
-  }
-  Invoke-Directory @Private:FullPath @args
+  Invoke-Directory -Path (Join-Path $HOME $Path) @args
 }
 
 function Invoke-DirectoryCode {
@@ -99,10 +96,7 @@ function Invoke-DirectoryCode {
     [string]$Path
   )
 
-  [hashtable]$Private:FullPath = @{
-    Path = Join-Path $REPO_ROOT $Path
-  }
-  Invoke-Directory @Private:FullPath @args
+  Invoke-Directory -Path (Join-Path $REPO_ROOT $Path) @args
 }
 
 function Invoke-DirectoryDrive {
@@ -117,10 +111,7 @@ function Invoke-DirectoryDrive {
     [string]$Path
   )
 
-  [hashtable]$Private:FullPath = @{
-    Path = Join-Path $PWD.Drive.Root $Path
-  }
-  Invoke-Directory @Private:FullPath @args
+  Invoke-Directory -Path (Join-Path $PWD.Drive.Root $Path) @args
 }
 
 New-Alias e Invoke-Directory

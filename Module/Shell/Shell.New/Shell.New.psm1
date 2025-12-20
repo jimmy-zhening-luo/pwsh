@@ -51,17 +51,12 @@ function New-Directory {
     [Parameter(
       ValueFromPipelineByPropertyName
     )]
-    [System.Management.Automation.PSCredential]$Credential,
-
-    [Parameter(DontShow)][switch]$zNothing
+    [System.Management.Automation.PSCredential]$Credential
   )
 
   begin {
-    [hashtable]$Private:DirectoryType = @{
-      ItemType = 'Directory'
-    }
     $Private:wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [System.Management.Automation.CommandTypes]::Cmdlet)
-    $Private:scriptCmd = { & $Private:wrappedCmd @Private:DirectoryType @PSBoundParameters }
+    $Private:scriptCmd = { & $Private:wrappedCmd -ItemType Directory @PSBoundParameters }
     $Private:steppablePipeline = $Private:scriptCmd.GetSteppablePipeline()
 
     if (
@@ -124,18 +119,12 @@ function New-Junction {
       { return [string]$PWD.Path },
       $null, $null
     )]
-    [System.Object]$Value,
-
-    [Parameter(DontShow)][switch]$zNothing
+    [System.Object]$Value
   )
 
   begin {
-    [hashtable]$Private:JunctionType = @{
-      ItemType = 'Junction'
-      Force    = $True
-    }
     $Private:wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [System.Management.Automation.CommandTypes]::Cmdlet)
-    $Private:scriptCmd = { & $Private:wrappedCmd @PSBoundParameters @Private:JunctionType }
+    $Private:scriptCmd = { & $Private:wrappedCmd @PSBoundParameters -ItemType Junction -Force }
     $Private:steppablePipeline = $Private:scriptCmd.GetSteppablePipeline()
 
     if (

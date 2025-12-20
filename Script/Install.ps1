@@ -60,35 +60,21 @@ using namespace System.Collections.Generic
 
   #region Install
   foreach ($Private:BinaryModule in $Private:Cmdlets) {
-    [hashtable]$Private:BinaryModuleManifest = @{
-      Project     = $Private:BinaryModule
-      Folder      = 'Cmdlet'
-      SourceRoot  = $Private:SourceRoot
-      InstallPath = "$Private:ModuleRoot\$Private:BinaryModule"
-    }
-    Install-PSProject @Private:BinaryModuleManifest
+    Install-PSProject -Project $Private:BinaryModule -Folder Cmdlet -SourceRoot $Private:SourceRoot -InstallPath $Private:ModuleRoot\$Private:BinaryModule
   }
 
   foreach ($Private:Type in $Private:Types) {
-    [hashtable]$Private:TypeManifest = @{
-      Project     = $Private:Type
-      Folder      = 'Type'
-      SourceRoot  = $Private:SourceRoot
-      InstallPath = $Private:SourceRoot
-    }
-    Install-PSProject @Private:TypeManifest
+    Install-PSProject -Project $Private:Type -Folder Type -SourceRoot $Private:SourceRoot -InstallPath $Private:SourceRoot
   }
   #endregion
 
 
   #region Add Type
   foreach ($Private:Type in $Private:Types) {
-    [hashtable]$Private:TypeAssembly = @{
-      Path = "$Private:SourceRoot\$Private:Type.dll"
-    }
+    [string]$Private:TypeAssembly = "$Private:SourceRoot\$Private:Type.dll"
 
-    if (Test-Path @Private:TypeAssembly -PathType Leaf) {
-      Add-Type @Private:TypeAssembly
+    if (Test-Path -Path $Private:TypeAssembly -PathType Leaf) {
+      Add-Type -Path $Private:TypeAssembly
     }
   }
   #endregion

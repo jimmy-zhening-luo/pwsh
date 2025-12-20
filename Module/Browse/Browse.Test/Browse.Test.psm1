@@ -81,8 +81,9 @@ function Test-Host {
     if ($Detailed) {
       $InformationLevel = [TestHostVerbosity]::Detailed
     }
-    [hashtable]$Private:Verbosity = @{
-      InformationLevel = $InformationLevel -eq [TestHostVerbosity]::Detailed ? [TestHostVerbosity]::Detailed : [TestHostVerbosity]::Quiet
+
+    if ($InformationLevel -ne [TestHostVerbosity]::Detailed) {
+      $InformationLevel = [TestHostVerbosity]::Quiet
     }
   }
 
@@ -108,17 +109,14 @@ function Test-Host {
           }
         }
 
-        Test-NetConnection @Private:Connection @Private:Verbosity
+        Test-NetConnection @Private:Connection -InformationLevel $Private:InformationLevel
       }
     }
   }
 
   end {
     if (-not $Name) {
-      [hashtable]$Private:Connectivity = @{
-        ComputerName = 'google.com'
-      }
-      return Test-NetConnection @Private:Connectivity @Private:Verbosity
+      return Test-NetConnection -ComputerName google.com -InformationLevel $Private:InformationLevel
     }
   }
 }
@@ -179,7 +177,7 @@ function Test-Url {
     foreach ($Private:link in $Uri) {
       if ($Private:link) {
         try {
-          [int]$Private:Status = Invoke-WebRequest @PSBoundParameters @Private:Request |
+          [int]$Private:Status = Invoke-WebRequest -Uri $Private:link @Private:Request |
             Select-Object -ExpandProperty StatusCode
         }
         catch {

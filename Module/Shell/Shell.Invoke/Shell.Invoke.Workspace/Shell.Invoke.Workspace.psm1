@@ -115,12 +115,7 @@ function Invoke-Workspace {
     $Private:ArgumentList.Add('--reuse-window')
   }
 
-  [hashtable]$Private:VSCode = @{
-    FilePath     = "$env:LOCALAPPDATA\Programs\Microsoft VS Code\bin\code.cmd"
-    ArgumentList = $Private:ArgumentList
-    NoNewWindow  = $True
-  }
-  Start-Process @Private:VSCode
+  Start-Process -FilePath "$env:LOCALAPPDATA\Programs\Microsoft VS Code\bin\code.cmd" -NoNewWindow -ArgumentList $Private:ArgumentList
 }
 
 function Invoke-WorkspaceSibling {
@@ -158,11 +153,7 @@ function Invoke-WorkspaceSibling {
     [Parameter(DontShow)][switch]$zNothing
   )
 
-  [hashtable]$Private:Location = @{
-    Location = Split-Path $PWD.Path
-    Empty    = $True
-  }
-  Invoke-Workspace @PSBoundParameters @Private:Location
+  Invoke-Workspace @PSBoundParameters -Location (Split-Path $PWD.Path) -Empty
 }
 
 function Invoke-WorkspaceRelative {
@@ -200,10 +191,7 @@ function Invoke-WorkspaceRelative {
     [Parameter(DontShow)][switch]$zNothing
   )
 
-  [hashtable]$Private:Location = @{
-    Location = $PWD.Path | Split-Path | Split-Path
-  }
-  Invoke-Workspace @PSBoundParameters @Private:Location
+  Invoke-Workspace @PSBoundParameters -Location ($PWD.Path | Split-Path | Split-Path)
 }
 
 function Invoke-WorkspaceHome {
@@ -241,10 +229,7 @@ function Invoke-WorkspaceHome {
     [Parameter(DontShow)][switch]$zNothing
   )
 
-  [hashtable]$Private:Location = @{
-    Location = $HOME
-  }
-  Invoke-Workspace @PSBoundParameters @Private:Location
+  Invoke-Workspace @PSBoundParameters -Location $HOME
 }
 
 function Invoke-WorkspaceCode {
@@ -282,10 +267,7 @@ function Invoke-WorkspaceCode {
     [Parameter(DontShow)][switch]$zNothing
   )
 
-  [hashtable]$Private:Location = @{
-    Location = $REPO_ROOT
-  }
-  Invoke-Workspace @PSBoundParameters @Private:Location
+  Invoke-Workspace @PSBoundParameters -Location $REPO_ROOT
 }
 
 New-Alias i Invoke-Workspace

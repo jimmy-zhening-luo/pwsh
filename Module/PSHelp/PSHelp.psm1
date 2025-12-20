@@ -1,11 +1,7 @@
 using namespace System.Collections.Generic
 using namespace Completer
 
-[hashtable]$CUSTOM_HELP_FILE = @{
-  Path = "$PSScriptRoot\PSHelpTopic.psd1"
-}
-[hashtable]$CUSTOM_HELP = Import-PowerShellDataFile @CUSTOM_HELP_FILE
-
+[hashtable]$CUSTOM_HELP = Import-PowerShellDataFile -Path $PSScriptRoot\PSHelpTopic.psd1
 [string]$ABOUT_BASE_URL = 'https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about'
 
 <#
@@ -83,9 +79,9 @@ function Get-HelpOnline {
   $Private:HelpLinkArticleList = [List[uri]]::new()
   $Private:ArticleList = [List[uri]]::new()
 
-  [hashtable]$Private:Command = @{
-    Name        = $Private:Topic
-    ErrorAction = 'SilentlyContinue'
+  [hashtable]$Private:Silent = @{
+    ErrorAction    = 'SilentlyContinue'
+    ProgressAction = 'SilentlyContinue'
   }
 
   if ($CUSTOM_HELP.ContainsKey($Private:Topic)) {
@@ -102,7 +98,7 @@ function Get-HelpOnline {
     }
   }
   else {
-    $Private:Help = Get-Help @Private:Command
+    $Private:Help = Get-Help -Name $Private:Topic @Private:Silent
 
     if ($Private:Help -and $Private:Help.Count -gt 1) {
       $Private:Help = ''
@@ -125,7 +121,7 @@ function Get-HelpOnline {
     }
 
     if ($Private:Help -and $Parameter) {
-      $Private:ParameterHelp = Get-Help @Private:Command -Parameter $Parameter
+      $Private:ParameterHelp = Get-Help -Name $Private:Topic -Parameter $Parameter @Private:Silent
 
       if ($Private:ParameterHelp) {
         $Private:Help = $Private:ParameterHelp
@@ -180,7 +176,7 @@ function Get-HelpOnline {
         }
 
         if ($Private:about_Article) {
-          $Private:Help = Get-Help @Private:Command -Name $Private:about_TopicCandidate
+          $Private:Help = Get-Help -Name $Private:about_TopicCandidate @Private:Silent
         }
       }
 
@@ -207,7 +203,7 @@ function Get-HelpOnline {
     }
     else {
       if ($Private:Help) {
-        Get-Help @Private:Command 2>&1 | Out-Null
+        Get-Help -Name $Private:Topic @Private:Silent 2>&1 | Out-Null
       }
     }
   }

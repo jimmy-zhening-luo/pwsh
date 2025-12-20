@@ -40,10 +40,7 @@ function Update-Windows {
     throw 'Cannot open Settings app during SSH session'
   }
 
-  [hashtable]$Private:WindowsUpdate = @{
-    FilePath = 'ms-settings:windowsupdate'
-  }
-  Start-Process @Private:WindowsUpdate
+  Start-Process -FilePath ms-settings:windowsupdate
 }
 
 <#

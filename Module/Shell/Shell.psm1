@@ -18,7 +18,7 @@ function Clear-Line {
   )
 
   if ($Path -or $args) {
-    Clear-Content @PSBoundParameters @args
+    Clear-Content -Path $Path @args
   }
   else {
     Clear-Host

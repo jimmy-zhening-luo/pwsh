@@ -300,16 +300,7 @@ function Invoke-PSHistory {
   [OutputType([void])]
   param()
 
-  [hashtable]$Private:CodeEdit = @{
-    FilePath     = "$env:LOCALAPPDATA\Programs\Microsoft VS Code\bin\code.cmd"
-    ArgumentList = @(
-      [string](Get-PSReadLineOption).HistorySavePath
-      '--profile=PowerShell'
-      '--new-window'
-    )
-    NoNewWindow  = $True
-  }
-  Start-Process @Private:CodeEdit
+  Start-Process -FilePath "$env:LOCALAPPDATA\Programs\Microsoft VS Code\bin\code.cmd" -NoNewWindow -ArgumentList (Get-PSReadLineOption).HistorySavePath, --profile=PowerShell --new-window
 }
 
 [string]$PROFILE_REPO_ROOT = "$REPO_ROOT\pwsh"
@@ -329,15 +320,7 @@ function Invoke-PSProfile {
   [OutputType([void])]
   param()
 
-  [hashtable]$Private:CodeEdit = @{
-    FilePath     = "$env:LOCALAPPDATA\Programs\Microsoft VS Code\bin\code.cmd"
-    ArgumentList = @(
-      "$PROFILE_REPO_ROOT"
-      '--profile=PowerShell'
-    )
-    NoNewWindow  = $True
-  }
-  Start-Process @Private:CodeEdit
+  Start-Process -FilePath "$env:LOCALAPPDATA\Programs\Microsoft VS Code\bin\code.cmd" -NoNewWindow -ArgumentList $PROFILE_REPO_ROOT, --profile=PowerShell
 }
 
 <#
@@ -389,12 +372,7 @@ function Update-PSProfile {
 
   #region Build
   if (-not $SkipBuild) {
-    [hashtable]$Private:CompileCommand = @{
-      All         = $True
-      CommandType = 'Application'
-      Name        = 'dotnet.exe'
-    }
-    [System.Management.Automation.ApplicationInfo]$Private:DotnetExecutable = Get-Command @Private:CompileCommand
+    [System.Management.Automation.ApplicationInfo]$Private:DotnetExecutable = Get-Command -Name dotnet.exe -CommandType Application -All
 
     if (-not $Private:DotnetExecutable) {
       try {
@@ -457,30 +435,14 @@ function Install-PSModuleDotnet {
         throw 'winget attempted to install Microsoft.DotNet.SDK.10 but returned a non-zero exit code'
       }
 
-      [hashtable]$Private:CompileCommand = @{
-        All         = $True
-        CommandType = 'Application'
-        Name        = 'dotnet.exe'
-      }
-      [System.Management.Automation.ApplicationInfo]$Private:DotnetExecutable = Get-Command @Private:CompileCommand
+      [System.Management.Automation.ApplicationInfo]$Private:DotnetExecutable = Get-Command -Name dotnet.exe -CommandType Application -All
 
       if (-not $Private:DotnetExecutable) {
         throw 'Failed to locate Microsoft.DotNet.SDK.10 executable post-installation'
       }
 
       try {
-        [hashtable]$Private:DotnetInstallDependency = @{
-          FilePath     = (Resolve-Path -Path $Private:DotnetExecutable.Source).Path
-          NoNewWindow  = $True
-          PassThru     = $True
-          ErrorAction  = 'Stop'
-          ArgumentList = [string[]]@(
-            'new'
-            'install'
-            'Microsoft.PowerShell.Standard.Module.Template'
-          )
-        }
-        Start-Process @Private:DotnetInstallDependency |
+        Start-Process -FilePath $Private:DotnetExecutable.Source -NoNewWindow -PassThru -ErrorAction Stop -ArgumentList new, install, Microsoft.PowerShell.Standard.Module.Template |
           Wait-Process
       }
       catch {

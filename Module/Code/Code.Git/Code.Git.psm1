@@ -23,38 +23,37 @@ function Resolve-GitRepository {
   process {
     foreach ($Private:directory in $WorkingDirectory) {
       if ($New) {
-        [hashtable]$Private:TestWorkingDirectory = @{
-          Path = $WorkingDirectory
+        if (Test-RelativePath -Path $WorkingDirectory) {
+          Write-Output (
+            [string](
+              Resolve-RelativePath -Path $WorkingDirectory
+            )
+          )
         }
-        if (Test-RelativePath @Private:TestWorkingDirectory) {
-          Write-Output ([string](Resolve-RelativePath @Private:TestWorkingDirectory))
-        }
-        else {
-          $Private:TestWorkingDirectory.Location = $REPO_ROOT
-          $Private:TestWorkingDirectory.New = $True
-
-          if (Test-RelativePath @Private:TestWorkingDirectory) {
-            Write-Output ([string](Resolve-RelativePath @Private:TestWorkingDirectory))
-          }
+        elseif (Test-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT -New) {
+          Write-Output (
+            [string](
+              Resolve-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT -New
+            )
+          )
         }
       }
       else {
-        [hashtable]$Private:ResolveRepository = @{
-          Path = $WorkingDirectory
-        }
-        [hashtable]$Private:TestRepository = @{
-          Path           = $WorkingDirectory ? (Join-Path $WorkingDirectory .git) : '.git'
-          RequireSubpath = $True
-        }
+        [string]$Private:IsRepository = $WorkingDirectory ? (Join-Path $WorkingDirectory .git) : '.git'
 
-        if (Test-RelativePath @Private:TestRepository) {
-          Write-Output ([string](Resolve-RelativePath @Private:ResolveRepository))
+        if (Test-RelativePath -Path $Private:IsRepository) {
+          Write-Output (
+            [string](
+              Resolve-RelativePath -Path $WorkingDirectory
+            )
+          )
         }
-        else {
-          $Private:TestRepository.Location = $Private:ResolveRepository.Location = $REPO_ROOT
-          if (Test-RelativePath @Private:TestRepository) {
-            Write-Output ([string](Resolve-RelativePath @Private:ResolveRepository))
-          }
+        elseif (Test-RelativePath -Path $Private:IsRepository -Location $REPO_ROOT) {
+          Write-Output (
+            [string](
+              Resolve-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT
+            )
+          )
         }
       }
     }
@@ -210,7 +209,7 @@ function Invoke-GitRepository {
     WorkingDirectory = $WorkingDirectory
     New              = $Verb -in $NEWABLE_GIT_VERB
   }
-  [string]$Private:Repository = Resolve-GitRepository @Private:Resolve
+  [string]$Private:Repository = @Private:Resolve
 
   if (-not $Private:Repository) {
     if ($WorkingDirectory) {
@@ -297,11 +296,7 @@ function Measure-GitRepository {
     [string]$WorkingDirectory
   )
 
-  [hashtable]$Private:Status = @{
-    Verb             = 'status'
-    WorkingDirectory = $WorkingDirectory
-  }
-  Invoke-GitRepository @Private:Status @args
+  Invoke-GitRepository -Verb status -WorkingDirectory $WorkingDirectory -Argument $args
 }
 
 <#
@@ -361,11 +356,7 @@ function Import-GitRepository {
     )
   }
 
-  [hashtable]$Private:Clone = @{
-    Verb             = 'clone'
-    WorkingDirectory = $WorkingDirectory
-  }
-  Invoke-GitRepository @Private:Clone @Private:CloneArgument
+  Invoke-GitRepository -Verb clone -WorkingDirectory $WorkingDirectory -Argument $Private:CloneArgument
 }
 
 <#
@@ -394,11 +385,7 @@ function Get-GitRepository {
     [string]$WorkingDirectory
   )
 
-  [hashtable]$Private:Pull = @{
-    Verb             = 'pull'
-    WorkingDirectory = $WorkingDirectory
-  }
-  Invoke-GitRepository @Private:Pull @args
+  Invoke-GitRepository -Verb pull -WorkingDirectory $WorkingDirectory -Argument $args
 }
 
 <#
@@ -416,16 +403,15 @@ https://git-scm.com/docs/git-pull
 #>
 function Get-ChildGitRepository {
 
-  [hashtable]$Private:CodeDirectory = @{
-    Path      = $REPO_ROOT
-    Directory = $True
-  }
-  [string[]]$Private:Repositories = Get-ChildItem @Private:CodeDirectory |
+  [CmdletBinding()]
+  param()
+
+  [string[]]$Private:Repositories = Get-ChildItem -Path $REPO_ROOT -Directory |
     Select-Object -ExpandProperty FullName |
     Resolve-GitRepository
 
   foreach ($Private:Repository in $Private:Repositories) {
-    Get-GitRepository -WorkingDirectory $Private:Repository @args
+    Get-GitRepository -WorkingDirectory $Private:Repository
   }
 
   [ushort]$Private:Count = $Private:Repositories.Count
@@ -506,11 +492,7 @@ function Add-GitRepository {
     $Private:AddArgument.Add('--renormalize')
   }
 
-  [hashtable]$Private:Add = @{
-    Verb             = 'add'
-    WorkingDirectory = $WorkingDirectory
-  }
-  Invoke-GitRepository @Private:Add @Private:AddArgument
+  Invoke-GitRepository -Verb add -WorkingDirectory $WorkingDirectory -Argument $Private:AddArgument
 }
 
 <#
@@ -612,15 +594,11 @@ function Write-GitRepository {
     )
   )
 
-  [hashtable]$Private:Repository = @{
-    WorkingDirectory = $WorkingDirectory
-  }
   if (-not $Staged) {
-    Add-GitRepository @Private:Repository
+    Add-GitRepository -WorkingDirectory $WorkingDirectory
   }
 
-  $Private:Repository.Verb = 'commit'
-  Invoke-GitRepository @Private:Repository @Private:CommitArgument
+  Invoke-GitRepository -Verb commit -WorkingDirectory $WorkingDirectory -Argument $Private:CommitArgument
 }
 
 <#
@@ -668,13 +646,9 @@ function Push-GitRepository {
     )
   }
 
-  [hashtable]$Private:Repository = @{
-    WorkingDirectory = $WorkingDirectory
-  }
-  Get-GitRepository @Private:Repository
+  Get-GitRepository -WorkingDirectory $WorkingDirectory
 
-  $Private:Repository.Verb = 'push'
-  Invoke-GitRepository @Private:Repository @Private:PushArgument
+  Invoke-GitRepository -Verb push -WorkingDirectory $WorkingDirectory -Argument $Private:PushArgument
 }
 
 [regex]$TREE_SPEC = '^(?=.)(?>HEAD)?(?<Branching>(?>~|\^)?)(?<Step>(?>\d{0,10}))$'
@@ -760,13 +734,9 @@ function Reset-GitRepository {
   }
   $Private:ResetArgument.Insert(0, '--hard')
 
-  [hashtable]$Private:Repository = @{
-    WorkingDirectory = $WorkingDirectory
-  }
-  Add-GitRepository @Private:Repository
+  Add-GitRepository -WorkingDirectory $WorkingDirectory
 
-  $Private:Repository.Verb = 'reset'
-  Invoke-GitRepository @Private:Repository @Private:ResetArgument
+  Invoke-GitRepository -Verb reset -WorkingDirectory $WorkingDirectory -Argument $Private:ResetArgument
 }
 
 <#
@@ -814,12 +784,9 @@ function Restore-GitRepository {
     )
   }
 
-  [hashtable]$Private:Repository = @{
-    WorkingDirectory = $WorkingDirectory
-  }
-  Reset-GitRepository @Private:Repository @Private:ResetArgument
+  Reset-GitRepository -WorkingDirectory $WorkingDirectory -Argument $Private:ResetArgument
 
-  Get-GitRepository @Private:Repository
+  Get-GitRepository -WorkingDirectory $WorkingDirectory
 }
 
 New-Alias g Invoke-GitRepository

@@ -90,18 +90,17 @@ function Get-Size {
         throw "Path '$Private:filepath' does not exist."
       }
 
-      [hashtable]$Private:Target = @{
-        Path = $Private:filepath
-      }
-      [System.IO.FileSystemInfo]$Private:Item = Get-Item @Private:Target
-
-      [ulong]$Private:Size = $Private:Item.PSIsContainer ? (
-        Get-ChildItem @Private:Target -Recurse -Force -File |
+      [long]$Private:Size = (
+        Test-Path -Path $Private:filepath -PathType Container
+      ) ? (
+        Get-ChildItem -Path $Private:filepath -Recurse -Force -File |
           Measure-Object -Property Length -Sum |
           Select-Object -ExpandProperty Sum
-      ) : $Private:Item.Length
+      ) : (
+        Get-Item -Path $Private:filepath
+      ).Length
 
-      [double]$Private:ScaledSize = $Private:Size / $Private:Factor
+      [double]$Private:ScaledSize = [long]$Private:Size / [long]$Private:Factor
 
       Write-Output (
         $Number ? $Private:ScaledSize : (

@@ -75,7 +75,7 @@ function Get-YouTubeAudio {
     '--postprocessor-args'
     '-ar 44100'
   )
-  Get-YouTube @PSBoundParameters @args @Private:YouTubeArgument
+  Get-YouTube -Video $Video @args @Private:YouTubeArgument
 }
 
 <#
@@ -99,10 +99,7 @@ function Get-YouTubeFormat {
     [string]$Video
   )
 
-  [string[]]$Private:YouTubeArgument = @(
-    '-F'
-  )
-  Get-YouTube @PSBoundParameters @args @Private:YouTubeArgument
+  Get-YouTube -Video $Video @args '-F'
 }
 
 <#
@@ -120,10 +117,7 @@ function Invoke-YouTubeDirectory {
   [OutputType([void])]
   param()
 
-  [hashtable]$Private:YouTubeDownloads = @{
-    Path = 'Videos\YouTube'
-  }
-  Invoke-DirectoryHome @Private:YouTubeDownloads
+  Invoke-Item -Path Videos\YouTube
 }
 
 <#
@@ -141,12 +135,7 @@ function Invoke-YouTubeConfig {
   [OutputType([void])]
   param()
 
-  [hashtable]$Private:YouTubeConfig = @{
-    Workspace   = 'util\bin\yt\yt-dlp.conf'
-    ProfileName = 'Setting'
-    Window      = $True
-  }
-  Invoke-WorkspaceHome @Private:YouTubeConfig
+  Invoke-WorkspaceHome -Workspace util\bin\yt\yt-dlp.conf -ProfileName Setting -Window
 }
 
 New-Alias yt Get-YouTube
