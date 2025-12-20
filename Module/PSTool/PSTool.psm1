@@ -20,18 +20,18 @@ Measure-Command
 #>
 function Measure-PSProfile {
   [CmdletBinding(
-    DefaultParameterSetName = 'String'
+    DefaultParameterSetName = 'Display'
   )]
   [OutputType([string])]
-  [OutputType([double], ParameterSetName = 'Number')]
+  [OutputType([double], ParameterSetName = 'Numeric')]
   param(
 
     [Parameter(
-      ParameterSetName = 'String',
+      ParameterSetName = 'Display',
       Position = 0
     )]
     [Parameter(
-      ParameterSetName = 'Number',
+      ParameterSetName = 'Numeric',
       Position = 0
     )]
     [ValidateRange(1, 50)]
@@ -39,16 +39,16 @@ function Measure-PSProfile {
     [int]$Iterations,
 
     [Parameter(
-      ParameterSetName = 'Number',
+      ParameterSetName = 'Numeric',
       Mandatory
     )]
     # If specified, returns only the numeric profile overhead in milliseconds.
-    [switch]$Number,
+    [switch]$Numeric,
 
     [Parameter(
-      ParameterSetName = 'Number'
+      ParameterSetName = 'Numeric'
     )]
-    # If specified along with Number, returns the numeric baseline value in milliseconds instead of the profile overhead.
+    # If specified along with Numeric, returns the numeric baseline value in milliseconds instead of the profile overhead.
     [switch]$Baseline,
 
     [Parameter(DontShow)][switch]$zNothing
@@ -110,7 +110,7 @@ function Measure-PSProfile {
     [long]$Private:AverageProfileCostTicks
   )
 
-  if ($Number) {
+  if ($Numeric) {
     return $Baseline ? $AverageBareStartup.TotalMilliseconds : $AverageProfileCost.TotalMilliseconds
   }
   else {
