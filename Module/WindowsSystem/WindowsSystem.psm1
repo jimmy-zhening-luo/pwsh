@@ -169,11 +169,11 @@ function Stop-Task {
         if (-not $Name) {
           if (
             $PSCmdlet.ShouldProcess(
-              'Process Name: explorer.exe',
-              'Stop-Process (default => explorer.exe)'
+              'Process Name: explorer',
+              'Stop-Process (default => explorer)'
             )
           ) {
-            Stop-Process -Name explorer.exe -Force
+            Stop-Process -Name explorer -Force
           }
         }
       }
@@ -181,11 +181,11 @@ function Stop-Task {
         if ($Self) {
           if (
             $PSCmdlet.ShouldProcess(
-              'Process Name: WindowsTerminal.exe',
-              'Stop-Process (-Self => WindowsTerminal.exe)'
+              'Process Name: WindowsTerminal',
+              'Stop-Process (-Self => WindowsTerminal)'
             )
           ) {
-            Stop-Process -Name WindowsTerminal.exe -Force
+            Stop-Process -Name WindowsTerminal -Force
           }
         }
       }
