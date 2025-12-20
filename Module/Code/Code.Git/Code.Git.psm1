@@ -42,7 +42,7 @@ function Resolve-GitRepository {
         }
       }
       else {
-        if (-not Path) {
+        if (-not $Path) {
           if (Test-Path -Path .git -PathType Container) {
             Write-Output $PWD.Path
           }
