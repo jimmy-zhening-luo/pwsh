@@ -7,9 +7,7 @@
   CompanyName          = 'Jimmy Zhening Luo'
   Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
   PowerShellVersion    = '7.4'
-  FunctionsToExport    = @(
-    'Copy-Guid'
-  )
+  FunctionsToExport    = @()
   CmdletsToExport      = @()
   VariablesToExport    = @()
   AliasesToExport      = @(
@@ -21,6 +19,5 @@
     'count'
     'z'
     'format'
-    'guid'
   )
 }

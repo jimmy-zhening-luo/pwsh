@@ -12,6 +12,7 @@
   )
   FunctionsToExport    = @(
     'Test-Function'
+    'Copy-Guid'
   )
   CmdletsToExport      = @(
     'Test-Cmdlet'
@@ -19,8 +20,9 @@
   )
   VariablesToExport    = @()
   AliasesToExport      = @(
-    'fest'
     'test'
     'hex'
+    'fest'
+    'guid'
   )
 }
