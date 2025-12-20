@@ -82,7 +82,14 @@ function Measure-PSProfile {
     DefaultParameterSetName = 'Display'
   )]
   [OutputType([string])]
-  [OutputType([double], ParameterSetName = 'Numeric')]
+  [OutputType(
+    [double],
+    ParameterSetName = 'Numeric'
+  )]
+  [OutputType(
+    [timespan],
+    ParameterSetName = 'Timespan'
+  )]
   param(
 
     [Parameter(
@@ -93,6 +100,10 @@ function Measure-PSProfile {
       ParameterSetName = 'Numeric',
       Position = 0
     )]
+    [Parameter(
+      ParameterSetName = 'Timespan',
+      Position = 0
+    )]
     [ValidateRange(1, 50)]
     # The number of iterations to perform, maximum 50. Default is 8.
     [int]$Iterations,
@@ -101,13 +112,20 @@ function Measure-PSProfile {
       ParameterSetName = 'Numeric',
       Mandatory
     )]
-    # If specified, returns only the numeric profile overhead in milliseconds.
+    # If specified, returns only the numeric profile overhead in milliseconds. Cannot be specified with Timespan.
     [switch]$Numeric,
+
+    [Parameter(
+      ParameterSetName = 'Timespan',
+      Mandatory
+    )]
+    # If specified, returns only the profile overhead as a timespan. Cannot be specified with Numeric.
+    [switch]$Timespan,
 
     [Parameter(
       ParameterSetName = 'Numeric'
     )]
-    # If specified along with Numeric, returns the numeric baseline value in milliseconds instead of the profile overhead.
+    # If specified along with Numeric or with Timespan, returns the baseline instead of the profile overhead.
     [switch]$Baseline,
 
     [Parameter(DontShow)][switch]$zNothing
@@ -170,6 +188,9 @@ function Measure-PSProfile {
 
   if ($Numeric) {
     return $Baseline ? $Private:AverageBareStartup.TotalMilliseconds : $Private:AverageProfileCost.TotalMilliseconds
+  }
+  elseif ($Timespan) {
+    return $Baseline ? [timespan]$Private:AverageBareStartup : [timespan]$Private:AverageProfileCost
   }
   else {
     return "$([long]$Private:AverageProfileCost.TotalMilliseconds) ms`n(Base: $([long]$Private:AverageBareStartup.TotalMilliseconds) ms)"
