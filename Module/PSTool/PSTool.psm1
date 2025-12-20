@@ -348,7 +348,7 @@ function Publish-PSProfile {
   )
   & "$env:ProgramFiles\Git\cmd\git.exe" @Private:GitCommandManifest
 
-  if ($LASTEXITCODE -ne 0) {
+  if ($LASTEXITCODE -notin 0, 1) {
     throw "Failed to pull pwsh profile repository at '$PROFILE_REPO_ROOT'. Git returned exit code: $LASTEXITCODE"
   }
   #endregion
@@ -424,7 +424,7 @@ function Install-PSModuleDotnet {
     ) {
       & $env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe '--id=Microsoft.DotNet.SDK.10'
 
-      if ($LASTEXITCODE -ne 0) {
+      if ($LASTEXITCODE -notin 0, 1) {
         throw 'winget attempted to install Microsoft.DotNet.SDK.10 but returned a non-zero exit code'
       }
 

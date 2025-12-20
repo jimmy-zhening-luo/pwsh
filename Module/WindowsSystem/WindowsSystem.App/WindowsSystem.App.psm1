@@ -43,7 +43,7 @@ function Add-WinGetApp {
     & $env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe upgrade
   }
 
-  if ($LASTEXITCODE -ne 0) {
+  if ($LASTEXITCODE -notin 0, 1) {
     throw "winget.exe error, execution stopped with exit code: $LASTEXITCODE"
   }
 }
@@ -65,7 +65,7 @@ function Update-WinGetApp {
 
   & $env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe upgrade @args
 
-  if ($LASTEXITCODE -ne 0) {
+  if ($LASTEXITCODE -notin 0, 1) {
     throw "winget.exe error, execution stopped with exit code: $LASTEXITCODE"
   }
 }
@@ -92,7 +92,7 @@ function Find-WinGetApp {
     & $env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe list
   }
 
-  if ($LASTEXITCODE -ne 0) {
+  if ($LASTEXITCODE -notin 0, 1) {
     throw "winget.exe error, execution stopped with exit code: $LASTEXITCODE"
   }
 }
@@ -114,7 +114,7 @@ function Remove-WinGetApp {
 
   & $env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe uninstall @args
 
-  if ($LASTEXITCODE -ne 0) {
+  if ($LASTEXITCODE -notin 0, 1) {
     throw "winget.exe error, execution stopped with exit code: $LASTEXITCODE"
   }
 }

@@ -16,7 +16,7 @@ function Invoke-CommandPrompt {
 
   & $env:ComSpec /c @args
 
-  if ($LASTEXITCODE -ne 0) {
+  if ($LASTEXITCODE -notin 0, 1) {
     throw "cmd.exe error, execution stopped with exit code: $LASTEXITCODE"
   }
 }

@@ -34,7 +34,7 @@ function Get-YouTube {
   if (Test-Url -Uri $Private:VideoUri) {
     & yt-dlp.exe @args -- [string]$Private:VideoUri
 
-    if ($LASTEXITCODE -ne 0) {
+    if ($LASTEXITCODE -notin 0, 1) {
       throw "ytdlp error, execution stopped with exit code: $LASTEXITCODE"
     }
   }

@@ -91,7 +91,7 @@ function Invoke-Node {
   if ($args) {
     & node.exe @args
 
-    if ($LASTEXITCODE -ne 0) {
+    if ($LASTEXITCODE -notin 0, 1) {
       throw "Node.exe error, execution stopped with exit code: $LASTEXITCODE"
     }
   }
@@ -343,7 +343,7 @@ function Invoke-NodePackage {
 
   & npm.ps1 @Private:NodeArgument
 
-  if ($LASTEXITCODE -ne 0) {
+  if ($LASTEXITCODE -notin 0, 1) {
     [string]$Private:Exception = "npm command error, execution returned exit code: $LASTEXITCODE"
 
     if ($NoThrow) {
@@ -373,7 +373,7 @@ function Invoke-NodeExecutable {
   if ($args) {
     & npx.ps1 @args
 
-    if ($LASTEXITCODE -ne 0) {
+    if ($LASTEXITCODE -notin 0, 1) {
       throw "npx error, execution stopped with exit code: $LASTEXITCODE"
     }
   }

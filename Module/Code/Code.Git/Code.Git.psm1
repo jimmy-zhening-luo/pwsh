@@ -455,7 +455,7 @@ function Invoke-GitRepository {
 
   & "$env:ProgramFiles\Git\cmd\git.exe" @Private:GitCommand @Private:GitArgument
 
-  if ($LASTEXITCODE -ne 0) {
+  if ($LASTEXITCODE -notin 0, 1) {
     [string]$Private:Exception = "git command error, execution returned exit code: $LASTEXITCODE"
 
     if ($NoThrow) {
