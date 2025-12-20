@@ -18,7 +18,6 @@ function Resolve-GitRepository {
     [string[]]$WorkingDirectory,
 
     [switch]$New
-
   )
 
   process {
@@ -165,7 +164,6 @@ function Invoke-GitRepository {
 
     # Pass the -v flag as an argument to git
     [switch]$V
-
   )
 
   $Private:GitArgument = [List[string]]::new()
@@ -297,7 +295,6 @@ function Measure-GitRepository {
     )]
     # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
     [string]$WorkingDirectory
-
   )
 
   [hashtable]$Private:Status = @{
@@ -338,7 +335,6 @@ function Import-GitRepository {
     [Alias('ssh')]
     # Use git@github.com remote protocol instead of the default HTTPS
     [switch]$ForceSsh
-
   )
 
   [string[]]$Private:RepositoryPathSegments = $Repository -split '/' -notmatch [regex]'^\s*$'
@@ -396,7 +392,6 @@ function Get-GitRepository {
     )]
     # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
     [string]$WorkingDirectory
-
   )
 
   [hashtable]$Private:Pull = @{
@@ -468,7 +463,6 @@ function Add-GitRepository {
 
     # Equivalent to git add --renormalize flag
     [switch]$Renormalize
-
   )
 
   $Private:AddArgument = [List[string]]::new()
@@ -552,7 +546,6 @@ function Write-GitRepository {
 
     # Allow an empty commit, equivalent to git commit --allow-empty flag.
     [switch]$AllowEmpty
-
   )
 
   $Private:CommitArgument = [List[string]]::new()
@@ -654,7 +647,6 @@ function Push-GitRepository {
     )]
     # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
     [string]$WorkingDirectory
-
   )
 
   $Private:PushArgument = [List[string]]::new()
@@ -717,7 +709,6 @@ function Reset-GitRepository {
 
     # Non-destructive reset, equivalent to running git reset without the --hard flag.
     [switch]$Soft
-
   )
 
   $Private:ResetArgument = [List[string]]::new()
@@ -802,7 +793,6 @@ function Restore-GitRepository {
     )]
     # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
     [string]$WorkingDirectory
-
   )
 
   $Private:ResetArgument = [List[string]]::new()

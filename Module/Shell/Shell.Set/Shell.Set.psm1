@@ -11,7 +11,6 @@ function Set-Directory {
       $null
     )]
     [string]$Path
-
   )
 
   if ($Path -or $args) {
@@ -33,7 +32,6 @@ function Set-DirectorySibling {
       $null
     )]
     [string]$Path
-
   )
 
   [hashtable]$Private:FullPath = @{
@@ -53,7 +51,6 @@ function Set-DirectoryRelative {
       $null
     )]
     [string]$Path
-
   )
 
   [hashtable]$Private:FullPath = @{
@@ -73,7 +70,6 @@ function Set-DirectoryHome {
       $null
     )]
     [string]$Path
-
   )
 
   [hashtable]$Private:FullPath = @{
@@ -93,7 +89,6 @@ function Set-DirectoryCode {
       $null
     )]
     [string]$Path
-
   )
 
   [hashtable]$Private:FullPath = @{
@@ -113,7 +108,6 @@ function Set-Drive {
       $null
     )]
     [string]$Path
-
   )
 
   [hashtable]$Private:FullPath = @{
@@ -133,7 +127,6 @@ function Set-DriveD {
       $null
     )]
     [string]$Path
-
   )
 
   [hashtable]$Private:FullPath = @{

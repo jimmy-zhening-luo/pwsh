@@ -39,7 +39,6 @@ function Invoke-Workspace {
     [switch]$Empty,
 
     [Parameter(DontShow)][switch]$zNothing
-
   )
 
   if ($env:SSH_CLIENT) {
@@ -157,7 +156,6 @@ function Invoke-WorkspaceSibling {
     [switch]$ReuseWindow,
 
     [Parameter(DontShow)][switch]$zNothing
-
   )
 
   [hashtable]$Private:Location = @{
@@ -200,7 +198,6 @@ function Invoke-WorkspaceRelative {
     [switch]$ReuseWindow,
 
     [Parameter(DontShow)][switch]$zNothing
-
   )
 
   [hashtable]$Private:Location = @{
@@ -242,7 +239,6 @@ function Invoke-WorkspaceHome {
     [switch]$ReuseWindow,
 
     [Parameter(DontShow)][switch]$zNothing
-
   )
 
   [hashtable]$Private:Location = @{
@@ -284,7 +280,6 @@ function Invoke-WorkspaceCode {
     [switch]$ReuseWindow,
 
     [Parameter(DontShow)][switch]$zNothing
-
   )
 
   [hashtable]$Private:Location = @{

@@ -10,7 +10,6 @@ function Invoke-Directory {
       $null, $null
     )]
     [string]$Path
-
   )
   if (-not $env:SSH_CLIENT) {
     if (-not $Path) {
@@ -46,7 +45,6 @@ function Invoke-DirectorySibling {
       $null, $null
     )]
     [string]$Path
-
   )
 
   Invoke-Directory -Path (
@@ -64,7 +62,6 @@ function Invoke-DirectoryRelative {
       $null, $null
     )]
     [string]$Path
-
   )
 
   Invoke-Directory -Path (
@@ -82,7 +79,6 @@ function Invoke-DirectoryHome {
       $null, $null
     )]
     [string]$Path
-
   )
 
   [hashtable]$Private:FullPath = @{
@@ -101,7 +97,6 @@ function Invoke-DirectoryCode {
       $null, $null
     )]
     [string]$Path
-
   )
 
   [hashtable]$Private:FullPath = @{
@@ -120,7 +115,6 @@ function Invoke-DirectoryDrive {
       $null, $null
     )]
     [string]$Path
-
   )
 
   [hashtable]$Private:FullPath = @{

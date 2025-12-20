@@ -27,7 +27,6 @@ function Copy-Guid {
     [switch]$Silent,
 
     [Parameter(DontShow)][switch]$zNothing
-
   )
 
   [string]$Private:Guid = (New-Guid).Guid

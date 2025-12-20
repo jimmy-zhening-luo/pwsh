@@ -54,7 +54,6 @@ function Measure-Performance {
     [switch]$Numeric,
 
     [Parameter(DontShow)][switch]$zNothing
-
   )
 
 }
@@ -112,7 +111,6 @@ function Measure-PSProfile {
     [switch]$Baseline,
 
     [Parameter(DontShow)][switch]$zNothing
-
   )
 
   if (-not $Iterations) {
@@ -253,7 +251,6 @@ function Update-PSProfile {
     [switch]$SkipBuild,
 
     [Parameter(DontShow)][switch]$zNothing
-
   )
 
   #region Pull Repo

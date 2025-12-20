@@ -14,7 +14,6 @@ function Remove-Directory {
       $null, $null
     )]
     [string]$Path
-
   )
 
   [hashtable]$Private:Hard = @{

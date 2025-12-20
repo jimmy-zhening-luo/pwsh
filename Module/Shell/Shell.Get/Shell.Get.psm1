@@ -77,7 +77,6 @@ function Get-Size {
     [switch]$Number,
 
     [Parameter(DontShow)][switch]$zNothing
-
   )
 
   begin {

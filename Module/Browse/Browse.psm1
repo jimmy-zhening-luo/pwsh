@@ -36,7 +36,6 @@ function Open-Url {
     [AllowEmptyCollection()]
     # The URL(s) to open.
     [uri[]]$Uri
-
   )
 
   begin {

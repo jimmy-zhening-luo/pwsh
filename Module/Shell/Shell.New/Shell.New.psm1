@@ -54,7 +54,6 @@ function New-Directory {
     [System.Management.Automation.PSCredential]$Credential,
 
     [Parameter(DontShow)][switch]$zNothing
-
   )
 
   begin {
@@ -128,7 +127,6 @@ function New-Junction {
     [System.Object]$Value,
 
     [Parameter(DontShow)][switch]$zNothing
-
   )
 
   begin {

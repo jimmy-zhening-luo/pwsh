@@ -17,7 +17,6 @@ function Get-YouTube {
 
     # The YouTube video URL or identifier to process.
     [string]$Video
-
   )
 
   if (-not $Video) {
@@ -63,7 +62,6 @@ function Get-YouTubeAudio {
 
     # The YouTube video URL or identifier to process.
     [string]$Video
-
   )
 
   [string[]]$Private:YouTubeArgument = @(
@@ -99,7 +97,6 @@ function Get-YouTubeFormat {
 
     # The YouTube video URL or identifier to process.
     [string]$Video
-
   )
 
   [string[]]$Private:YouTubeArgument = @(

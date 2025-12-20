@@ -162,7 +162,6 @@ function Test-Url {
     [uri]$Uri,
 
     [Parameter(DontShow)][switch]$zNothing
-
   )
 
   begin {

@@ -63,7 +63,6 @@ function Edit-SystemPath {
 
     # Launch Environment Variables control panel as administrator to edit system variables
     [switch]$Administrator
-
   )
 
   if ($env:SSH_CLIENT) {
@@ -131,7 +130,6 @@ function Stop-Task {
     [switch]$Self,
 
     [Parameter(DontShow)][switch]$zNothing
-
   )
 
   process {

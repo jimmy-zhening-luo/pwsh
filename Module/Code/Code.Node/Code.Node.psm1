@@ -27,7 +27,6 @@ function Test-NodePackageDirectory {
     [AllowEmptyString()]
     # Node package root path to be resolved
     [string]$WorkingDirectory
-
   )
 
   if (-not $WorkingDirectory) {
@@ -62,7 +61,6 @@ function Resolve-NodePackageDirectory {
     [AllowEmptyString()]
     # Node package root path to be resolved
     [string]$WorkingDirectory
-
   )
 
   [hashtable]$Private:TestWorkingDirectory = @{
@@ -277,7 +275,6 @@ function Invoke-NodePackage {
     [switch]$P,
 
     [Parameter(DontShow)][switch]$zNothing
-
   )
 
   $Private:NodeArgument = [List[string]]::new(
@@ -453,7 +450,6 @@ function Compare-NodeModule {
     [string]$WorkingDirectory,
 
     [Parameter(DontShow)][switch]$zNothing
-
   )
 
   $Private:NodeArgument = [List[string]]::new()
@@ -524,7 +520,6 @@ function Step-NodePackageVersion {
     [string]$WorkingDirectory,
 
     [Parameter(DontShow)][switch]$zNothing
-
   )
 
   if ($Version) {
@@ -611,7 +606,6 @@ function Invoke-NodePackageScript {
     [string]$WorkingDirectory,
 
     [Parameter(DontShow)][switch]$zNothing
-
   )
 
   if (-not $Script) {
@@ -671,7 +665,6 @@ function Test-NodePackage {
     [string]$WorkingDirectory,
 
     [Parameter(DontShow)][switch]$zNothing
-
   )
 
   $Private:NodeArgument = [List[string]]::new()

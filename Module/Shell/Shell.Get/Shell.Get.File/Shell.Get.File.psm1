@@ -15,7 +15,6 @@ function Get-File {
     [string]$Path,
 
     [string]$Location
-
   )
 
   [string[]]$Private:ArgumentList = @()
@@ -67,7 +66,6 @@ function Get-FileSibling {
       $null, $null
     )]
     [string]$Path
-
   )
 
   [hashtable]$Private:Location = @{
@@ -86,7 +84,6 @@ function Get-FileRelative {
       $null, $null
     )]
     [string]$Path
-
   )
 
   [hashtable]$Private:Location = @{
@@ -105,7 +102,6 @@ function Get-FileHome {
       $null, $null
     )]
     [string]$Path
-
   )
 
   [hashtable]$Private:Location = @{
@@ -124,7 +120,6 @@ function Get-FileCode {
       $null, $null
     )]
     [string]$Path
-
   )
 
   [hashtable]$Private:Location = @{
@@ -143,7 +138,6 @@ function Get-FileDrive {
       $null, $null
     )]
     [string]$Path
-
   )
 
   [hashtable]$Private:Location = @{

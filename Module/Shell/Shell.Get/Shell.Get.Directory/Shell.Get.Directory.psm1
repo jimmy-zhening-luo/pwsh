@@ -11,7 +11,6 @@ function Get-Directory {
       $null
     )]
     [string]$Path
-
   )
 
   if ($Path) {
@@ -33,7 +32,6 @@ function Get-DirectorySibling {
       $null
     )]
     [string]$Path
-
   )
 
   [hashtable]$Private:FullPath = @{
@@ -53,7 +51,6 @@ function Get-DirectoryRelative {
       $null
     )]
     [string]$Path
-
   )
 
   [hashtable]$Private:FullPath = @{
@@ -73,7 +70,6 @@ function Get-DirectoryHome {
       $null
     )]
     [string]$Path
-
   )
 
   [hashtable]$Private:FullPath = @{
@@ -93,7 +89,6 @@ function Get-DirectoryCode {
       $null
     )]
     [string]$Path
-
   )
 
   [hashtable]$Private:FullPath = @{
@@ -113,7 +108,6 @@ function Get-DirectoryDrive {
       $null
     )]
     [string]$Path
-
   )
 
   [hashtable]$Private:FullPath = @{

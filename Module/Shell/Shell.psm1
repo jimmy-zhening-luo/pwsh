@@ -15,7 +15,6 @@ function Clear-Line {
       $null, $null
     )]
     [string]$Path
-
   )
 
   if ($Path -or $args) {
@@ -40,7 +39,6 @@ function Test-RelativePath {
     [switch]$New,
 
     [switch]$RequireSubpath
-
   )
 
   $Path = [Canonicalizer]::Normalize(
@@ -152,7 +150,6 @@ function Resolve-RelativePath {
     [switch]$New,
 
     [switch]$RequireSubpath
-
   )
 
   if (-not (Test-RelativePath @PSBoundParameters)) {

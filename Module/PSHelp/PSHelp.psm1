@@ -72,7 +72,6 @@ function Get-HelpOnline {
     [string[]]$Parameter,
 
     [Parameter(DontShow)][switch]$zNothing
-
   )
 
   if (-not $Name) {
@@ -265,7 +264,6 @@ function Get-CommandAlias {
     [string[]]$Exclude,
 
     [Parameter(DontShow)][switch]$zNothing
-
   )
 
   begin {
@@ -356,7 +354,6 @@ function Get-VerbList {
     [string]$Group,
 
     [Parameter(DontShow)][switch]$zNothing
-
   )
 
   begin {
