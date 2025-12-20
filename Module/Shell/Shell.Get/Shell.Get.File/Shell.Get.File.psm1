@@ -17,14 +17,14 @@ function Get-File {
     [string]$Location
   )
 
-  [string[]]$Private:ArgumentList = @()
+  [string[]]$Private:Argument = @()
 
   if (
     $Location -and -not (
       Test-Path -Path $Location -PathType Container
     )
   ) {
-    $Private:ArgumentList += $Location
+    $Private:Argument += $Location
     $Location = ''
   }
 
@@ -38,17 +38,20 @@ function Get-File {
     }
 
     if (Test-Path -Path $Private:FullPath -PathType Container) {
-      return Get-ChildItem -Path $Private:FullPath @args
+      return Get-ChildItem -Path $Private:FullPath @Private:Argument @args
     }
     else {
-      return Get-Content -Path $Private:FullPath @args
+      return Get-Content -Path $Private:FullPath @Private:Argument @args
     }
   }
   else {
-    [hashtable]$Private:Directory = @{
-      Path = ($Location ? (Resolve-Path -Path $Location) : $PWD).Path
-    }
-    return Get-ChildItem @Private:Directory @Private:ArgumentList @args
+    return Get-ChildItem -Path (
+      (
+        $Location ? (
+          Resolve-Path -Path $Location
+        ) : $PWD
+      ).Path
+    ) @Private:Argument @args
   }
 }
 
