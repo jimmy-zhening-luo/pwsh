@@ -197,6 +197,9 @@ function Measure-PSProfile {
     [Parameter(
       ParameterSetName = 'Numeric'
     )]
+    [Parameter(
+      ParameterSetName = 'Baseline'
+    )]
     # If specified along with Numeric or with Timespan, returns the baseline instead of the profile overhead.
     [switch]$Baseline,
 
