@@ -37,16 +37,19 @@ function Measure-Performance {
 
     [Parameter(
       ParameterSetName = 'Display',
+      Mandatory,
       Position = 0,
       ValueFromRemainingArguments
     )]
     [Parameter(
       ParameterSetName = 'Numeric',
+      Mandatory,
       Position = 0,
       ValueFromRemainingArguments
     )]
     [Parameter(
       ParameterSetName = 'Timespan',
+      Mandatory,
       Position = 0,
       ValueFromRemainingArguments
     )]
