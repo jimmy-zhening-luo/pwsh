@@ -7,8 +7,6 @@ Measure PowerShell command performance.
 .DESCRIPTION
 This function measures the performance of a PowerShell command by invoking it in a new PowerShell process and comparing its execution time over the PowerShell process invocation time as a baseline.
 
-It can perform multiple iterations to calculate a mean command performance value.
-
 The invoked PowerShell process will not load the user profile, so any commands or modules defined in the profile will not be available during measurement.
 
 .COMPONENT
@@ -56,10 +54,6 @@ function Measure-Performance {
     # The PowerShell command to measure. The command must be available in a new PowerShell process without loading the user profile. Multiple strings will be concatenated with spaces.
     [string[]]$Command,
 
-    [ValidateRange(1, 50)]
-    # The number of iterations to perform, maximum 50. Default is 6.
-    [int]$Iterations,
-
     [Parameter(
       ParameterSetName = 'Numeric',
       Mandatory
@@ -79,53 +73,30 @@ function Measure-Performance {
 
   [string]$Private:FullCommand = $Command -join ' '
 
-  if (-not $Iterations) {
-    $Iterations = 6
-  }
+  [long]$Private:CommandTicks = [long](
+    Measure-Command {
+      pwsh -NoProfile -Command "$Private:FullCommand"
+    }
+  ).Ticks
 
-  [List[long]]$Private:CommandTicks = [List[long]]::new()
+  [timespan]$Private:AverageBaseline = Measure-PSProfile -Iterations 5 -Baseline -Timespan
 
-  for (
-    [int]$Private:i = 0
-    $Private:i -lt $Iterations
-    ++$Private:i
-  ) {
-    $Private:CommandTicks.Add(
-      [long](
-        Measure-Command {
-          pwsh -NoProfile -Command "$Private:FullCommand"
-        }
-      ).Ticks
-    )
-  }
-
-  [timespan]$Private:AverageBaseline = Measure-PSProfile -Iterations $Iterations -Baseline -Timespan
-  [long]$Private:TotalBaselineTicks = [long](
-    [long]$Private:AverageBaseline.Ticks * [long]$Iterations
+  [long]$CommandCostTicks = [long](
+    [long]$Private:CommandTicks - [long]$Private:AverageBaseline.Ticks
   )
 
-  [long]$Private:TotalCommandTicks = [long][System.Linq.Enumerable]::Sum(
-    [List[long]]$Private:CommandTicks
-  )
-
-  [long]$TotalCommandCostTicks = [long](
-    [long]$Private:TotalCommandTicks - [long]$Private:TotalBaselineTicks
-  )
-  [long]$Private:AverageCommandCostTicks = [long](
-    [long]$TotalCommandCostTicks / [long]$Iterations
-  )
-  [timespan]$Private:AverageCommandCost = [timespan]::new(
-    [long]$Private:AverageCommandCostTicks
+  [timespan]$Private:CommandCost = [timespan]::new(
+    [long]$Private:CommandCostTicks
   )
 
   if ($Numeric) {
-    return $Private:AverageCommandCost.TotalMilliseconds
+    return $Private:CommandCost.TotalMilliseconds
   }
   elseif ($Timespan) {
-    return [timespan]$Private:AverageCommandCost
+    return [timespan]$Private:CommandCost
   }
   else {
-    return "$([long]$Private:AverageCommandCost.TotalMilliseconds) ms`n(Base: $([long]$Private:AverageBaseline.TotalMilliseconds) ms)"
+    return "$([long]$Private:CommandCost.TotalMilliseconds) ms`n(Base: $([long]$Private:AverageBaseline.TotalMilliseconds) ms)"
   }
 }
 
@@ -176,7 +147,7 @@ function Measure-PSProfile {
       Position = 0
     )]
     [ValidateRange(1, 50)]
-    # The number of iterations to perform, maximum 50. Default is 6.
+    # The number of iterations to perform, maximum 50. Default is 8.
     [int]$Iterations,
 
     [Parameter(
@@ -206,7 +177,7 @@ function Measure-PSProfile {
   )
 
   if (-not $Iterations) {
-    $Iterations = 6
+    $Iterations = 8
   }
 
   [List[long]]$Private:BareStartupTicks = [List[long]]::new()
