@@ -2,15 +2,11 @@ if (-not $Env:PSModulePath.EndsWith(";$PSScriptRoot\Module;")) {
   $Env:PSModulePath += ";$PSScriptRoot\Module;"
 }
 
-echo $REPO_ROOT
-
-if (-not -not $Env:SSH_CLIENT -and -not $Global:PSSessionOption.NoCompression) {
-  $Global:PSSessionOption.NoCompression = $True
+if (-not -not $Env:SSH_CLIENT) {
+  $PSSessionOption.NoCompression = $True
 }
 
-if (-not $Global:PSDefaultParameterValue) {
-  $Global:PSDefaultParameterValues = Import-PowerShellDataFile -Path $PSScriptRoot\Data\Parameter.psd1
-}
+$Global:PSDefaultParameterValues = Import-PowerShellDataFile -Path $PSScriptRoot\Data\Parameter.psd1
 
 $Script:REPO_ROOT = Split-Path $PSScriptRoot
 
