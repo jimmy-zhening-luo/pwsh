@@ -3,7 +3,6 @@ using namespace Completer.PathCompleter
 function Get-Directory {
 
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
-
   param(
 
     [RelativePathCompletions(
@@ -26,7 +25,6 @@ function Get-Directory {
 function Get-DirectorySibling {
 
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
-
   param(
 
     [RelativePathCompletions(
@@ -47,7 +45,6 @@ function Get-DirectorySibling {
 function Get-DirectoryRelative {
 
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
-
   param(
 
     [RelativePathCompletions(
@@ -68,7 +65,6 @@ function Get-DirectoryRelative {
 function Get-DirectoryHome {
 
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
-
   param(
 
     [PathLocationCompletions(
@@ -89,7 +85,6 @@ function Get-DirectoryHome {
 function Get-DirectoryCode {
 
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
-
   param(
 
     [PathLocationCompletions(
@@ -110,7 +105,6 @@ function Get-DirectoryCode {
 function Get-DirectoryDrive {
 
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
-
   param(
 
     [PathLocationCompletions(

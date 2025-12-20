@@ -7,7 +7,6 @@ using namespace Completer.PathCompleter
 function Remove-Directory {
 
   [OutputType([void])]
-
   param(
 
     [RelativePathCompletions(

@@ -60,7 +60,6 @@ function Get-File {
 function Get-FileSibling {
 
   [OutputType([string[]])]
-
   param(
 
     [RelativePathCompletions(
@@ -80,7 +79,6 @@ function Get-FileSibling {
 function Get-FileRelative {
 
   [OutputType([string[]])]
-
   param(
 
     [RelativePathCompletions(
@@ -100,7 +98,6 @@ function Get-FileRelative {
 function Get-FileHome {
 
   [OutputType([string[]])]
-
   param(
 
     [PathLocationCompletions(
@@ -120,7 +117,6 @@ function Get-FileHome {
 function Get-FileCode {
 
   [OutputType([string[]])]
-
   param(
 
     [PathLocationCompletions(
@@ -140,7 +136,6 @@ function Get-FileCode {
 function Get-FileDrive {
 
   [OutputType([string[]])]
-
   param(
 
     [PathLocationCompletions(

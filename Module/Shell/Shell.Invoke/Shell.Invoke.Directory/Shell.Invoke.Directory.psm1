@@ -3,7 +3,6 @@ using namespace Completer.PathCompleter
 function Invoke-Directory {
 
   [OutputType([void])]
-
   param(
 
     [RelativePathCompletions(
@@ -30,7 +29,6 @@ function Invoke-Directory {
 function Invoke-DirectorySibling {
 
   [OutputType([void])]
-
   param(
 
     [RelativePathCompletions(
@@ -50,7 +48,6 @@ function Invoke-DirectorySibling {
 function Invoke-DirectoryRelative {
 
   [OutputType([void])]
-
   param(
 
     [RelativePathCompletions(
@@ -70,7 +67,6 @@ function Invoke-DirectoryRelative {
 function Invoke-DirectoryHome {
 
   [OutputType([void])]
-
   param(
 
     [PathLocationCompletions(
@@ -90,7 +86,6 @@ function Invoke-DirectoryHome {
 function Invoke-DirectoryCode {
 
   [OutputType([void])]
-
   param(
 
     [PathLocationCompletions(
@@ -110,7 +105,6 @@ function Invoke-DirectoryCode {
 function Invoke-DirectoryDrive {
 
   [OutputType([void])]
-
   param(
 
     [PathLocationCompletions(

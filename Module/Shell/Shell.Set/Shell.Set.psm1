@@ -3,7 +3,6 @@ using namespace Completer.PathCompleter
 function Set-Directory {
 
   [OutputType([void])]
-
   param(
 
     [RelativePathCompletions(
@@ -26,7 +25,6 @@ function Set-Directory {
 function Set-DirectorySibling {
 
   [OutputType([void])]
-
   param(
 
     [RelativePathCompletions(
@@ -47,7 +45,6 @@ function Set-DirectorySibling {
 function Set-DirectoryRelative {
 
   [OutputType([void])]
-
   param(
 
     [RelativePathCompletions(
@@ -68,7 +65,6 @@ function Set-DirectoryRelative {
 function Set-DirectoryHome {
 
   [OutputType([void])]
-
   param(
 
     [PathLocationCompletions(
@@ -89,7 +85,6 @@ function Set-DirectoryHome {
 function Set-DirectoryCode {
 
   [OutputType([void])]
-
   param(
 
     [PathLocationCompletions(
@@ -110,7 +105,6 @@ function Set-DirectoryCode {
 function Set-Drive {
 
   [OutputType([void])]
-
   param(
 
     [PathLocationCompletions(
@@ -131,7 +125,6 @@ function Set-Drive {
 function Set-DriveD {
 
   [OutputType([void])]
-
   param(
 
     [PathLocationCompletions(

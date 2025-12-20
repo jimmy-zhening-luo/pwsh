@@ -33,7 +33,6 @@ function Get-Size {
   )]
   [OutputType([string[]])]
   [OutputType([double[]], ParameterSetName = 'Number')]
-
   param(
 
     [Parameter(

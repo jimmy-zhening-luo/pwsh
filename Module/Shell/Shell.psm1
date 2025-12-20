@@ -8,7 +8,6 @@ using namespace Completer.PathCompleter
 function Clear-Line {
 
   [OutputType([void])]
-
   param(
 
     [RelativePathCompletions(
@@ -30,7 +29,6 @@ function Clear-Line {
 function Test-RelativePath {
 
   [OutputType([bool])]
-
   param(
 
     [string]$Path,
@@ -147,7 +145,6 @@ function Test-RelativePath {
 function Resolve-RelativePath {
 
   [OutputType([string])]
-
   param(
 
     [string]$Path,

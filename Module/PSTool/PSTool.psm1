@@ -71,7 +71,6 @@ function Measure-PSProfile {
   )]
   [OutputType([string])]
   [OutputType([double], ParameterSetName = 'Number')]
-
   param(
 
     [Parameter(
