@@ -29,11 +29,11 @@ function Get-File {
   }
 
   if ($Path) {
-    [string]$Private:Target = $Location ? (
+    [string]$Private:FullPath = $Location ? (
       Join-Path $Location $Path
     ) : $Path
 
-    if (-not (Test-Path -Path $Private:Target)) {
+    if (-not (Test-Path -Path $Private:FullPath)) {
       throw "Path '$Private:Target' does not exist."
     }
 
