@@ -41,14 +41,14 @@ function Resolve-GitRepository {
       else {
         [string]$Private:IsRepository = $WorkingDirectory ? (Join-Path $WorkingDirectory .git) : '.git'
 
-        if (Test-RelativePath -Path $Private:IsRepository) {
+        if (Test-RelativePath -Path $Private:IsRepository -RequireSubpath) {
           Write-Output (
             [string](
               Resolve-RelativePath -Path $WorkingDirectory
             )
           )
         }
-        elseif (Test-RelativePath -Path $Private:IsRepository -Location $REPO_ROOT) {
+        elseif (Test-RelativePath -Path $Private:IsRepository -Location $REPO_ROOT -RequireSubpath) {
           Write-Output (
             [string](
               Resolve-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT
@@ -209,7 +209,7 @@ function Invoke-GitRepository {
     WorkingDirectory = $WorkingDirectory
     New              = $Verb -in $NEWABLE_GIT_VERB
   }
-  [string]$Private:Repository = @Private:Resolve
+  [string]$Private:Repository = Resolve-GitRepository @Private:Resolve
 
   if (-not $Private:Repository) {
     if ($WorkingDirectory) {

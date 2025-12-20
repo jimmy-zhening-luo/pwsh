@@ -90,26 +90,26 @@ function Test-Host {
   process {
     foreach ($Private:computerName in $Name) {
       if ($Private:computerName) {
-        [hashtable]$Private:Connection = @{
+        [hashtable]$Private:Destination = @{
           ComputerName = $Private:computerName
         }
         switch ($PSCmdlet.ParameterSetName) {
           RemotePort {
-            $Private:Connection.Port = $Port
+            $Private:Destination.Port = $Port
           }
           CommonTCPPort {
             if ($CommonTCPPort) {
               if ([TestHostWellKnownPort]::$CommonTCPPort) {
-                $Private:Connection.CommonTCPPort = [TestHostWellKnownPort]::$CommonTCPPort
+                $Private:Destination.CommonTCPPort = [TestHostWellKnownPort]::$CommonTCPPort
               }
               elseif ($CommonTCPPort -as [ushort]) {
-                $Private:Connection.Port = [ushort]$CommonTCPPort
+                $Private:Destination.Port = [ushort]$CommonTCPPort
               }
             }
           }
         }
 
-        Test-NetConnection @Private:Connection -InformationLevel $Private:InformationLevel
+        Test-NetConnection @Private:Destination -InformationLevel $Private:InformationLevel
       }
     }
   }
