@@ -57,7 +57,7 @@ function Measure-Performance {
     [string[]]$Command,
 
     [ValidateRange(1, 50)]
-    # The number of iterations to perform, maximum 50. Default is 8.
+    # The number of iterations to perform, maximum 50. Default is 6.
     [int]$Iterations,
 
     [Parameter(
@@ -80,7 +80,7 @@ function Measure-Performance {
   [string]$Private:FullCommand = $Command -join ' '
 
   if (-not $Iterations) {
-    $Iterations = 8
+    $Iterations = 6
   }
 
   [List[long]]$Private:CommandTicks = [List[long]]::new()
@@ -176,7 +176,7 @@ function Measure-PSProfile {
       Position = 0
     )]
     [ValidateRange(1, 50)]
-    # The number of iterations to perform, maximum 50. Default is 8.
+    # The number of iterations to perform, maximum 50. Default is 6.
     [int]$Iterations,
 
     [Parameter(
@@ -206,7 +206,7 @@ function Measure-PSProfile {
   )
 
   if (-not $Iterations) {
-    $Iterations = 8
+    $Iterations = 6
   }
 
   [List[long]]$Private:BareStartupTicks = [List[long]]::new()
