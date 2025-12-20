@@ -980,7 +980,7 @@ function Restore-GitRepository {
     )
   }
 
-  Reset-GitRepository -WorkingDirectory $WorkingDirectory -Argument $Private:ResetArgument
+  Reset-GitRepository -WorkingDirectory $WorkingDirectory @Private:ResetArgument
 
   Get-GitRepository -WorkingDirectory $WorkingDirectory
 }
