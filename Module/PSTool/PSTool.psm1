@@ -271,7 +271,7 @@ function Invoke-PSHistory {
   [OutputType([void])]
   param()
 
-  Start-Process -FilePath "$env:LOCALAPPDATA\Programs\Microsoft VS Code\bin\code.cmd" -NoNewWindow -ArgumentList (Get-PSReadLineOption).HistorySavePath, --profile=PowerShell --new-window
+  Start-Process -FilePath "$env:LOCALAPPDATA\Programs\Microsoft VS Code\bin\code.cmd" -NoNewWindow -ArgumentList (Get-PSReadLineOption).HistorySavePath, --profile=Setting, --new-window
 }
 
 [string]$PROFILE_REPO_ROOT = "$REPO_ROOT\pwsh"
@@ -291,7 +291,7 @@ function Invoke-PSProfile {
   [OutputType([void])]
   param()
 
-  Start-Process -FilePath "$env:LOCALAPPDATA\Programs\Microsoft VS Code\bin\code.cmd" -NoNewWindow -ArgumentList $PROFILE_REPO_ROOT, --profile=PowerShell
+  Start-Process -FilePath "$env:LOCALAPPDATA\Programs\Microsoft VS Code\bin\code.cmd" -NoNewWindow -ArgumentList $PROFILE_REPO_ROOT, --profile=Default
 }
 
 <#
