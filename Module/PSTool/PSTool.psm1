@@ -82,7 +82,7 @@ function Measure-PSProfile {
       Position = 0
     )]
     [ValidateRange(1, 50)]
-    # The number of iterations to perform, maximum 50. Default is 1.
+    # The number of iterations to perform, maximum 50. Default is 8.
     [int]$Iterations,
 
     [Parameter(
@@ -97,7 +97,7 @@ function Measure-PSProfile {
   )
 
   if (-not $Iterations) {
-    $Iterations = 1
+    $Iterations = 8
   }
 
   [List[long]]$Private:BareStartupTicks = [List[long]]::new()
