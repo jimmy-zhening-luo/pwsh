@@ -25,7 +25,14 @@ function Measure-Performance {
     DefaultParameterSetName = 'Display'
   )]
   [OutputType([string])]
-  [OutputType([double], ParameterSetName = 'Numeric')]
+  [OutputType(
+    [double],
+    ParameterSetName = 'Numeric'
+  )]
+  [OutputType(
+    [timespan],
+    ParameterSetName = 'Timespan'
+  )]
   param(
 
     [Parameter(
@@ -35,6 +42,11 @@ function Measure-Performance {
     )]
     [Parameter(
       ParameterSetName = 'Numeric',
+      Position = 0,
+      ValueFromRemainingArguments
+    )]
+    [Parameter(
+      ParameterSetName = 'Timespan',
       Position = 0,
       ValueFromRemainingArguments
     )]
@@ -50,8 +62,15 @@ function Measure-Performance {
       ParameterSetName = 'Numeric',
       Mandatory
     )]
-    # If specified, returns only the numeric performance value in milliseconds.
+    # If specified, returns only the numeric command performance in milliseconds. Cannot be specified with Timespan.
     [switch]$Numeric,
+
+    [Parameter(
+      ParameterSetName = 'Timespan',
+      Mandatory
+    )]
+    # If specified, returns only the command performance as a timespan. Cannot be specified with Numeric.
+    [switch]$Timespan,
 
     [Parameter(DontShow)][switch]$zNothing
   )
