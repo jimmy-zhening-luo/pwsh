@@ -180,8 +180,14 @@ function Test-Url {
           [int]$Private:Status = Invoke-WebRequest -Uri $Private:link @Private:Request |
             Select-Object -ExpandProperty StatusCode
         }
-        catch {
+        catch [Microsoft.PowerShell.Commands.HttpResponseException] {
           $Private:Status = $PSItem.Exception.Response.StatusCode.value__
+        }
+        catch [System.Net.Http.HttpRequestException] {
+          [int]$Private:Status = -1
+        }
+        catch {
+          throw "Test-Url: Unhandled exception: " + $PSItem.Exception
         }
 
         if ($Private:Status -as [int] -and $Private:Status -ge 200 -and $Private:Status -lt 300) {
