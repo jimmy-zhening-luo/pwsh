@@ -8,17 +8,17 @@
   Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
   PowerShellVersion    = '7.4'
   FunctionsToExport    = @(
+    'Measure-PSProfile'
     'Invoke-PSHistory'
     'Invoke-PSProfile'
-    'Measure-PSProfile'
     'Update-PSProfile'
   )
   CmdletsToExport      = @()
   VariablesToExport    = @()
   AliasesToExport      = @(
+    'mc'
     'oc'
     'op'
-    'mc'
     'up'
   )
 }

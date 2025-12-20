@@ -2,61 +2,6 @@ using namespace System.Collections.Generic
 
 <#
 .SYNOPSIS
-Open PowerShell command history in a text editor.
-
-.DESCRIPTION
-This function opens the PowerShell command history file in Visual Studio Code.
-
-.COMPONENT
-PSTool
-#>
-function Invoke-PSHistory {
-  [CmdletBinding()]
-  [OutputType([void])]
-  param()
-
-  [hashtable]$Private:CodeEdit = @{
-    FilePath     = "$env:LOCALAPPDATA\Programs\Microsoft VS Code\bin\code.cmd"
-    ArgumentList = @(
-      [string](Get-PSReadLineOption).HistorySavePath
-      '--profile=PowerShell'
-      '--new-window'
-    )
-    NoNewWindow  = $True
-  }
-  Start-Process @Private:CodeEdit
-}
-
-[string]$PROFILE_REPO_ROOT = "$REPO_ROOT\pwsh"
-
-<#
-.SYNOPSIS
-Open PowerShell profile repository.
-
-.DESCRIPTION
-This function opens the PowerShell profile repository in Visual Studio Code.
-
-.COMPONENT
-PSTool
-#>
-function Invoke-PSProfile {
-  [CmdletBinding()]
-  [OutputType([void])]
-  param()
-
-  [hashtable]$Private:CodeEdit = @{
-    FilePath     = "$env:LOCALAPPDATA\Programs\Microsoft VS Code\bin\code.cmd"
-    ArgumentList = @(
-      "$PROFILE_REPO_ROOT"
-      '--profile=PowerShell'
-    )
-    NoNewWindow  = $True
-  }
-  Start-Process @Private:CodeEdit
-}
-
-<#
-.SYNOPSIS
 Measure PowerShell profile load time.
 
 .DESCRIPTION
@@ -157,6 +102,61 @@ function Measure-PSProfile {
   else {
     return "$([long]$AverageProfileCost.TotalMilliseconds) ms`n(Base: $([long]$AverageBareStartup.TotalMilliseconds) ms)"
   }
+}
+
+<#
+.SYNOPSIS
+Open PowerShell command history in a text editor.
+
+.DESCRIPTION
+This function opens the PowerShell command history file in Visual Studio Code.
+
+.COMPONENT
+PSTool
+#>
+function Invoke-PSHistory {
+  [CmdletBinding()]
+  [OutputType([void])]
+  param()
+
+  [hashtable]$Private:CodeEdit = @{
+    FilePath     = "$env:LOCALAPPDATA\Programs\Microsoft VS Code\bin\code.cmd"
+    ArgumentList = @(
+      [string](Get-PSReadLineOption).HistorySavePath
+      '--profile=PowerShell'
+      '--new-window'
+    )
+    NoNewWindow  = $True
+  }
+  Start-Process @Private:CodeEdit
+}
+
+[string]$PROFILE_REPO_ROOT = "$REPO_ROOT\pwsh"
+
+<#
+.SYNOPSIS
+Open PowerShell profile repository.
+
+.DESCRIPTION
+This function opens the PowerShell profile repository in Visual Studio Code.
+
+.COMPONENT
+PSTool
+#>
+function Invoke-PSProfile {
+  [CmdletBinding()]
+  [OutputType([void])]
+  param()
+
+  [hashtable]$Private:CodeEdit = @{
+    FilePath     = "$env:LOCALAPPDATA\Programs\Microsoft VS Code\bin\code.cmd"
+    ArgumentList = @(
+      "$PROFILE_REPO_ROOT"
+      '--profile=PowerShell'
+    )
+    NoNewWindow  = $True
+  }
+  Start-Process @Private:CodeEdit
 }
 
 <#
@@ -312,7 +312,7 @@ function Install-PSModuleDotnet {
   }
 }
 
+New-Alias mc Measure-PSProfile
 New-Alias oc Invoke-PSHistory
 New-Alias op Invoke-PSProfile
 New-Alias up Update-PSProfile
-New-Alias mc Measure-PSProfile
