@@ -2,6 +2,8 @@ if (-not $Env:PSModulePath.EndsWith(";$PSScriptRoot\Module;")) {
   $Env:PSModulePath += ";$PSScriptRoot\Module;"
 }
 
+echo $REPO_ROOT
+
 if (-not -not $Env:SSH_CLIENT -and -not $Global:PSSessionOption.NoCompression) {
   $Global:PSSessionOption.NoCompression = $True
 }
