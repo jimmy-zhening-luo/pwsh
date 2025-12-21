@@ -383,25 +383,33 @@ function Publish-PSProfile {
     [string]$Private:Solution = "$PROFILE_REPO_ROOT\Class\Class.slnx"
 
     try {
-      & $Private:DotnetNativeCommand.Source clean $Private:Solution --configuration Release
+      try {
+        & $Private:DotnetNativeCommand.Source clean $Private:Solution --configuration Release
 
-      if ($LASTEXITCODE -notin 0, 1) {
-        throw "dotnet.exe returned a non-zero exit code ($LASTEXITCODE) when trying to clean the project."
+        if ($LASTEXITCODE -notin 0, 1) {
+          throw "dotnet.exe returned a non-zero exit code ($LASTEXITCODE) when trying to clean the project."
+        }
+      }
+      catch {
+        throw 'Failed to clean project. ' + $PSItem.Exception
+      }
+
+      try {
+        & $Private:DotnetNativeCommand.Source build $Private:Solution --configuration Release
+
+        if ($LASTEXITCODE -notin 0, 1) {
+          throw "dotnet.exe returned a non-zero exit code ($LASTEXITCODE) when trying to build the project."
+        }
+      }
+      catch {
+        throw 'Failed to clean project. ' + $PSItem.Exception
       }
     }
     catch {
-      throw 'Failed to clean project. ' + $PSItem.Exception
+      throw 'Failed to build profile project. ' + $PSItem.Exception
     }
+    finally {
 
-    try {
-      & $Private:DotnetNativeCommand.Source build $Private:Solution --configuration Release
-
-      if ($LASTEXITCODE -notin 0, 1) {
-        throw "dotnet.exe returned a non-zero exit code ($LASTEXITCODE) when trying to build the project."
-      }
-    }
-    catch {
-      throw 'Failed to clean project. ' + $PSItem.Exception
     }
   }
   #endregion
