@@ -51,13 +51,13 @@ namespace Completer
       )
     );
 
-    protected abstract IEnumerable<string> FulfillArgumentCompletion(
+    public abstract IEnumerable<string> FulfillArgumentCompletion(
       string parameterName,
       string wordToComplete,
       IDictionary fakeBoundParameters
     );
 
-    private IEnumerable<CompletionResult> WrapArgumentCompletionResult(
+    public IEnumerable<CompletionResult> WrapArgumentCompletionResult(
       IEnumerable<string> completedStrings
     )
     {

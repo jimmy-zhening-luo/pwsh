@@ -174,7 +174,7 @@ namespace Completer
       }
     }
 
-    protected override IEnumerable<string> FulfillArgumentCompletion(
+    public override IEnumerable<string> FulfillArgumentCompletion(
       string parameterName,
       string wordToComplete,
       IDictionary fakeBoundParameters

@@ -45,7 +45,7 @@ namespace Completer
       }
     } // class LocationPathCompletionsAttribute
 
-    internal class PathCompleter : CompleterBase
+    public class PathCompleter : CompleterBase
     {
       public readonly string Root;
       public readonly PathItemType Type;
@@ -193,7 +193,7 @@ namespace Completer
         yield break;
       }
 
-      protected override IEnumerable<string> FulfillArgumentCompletion(
+      public override IEnumerable<string> FulfillArgumentCompletion(
         string parameterName,
         string wordToComplete,
         IDictionary fakeBoundParameters
