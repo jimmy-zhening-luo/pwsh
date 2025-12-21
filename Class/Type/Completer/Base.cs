@@ -32,16 +32,13 @@ namespace Completer
       string wordToComplete,
       CommandAst commandAst,
       IDictionary fakeBoundParameters
-    )
-    {
-      return WrapArgumentCompletionResult(
-        FulfillArgumentCompletion(
-          parameterName,
-          wordToComplete,
-          fakeBoundParameters
-        )
-      );
-    }
+    ) => WrapArgumentCompletionResult(
+      FulfillArgumentCompletion(
+        parameterName,
+        wordToComplete,
+        fakeBoundParameters
+      )
+    );
 
     protected abstract IEnumerable<string> FulfillArgumentCompletion(
       string parameterName,
