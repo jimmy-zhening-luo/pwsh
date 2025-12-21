@@ -6,8 +6,8 @@ namespace Completer
   namespace PathCompleter
   {
     [AttributeUsage(AttributeTargets.Parameter)]
-    public class LocationPathCompletionsAttribute(
-      string Location,
+    public class RelativePathCompletionsAttribute(
+      ScriptBlock CurrentDirectory,
       PathItemType? ItemType,
       bool? Flat
     ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
@@ -15,7 +15,10 @@ namespace Completer
       public IArgumentCompleter Create()
       {
         return new PathCompleter(
-          Location,
+          CurrentDirectory
+            .Invoke()[0]
+            .BaseObject
+            .ToString(),
           ItemType,
           Flat
         );
