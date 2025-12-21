@@ -6,13 +6,6 @@ using System.Management.Automation.Language;
 
 namespace Completer
 {
-  public enum CompletionCase
-  {
-    Preserve,
-    Lower,
-    Upper
-  } // enum CompletionCase
-
   [AttributeUsage(AttributeTargets.Parameter)]
   public abstract class CompletionsBaseAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory
   {
