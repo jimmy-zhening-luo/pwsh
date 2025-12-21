@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Management.Automation;
 
 namespace Completer
@@ -75,7 +74,6 @@ namespace Completer
       public readonly PathItemType Type;
       public readonly bool Flat;
 
-      [SetsRequiredMembers]
       public PathCompleter(
         string root,
         PathItemType? type,
