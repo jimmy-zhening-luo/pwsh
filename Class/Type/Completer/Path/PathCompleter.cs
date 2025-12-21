@@ -74,6 +74,7 @@ namespace Completer
       public readonly PathItemType Type;
       public readonly bool Flat;
 
+      [SetsRequiredMembers]
       public PathCompleter(
         string root,
         PathItemType? type,
