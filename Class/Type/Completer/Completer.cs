@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Completer
 {
-  public class Completer : CompleterBase
+  public class Completer : BaseCompleter
   {
     public readonly IEnumerable<string> Domain;
     public readonly bool Strict;

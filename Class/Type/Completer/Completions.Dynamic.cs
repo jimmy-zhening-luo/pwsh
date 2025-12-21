@@ -5,7 +5,7 @@ using System.Management.Automation;
 namespace Completer
 {
   [AttributeUsage(AttributeTargets.Parameter)]
-  public class DynamicCompletionsAttribute : CompletionsBaseAttribute
+  public class DynamicCompletionsAttribute : BaseCompletionsAttribute
   {
     public readonly ScriptBlock DomainGenerator;
     public readonly bool Strict;

@@ -7,30 +7,30 @@ using System.Management.Automation.Language;
 namespace Completer
 {
   [AttributeUsage(AttributeTargets.Parameter)]
-  public abstract class CompletionsBaseAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory
+  public abstract class BaseCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory
   {
     public readonly CompletionCase Casing;
 
-    public CompletionsBaseAttribute() { }
+    public BaseCompletionsAttribute() { }
 
-    public CompletionsBaseAttribute(
+    public BaseCompletionsAttribute(
       CompletionCase casing
     ) : this()
     {
       Casing = casing;
     }
 
-    public abstract CompleterBase Create();
+    public abstract BaseCompleter Create();
     IArgumentCompleter IArgumentCompleterFactory.Create() => Create();
   }
 
-  public abstract class CompleterBase : IArgumentCompleter
+  public abstract class BaseCompleter : IArgumentCompleter
   {
     public readonly CompletionCase Casing;
 
-    public CompleterBase() { }
+    public BaseCompleter() { }
 
-    public CompleterBase(
+    public BaseCompleter(
       CompletionCase casing
     ) : this()
     {

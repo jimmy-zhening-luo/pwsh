@@ -45,7 +45,7 @@ namespace Completer
       }
     } // class LocationPathCompletionsAttribute
 
-    public class PathCompleter : CompleterBase
+    public class PathCompleter : BaseCompleter
     {
       public readonly string Root;
       public readonly PathItemType Type;
