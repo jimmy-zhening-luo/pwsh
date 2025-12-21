@@ -25,7 +25,7 @@ namespace Completer
       string wordToComplete
     )
     {
-      string unescapedWordToComplete = Stringifier.Unescape(wordToComplete);
+      string unescapedWordToComplete = Escaper.Unescape(wordToComplete);
       if (
         string.IsNullOrWhiteSpace(
           unescapedWordToComplete

@@ -2,7 +2,7 @@ using System.Management.Automation.Language;
 
 namespace Completer
 {
-  public static class Stringifier
+  public static class Escaper
   {
     public static string Unescape(string escapedText) => (
       escapedText.Length > 1
@@ -21,5 +21,5 @@ namespace Completer
         + CodeGeneration.EscapeSingleQuotedStringContent(text)
         + "'"
       : text;
-  } // class Stringifier
+  } // class Escaper
 } // namespace Completer

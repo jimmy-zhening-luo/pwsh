@@ -21,7 +21,7 @@ namespace Completer
       )
       {
         string normalPath = DuplicatePathSeparatorRegex().Replace(
-          Stringifier
+          Escaper
             .Unescape(path)
             .Replace(
               FriendlyPathSeparatorChar,

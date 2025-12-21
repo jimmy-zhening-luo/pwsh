@@ -64,7 +64,7 @@ namespace Completer
       foreach (string completedString in completedStrings)
       {
         yield return new CompletionResult(
-          Stringifier.Escape(
+          Escaper.Escape(
             Casing switch
             {
               CompletionCase.Upper => completedString.ToUpper(),

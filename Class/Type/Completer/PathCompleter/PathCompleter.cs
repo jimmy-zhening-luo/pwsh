@@ -59,7 +59,7 @@ namespace Completer
       {
         Root = Canonicalizer.AnchorHome(
           Canonicalizer.Normalize(
-            Stringifier.Unescape(root),
+            Escaper.Unescape(root),
             Canonicalizer.PathSeparator,
             true,
             true
