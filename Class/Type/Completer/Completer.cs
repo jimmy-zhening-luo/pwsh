@@ -118,6 +118,7 @@ namespace Completer
         yield break;
       }
     }
+
     protected override IEnumerable<string> FulfillArgumentCompletion(
       string parameterName,
       string wordToComplete,
