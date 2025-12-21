@@ -15,7 +15,7 @@ namespace Completer
 
   public abstract class CompleterBase : IArgumentCompleter
   {
-    public readonly CompletionCase Casing = CompletionCase.Preserve;
+    public readonly CompletionCase Casing;
 
     public CompleterBase() { }
 
