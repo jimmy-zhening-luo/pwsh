@@ -2,9 +2,9 @@ using System.Management.Automation;
 
 namespace Transform
 {
-  namespace Commands
+  namespace Test
   {
-    namespace Test
+    namespace Commands
     {
       [Cmdlet(
         VerbsDiagnostic.Test,
@@ -34,6 +34,6 @@ namespace Transform
           WriteObject(name);
         }
       } // class TestCmdlet
-    } // namespace Test
-  } // namespace Commands
+    } // namespace Commands
+  } // namespace Test
 } // namespace Transform
