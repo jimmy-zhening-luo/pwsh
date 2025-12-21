@@ -21,10 +21,16 @@ namespace Completer
       init;
     }
 
-    public CompleterBase() { }
+    [SetsRequiredMembers]
+    public CompleterBase(): this(
+      CompletionCase.Preserve
+    )
+    { }
 
     [SetsRequiredMembers]
-    public CompleterBase(CompletionCase? casing)
+    public CompleterBase(
+      CompletionCase? casing
+    )
     {
       Casing = casing ?? CompletionCase.Preserve;
     }
