@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Management.Automation;
@@ -6,24 +5,6 @@ using System.Management.Automation.Language;
 
 namespace Completer
 {
-  [AttributeUsage(AttributeTargets.Parameter)]
-  public abstract class BaseCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory
-  {
-    public readonly CompletionCase Casing;
-
-    public BaseCompletionsAttribute() { }
-
-    public BaseCompletionsAttribute(
-      CompletionCase casing
-    ) : this()
-    {
-      Casing = casing;
-    }
-
-    public abstract BaseCompleter Create();
-    IArgumentCompleter IArgumentCompleterFactory.Create() => Create();
-  }
-
   public abstract class BaseCompleter : IArgumentCompleter
   {
     public readonly CompletionCase Casing;
