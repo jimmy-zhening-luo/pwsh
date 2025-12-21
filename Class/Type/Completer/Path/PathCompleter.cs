@@ -55,7 +55,7 @@ namespace Completer
         string root,
         PathItemType? type,
         bool? flat
-      ) : base(CompletionCase.Preserve)
+      ) : base()
       {
         Root = Canonicalizer.AnchorHome(
           Canonicalizer.Normalize(
@@ -69,9 +69,7 @@ namespace Completer
         Flat = flat ?? false;
       }
 
-      public IEnumerable<string> FindDescendant(
-        string wordToComplete
-      )
+      public IEnumerable<string> FindDescendant(string wordToComplete)
       {
         string currentPathValue = Canonicalizer.Normalize(
           wordToComplete,
