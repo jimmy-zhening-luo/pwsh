@@ -203,9 +203,7 @@ function Resolve-RelativePath {
   )
 
   if (-not (Test-RelativePath @PSBoundParameters)) {
-    throw "Invalid path '$Path': " + (
-      $PSBoundParameters | ConvertTo-Json -EnumsAsStrings -Depth 6
-    )
+    throw "Invalid path '$Path'."
   }
 
   $Path = [Canonicalizer]::Normalize(

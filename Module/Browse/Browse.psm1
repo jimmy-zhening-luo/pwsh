@@ -50,7 +50,7 @@ function Open-Url {
             Start-Process -FilePath $Private:Browser -ArgumentList $Private:link
           }
           else {
-            Write-Information $Private:link
+            Write-Information -MessageData "$Private:link" -InformationAction Continue
           }
         }
       }
