@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Management.Automation;
@@ -11,6 +12,24 @@ namespace Completer
     Lower,
     Upper
   } // enum CompletionCase
+
+  [AttributeUsage(AttributeTargets.Parameter)]
+  public abstract class CompletionsBaseAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory
+  {
+    public readonly CompletionCase Casing;
+
+    public CompletionsBaseAttribute() { }
+
+    public CompletionsBaseAttribute(
+      CompletionCase casing
+    ) : this()
+    {
+      Casing = casing;
+    }
+
+    public abstract CompleterBase Create();
+    IArgumentCompleter IArgumentCompleterFactory.Create() => Create();
+  }
 
   public abstract class CompleterBase : IArgumentCompleter
   {
