@@ -313,8 +313,7 @@ function Invoke-GitRepository {
       Position = 0
     )]
     [StaticCompletions(
-      'switch,merge,diff,stash,tag,config,remote,submodule,fetch,checkout,branch,rm,mv,ls-files,ls-tree,init,status,clone,pull,add,commit,push,reset',
-      $null, $null
+      'switch,merge,diff,stash,tag,config,remote,submodule,fetch,checkout,branch,rm,mv,ls-files,ls-tree,init,status,clone,pull,add,commit,push,reset'
     )]
     # Git command to run.
     [string]$Verb,
