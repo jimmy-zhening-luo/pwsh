@@ -75,5 +75,5 @@ namespace Completer
         );
       }
     }
-  } // class CompleterBase
-} // namespace Completer
+  }
+}

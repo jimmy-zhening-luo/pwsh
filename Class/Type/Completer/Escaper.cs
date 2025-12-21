@@ -21,5 +21,5 @@ namespace Completer
         + CodeGeneration.EscapeSingleQuotedStringContent(text)
         + "'"
       : text;
-  } // class Escaper
-} // namespace Completer
+  }
+}

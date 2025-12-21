@@ -80,5 +80,5 @@ namespace Completer
       string wordToComplete,
       IDictionary fakeBoundParameters
     ) => FindCompletion(wordToComplete);
-  } // class Completer
-} // namespace Completer
+  }
+}
