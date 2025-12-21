@@ -12,10 +12,22 @@ namespace Completer
     Upper
   } // enum CompletionCase
 
-  public abstract class CompleterBase(
-    CompletionCase Casing
-  ) : IArgumentCompleter
+  public abstract class CompleterBase : IArgumentCompleter
   {
+    public readonly required CompletionCase Casing
+    {
+      get;
+      init;
+    }
+
+    public CompleterBase() { }
+
+    [SetsRequiredMembers]
+    public CompleterBase(CompletionCase? casing)
+    {
+      Casing = casing ?? CompletionCase.Preserve;
+    }
+
     public IEnumerable<CompletionResult> CompleteArgument(
       string commandName,
       string parameterName,
