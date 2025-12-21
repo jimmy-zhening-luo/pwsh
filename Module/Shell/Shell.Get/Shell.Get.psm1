@@ -62,7 +62,7 @@ function Get-Size {
       ParameterSetName = 'Number',
       Position = 1
     )]
-    [StaticCompletions(
+    [Completions(
       'b,kb,mb,gb,tb,pb'
     )]
     # The unit in which to return the size.

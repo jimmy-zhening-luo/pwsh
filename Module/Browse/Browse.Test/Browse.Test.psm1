@@ -49,7 +49,7 @@ function Test-Host {
       Position = 1
     )]
     [Alias('TCP')]
-    [StaticCompletions(
+    [Completions(
       'http,rdp,smb,winrm'
     )]
     [string]$CommonTCPPort,
@@ -63,7 +63,7 @@ function Test-Host {
     # The port number to test on the target host.
     [ushort]$Port,
 
-    [StaticCompletions(
+    [Completions(
       'quiet,detailed'
     )]
     # The level of information to return, can be Quiet or Detailed. Will not take effect if Detailed switch is set. Defaults to Quiet.

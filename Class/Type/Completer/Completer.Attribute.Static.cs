@@ -3,21 +3,21 @@ using System;
 namespace Completer
 {
   [AttributeUsage(AttributeTargets.Parameter)]
-  public class StaticCompletionsAttribute : BaseCompletionsAttribute
+  public class CompletionsAttribute : BaseCompletionsAttribute
   {
     public readonly string StringifiedDomain;
     public readonly bool Strict;
 
-    private StaticCompletionsAttribute() : base() { }
+    private CompletionsAttribute() : base() { }
 
-    public StaticCompletionsAttribute(
+    public CompletionsAttribute(
       string stringifiedDomain
     ) : this()
     {
       StringifiedDomain = stringifiedDomain;
     }
 
-    public StaticCompletionsAttribute(
+    public CompletionsAttribute(
       string stringifiedDomain,
       bool strict
     ) : this(stringifiedDomain)
@@ -25,7 +25,7 @@ namespace Completer
       Strict = strict;
     }
 
-    public StaticCompletionsAttribute(
+    public CompletionsAttribute(
       string stringifiedDomain,
       bool strict,
       CompletionCase casing

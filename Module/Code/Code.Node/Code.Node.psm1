@@ -220,7 +220,7 @@ function Invoke-NodePackage {
     [Parameter(
       Position = 0
     )]
-    [StaticCompletions(
+    [Completions(
       'pkg,i,it,cit,rm,access,adduser,audit,bugs,cache,ci,completion,config,dedupe,deprecate,diff,dist-tag,docs,doctor,edit,exec,explain,explore,find-dupes,fund,help,help-search,init,install,install-ci-test,install-test,link,login,logout,ls,org,outdated,owner,pack,ping,prefix,profile,prune,publish,query,rebuild,repo,restart,root,run,sbom,search,shrinkwrap,star,stars,start,stop,team,test,token,undeprecate,uninstall,unpublish,unstar,update,version,view,whoami'
     )]
     # npm command verb
@@ -483,7 +483,7 @@ function Step-NodePackageVersion {
   param(
 
     # New package version, default 'patch'
-    [StaticCompletions(
+    [Completions(
       'patch,minor,major,prerelease,preminor,premajor'
     )]
     [string]$Version,
