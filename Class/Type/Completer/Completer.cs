@@ -141,9 +141,6 @@ namespace Completer
       string parameterName,
       string wordToComplete,
       IDictionary fakeBoundParameters
-    )
-    {
-      return FindCompletion(wordToComplete);
-    }
+    ) => FindCompletion(wordToComplete);
   } // class Completer
 } // namespace Completer
