@@ -13,5 +13,5 @@ namespace Completer
       Alias,
       Function
     }
-  }
-}
+  } // namespace PathCompleter
+} // namespace Completer

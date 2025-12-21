@@ -25,6 +25,6 @@ namespace Completer
       public readonly static string RemoveTrailingPathSeparatorPattern = @"(?>(?<!^)(?<!:)\\+)$";
       public readonly static string SubstituteHomeRootPattern = @"^~(?=$|\\)";
       public readonly static string SubstituteRelativeRootPattern = @"^\.(?=$|\\)";
-    } // partial class Canonicalizer
+    }
   } // namespace PathCompleter
 } // namespace Completer

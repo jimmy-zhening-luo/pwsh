@@ -87,6 +87,6 @@ namespace Completer
         // placeholder
         return currentDirectory + path;
       }
-    } // class Canonicalizer
+    }
   } // namespace PathCompleter
 } // namespace Completer

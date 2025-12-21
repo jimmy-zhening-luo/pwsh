@@ -21,6 +21,6 @@ namespace Completer
         @"(?>(?<!^)(?<!:)\\+)$"
       )]
       private static partial Regex RemoveTrailingPathSeparatorRegex();
-    } // partial class Canonicalizer
+    }
   } // namespace PathCompleter
 } // namespace Completer

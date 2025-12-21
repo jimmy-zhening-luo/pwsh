@@ -8,43 +8,6 @@ namespace Completer
 {
   namespace PathCompleter
   {
-    [AttributeUsage(AttributeTargets.Parameter)]
-    public class RelativePathCompletionsAttribute(
-      ScriptBlock CurrentDirectory,
-      PathItemType? ItemType,
-      bool? Flat
-    ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
-    {
-      public IArgumentCompleter Create()
-      {
-        return new PathCompleter(
-          CurrentDirectory
-            .Invoke()[0]
-            .BaseObject
-            .ToString(),
-          ItemType,
-          Flat
-        );
-      }
-    } // class RelativePathCompletionsAttribute
-
-    [AttributeUsage(AttributeTargets.Parameter)]
-    public class LocationPathCompletionsAttribute(
-      string Location,
-      PathItemType? ItemType,
-      bool? Flat
-    ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
-    {
-      public IArgumentCompleter Create()
-      {
-        return new PathCompleter(
-          Location,
-          ItemType,
-          Flat
-        );
-      }
-    } // class LocationPathCompletionsAttribute
-
     public class PathCompleter : BaseCompleter
     {
       public readonly string Root;
@@ -209,6 +172,6 @@ namespace Completer
           );
         }
       }
-    } // class PathCompleter
+    }
   } // namespace PathCompleter
 } // namespace Completer
