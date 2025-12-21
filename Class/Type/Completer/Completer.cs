@@ -1,20 +1,45 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Management.Automation;
 
 namespace Completer
 {
   [AttributeUsage(AttributeTargets.Parameter)]
-  public class DynamicCompletionsAttribute(
-    ScriptBlock DomainGenerator,
-    CompletionCase? Casing,
-    bool? Surrounding
-  ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
+  public class DynamicCompletionsAttribute : CompletionsBaseAttribute
   {
-    public IArgumentCompleter Create()
+    public readonly ScriptBlock DomainGenerator;
+    public readonly bool Strict;
+
+    private DynamicCompletionsAttribute() : base() { }
+
+    public DynamicCompletionsAttribute(
+      ScriptBlock domainGenerator
+    ) : this()
+    {
+      DomainGenerator = domainGenerator;
+    }
+
+    public DynamicCompletionsAttribute(
+      ScriptBlock domainGenerator,
+      bool strict
+    ) : this(domainGenerator)
+    {
+      Strict = strict;
+    }
+
+    public DynamicCompletionsAttribute(
+      ScriptBlock domainGenerator,
+      bool strict,
+      CompletionCase casing
+    ) : base(casing)
+    {
+      DomainGenerator = domainGenerator;
+      Strict = strict;
+    }
+
+    public override Completer Create()
     {
       return new Completer(
         DomainGenerator
@@ -24,20 +49,46 @@ namespace Completer
               .BaseObject
               .ToString()
           ),
-        Surrounding,
+        Strict,
         Casing
       );
     }
   } // class DynamicCompletionsAttribute
 
   [AttributeUsage(AttributeTargets.Parameter)]
-  public class StaticCompletionsAttribute(
-    string StringifiedDomain,
-    CompletionCase? Casing,
-    bool? Surrounding
-  ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
+  public class StaticCompletionsAttribute : CompletionsBaseAttribute
   {
-    public IArgumentCompleter Create()
+    public readonly string StringifiedDomain;
+    public readonly bool Strict;
+
+    private StaticCompletionsAttribute() : base() { }
+
+    public StaticCompletionsAttribute(
+      string stringifiedDomain
+    ) : this()
+    {
+      StringifiedDomain = stringifiedDomain;
+    }
+
+    public StaticCompletionsAttribute(
+      string stringifiedDomain,
+      bool strict
+    ) : this(stringifiedDomain)
+    {
+      Strict = strict;
+    }
+
+    public StaticCompletionsAttribute(
+      string stringifiedDomain,
+      bool strict,
+      CompletionCase casing
+    ) : base(casing)
+    {
+      StringifiedDomain = stringifiedDomain;
+      Strict = strict;
+    }
+
+    public override Completer Create()
     {
       return new Completer(
         StringifiedDomain
@@ -46,41 +97,27 @@ namespace Completer
             StringSplitOptions.RemoveEmptyEntries
             | StringSplitOptions.TrimEntries
           ),
-        Surrounding,
+        Strict,
         Casing
       );
     }
   } // class StaticCompletionsAttribute
 
-  internal class Completer : CompleterBase
+  public class Completer : CompleterBase
   {
     public readonly IEnumerable<string> Domain;
-    public readonly bool Surrounding = true;
+    public readonly bool Strict;
 
-    public Completer(
-      IEnumerable<string> domain
-    )
-    {
-      Domain = domain;
-    }
+    private Completer() : base() { }
 
     public Completer(
       IEnumerable<string> domain,
-      bool surrounding
-    )
-    {
-      Domain = domain;
-      Surrounding = surrounding;
-    }
-
-    public Completer(
-      IEnumerable<string> domain,
-      bool surrounding,
+      bool strict,
       CompletionCase casing
     ) : base(casing)
     {
       Domain = domain;
-      Surrounding = surrounding;
+      Strict = strict;
     }
 
     public IEnumerable<string> FindCompletion(
@@ -116,7 +153,7 @@ namespace Completer
             yield return member;
           }
         }
-        if (Surrounding && matched <= 1)
+        if (!Strict && matched <= 1)
         {
           foreach (string member in Domain)
           {
