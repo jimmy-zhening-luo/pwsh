@@ -56,6 +56,7 @@ namespace Completer
   {
     public readonly IEnumerable<string> Domain;
     public readonly bool Surrounding;
+
     public Completer(
       IEnumerable<string> domain,
       CompletionCase casing,
@@ -65,6 +66,7 @@ namespace Completer
       Domain = domain;
       Surrounding = surrounding;
     }
+
     public IEnumerable<string> FindCompletion(
       string wordToComplete
     )
