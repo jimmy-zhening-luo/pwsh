@@ -15,18 +15,15 @@ namespace Completer
 
   public abstract class CompleterBase : IArgumentCompleter
   {
-    public required CompletionCase Casing
-    {
-      get;
-      init;
-    }
+    public readonly CompletionCase Casing = CompletionCase.Preserve;
 
-    [SetsRequiredMembers]
+    public CompleterBase() { }
+
     public CompleterBase(
-      CompletionCase? casing
+      CompletionCase casing
     )
     {
-      Casing = casing ?? CompletionCase.Preserve;
+      Casing = casing;
     }
 
     public IEnumerable<CompletionResult> CompleteArgument(

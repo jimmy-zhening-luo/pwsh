@@ -55,17 +55,32 @@ namespace Completer
   internal class Completer : CompleterBase
   {
     public readonly IEnumerable<string> Domain;
-    public readonly bool Surrounding;
+    public readonly bool Surrounding = true;
 
-    [SetsRequiredMembers]
     public Completer(
-      IEnumerable<string> domain,
-      bool? surrounding,
-      CompletionCase? casing
-    ) : base(casing ?? CompletionCase.Preserve)
+      IEnumerable<string> domain
+    )
     {
       Domain = domain;
-      Surrounding = surrounding ?? true;
+    }
+
+    public Completer(
+      IEnumerable<string> domain,
+      bool surrounding
+    )
+    {
+      Domain = domain;
+      Surrounding = surrounding;
+    }
+
+    public Completer(
+      IEnumerable<string> domain,
+      bool surrounding,
+      CompletionCase casing
+    ) : base(casing)
+    {
+      Domain = domain;
+      Surrounding = surrounding;
     }
 
     public IEnumerable<string> FindCompletion(
