@@ -30,6 +30,12 @@ namespace Completer
       public readonly static string SubstituteHomeRootPattern = @"^~(?=$|\\)";
       public readonly static string SubstituteRelativeRootPattern = @"^\.(?=$|\\)";
 
+      public static string GetHome() => Environment.GetFolderPath(
+        Environment
+          .SpecialFolder
+          .UserProfile
+      );
+
       public static string Normalize(
         string path,
         string separator = "",
@@ -77,12 +83,7 @@ namespace Completer
           return path;
         }
 
-        string home = Environment.GetFolderPath(
-          Environment
-            .SpecialFolder
-            .UserProfile
-        );
-
+        string home = GetHome();
         if (path == Home)
         {
           return home;
