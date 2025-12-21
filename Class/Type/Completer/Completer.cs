@@ -23,8 +23,8 @@ namespace Completer
               .BaseObject
               .ToString()
           ),
+        Surrounding ?? true,
         Casing ?? CompletionCase.Preserve,
-        Surrounding ?? true
       );
     }
   } // class DynamicCompletionsAttribute
@@ -45,25 +45,25 @@ namespace Completer
             StringSplitOptions.RemoveEmptyEntries
             | StringSplitOptions.TrimEntries
           ),
+        Surrounding ?? true,
         Casing ?? CompletionCase.Preserve,
-        Surrounding ?? true
       );
     }
   } // class StaticCompletionsAttribute
 
   internal class Completer : CompleterBase
   {
-    public readonly IEnumerable<string> Domain;
     public readonly bool Surrounding;
+    public readonly IEnumerable<string> Domain;
 
     public Completer(
-      IEnumerable<string> domain,
-      CompletionCase casing,
-      bool surrounding
-    ) : base(casing)
+      CompletionCase? casing,
+      bool? surrounding,
+      IEnumerable<string> domain
+    ) : base(casing ?? CompletionCase.Preserve)
     {
+      Surrounding = surrounding ?? true;
       Domain = domain;
-      Surrounding = surrounding;
     }
 
     public IEnumerable<string> FindCompletion(
