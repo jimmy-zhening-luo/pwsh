@@ -57,8 +57,6 @@ namespace Completer
     public readonly IEnumerable<string> Domain;
     public readonly bool Surrounding;
 
-    public Completer() { }
-
     [SetsRequiredMembers]
     public Completer(
       IEnumerable<string> domain,
