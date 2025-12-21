@@ -21,7 +21,7 @@ namespace Completer
 
     public CompleterBase(
       CompletionCase casing
-    )
+    ) : this()
     {
       Casing = casing;
     }
