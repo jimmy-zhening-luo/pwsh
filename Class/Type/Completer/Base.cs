@@ -22,12 +22,6 @@ namespace Completer
     }
 
     [SetsRequiredMembers]
-    public CompleterBase(): this(
-      CompletionCase.Preserve
-    )
-    { }
-
-    [SetsRequiredMembers]
     public CompleterBase(
       CompletionCase? casing
     )
