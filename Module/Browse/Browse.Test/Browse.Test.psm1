@@ -116,7 +116,9 @@ function Test-Host {
 
   end {
     if (-not $Name) {
-      return Test-NetConnection -ComputerName google.com -InformationLevel $Private:InformationLevel
+      $Private:DumbassPSLinterWorkaroundLMFAO = 'google.com'
+
+      return Test-NetConnection -ComputerName $Private:DumbassPSLinterWorkaroundLMFAO -InformationLevel $Private:InformationLevel
     }
   }
 }
@@ -187,7 +189,7 @@ function Test-Url {
           [int]$Private:Status = -1
         }
         catch {
-          throw "Test-Url: Unhandled exception: " + $PSItem.Exception
+          throw 'Test-Url: Unhandled exception: ' + $PSItem.Exception
         }
 
         if ($Private:Status -as [int] -and $Private:Status -ge 200 -and $Private:Status -lt 300) {
