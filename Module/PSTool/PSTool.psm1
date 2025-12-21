@@ -409,7 +409,7 @@ function Publish-PSProfile {
       throw 'Failed to build profile project. ' + $PSItem.Exception
     }
     finally {
-      Stop-Process -Name dotnet.exe -Force
+      Stop-Process -Name dotnet -Force
     }
   }
   #endregion
