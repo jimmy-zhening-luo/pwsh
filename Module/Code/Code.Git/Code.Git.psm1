@@ -25,17 +25,17 @@ function Resolve-GitRepository {
     foreach ($Private:directory in $WorkingDirectory) {
       if ($New) {
         if (-not $WorkingDirectory) {
-          Write-Output $PWD.Path
+          Write-Output -InputObject $PWD.Path
         }
         elseif (Test-Path -Path $WorkingDirectory -PathType Container) {
-          Write-Output (
+          Write-Output -InputObject (
             [string](
               Resolve-Path -Path $WorkingDirectory
             ).Path
           )
         }
         elseif (Test-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT -New) {
-          Write-Output (
+          Write-Output -InputObject (
             [string](
               Resolve-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT -New
             )
@@ -45,7 +45,7 @@ function Resolve-GitRepository {
       else {
         if (-not $WorkingDirectory) {
           if (Test-Path -Path .git -PathType Container) {
-            Write-Output $PWD.Path
+            Write-Output -InputObject $PWD.Path
           }
         }
         elseif (
@@ -53,7 +53,7 @@ function Resolve-GitRepository {
             Join-Path $WorkingDirectory .git
           ) -PathType Container
         ) {
-          Write-Output (
+          Write-Output -InputObject (
             [string](
               Resolve-Path -Path $WorkingDirectory
             ).Path
@@ -64,7 +64,7 @@ function Resolve-GitRepository {
             Join-Path $WorkingDirectory .git
           ) -Location $REPO_ROOT
         ) {
-          Write-Output (
+          Write-Output -InputObject (
             [string](
               Resolve-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT
             )

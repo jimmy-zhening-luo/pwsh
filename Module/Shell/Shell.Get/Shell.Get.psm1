@@ -102,7 +102,7 @@ function Get-Size {
 
       [double]$Private:ScaledSize = [long]$Private:Size / [long]$Private:Factor
 
-      Write-Output (
+      Write-Output -InputObject (
         $Number ? $Private:ScaledSize : (
           [System.Math]::Round(
             $Private:ScaledSize,

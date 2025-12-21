@@ -193,7 +193,7 @@ function Test-Url {
         }
 
         if ($Private:Status -as [int] -and $Private:Status -ge 200 -and $Private:Status -lt 300) {
-          Write-Output ([uri]$Private:link)
+          Write-Output -InputObject ([uri]$Private:link)
         }
       }
     }
