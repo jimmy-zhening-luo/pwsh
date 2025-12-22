@@ -68,9 +68,7 @@ function Resolve-GitRepository {
             $WorkingDirectory
           ) -and (
             Test-Path (
-              Join-Path $REPO_ROOT (
-                Join-Path $WorkingDirectory .git
-              )
+              Join-Path $REPO_ROOT\$WorkingDirectory .git
             ) -PathType Container
           )
         ) {
