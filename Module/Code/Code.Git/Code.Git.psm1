@@ -92,7 +92,7 @@ function Test-RelativePath {
   if ([Path]::IsPathRooted($Path)) {
     if ($Location) {
       if (
-        [Canonicalizer]::IsPathDescendant(
+        [Canonicalizer]::IsPathDescendantOf(
           $Path,
           $Location
         )
@@ -119,7 +119,7 @@ function Test-RelativePath {
       $Path = Join-Path $HOME $Path
 
       if (
-        [Canonicalizer]::IsPathDescendant(
+        [Canonicalizer]::IsPathDescendantOf(
           $Path,
           $Location
         )

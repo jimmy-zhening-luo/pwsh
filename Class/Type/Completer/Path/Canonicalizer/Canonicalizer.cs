@@ -7,27 +7,10 @@ namespace Completer
   {
     public static partial class Canonicalizer
     {
-      public static bool IsPathDescendant(
-        string path,
-        string location
-      ) => IsPathDescendantRegex().IsMatch(
-        Path.GetRelativePath(
-          path,
-          location
-        )
-      );
-
       public static string Home() => Environment.GetFolderPath(
         Environment
           .SpecialFolder
           .UserProfile
-      );
-
-      public static bool IsPathHomeRooted(string path) => IsPathHomeRootedRegex().IsMatch(path);
-
-      public static string RemoveHomeRoot(string path) => RemoveHomeRootRegex().Replace(
-        path,
-        string.Empty
       );
 
       public static string Normalize(
@@ -92,6 +75,23 @@ namespace Completer
           return path;
         }
       }
+
+      public static bool IsPathHomeRooted(string path) => IsPathHomeRootedRegex().IsMatch(path);
+
+      public static bool IsPathDescendantOf(
+        string path,
+        string location
+      ) => IsPathDescendantOfRegex().IsMatch(
+        Path.GetRelativePath(
+          path,
+          location
+        )
+      );
+  
+      public static string RemoveHomeRoot(string path) => RemoveHomeRootRegex().Replace(
+        path,
+        string.Empty
+      );
     }
   } // namespace PathCompleter
 } // namespace Completer

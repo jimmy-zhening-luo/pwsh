@@ -14,7 +14,7 @@ namespace Completer
       [GeneratedRegex(
         @"^(?=(?>[.\\]*)$)"
       )]
-      public static partial Regex IsPathDescendantRegex();
+      public static partial Regex IsPathDescendantOfRegex();
 
       [GeneratedRegex(
         @"^(?=~(?>\\|$))"
