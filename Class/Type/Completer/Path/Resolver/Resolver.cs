@@ -35,31 +35,9 @@ namespace Completer
           .UserProfile
       );
 
-      public static string AnchorHome(string path)
-      {
-        if (!path.StartsWith('~'))
-        {
-          return path;
-        }
-
-        string home = Home();
-        if (path == "~")
-        {
-          return home;
-        }
-
-        if (
-          path[1] == '\\'
-          || path[1] == '/'
-        )
-        {
-          return home + path[1..];
-        }
-        else
-        {
-          return path;
-        }
-      }
+      public static string AnchorHome(string path) => Canonicalizer.IsHomeRooted(path)
+        ? Home() + path[1..]
+        : path;
     }
   } // namespace PathCompleter
 } // namespace Completer
