@@ -38,13 +38,13 @@ namespace Completer
 
       public static string Denormalize(
         string path,
-        string? location = null,
-        string? subpath = null
+        string location = "",
+        string subpath = ""
       ) => Path
         .Join(
-          location ?? "",
+          location,
           path,
-          subpath ?? ""
+          subpath
         )
         .Replace('\\', '/');
 
