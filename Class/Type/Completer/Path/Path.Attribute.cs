@@ -1,5 +1,4 @@
 using System;
-using System.Management.Automation;
 
 namespace Completer
 {
@@ -8,11 +7,11 @@ namespace Completer
     [AttributeUsage(AttributeTargets.Parameter)]
     public class LocationPathCompletionsAttribute(
       string Location,
-      PathItemType? ItemType,
-      bool? Flat
-    ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
+      PathItemType ItemType,
+      bool Flat
+    ) : BaseCompletionsAttribute
     {
-      public IArgumentCompleter Create()
+      public override PathCompleter Create()
       {
         return new PathCompleter(
           Location,

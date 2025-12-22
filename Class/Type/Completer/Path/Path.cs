@@ -12,11 +12,13 @@ namespace Completer
       public readonly PathItemType Type;
       public readonly bool Flat;
 
+      private PathCompleter() : base() { }
+
       public PathCompleter(
         string root,
-        PathItemType? type,
-        bool? flat
-      ) : base()
+        PathItemType type,
+        bool flat
+      ) : this()
       {
         Root = Canonicalizer.AnchorHome(
           Canonicalizer.Normalize(
@@ -26,8 +28,8 @@ namespace Completer
             true
           )
         );
-        Type = type ?? PathItemType.Any;
-        Flat = flat ?? false;
+        Type = type;
+        Flat = flat;
       }
 
       public IEnumerable<string> FindDescendant(string wordToComplete)

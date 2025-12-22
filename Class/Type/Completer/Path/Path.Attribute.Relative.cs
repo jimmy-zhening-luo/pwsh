@@ -8,11 +8,11 @@ namespace Completer
     [AttributeUsage(AttributeTargets.Parameter)]
     public class RelativePathCompletionsAttribute(
       ScriptBlock CurrentDirectory,
-      PathItemType? ItemType,
-      bool? Flat
-    ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
+      PathItemType ItemType,
+      bool Flat
+    ) : BaseCompletionsAttribute
     {
-      public IArgumentCompleter Create()
+      public override PathCompleter Create()
       {
         return new PathCompleter(
           CurrentDirectory
