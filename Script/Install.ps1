@@ -39,7 +39,7 @@ using namespace System.Collections.Generic
     process {
       $Private:BuildOutput = "$SourceRoot\$Folder\$Project\bin\Release\net9.0\$Project.dll"
   
-      if (Test-Path -Path $Private:BuildOutput -PathType Leaf) {
+      if (Test-Path $Private:BuildOutput -PathType Leaf) {
         $Private:InstallPath = $AppendProject ? (
           "$InstallRoot\$Project"
         ) : $InstallRoot
@@ -47,7 +47,7 @@ using namespace System.Collections.Generic
   
         if (
           -not (
-            Test-Path -Path $Private:InstalledAssembly -PathType Leaf
+            Test-Path $Private:InstalledAssembly -PathType Leaf
           ) -or (
             Get-FileHash -Path $Private:InstalledAssembly -Algorithm MD5
           ).Hash -ne (
@@ -75,7 +75,7 @@ using namespace System.Collections.Generic
   #region Add Type
   $Private:DOTNET_SOLUTION.Types |
     Where-Object {
-      Test-Path -Path $Private:SourceRoot\$PSItem.dll -PathType Leaf
+      Test-Path $Private:SourceRoot\$PSItem.dll -PathType Leaf
     } |
     ForEach-Object {
       Add-Type -Path $Private:SourceRoot\$PSItem.dll
