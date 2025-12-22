@@ -203,11 +203,7 @@ function Invoke-Workspace {
   if ($ProfileName) {
     $Window = $True
     $Private:ArgumentList.Add(
-      $ProfileName.StartsWith('-') ? (
-        $ProfileName
-      ) : (
-        "--profile=$ProfileName"
-      )
+      $ProfileName.StartsWith('-') ? $ProfileName : "--profile=$ProfileName"
     )
   }
 
