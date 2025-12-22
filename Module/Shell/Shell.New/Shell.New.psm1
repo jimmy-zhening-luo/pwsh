@@ -45,12 +45,7 @@ function New-Directory {
       { return $PWD.Path }
     )]
     [System.Object]$Value,
-    [switch]$Force,
-
-    [Parameter(
-      ValueFromPipelineByPropertyName
-    )]
-    [System.Management.Automation.PSCredential]$Credential
+    [switch]$Force
   )
 
   begin {
