@@ -365,6 +365,44 @@ function Invoke-WorkspaceCode {
   Invoke-Workspace @PSBoundParameters -Location $REPO_ROOT
 }
 
+New-Alias i/ Invoke-WorkspaceDrive
+function Invoke-WorkspaceDrive {
+  [CmdletBinding()]
+  [OutputType([void])]
+  param(
+
+    [Parameter(
+      Position = 0
+    )]
+    [AllowEmptyString()]
+    [PathCompletions(
+      '\'
+    )]
+    [string]$Workspace,
+
+    [Parameter(
+      Position = 1
+    )]
+    [AllowEmptyString()]
+    [string]$ProfileName,
+
+    [Parameter(
+      Position = 2,
+      ValueFromRemainingArguments
+    )]
+    [string[]]$Argument,
+
+    [switch]$Window,
+
+    [Alias('rw')]
+    [switch]$ReuseWindow,
+
+    [Parameter(DontShow)][switch]$zNothing
+  )
+
+  Invoke-Workspace @PSBoundParameters -Location $PWD.Drive.Root
+}
+
 New-Alias e Invoke-Directory
 New-Alias e. Invoke-DirectorySibling
 New-Alias e.. Invoke-DirectoryRelative
