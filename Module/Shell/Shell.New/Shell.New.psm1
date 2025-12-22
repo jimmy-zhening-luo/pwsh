@@ -72,7 +72,7 @@ function New-Directory {
     if (
       $PSCmdlet.ShouldProcess(
         $Value,
-        "> Step: New-Item -ItemType Directory -Path [[$Path]] -Name [$Name] -- " + ($PSBoundParameters | ConvertTo-Json -EnumsAsStrings -Depth 6)
+        "> Step: New-Item -ItemType Directory -Path [[$Path]] -Name [$Name] -- " + (ConvertTo-Json -InputObject $PSBoundParameters -EnumsAsStrings -Depth 6)
       )
     ) {
       $Private:steppablePipeline.Process($PSItem)

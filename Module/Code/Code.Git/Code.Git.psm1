@@ -368,11 +368,11 @@ function Invoke-GitRepository {
       else {
         if (
           $WorkingDirectory -and -not (
-            $PWD | Resolve-GitRepository
+            Resolve-GitRepository -WorkingDirectory $PWD.Path
           ) -and -not (
-            $WorkingDirectory | Resolve-GitRepository
+            Resolve-GitRepository -WorkingDirectory $WorkingDirectory
           ) -and (
-            $Verb | Resolve-GitRepository
+            Resolve-GitRepository -WorkingDirectory $Verb
           )
         ) {
           $Private:GitArgument.Add($WorkingDirectory)
@@ -653,9 +653,9 @@ function Add-GitRepository {
 
   if (
     $WorkingDirectory -and (
-      $PWD | Resolve-GitRepository
+      Resolve-GitRepository -WorkingDirectory $PWD.Path
     ) -and -not (
-      $WorkingDirectory | Resolve-GitRepository
+      Resolve-GitRepository -WorkingDirectory $WorkingDirectory
     )
   ) {
     if ($Name) {
@@ -749,9 +749,9 @@ function Write-GitRepository {
 
   if (
     $WorkingDirectory -and (
-      $PWD | Resolve-GitRepository
+      Resolve-GitRepository -WorkingDirectory $PWD.Path
     ) -and -not (
-      $WorkingDirectory | Resolve-GitRepository
+      Resolve-GitRepository -WorkingDirectory $WorkingDirectory
     )
   ) {
     if ($WorkingDirectory -match $GIT_ARGUMENT -and $Private:Messages.Count -eq 0) {
@@ -821,9 +821,9 @@ function Push-GitRepository {
 
   if (
     $WorkingDirectory -and (
-      $PWD | Resolve-GitRepository
+      Resolve-GitRepository -WorkingDirectory $PWD.Path
     ) -and -not (
-      $WorkingDirectory | Resolve-GitRepository
+      Resolve-GitRepository -WorkingDirectory $WorkingDirectory
     )
   ) {
     $Private:PushArgument.Add($WorkingDirectory)
@@ -899,9 +899,9 @@ function Reset-GitRepository {
 
   if (
     $WorkingDirectory -and (
-      $PWD | Resolve-GitRepository
+      Resolve-GitRepository -WorkingDirectory $PWD.Path
     ) -and -not (
-      $WorkingDirectory | Resolve-GitRepository
+      Resolve-GitRepository -WorkingDirectory $WorkingDirectory
     )
   ) {
     if (
@@ -959,9 +959,9 @@ function Restore-GitRepository {
 
   if (
     $WorkingDirectory -and (
-      $PWD | Resolve-GitRepository
+      Resolve-GitRepository -WorkingDirectory $PWD.Path
     ) -and -not (
-      $WorkingDirectory | Resolve-GitRepository
+      Resolve-GitRepository -WorkingDirectory $WorkingDirectory
     )
   ) {
     $Private:ResetArgument.Add($WorkingDirectory)

@@ -17,7 +17,7 @@ function Test-Function {
     [Parameter(DontShow)][switch]$zNothing
   )
 
-  return $PSBoundParameters | ConvertTo-Json -EnumsAsStrings -Depth 6
+  return ConvertTo-Json -InputObject $PSBoundParameters -EnumsAsStrings -Depth 6
 }
 
 <#
@@ -57,7 +57,7 @@ function Copy-Guid {
     [string]$Private:Guid = $Private:Guid.ToUpperInvariant()
   }
 
-  $Private:Guid | Set-Clipboard
+  Set-Clipboard -Value $Private:Guid
 
   if (-not $Silent) {
     return $Private:Guid
