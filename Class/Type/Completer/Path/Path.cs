@@ -108,7 +108,7 @@ namespace Completer
             )
           )
           {
-            yield return Canonicalizer.Denornalize(
+            yield return Canonicalizer.Denormalize(
               Path.Join(
                 currentDirectoryValue,
                 Path.GetFileName(directory),
@@ -130,7 +130,7 @@ namespace Completer
             )
           )
           {
-            yield return Canonicalizer.Denornalize(
+            yield return Canonicalizer.Denormalize(
               Path.Join(
                 currentDirectoryValue,
                 Path.GetFileName(file)
@@ -139,7 +139,7 @@ namespace Completer
           }
         }
 
-        yield return Canonicalizer.Denornalize(
+        yield return Canonicalizer.Denormalize(
           Path.Join(
             currentDirectoryValue,
             @"..\"
@@ -148,7 +148,7 @@ namespace Completer
 
         if (currentDirectoryValue != string.Empty)
         {
-          yield return Canonicalizer.Denornalize(
+          yield return Canonicalizer.Denormalize(
             Path.Join(
               currentDirectoryValue,
               @"\"
