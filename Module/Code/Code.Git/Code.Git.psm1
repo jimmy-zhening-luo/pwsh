@@ -12,9 +12,7 @@ function Test-RelativePath {
 
     [string]$Location,
 
-    [switch]$File,
-
-    [switch]$Newable
+    [switch]$File
   )
 
   $Path = [Canonicalizer]::Normalize($Path)
@@ -80,28 +78,14 @@ function Test-RelativePath {
   $FullLocation = (Resolve-Path $Location).Path
   $FullPath = Join-Path $FullLocation $Path
   [bool]$HasSubpath = $FullPath.Substring($FullLocation.Length) -notmatch [regex]'^\\*$'
-  $FileLike = $HasSubpath -and -not (
-    $FullPath.EndsWith('\') -or $FullPath.EndsWith('..')
+
+  return $HasSubpath ? (
+    Test-Path $FullPath -PathType (
+      $File ? 'Leaf' : 'Container'
+    )
+  ) : (
+    -not $File
   )
-
-  if (-not $HasSubpath) {
-    return -not $File -and -not $Newable
-  }
-
-  if ($File -and -not $FileLike) {
-    return $False
-  }
-
-  $Item = @{
-    Path     = $FullPath
-    PathType = $File ? 'Leaf' : 'Container'
-  }
-  if ($Newable) {
-    return (Test-Path @Item -IsValid) -and -not (Test-Path @Item)
-  }
-  else {
-    return Test-Path @Item
-  }
 }
 
 function Resolve-RelativePath {
@@ -113,9 +97,7 @@ function Resolve-RelativePath {
 
     [string]$Location,
 
-    [switch]$File,
-
-    [switch]$Newable
+    [switch]$File
   )
 
   if (-not (Test-RelativePath @PSBoundParameters)) {
@@ -156,15 +138,7 @@ function Resolve-RelativePath {
     $Location = $PWD.Path
   }
 
-  $FullLocation = (Resolve-Path $Location).Path
-  $FullPath = Join-Path $FullLocation $Path
-
-  if ($Newable) {
-    return $FullPath
-  }
-  else {
-    return (Resolve-Path $FullPath -Force).Path
-  }
+  return (Resolve-Path ($FullPath = Join-Path (Resolve-Path $Location).Path $Path) -Force).Path
 }
 
 function Resolve-GitRepository {
@@ -196,9 +170,9 @@ function Resolve-GitRepository {
             Resolve-Path $WorkingDirectory
           ).Path
         }
-        elseif (Test-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT -Newable) {
+        elseif (Test-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT) {
           Write-Output -InputObject (
-            Resolve-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT -Newable
+            Resolve-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT
           )
         }
       }
