@@ -2,11 +2,11 @@ using namespace System.Collections.Generic
 
 & {
   #region Solution
-  $Private:Root = Split-Path $PSScriptRoot
-  $Private:SourceRoot = "$Private:Root\Class"
-  $Private:ModuleRoot = "$Private:Root\Module"
+  $Root = Split-Path $PSScriptRoot
+  $SourceRoot = "$Root\Class"
+  $ModuleRoot = "$Root\Module"
 
-  $Private:DOTNET_SOLUTION = Import-PowerShellDataFile -Path $Private:Root\Data\Class.psd1
+  $DOTNET_SOLUTION = Import-PowerShellDataFile -Path $Root\Data\Class.psd1
   #endregion
 
   #region Installer
@@ -37,24 +37,24 @@ using namespace System.Collections.Generic
     )
 
     process {
-      $Private:BuildOutput = "$SourceRoot\$Folder\$Project\bin\Release\net9.0\$Project.dll"
+      $BuildOutput = "$SourceRoot\$Folder\$Project\bin\Release\net9.0\$Project.dll"
   
-      if (Test-Path $Private:BuildOutput -PathType Leaf) {
-        $Private:InstallPath = $AppendProject ? (
+      if (Test-Path $BuildOutput -PathType Leaf) {
+        $InstallPath = $AppendProject ? (
           "$InstallRoot\$Project"
         ) : $InstallRoot
-        $Private:InstalledAssembly = "$Private:InstallPath\$Project.dll"
+        $InstalledAssembly = "$InstallPath\$Project.dll"
   
         if (
           -not (
-            Test-Path $Private:InstalledAssembly -PathType Leaf
+            Test-Path $InstalledAssembly -PathType Leaf
           ) -or (
-            Get-FileHash -Path $Private:InstalledAssembly -Algorithm MD5
+            Get-FileHash -Path $InstalledAssembly -Algorithm MD5
           ).Hash -ne (
-            Get-FileHash -Path $Private:BuildOutput -Algorithm MD5
+            Get-FileHash -Path $BuildOutput -Algorithm MD5
           ).Hash
         ) {
-          Copy-Item -Path $Private:BuildOutput -Destination $Private:InstallPath -Force -ErrorAction Continue
+          Copy-Item -Path $BuildOutput -Destination $InstallPath -Force -ErrorAction Continue
         }
       }
       else {
@@ -65,20 +65,20 @@ using namespace System.Collections.Generic
   #endregion
 
   #region Install
-  $Private:DOTNET_SOLUTION.Cmdlets |
-    Install-PSProject -Folder Cmdlet -SourceRoot $Private:SourceRoot -InstallRoot $Private:ModuleRoot -AppendProject
+  $DOTNET_SOLUTION.Cmdlets |
+    Install-PSProject -Folder Cmdlet -SourceRoot $SourceRoot -InstallRoot $ModuleRoot -AppendProject
 
-  $Private:DOTNET_SOLUTION.Types |
-    Install-PSProject -Folder Type -SourceRoot $Private:SourceRoot -InstallRoot $Private:SourceRoot
+  $DOTNET_SOLUTION.Types |
+    Install-PSProject -Folder Type -SourceRoot $SourceRoot -InstallRoot $SourceRoot
   #endregion
 
   #region Add Type
-  $Private:DOTNET_SOLUTION.Types |
+  $DOTNET_SOLUTION.Types |
     Where-Object {
-      Test-Path $Private:SourceRoot\$PSItem.dll -PathType Leaf
+      Test-Path $SourceRoot\$PSItem.dll -PathType Leaf
     } |
     ForEach-Object {
-      Add-Type -Path $Private:SourceRoot\$PSItem.dll
+      Add-Type -Path $SourceRoot\$PSItem.dll
     }
   #endregion
 }
