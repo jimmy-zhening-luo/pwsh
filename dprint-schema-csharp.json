@@ -27,8 +27,11 @@
   "$defs": {
     "tristate": {
       "type": "integer",
-      "min": 0,
-      "max": 2
+      "enum": [
+        0,
+        1,
+        2
+      ]
     },
     "position": {
       "anyOf": [
