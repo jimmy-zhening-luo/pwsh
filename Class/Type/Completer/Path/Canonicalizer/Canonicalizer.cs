@@ -60,6 +60,11 @@ namespace Completer
           : pretrimmedNormalPath;
       }
 
+      public static string Denormalize(string path) => path.Replace(
+        '\\',
+        '/'
+      );
+
       public static string AnchorHome(
         string path
       )
