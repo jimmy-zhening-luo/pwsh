@@ -9,17 +9,32 @@ namespace Completer
       [GeneratedRegex(
         @"(?<!^)\\\\+"
       )]
-      private static partial Regex DuplicatePathSeparatorRegex();
+      public static partial Regex DuplicatePathSeparatorRegex();
+
+      [GeneratedRegex(
+        @"^(?=(?>[.\\]*)$)"
+      )]
+      public static partial Regex IsPathDescendantRegex();
+
+      [GeneratedRegex(
+        @"^(?=~(?>$|\\))"
+      )]
+      public static partial Regex IsPathHomeRootedRegex();
 
       [GeneratedRegex(
         @"^\.(?>$|\\+)"
       )]
-      private static partial Regex RemoveRelativeRootRegex();
+      public static partial Regex RemoveRelativeRootRegex();
+
+      [GeneratedRegex(
+        @"^~(?>$|\\+)"
+      )]
+      public static partial Regex RemoveHomeRootRegex();
 
       [GeneratedRegex(
         @"(?>(?<!^)(?<!:)\\+)$"
       )]
-      private static partial Regex RemoveTrailingPathSeparatorRegex();
+      public static partial Regex RemoveTrailingPathSeparator();
     }
   } // namespace PathCompleter
 } // namespace Completer

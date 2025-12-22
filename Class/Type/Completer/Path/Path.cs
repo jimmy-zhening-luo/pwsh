@@ -23,7 +23,6 @@ namespace Completer
         Root = Canonicalizer.AnchorHome(
           Canonicalizer.Normalize(
             Escaper.Unescape(root),
-            Canonicalizer.PathSeparator,
             true,
             true
           )
@@ -36,9 +35,7 @@ namespace Completer
       {
         string currentPathValue = Canonicalizer.Normalize(
           wordToComplete,
-          Canonicalizer.PathSeparator,
-          true,
-          false
+          true
         );
         string currentDirectoryValue = "";
         string searchLocation = "";
@@ -47,7 +44,7 @@ namespace Completer
         if (!string.IsNullOrWhiteSpace(currentPathValue))
         {
           int lastSeparatorIndex = currentPathValue.LastIndexOf(
-            Canonicalizer.PathSeparatorChar
+            '\\'
           );
 
           if (lastSeparatorIndex >= 0)
@@ -116,7 +113,7 @@ namespace Completer
               Path.GetFileName(directory),
               Flat
                 ? string.Empty
-                : Canonicalizer.PathSeparator
+                : @"\"
             );
           }
         }
@@ -147,7 +144,7 @@ namespace Completer
         {
           yield return Path.Join(
             currentDirectoryValue,
-            Canonicalizer.PathSeparator
+            @"\"
           );
         }
 
@@ -167,8 +164,8 @@ namespace Completer
         )
         {
           yield return descendant.Replace(
-            Canonicalizer.PathSeparatorChar,
-            Canonicalizer.FriendlyPathSeparatorChar
+            '\\',
+            '/'
           );
         }
       }

@@ -93,7 +93,6 @@ function Test-RelativePath {
 
   $Path = [Canonicalizer]::Normalize(
     $Path,
-    '',
     $True
   )
   $Location = [Canonicalizer]::Normalize($Location)
@@ -101,10 +100,10 @@ function Test-RelativePath {
   if ([Path]::IsPathRooted($Path)) {
     if ($Location) {
       if (
-        [Path]::GetRelativePath(
+        [Canonicalizer]::IsPathDescendant(
           $Path,
           $Location
-        ) -match [regex][Canonicalizer]::IsPathDescendantPattern
+        )
       ) {
         $Path = [Path]::GetRelativePath(
           $Location,
@@ -120,18 +119,18 @@ function Test-RelativePath {
     }
   }
   elseif (
-    $Path -match [regex][Canonicalizer]::IsPathHomeRootedPattern
+    [Canonicalizer]::IsPathHomeRooted($Path)
   ) {
-    $Path = $Path -replace [regex][Canonicalizer]::RemoveHomeRootPattern, ''
+    $Path = [Canonicalizer]::RemoveHomeRoot($Path)
 
     if ($Location) {
       $Path = Join-Path $HOME $Path
 
       if (
-        [Path]::GetRelativePath(
+        [Canonicalizer]::IsPathDescendant(
           $Path,
           $Location
-        ) -match [regex][Canonicalizer]::IsPathDescendantPattern
+        )
       ) {
         $Path = [Path]::GetRelativePath(
           $Location,
@@ -159,9 +158,7 @@ function Test-RelativePath {
   [string]$Private:FullPath = Join-Path $Private:FullLocation $Path
   [bool]$Private:HasSubpath = $Private:FullPath.Substring($Private:FullLocation.Length) -notmatch [regex]'^\\*$'
   [bool]$Private:FileLike = $Private:HasSubpath -and -not (
-    $Private:FullPath.EndsWith(
-      [Canonicalizer]::PathSeparator
-    ) -or $Private:FullPath.EndsWith('..')
+    $Private:FullPath.EndsWith('\') -or $Private:FullPath.EndsWith('..')
   )
 
   if (-not $Private:HasSubpath) {
@@ -208,7 +205,6 @@ function Resolve-RelativePath {
 
   $Path = [Canonicalizer]::Normalize(
     $Path,
-    [Canonicalizer]::PathSeparator,
     $True
   )
   $Location = [Canonicalizer]::Normalize($Location)
@@ -225,9 +221,9 @@ function Resolve-RelativePath {
     }
   }
   elseif (
-    $Path -match [regex][Canonicalizer]::IsPathHomeRootedPattern
+    [Canonicalizer]::IsPathHomeRooted($Path)
   ) {
-    $Path = $Path -replace [regex][Canonicalizer]::RemoveHomeRootPattern, ''
+    $Path = [Canonicalizer]::RemoveHomeRoot($Path)
 
     if ($Location) {
       $Path = [Path]::GetRelativePath(

@@ -1,5 +1,5 @@
 using System;
-// using System.IO;
+using System.IO;
 
 namespace Completer
 {
@@ -7,27 +7,44 @@ namespace Completer
   {
     public static partial class Canonicalizer
     {
-      public static string GetHome() => Environment.GetFolderPath(
+      public static bool IsPathDescendant(
+        string path,
+        string location
+      ) => IsPathDescendantRegex().IsMatch(
+        Path.GetRelativePath(
+          path,
+          location
+        )
+      );
+
+      public static string Home() => Environment.GetFolderPath(
         Environment
           .SpecialFolder
           .UserProfile
       );
 
+      public static bool IsPathHomeRooted(string path) => IsPathHomeRootedRegex().IsMatch(path);
+
+      public static string RemoveHomeRoot(string path) => RemoveHomeRootRegex().Replace(
+        path,
+        string.Empty
+      );
+
       public static string Normalize(
         string path,
-        string separator = "",
         bool trimLeadingRelative = false,
-        bool trimTrailing = false
+        bool trimTrailing = false,
+        char? separator = null
       )
       {
         string normalPath = DuplicatePathSeparatorRegex().Replace(
           Escaper
             .Unescape(path)
             .Replace(
-              FriendlyPathSeparatorChar,
-              PathSeparatorChar
+              '/',
+              '\\'
             ),
-          PathSeparator
+          @"\"
         );
 
         string pretrimmedNormalPath = trimLeadingRelative
@@ -37,16 +54,16 @@ namespace Completer
             )
           : normalPath;
         string trimmedNormalPath = trimTrailing
-          ? RemoveTrailingPathSeparatorRegex().Replace(
+          ? RemoveTrailingPathSeparator().Replace(
               pretrimmedNormalPath,
               string.Empty
             )
           : pretrimmedNormalPath;
 
-        return separator != string.Empty && separator != PathSeparator
+        return separator.HasValue && separator != '\\'
           ? trimmedNormalPath.Replace(
-              PathSeparator,
-              separator
+              '\\',
+              separator.Value
             )
           : trimmedNormalPath;
       }
@@ -55,20 +72,20 @@ namespace Completer
         string path
       )
       {
-        if (!path.StartsWith(HomeChar))
+        if (!path.StartsWith('~'))
         {
           return path;
         }
 
-        string home = GetHome();
-        if (path == Home)
+        string home = Home();
+        if (path == "~")
         {
           return home;
         }
 
         if (
-          path[1] == PathSeparatorChar
-          || path[1] == FriendlyPathSeparatorChar
+          path[1] == '\\'
+          || path[1] == '/'
         )
         {
           return home + path[1..];
@@ -77,15 +94,6 @@ namespace Completer
         {
           return path;
         }
-      }
-
-      public static string AnchorRelative(
-        string path,
-        string currentDirectory
-      )
-      {
-        // placeholder
-        return currentDirectory + path;
       }
     }
   } // namespace PathCompleter
