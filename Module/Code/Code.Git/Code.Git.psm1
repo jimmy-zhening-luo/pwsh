@@ -18,12 +18,12 @@ function Resolve-GitRepository {
     [AllowEmptyCollection()]
     [string[]]$WorkingDirectory,
 
-    [switch]$New
+    [switch]$Newable
   )
 
   process {
     foreach ($directory in $WorkingDirectory) {
-      if ($New) {
+      if ($Newable) {
         if (-not $WorkingDirectory) {
           Write-Output -InputObject $PWD.Path
         }
@@ -32,9 +32,9 @@ function Resolve-GitRepository {
             Resolve-Path $WorkingDirectory
           ).Path
         }
-        elseif (Test-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT -New) {
+        elseif (Test-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT -Newable) {
           Write-Output -InputObject (
-            Resolve-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT -New
+            Resolve-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT -Newable
           )
         }
       }
@@ -78,13 +78,20 @@ function Test-RelativePath {
 
     [switch]$File,
 
-    [switch]$New,
+    [switch]$Newable,
 
     [switch]$RequireSubpath
   )
 
   $Path = [Canonicalizer]::Normalize($Path)
   $Location = [Canonicalizer]::Normalize($Location)
+
+  if ($Path) {
+    
+  }
+  else {
+    return $Location
+  }
 
   if ([Path]::IsPathRooted($Path)) {
     if ($Location) {
@@ -152,7 +159,7 @@ function Test-RelativePath {
 
   if (-not $HasSubpath) {
     return -not (
-      $RequiresSubpath -or $File -or $New
+      $RequiresSubpath -or $File -or $Newable
     )
   }
 
@@ -164,7 +171,7 @@ function Test-RelativePath {
     Path     = $FullPath
     PathType = $File ? 'Leaf' : 'Container'
   }
-  if ($New) {
+  if ($Newable) {
     return (Test-Path @Item -IsValid) -and -not (Test-Path @Item)
   }
   else {
@@ -183,7 +190,7 @@ function Resolve-RelativePath {
 
     [switch]$File,
 
-    [switch]$New,
+    [switch]$Newable,
 
     [switch]$RequireSubpath
   )
@@ -229,7 +236,7 @@ function Resolve-RelativePath {
   $FullLocation = (Resolve-Path $Location).Path
   $FullPath = Join-Path $FullLocation $Path
 
-  if ($New) {
+  if ($Newable) {
     return $FullPath
   }
   else {
@@ -383,7 +390,7 @@ function Invoke-GitRepository {
 
   $Resolve = @{
     WorkingDirectory = $WorkingDirectory
-    New              = $Verb -in $NEWABLE_GIT_VERB
+    Newable          = $Verb -in $NEWABLE_GIT_VERB
   }
   $Repository = Resolve-GitRepository @Resolve
 
