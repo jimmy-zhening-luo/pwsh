@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 
 namespace Completer
@@ -7,12 +6,6 @@ namespace Completer
   {
     public static partial class Canonicalizer
     {
-      public static string Home() => Environment.GetFolderPath(
-        Environment
-          .SpecialFolder
-          .UserProfile
-      );
-
       public static string Normalize(
         string path,
         bool preserveTrailingSeparator = false
@@ -47,34 +40,6 @@ namespace Completer
           subpath
         )
         .Replace('\\', '/');
-
-      public static string AnchorHome(
-        string path
-      )
-      {
-        if (!path.StartsWith('~'))
-        {
-          return path;
-        }
-
-        string home = Home();
-        if (path == "~")
-        {
-          return home;
-        }
-
-        if (
-          path[1] == '\\'
-          || path[1] == '/'
-        )
-        {
-          return home + path[1..];
-        }
-        else
-        {
-          return path;
-        }
-      }
 
       public static bool IsPathHomeRooted(string path) => IsPathHomeRootedRegex().IsMatch(path);
 
