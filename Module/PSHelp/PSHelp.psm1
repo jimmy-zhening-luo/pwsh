@@ -1,8 +1,8 @@
 using namespace System.Collections.Generic
 using namespace Completer
 
-[hashtable]$CUSTOM_HELP = Import-PowerShellDataFile -Path $PSScriptRoot\PSHelpTopic.psd1
-[string]$ABOUT_BASE_URL = 'https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about'
+$CUSTOM_HELP = Import-PowerShellDataFile -Path $PSScriptRoot\PSHelpTopic.psd1
+$ABOUT_BASE_URL = 'https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about'
 
 <#
 .SYNOPSIS
@@ -78,7 +78,7 @@ function Get-HelpOnline {
   $Private:HelpLinkArticleList = [List[uri]]::new()
   $Private:ArticleList = [List[uri]]::new()
 
-  [hashtable]$Private:Silent = @{
+  $Private:Silent = @{
     ErrorAction    = 'SilentlyContinue'
     ProgressAction = 'SilentlyContinue'
   }
@@ -163,7 +163,7 @@ function Get-HelpOnline {
           }
         }
 
-        [string]$Private:about_TopicCandidate = $Private:Topic -replace [regex]'(?>[_ :]+)', '_' -replace [regex]'^(?>about)?_?', 'about_'
+        $Private:about_TopicCandidate = $Private:Topic -replace [regex]'(?>[_ :]+)', '_' -replace [regex]'^(?>about)?_?', 'about_'
 
         $Private:about_Article = Resolve-AboutArticle -Topic $Private:about_TopicCandidate
 
@@ -269,7 +269,7 @@ function Get-CommandAlias {
   }
 
   process {
-    [hashtable]$Private:AliasQuery = @{
+    $Private:AliasQuery = @{
       Scope      = $Scope
       Definition = $Definition ? $Definition.Contains('*') ? $Definition : $Definition.Length -lt 3 ? "$Definition*" : "*$Definition*" : '*'
     }
@@ -288,14 +288,12 @@ function Get-CommandAlias {
   }
 
   end {
-    [System.Management.Automation.CommandInfo[]]$Private:UniqueAliases = $Private:AliasList |
+    return $Private:AliasList |
       Sort-Object -Property DisplayName |
       Group-Object -Property DisplayName |
       ForEach-Object {
         $PSItem.Group[0]
       }
-
-    return $Private:UniqueAliases
   }
 }
 
@@ -354,7 +352,7 @@ function Get-VerbList {
   }
 
   process {
-    [hashtable]$Private:VerbQuery = @{
+    $Private:VerbQuery = @{
       Verb = $Verb ? $Verb.Contains('*') ? $Verb : $Verb.Length -lt 3 ? "$Verb*" : "*$Verb*" : '*'
     }
 
@@ -375,10 +373,8 @@ function Get-VerbList {
   end {
     $Private:VerbList.Sort()
 
-    [string[]]$Private:UniqueVerbs = $Private:VerbList |
+    return $Private:VerbList |
       Select-Object -Unique -CaseInsensitive
-
-    return $Private:UniqueVerbs
   }
 }
 

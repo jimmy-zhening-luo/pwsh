@@ -10,7 +10,7 @@ function Clear-Line {
   param(
 
     [RelativePathCompletions(
-      { return [string]$PWD.Path }
+      { return $PWD.Path }
     )]
     [string]$Path
   )

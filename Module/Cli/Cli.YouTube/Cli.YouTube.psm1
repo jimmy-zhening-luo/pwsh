@@ -29,7 +29,7 @@ function Get-YouTube {
     -1,
     '/watch',
     '?v=' + $Matches.Video
-  ).Uri : [uri]$Video
+  ).Uri : $Video
 
   if (Test-Url -Uri $Private:VideoUri) {
     & yt-dlp.exe @args -- [string]$Private:VideoUri
@@ -64,7 +64,7 @@ function Get-YouTubeAudio {
     [string]$Video
   )
 
-  [string[]]$Private:YouTubeArgument = @(
+  $Private:YouTubeArgument = @(
     '--format'
     'bestaudio'
     '--extract-audio'

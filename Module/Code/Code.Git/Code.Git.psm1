@@ -27,37 +27,31 @@ function Resolve-GitRepository {
         if (-not $WorkingDirectory) {
           Write-Output -InputObject $PWD.Path
         }
-        elseif (Test-Path -Path $WorkingDirectory -PathType Container) {
+        elseif (Test-Path $WorkingDirectory -PathType Container) {
           Write-Output -InputObject (
-            [string](
-              Resolve-Path -Path $WorkingDirectory
-            ).Path
-          )
+            Resolve-Path $WorkingDirectory
+          ).Path
         }
         elseif (Test-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT -New) {
           Write-Output -InputObject (
-            [string](
-              Resolve-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT -New
-            )
+            Resolve-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT -New
           )
         }
       }
       else {
         if (-not $WorkingDirectory) {
-          if (Test-Path -Path .git -PathType Container) {
+          if (Test-Path .git -PathType Container) {
             Write-Output -InputObject $PWD.Path
           }
         }
         elseif (
-          Test-Path -Path (
+          Test-Path (
             Join-Path $WorkingDirectory .git
           ) -PathType Container
         ) {
           Write-Output -InputObject (
-            [string](
-              Resolve-Path -Path $WorkingDirectory
-            ).Path
-          )
+            Resolve-Path $WorkingDirectory
+          ).Path
         }
         elseif (
           Test-RelativePath -Path (
@@ -65,9 +59,7 @@ function Resolve-GitRepository {
           ) -Location $REPO_ROOT
         ) {
           Write-Output -InputObject (
-            [string](
-              Resolve-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT
-            )
+            Resolve-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT
           )
         }
       }
@@ -150,14 +142,14 @@ function Test-RelativePath {
     $Location = $PWD.Path
   }
 
-  if (-not (Test-Path -Path $Location -PathType Container)) {
+  if (-not (Test-Path $Location -PathType Container)) {
     return $False
   }
 
-  [string]$Private:FullLocation = (Resolve-Path -Path $Location).Path
-  [string]$Private:FullPath = Join-Path $Private:FullLocation $Path
+  $Private:FullLocation = (Resolve-Path $Location).Path
+  $Private:FullPath = Join-Path $Private:FullLocation $Path
   [bool]$Private:HasSubpath = $Private:FullPath.Substring($Private:FullLocation.Length) -notmatch [regex]'^\\*$'
-  [bool]$Private:FileLike = $Private:HasSubpath -and -not (
+  $Private:FileLike = $Private:HasSubpath -and -not (
     $Private:FullPath.EndsWith('\') -or $Private:FullPath.EndsWith('..')
   )
 
@@ -171,7 +163,7 @@ function Test-RelativePath {
     return $False
   }
 
-  [hashtable]$Private:Item = @{
+  $Private:Item = @{
     Path     = $Private:FullPath
     PathType = $File ? 'Leaf' : 'Container'
   }
@@ -240,14 +232,14 @@ function Resolve-RelativePath {
     $Location = $PWD.Path
   }
 
-  [string]$Private:FullLocation = (Resolve-Path -Path $Location).Path
-  [string]$Private:FullPath = Join-Path $Private:FullLocation $Path
+  $Private:FullLocation = (Resolve-Path $Location).Path
+  $Private:FullPath = Join-Path $Private:FullLocation $Path
 
   if ($New) {
     return $Private:FullPath
   }
   else {
-    return [string](Resolve-Path -Path $Private:FullPath -Force).Path
+    return (Resolve-Path $Private:FullPath -Force).Path
   }
 }
 
@@ -395,11 +387,11 @@ function Invoke-GitRepository {
     $Verb = 'status'
   }
 
-  [hashtable]$Private:Resolve = @{
+  $Private:Resolve = @{
     WorkingDirectory = $WorkingDirectory
     New              = $Verb -in $NEWABLE_GIT_VERB
   }
-  [string]$Private:Repository = Resolve-GitRepository @Private:Resolve
+  $Private:Repository = Resolve-GitRepository @Private:Resolve
 
   if (-not $Private:Repository) {
     if ($WorkingDirectory) {
@@ -449,10 +441,10 @@ function Invoke-GitRepository {
   & "$env:ProgramFiles\Git\cmd\git.exe" @Private:GitCommand @Private:GitArgument
 
   if ($LASTEXITCODE -notin 0, 1) {
-    [string]$Private:Exception = "git command error, execution returned exit code: $LASTEXITCODE"
+    $Private:Exception = "git command error, execution returned exit code: $LASTEXITCODE"
 
     if ($NoThrow) {
-      Write-Warning -Message $Private:Exception
+      Write-Warning -Message "$Private:Exception"
     }
     else {
       throw $Private:Exception
@@ -532,7 +524,7 @@ function Import-GitRepository {
     $Private:RepositoryPathSegments = , 'jimmy-zhening-luo' + $Private:RepositoryPathSegments
   }
 
-  [string]$Private:Origin = (
+  $Private:Origin = (
     $ForceSsh ? 'git@github.com:' : 'https://github.com/'
   ) + (
     $Private:RepositoryPathSegments -join '/'
@@ -604,7 +596,7 @@ function Get-ChildGitRepository {
     Get-GitRepository -WorkingDirectory $Private:Repository
   }
 
-  [ushort]$Private:Count = $Private:Repositories.Count
+  $Private:Count = $Private:Repositories.Count
 
   return "`nPulled $Private:Count repositor" + ($Private:Count -eq 1 ? 'y' : 'ies')
 }
@@ -885,7 +877,7 @@ function Reset-GitRepository {
   if ($Tree) {
     if (
       $Tree -match $TREE_SPEC -and (
-        -not $Matches.Step -or $Matches.Step -as [uint]
+        -not $Matches.Step -or $Matches.Step -as [int]
       )
     ) {
       [string]$Private:Branching = $Matches.Branching ? $Matches.Branching : '~'
@@ -906,11 +898,11 @@ function Reset-GitRepository {
   ) {
     if (
       -not $Tree -and $WorkingDirectory -match $TREE_SPEC -and (
-        -not $Matches.Step -or $Matches.Step -as [uint]
+        -not $Matches.Step -or $Matches.Step -as [int]
       )
     ) {
       [string]$Private:Branching = $Matches.Branching ? $Matches.Branching : '~'
-      $Tree = 'HEAD' + $Private:Branching + $Matches.Step
+      $Tree = "HEAD$Private:Branching$($Matches.Step)"
     }
     else {
       $Private:ResetArgument.Insert(0, $WorkingDirectory)

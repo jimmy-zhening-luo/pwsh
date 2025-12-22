@@ -73,27 +73,25 @@ function Measure-Performance {
 
   [string]$Private:FullCommand = $Command -join ' '
 
-  [long]$Private:CommandTicks = [long](
+  [long]$Private:CommandTicks = (
     Measure-Command {
       pwsh -NoProfile -Command "$Private:FullCommand"
     }
   ).Ticks
 
-  [timespan]$Private:AverageBaseline = Measure-PSProfile -Iterations 5 -Baseline -Timespan
+  $Private:AverageBaseline = Measure-PSProfile -Iterations 5 -Baseline -Timespan
 
-  [long]$CommandCostTicks = [long](
-    [long]$Private:CommandTicks - [long]$Private:AverageBaseline.Ticks
-  )
+  [long]$CommandCostTicks = $Private:CommandTicks - $Private:AverageBaseline.Ticks
 
-  [timespan]$Private:CommandCost = [timespan]::new(
-    [long]$Private:CommandCostTicks
+  $Private:CommandCost = [timespan]::new(
+    $Private:CommandCostTicks
   )
 
   if ($Numeric) {
     return $Private:CommandCost.TotalMilliseconds
   }
   elseif ($Timespan) {
-    return [timespan]$Private:CommandCost
+    return $Private:CommandCost
   }
   else {
     return "$([long]$Private:CommandCost.TotalMilliseconds) ms`n(Base: $([long]$Private:AverageBaseline.TotalMilliseconds) ms)"
@@ -180,16 +178,16 @@ function Measure-PSProfile {
     $Iterations = 8
   }
 
-  [List[long]]$Private:BareStartupTicks = [List[long]]::new()
-  [List[long]]$Private:StartupWithProfileTicks = [List[long]]::new()
+  $Private:BareStartupTicks = [List[long]]::new()
+  $Private:StartupWithProfileTicks = [List[long]]::new()
 
   for (
-    [int]$Private:i = 0
+    $Private:i = 0
     $Private:i -lt $Iterations
     ++$Private:i
   ) {
     if (-not $Baseline) {
-      [int]$Private:Command1 = Get-Random 500
+      $Private:Command1 = Get-Random 500
       $Private:StartupWithProfileTicks.Add(
         [long](
           Measure-Command {
@@ -199,7 +197,7 @@ function Measure-PSProfile {
       )
     }
 
-    [int]$Private:Command2 = Get-Random 500
+    $Private:Command2 = Get-Random 500
     $Private:BareStartupTicks.Add(
       [long](
         Measure-Command {
@@ -209,14 +207,12 @@ function Measure-PSProfile {
     )
   }
 
-  [long]$Private:TotalBareStartupTicks = [long][System.Linq.Enumerable]::Sum(
-    [List[long]]$Private:BareStartupTicks
+  [long]$Private:TotalBareStartupTicks = [System.Linq.Enumerable]::Sum(
+    $Private:BareStartupTicks
   )
-  [long]$Private:AverageBareStartupTicks = [long](
-    $Private:TotalBareStartupTicks / $Iterations
-  )
-  [timespan]$Private:AverageBareStartup = [timespan]::new(
-    [long]$Private:AverageBareStartupTicks
+  [long]$Private:AverageBareStartupTicks = $Private:TotalBareStartupTicks / $Iterations
+  $Private:AverageBareStartup = [timespan]::new(
+    $Private:AverageBareStartupTicks
   )
 
   if ($Baseline) {
@@ -225,30 +221,27 @@ function Measure-PSProfile {
         return $Private:AverageBareStartup.TotalMilliseconds
       }
       Timespan {
-        return [timespan]$Private:AverageBareStartup
+        return $Private:AverageBareStartup
       }
     }
   }
   else {
-    [long]$Private:TotalStartupWithProfileTicks = [long][System.Linq.Enumerable]::Sum(
-      [List[long]]$Private:StartupWithProfileTicks
+    [long]$Private:TotalStartupWithProfileTicks = [System.Linq.Enumerable]::Sum(
+      $Private:StartupWithProfileTicks
     )
 
-    [long]$Private:TotalProfileCostTicks = [long](
-      [long]$Private:TotalStartupWithProfileTicks - [long]$Private:TotalBareStartupTicks
-    )
-    [long]$Private:AverageProfileCostTicks = [long](
-      [long]$Private:TotalProfileCostTicks / [long]$Iterations
-    )
-    [timespan]$Private:AverageProfileCost = [timespan]::new(
-      [long]$Private:AverageProfileCostTicks
+    [long]$Private:TotalProfileCostTicks = $Private:TotalStartupWithProfileTicks - $Private:TotalBareStartupTicks
+    [long]$Private:AverageProfileCostTicks =
+      $Private:TotalProfileCostTicks / $Iterations
+    $Private:AverageProfileCost = [timespan]::new(
+      $Private:AverageProfileCostTicks
     )
 
     if ($Numeric) {
       return $Private:AverageProfileCost.TotalMilliseconds
     }
     elseif ($Timespan) {
-      return [timespan]$Private:AverageProfileCost
+      return $Private:AverageProfileCost
     }
     else {
       return "$([long]$Private:AverageProfileCost.TotalMilliseconds) ms`n(Base: $([long]$Private:AverageBareStartup.TotalMilliseconds) ms)"
@@ -274,7 +267,7 @@ function Invoke-PSHistory {
   Start-Process -FilePath "$env:LOCALAPPDATA\Programs\Microsoft VS Code\bin\code.cmd" -NoNewWindow -ArgumentList (Get-PSReadLineOption).HistorySavePath, --profile=Setting, --new-window
 }
 
-[string]$PROFILE_REPO_ROOT = "$REPO_ROOT\pwsh"
+$PROFILE_REPO_ROOT = "$REPO_ROOT\pwsh"
 
 <#
 .SYNOPSIS
@@ -339,7 +332,7 @@ function Publish-PSProfile {
   )
 
   #region Pull Repo
-  [string[]]$Private:GitCommandManifest = @(
+  $Private:GitCommandManifest = @(
     '-c'
     'color.ui=always'
     '-C'
@@ -355,9 +348,9 @@ function Publish-PSProfile {
 
 
   #region Copy Linter
-  [string]$Private:LinterConfig = "$PROFILE_REPO_ROOT\Data\PSScriptAnalyzerSettings.psd1"
+  $Private:LinterConfig = "$PROFILE_REPO_ROOT\Data\PSScriptAnalyzerSettings.psd1"
 
-  if (Test-Path -Path $Private:LinterConfig -PathType Leaf) {
+  if (Test-Path $Private:LinterConfig -PathType Leaf) {
     Copy-Item -Path $Private:LinterConfig -Destination $HOME -Force
   }
   #endregion
@@ -380,7 +373,7 @@ function Publish-PSProfile {
       }
     }
 
-    [string]$Private:Solution = "$PROFILE_REPO_ROOT\Class\Class.slnx"
+    $Private:Solution = "$PROFILE_REPO_ROOT\Class\Class.slnx"
 
     try {
       try {

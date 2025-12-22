@@ -33,7 +33,7 @@ function Test-NodePackageDirectory {
     $WorkingDirectory = $PWD.Path
   }
 
-  return Test-Path -Path (
+  return Test-Path (
     Join-Path $WorkingDirectory package.json
   ) -PathType Leaf
 }
@@ -66,7 +66,7 @@ function Resolve-NodePackageDirectory {
   )
 
   if (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory) {
-    return $WorkingDirectory ? "--prefix=$((Resolve-Path -Path $WorkingDirectory).Path)" : ''
+    return $WorkingDirectory ? "--prefix=$((Resolve-Path $WorkingDirectory).Path)" : ''
   }
   else {
     throw "Path '$WorkingDirectory' is not a Node package directory."
@@ -97,7 +97,7 @@ function Invoke-Node {
   }
 }
 
-$NODE_VERB = @(
+[string[]]$NODE_VERB = @(
   'access'
   'adduser'
   'audit'
@@ -265,11 +265,8 @@ function Invoke-NodePackage {
     [Parameter(DontShow)][switch]$zNothing
   )
 
-  $Private:NodeArgument = [List[string]]::new(
-    [List[string]]@(
-      '--color=always'
-    )
-  )
+  $Private:NodeArgument = [List[string]]::new()
+  $Private:NodeArgument.Add('--color=always')
 
   $Private:NodeCommand = [List[string]]::new()
   if ($Argument) {
@@ -279,12 +276,16 @@ function Invoke-NodePackage {
   }
 
   if ($WorkingDirectory.Length -ne 0) {
-    if ($WorkingDirectory.StartsWith('-') -or -not (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)) {
+    if (
+      $WorkingDirectory.StartsWith('-') -or -not (
+        Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory
+      )
+    ) {
       $Private:NodeCommand.Add($WorkingDirectory)
       $WorkingDirectory = ''
     }
     else {
-      [string]$Private:PackagePrefix = Resolve-NodePackageDirectory -WorkingDirectory $WorkingDirectory
+      $Private:PackagePrefix = Resolve-NodePackageDirectory -WorkingDirectory $WorkingDirectory
 
       if ($Private:PackagePrefix) {
         $Private:NodeArgument.Add($Private:PackagePrefix)
@@ -343,10 +344,10 @@ function Invoke-NodePackage {
   & npm.ps1 @Private:NodeArgument
 
   if ($LASTEXITCODE -notin 0, 1) {
-    [string]$Private:Exception = "npm command error, execution returned exit code: $LASTEXITCODE"
+    $Private:Exception = "npm command error, execution returned exit code: $LASTEXITCODE"
 
     if ($NoThrow) {
-      Write-Warning -Message $Private:Exception
+      Write-Warning -Message "$Private:Exception"
     }
     else {
       throw $Private:Exception
@@ -502,10 +503,10 @@ function Step-NodePackageVersion {
   if ($Version) {
     if ($null -eq [NodePackageNamedVersion]::$Version) {
       if ($Version -match $VERSION_SPEC) {
-        [hashtable]$Private:FullVersion = @{
-          Major = [uint]$Matches.Major
-          Minor = $Matches.Minor ? [uint]$Matches.Minor : [uint]0
-          Patch = $Matches.Patch ? [uint]$Matches.Patch : [uint]0
+        $Private:FullVersion = @{
+          Major = [int]$Matches.Major
+          Minor = $Matches.Minor ? [int]$Matches.Minor : 0
+          Patch = $Matches.Patch ? [int]$Matches.Patch : 0
           Pre   = $Matches.Pre ? [string]$Matches.Pre : ''
         }
 
@@ -527,10 +528,9 @@ function Step-NodePackageVersion {
     $Version = [NodePackageNamedVersion]::patch
   }
 
-  $Private:NodeArgument = [List[string]]::new(
-    [List[string]]@(
-      $Version.ToLowerInvariant()
-    )
+  $Private:NodeArgument = [List[string]]::new()
+  $Private:NodeArgument.Add(
+    $Version.ToLowerInvariant()
   )
 
   if ($WorkingDirectory) {
@@ -584,11 +584,8 @@ function Invoke-NodePackageScript {
     throw 'Script name is required.'
   }
 
-  $Private:NodeArgument = [List[string]]::new(
-    [List[string]]@(
-      $Script
-    )
-  )
+  $Private:NodeArgument = [List[string]]::new()
+  $Private:NodeArgument.Add($Script)
 
   if ($WorkingDirectory) {
     if (-not (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)) {

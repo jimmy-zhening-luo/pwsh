@@ -66,7 +66,7 @@ function Edit-SystemPath {
     throw 'Cannot present Control Panel during SSH session'
   }
 
-  [hashtable]$Private:ControlPanel = @{
+  $Private:ControlPanel = @{
     FilePath     = "$env:SystemRoot\System32\rundll32.exe"
     ArgumentList = @(
       'sysdm.cpl'
@@ -139,7 +139,7 @@ function Stop-Task {
       Name {
         foreach ($Private:ProcessHandle in $Name) {
           if ($Private:ProcessHandle) {
-            [hashtable]$Private:Process = @{
+            $Private:Process = @{
               Force = $True
             }
             if ($Private:ProcessHandle -match [regex]'^(?>\d{1,10})$' -and $Private:ProcessHandle -as [uint]) {

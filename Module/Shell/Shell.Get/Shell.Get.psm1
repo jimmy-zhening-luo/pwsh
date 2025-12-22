@@ -10,7 +10,7 @@ enum DiskSizeUnit {
   PB
 }
 
-[hashtable]$DISK_SIZE_UNIT_ALIAS = @{
+$DISK_SIZE_UNIT_ALIAS = @{
   K = [DiskSizeUnit]::KB
   M = [DiskSizeUnit]::MB
   G = [DiskSizeUnit]::GB
@@ -18,7 +18,7 @@ enum DiskSizeUnit {
   P = [DiskSizeUnit]::PB
 }
 
-[hashtable]$DISK_SIZE_FACTORS = @{
+$DISK_SIZE_FACTORS = @{
   [DiskSizeUnit]::B  = 1
   [DiskSizeUnit]::KB = 1KB
   [DiskSizeUnit]::MB = 1MB
@@ -48,7 +48,7 @@ function Get-Size {
       ValueFromPipelineByPropertyName
     )]
     [RelativePathCompletions(
-      { return [string]$PWD.Path }
+      { return $PWD.Path }
     )]
     # The path of the file or directory to be measured.
     [string[]]$Path,
@@ -79,17 +79,17 @@ function Get-Size {
 
   begin {
     [DiskSizeUnit]$Private:CanonicalUnit = $null -eq [DiskSizeUnit]::$Unit ? $DISK_SIZE_UNIT_ALIAS.ContainsKey($Unit) ? [DiskSizeUnit]::($DISK_SIZE_UNIT_ALIAS[$Unit]) : [DiskSizeUnit]::KB : [DiskSizeUnit]::$Unit
-    [ulong]$Private:Factor = $DISK_SIZE_FACTORS[$Private:CanonicalUnit]
+    $Private:Factor = $DISK_SIZE_FACTORS[$Private:CanonicalUnit]
   }
 
   process {
     foreach ($Private:filepath in $Path) {
-      if (-not (Test-Path -Path $Private:filepath)) {
+      if (-not (Test-Path $Private:filepath)) {
         throw "Path '$Private:filepath' does not exist."
       }
 
-      [long]$Private:Size = (
-        Test-Path -Path $Private:filepath -PathType Container
+      $Private:Size = (
+        Test-Path $Private:filepath -PathType Container
       ) ? (
         Get-ChildItem -Path $Private:filepath -Recurse -Force -File |
           Measure-Object -Property Length -Sum |
@@ -98,14 +98,14 @@ function Get-Size {
         Get-Item -Path $Private:filepath
       ).Length
 
-      [double]$Private:ScaledSize = [long]$Private:Size / [long]$Private:Factor
+      [double]$Private:ScaledSize = $Private:Size / $Private:Factor
 
       Write-Output -InputObject (
         $Number ? $Private:ScaledSize : (
           [System.Math]::Round(
             $Private:ScaledSize,
             3
-          ).ToString() + ' ' + $Private:CanonicalUnit
+          ).ToString() + " $Private:CanonicalUnit"
         )
       )
     }
@@ -113,19 +113,17 @@ function Get-Size {
 
   end {
     if (-not $Path) {
-      [ulong]$Private:Size = Get-ChildItem -Path $PWD.Path -Recurse -File |
+      $Private:Size = Get-ChildItem -Path $PWD.Path -Recurse -File |
         Measure-Object -Property Length -Sum |
         Select-Object -ExpandProperty Sum
 
       [double]$Private:ScaledSize = $Private:Size / $Private:Factor
 
-      return (
-        $Number ? $Private:ScaledSize : (
-          [System.Math]::Round(
-            $Private:ScaledSize,
-            3
-          ).ToString() + ' ' + $Private:CanonicalUnit
-        )
+      return $Number ? $Private:ScaledSize : (
+        [System.Math]::Round(
+          $Private:ScaledSize,
+          3
+        ).ToString() + " $Private:CanonicalUnit"
       )
     }
   }
@@ -137,7 +135,7 @@ function Get-Directory {
   param(
 
     [RelativePathCompletions(
-      { return [string]$PWD.Path },
+      { return $PWD.Path },
       [PathItemType]::Directory
     )]
     [string]$Path
@@ -157,7 +155,7 @@ function Get-DirectorySibling {
   param(
 
     [RelativePathCompletions(
-      { return [string](Split-Path $PWD.Path) },
+      { return Split-Path $PWD.Path },
       [PathItemType]::Directory
     )]
     [string]$Path
@@ -172,7 +170,7 @@ function Get-DirectoryRelative {
   param(
 
     [RelativePathCompletions(
-      { return [string]($PWD.Path | Split-Path | Split-Path) },
+      { return $PWD.Path | Split-Path | Split-Path },
       [PathItemType]::Directory
     )]
     [string]$Path
@@ -235,7 +233,7 @@ function Get-File {
   param(
 
     [RelativePathCompletions(
-      { return [string]$PWD.Path }
+      { return $PWD.Path }
     )]
     [string]$Path,
 
@@ -246,7 +244,7 @@ function Get-File {
 
   if (
     $Location -and -not (
-      Test-Path -Path $Location -PathType Container
+      Test-Path $Location -PathType Container
     )
   ) {
     $Private:Argument += $Location
@@ -258,11 +256,11 @@ function Get-File {
       Join-Path $Location $Path
     ) : $Path
 
-    if (-not (Test-Path -Path $Private:FullPath)) {
+    if (-not (Test-Path $Private:FullPath)) {
       throw "Path '$Private:Target' does not exist."
     }
 
-    if (Test-Path -Path $Private:FullPath -PathType Container) {
+    if (Test-Path $Private:FullPath -PathType Container) {
       return Get-ChildItem -Path $Private:FullPath @Private:Argument @args
     }
     else {
@@ -273,7 +271,7 @@ function Get-File {
     return Get-ChildItem -Path (
       (
         $Location ? (
-          Resolve-Path -Path $Location
+          Resolve-Path $Location
         ) : $PWD
       ).Path
     ) @Private:Argument @args
@@ -286,7 +284,7 @@ function Get-FileSibling {
   param(
 
     [RelativePathCompletions(
-      { return [string](Split-Path $PWD.Path) }
+      { return Split-Path $PWD.Path }
     )]
     [string]$Path
   )
@@ -300,7 +298,7 @@ function Get-FileRelative {
   param(
 
     [RelativePathCompletions(
-      { return [string]($PWD.Path | Split-Path | Split-Path) }
+      { return $PWD.Path | Split-Path | Split-Path }
     )]
     [string]$Path
   )

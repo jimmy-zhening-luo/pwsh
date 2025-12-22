@@ -7,7 +7,7 @@ function Invoke-Directory {
   param(
 
     [RelativePathCompletions(
-      { return [string]$PWD.Path }
+      { return $PWD.Path }
     )]
     [string]$Path
   )
@@ -15,18 +15,16 @@ function Invoke-Directory {
     if (-not $Path) {
       Invoke-Item -Path $PWD.Path @args
     }
-    elseif (Test-Path -Path $Path -PathType Container) {
+    elseif (Test-Path $Path -PathType Container) {
       Invoke-Item -Path $Path @args
     }
     else {
-      throw (Test-Path -Path $Path -PathType Leaf) ? (
-        [System.IO.IOException]::new(
-          "The path '$Path' is a file, not a directory."
-        )
-      ) : (
-        [System.IO.DirectoryNotFoundException]::new(
-          "The directory path '$Path' does not exist."
-        )
+      throw (
+        Test-Path $Path -PathType Leaf
+      ) ? [System.IO.IOException]::new(
+        "The path '$Path' is a file, not a directory."
+      ) : [System.IO.DirectoryNotFoundException]::new(
+        "The directory path '$Path' does not exist."
       )
     }
   }
@@ -41,7 +39,7 @@ function Invoke-DirectorySibling {
   param(
 
     [RelativePathCompletions(
-      { return [string](Split-Path $PWD.Path) }
+      { return Split-Path $PWD.Path }
     )]
     [string]$Path
   )
@@ -57,7 +55,7 @@ function Invoke-DirectoryRelative {
   param(
 
     [RelativePathCompletions(
-      { return [string]($PWD.Path | Split-Path | Split-Path) }
+      { return $PWD.Path | Split-Path | Split-Path }
     )]
     [string]$Path
   )
@@ -119,7 +117,7 @@ function Invoke-Workspace {
     )]
     [AllowEmptyString()]
     [RelativePathCompletions(
-      { return [string]$PWD.Path }
+      { return $PWD.Path }
     )]
     [string]$Workspace,
 
@@ -156,7 +154,7 @@ function Invoke-Workspace {
 
   if (
     $Location -and -not (
-      Test-Path -Path $Location -PathType Container
+      Test-Path $Location -PathType Container
     )
   ) {
     $Private:ArgumentList.Add($Location)
@@ -167,10 +165,10 @@ function Invoke-Workspace {
     [string]$Private:Target = $Location ? (
       Join-Path $Location $Workspace
     ) : $Workspace
-    if (Test-Path -Path $Private:Target) {
+    if (Test-Path $Private:Target) {
       $Private:ArgumentList.Insert(
         0,
-        [string](Resolve-Path -Path $Target).Path
+        (Resolve-Path $Target).Path
       )
     }
     else {
@@ -187,12 +185,10 @@ function Invoke-Workspace {
     if ($Location -and -not $Empty -or $ReuseWindow) {
       $Private:ArgumentList.Insert(
         0,
-        [string](
+        (
           $Location ? (
-            Resolve-Path -Path $Location
-          ) : (
-            $PWD
-          )
+            Resolve-Path $Location
+          ) : $PWD
         ).Path
       )
     }
@@ -235,7 +231,7 @@ function Invoke-WorkspaceSibling {
     )]
     [AllowEmptyString()]
     [RelativePathCompletions(
-      { return [string](Split-Path $PWD.Path) }
+      { return Split-Path $PWD.Path }
     )]
     [string]$Workspace,
 
@@ -272,7 +268,7 @@ function Invoke-WorkspaceRelative {
     )]
     [AllowEmptyString()]
     [RelativePathCompletions(
-      { return [string]($PWD.Path | Split-Path | Split-Path) }
+      { return $PWD.Path | Split-Path | Split-Path }
     )]
     [string]$Workspace,
 

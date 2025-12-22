@@ -88,7 +88,7 @@ function Test-Host {
   process {
     foreach ($Private:computerName in $Name) {
       if ($Private:computerName) {
-        [hashtable]$Private:Destination = @{
+        $Private:Destination = @{
           ComputerName = $Private:computerName
         }
         switch ($PSCmdlet.ParameterSetName) {
@@ -163,7 +163,7 @@ function Test-Url {
   )
 
   begin {
-    [hashtable]$Private:Request = @{
+    $Private:Request = @{
       Method                       = 'HEAD'
       PreserveHttpMethodOnRedirect = $True
       DisableKeepAlive             = $True

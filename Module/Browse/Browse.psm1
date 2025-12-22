@@ -39,7 +39,7 @@ function Open-Url {
   )
 
   begin {
-    [string]$Private:Browser = "$env:ProgramFiles\Google\Chrome\Application\chrome.exe"
+    $Private:Browser = "$env:ProgramFiles\Google\Chrome\Application\chrome.exe"
   }
 
   process {
@@ -59,14 +59,14 @@ function Open-Url {
 
   end {
     if ($PSCmdlet.ParameterSetName -eq 'Path') {
-      [string]$Private:Target = $Path ? (
-        Test-Path -Path $Path
-      ) ? (
-        Resolve-Path -Path $Path
-      ).Path : [uri]$Path : $PWD.Path
-
       if (-not $env:SSH_CLIENT) {
-        Start-Process -FilePath $Private:Browser -ArgumentList $Private:Target
+        Start-Process -FilePath $Private:Browser -ArgumentList (
+          $Path ? (
+            Test-Path $Path
+          ) ? (
+            Resolve-Path $Path
+          ).Path : [string]([uri]$Path) : $PWD.Path
+        )
       }
     }
   }
