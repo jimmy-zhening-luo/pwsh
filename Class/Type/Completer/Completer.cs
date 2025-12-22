@@ -22,13 +22,7 @@ namespace Completer
 
     public override IEnumerable<string> FulfillCompletion(string wordToComplete)
     {
-      string unescapedWordToComplete = Escaper.Unescape(wordToComplete);
-
-      if (
-        string.IsNullOrWhiteSpace(
-          unescapedWordToComplete
-        )
-      )
+      if (wordToComplete == string.Empty)
       {
         foreach (string member in Domain)
         {
@@ -43,7 +37,7 @@ namespace Completer
         {
           if (
             member.StartsWith(
-              unescapedWordToComplete,
+              wordToComplete,
               StringComparison.OrdinalIgnoreCase
             )
           )
@@ -57,9 +51,9 @@ namespace Completer
           foreach (string member in Domain)
           {
             if (
-              member.Length > unescapedWordToComplete.Length
+              member.Length > wordToComplete.Length
               && member.IndexOf(
-                unescapedWordToComplete,
+                wordToComplete,
                 1,
                 StringComparison.OrdinalIgnoreCase
               ) >= 1

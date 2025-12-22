@@ -23,7 +23,13 @@ namespace Completer
       CommandAst commandAst,
       IDictionary fakeBoundParameters
     ) => WrapArgumentCompletionResult(
-      FulfillCompletion(wordToComplete)
+      FulfillCompletion(
+        Escaper
+          .Unescape(
+            wordToComplete
+          )
+          .Trim()
+      )
     );
 
     public abstract IEnumerable<string> FulfillCompletion(string wordToComplete);

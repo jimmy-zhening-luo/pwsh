@@ -13,9 +13,7 @@ namespace Completer
       {
         string normalPath = RemoveRelativeRoot(
           DuplicateSeparatorRegex().Replace(
-            Escaper
-              .Unescape(path)
-              .Replace('/', '\\'),
+            path.Replace('/', '\\'),
             @"\"
           )
         );
