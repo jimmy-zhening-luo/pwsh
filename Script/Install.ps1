@@ -14,11 +14,14 @@ using namespace System.Collections.Generic
   #region Installer
   function Install-PSProject {
     [CmdletBinding()]
-    [OutputType([string])]
+    [OutputType([void])]
     param(
-      [Parameter(Mandatory)]
+      [Parameter(
+        Mandatory,
+        ValueFromPipeline
+      )]
       [ValidateNotNullOrWhiteSpace()]
-      [string]$Project,
+      [string[]]$Project,
 
       [Parameter(Mandatory)]
       [ValidateNotNullOrWhiteSpace()]
@@ -30,40 +33,43 @@ using namespace System.Collections.Generic
 
       [Parameter(Mandatory)]
       [ValidateNotNullOrWhiteSpace()]
-      [string]$InstallPath
+      [string]$InstallRoot,
+
+      [switch]$AppendProject
     )
 
-    [string]$Private:BuildOutput = "$SourceRoot\$Folder\$Project\bin\Release\net9.0\$Project.dll"
-
-    if (Test-Path -Path $Private:BuildOutput -PathType Leaf) {
-      [string]$Private:InstalledAssembly = "$InstallPath\$Project.dll"
-
-      if (
-        -not (
-          Test-Path -Path $Private:InstalledAssembly -PathType Leaf
-        ) -or (
-          Get-FileHash -Path $Private:InstalledAssembly -Algorithm MD5
-        ).Hash -ne (
-          Get-FileHash -Path $Private:BuildOutput -Algorithm MD5
-        ).Hash
-      ) {
-        Copy-Item -Path $Private:BuildOutput -Destination $InstallPath -Force -ErrorAction Continue
+    process {
+      [string]$Private:BuildOutput = "$SourceRoot\$Folder\$Project\bin\Release\net9.0\$Project.dll"
+  
+      if (Test-Path -Path $Private:BuildOutput -PathType Leaf) {
+        [string]$Private:InstallPath = $AppendProject ? (
+          "$InstallRoot\$Project"
+        ) : $InstallRoot
+        [string]$Private:InstalledAssembly = "$Private:InstallPath\$Project.dll"
+  
+        if (
+          -not (
+            Test-Path -Path $Private:InstalledAssembly -PathType Leaf
+          ) -or (
+            Get-FileHash -Path $Private:InstalledAssembly -Algorithm MD5
+          ).Hash -ne (
+            Get-FileHash -Path $Private:BuildOutput -Algorithm MD5
+          ).Hash
+        ) {
+          Copy-Item -Path $Private:BuildOutput -Destination $Private:InstallPath -Force -ErrorAction Continue
+        }
       }
-    }
-    else {
-      Write-Warning -Message "Project '$Folder\$Project' is not built, skipping."
+      else {
+        Write-Warning -Message "Project '$Folder\$Project' is not built, skipping."
+      }
     }
   }
   #endregion
 
   #region Install
-  foreach ($Private:BinaryModule in $Private:Cmdlets) {
-    Install-PSProject -Project $Private:BinaryModule -Folder Cmdlet -SourceRoot $Private:SourceRoot -InstallPath $Private:ModuleRoot\$Private:BinaryModule
-  }
+  $Private:Cmdlets | Install-PSProject -Folder Cmdlet -SourceRoot $Private:SourceRoot -InstallRoot $Private:ModuleRoot -AppendProject
 
-  foreach ($Private:Type in $Private:Types) {
-    Install-PSProject -Project $Private:Type -Folder Type -SourceRoot $Private:SourceRoot -InstallPath $Private:SourceRoot
-  }
+  $Private:Types | Install-PSProject -Folder Type -SourceRoot $Private:SourceRoot -InstallRoot $Private:SourceRoot
   #endregion
 
   #region Add Type
