@@ -214,7 +214,7 @@ function Get-DirectoryDrive {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param(
 
-    [PathCompletions(
+    [RelativePathCompletions(
       { return $PWD.Drive.Root },
       [PathItemType]::Directory
     )]
@@ -339,7 +339,7 @@ function Get-FileDrive {
   [OutputType([string[]])]
   param(
 
-    [PathCompletions(
+    [RelativePathCompletions(
       { return $PWD.Drive.Root }
     )]
     [string]$Path

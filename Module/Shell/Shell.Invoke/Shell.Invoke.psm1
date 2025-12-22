@@ -98,7 +98,7 @@ function Invoke-DirectoryDrive {
   [OutputType([void])]
   param(
 
-    [PathCompletions(
+    [RelativePathCompletions(
       { return $PWD.Drive.Root }
     )]
     [string]$Path
@@ -375,7 +375,7 @@ function Invoke-WorkspaceDrive {
       Position = 0
     )]
     [AllowEmptyString()]
-    [PathCompletions(
+    [RelativePathCompletions(
       { return $PWD.Drive.Root }
     )]
     [string]$Workspace,

@@ -88,7 +88,7 @@ function Set-Drive {
   [OutputType([void])]
   param(
 
-    [PathCompletions(
+    [RelativePathCompletions(
       { return $PWD.Drive.Root },
       [PathItemType]::Directory
     )]
