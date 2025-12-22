@@ -22,59 +22,59 @@ function Resolve-GitRepository {
   )
 
   process {
-    foreach ($directory in $WorkingDirectory) {
+    foreach ($wd in $WorkingDirectory) {
       if ($Newable) {
-        if (-not $WorkingDirectory) {
+        if (-not $wd) {
           Write-Output $PWD.Path
         }
-        elseif (Test-Path $WorkingDirectory -PathType Container) {
+        elseif (Test-Path $wd -PathType Container) {
           Write-Output (
-            Resolve-Path $WorkingDirectory
+            Resolve-Path $wd
           ).Path
         }
         elseif (
           -not [Path]::IsPathRooted(
-            $WorkingDirectory
+            $wd
           ) -and (
             Test-Path (
-              Join-Path $REPO_ROOT $WorkingDirectory
+              Join-Path $REPO_ROOT $wd
             ) -PathType Container
           )
         ) {
           Write-Output (
             Resolve-Path (
-              Join-Path $REPO_ROOT $WorkingDirectory
+              Join-Path $REPO_ROOT $wd
             ) -Force
           ).Path
         }
       }
       else {
-        if (-not $WorkingDirectory) {
+        if (-not $wd) {
           if (Test-Path .git -PathType Container) {
             Write-Output $PWD.Path
           }
         }
         elseif (
           Test-Path (
-            Join-Path $WorkingDirectory .git
+            Join-Path $wd .git
           ) -PathType Container
         ) {
           Write-Output (
-            Resolve-Path $WorkingDirectory
+            Resolve-Path $wd
           ).Path
         }
         elseif (
           -not [Path]::IsPathRooted(
-            $WorkingDirectory
+            $wd
           ) -and (
             Test-Path (
-              Join-Path $REPO_ROOT\$WorkingDirectory .git
+              Join-Path $REPO_ROOT\$wd .git
             ) -PathType Container
           )
         ) {
           Write-Output (
             Resolve-Path (
-              Join-Path $REPO_ROOT $WorkingDirectory
+              Join-Path $REPO_ROOT $wd
             ) -Force
           ).Path
         }
