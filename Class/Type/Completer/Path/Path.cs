@@ -33,21 +33,6 @@ namespace Completer
 
       public override IEnumerable<string> FulfillCompletion(string wordToComplete)
       {
-        foreach (
-          string descendant in FulfillDescendant(
-            wordToComplete
-          )
-        )
-        {
-          yield return descendant.Replace(
-            '\\',
-            '/'
-          );
-        }
-      }
-
-      private protected IEnumerable<string> FulfillDescendant(string wordToComplete)
-      {
         string currentPathValue = Canonicalizer.Normalize(
           wordToComplete,
           true
@@ -123,12 +108,14 @@ namespace Completer
             )
           )
           {
-            yield return Path.Join(
-              currentDirectoryValue,
-              Path.GetFileName(directory),
-              Flat
-                ? string.Empty
-                : @"\"
+            yield return Canonicalizer.Denornalize(
+              Path.Join(
+                currentDirectoryValue,
+                Path.GetFileName(directory),
+                Flat
+                  ? string.Empty
+                  : @"\"
+              )
             );
           }
         }
@@ -143,23 +130,29 @@ namespace Completer
             )
           )
           {
-            yield return Path.Join(
-              currentDirectoryValue,
-              Path.GetFileName(file)
+            yield return Canonicalizer.Denornalize(
+              Path.Join(
+                currentDirectoryValue,
+                Path.GetFileName(file)
+              )
             );
           }
         }
 
-        yield return Path.Join(
-          currentDirectoryValue,
-          @"..\"
+        yield return Canonicalizer.Denornalize(
+          Path.Join(
+            currentDirectoryValue,
+            @"..\"
+          )
         );
 
         if (currentDirectoryValue != string.Empty)
         {
-          yield return Path.Join(
-            currentDirectoryValue,
-            @"\"
+          yield return Canonicalizer.Denornalize(
+            Path.Join(
+              currentDirectoryValue,
+              @"\"
+            )
           );
         }
 
