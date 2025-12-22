@@ -24,9 +24,9 @@
       GUID          = 'afed7375-abb6-4d62-9b11-fa07320220aa'
     }
     @{
-      ModuleName    = 'Shell.Invoke'
+      ModuleName    = 'Shell.Start'
       ModuleVersion = '3.0.0.0'
-      GUID          = '6f610e9b-3218-49e5-93e7-f9242095f7c9'
+      GUID          = '043fee19-632c-4e0a-ac64-31b9fe02be00'
     }
     @{
       ModuleName    = 'Shell.Remove'
@@ -58,18 +58,18 @@
     'Set-DirectoryCode'
     'Set-Drive'
     'Set-DriveD'
-    'Invoke-Directory'
-    'Invoke-DirectorySibling'
-    'Invoke-DirectoryRelative'
-    'Invoke-DirectoryHome'
-    'Invoke-DirectoryCode'
-    'Invoke-DirectoryDrive'
-    'Invoke-Workspace'
-    'Invoke-WorkspaceSibling'
-    'Invoke-WorkspaceRelative'
-    'Invoke-WorkspaceHome'
-    'Invoke-WorkspaceCode'
-    'Invoke-WorkspaceDrive'
+    'Start-Explorer'
+    'Start-ExplorerSibling'
+    'Start-ExplorerRelative'
+    'Start-ExplorerHome'
+    'Start-ExplorerCode'
+    'Start-ExplorerDrive'
+    'Start-Workspace'
+    'Start-WorkspaceSibling'
+    'Start-WorkspaceRelative'
+    'Start-WorkspaceHome'
+    'Start-WorkspaceCode'
+    'Start-WorkspaceDrive'
     'Remove-Directory'
   )
   CmdletsToExport      = @()

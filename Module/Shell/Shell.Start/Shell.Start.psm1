@@ -1,7 +1,7 @@
 using namespace System.Collections.Generic
 using namespace Completer.PathCompleter
 
-function Invoke-Directory {
+function Start-Explorer {
 
   [OutputType([void])]
   param(
@@ -33,7 +33,7 @@ function Invoke-Directory {
   }
 }
 
-function Invoke-DirectorySibling {
+function Start-ExplorerSibling {
 
   [OutputType([void])]
   param(
@@ -44,12 +44,12 @@ function Invoke-DirectorySibling {
     [string]$Path
   )
 
-  Invoke-Directory -Path (
+  Start-Explorer -Path (
     Join-Path (Split-Path $PWD.Path) $Path
   ) @args
 }
 
-function Invoke-DirectoryRelative {
+function Start-ExplorerRelative {
 
   [OutputType([void])]
   param(
@@ -60,12 +60,12 @@ function Invoke-DirectoryRelative {
     [string]$Path
   )
 
-  Invoke-Directory -Path (
+  Start-Explorer -Path (
     Join-Path ($PWD.Path | Split-Path | Split-Path) $Path
   ) @args
 }
 
-function Invoke-DirectoryHome {
+function Start-ExplorerHome {
 
   [OutputType([void])]
   param(
@@ -76,10 +76,10 @@ function Invoke-DirectoryHome {
     [string]$Path
   )
 
-  Invoke-Directory -Path (Join-Path $HOME $Path) @args
+  Start-Explorer -Path (Join-Path $HOME $Path) @args
 }
 
-function Invoke-DirectoryCode {
+function Start-ExplorerCode {
 
   [OutputType([void])]
   param(
@@ -90,10 +90,10 @@ function Invoke-DirectoryCode {
     [string]$Path
   )
 
-  Invoke-Directory -Path (Join-Path $REPO_ROOT $Path) @args
+  Start-Explorer -Path (Join-Path $REPO_ROOT $Path) @args
 }
 
-function Invoke-DirectoryDrive {
+function Start-ExplorerDrive {
 
   [OutputType([void])]
   param(
@@ -104,10 +104,10 @@ function Invoke-DirectoryDrive {
     [string]$Path
   )
 
-  Invoke-Directory -Path (Join-Path $PWD.Drive.Root $Path) @args
+  Start-Explorer -Path (Join-Path $PWD.Drive.Root $Path) @args
 }
 
-function Invoke-Workspace {
+function Start-Workspace {
   [CmdletBinding()]
   [OutputType([void])]
   param(
@@ -217,7 +217,7 @@ function Invoke-Workspace {
   Start-Process -FilePath "$env:LOCALAPPDATA\Programs\Microsoft VS Code\bin\code.cmd" -NoNewWindow -ArgumentList $ArgumentList
 }
 
-function Invoke-WorkspaceSibling {
+function Start-WorkspaceSibling {
   [CmdletBinding()]
   [OutputType([void])]
   param(
@@ -251,10 +251,10 @@ function Invoke-WorkspaceSibling {
     [Parameter(DontShow)][switch]$zNothing
   )
 
-  Invoke-Workspace @PSBoundParameters -Location (Split-Path $PWD.Path) -Empty
+  Start-Workspace @PSBoundParameters -Location (Split-Path $PWD.Path) -Empty
 }
 
-function Invoke-WorkspaceRelative {
+function Start-WorkspaceRelative {
   [CmdletBinding()]
   [OutputType([void])]
   param(
@@ -288,10 +288,10 @@ function Invoke-WorkspaceRelative {
     [Parameter(DontShow)][switch]$zNothing
   )
 
-  Invoke-Workspace @PSBoundParameters -Location ($PWD.Path | Split-Path | Split-Path)
+  Start-Workspace @PSBoundParameters -Location ($PWD.Path | Split-Path | Split-Path)
 }
 
-function Invoke-WorkspaceHome {
+function Start-WorkspaceHome {
   [CmdletBinding()]
   [OutputType([void])]
   param(
@@ -325,10 +325,10 @@ function Invoke-WorkspaceHome {
     [Parameter(DontShow)][switch]$zNothing
   )
 
-  Invoke-Workspace @PSBoundParameters -Location $HOME
+  Start-Workspace @PSBoundParameters -Location $HOME
 }
 
-function Invoke-WorkspaceCode {
+function Start-WorkspaceCode {
   [CmdletBinding()]
   [OutputType([void])]
   param(
@@ -362,11 +362,11 @@ function Invoke-WorkspaceCode {
     [Parameter(DontShow)][switch]$zNothing
   )
 
-  Invoke-Workspace @PSBoundParameters -Location $REPO_ROOT
+  Start-Workspace @PSBoundParameters -Location $REPO_ROOT
 }
 
-New-Alias i/ Invoke-WorkspaceDrive
-function Invoke-WorkspaceDrive {
+New-Alias i/ Start-WorkspaceDrive
+function Start-WorkspaceDrive {
   [CmdletBinding()]
   [OutputType([void])]
   param(
@@ -400,18 +400,18 @@ function Invoke-WorkspaceDrive {
     [Parameter(DontShow)][switch]$zNothing
   )
 
-  Invoke-Workspace @PSBoundParameters -Location $PWD.Drive.Root
+  Start-Workspace @PSBoundParameters -Location $PWD.Drive.Root
 }
 
-New-Alias e Invoke-Directory
-New-Alias e. Invoke-DirectorySibling
-New-Alias e.. Invoke-DirectoryRelative
-New-Alias eh Invoke-DirectoryHome
-New-Alias ec Invoke-DirectoryCode
-New-Alias e/ Invoke-DirectoryDrive
+New-Alias e Start-Explorer
+New-Alias e. Start-ExplorerSibling
+New-Alias e.. Start-ExplorerRelative
+New-Alias eh Start-ExplorerHome
+New-Alias ec Start-ExplorerCode
+New-Alias e/ Start-ExplorerDrive
 
-New-Alias i Invoke-Workspace
-New-Alias i. Invoke-WorkspaceSibling
-New-Alias i.. Invoke-WorkspaceRelative
-New-Alias ih Invoke-WorkspaceHome
-New-Alias ic Invoke-WorkspaceCode
+New-Alias i Start-Workspace
+New-Alias i. Start-WorkspaceSibling
+New-Alias i.. Start-WorkspaceRelative
+New-Alias ih Start-WorkspaceHome
+New-Alias ic Start-WorkspaceCode
