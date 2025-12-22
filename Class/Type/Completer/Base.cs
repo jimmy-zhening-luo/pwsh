@@ -23,10 +23,10 @@ namespace Completer
       CommandAst commandAst,
       IDictionary fakeBoundParameters
     ) => WrapArgumentCompletionResult(
-      FulfillArgumentCompletion(wordToComplete)
+      FulfillCompletion(wordToComplete)
     );
 
-    private protected abstract IEnumerable<string> FulfillArgumentCompletion(string wordToComplete);
+    private protected abstract IEnumerable<string> FulfillCompletion(string wordToComplete);
 
     private IEnumerable<CompletionResult> WrapArgumentCompletionResult(
       IEnumerable<string> completedStrings

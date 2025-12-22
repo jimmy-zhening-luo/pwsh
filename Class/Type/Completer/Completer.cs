@@ -73,7 +73,7 @@ namespace Completer
       }
     }
 
-    private protected override IEnumerable<string> FulfillArgumentCompletion(
+    private protected override IEnumerable<string> FulfillCompletion(
       string wordToComplete
     ) => FindCompletion(wordToComplete);
   }
