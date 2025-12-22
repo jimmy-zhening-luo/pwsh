@@ -4,7 +4,7 @@ using System.Management.Automation;
 namespace Completer
 {
   [AttributeUsage(AttributeTargets.Parameter)]
-  public abstract class BaseCompletionsAttribute<C> : ArgumentCompleterAttribute, IArgumentCompleterFactory where C : BaseCompleter
+  public abstract class BaseCompletionsAttribute<TCompleter> : ArgumentCompleterAttribute, IArgumentCompleterFactory where TCompleter : BaseCompleter
   {
     public readonly CompletionCase Casing;
 
@@ -15,7 +15,7 @@ namespace Completer
       Casing = casing;
     }
 
-    public abstract C Create();
+    public abstract TCompleter Create();
     IArgumentCompleter IArgumentCompleterFactory.Create() => Create();
   }
 }
