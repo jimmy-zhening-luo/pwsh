@@ -89,7 +89,7 @@ function Set-Drive {
   param(
 
     [PathCompletions(
-      '\',
+      { return $PWD.Drive.Root },
       [PathItemType]::Directory
     )]
     [string]$Path

@@ -215,7 +215,7 @@ function Get-DirectoryDrive {
   param(
 
     [PathCompletions(
-      '\',
+      { return $PWD.Drive.Root },
       [PathItemType]::Directory
     )]
     [string]$Path
@@ -340,7 +340,7 @@ function Get-FileDrive {
   param(
 
     [PathCompletions(
-      '\'
+      { return $PWD.Drive.Root }
     )]
     [string]$Path
   )
