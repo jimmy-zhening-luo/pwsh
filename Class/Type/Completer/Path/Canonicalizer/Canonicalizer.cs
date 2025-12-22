@@ -22,11 +22,9 @@ namespace Completer
         );
 
         return preserveTrailingSeparator
+          || normalPath.EndsWith('\\')
           ? normalPath
-          : RemoveTrailingPathSeparator().Replace(
-              normalPath,
-              string.Empty
-            );
+          : normalPath[..^1];
       }
 
       public static string Denormalize(
