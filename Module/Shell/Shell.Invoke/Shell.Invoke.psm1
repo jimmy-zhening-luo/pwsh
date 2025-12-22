@@ -72,7 +72,7 @@ function Invoke-DirectoryHome {
   [OutputType([void])]
   param(
 
-    [LocationPathCompletions(
+    [PathCompletions(
       '~'
     )]
     [string]$Path
@@ -86,7 +86,7 @@ function Invoke-DirectoryCode {
   [OutputType([void])]
   param(
 
-    [LocationPathCompletions(
+    [PathCompletions(
       '~\code'
     )]
     [string]$Path
@@ -100,7 +100,7 @@ function Invoke-DirectoryDrive {
   [OutputType([void])]
   param(
 
-    [LocationPathCompletions(
+    [PathCompletions(
       '\'
     )]
     [string]$Path
@@ -308,7 +308,7 @@ function Invoke-WorkspaceHome {
       Position = 0
     )]
     [AllowEmptyString()]
-    [LocationPathCompletions(
+    [PathCompletions(
       '~'
     )]
     [string]$Workspace,
@@ -345,7 +345,7 @@ function Invoke-WorkspaceCode {
       Position = 0
     )]
     [AllowEmptyString()]
-    [LocationPathCompletions(
+    [PathCompletions(
       '~\code'
     )]
     [string]$Workspace,

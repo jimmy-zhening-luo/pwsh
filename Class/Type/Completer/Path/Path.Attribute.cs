@@ -5,20 +5,20 @@ namespace Completer
   namespace PathCompleter
   {
     [AttributeUsage(AttributeTargets.Parameter)]
-    public class LocationPathCompletionsAttribute : BaseCompletionsAttribute
+    public class PathCompletionsAttribute : BaseCompletionsAttribute
     {
       public readonly string Location;
       public readonly PathItemType ItemType;
       public readonly bool Flat;
 
-      private LocationPathCompletionsAttribute() : base() { }
+      private PathCompletionsAttribute() : base() { }
 
-      public LocationPathCompletionsAttribute(string location) : this()
+      public PathCompletionsAttribute(string location) : this()
       {
         Location = location;
       }
 
-      public LocationPathCompletionsAttribute(
+      public PathCompletionsAttribute(
         string location,
         PathItemType itemType
       ) : this(location)
@@ -26,7 +26,7 @@ namespace Completer
         ItemType = itemType;
       }
 
-      public LocationPathCompletionsAttribute(
+      public PathCompletionsAttribute(
         string location,
         PathItemType itemType,
         bool flat

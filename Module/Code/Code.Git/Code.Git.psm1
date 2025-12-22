@@ -321,7 +321,7 @@ function Invoke-GitRepository {
     [Parameter(
       Position = 1
     )]
-    [LocationPathCompletions(
+    [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
       $True
@@ -481,7 +481,7 @@ function Measure-GitRepository {
 
   param(
 
-    [LocationPathCompletions(
+    [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
       $True
@@ -513,7 +513,7 @@ function Import-GitRepository {
     # Remote repository URL or 'org/repo'
     [string]$Repository,
 
-    [LocationPathCompletions(
+    [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
       $True
@@ -570,7 +570,7 @@ function Get-GitRepository {
 
   param(
 
-    [LocationPathCompletions(
+    [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
       $True
@@ -630,7 +630,7 @@ function Add-GitRepository {
 
   param(
 
-    [LocationPathCompletions(
+    [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
       $True
@@ -706,7 +706,7 @@ function Write-GitRepository {
 
   param(
 
-    [LocationPathCompletions(
+    [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
       $True
@@ -812,7 +812,7 @@ function Push-GitRepository {
 
   param(
 
-    [LocationPathCompletions(
+    [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
       $True
@@ -864,7 +864,7 @@ function Reset-GitRepository {
 
   param(
 
-    [LocationPathCompletions(
+    [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
       $True
@@ -950,7 +950,7 @@ function Restore-GitRepository {
 
   param(
 
-    [LocationPathCompletions(
+    [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
       $True

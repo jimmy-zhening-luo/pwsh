@@ -186,7 +186,7 @@ function Get-DirectoryHome {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param(
 
-    [LocationPathCompletions(
+    [PathCompletions(
       '~',
       [PathItemType]::Directory
     )]
@@ -201,7 +201,7 @@ function Get-DirectoryCode {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param(
 
-    [LocationPathCompletions(
+    [PathCompletions(
       '~\code',
       [PathItemType]::Directory
     )]
@@ -216,7 +216,7 @@ function Get-DirectoryDrive {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param(
 
-    [LocationPathCompletions(
+    [PathCompletions(
       '\',
       [PathItemType]::Directory
     )]
@@ -313,7 +313,7 @@ function Get-FileHome {
   [OutputType([string[]])]
   param(
 
-    [LocationPathCompletions(
+    [PathCompletions(
       '~'
     )]
     [string]$Path
@@ -327,7 +327,7 @@ function Get-FileCode {
   [OutputType([string[]])]
   param(
 
-    [LocationPathCompletions(
+    [PathCompletions(
       '~\code'
     )]
     [string]$Path
@@ -341,7 +341,7 @@ function Get-FileDrive {
   [OutputType([string[]])]
   param(
 
-    [LocationPathCompletions(
+    [PathCompletions(
       '\'
     )]
     [string]$Path

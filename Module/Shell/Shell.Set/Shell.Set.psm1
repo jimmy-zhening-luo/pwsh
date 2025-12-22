@@ -58,7 +58,7 @@ function Set-DirectoryHome {
   [OutputType([void])]
   param(
 
-    [LocationPathCompletions(
+    [PathCompletions(
       '~',
       [PathItemType]::Directory
     )]
@@ -73,7 +73,7 @@ function Set-DirectoryCode {
   [OutputType([void])]
   param(
 
-    [LocationPathCompletions(
+    [PathCompletions(
       '~\code',
       [PathItemType]::Directory
     )]
@@ -88,7 +88,7 @@ function Set-Drive {
   [OutputType([void])]
   param(
 
-    [LocationPathCompletions(
+    [PathCompletions(
       '\',
       [PathItemType]::Directory
     )]
@@ -103,7 +103,7 @@ function Set-DriveD {
   [OutputType([void])]
   param(
 
-    [LocationPathCompletions(
+    [PathCompletions(
       'D:',
       [PathItemType]::Directory
     )]
