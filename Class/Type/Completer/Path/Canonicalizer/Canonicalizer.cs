@@ -15,38 +15,28 @@ namespace Completer
 
       public static string Normalize(
         string path,
-        bool trimLeadingRelative = false,
-        bool trimTrailing = false
+        bool preserveTrailingSeparator = false
       )
       {
-        string normalPath = DuplicatePathSeparatorRegex().Replace(
-          Escaper
-            .Unescape(path)
-            .Replace(
-              '/',
-              '\\'
-            ),
-          @"\"
+        string normalPath = RemoveRelativeRootRegex().Replace(
+          DuplicatePathSeparatorRegex().Replace(
+            Escaper
+              .Unescape(path)
+              .Replace('/', '\\'),
+            @"\"
+          ),
+          string.Empty
         );
-        string pretrimmedNormalPath = trimLeadingRelative
-          ? RemoveRelativeRootRegex().Replace(
+
+        return preserveTrailingSeparator
+          ? normalPath
+          : RemoveTrailingPathSeparator().Replace(
               normalPath,
               string.Empty
-            )
-          : normalPath;
-
-        return trimTrailing
-          ? RemoveTrailingPathSeparator().Replace(
-              pretrimmedNormalPath,
-              string.Empty
-            )
-          : pretrimmedNormalPath;
+            );
       }
 
-      public static string Denormalize(string path) => path.Replace(
-        '\\',
-        '/'
-      );
+      public static string Denormalize(string path) => path.Replace('\\', '/');
 
       public static string AnchorHome(
         string path

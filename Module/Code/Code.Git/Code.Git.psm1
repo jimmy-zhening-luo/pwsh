@@ -83,10 +83,7 @@ function Test-RelativePath {
     [switch]$RequireSubpath
   )
 
-  $Path = [Canonicalizer]::Normalize(
-    $Path,
-    $True
-  )
+  $Path = [Canonicalizer]::Normalize($Path)
   $Location = [Canonicalizer]::Normalize($Location)
 
   if ([Path]::IsPathRooted($Path)) {
@@ -195,10 +192,7 @@ function Resolve-RelativePath {
     throw "Invalid path '$Path'."
   }
 
-  $Path = [Canonicalizer]::Normalize(
-    $Path,
-    $True
-  )
+  $Path = [Canonicalizer]::Normalize($Path)
   $Location = [Canonicalizer]::Normalize($Location)
 
   if ([Path]::IsPathRooted($Path)) {

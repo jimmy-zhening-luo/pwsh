@@ -20,11 +20,7 @@ namespace Completer
       ) : this()
       {
         Root = Canonicalizer.AnchorHome(
-          Canonicalizer.Normalize(
-            Escaper.Unescape(root),
-            true,
-            true
-          )
+          Canonicalizer.Normalize(root)
         );
         Type = type;
         Flat = flat;
