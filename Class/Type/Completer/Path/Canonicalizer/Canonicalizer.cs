@@ -18,10 +18,11 @@ namespace Completer
           )
         );
 
-        return !preserveTrailingSeparator
-          && normalPath.EndsWith('\\')
-          ? normalPath[..^1]
-          : normalPath;
+        return preserveTrailingSeparator
+          ? normalPath
+          : Path.TrimEndingDirectorySeparator(
+            normalPath
+          );
       }
 
       public static string Denormalize(
@@ -51,12 +52,12 @@ namespace Completer
       public static bool IsDescendantOf(
         string path,
         string location
-      ) => IsDescendantOfRegex().IsMatch(
-        Path.GetRelativePath(
+      ) => Path
+        .GetRelativePath(
           path,
           location
         )
-      );
+        .Trim(RelativeChars) == string.Empty;
 
       public static string RemoveRelativeRoot(string path) => IsRelativelyRooted(path)
         ? path.Length == 1

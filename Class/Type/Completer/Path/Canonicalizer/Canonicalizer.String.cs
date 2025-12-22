@@ -6,10 +6,10 @@ namespace Completer
   {
     public static partial class Canonicalizer
     {
-      [GeneratedRegex(
-        @"(?<!^)(?>\\\\+)"
-      )]
-      public static partial Regex DuplicateSeparatorRegex();
+      public static char[] RelativeChars = {
+        '.',
+        '\\'
+      };
     }
   } // namespace PathCompleter
 } // namespace Completer
