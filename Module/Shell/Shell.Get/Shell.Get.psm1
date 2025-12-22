@@ -48,8 +48,7 @@ function Get-Size {
       ValueFromPipelineByPropertyName
     )]
     [RelativePathCompletions(
-      { return [string]$PWD.Path },
-      $null, $null
+      { return [string]$PWD.Path }
     )]
     # The path of the file or directory to be measured.
     [string[]]$Path,
@@ -139,8 +138,7 @@ function Get-Directory {
 
     [RelativePathCompletions(
       { return [string]$PWD.Path },
-      [PathItemType]::Directory,
-      $null
+      [PathItemType]::Directory
     )]
     [string]$Path
   )
@@ -160,8 +158,7 @@ function Get-DirectorySibling {
 
     [RelativePathCompletions(
       { return [string](Split-Path $PWD.Path) },
-      [PathItemType]::Directory,
-      $null
+      [PathItemType]::Directory
     )]
     [string]$Path
   )
@@ -176,8 +173,7 @@ function Get-DirectoryRelative {
 
     [RelativePathCompletions(
       { return [string]($PWD.Path | Split-Path | Split-Path) },
-      [PathItemType]::Directory,
-      $null
+      [PathItemType]::Directory
     )]
     [string]$Path
   )
@@ -192,8 +188,7 @@ function Get-DirectoryHome {
 
     [LocationPathCompletions(
       '~',
-      [PathItemType]::Directory,
-      $null
+      [PathItemType]::Directory
     )]
     [string]$Path
   )
@@ -208,8 +203,7 @@ function Get-DirectoryCode {
 
     [LocationPathCompletions(
       '~\code',
-      [PathItemType]::Directory,
-      $null
+      [PathItemType]::Directory
     )]
     [string]$Path
   )
@@ -224,8 +218,7 @@ function Get-DirectoryDrive {
 
     [LocationPathCompletions(
       '\',
-      [PathItemType]::Directory,
-      $null
+      [PathItemType]::Directory
     )]
     [string]$Path
   )
@@ -242,8 +235,7 @@ function Get-File {
   param(
 
     [RelativePathCompletions(
-      { return [string]$PWD.Path },
-      $null, $null
+      { return [string]$PWD.Path }
     )]
     [string]$Path,
 
@@ -294,8 +286,7 @@ function Get-FileSibling {
   param(
 
     [RelativePathCompletions(
-      { return [string](Split-Path $PWD.Path) },
-      $null, $null
+      { return [string](Split-Path $PWD.Path) }
     )]
     [string]$Path
   )
@@ -309,8 +300,7 @@ function Get-FileRelative {
   param(
 
     [RelativePathCompletions(
-      { return [string]($PWD.Path | Split-Path | Split-Path) },
-      $null, $null
+      { return [string]($PWD.Path | Split-Path | Split-Path) }
     )]
     [string]$Path
   )
@@ -324,8 +314,7 @@ function Get-FileHome {
   param(
 
     [LocationPathCompletions(
-      '~',
-      $null, $null
+      '~'
     )]
     [string]$Path
   )
@@ -339,8 +328,7 @@ function Get-FileCode {
   param(
 
     [LocationPathCompletions(
-      '~\code',
-      $null, $null
+      '~\code'
     )]
     [string]$Path
   )
@@ -354,8 +342,7 @@ function Get-FileDrive {
   param(
 
     [LocationPathCompletions(
-      '\',
-      $null, $null
+      '\'
     )]
     [string]$Path
   )

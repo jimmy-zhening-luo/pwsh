@@ -6,12 +6,38 @@ namespace Completer
   namespace PathCompleter
   {
     [AttributeUsage(AttributeTargets.Parameter)]
-    public class RelativePathCompletionsAttribute(
-      ScriptBlock CurrentDirectory,
-      PathItemType ItemType,
-      bool Flat
-    ) : BaseCompletionsAttribute
+    public class RelativePathCompletionsAttribute : BaseCompletionsAttribute
     {
+      public readonly ScriptBlock CurrentDirectory;
+      public readonly PathItemType ItemType;
+      public readonly bool Flat;
+
+      private RelativePathCompletionsAttribute() : base() { }
+
+      public RelativePathCompletionsAttribute(
+        ScriptBlock currentDirectory
+      ) : this()
+      {
+        CurrentDirectory = currentDirectory;
+      }
+
+      public RelativePathCompletionsAttribute(
+        ScriptBlock currentDirectory,
+        PathItemType itemType
+      ) : this(currentDirectory)
+      {
+        ItemType = itemType;
+      }
+
+      public RelativePathCompletionsAttribute(
+        ScriptBlock currentDirectory,
+        PathItemType itemType,
+        bool flat
+      ) : this(currentDirectory, itemType)
+      {
+        Flat = flat;
+      }
+
       public override PathCompleter Create()
       {
         return new PathCompleter(

@@ -7,8 +7,7 @@ function Invoke-Directory {
   param(
 
     [RelativePathCompletions(
-      { return [string]$PWD.Path },
-      $null, $null
+      { return [string]$PWD.Path }
     )]
     [string]$Path
   )
@@ -42,8 +41,7 @@ function Invoke-DirectorySibling {
   param(
 
     [RelativePathCompletions(
-      { return [string](Split-Path $PWD.Path) },
-      $null, $null
+      { return [string](Split-Path $PWD.Path) }
     )]
     [string]$Path
   )
@@ -59,8 +57,7 @@ function Invoke-DirectoryRelative {
   param(
 
     [RelativePathCompletions(
-      { return [string]($PWD.Path | Split-Path | Split-Path) },
-      $null, $null
+      { return [string]($PWD.Path | Split-Path | Split-Path) }
     )]
     [string]$Path
   )
@@ -76,8 +73,7 @@ function Invoke-DirectoryHome {
   param(
 
     [LocationPathCompletions(
-      '~',
-      $null, $null
+      '~'
     )]
     [string]$Path
   )
@@ -91,8 +87,7 @@ function Invoke-DirectoryCode {
   param(
 
     [LocationPathCompletions(
-      '~\code',
-      $null, $null
+      '~\code'
     )]
     [string]$Path
   )
@@ -106,8 +101,7 @@ function Invoke-DirectoryDrive {
   param(
 
     [LocationPathCompletions(
-      '\',
-      $null, $null
+      '\'
     )]
     [string]$Path
   )
@@ -125,8 +119,7 @@ function Invoke-Workspace {
     )]
     [AllowEmptyString()]
     [RelativePathCompletions(
-      { return [string]$PWD.Path },
-      $null, $null
+      { return [string]$PWD.Path }
     )]
     [string]$Workspace,
 
@@ -242,8 +235,7 @@ function Invoke-WorkspaceSibling {
     )]
     [AllowEmptyString()]
     [RelativePathCompletions(
-      { return [string](Split-Path $PWD.Path) },
-      $null, $null
+      { return [string](Split-Path $PWD.Path) }
     )]
     [string]$Workspace,
 
@@ -280,8 +272,7 @@ function Invoke-WorkspaceRelative {
     )]
     [AllowEmptyString()]
     [RelativePathCompletions(
-      { return [string]($PWD.Path | Split-Path | Split-Path) },
-      $null, $null
+      { return [string]($PWD.Path | Split-Path | Split-Path) }
     )]
     [string]$Workspace,
 
@@ -318,8 +309,7 @@ function Invoke-WorkspaceHome {
     )]
     [AllowEmptyString()]
     [LocationPathCompletions(
-      '~',
-      $null, $null
+      '~'
     )]
     [string]$Workspace,
 
@@ -356,8 +346,7 @@ function Invoke-WorkspaceCode {
     )]
     [AllowEmptyString()]
     [LocationPathCompletions(
-      '~\code',
-      $null, $null
+      '~\code'
     )]
     [string]$Workspace,
 

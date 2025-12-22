@@ -7,8 +7,7 @@ function Set-Directory {
 
     [RelativePathCompletions(
       { return [string]$PWD.Path },
-      [PathItemType]::Directory,
-      $null
+      [PathItemType]::Directory
     )]
     [string]$Path
   )
@@ -31,8 +30,7 @@ function Set-DirectorySibling {
 
     [RelativePathCompletions(
       { return [string](Split-Path $PWD.Path) },
-      [PathItemType]::Directory,
-      $null
+      [PathItemType]::Directory
     )]
     [string]$Path
   )
@@ -47,8 +45,7 @@ function Set-DirectoryRelative {
 
     [RelativePathCompletions(
       { return [string]($PWD.Path | Split-Path | Split-Path) },
-      [PathItemType]::Directory,
-      $null
+      [PathItemType]::Directory
     )]
     [string]$Path
   )
@@ -63,8 +60,7 @@ function Set-DirectoryHome {
 
     [LocationPathCompletions(
       '~',
-      [PathItemType]::Directory,
-      $null
+      [PathItemType]::Directory
     )]
     [string]$Path
   )
@@ -79,8 +75,7 @@ function Set-DirectoryCode {
 
     [LocationPathCompletions(
       '~\code',
-      [PathItemType]::Directory,
-      $null
+      [PathItemType]::Directory
     )]
     [string]$Path
   )
@@ -95,8 +90,7 @@ function Set-Drive {
 
     [LocationPathCompletions(
       '\',
-      [PathItemType]::Directory,
-      $null
+      [PathItemType]::Directory
     )]
     [string]$Path
   )
@@ -111,8 +105,7 @@ function Set-DriveD {
 
     [LocationPathCompletions(
       'D:',
-      [PathItemType]::Directory,
-      $null
+      [PathItemType]::Directory
     )]
     [string]$Path
   )
