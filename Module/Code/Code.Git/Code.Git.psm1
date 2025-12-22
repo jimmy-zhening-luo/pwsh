@@ -22,13 +22,6 @@ function Test-RelativePath {
   $Path = [Canonicalizer]::Normalize($Path)
   $Location = [Canonicalizer]::Normalize($Location)
 
-  if ($Path) {
-    
-  }
-  else {
-    return $Location
-  }
-
   if ([Path]::IsPathRooted($Path)) {
     if ($Location) {
       if (
