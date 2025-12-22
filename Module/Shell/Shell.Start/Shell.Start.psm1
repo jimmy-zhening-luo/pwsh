@@ -1,4 +1,5 @@
 using namespace System.Collections.Generic
+using namespace Completer
 using namespace Completer.PathCompleter
 
 function Start-Explorer {
@@ -125,6 +126,16 @@ function Start-Workspace {
       Position = 1
     )]
     [AllowEmptyString()]
+    [DynamicCompletions(
+      {
+        return Get-Content -Raw $Env:APPDATA\Code\User\sync\profiles\lastSyncprofiles.json |
+          ConvertFrom-Json |
+          Select-Object -ExpandProperty syncData |
+          Select-Object -ExpandProperty content |
+          ConvertFrom-Json |
+          Select-Object -ExpandProperty Name
+      }
+    )]
     [string]$ProfileName,
 
     [Parameter(
