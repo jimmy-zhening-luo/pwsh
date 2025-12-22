@@ -5,17 +5,19 @@ namespace Completer
 {
   namespace PathCompleter
   {
-    public class Resolver
+    public interface IResolver
     {
-      public static string Home() => Environment.GetFolderPath(
-        Environment
-          .SpecialFolder
-          .UserProfile
+      public static abstract string Test(
+        string path,
+        string location,
+        PathItemType type
       );
 
-      public static string AnchorHome(string path) => Canonicalizer.IsHomeRooted(path)
-        ? Home() + path[1..]
-        : path;
+      public static abstract string Resolve(
+        string path,
+        string location,
+        PathItemType type
+      );
     }
   } // namespace PathCompleter
 } // namespace Completer
