@@ -14,9 +14,7 @@ function Test-RelativePath {
 
     [switch]$File,
 
-    [switch]$Newable,
-
-    [switch]$RequireSubpath
+    [switch]$Newable
   )
 
   $Path = [Canonicalizer]::Normalize($Path)
@@ -87,9 +85,7 @@ function Test-RelativePath {
   )
 
   if (-not $HasSubpath) {
-    return -not (
-      $RequiresSubpath -or $File -or $Newable
-    )
+    return -not $File -and -not $Newable
   }
 
   if ($File -and -not $FileLike) {
@@ -119,9 +115,7 @@ function Resolve-RelativePath {
 
     [switch]$File,
 
-    [switch]$Newable,
-
-    [switch]$RequireSubpath
+    [switch]$Newable
   )
 
   if (-not (Test-RelativePath @PSBoundParameters)) {
