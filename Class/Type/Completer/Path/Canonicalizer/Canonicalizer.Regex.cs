@@ -25,11 +25,6 @@ namespace Completer
         @"^~(?>\\+|$)"
       )]
       public static partial Regex RemoveHomeRootRegex();
-
-      [GeneratedRegex(
-        @"(?<!^)(?<!:)(?>\\+)$"
-      )]
-      public static partial Regex RemoveTrailingPathSeparator();
     }
   } // namespace PathCompleter
 } // namespace Completer
