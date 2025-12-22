@@ -100,7 +100,7 @@ function Get-Size {
 
       [double]$ScaledSize = $Size / $Factor
 
-      Write-Output -InputObject (
+      Write-Output (
         $Number ? $ScaledSize : (
           [System.Math]::Round(
             $ScaledSize,

@@ -17,7 +17,7 @@ function Test-Function {
     [Parameter(DontShow)][switch]$zNothing
   )
 
-  return ConvertTo-Json -InputObject $PSBoundParameters -EnumsAsStrings -Depth 6
+  return ConvertTo-Json $PSBoundParameters -EnumsAsStrings -Depth 6
 }
 
 <#

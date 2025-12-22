@@ -191,7 +191,7 @@ function Test-Url {
         }
 
         if ($Status -as [int] -and $Status -ge 200 -and $Status -lt 300) {
-          Write-Output -InputObject ([uri]$link)
+          Write-Output ([uri]$link)
         }
       }
     }

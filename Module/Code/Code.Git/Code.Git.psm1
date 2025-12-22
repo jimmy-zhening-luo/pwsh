@@ -163,15 +163,31 @@ function Resolve-GitRepository {
     foreach ($directory in $WorkingDirectory) {
       if ($Newable) {
         if (-not $WorkingDirectory) {
-          Write-Output -InputObject $PWD.Path
+          Write-Output $PWD.Path
         }
         elseif (Test-Path $WorkingDirectory -PathType Container) {
-          Write-Output -InputObject (
+          Write-Output (
             Resolve-Path $WorkingDirectory
           ).Path
         }
-        elseif (Test-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT) {
-          Write-Output -InputObject (
+        elseif (
+          -not [Path]::IsPathRooted(
+            $WorkingDirectory
+          ) -and (
+            Test-Path (
+              Join-Path $REPO_ROOT $WorkingDirectory
+            ) -PathType Container
+          )
+        ) {
+          Write-Output (
+            Resolve-Path (
+              Join-Path $REPO_ROOT $WorkingDirectory
+            )
+          ).Path
+        }
+        
+        Test-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT) {
+          Write-Output (
             Resolve-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT
           )
         }
@@ -179,7 +195,7 @@ function Resolve-GitRepository {
       else {
         if (-not $WorkingDirectory) {
           if (Test-Path .git -PathType Container) {
-            Write-Output -InputObject $PWD.Path
+            Write-Output $PWD.Path
           }
         }
         elseif (
@@ -187,7 +203,7 @@ function Resolve-GitRepository {
             Join-Path $WorkingDirectory .git
           ) -PathType Container
         ) {
-          Write-Output -InputObject (
+          Write-Output (
             Resolve-Path $WorkingDirectory
           ).Path
         }
@@ -196,7 +212,7 @@ function Resolve-GitRepository {
             Join-Path $WorkingDirectory .git
           ) -Location $REPO_ROOT
         ) {
-          Write-Output -InputObject (
+          Write-Output (
             Resolve-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT
           )
         }
