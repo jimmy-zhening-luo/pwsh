@@ -41,7 +41,11 @@ namespace Completer
         )
         .Replace('\\', '/');
 
-      public static bool IsPathHomeRooted(string path) => IsPathHomeRootedRegex().IsMatch(path);
+      public static bool IsPathHomeRooted(string path) => path.StartsWith('~')
+        && (
+          path.Length == 1
+          || path[1] == '\\'
+        );
 
       public static bool IsPathDescendantOf(
         string path,

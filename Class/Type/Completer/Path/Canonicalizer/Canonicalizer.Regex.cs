@@ -17,11 +17,6 @@ namespace Completer
       public static partial Regex IsPathDescendantOfRegex();
 
       [GeneratedRegex(
-        @"^(?=~(?>\\|$))"
-      )]
-      public static partial Regex IsPathHomeRootedRegex();
-
-      [GeneratedRegex(
         @"^\.(?>\\+|$)"
       )]
       public static partial Regex RemoveRelativeRootRegex();
