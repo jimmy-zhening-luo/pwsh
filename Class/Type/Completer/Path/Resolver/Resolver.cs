@@ -35,7 +35,7 @@ namespace Completer
           .UserProfile
       );
 
-      public static string AnchorHome(string path) => Canonicalizer.IsPathHomeRooted(path)
+      public static string AnchorHome(string path) => Canonicalizer.IsHomeRooted(path)
         ? Home() + path[1..]
         : path;
     }

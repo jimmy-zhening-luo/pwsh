@@ -89,7 +89,7 @@ function Test-RelativePath {
   if ([Path]::IsPathRooted($Path)) {
     if ($Location) {
       if (
-        [Canonicalizer]::IsPathDescendantOf(
+        [Canonicalizer]::IsDescendantOf(
           $Path,
           $Location
         )
@@ -108,7 +108,7 @@ function Test-RelativePath {
     }
   }
   elseif (
-    [Canonicalizer]::IsPathHomeRooted($Path)
+    [Canonicalizer]::IsHomeRooted($Path)
   ) {
     $Path = [Canonicalizer]::RemoveHomeRoot($Path)
 
@@ -116,7 +116,7 @@ function Test-RelativePath {
       $Path = Join-Path $HOME $Path
 
       if (
-        [Canonicalizer]::IsPathDescendantOf(
+        [Canonicalizer]::IsDescendantOf(
           $Path,
           $Location
         )
@@ -207,7 +207,7 @@ function Resolve-RelativePath {
     }
   }
   elseif (
-    [Canonicalizer]::IsPathHomeRooted($Path)
+    [Canonicalizer]::IsHomeRooted($Path)
   ) {
     $Path = [Canonicalizer]::RemoveHomeRoot($Path)
 

@@ -11,14 +11,13 @@ namespace Completer
         bool preserveTrailingSeparator = false
       )
       {
-        string normalPath = RemoveRelativeRootRegex().Replace(
-          DuplicatePathSeparatorRegex().Replace(
+        string normalPath = RemoveRelativeRoot(
+          DuplicateSeparatorRegex().Replace(
             Escaper
               .Unescape(path)
               .Replace('/', '\\'),
             @"\"
-          ),
-          string.Empty
+          )
         );
 
         return !preserveTrailingSeparator
@@ -39,22 +38,34 @@ namespace Completer
         )
         .Replace('\\', '/');
 
-      public static bool IsPathHomeRooted(string path) => path.StartsWith('~')
+      public static bool IsRelativelyRooted(string path) => path.StartsWith('.')
         && (
           path.Length == 1
           || path[1] == '\\'
         );
 
-      public static bool IsPathDescendantOf(
+      public static bool IsHomeRooted(string path) => path.StartsWith('~')
+        && (
+          path.Length == 1
+          || path[1] == '\\'
+        );
+
+      public static bool IsDescendantOf(
         string path,
         string location
-      ) => IsPathDescendantOfRegex().IsMatch(
+      ) => IsDescendantOfRegex().IsMatch(
         Path.GetRelativePath(
           path,
           location
         )
       );
-  
+
+      public static string RemoveRelativeRoot(string path) => IsRelativelyRooted(path)
+        ? path.Length == 1
+          ? string.Empty
+          : path[2..]
+        : path;
+
       public static string RemoveHomeRoot(string path) => RemoveHomeRootRegex().Replace(
         path,
         string.Empty

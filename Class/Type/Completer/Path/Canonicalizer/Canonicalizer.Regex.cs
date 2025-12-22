@@ -9,12 +9,12 @@ namespace Completer
       [GeneratedRegex(
         @"(?<!^)(?>\\\\+)"
       )]
-      public static partial Regex DuplicatePathSeparatorRegex();
+      public static partial Regex DuplicateSeparatorRegex();
 
       [GeneratedRegex(
         @"^(?=(?>[.\\]*)$)"
       )]
-      public static partial Regex IsPathDescendantOfRegex();
+      public static partial Regex IsDescendantOfRegex();
 
       [GeneratedRegex(
         @"^\.(?>\\+|$)"
