@@ -8,7 +8,7 @@ namespace Completer
   {
     public readonly CompletionCase Casing;
 
-    private protected BaseCompletionsAttribute() : base(typeof(C)) { }
+    private protected BaseCompletionsAttribute() : base() { }
 
     private protected BaseCompletionsAttribute(CompletionCase casing) : this()
     {
