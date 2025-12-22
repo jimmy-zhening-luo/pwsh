@@ -7,7 +7,7 @@ namespace Completer
   {
     public class Resolver
     {
-      public static string Test(
+      public static bool Test(
         string path,
         string location = "",
         PathItemType itemType = PathItemType.Any,
