@@ -6,9 +6,7 @@ using namespace System.Collections.Generic
   $Private:SourceRoot = "$Private:Root\Class"
   $Private:ModuleRoot = "$Private:Root\Module"
 
-  [hashtable]$Private:DOTNET_SOLUTION = Import-PowerShellDataFile -Path $Private:Root\Data\Class.psd1
-  [string[]]$Private:Cmdlets = [string[]]$Private:DOTNET_SOLUTION.Cmdlets
-  [string[]]$Private:Types = [string[]]$Private:DOTNET_SOLUTION.Types
+  $Private:DOTNET_SOLUTION = Import-PowerShellDataFile -Path $Private:Root\Data\Class.psd1
   #endregion
 
   #region Installer
@@ -39,13 +37,13 @@ using namespace System.Collections.Generic
     )
 
     process {
-      [string]$Private:BuildOutput = "$SourceRoot\$Folder\$Project\bin\Release\net9.0\$Project.dll"
+      $Private:BuildOutput = "$SourceRoot\$Folder\$Project\bin\Release\net9.0\$Project.dll"
   
       if (Test-Path -Path $Private:BuildOutput -PathType Leaf) {
-        [string]$Private:InstallPath = $AppendProject ? (
+        $Private:InstallPath = $AppendProject ? (
           "$InstallRoot\$Project"
         ) : $InstallRoot
-        [string]$Private:InstalledAssembly = "$Private:InstallPath\$Project.dll"
+        $Private:InstalledAssembly = "$Private:InstallPath\$Project.dll"
   
         if (
           -not (
@@ -67,18 +65,20 @@ using namespace System.Collections.Generic
   #endregion
 
   #region Install
-  $Private:Cmdlets | Install-PSProject -Folder Cmdlet -SourceRoot $Private:SourceRoot -InstallRoot $Private:ModuleRoot -AppendProject
+  $Private:DOTNET_SOLUTION.Cmdlets |
+    Install-PSProject -Folder Cmdlet -SourceRoot $Private:SourceRoot -InstallRoot $Private:ModuleRoot -AppendProject
 
-  $Private:Types | Install-PSProject -Folder Type -SourceRoot $Private:SourceRoot -InstallRoot $Private:SourceRoot
+  $Private:DOTNET_SOLUTION.Types |
+    Install-PSProject -Folder Type -SourceRoot $Private:SourceRoot -InstallRoot $Private:SourceRoot
   #endregion
 
   #region Add Type
-  foreach ($Private:Type in $Private:Types) {
-    [string]$Private:TypeAssembly = "$Private:SourceRoot\$Private:Type.dll"
-
-    if (Test-Path -Path $Private:TypeAssembly -PathType Leaf) {
-      Add-Type -Path $Private:TypeAssembly
+  $Private:DOTNET_SOLUTION.Types |
+    Where-Object {
+      Test-Path -Path $Private:SourceRoot\$PSItem.dll -PathType Leaf
+    } |
+    ForEach-Object {
+      Add-Type -Path $Private:SourceRoot\$PSItem.dll
     }
-  }
   #endregion
 }
