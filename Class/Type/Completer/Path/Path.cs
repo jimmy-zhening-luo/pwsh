@@ -31,7 +31,22 @@ namespace Completer
         Flat = flat;
       }
 
-      public IEnumerable<string> FindDescendant(string wordToComplete)
+      public override IEnumerable<string> FulfillCompletion(string wordToComplete)
+      {
+        foreach (
+          string descendant in FulfillDescendant(
+            wordToComplete
+          )
+        )
+        {
+          yield return descendant.Replace(
+            '\\',
+            '/'
+          );
+        }
+      }
+
+      private protected IEnumerable<string> FulfillDescendant(string wordToComplete)
       {
         string currentPathValue = Canonicalizer.Normalize(
           wordToComplete,
@@ -149,23 +164,6 @@ namespace Completer
         }
 
         yield break;
-      }
-
-      private protected override IEnumerable<string> FulfillCompletion(
-        string wordToComplete
-      )
-      {
-        foreach (
-          string descendant in FindDescendant(
-            wordToComplete
-          )
-        )
-        {
-          yield return descendant.Replace(
-            '\\',
-            '/'
-          );
-        }
       }
     }
   } // namespace PathCompleter

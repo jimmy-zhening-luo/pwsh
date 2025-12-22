@@ -26,7 +26,7 @@ namespace Completer
       FulfillCompletion(wordToComplete)
     );
 
-    private protected abstract IEnumerable<string> FulfillCompletion(string wordToComplete);
+    public abstract IEnumerable<string> FulfillCompletion(string wordToComplete);
 
     private IEnumerable<CompletionResult> WrapArgumentCompletionResult(
       IEnumerable<string> completedStrings

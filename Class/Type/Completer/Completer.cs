@@ -21,7 +21,7 @@ namespace Completer
       Strict = strict;
     }
 
-    public IEnumerable<string> FindCompletion(string wordToComplete)
+    public IEnumerable<string> FulfillCompletion(string wordToComplete)
     {
       string unescapedWordToComplete = Escaper.Unescape(wordToComplete);
       if (
@@ -72,9 +72,5 @@ namespace Completer
         yield break;
       }
     }
-
-    private protected override IEnumerable<string> FulfillCompletion(
-      string wordToComplete
-    ) => FindCompletion(wordToComplete);
   }
 }
