@@ -7,7 +7,7 @@ namespace Completer
     public static partial class Canonicalizer
     {
       [GeneratedRegex(
-        @"(?<!^)\\\\+"
+        @"(?<!^)(?>\\\\+)"
       )]
       public static partial Regex DuplicatePathSeparatorRegex();
 
@@ -17,22 +17,22 @@ namespace Completer
       public static partial Regex IsPathDescendantRegex();
 
       [GeneratedRegex(
-        @"^(?=~(?>$|\\))"
+        @"^(?=~(?>\\|$))"
       )]
       public static partial Regex IsPathHomeRootedRegex();
 
       [GeneratedRegex(
-        @"^\.(?>$|\\+)"
+        @"^\.(?>\\+|$)"
       )]
       public static partial Regex RemoveRelativeRootRegex();
 
       [GeneratedRegex(
-        @"^~(?>$|\\+)"
+        @"^~(?>\\+|$)"
       )]
       public static partial Regex RemoveHomeRootRegex();
 
       [GeneratedRegex(
-        @"(?>(?<!^)(?<!:)\\+)$"
+        @"(?<!^)(?<!:)(?>\\+)$"
       )]
       public static partial Regex RemoveTrailingPathSeparator();
     }
