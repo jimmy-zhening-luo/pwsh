@@ -21,7 +21,7 @@ namespace Completer
       Strict = strict;
     }
 
-    public IEnumerable<string> FulfillCompletion(string wordToComplete)
+    public override IEnumerable<string> FulfillCompletion(string wordToComplete)
     {
       string unescapedWordToComplete = Escaper.Unescape(wordToComplete);
       if (
