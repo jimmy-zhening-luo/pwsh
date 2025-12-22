@@ -58,7 +58,8 @@ namespace Completer
           path,
           location
         )
-        .Trim(RelativeChars) == string.Empty;
+        .Trim('.')
+        .Trim('\\') == string.Empty;
 
       public static string RemoveRelativeRoot(string path) => IsRelativelyRooted(path)
         ? path.Length == 1
