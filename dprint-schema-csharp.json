@@ -196,5 +196,6 @@
     }
   },
   "additionalProperties": true,
-  "allowTrailingCommas": true
+  "allowTrailingCommas": true,
+  "allowComments": true
 }
