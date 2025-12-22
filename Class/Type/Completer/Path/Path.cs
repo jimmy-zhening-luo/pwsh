@@ -19,7 +19,7 @@ namespace Completer
         bool flat
       ) : this()
       {
-        Root = Resolver.AnchorHome(
+        Root = Canonicalizer.AnchorHome(
           Canonicalizer.Normalize(root)
         );
         Type = type;
