@@ -25,42 +25,24 @@
     }
   },
   "$defs": {
-    "tristate": {
-      "type": "integer",
+    "position": {
       "enum": [
+        "LeftMost",
+        "OneLess",
+        "NoIndent",
         0,
         1,
         2
       ]
     },
-    "position": {
-      "anyOf": [
-        {
-          "$ref": "#/$defs/tristate"
-        },
-        {
-          "type": "string",
-          "enum": [
-            "LeftMost",
-            "OneLess",
-            "NoIndent"
-          ]
-        }
-      ]
-    },
     "spacing": {
-      "anyOf": [
-        {
-          "$ref": "#/$defs/tristate"
-        },
-        {
-          "type": "string",
-          "enum": [
-            "Single",
-            "Ignore",
-            "Remove"
-          ]
-        }
+      "enum": [
+        "Single",
+        "Ignore",
+        "Remove",
+        0,
+        1,
+        2
       ]
     }
   },
