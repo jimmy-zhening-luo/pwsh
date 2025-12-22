@@ -21,10 +21,10 @@ namespace Completer
           string.Empty
         );
 
-        return preserveTrailingSeparator
-          || normalPath.EndsWith('\\')
-          ? normalPath
-          : normalPath[..^1];
+        return !preserveTrailingSeparator
+          && normalPath.EndsWith('\\')
+          ? normalPath[..^1]
+          : normalPath;
       }
 
       public static string Denormalize(
