@@ -3,70 +3,6 @@ using namespace System.Collections.Generic
 using namespace Completer
 using namespace Completer.PathCompleter
 
-function Resolve-GitRepository {
-  [CmdletBinding()]
-  [OutputType([string[]])]
-  param(
-
-    [Parameter(
-      Mandatory,
-      Position = 0,
-      ValueFromPipeline,
-      ValueFromPipelineByPropertyName
-    )]
-    [AllowEmptyString()]
-    [AllowEmptyCollection()]
-    [string[]]$WorkingDirectory,
-
-    [switch]$Newable
-  )
-
-  process {
-    foreach ($directory in $WorkingDirectory) {
-      if ($Newable) {
-        if (-not $WorkingDirectory) {
-          Write-Output -InputObject $PWD.Path
-        }
-        elseif (Test-Path $WorkingDirectory -PathType Container) {
-          Write-Output -InputObject (
-            Resolve-Path $WorkingDirectory
-          ).Path
-        }
-        elseif (Test-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT -Newable) {
-          Write-Output -InputObject (
-            Resolve-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT -Newable
-          )
-        }
-      }
-      else {
-        if (-not $WorkingDirectory) {
-          if (Test-Path .git -PathType Container) {
-            Write-Output -InputObject $PWD.Path
-          }
-        }
-        elseif (
-          Test-Path (
-            Join-Path $WorkingDirectory .git
-          ) -PathType Container
-        ) {
-          Write-Output -InputObject (
-            Resolve-Path $WorkingDirectory
-          ).Path
-        }
-        elseif (
-          Test-RelativePath -Path (
-            Join-Path $WorkingDirectory .git
-          ) -Location $REPO_ROOT
-        ) {
-          Write-Output -InputObject (
-            Resolve-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT
-          )
-        }
-      }
-    }
-  }
-}
-
 function Test-RelativePath {
 
   [OutputType([bool])]
@@ -241,6 +177,70 @@ function Resolve-RelativePath {
   }
   else {
     return (Resolve-Path $FullPath -Force).Path
+  }
+}
+
+function Resolve-GitRepository {
+  [CmdletBinding()]
+  [OutputType([string[]])]
+  param(
+
+    [Parameter(
+      Mandatory,
+      Position = 0,
+      ValueFromPipeline,
+      ValueFromPipelineByPropertyName
+    )]
+    [AllowEmptyString()]
+    [AllowEmptyCollection()]
+    [string[]]$WorkingDirectory,
+
+    [switch]$Newable
+  )
+
+  process {
+    foreach ($directory in $WorkingDirectory) {
+      if ($Newable) {
+        if (-not $WorkingDirectory) {
+          Write-Output -InputObject $PWD.Path
+        }
+        elseif (Test-Path $WorkingDirectory -PathType Container) {
+          Write-Output -InputObject (
+            Resolve-Path $WorkingDirectory
+          ).Path
+        }
+        elseif (Test-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT -Newable) {
+          Write-Output -InputObject (
+            Resolve-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT -Newable
+          )
+        }
+      }
+      else {
+        if (-not $WorkingDirectory) {
+          if (Test-Path .git -PathType Container) {
+            Write-Output -InputObject $PWD.Path
+          }
+        }
+        elseif (
+          Test-Path (
+            Join-Path $WorkingDirectory .git
+          ) -PathType Container
+        ) {
+          Write-Output -InputObject (
+            Resolve-Path $WorkingDirectory
+          ).Path
+        }
+        elseif (
+          Test-RelativePath -Path (
+            Join-Path $WorkingDirectory .git
+          ) -Location $REPO_ROOT
+        ) {
+          Write-Output -InputObject (
+            Resolve-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT
+          )
+        }
+      }
+    }
   }
 }
 
