@@ -5,7 +5,7 @@ namespace Completer
   namespace PathCompleter
   {
     [AttributeUsage(AttributeTargets.Parameter)]
-    public class PathCompletionsAttribute : BaseCompletionsAttribute
+    public class PathCompletionsAttribute : BaseCompletionsAttribute<PathCompleter>
     {
       public readonly string Location;
       public readonly PathItemType ItemType;

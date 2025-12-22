@@ -3,7 +3,7 @@ using System;
 namespace Completer
 {
   [AttributeUsage(AttributeTargets.Parameter)]
-  public class CompletionsAttribute : BaseCompletionsAttribute
+  public class CompletionsAttribute : BaseCompletionsAttribute<Completer>
   {
     public readonly string StringifiedDomain;
     public readonly bool Strict;

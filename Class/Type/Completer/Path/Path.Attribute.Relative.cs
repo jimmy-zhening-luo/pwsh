@@ -6,7 +6,7 @@ namespace Completer
   namespace PathCompleter
   {
     [AttributeUsage(AttributeTargets.Parameter)]
-    public class RelativePathCompletionsAttribute : BaseCompletionsAttribute
+    public class RelativePathCompletionsAttribute : BaseCompletionsAttribute<PathCompleter>
     {
       public readonly ScriptBlock CurrentDirectory;
       public readonly PathItemType ItemType;

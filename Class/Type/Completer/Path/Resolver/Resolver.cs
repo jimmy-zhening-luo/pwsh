@@ -2,45 +2,23 @@ namespace Completer
 {
   namespace PathCompleter
   {
-    public static class Resolver
+    public interface IResolver
     {
-      public static string Test(
+      public static abstract string Test(
         string path,
         string location = "",
         PathItemType itemType = PathItemType.Any,
         bool newable = false,
         bool requireSubpath = false
-      )
-      {
-        // placeholder
-        if (newable && requireSubpath && itemType == PathItemType.Any)
-        {
-          return path;
-        }
-        else
-        {
-          return location;
-        }
-      }
+      );
 
-      public static string Resolve(
+      public static abstract string Resolve(
         string path,
         string location = "",
           PathItemType itemType = PathItemType.Any,
         bool newable = false,
         bool requireSubpath = false
-      )
-      {
-        // placeholder
-        if (newable && requireSubpath && itemType == PathItemType.Any)
-        {
-          return path;
-        }
-        else
-        {
-          return location;
-        }
-      }
+      );
     }
   } // namespace PathCompleter
 } // namespace Completer
