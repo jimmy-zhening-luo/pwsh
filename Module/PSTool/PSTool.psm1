@@ -71,30 +71,30 @@ function Measure-Performance {
     [Parameter(DontShow)][switch]$zNothing
   )
 
-  [string]$Private:FullCommand = $Command -join ' '
+  [string]$FullCommand = $Command -join ' '
 
-  [long]$Private:CommandTicks = (
+  [long]$CommandTicks = (
     Measure-Command {
-      pwsh -NoProfile -Command "$Private:FullCommand"
+      pwsh -NoProfile -Command "$FullCommand"
     }
   ).Ticks
 
-  $Private:AverageBaseline = Measure-PSProfile -Iterations 5 -Baseline -Timespan
+  $AverageBaseline = Measure-PSProfile -Iterations 5 -Baseline -Timespan
 
-  [long]$CommandCostTicks = $Private:CommandTicks - $Private:AverageBaseline.Ticks
+  [long]$CommandCostTicks = $CommandTicks - $AverageBaseline.Ticks
 
-  $Private:CommandCost = [timespan]::new(
-    $Private:CommandCostTicks
+  $CommandCost = [timespan]::new(
+    $CommandCostTicks
   )
 
   if ($Numeric) {
-    return $Private:CommandCost.TotalMilliseconds
+    return $CommandCost.TotalMilliseconds
   }
   elseif ($Timespan) {
-    return $Private:CommandCost
+    return $CommandCost
   }
   else {
-    return "$([long]$Private:CommandCost.TotalMilliseconds) ms`n(Base: $([long]$Private:AverageBaseline.TotalMilliseconds) ms)"
+    return "$([long]$CommandCost.TotalMilliseconds) ms`n(Base: $([long]$AverageBaseline.TotalMilliseconds) ms)"
   }
 }
 
@@ -178,73 +178,73 @@ function Measure-PSProfile {
     $Iterations = 8
   }
 
-  $Private:BareStartupTicks = [List[long]]::new()
-  $Private:StartupWithProfileTicks = [List[long]]::new()
+  $BareStartupTicks = [List[long]]::new()
+  $StartupWithProfileTicks = [List[long]]::new()
 
   for (
-    $Private:i = 0
-    $Private:i -lt $Iterations
-    ++$Private:i
+    $i = 0
+    $i -lt $Iterations
+    ++$i
   ) {
     if (-not $Baseline) {
-      $Private:Command1 = Get-Random 500
-      $Private:StartupWithProfileTicks.Add(
+      $Command1 = Get-Random 500
+      $StartupWithProfileTicks.Add(
         [long](
           Measure-Command {
-            pwsh -Command "$Private:Command1"
+            pwsh -Command "$Command1"
           }
         ).Ticks
       )
     }
 
-    $Private:Command2 = Get-Random 500
-    $Private:BareStartupTicks.Add(
+    $Command2 = Get-Random 500
+    $BareStartupTicks.Add(
       [long](
         Measure-Command {
-          pwsh -NoProfile -Command "$Private:Command2"
+          pwsh -NoProfile -Command "$Command2"
         }
       ).Ticks
     )
   }
 
-  [long]$Private:TotalBareStartupTicks = [System.Linq.Enumerable]::Sum(
-    $Private:BareStartupTicks
+  [long]$TotalBareStartupTicks = [System.Linq.Enumerable]::Sum(
+    $BareStartupTicks
   )
-  [long]$Private:AverageBareStartupTicks = $Private:TotalBareStartupTicks / $Iterations
-  $Private:AverageBareStartup = [timespan]::new(
-    $Private:AverageBareStartupTicks
+  [long]$AverageBareStartupTicks = $TotalBareStartupTicks / $Iterations
+  $AverageBareStartup = [timespan]::new(
+    $AverageBareStartupTicks
   )
 
   if ($Baseline) {
     switch ($PSCmdlet.ParameterSetName) {
       Numeric {
-        return $Private:AverageBareStartup.TotalMilliseconds
+        return $AverageBareStartup.TotalMilliseconds
       }
       Timespan {
-        return $Private:AverageBareStartup
+        return $AverageBareStartup
       }
     }
   }
   else {
-    [long]$Private:TotalStartupWithProfileTicks = [System.Linq.Enumerable]::Sum(
-      $Private:StartupWithProfileTicks
+    [long]$TotalStartupWithProfileTicks = [System.Linq.Enumerable]::Sum(
+      $StartupWithProfileTicks
     )
 
-    [long]$Private:TotalProfileCostTicks = $Private:TotalStartupWithProfileTicks - $Private:TotalBareStartupTicks
-    [long]$Private:AverageProfileCostTicks =
-      $Private:TotalProfileCostTicks / $Iterations
-    $Private:AverageProfileCost = [timespan]::new(
-      $Private:AverageProfileCostTicks
+    [long]$TotalProfileCostTicks = $TotalStartupWithProfileTicks - $TotalBareStartupTicks
+    [long]$AverageProfileCostTicks =
+      $TotalProfileCostTicks / $Iterations
+    $AverageProfileCost = [timespan]::new(
+      $AverageProfileCostTicks
     )
 
     if ($Numeric) {
-      return $Private:AverageProfileCost.TotalMilliseconds
+      return $AverageProfileCost.TotalMilliseconds
     }
     elseif ($Timespan) {
-      return $Private:AverageProfileCost
+      return $AverageProfileCost
     }
     else {
-      return "$([long]$Private:AverageProfileCost.TotalMilliseconds) ms`n(Base: $([long]$Private:AverageBareStartup.TotalMilliseconds) ms)"
+      return "$([long]$AverageProfileCost.TotalMilliseconds) ms`n(Base: $([long]$AverageBareStartup.TotalMilliseconds) ms)"
     }
   }
 }
@@ -332,14 +332,14 @@ function Publish-PSProfile {
   )
 
   #region Pull Repo
-  $Private:GitCommandManifest = @(
+  $GitCommandManifest = @(
     '-c'
     'color.ui=always'
     '-C'
     $PROFILE_REPO_ROOT
     'pull'
   )
-  & "$env:ProgramFiles\Git\cmd\git.exe" @Private:GitCommandManifest
+  & "$env:ProgramFiles\Git\cmd\git.exe" @GitCommandManifest
 
   if ($LASTEXITCODE -notin 0, 1) {
     throw "Failed to pull pwsh profile repository at '$PROFILE_REPO_ROOT'. Git returned exit code: $LASTEXITCODE"
@@ -348,23 +348,23 @@ function Publish-PSProfile {
 
 
   #region Copy Linter
-  $Private:LinterConfig = "$PROFILE_REPO_ROOT\Data\PSScriptAnalyzerSettings.psd1"
+  $LinterConfig = "$PROFILE_REPO_ROOT\Data\PSScriptAnalyzerSettings.psd1"
 
-  if (Test-Path $Private:LinterConfig -PathType Leaf) {
-    Copy-Item -Path $Private:LinterConfig -Destination $HOME -Force
+  if (Test-Path $LinterConfig -PathType Leaf) {
+    Copy-Item -Path $LinterConfig -Destination $HOME -Force
   }
   #endregion
 
 
   #region Build
   if (-not $SkipBuild) {
-    [System.Management.Automation.ApplicationInfo]$Private:DotnetNativeCommand = Get-Command -Name dotnet.exe -CommandType Application -All
+    [System.Management.Automation.ApplicationInfo]$DotnetNativeCommand = Get-Command -Name dotnet.exe -CommandType Application -All
 
-    if (-not $Private:DotnetNativeCommand) {
+    if (-not $DotnetNativeCommand) {
       try {
-        [System.Management.Automation.ApplicationInfo]$Private:DotnetNativeCommand = Install-PSModuleDotnet
+        [System.Management.Automation.ApplicationInfo]$DotnetNativeCommand = Install-PSModuleDotnet
 
-        if (-not $Private:DotnetNativeCommand) {
+        if (-not $DotnetNativeCommand) {
           throw 'Failed to locate Microsoft.DotNet.SDK.10 executable post-installation'
         }
       }
@@ -373,11 +373,11 @@ function Publish-PSProfile {
       }
     }
 
-    $Private:Solution = "$PROFILE_REPO_ROOT\Class\Class.slnx"
+    $Solution = "$PROFILE_REPO_ROOT\Class\Class.slnx"
 
     try {
       try {
-        & $Private:DotnetNativeCommand.Source clean $Private:Solution --configuration Release
+        & $DotnetNativeCommand.Source clean $Solution --configuration Release
 
         if ($LASTEXITCODE -notin 0, 1) {
           throw "dotnet.exe returned a non-zero exit code ($LASTEXITCODE) when trying to clean the project."
@@ -388,7 +388,7 @@ function Publish-PSProfile {
       }
 
       try {
-        & $Private:DotnetNativeCommand.Source build $Private:Solution --configuration Release
+        & $DotnetNativeCommand.Source build $Solution --configuration Release
 
         if ($LASTEXITCODE -notin 0, 1) {
           throw "dotnet.exe returned a non-zero exit code ($LASTEXITCODE) when trying to build the project."
@@ -429,14 +429,14 @@ function Install-PSModuleDotnet {
         throw "winget attempted to install Microsoft.DotNet.SDK.10 but returned a non-zero exit code ($LASTEXITCODE)"
       }
 
-      [System.Management.Automation.ApplicationInfo]$Private:DotnetNativeCommand = Get-Command -Name dotnet.exe -CommandType Application -All
+      [System.Management.Automation.ApplicationInfo]$DotnetNativeCommand = Get-Command -Name dotnet.exe -CommandType Application -All
 
-      if (-not $Private:DotnetNativeCommand) {
+      if (-not $DotnetNativeCommand) {
         throw 'Failed to locate Microsoft.DotNet.SDK.10 executable post-installation'
       }
 
       try {
-        & $Private:DotnetNativeCommand.Source new install Microsoft.PowerShell.Standard.Module.Template
+        & $DotnetNativeCommand.Source new install Microsoft.PowerShell.Standard.Module.Template
 
         if ($LASTEXITCODE -notin 0, 1) {
           throw "dotnet.exe returned a non-zero exit code ($LASTEXITCODE) when trying to install Microsoft.PowerShell.Standard.Module.Template"
@@ -446,7 +446,7 @@ function Install-PSModuleDotnet {
         throw 'Failed to install required dotnet dependency: Microsoft.PowerShell.Standard.Module.Template ' + $PSItem.Exception
       }
 
-      return $Private:DotnetNativeCommand
+      return $DotnetNativeCommand
     }
   }
 }

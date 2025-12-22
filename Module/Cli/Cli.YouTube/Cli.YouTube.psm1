@@ -23,7 +23,7 @@ function Get-YouTube {
     throw 'No video specified.'
   }
 
-  [uri]$Private:VideoUri = $Video -match [regex]'^(?>https?://)?(?>(?>www|m)\.)?(?>youtube\.com/watch\?)(?:\S*&)?v=(?<Video>(?>[-\w]+))' ? [UriBuilder]::new(
+  [uri]$VideoUri = $Video -match [regex]'^(?>https?://)?(?>(?>www|m)\.)?(?>youtube\.com/watch\?)(?:\S*&)?v=(?<Video>(?>[-\w]+))' ? [UriBuilder]::new(
     'https',
     'www.youtube.com',
     -1,
@@ -31,15 +31,15 @@ function Get-YouTube {
     '?v=' + $Matches.Video
   ).Uri : $Video
 
-  if (Test-Url -Uri $Private:VideoUri) {
-    & yt-dlp.exe @args -- [string]$Private:VideoUri
+  if (Test-Url -Uri $VideoUri) {
+    & yt-dlp.exe @args -- [string]$VideoUri
 
     if ($LASTEXITCODE -notin 0, 1) {
       throw "ytdlp error, execution stopped with exit code: $LASTEXITCODE"
     }
   }
   else {
-    throw 'The specified video URL is unreachable: ' + [string]$Private:VideoUri
+    throw 'The specified video URL is unreachable: ' + [string]$VideoUri
   }
 }
 
@@ -64,7 +64,7 @@ function Get-YouTubeAudio {
     [string]$Video
   )
 
-  $Private:YouTubeArgument = @(
+  $YouTubeArgument = @(
     '--format'
     'bestaudio'
     '--extract-audio'
@@ -75,7 +75,7 @@ function Get-YouTubeAudio {
     '--postprocessor-args'
     '-ar 44100'
   )
-  Get-YouTube -Video $Video @args @Private:YouTubeArgument
+  Get-YouTube -Video $Video @args @YouTubeArgument
 }
 
 <#

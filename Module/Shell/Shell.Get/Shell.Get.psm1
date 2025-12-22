@@ -78,34 +78,34 @@ function Get-Size {
   )
 
   begin {
-    [DiskSizeUnit]$Private:CanonicalUnit = $null -eq [DiskSizeUnit]::$Unit ? $DISK_SIZE_UNIT_ALIAS.ContainsKey($Unit) ? [DiskSizeUnit]::($DISK_SIZE_UNIT_ALIAS[$Unit]) : [DiskSizeUnit]::KB : [DiskSizeUnit]::$Unit
-    $Private:Factor = $DISK_SIZE_FACTORS[$Private:CanonicalUnit]
+    [DiskSizeUnit]$CanonicalUnit = $null -eq [DiskSizeUnit]::$Unit ? $DISK_SIZE_UNIT_ALIAS.ContainsKey($Unit) ? [DiskSizeUnit]::($DISK_SIZE_UNIT_ALIAS[$Unit]) : [DiskSizeUnit]::KB : [DiskSizeUnit]::$Unit
+    $Factor = $DISK_SIZE_FACTORS[$CanonicalUnit]
   }
 
   process {
-    foreach ($Private:filepath in $Path) {
-      if (-not (Test-Path $Private:filepath)) {
-        throw "Path '$Private:filepath' does not exist."
+    foreach ($filepath in $Path) {
+      if (-not (Test-Path $filepath)) {
+        throw "Path '$filepath' does not exist."
       }
 
-      $Private:Size = (
-        Test-Path $Private:filepath -PathType Container
+      $Size = (
+        Test-Path $filepath -PathType Container
       ) ? (
-        Get-ChildItem -Path $Private:filepath -Recurse -Force -File |
+        Get-ChildItem -Path $filepath -Recurse -Force -File |
           Measure-Object -Property Length -Sum |
           Select-Object -ExpandProperty Sum
       ) : (
-        Get-Item -Path $Private:filepath
+        Get-Item -Path $filepath
       ).Length
 
-      [double]$Private:ScaledSize = $Private:Size / $Private:Factor
+      [double]$ScaledSize = $Size / $Factor
 
       Write-Output -InputObject (
-        $Number ? $Private:ScaledSize : (
+        $Number ? $ScaledSize : (
           [System.Math]::Round(
-            $Private:ScaledSize,
+            $ScaledSize,
             3
-          ).ToString() + " $Private:CanonicalUnit"
+          ).ToString() + " $CanonicalUnit"
         )
       )
     }
@@ -113,17 +113,17 @@ function Get-Size {
 
   end {
     if (-not $Path) {
-      $Private:Size = Get-ChildItem -Path $PWD.Path -Recurse -File |
+      $Size = Get-ChildItem -Path $PWD.Path -Recurse -File |
         Measure-Object -Property Length -Sum |
         Select-Object -ExpandProperty Sum
 
-      [double]$Private:ScaledSize = $Private:Size / $Private:Factor
+      [double]$ScaledSize = $Size / $Factor
 
-      return $Number ? $Private:ScaledSize : (
+      return $Number ? $ScaledSize : (
         [System.Math]::Round(
-          $Private:ScaledSize,
+          $ScaledSize,
           3
-        ).ToString() + " $Private:CanonicalUnit"
+        ).ToString() + " $CanonicalUnit"
       )
     }
   }
@@ -240,31 +240,31 @@ function Get-File {
     [string]$Location
   )
 
-  [string[]]$Private:Argument = @()
+  [string[]]$Argument = @()
 
   if (
     $Location -and -not (
       Test-Path $Location -PathType Container
     )
   ) {
-    $Private:Argument += $Location
+    $Argument += $Location
     $Location = ''
   }
 
   if ($Path) {
-    [string]$Private:FullPath = $Location ? (
+    [string]$FullPath = $Location ? (
       Join-Path $Location $Path
     ) : $Path
 
-    if (-not (Test-Path $Private:FullPath)) {
-      throw "Path '$Private:Target' does not exist."
+    if (-not (Test-Path $FullPath)) {
+      throw "Path '$Target' does not exist."
     }
 
-    if (Test-Path $Private:FullPath -PathType Container) {
-      return Get-ChildItem -Path $Private:FullPath @Private:Argument @args
+    if (Test-Path $FullPath -PathType Container) {
+      return Get-ChildItem -Path $FullPath @Argument @args
     }
     else {
-      return Get-Content -Path $Private:FullPath @Private:Argument @args
+      return Get-Content -Path $FullPath @Argument @args
     }
   }
   else {
@@ -274,7 +274,7 @@ function Get-File {
           Resolve-Path $Location
         ) : $PWD
       ).Path
-    ) @Private:Argument @args
+    ) @Argument @args
   }
 }
 

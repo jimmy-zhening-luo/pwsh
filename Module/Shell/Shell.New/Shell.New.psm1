@@ -54,9 +54,9 @@ function New-Directory {
   )
 
   begin {
-    $Private:wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [System.Management.Automation.CommandTypes]::Cmdlet)
-    $Private:scriptCmd = { & $Private:wrappedCmd -ItemType Directory @PSBoundParameters }
-    $Private:steppablePipeline = $Private:scriptCmd.GetSteppablePipeline()
+    $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [System.Management.Automation.CommandTypes]::Cmdlet)
+    $scriptCmd = { & $wrappedCmd -ItemType Directory @PSBoundParameters }
+    $steppablePipeline = $scriptCmd.GetSteppablePipeline()
 
     if (
       $PSCmdlet.ShouldProcess(
@@ -64,7 +64,7 @@ function New-Directory {
         "Open Transaction: Create $($Path.Count) directory(s) [[$Path]]\$Name"
       )
     ) {
-      $Private:steppablePipeline.Begin($PSCmdlet)
+      $steppablePipeline.Begin($PSCmdlet)
     }
   }
 
@@ -75,13 +75,13 @@ function New-Directory {
         "> Step: New-Item -ItemType Directory -Path [[$Path]] -Name [$Name] -- " + (ConvertTo-Json -InputObject $PSBoundParameters -EnumsAsStrings -Depth 6)
       )
     ) {
-      $Private:steppablePipeline.Process($PSItem)
+      $steppablePipeline.Process($PSItem)
     }
   }
 
   end {
     if ($PSCmdlet.ShouldProcess('Transaction', 'Close')) {
-      $Private:steppablePipeline.End()
+      $steppablePipeline.End()
     }
   }
 }
@@ -121,9 +121,9 @@ function New-Junction {
   )
 
   begin {
-    $Private:wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [System.Management.Automation.CommandTypes]::Cmdlet)
-    $Private:scriptCmd = { & $Private:wrappedCmd @PSBoundParameters -ItemType Junction -Force }
-    $Private:steppablePipeline = $Private:scriptCmd.GetSteppablePipeline()
+    $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('New-Item', [System.Management.Automation.CommandTypes]::Cmdlet)
+    $scriptCmd = { & $wrappedCmd @PSBoundParameters -ItemType Junction -Force }
+    $steppablePipeline = $scriptCmd.GetSteppablePipeline()
 
     if (
       $PSCmdlet.ShouldProcess(
@@ -131,7 +131,7 @@ function New-Junction {
         "Open Transaction: Create junction [$Path] with target [$Value]"
       )
     ) {
-      $Private:steppablePipeline.Begin($PSCmdlet)
+      $steppablePipeline.Begin($PSCmdlet)
     }
   }
 
@@ -142,13 +142,13 @@ function New-Junction {
         "> Step: New-Item -Force -ItemType Junction -Path [$Path] -Value [$Value]"
       )
     ) {
-      $Private:steppablePipeline.Process($PSItem)
+      $steppablePipeline.Process($PSItem)
     }
   }
 
   end {
     if ($PSCmdlet.ShouldProcess('Transaction', 'Close')) {
-      $Private:steppablePipeline.End()
+      $steppablePipeline.End()
     }
   }
 }

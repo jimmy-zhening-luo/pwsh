@@ -51,16 +51,16 @@ function Copy-Guid {
     [Parameter(DontShow)][switch]$zNothing
   )
 
-  $Private:Guid = (New-Guid).Guid
+  $Guid = (New-Guid).Guid
 
   if ($Uppercase) {
-    $Private:Guid = $Private:Guid.ToUpperInvariant()
+    $Guid = $Guid.ToUpperInvariant()
   }
 
-  Set-Clipboard -Value $Private:Guid
+  Set-Clipboard -Value $Guid
 
   if (-not $Silent) {
-    return $Private:Guid
+    return $Guid
   }
 }
 

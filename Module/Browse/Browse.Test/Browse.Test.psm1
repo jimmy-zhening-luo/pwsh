@@ -86,37 +86,37 @@ function Test-Host {
   }
 
   process {
-    foreach ($Private:computerName in $Name) {
-      if ($Private:computerName) {
-        $Private:Destination = @{
-          ComputerName = $Private:computerName
+    foreach ($computerName in $Name) {
+      if ($computerName) {
+        $Destination = @{
+          ComputerName = $computerName
         }
         switch ($PSCmdlet.ParameterSetName) {
           RemotePort {
-            $Private:Destination.Port = $Port
+            $Destination.Port = $Port
           }
           CommonTCPPort {
             if ($CommonTCPPort) {
               if ([TestHostWellKnownPort]::$CommonTCPPort) {
-                $Private:Destination.CommonTCPPort = [TestHostWellKnownPort]::$CommonTCPPort
+                $Destination.CommonTCPPort = [TestHostWellKnownPort]::$CommonTCPPort
               }
               elseif ($CommonTCPPort -as [ushort]) {
-                $Private:Destination.Port = [ushort]$CommonTCPPort
+                $Destination.Port = [ushort]$CommonTCPPort
               }
             }
           }
         }
 
-        Test-NetConnection @Private:Destination -InformationLevel $Private:InformationLevel
+        Test-NetConnection @Destination -InformationLevel $InformationLevel
       }
     }
   }
 
   end {
     if (-not $Name) {
-      $Private:DumbassPSLinterWorkaroundLMFAO = 'google.com'
+      $DumbassPSLinterWorkaroundLMFAO = 'google.com'
 
-      return Test-NetConnection -ComputerName $Private:DumbassPSLinterWorkaroundLMFAO -InformationLevel $Private:InformationLevel
+      return Test-NetConnection -ComputerName $DumbassPSLinterWorkaroundLMFAO -InformationLevel $InformationLevel
     }
   }
 }
@@ -163,7 +163,7 @@ function Test-Url {
   )
 
   begin {
-    $Private:Request = @{
+    $Request = @{
       Method                       = 'HEAD'
       PreserveHttpMethodOnRedirect = $True
       DisableKeepAlive             = $True
@@ -174,24 +174,24 @@ function Test-Url {
   }
 
   process {
-    foreach ($Private:link in $Uri) {
-      if ($Private:link) {
+    foreach ($link in $Uri) {
+      if ($link) {
         try {
-          [int]$Private:Status = Invoke-WebRequest -Uri $Private:link @Private:Request |
+          [int]$Status = Invoke-WebRequest -Uri $link @Request |
             Select-Object -ExpandProperty StatusCode
         }
         catch [Microsoft.PowerShell.Commands.HttpResponseException] {
-          $Private:Status = $PSItem.Exception.Response.StatusCode.value__
+          $Status = $PSItem.Exception.Response.StatusCode.value__
         }
         catch [System.Net.Http.HttpRequestException] {
-          [int]$Private:Status = -1
+          [int]$Status = -1
         }
         catch {
           throw 'Test-Url: Unhandled exception: ' + $PSItem.Exception
         }
 
-        if ($Private:Status -as [int] -and $Private:Status -ge 200 -and $Private:Status -lt 300) {
-          Write-Output -InputObject ([uri]$Private:link)
+        if ($Status -as [int] -and $Status -ge 200 -and $Status -lt 300) {
+          Write-Output -InputObject ([uri]$link)
         }
       }
     }

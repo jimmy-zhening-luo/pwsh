@@ -265,12 +265,12 @@ function Invoke-NodePackage {
     [Parameter(DontShow)][switch]$zNothing
   )
 
-  $Private:NodeArgument = [List[string]]::new()
-  $Private:NodeArgument.Add('--color=always')
+  $NodeArgument = [List[string]]::new()
+  $NodeArgument.Add('--color=always')
 
-  $Private:NodeCommand = [List[string]]::new()
+  $NodeCommand = [List[string]]::new()
   if ($Argument) {
-    $Private:NodeCommand.AddRange(
+    $NodeCommand.AddRange(
       [List[string]]$Argument
     )
   }
@@ -281,76 +281,76 @@ function Invoke-NodePackage {
         Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory
       )
     ) {
-      $Private:NodeCommand.Add($WorkingDirectory)
+      $NodeCommand.Add($WorkingDirectory)
       $WorkingDirectory = ''
     }
     else {
-      $Private:PackagePrefix = Resolve-NodePackageDirectory -WorkingDirectory $WorkingDirectory
+      $PackagePrefix = Resolve-NodePackageDirectory -WorkingDirectory $WorkingDirectory
 
-      if ($Private:PackagePrefix) {
-        $Private:NodeArgument.Add($Private:PackagePrefix)
+      if ($PackagePrefix) {
+        $NodeArgument.Add($PackagePrefix)
       }
     }
   }
 
   if ($Command.Length -ne 0 -and $Command.StartsWith('-') -or $Command -notin $NODE_VERB -and -not $NODE_ALIAS.ContainsKey($Command)) {
-    [string]$Private:DeferredVerb = $Private:NodeCommand.Count -eq 0 ? '' : $Private:NodeCommand.Find(
+    [string]$DeferredVerb = $NodeCommand.Count -eq 0 ? '' : $NodeCommand.Find(
       {
         $args[0] -in $NODE_VERB
       }
     )
 
-    if ($Private:DeferredVerb) {
-      $Private:NodeCommand.Remove($Private:DeferredVerb) | Out-Null
+    if ($DeferredVerb) {
+      $NodeCommand.Remove($DeferredVerb) | Out-Null
     }
 
-    $Private:NodeCommand.Insert(0, $Command)
-    $Command = $Private:DeferredVerb
+    $NodeCommand.Insert(0, $Command)
+    $Command = $DeferredVerb
   }
 
   if ($Command) {
-    $Private:NodeArgument.Add($Command.ToLowerInvariant())
+    $NodeArgument.Add($Command.ToLowerInvariant())
     if ($D) {
-      $Private:NodeCommand.Add('-D')
+      $NodeCommand.Add('-D')
     }
     if ($E) {
-      $Private:NodeCommand.Add('-E')
+      $NodeCommand.Add('-E')
     }
     if ($I) {
-      $Private:NodeCommand.Add('-i')
+      $NodeCommand.Add('-i')
     }
     if ($O) {
-      $Private:NodeCommand.Add('-o')
+      $NodeCommand.Add('-o')
     }
     if ($P) {
-      $Private:NodeCommand.Add('-P')
+      $NodeCommand.Add('-P')
     }
     if ($Version) {
-      $Private:NodeCommand.Add('-v')
+      $NodeCommand.Add('-v')
     }
   }
   else {
     if ($Version) {
-      $Private:NodeArgument.Add('-v')
+      $NodeArgument.Add('-v')
     }
   }
 
-  if ($Private:NodeCommand.Count -ne 0) {
-    $Private:NodeArgument.AddRange(
-      $Private:NodeCommand
+  if ($NodeCommand.Count -ne 0) {
+    $NodeArgument.AddRange(
+      $NodeCommand
     )
   }
 
-  & npm.ps1 @Private:NodeArgument
+  & npm.ps1 @NodeArgument
 
   if ($LASTEXITCODE -notin 0, 1) {
-    $Private:Exception = "npm command error, execution returned exit code: $LASTEXITCODE"
+    $Exception = "npm command error, execution returned exit code: $LASTEXITCODE"
 
     if ($NoThrow) {
-      Write-Warning -Message "$Private:Exception"
+      Write-Warning -Message "$Exception"
     }
     else {
-      throw $Private:Exception
+      throw $Exception
     }
   }
 }
@@ -394,19 +394,19 @@ https://docs.npmjs.com/cli/commands/npm-cache
 #>
 function Clear-NodeModuleCache {
 
-  $Private:NodeArgument = [List[string]]::new(
+  $NodeArgument = [List[string]]::new(
     [List[string]]@(
       'clean'
       '--force'
     )
   )
   if ($args) {
-    $Private:NodeArgument.AddRange(
+    $NodeArgument.AddRange(
       [List[string]]$args
     )
   }
 
-  Invoke-NodePackage -Command cache -Argument $Private:NodeArgument
+  Invoke-NodePackage -Command cache -Argument $NodeArgument
 }
 
 <#
@@ -437,22 +437,22 @@ function Compare-NodeModule {
     [Parameter(DontShow)][switch]$zNothing
   )
 
-  $Private:NodeArgument = [List[string]]::new()
+  $NodeArgument = [List[string]]::new()
 
   if ($WorkingDirectory) {
     if (-not (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)) {
-      $Private:NodeArgument.Add($WorkingDirectory)
+      $NodeArgument.Add($WorkingDirectory)
       $WorkingDirectory = ''
     }
   }
 
   if ($args) {
-    $Private:NodeArgument.AddRange(
+    $NodeArgument.AddRange(
       [List[string]]$args
     )
   }
 
-  Invoke-NodePackage -Command outdated -WorkingDirectory $WorkingDirectory -NoThrow -Argument $Private:NodeArgument
+  Invoke-NodePackage -Command outdated -WorkingDirectory $WorkingDirectory -NoThrow -Argument $NodeArgument
 }
 
 enum NodePackageNamedVersion {
@@ -503,17 +503,17 @@ function Step-NodePackageVersion {
   if ($Version) {
     if ($null -eq [NodePackageNamedVersion]::$Version) {
       if ($Version -match $VERSION_SPEC) {
-        $Private:FullVersion = @{
+        $FullVersion = @{
           Major = [int]$Matches.Major
           Minor = $Matches.Minor ? [int]$Matches.Minor : 0
           Patch = $Matches.Patch ? [int]$Matches.Patch : 0
           Pre   = $Matches.Pre ? [string]$Matches.Pre : ''
         }
 
-        $Version = "$($Private:FullVersion.Major).$($Private:FullVersion.Minor).$($Private:FullVersion.Patch)"
+        $Version = "$($FullVersion.Major).$($FullVersion.Minor).$($FullVersion.Patch)"
 
-        if ($Private:FullVersion.Pre) {
-          $Version += "-$($Private:FullVersion.Pre)"
+        if ($FullVersion.Pre) {
+          $Version += "-$($FullVersion.Pre)"
         }
       }
       else {
@@ -528,25 +528,25 @@ function Step-NodePackageVersion {
     $Version = [NodePackageNamedVersion]::patch
   }
 
-  $Private:NodeArgument = [List[string]]::new()
-  $Private:NodeArgument.Add(
+  $NodeArgument = [List[string]]::new()
+  $NodeArgument.Add(
     $Version.ToLowerInvariant()
   )
 
   if ($WorkingDirectory) {
     if (-not (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)) {
-      $Private:NodeArgument.Add($WorkingDirectory)
+      $NodeArgument.Add($WorkingDirectory)
       $WorkingDirectory = ''
     }
   }
 
   if ($args) {
-    $Private:NodeArgument.AddRange(
+    $NodeArgument.AddRange(
       [List[string]]$args
     )
   }
 
-  Invoke-NodePackage -Command version -WorkingDirectory $WorkingDirectory -Argument $Private:NodeArgument
+  Invoke-NodePackage -Command version -WorkingDirectory $WorkingDirectory -Argument $NodeArgument
 }
 
 <#
@@ -584,23 +584,23 @@ function Invoke-NodePackageScript {
     throw 'Script name is required.'
   }
 
-  $Private:NodeArgument = [List[string]]::new()
-  $Private:NodeArgument.Add($Script)
+  $NodeArgument = [List[string]]::new()
+  $NodeArgument.Add($Script)
 
   if ($WorkingDirectory) {
     if (-not (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)) {
-      $Private:NodeArgument.Add($WorkingDirectory)
+      $NodeArgument.Add($WorkingDirectory)
       $WorkingDirectory = ''
     }
   }
 
   if ($args) {
-    $Private:NodeArgument.AddRange(
+    $NodeArgument.AddRange(
       [List[string]]$args
     )
   }
 
-  Invoke-NodePackage -Command run -WorkingDirectory $WorkingDirectory -Argument $Private:NodeArgument
+  Invoke-NodePackage -Command run -WorkingDirectory $WorkingDirectory -Argument $NodeArgument
 }
 
 <#
@@ -631,22 +631,22 @@ function Test-NodePackage {
     [Parameter(DontShow)][switch]$zNothing
   )
 
-  $Private:NodeArgument = [List[string]]::new()
+  $NodeArgument = [List[string]]::new()
 
   if ($WorkingDirectory) {
     if (-not (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)) {
-      $Private:NodeArgument.Add($WorkingDirectory)
+      $NodeArgument.Add($WorkingDirectory)
       $WorkingDirectory = ''
     }
   }
 
   if ($args) {
-    $Private:NodeArgument.AddRange(
+    $NodeArgument.AddRange(
       [List[string]]$args
     )
   }
 
-  Invoke-NodePackage -Command test -WorkingDirectory $WorkingDirectory -Argument $Private:NodeArgument
+  Invoke-NodePackage -Command test -WorkingDirectory $WorkingDirectory -Argument $NodeArgument
 }
 
 New-Alias no Invoke-Node

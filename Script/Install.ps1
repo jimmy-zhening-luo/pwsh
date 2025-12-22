@@ -4,7 +4,6 @@ using namespace System.Collections.Generic
   #region Solution
   $Root = Split-Path $PSScriptRoot
   $SourceRoot = "$Root\Class"
-  $ModuleRoot = "$Root\Module"
 
   $DOTNET_SOLUTION = Import-PowerShellDataFile -Path $Root\Data\Class.psd1
   #endregion
@@ -66,7 +65,7 @@ using namespace System.Collections.Generic
 
   #region Install
   $DOTNET_SOLUTION.Cmdlets |
-    Install-PSProject -Folder Cmdlet -SourceRoot $SourceRoot -InstallRoot $ModuleRoot -AppendProject
+    Install-PSProject -Folder Cmdlet -SourceRoot $SourceRoot -InstallRoot $Root\Module -AppendProject
 
   $DOTNET_SOLUTION.Types |
     Install-PSProject -Folder Type -SourceRoot $SourceRoot -InstallRoot $SourceRoot

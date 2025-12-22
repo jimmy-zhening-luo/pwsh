@@ -72,39 +72,39 @@ function Get-HelpOnline {
   if (-not $Name) {
     return Get-Help -Name Get-Help
   }
-  [string]$Private:Topic = $Name -join '_'
+  [string]$Topic = $Name -join '_'
 
-  $Private:Help = ''
-  $Private:HelpLinkArticleList = [List[uri]]::new()
-  $Private:ArticleList = [List[uri]]::new()
+  $Help = ''
+  $HelpLinkArticleList = [List[uri]]::new()
+  $ArticleList = [List[uri]]::new()
 
-  $Private:Silent = @{
+  $Silent = @{
     ErrorAction    = 'SilentlyContinue'
     ProgressAction = 'SilentlyContinue'
   }
 
-  if ($CUSTOM_HELP.ContainsKey($Private:Topic)) {
-    $Private:CustomHelp = $CUSTOM_HELP[$Private:Topic]
+  if ($CUSTOM_HELP.ContainsKey($Topic)) {
+    $CustomHelp = $CUSTOM_HELP[$Topic]
 
-    if ($Private:CustomHelp -and $Private:CustomHelp -as [string] -and $Private:CustomHelp -notmatch [regex]':') {
-      [uri[]]$Private:CustomHelp = $CUSTOM_HELP[[string]$Private:CustomHelp]
+    if ($CustomHelp -and $CustomHelp -as [string] -and $CustomHelp -notmatch [regex]':') {
+      [uri[]]$CustomHelp = $CUSTOM_HELP[[string]$CustomHelp]
     }
 
-    if ($Private:CustomHelp) {
-      $Private:ArticleList.AddRange(
-        [List[uri]]$Private:CustomHelp
+    if ($CustomHelp) {
+      $ArticleList.AddRange(
+        [List[uri]]$CustomHelp
       )
     }
   }
   else {
-    $Private:Help = Get-Help -Name $Private:Topic @Private:Silent
+    $Help = Get-Help -Name $Topic @Silent
 
-    if ($Private:Help -and $Private:Help.Count -gt 1) {
-      $Private:Help = ''
+    if ($Help -and $Help.Count -gt 1) {
+      $Help = ''
     }
 
-    if ($Private:Help) {
-      [string[]]$Private:HelpLinkProperty = $Private:Help.relatedLinks.navigationLink.Uri -replace [regex]'\?(?>.*)$', '' |
+    if ($Help) {
+      [string[]]$HelpLinkProperty = $Help.relatedLinks.navigationLink.Uri -replace [regex]'\?(?>.*)$', '' |
         Where-Object {
           -not [string]::IsNullOrWhiteSpace($PSItem)
         } |
@@ -112,97 +112,97 @@ function Get-HelpOnline {
           $PSItem -as [uri]
         }
 
-      if ($Private:HelpLinkProperty) {
-        $Private:HelpLinkArticleList.AddRange(
-          [List[uri]]$Private:HelpLinkProperty
+      if ($HelpLinkProperty) {
+        $HelpLinkArticleList.AddRange(
+          [List[uri]]$HelpLinkProperty
         )
       }
     }
 
-    if ($Private:Help -and $Parameter) {
-      $Private:ParameterHelp = Get-Help -Name $Private:Topic -Parameter $Parameter @Private:Silent
+    if ($Help -and $Parameter) {
+      $ParameterHelp = Get-Help -Name $Topic -Parameter $Parameter @Silent
 
-      if ($Private:ParameterHelp) {
-        $Private:Help = $Private:ParameterHelp
-        if ($Private:HelpLinkArticleList.Count -eq 1 -and $Parameter.Count -eq 1) {
-          [uri]$Private:CanonicalHelpLinkArticle = $Private:HelpLinkArticleList[0]
-          $Private:HelpLinkArticleList.RemoveAt(0)
+      if ($ParameterHelp) {
+        $Help = $ParameterHelp
+        if ($HelpLinkArticleList.Count -eq 1 -and $Parameter.Count -eq 1) {
+          [uri]$CanonicalHelpLinkArticle = $HelpLinkArticleList[0]
+          $HelpLinkArticleList.RemoveAt(0)
 
-          [uri]$Private:ParameterizedCanonicalHelpLinkArticle = [string]$Private:CanonicalHelpLinkArticle + "#-$Parameter".ToLowerInvariant()
+          [uri]$ParameterizedCanonicalHelpLinkArticle = [string]$CanonicalHelpLinkArticle + "#-$Parameter".ToLowerInvariant()
 
-          $Private:HelpLinkArticleList.Add($Private:ParameterizedCanonicalHelpLinkArticle)
+          $HelpLinkArticleList.Add($ParameterizedCanonicalHelpLinkArticle)
         }
       }
     }
 
-    if ($Private:HelpLinkArticleList.Count -ne 0) {
-      $Private:ArticleList.AddRange(
-        [List[uri]]$Private:HelpLinkArticleList
+    if ($HelpLinkArticleList.Count -ne 0) {
+      $ArticleList.AddRange(
+        [List[uri]]$HelpLinkArticleList
       )
     }
     else {
-      $Private:about_Article = ''
+      $about_Article = ''
 
-      if ($Private:Help -and $Private:Help.Name) {
-        [string]$Private:LocalHelpTopic = $Private:Help.Name
+      if ($Help -and $Help.Name) {
+        [string]$LocalHelpTopic = $Help.Name
 
-        if ($Private:LocalHelpTopic.StartsWith('about_')) {
-          $Private:about_Article = [uri]"$ABOUT_BASE_URL/$Private:LocalHelpTopic"
+        if ($LocalHelpTopic.StartsWith('about_')) {
+          $about_Article = [uri]"$ABOUT_BASE_URL/$LocalHelpTopic"
         }
       }
       else {
         function Resolve-AboutArticle {
           [OutputType([uri])]
           param(
-            [string]$Private:Topic
+            [string]$Topic
           )
 
-          [uri]$Private:about_Article = "$ABOUT_BASE_URL/$Private:Topic"
-          if (Test-Url -Uri $Private:about_Article) {
-            return $Private:about_Article
+          [uri]$about_Article = "$ABOUT_BASE_URL/$Topic"
+          if (Test-Url -Uri $about_Article) {
+            return $about_Article
           }
         }
 
-        $Private:about_TopicCandidate = $Private:Topic -replace [regex]'(?>[_ :]+)', '_' -replace [regex]'^(?>about)?_?', 'about_'
+        $about_TopicCandidate = $Topic -replace [regex]'(?>[_ :]+)', '_' -replace [regex]'^(?>about)?_?', 'about_'
 
-        $Private:about_Article = Resolve-AboutArticle -Topic $Private:about_TopicCandidate
+        $about_Article = Resolve-AboutArticle -Topic $about_TopicCandidate
 
-        if (-not $Private:about_Article) {
-          if ($Private:about_TopicCandidate -notmatch [regex]'s$') {
-            $Private:about_TopicCandidate += 's'
-            $Private:about_Article = Resolve-AboutArticle -Topic $Private:about_TopicCandidate
+        if (-not $about_Article) {
+          if ($about_TopicCandidate -notmatch [regex]'s$') {
+            $about_TopicCandidate += 's'
+            $about_Article = Resolve-AboutArticle -Topic $about_TopicCandidate
           }
         }
 
-        if ($Private:about_Article) {
-          $Private:Help = Get-Help -Name $Private:about_TopicCandidate @Private:Silent
+        if ($about_Article) {
+          $Help = Get-Help -Name $about_TopicCandidate @Silent
         }
       }
 
-      if ($Private:about_Article) {
-        $Private:ArticleList.Add([uri]$Private:about_Article)
+      if ($about_Article) {
+        $ArticleList.Add([uri]$about_Article)
       }
     }
   }
 
-  if ($Private:Help) {
-    $Private:Help
+  if ($Help) {
+    $Help
   }
 
-  [string[]]$Private:Articles = $Private:ArticleList.ToArray() -replace [regex]'^(?>https?:\/\/)?', 'https://' -replace [regex]'(?<=^https:\/\/learn\.microsoft\.com\/)en-us\/', '' |
+  [string[]]$Articles = $ArticleList.ToArray() -replace [regex]'^(?>https?:\/\/)?', 'https://' -replace [regex]'(?<=^https:\/\/learn\.microsoft\.com\/)en-us\/', '' |
     Select-Object -Unique -CaseInsensitive
 
-  if ($Private:Articles) {
-    Write-Information -MessageData "$($Private:Articles -join "`n")" -InformationAction Continue
+  if ($Articles) {
+    Write-Information -MessageData "$($Articles -join "`n")" -InformationAction Continue
   }
 
   if (-not $env:SSH_CLIENT) {
-    if ($Private:Articles) {
-      [uri[]]$Private:Articles | Browse\Open-Url
+    if ($Articles) {
+      [uri[]]$Articles | Browse\Open-Url
     }
     else {
-      if ($Private:Help) {
-        Get-Help -Name $Private:Topic @Private:Silent 2>&1 | Out-Null
+      if ($Help) {
+        Get-Help -Name $Topic @Silent 2>&1 | Out-Null
       }
     }
   }
@@ -265,30 +265,30 @@ function Get-CommandAlias {
       $Scope = 'Global'
     }
 
-    $Private:AliasList = [List[System.Management.Automation.CommandInfo]]::new()
+    $AliasList = [List[System.Management.Automation.CommandInfo]]::new()
   }
 
   process {
-    $Private:AliasQuery = @{
+    $AliasQuery = @{
       Scope      = $Scope
       Definition = $Definition ? $Definition.Contains('*') ? $Definition : $Definition.Length -lt 3 ? "$Definition*" : "*$Definition*" : '*'
     }
 
     if ($Exclude) {
-      $Private:AliasQuery.Exclude = $Exclude
+      $AliasQuery.Exclude = $Exclude
     }
 
-    [System.Management.Automation.CommandInfo[]]$Private:AliasResults = Get-Alias @Private:AliasQuery
+    [System.Management.Automation.CommandInfo[]]$AliasResults = Get-Alias @AliasQuery
 
-    if ($Private:AliasResults) {
-      $Private:AliasList.AddRange(
-        [List[System.Management.Automation.CommandInfo]]$Private:AliasResults
+    if ($AliasResults) {
+      $AliasList.AddRange(
+        [List[System.Management.Automation.CommandInfo]]$AliasResults
       )
     }
   }
 
   end {
-    return $Private:AliasList |
+    return $AliasList |
       Sort-Object -Property DisplayName |
       Group-Object -Property DisplayName |
       ForEach-Object {
@@ -348,32 +348,32 @@ function Get-VerbList {
   )
 
   begin {
-    $Private:VerbList = [List[string]]::new()
+    $VerbList = [List[string]]::new()
   }
 
   process {
-    $Private:VerbQuery = @{
+    $VerbQuery = @{
       Verb = $Verb ? $Verb.Contains('*') ? $Verb : $Verb.Length -lt 3 ? "$Verb*" : "*$Verb*" : '*'
     }
 
     if ($Group) {
-      $Private:VerbQuery.Group = $Group
+      $VerbQuery.Group = $Group
     }
 
-    [string[]]$Private:VerbResults = Get-Verb @Private:VerbQuery |
+    [string[]]$VerbResults = Get-Verb @VerbQuery |
       Select-Object -ExpandProperty Verb
 
-    if ($Private:VerbResults) {
-      $Private:VerbList.AddRange(
-        [List[string]]$Private:VerbResults
+    if ($VerbResults) {
+      $VerbList.AddRange(
+        [List[string]]$VerbResults
       )
     }
   }
 
   end {
-    $Private:VerbList.Sort()
+    $VerbList.Sort()
 
-    return $Private:VerbList |
+    return $VerbList |
       Select-Object -Unique -CaseInsensitive
   }
 }

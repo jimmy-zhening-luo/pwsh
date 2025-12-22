@@ -66,7 +66,7 @@ function Edit-SystemPath {
     throw 'Cannot present Control Panel during SSH session'
   }
 
-  $Private:ControlPanel = @{
+  $ControlPanel = @{
     FilePath     = "$env:SystemRoot\System32\rundll32.exe"
     ArgumentList = @(
       'sysdm.cpl'
@@ -74,9 +74,9 @@ function Edit-SystemPath {
     )
   }
   if ($Administrator) {
-    $Private:ControlPanel.Verb = 'RunAs'
+    $ControlPanel.Verb = 'RunAs'
   }
-  Start-Process @Private:ControlPanel
+  Start-Process @ControlPanel
 }
 
 <#
@@ -132,30 +132,30 @@ function Stop-Task {
   process {
     switch ($PSCmdlet.ParameterSetName) {
       Id {
-        foreach ($Private:ProcessId in $Id) {
-          Stop-Process -Id $Private:ProcessId -Force
+        foreach ($ProcessId in $Id) {
+          Stop-Process -Id $ProcessId -Force
         }
       }
       Name {
-        foreach ($Private:ProcessHandle in $Name) {
-          if ($Private:ProcessHandle) {
-            $Private:Process = @{
+        foreach ($ProcessHandle in $Name) {
+          if ($ProcessHandle) {
+            $Process = @{
               Force = $True
             }
-            if ($Private:ProcessHandle -match [regex]'^(?>\d{1,10})$' -and $Private:ProcessHandle -as [uint]) {
-              $Private:Process.Id = [uint]$Private:ProcessHandle
+            if ($ProcessHandle -match [regex]'^(?>\d{1,10})$' -and $ProcessHandle -as [uint]) {
+              $Process.Id = [uint]$ProcessHandle
             }
             else {
-              $Private:Process.Name = $Private:ProcessHandle
+              $Process.Name = $ProcessHandle
             }
 
             if (
               $PSCmdlet.ShouldProcess(
-                $Private:Process.Id ? "Process ID: $($Private:Process.Id)" : "Process Name: $($Private:Process.Name)",
+                $Process.Id ? "Process ID: $($Process.Id)" : "Process Name: $($Process.Name)",
                 'Stop-Process'
               )
             ) {
-              Stop-Process @Private:Process
+              Stop-Process @Process
             }
           }
         }

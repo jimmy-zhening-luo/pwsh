@@ -150,23 +150,23 @@ function Invoke-Workspace {
     throw 'Cannot open VSCode from SSH session'
   }
 
-  $Private:ArgumentList = [List[string]]::new()
+  $ArgumentList = [List[string]]::new()
 
   if (
     $Location -and -not (
       Test-Path $Location -PathType Container
     )
   ) {
-    $Private:ArgumentList.Add($Location)
+    $ArgumentList.Add($Location)
     $Location = ''
   }
 
   if ($Workspace) {
-    [string]$Private:Target = $Location ? (
+    [string]$Target = $Location ? (
       Join-Path $Location $Workspace
     ) : $Workspace
-    if (Test-Path $Private:Target) {
-      $Private:ArgumentList.Insert(
+    if (Test-Path $Target) {
+      $ArgumentList.Insert(
         0,
         (Resolve-Path $Target).Path
       )
@@ -176,14 +176,14 @@ function Invoke-Workspace {
         throw "Path '$Workspace' does not exist."
       }
 
-      $Private:ArgumentList.Insert(0, $Workspace)
+      $ArgumentList.Insert(0, $Workspace)
       $Workspace = ''
     }
   }
 
   if (-not $Workspace) {
     if ($Location -and -not $Empty -or $ReuseWindow) {
-      $Private:ArgumentList.Insert(
+      $ArgumentList.Insert(
         0,
         (
           $Location ? (
@@ -195,26 +195,26 @@ function Invoke-Workspace {
   }
 
   if ($Argument) {
-    $Private:ArgumentList.AddRange(
+    $ArgumentList.AddRange(
       [List[string]]$Argument
     )
   }
 
   if ($ProfileName) {
     $Window = $True
-    $Private:ArgumentList.Add(
+    $ArgumentList.Add(
       $ProfileName.StartsWith('-') ? $ProfileName : "--profile=$ProfileName"
     )
   }
 
   if ($Window) {
-    $Private:ArgumentList.Add('--new-window')
+    $ArgumentList.Add('--new-window')
   }
   elseif ($ReuseWindow) {
-    $Private:ArgumentList.Add('--reuse-window')
+    $ArgumentList.Add('--reuse-window')
   }
 
-  Start-Process -FilePath "$env:LOCALAPPDATA\Programs\Microsoft VS Code\bin\code.cmd" -NoNewWindow -ArgumentList $Private:ArgumentList
+  Start-Process -FilePath "$env:LOCALAPPDATA\Programs\Microsoft VS Code\bin\code.cmd" -NoNewWindow -ArgumentList $ArgumentList
 }
 
 function Invoke-WorkspaceSibling {
