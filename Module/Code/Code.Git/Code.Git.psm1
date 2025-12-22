@@ -3,144 +3,6 @@ using namespace System.Collections.Generic
 using namespace Completer
 using namespace Completer.PathCompleter
 
-function Test-RelativePath {
-
-  [OutputType([bool])]
-  param(
-
-    [string]$Path,
-
-    [string]$Location,
-
-    [switch]$File
-  )
-
-  $Path = [Canonicalizer]::Normalize($Path)
-  $Location = [Canonicalizer]::Normalize($Location)
-
-  if ([Path]::IsPathRooted($Path)) {
-    if ($Location) {
-      if (
-        [Canonicalizer]::IsDescendantOf(
-          $Path,
-          $Location
-        )
-      ) {
-        $Path = [Path]::GetRelativePath(
-          $Location,
-          $Path
-        )
-      }
-      else {
-        return $False
-      }
-    }
-    else {
-      $Location = [Path]::GetPathRoot($Path)
-    }
-  }
-  elseif (
-    [Canonicalizer]::IsHomeRooted($Path)
-  ) {
-    $Path = [Canonicalizer]::RemoveHomeRoot($Path)
-
-    if ($Location) {
-      $Path = Join-Path $HOME $Path
-
-      if (
-        [Canonicalizer]::IsDescendantOf(
-          $Path,
-          $Location
-        )
-      ) {
-        $Path = [Path]::GetRelativePath(
-          $Location,
-          $Path
-        )
-      }
-      else {
-        return $False
-      }
-    }
-    else {
-      $Location = $HOME
-    }
-  }
-
-  if (-not $Location) {
-    $Location = $PWD.Path
-  }
-
-  if (-not (Test-Path $Location -PathType Container)) {
-    return $False
-  }
-
-  $FullLocation = (Resolve-Path $Location).Path
-  $FullPath = Join-Path $FullLocation $Path
-  [bool]$HasSubpath = $FullPath.Substring($FullLocation.Length) -notmatch [regex]'^\\*$'
-
-  return $HasSubpath ? (
-    Test-Path $FullPath -PathType (
-      $File ? 'Leaf' : 'Container'
-    )
-  ) : (
-    -not $File
-  )
-}
-
-function Resolve-RelativePath {
-
-  [OutputType([string])]
-  param(
-
-    [string]$Path,
-
-    [string]$Location,
-
-    [switch]$File
-  )
-
-  if (-not (Test-RelativePath @PSBoundParameters)) {
-    throw "Invalid path '$Path'."
-  }
-
-  $Path = [Canonicalizer]::Normalize($Path)
-  $Location = [Canonicalizer]::Normalize($Location)
-
-  if ([Path]::IsPathRooted($Path)) {
-    if ($Location) {
-      $Path = [Path]::GetRelativePath(
-        $Location,
-        $Path
-      )
-    }
-    else {
-      $Location = [Path]::GetPathRoot($Path)
-    }
-  }
-  elseif (
-    [Canonicalizer]::IsHomeRooted($Path)
-  ) {
-    $Path = [Canonicalizer]::RemoveHomeRoot($Path)
-
-    if ($Location) {
-      $Path = [Path]::GetRelativePath(
-        $Location,
-        (Join-Path $HOME $Path)
-      )
-    }
-    else {
-      $Location = $HOME
-    }
-  }
-
-  if (-not $Location) {
-    $Location = $PWD.Path
-  }
-
-  return (Resolve-Path ($FullPath = Join-Path (Resolve-Path $Location).Path $Path) -Force).Path
-}
-
 function Resolve-GitRepository {
   [CmdletBinding()]
   [OutputType([string[]])]
@@ -182,14 +44,8 @@ function Resolve-GitRepository {
           Write-Output (
             Resolve-Path (
               Join-Path $REPO_ROOT $WorkingDirectory
-            )
+            ) -Force
           ).Path
-        }
-        
-        Test-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT) {
-          Write-Output (
-            Resolve-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT
-          )
         }
       }
       else {
@@ -208,13 +64,19 @@ function Resolve-GitRepository {
           ).Path
         }
         elseif (
-          Test-RelativePath -Path (
-            Join-Path $WorkingDirectory .git
-          ) -Location $REPO_ROOT
+          -not [Path]::IsPathRooted(
+            $WorkingDirectory
+          ) -and (
+            Test-Path (
+              Join-Path $REPO_ROOT $WorkingDirectory .git
+            ) -PathType Container
+          )
         ) {
           Write-Output (
-            Resolve-RelativePath -Path $WorkingDirectory -Location $REPO_ROOT
-          )
+            Resolve-Path (
+              Join-Path $REPO_ROOT $WorkingDirectory
+            ) -Force
+          ).Path
         }
       }
     }
