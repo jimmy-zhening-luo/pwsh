@@ -14,9 +14,7 @@ namespace Completer
 
       private RelativePathCompletionsAttribute() : base() { }
 
-      public RelativePathCompletionsAttribute(
-        ScriptBlock currentDirectory
-      ) : this()
+      public RelativePathCompletionsAttribute(ScriptBlock currentDirectory) : this()
       {
         CurrentDirectory = currentDirectory;
       }
@@ -38,17 +36,14 @@ namespace Completer
         Flat = flat;
       }
 
-      public override PathCompleter Create()
-      {
-        return new PathCompleter(
-          CurrentDirectory
-            .Invoke()[0]
-            .BaseObject
-            .ToString(),
-          ItemType,
-          Flat
-        );
-      }
+      public override PathCompleter Create() => new(
+        CurrentDirectory
+          .Invoke()[0]
+          .BaseObject
+          .ToString(),
+        ItemType,
+        Flat
+      );
     }
   } // namespace PathCompleter
 } // namespace Completer

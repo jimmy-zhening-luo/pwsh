@@ -10,9 +10,7 @@ namespace Completer
 
     private CompletionsAttribute() : base() { }
 
-    public CompletionsAttribute(
-      string stringifiedDomain
-    ) : this()
+    public CompletionsAttribute(string stringifiedDomain) : this()
     {
       StringifiedDomain = stringifiedDomain;
     }
@@ -35,18 +33,15 @@ namespace Completer
       Strict = strict;
     }
 
-    public override Completer Create()
-    {
-      return new Completer(
-        StringifiedDomain
-          .Split(
-            ',',
-            StringSplitOptions.RemoveEmptyEntries
-            | StringSplitOptions.TrimEntries
-          ),
-        Strict,
-        Casing
-      );
-    }
+    public override Completer Create() => new(
+      StringifiedDomain
+        .Split(
+          ',',
+          StringSplitOptions.RemoveEmptyEntries
+          | StringSplitOptions.TrimEntries
+        ),
+      Strict,
+      Casing
+    );
   }
 }

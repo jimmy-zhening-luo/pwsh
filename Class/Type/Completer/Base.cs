@@ -9,11 +9,9 @@ namespace Completer
   {
     public readonly CompletionCase Casing;
 
-    public BaseCompleter() { }
+    private protected BaseCompleter() { }
 
-    public BaseCompleter(
-      CompletionCase casing
-    ) : this()
+    private protected BaseCompleter(CompletionCase casing) : this()
     {
       Casing = casing;
     }
@@ -32,13 +30,13 @@ namespace Completer
       )
     );
 
-    public abstract IEnumerable<string> FulfillArgumentCompletion(
+    private protected abstract IEnumerable<string> FulfillArgumentCompletion(
       string parameterName,
       string wordToComplete,
       IDictionary fakeBoundParameters
     );
 
-    public IEnumerable<CompletionResult> WrapArgumentCompletionResult(
+    private IEnumerable<CompletionResult> WrapArgumentCompletionResult(
       IEnumerable<string> completedStrings
     )
     {

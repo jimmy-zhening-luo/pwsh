@@ -6,7 +6,6 @@ namespace Completer
   {
     public static partial class Canonicalizer
     {
-
       [GeneratedRegex(
         @"(?<!^)\\\\+"
       )]

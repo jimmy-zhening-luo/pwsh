@@ -12,9 +12,7 @@ namespace Completer
 
     private DynamicCompletionsAttribute() : base() { }
 
-    public DynamicCompletionsAttribute(
-      ScriptBlock domainGenerator
-    ) : this()
+    public DynamicCompletionsAttribute(ScriptBlock domainGenerator) : this()
     {
       DomainGenerator = domainGenerator;
     }
@@ -37,19 +35,16 @@ namespace Completer
       Strict = strict;
     }
 
-    public override Completer Create()
-    {
-      return new Completer(
-        DomainGenerator
-          .Invoke()
-          .Select(
-            member => member
-              .BaseObject
-              .ToString()
-          ),
-        Strict,
-        Casing
-      );
-    }
+    public override Completer Create() => new(
+      DomainGenerator
+        .Invoke()
+        .Select(
+          member => member
+            .BaseObject
+            .ToString()
+        ),
+      Strict,
+      Casing
+    );
   }
 }

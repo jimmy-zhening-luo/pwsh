@@ -8,11 +8,9 @@ namespace Completer
   {
     public readonly CompletionCase Casing;
 
-    public BaseCompletionsAttribute() { }
+    private protected BaseCompletionsAttribute() { }
 
-    public BaseCompletionsAttribute(
-      CompletionCase casing
-    ) : this()
+    private protected BaseCompletionsAttribute(CompletionCase casing) : this()
     {
       Casing = casing;
     }

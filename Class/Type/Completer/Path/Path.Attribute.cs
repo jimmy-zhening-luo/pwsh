@@ -35,14 +35,11 @@ namespace Completer
         Flat = flat;
       }
 
-      public override PathCompleter Create()
-      {
-        return new PathCompleter(
-          Location,
-          ItemType,
-          Flat
-        );
-      }
+      public override PathCompleter Create() => new(
+        Location,
+        ItemType,
+        Flat
+      );
     }
   } // namespace PathCompleter
 } // namespace Completer

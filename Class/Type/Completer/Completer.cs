@@ -21,9 +21,7 @@ namespace Completer
       Strict = strict;
     }
 
-    public IEnumerable<string> FindCompletion(
-      string wordToComplete
-    )
+    public IEnumerable<string> FindCompletion(string wordToComplete)
     {
       string unescapedWordToComplete = Escaper.Unescape(wordToComplete);
       if (
@@ -75,7 +73,7 @@ namespace Completer
       }
     }
 
-    public override IEnumerable<string> FulfillArgumentCompletion(
+    private protected override IEnumerable<string> FulfillArgumentCompletion(
       string parameterName,
       string wordToComplete,
       IDictionary fakeBoundParameters

@@ -154,7 +154,7 @@ namespace Completer
         yield break;
       }
 
-      public override IEnumerable<string> FulfillArgumentCompletion(
+      private protected override IEnumerable<string> FulfillArgumentCompletion(
         string parameterName,
         string wordToComplete,
         IDictionary fakeBoundParameters
