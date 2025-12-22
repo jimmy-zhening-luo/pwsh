@@ -271,7 +271,7 @@ function Get-CommandAlias {
   process {
     $AliasQuery = @{
       Scope      = $Scope
-      Definition = $Definition ? $Definition.Contains('*') ? $Definition : $Definition.Length -lt 3 ? "$Definition*" : "*$Definition*" : '*'
+      Definition = $Definition ? $Definition.Contains([char]'*') ? $Definition : $Definition.Length -lt 3 ? "$Definition*" : "*$Definition*" : '*'
     }
 
     if ($Exclude) {
@@ -353,7 +353,7 @@ function Get-VerbList {
 
   process {
     $VerbQuery = @{
-      Verb = $Verb ? $Verb.Contains('*') ? $Verb : $Verb.Length -lt 3 ? "$Verb*" : "*$Verb*" : '*'
+      Verb = $Verb ? $Verb.Contains([char]'*') ? $Verb : $Verb.Length -lt 3 ? "$Verb*" : "*$Verb*" : '*'
     }
 
     if ($Group) {

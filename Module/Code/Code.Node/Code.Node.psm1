@@ -277,7 +277,7 @@ function Invoke-NodePackage {
 
   if ($WorkingDirectory.Length -ne 0) {
     if (
-      $WorkingDirectory.StartsWith('-') -or -not (
+      $WorkingDirectory.StartsWith([char]'-') -or -not (
         Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory
       )
     ) {

@@ -183,7 +183,7 @@ function Start-Workspace {
       )
     }
     else {
-      if (-not $Workspace.StartsWith('-')) {
+      if (-not $Workspace.StartsWith([char]'-')) {
         throw "Path '$Workspace' does not exist."
       }
 
