@@ -11,7 +11,6 @@ using namespace System.Collections.Generic
   [string[]]$Private:Types = [string[]]$Private:DOTNET_SOLUTION.Types
   #endregion
 
-
   #region Installer
   function Install-PSProject {
     [CmdletBinding()]
@@ -57,7 +56,6 @@ using namespace System.Collections.Generic
   }
   #endregion
 
-
   #region Install
   foreach ($Private:BinaryModule in $Private:Cmdlets) {
     Install-PSProject -Project $Private:BinaryModule -Folder Cmdlet -SourceRoot $Private:SourceRoot -InstallPath $Private:ModuleRoot\$Private:BinaryModule
@@ -67,7 +65,6 @@ using namespace System.Collections.Generic
     Install-PSProject -Project $Private:Type -Folder Type -SourceRoot $Private:SourceRoot -InstallPath $Private:SourceRoot
   }
   #endregion
-
 
   #region Add Type
   foreach ($Private:Type in $Private:Types) {
