@@ -104,13 +104,11 @@ namespace Completer
           )
           {
             yield return Canonicalizer.Denormalize(
-              Path.Join(
-                currentDirectoryValue,
-                Path.GetFileName(directory),
-                Flat
-                  ? string.Empty
-                  : @"\"
-              )
+              currentDirectoryValue,
+              Path.GetFileName(directory),
+              Flat
+                ? string.Empty
+                : @"\"
             );
           }
         }
@@ -126,28 +124,22 @@ namespace Completer
           )
           {
             yield return Canonicalizer.Denormalize(
-              Path.Join(
-                currentDirectoryValue,
-                Path.GetFileName(file)
-              )
+              currentDirectoryValue,
+              Path.GetFileName(file)
             );
           }
         }
 
         yield return Canonicalizer.Denormalize(
-          Path.Join(
-            currentDirectoryValue,
-            @"..\"
-          )
+          currentDirectoryValue,
+          @"..\"
         );
 
         if (currentDirectoryValue != string.Empty)
         {
           yield return Canonicalizer.Denormalize(
-            Path.Join(
-              currentDirectoryValue,
-              @"\"
-            )
+            currentDirectoryValue,
+            @"\"
           );
         }
 

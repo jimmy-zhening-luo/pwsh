@@ -36,7 +36,17 @@ namespace Completer
             );
       }
 
-      public static string Denormalize(string path) => path.Replace('\\', '/');
+      public static string Denormalize(
+        string path,
+        string? location = null,
+        string? subpath = null,
+      ) => Path
+        .Join(
+          location ?? "",
+          path,
+          subpath ?? ""
+        )
+        .Replace('\\', '/');
 
       public static string AnchorHome(
         string path
