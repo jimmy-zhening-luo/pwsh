@@ -66,10 +66,11 @@ namespace Completer
           : path[2..]
         : path;
 
-      public static string RemoveHomeRoot(string path) => RemoveHomeRootRegex().Replace(
-        path,
-        string.Empty
-      );
+      public static string RemoveHomeRoot(string path) => IsHomeRooted(path)
+        ? path.Length == 1
+          ? string.Empty
+          : path[2..]
+        : path;
     }
   } // namespace PathCompleter
 } // namespace Completer

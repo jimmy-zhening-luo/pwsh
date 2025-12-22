@@ -15,11 +15,6 @@ namespace Completer
         @"^(?=(?>[.\\]*)$)"
       )]
       public static partial Regex IsDescendantOfRegex();
-
-      [GeneratedRegex(
-        @"^~(?>\\+|$)"
-      )]
-      public static partial Regex RemoveHomeRootRegex();
     }
   } // namespace PathCompleter
 } // namespace Completer
