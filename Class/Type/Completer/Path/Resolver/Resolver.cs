@@ -7,28 +7,6 @@ namespace Completer
   {
     public class Resolver
     {
-      public static bool Test(
-        string path,
-        string location = "",
-        PathItemType itemType = PathItemType.Any,
-        bool newable = false,
-        bool requireSubpath = false
-      )
-      {
-        return true;
-      }
-
-      public static string Resolve(
-        string path,
-        string location = "",
-          PathItemType itemType = PathItemType.Any,
-        bool newable = false,
-        bool requireSubpath = false
-      )
-      {
-        return path;
-      }
-
       public static string Home() => Environment.GetFolderPath(
         Environment
           .SpecialFolder
