@@ -23,47 +23,54 @@ namespace Completer
     public override IEnumerable<string> FulfillCompletion(string wordToComplete)
     {
       string unescapedWordToComplete = Escaper.Unescape(wordToComplete);
+
       if (
         string.IsNullOrWhiteSpace(
           unescapedWordToComplete
         )
       )
       {
-        return Domain;
-      }
-
-      int matched = 0;
-      foreach (string member in Domain)
-      {
-        if (
-          member.StartsWith(
-            unescapedWordToComplete,
-            StringComparison.OrdinalIgnoreCase
-          )
-        )
+        foreach (string member in Domain)
         {
-          ++matched;
           yield return member;
         }
+        yield break;
       }
-      if (!Strict && matched <= 1)
+      else
       {
+        int matched = 0;
         foreach (string member in Domain)
         {
           if (
-            member.Length > unescapedWordToComplete.Length
-            && member.IndexOf(
+            member.StartsWith(
               unescapedWordToComplete,
-              1,
               StringComparison.OrdinalIgnoreCase
-            ) >= 1
+            )
           )
           {
+            ++matched;
             yield return member;
           }
         }
+        if (!Strict && matched <= 1)
+        {
+          foreach (string member in Domain)
+          {
+            if (
+              member.Length > unescapedWordToComplete.Length
+              && member.IndexOf(
+                unescapedWordToComplete,
+                1,
+                StringComparison.OrdinalIgnoreCase
+              ) >= 1
+            )
+            {
+              yield return member;
+            }
+          }
+        }
+        yield break;
       }
-      yield break;
     }
   }
 }
