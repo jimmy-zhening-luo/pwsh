@@ -128,12 +128,13 @@ function Start-Workspace {
     [AllowEmptyString()]
     [DynamicCompletions(
       {
-        return Get-Content -Raw $Env:APPDATA\Code\User\sync\profiles\lastSyncprofiles.json |
-          ConvertFrom-Json |
-          Select-Object -ExpandProperty syncData |
-          Select-Object -ExpandProperty content |
-          ConvertFrom-Json |
-          Select-Object -ExpandProperty Name
+        return (
+          Get-Content -Raw $Env:APPDATA\Code\User\sync\profiles\lastSyncprofiles.json |
+            ConvertFrom-Json |
+            Select-Object -ExpandProperty syncData |
+            Select-Object -ExpandProperty content |
+            ConvertFrom-Json
+        ).Name.ToLower() + 'default'
       }
     )]
     [string]$ProfileName,
@@ -210,19 +211,101 @@ function Start-Workspace {
       [List[string]]$Argument
     )
   }
-
   if ($ProfileName) {
-    $Window = $True
     $ArgumentList.Add(
       $ProfileName.StartsWith('-') ? $ProfileName : "--profile=$ProfileName"
     )
   }
 
+  [string[]]$FullProfileArgumentMatch = $ArgumentList -match [regex]'^(?>--profile=(?>[^\s=-][^=]*)?)$'
+  [string[]]$ProfileArgumentMatch = $ArgumentList -eq '--profile'
+
+  if ($FullProfileArgumentMatch -or $ProfileArgumentMatch) {
+    if (
+      $FullProfileArgumentMatch -and $ProfileArgumentMatch -or $FullProfileArgumentMatch.Count -gt 1 -or $ProfileArgumentMatch.Count -gt 1
+    ) {
+      throw 'Visual Studio Code profile argument was specified more than once.'
+    }
+
+    [string]$ProfileArgumentValue = ''
+
+    if ($FullProfileArgumentMatch) {
+      [string]$_profile, [string]$ProfileArgumentValue = $FullProfileArgumentMatch[0] -split '='
+
+      $ArgumentList.Remove($FullProfileArgumentMatch[0])
+    }
+    else {
+      $ProfileArgumentIndex = $ArgumentList.IndexOf($ProfileArgumentMatch[0])
+
+      if (
+        $ProfileArgumentIndex -eq -1 -or $ProfileArgumentIndex -eq (
+          $ArgumentList.Count - 1
+        )
+      ) {
+        throw 'Visual Studio Code --profile argument was specified but no profile name was given.'
+      }
+
+      [string]$ProfileArgumentValue = $ArgumentList[$ProfileArgumentIndex + 1]
+
+      if (
+        [string]::IsNullOrWhiteSpace(
+          $ProfileArgumentValue
+        ) -or $ProfileArgumentValue.StartsWith(
+          [char]'-'
+        ) -or $ProfileArgumentValue.Contains(
+          [char]'='
+        )
+      ) {
+        throw 'Visual Studio Code --profile argument is missing or invalid.'
+      }
+
+      $ArgumentList.RemoveRange($ProfileArgumentIndex, 2)
+    }
+
+    [string[]]$Profiles = @('Default')
+    $Profiles += Get-Content -Raw $Env:APPDATA\Code\User\sync\profiles\lastSyncprofiles.json |
+      ConvertFrom-Json |
+      Select-Object -ExpandProperty syncData |
+      Select-Object -ExpandProperty content |
+      ConvertFrom-Json |
+      Select-Object -ExpandProperty Name
+
+    $TrimmedProfileName = $ProfileArgumentValue.Trim()
+
+    [string]$MatchedProfile = $Profiles |
+      Where-Object {
+        $PSItem.StartsWith(
+          $TrimmedProfileName,
+          [System.StringComparison]::OrdinalIgnoreCase
+        )
+      } |
+      Select-Object -First 1
+
+    if (-not $MatchedProfile) {
+      throw "Visual Studio Code profile '$TrimmedProfileName' does not exist."
+    }
+
+    $ArgumentList.Add("--profile=$MatchedProfile")
+    $Window = $True
+  }
+
   if ($Window) {
-    $ArgumentList.Add('--new-window')
+    if ($ArgumentList.Contains('--reuse-window')) {
+      $ArgumentList.Remove('--reuse-window')
+    }
+
+    if (-not $ArgumentList.Contains('--new-window')) {
+      $ArgumentList.Add('--new-window')
+    }
   }
   elseif ($ReuseWindow) {
-    $ArgumentList.Add('--reuse-window')
+    if ($ArgumentList.Contains('--new-window')) {
+      throw 'Cannot specify --reuse-window when --new-window is specified, as --new-window will always take precedence.'
+    }
+
+    if (-not $ArgumentList.Contains('--reuse-window')) {
+      $ArgumentList.Add('--reuse-window')
+    }
   }
 
   Start-Process -FilePath "$env:LOCALAPPDATA\Programs\Microsoft VS Code\bin\code.cmd" -NoNewWindow -ArgumentList $ArgumentList
