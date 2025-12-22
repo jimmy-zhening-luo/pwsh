@@ -33,8 +33,7 @@ namespace Completer
       public static string Normalize(
         string path,
         bool trimLeadingRelative = false,
-        bool trimTrailing = false,
-        char? separator = null
+        bool trimTrailing = false
       )
       {
         string normalPath = DuplicatePathSeparatorRegex().Replace(
@@ -46,26 +45,19 @@ namespace Completer
             ),
           @"\"
         );
-
         string pretrimmedNormalPath = trimLeadingRelative
           ? RemoveRelativeRootRegex().Replace(
               normalPath,
               string.Empty
             )
           : normalPath;
-        string trimmedNormalPath = trimTrailing
+
+        return trimTrailing
           ? RemoveTrailingPathSeparator().Replace(
               pretrimmedNormalPath,
               string.Empty
             )
           : pretrimmedNormalPath;
-
-        return separator.HasValue && separator != '\\'
-          ? trimmedNormalPath.Replace(
-              '\\',
-              separator.Value
-            )
-          : trimmedNormalPath;
       }
 
       public static string AnchorHome(
