@@ -39,7 +39,7 @@ namespace Completer
       public static string Denormalize(
         string path,
         string? location = null,
-        string? subpath = null,
+        string? subpath = null
       ) => Path
         .Join(
           location ?? "",
