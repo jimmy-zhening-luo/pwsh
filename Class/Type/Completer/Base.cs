@@ -30,11 +30,7 @@ namespace Completer
       )
     );
 
-    private protected abstract IEnumerable<string> FulfillArgumentCompletion(
-      string parameterName,
-      string wordToComplete,
-      IDictionary fakeBoundParameters
-    );
+    private protected abstract IEnumerable<string> FulfillArgumentCompletion(string wordToComplete);
 
     private IEnumerable<CompletionResult> WrapArgumentCompletionResult(
       IEnumerable<string> completedStrings

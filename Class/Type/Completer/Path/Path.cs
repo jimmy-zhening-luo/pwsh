@@ -152,9 +152,7 @@ namespace Completer
       }
 
       private protected override IEnumerable<string> FulfillArgumentCompletion(
-        string parameterName,
-        string wordToComplete,
-        IDictionary fakeBoundParameters
+        string wordToComplete
       )
       {
         foreach (
