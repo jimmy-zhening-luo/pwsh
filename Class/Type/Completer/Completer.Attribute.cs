@@ -21,11 +21,10 @@ namespace Completer
       string stringifiedDomain,
       bool strict,
       CompletionCase casing
-    ) : base(casing)
-    {
-      StringifiedDomain = stringifiedDomain;
-      Strict = strict;
-    }
+    ) : base(casing) => this(
+      stringifiedDomain,
+      strict
+    );
 
     public override Completer Create() => new(
       StringifiedDomain
