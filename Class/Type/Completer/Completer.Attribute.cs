@@ -10,18 +10,12 @@ namespace Completer
 
     private CompletionsAttribute() : base() { }
 
-    public CompletionsAttribute(string stringifiedDomain) : this()
-    {
-      StringifiedDomain = stringifiedDomain;
-    }
+    public CompletionsAttribute(string stringifiedDomain) : this() => StringifiedDomain = stringifiedDomain;
 
     public CompletionsAttribute(
       string stringifiedDomain,
       bool strict
-    ) : this(stringifiedDomain)
-    {
-      Strict = strict;
-    }
+    ) : this(stringifiedDomain) => Strict = strict;
 
     public CompletionsAttribute(
       string stringifiedDomain,
