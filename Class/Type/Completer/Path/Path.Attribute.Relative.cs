@@ -26,9 +26,6 @@ namespace Completer
         PathItemType itemType,
         bool flat
       ) : this(currentDirectory, itemType) => Flat = flat;
-      {
-        Flat = flat;
-      }
 
       public override PathCompleter Create() => new(
         CurrentDirectory
