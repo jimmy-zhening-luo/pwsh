@@ -10,10 +10,7 @@ namespace Completer
 
     private protected BaseCompletionsAttribute() : base() { }
 
-    private protected BaseCompletionsAttribute(CompletionCase casing) : this()
-    {
-      Casing = casing;
-    }
+    private protected BaseCompletionsAttribute(CompletionCase casing) : this() => Casing = casing;
 
     public abstract TCompleter Create();
     IArgumentCompleter IArgumentCompleterFactory.Create() => Create();
