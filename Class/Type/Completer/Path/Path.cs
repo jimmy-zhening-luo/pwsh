@@ -17,14 +17,14 @@ namespace Completer
         string root,
         PathItemType type,
         bool flat
-      ) : this()
-      {
-        Root = Canonicalizer.AnchorHome(
+      ) : this() => (Root, Type, Flat) = 
+      (
+        Canonicalizer.AnchorHome(
           Canonicalizer.Normalize(root)
-        );
-        Type = type;
-        Flat = flat;
-      }
+        ),
+        type,
+        flat
+      );
 
       public override IEnumerable<string> FulfillCompletion(string wordToComplete)
       {
