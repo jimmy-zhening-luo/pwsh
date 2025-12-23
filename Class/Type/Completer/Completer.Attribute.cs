@@ -21,7 +21,10 @@ namespace Completer
       string stringifiedDomain,
       bool strict,
       CompletionCase casing
-    ) : base(casing) => new CompletionsAttribute(
+    ) : base(casing) => (
+      StringifiedDomain,
+      Strict
+    ) = (
       stringifiedDomain,
       strict
     );
