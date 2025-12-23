@@ -11,10 +11,7 @@ namespace Completer
 
     private protected BaseCompleter() { }
 
-    private protected BaseCompleter(CompletionCase casing) : this()
-    {
-      Casing = casing;
-    }
+    private protected BaseCompleter(CompletionCase casing) : this() => Casing = casing;
 
     public IEnumerable<CompletionResult> CompleteArgument(
       string commandName,
