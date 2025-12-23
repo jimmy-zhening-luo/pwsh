@@ -33,7 +33,7 @@ namespace Transform
         {
           WriteObject(name);
         }
-      } // class TestCmdlet
+      }
     } // namespace Commands
   } // namespace Test
 } // namespace Transform
