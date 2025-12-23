@@ -155,7 +155,7 @@ function Start-Workspace {
 
     [switch]$Empty,
 
-    [Parameter(DontShow)][switch]$zNothing
+    [Parameter(DontShow)][switch]$z
   )
 
   if ($env:SSH_CLIENT) {
@@ -342,7 +342,7 @@ function Start-WorkspaceSibling {
     [Alias('rw')]
     [switch]$ReuseWindow,
 
-    [Parameter(DontShow)][switch]$zNothing
+    [Parameter(DontShow)][switch]$z
   )
 
   Start-Workspace @PSBoundParameters -Location (Split-Path $PWD.Path) -Empty
@@ -379,7 +379,7 @@ function Start-WorkspaceRelative {
     [Alias('rw')]
     [switch]$ReuseWindow,
 
-    [Parameter(DontShow)][switch]$zNothing
+    [Parameter(DontShow)][switch]$z
   )
 
   Start-Workspace @PSBoundParameters -Location ($PWD.Path | Split-Path | Split-Path)
@@ -416,7 +416,7 @@ function Start-WorkspaceHome {
     [Alias('rw')]
     [switch]$ReuseWindow,
 
-    [Parameter(DontShow)][switch]$zNothing
+    [Parameter(DontShow)][switch]$z
   )
 
   Start-Workspace @PSBoundParameters -Location $HOME
@@ -453,7 +453,7 @@ function Start-WorkspaceCode {
     [Alias('rw')]
     [switch]$ReuseWindow,
 
-    [Parameter(DontShow)][switch]$zNothing
+    [Parameter(DontShow)][switch]$z
   )
 
   Start-Workspace @PSBoundParameters -Location $REPO_ROOT
@@ -491,7 +491,7 @@ function Start-WorkspaceDrive {
     [Alias('rw')]
     [switch]$ReuseWindow,
 
-    [Parameter(DontShow)][switch]$zNothing
+    [Parameter(DontShow)][switch]$z
   )
 
   Start-Workspace @PSBoundParameters -Location $PWD.Drive.Root

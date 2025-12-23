@@ -262,7 +262,7 @@ function Invoke-NodePackage {
     # Pass the -P flag as an argument to npm
     [switch]$P,
 
-    [Parameter(DontShow)][switch]$zNothing
+    [Parameter(DontShow)][switch]$z
   )
 
   $NodeArgument = [List[string]]::new()
@@ -434,7 +434,7 @@ function Compare-NodeModule {
     # Node package root at which to run the command
     [string]$WorkingDirectory,
 
-    [Parameter(DontShow)][switch]$zNothing
+    [Parameter(DontShow)][switch]$z
   )
 
   $NodeArgument = [List[string]]::new()
@@ -497,7 +497,7 @@ function Step-NodePackageVersion {
     # Node package root at which to run the command
     [string]$WorkingDirectory,
 
-    [Parameter(DontShow)][switch]$zNothing
+    [Parameter(DontShow)][switch]$z
   )
 
   if ($Version) {
@@ -577,7 +577,7 @@ function Invoke-NodePackageScript {
     # Node package root at which to run the command
     [string]$WorkingDirectory,
 
-    [Parameter(DontShow)][switch]$zNothing
+    [Parameter(DontShow)][switch]$z
   )
 
   if (-not $Script) {
@@ -628,7 +628,7 @@ function Test-NodePackage {
     # Node package root at which to run the command
     [string]$WorkingDirectory,
 
-    [Parameter(DontShow)][switch]$zNothing
+    [Parameter(DontShow)][switch]$z
   )
 
   $NodeArgument = [List[string]]::new()

@@ -126,7 +126,7 @@ function Stop-Task {
     )]
     [switch]$Self,
 
-    [Parameter(DontShow)][switch]$zNothing
+    [Parameter(DontShow)][switch]$z
   )
 
   process {

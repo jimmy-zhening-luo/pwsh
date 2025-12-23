@@ -68,7 +68,7 @@ function Measure-Performance {
     # If specified, returns only the command performance as a timespan. Cannot be specified with Numeric.
     [switch]$Timespan,
 
-    [Parameter(DontShow)][switch]$zNothing
+    [Parameter(DontShow)][switch]$z
   )
 
   [string]$FullCommand = $Command -join ' '
@@ -171,7 +171,7 @@ function Measure-PSProfile {
     # If specified, returns only the profile overhead as a timespan. Cannot be specified with Numeric.
     [switch]$Timespan,
 
-    [Parameter(DontShow)][switch]$zNothing
+    [Parameter(DontShow)][switch]$z
   )
 
   if (-not $Iterations) {
@@ -302,7 +302,7 @@ function Update-PSProfile {
   [CmdletBinding()]
   [OutputType([void])]
   param(
-    [Parameter(DontShow)][switch]$zNothing
+    [Parameter(DontShow)][switch]$z
   )
 
   Publish-PSProfile -SkipBuild
@@ -328,7 +328,7 @@ function Publish-PSProfile {
     # If specified, skips the build step after syncing the repository and linter.
     [switch]$SkipBuild,
 
-    [Parameter(DontShow)][switch]$zNothing
+    [Parameter(DontShow)][switch]$z
   )
 
   #region Pull Repo

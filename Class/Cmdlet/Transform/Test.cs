@@ -27,7 +27,7 @@ namespace Transform
         private string name = "";
 
         [Parameter(DontShow = true)]
-        public SwitchParameter zNothing;
+        public SwitchParameter z;
 
         protected override void EndProcessing()
         {

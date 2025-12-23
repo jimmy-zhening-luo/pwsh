@@ -74,7 +74,7 @@ function Get-Size {
     # Returns only the numeric scalar value in the specified unit.
     [switch]$Number,
 
-    [Parameter(DontShow)][switch]$zNothing
+    [Parameter(DontShow)][switch]$z
   )
 
   begin {

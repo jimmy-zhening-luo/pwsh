@@ -72,7 +72,7 @@ function Test-Host {
     # Shorthand for InformationLevel Detailed
     [switch]$Detailed,
 
-    [Parameter(DontShow)][switch]$zNothing
+    [Parameter(DontShow)][switch]$z
   )
 
   begin {
@@ -159,7 +159,7 @@ function Test-Url {
     # The URL to test. If the URL has no scheme, it defaults to 'http'.
     [uri[]]$Uri,
 
-    [Parameter(DontShow)][switch]$zNothing
+    [Parameter(DontShow)][switch]$z
   )
 
   begin {

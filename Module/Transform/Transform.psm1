@@ -14,7 +14,7 @@ function Test-Function {
     )]
     [string[]]$ArgumentList,
 
-    [Parameter(DontShow)][switch]$zNothing
+    [Parameter(DontShow)][switch]$z
   )
 
   return ConvertTo-Json $PSBoundParameters -EnumsAsStrings -Depth 6
@@ -48,7 +48,7 @@ function Copy-Guid {
     # Only copy GUID to clipboard; do not output to the console
     [switch]$Silent,
 
-    [Parameter(DontShow)][switch]$zNothing
+    [Parameter(DontShow)][switch]$z
   )
 
   $Guid = (New-Guid).Guid
