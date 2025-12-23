@@ -13,27 +13,18 @@ namespace Completer
 
       private PathCompletionsAttribute() : base() { }
 
-      public PathCompletionsAttribute(string location) : this()
-      {
-        Location = location;
-      }
+      public PathCompletionsAttribute(string location) : this() => Location = location;
 
       public PathCompletionsAttribute(
         string location,
         PathItemType itemType
-      ) : this(location)
-      {
-        ItemType = itemType;
-      }
+      ) : this(location) => ItemType = itemType;
 
       public PathCompletionsAttribute(
         string location,
         PathItemType itemType,
         bool flat
-      ) : this(location, itemType)
-      {
-        Flat = flat;
-      }
+      ) : this(location, itemType) => Flat = flat;
 
       public override PathCompleter Create() => new(
         Location,

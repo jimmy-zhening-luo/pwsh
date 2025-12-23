@@ -14,24 +14,18 @@ namespace Completer
 
       private RelativePathCompletionsAttribute() : base() { }
 
-      public RelativePathCompletionsAttribute(ScriptBlock currentDirectory) : this()
-      {
-        CurrentDirectory = currentDirectory;
-      }
+      public RelativePathCompletionsAttribute(ScriptBlock currentDirectory) : this() => CurrentDirectory = currentDirectory;
 
       public RelativePathCompletionsAttribute(
         ScriptBlock currentDirectory,
         PathItemType itemType
-      ) : this(currentDirectory)
-      {
-        ItemType = itemType;
-      }
+      ) : this(currentDirectory) => ItemType = itemType;
 
       public RelativePathCompletionsAttribute(
         ScriptBlock currentDirectory,
         PathItemType itemType,
         bool flat
-      ) : this(currentDirectory, itemType)
+      ) : this(currentDirectory, itemType) => Flat = flat;
       {
         Flat = flat;
       }
