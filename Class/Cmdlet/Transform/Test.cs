@@ -34,6 +34,6 @@ namespace Transform
           WriteObject(name);
         }
       }
-    } // namespace Commands
+    }
   } // namespace Test
 } // namespace Transform
