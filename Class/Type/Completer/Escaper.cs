@@ -6,8 +6,8 @@ namespace Completer
   {
     public static string Unescape(string escapedText) => (
       escapedText.Length > 1
-      && escapedText.StartsWith('\u0027')
-      && escapedText.EndsWith('\u0027')
+      && escapedText.StartsWith('\'')
+      && escapedText.EndsWith('\'')
     )
       ? escapedText[1..^1]
         .Replace(
