@@ -1290,8 +1290,6 @@ enum NodePackageNamedVersion {
   premajor
 }
 
-[regex]$VERSION_SPEC = '^v?(?<Major>(?>\d+))(?>\.(?<Minor>(?>\d*))(?>\.(?<Patch>(?>\d*)))?)?(?>-(?<Pre>(?>\w+)(?>\.(?>\d+))?))?$'
-
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to increment the package version of the current Node package.
@@ -1326,32 +1324,33 @@ function Step-NodePackageVersion {
     [Parameter(DontShow)][switch]$z
   )
 
-  if ($Version) {
-    if ($null -eq [NodePackageNamedVersion]::$Version) {
-      if ($Version -match $VERSION_SPEC) {
-        $FullVersion = @{
-          Major = [int]$Matches.Major
-          Minor = $Matches.Minor ? [int]$Matches.Minor : 0
-          Patch = $Matches.Patch ? [int]$Matches.Patch : 0
-          Pre   = $Matches.Pre ? [string]$Matches.Pre : [string]::Empty
-        }
+  $Version = switch ($Version) {
+    [string]::Empty {
+      [NodePackageNamedVersion]::patch
+    }
+    {
+      $null -ne [NodePackageNamedVersion]::$Version
+    } {
+      [NodePackageNamedVersion]::$Version
+    }
+    default {
+      if (
+        $Version.StartsWith(
+          [char]'v',
+          [StringComparison]::OrdinalIgnoreCase
+        )
+      ) {
+        $Version = $Version.Substring(1)
+      }
 
-        $Version = "$($FullVersion.Major).$($FullVersion.Minor).$($FullVersion.Patch)"
-
-        if ($FullVersion.Pre) {
-          $Version += "-$($FullVersion.Pre)"
-        }
+      $Semver = $null
+      if ([semver]::TryParse($Version, $Semver)) {
+        $Semver.ToString()
       }
       else {
-        throw 'Provided version was not parseable'
+        throw 'Provided version was neither a well-known version nor parseable as a semantic version.'
       }
     }
-    else {
-      $Version = [NodePackageNamedVersion]::$Version
-    }
-  }
-  else {
-    $Version = [NodePackageNamedVersion]::patch
   }
 
   $NodeArgument = [List[string]]::new()
