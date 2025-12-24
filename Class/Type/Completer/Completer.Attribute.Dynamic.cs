@@ -23,10 +23,7 @@ namespace Completer
       ScriptBlock domainGenerator,
       bool strict,
       CompletionCase casing
-    ) : base(casing) => (
-      DomainGenerator,
-      Strict
-    ) = (
+    ) : base(casing) => (DomainGenerator, Strict) = (
       domainGenerator,
       strict
     );
