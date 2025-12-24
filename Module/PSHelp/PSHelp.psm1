@@ -74,7 +74,7 @@ function Get-HelpOnline {
   }
   [string]$Topic = $Name -join '_'
 
-  $Help = ''
+  $Help = [string]::Empty
   $HelpLinkArticleList = [List[uri]]::new()
   $ArticleList = [List[uri]]::new()
 
@@ -100,11 +100,11 @@ function Get-HelpOnline {
     $Help = Get-Help -Name $Topic @Silent
 
     if ($Help -and $Help.Count -gt 1) {
-      $Help = ''
+      $Help = [string]::Empty
     }
 
     if ($Help) {
-      [string[]]$HelpLinkProperty = $Help.relatedLinks.navigationLink.Uri -replace [regex]'\?(?>.*)$', '' |
+      [string[]]$HelpLinkProperty = $Help.relatedLinks.navigationLink.Uri -replace [regex]'\?(?>.*)$', [string]::Empty |
         Where-Object {
           -not [string]::IsNullOrWhiteSpace($PSItem)
         } |
@@ -141,7 +141,7 @@ function Get-HelpOnline {
       )
     }
     else {
-      $about_Article = ''
+      $about_Article = [string]::Empty
 
       if ($Help -and $Help.Name) {
         [string]$LocalHelpTopic = $Help.Name
@@ -189,7 +189,7 @@ function Get-HelpOnline {
     $Help
   }
 
-  [string[]]$Articles = $ArticleList.ToArray() -replace [regex]'^(?>https?:\/\/)?', 'https://' -replace [regex]'(?<=^https:\/\/learn\.microsoft\.com\/)en-us\/', '' |
+  [string[]]$Articles = $ArticleList.ToArray() -replace [regex]'^(?>https?:\/\/)?', 'https://' -replace [regex]'(?<=^https:\/\/learn\.microsoft\.com\/)en-us\/', [string]::Empty |
     Select-Object -Unique -CaseInsensitive
 
   if ($Articles) {

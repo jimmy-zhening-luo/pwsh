@@ -248,7 +248,7 @@ function Get-File {
     )
   ) {
     $Argument += $Location
-    $Location = ''
+    $Location = [string]::Empty
   }
 
   if ($Path) {
