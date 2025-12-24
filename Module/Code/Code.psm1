@@ -1343,7 +1343,7 @@ function Step-NodePackageVersion {
         }
       }
       else {
-        throw "Unrecognized version ''"
+        throw 'Provided version was not parseable'
       }
     }
     else {
