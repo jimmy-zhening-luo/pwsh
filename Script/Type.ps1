@@ -1,5 +1,3 @@
-& {
-  $TypeAcceleratorsClass = [psobject].Assembly.GetType('System.Management.Automation.TypeAccelerators')
+$TypeAcceleratorsClass = [psobject].Assembly.GetType('System.Management.Automation.TypeAccelerators')
 
-  $TypeAcceleratorsClass::Add('path', [System.IO.Path])
-}
+$TypeAcceleratorsClass::Add('path', [System.IO.Path])
