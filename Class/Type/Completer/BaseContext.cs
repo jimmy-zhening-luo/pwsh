@@ -1,0 +1,38 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Management.Automation;
+using System.Management.Automation.Language;
+
+namespace Completer
+{
+  public abstract class BaseContextCompleter : BaseCompleter
+  {
+    private protected BaseContextCompleter() : base() { }
+
+    private protected BaseContextCompleter(CompletionCase casing) : base(casing) { }
+
+    public override IEnumerable<CompletionResult> CompleteArgument(
+      string commandName,
+      string parameterName,
+      string wordToComplete,
+      CommandAst commandAst,
+      IDictionary fakeBoundParameters
+    ) => WrapArgumentCompletionResult(
+      FulfillCompletion(
+        Escaper
+          .Unescape(
+            wordToComplete
+          )
+          .Trim(),
+        commandAst,
+        fakeBoundParameters
+      )
+    );
+
+    public override abstract IEnumerable<string> FulfillCompletion(
+      string wordToComplete,
+      CommandAst commandAst,
+      IDictionary fakeBoundParameters
+    );
+  }
+}
