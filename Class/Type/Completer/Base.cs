@@ -31,7 +31,7 @@ namespace Completer
 
     public abstract IEnumerable<string> FulfillCompletion(string wordToComplete);
 
-    private IEnumerable<CompletionResult> WrapArgumentCompletionResult(
+    private protected IEnumerable<CompletionResult> WrapArgumentCompletionResult(
       IEnumerable<string> completedStrings
     )
     {
