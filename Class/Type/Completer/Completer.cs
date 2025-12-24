@@ -14,7 +14,10 @@ namespace Completer
       IEnumerable<string> domain,
       bool strict,
       CompletionCase casing
-    ) : base(casing) => (Domain, Strict) = (domain, strict);
+    ) : base(casing) => (Domain, Strict) = (
+      domain,
+      strict
+    );
 
     public override IEnumerable<string> FulfillCompletion(string wordToComplete)
     {
