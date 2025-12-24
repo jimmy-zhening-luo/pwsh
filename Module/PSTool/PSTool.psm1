@@ -98,7 +98,6 @@ function Measure-Performance {
   }
 }
 
-
 <#
 .SYNOPSIS
 Measure PowerShell profile load overhead.
