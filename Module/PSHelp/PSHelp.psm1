@@ -58,7 +58,7 @@ function Get-HelpOnline {
         ).About + (
           (
             Get-ChildItem -Path Function:
-          ).Name.ToLower() -notmatch [regex]'[^\w-]'
+          ).Name.ToLower() -notmatch '[^\w-]'
         ).ToLower()
       }
     )]
@@ -86,7 +86,7 @@ function Get-HelpOnline {
   if ($CUSTOM_HELP.ContainsKey($Topic)) {
     $CustomHelp = $CUSTOM_HELP[$Topic]
 
-    if ($CustomHelp -and $CustomHelp -as [string] -and $CustomHelp -notmatch [regex]':') {
+    if ($CustomHelp -and $CustomHelp -as [string] -and $CustomHelp -notmatch ':') {
       [uri[]]$CustomHelp = $CUSTOM_HELP[[string]$CustomHelp]
     }
 
@@ -104,7 +104,7 @@ function Get-HelpOnline {
     }
 
     if ($Help) {
-      [string[]]$HelpLinkProperty = $Help.relatedLinks.navigationLink.Uri -replace [regex]'\?(?>.*)$', [string]::Empty -like 'http*'
+      [string[]]$HelpLinkProperty = $Help.relatedLinks.navigationLink.Uri -replace '\?(?>.*)$', [string]::Empty -like 'http*'
 
       if ($HelpLinkProperty) {
         $HelpLinkArticleList.AddRange(
@@ -154,12 +154,12 @@ function Get-HelpOnline {
           }
         }
 
-        $about_TopicCandidate = $Topic -replace [regex]'(?>[_ :]+)', '_' -replace [regex]'^(?>about)?_?', 'about_'
+        $about_TopicCandidate = $Topic -replace '(?>[_ :]+)', '_' -replace '^(?>about)?_?', 'about_'
 
         $about_Article = Resolve-AboutArticle -Topic $about_TopicCandidate
 
         if (-not $about_Article) {
-          if ($about_TopicCandidate -notmatch [regex]'s$') {
+          if ($about_TopicCandidate -notmatch 's$') {
             $about_TopicCandidate += 's'
             $about_Article = Resolve-AboutArticle -Topic $about_TopicCandidate
           }
@@ -180,7 +180,7 @@ function Get-HelpOnline {
     $Help
   }
 
-  [string[]]$Articles = $ArticleList.ToArray() -replace [regex]'^(?>https?:\/\/)?', 'https://' -replace [regex]'(?<=^https:\/\/learn\.microsoft\.com\/)en-us\/', [string]::Empty |
+  [string[]]$Articles = $ArticleList.ToArray() -replace '^(?>https?:\/\/)?', 'https://' -replace '(?<=^https:\/\/learn\.microsoft\.com\/)en-us\/', [string]::Empty |
     Select-Object -Unique -CaseInsensitive
 
   if ($Articles) {

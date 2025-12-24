@@ -217,7 +217,7 @@ function Start-Workspace {
     )
   }
 
-  [string[]]$FullProfileArgumentMatch = $ArgumentList -match [regex]'^(?>--profile=(?>[^\s=-][^=]*)?)$'
+  [string[]]$FullProfileArgumentMatch = $ArgumentList -match '^(?>--profile=(?>[^\s=-][^=]*)?)$'
   [string[]]$ProfileArgumentMatch = $ArgumentList -eq '--profile'
 
   if ($FullProfileArgumentMatch -or $ProfileArgumentMatch) {

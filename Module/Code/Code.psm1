@@ -153,7 +153,7 @@ function Resolve-NodePackageDirectory {
   'config'
   'init'
 )
-[regex]$GIT_ARGUMENT = '^(?>(?=.*[*=])(?>.+)|-(?>\w|(?>-\w[-\w]*\w)))$'
+$GIT_ARGUMENT = '^(?>(?=.*[*=])(?>.+)|-(?>\w|(?>-\w[-\w]*\w)))$'
 
 <#
 .SYNOPSIS
@@ -394,7 +394,7 @@ function Import-GitRepository {
     [switch]$ForceSsh
   )
 
-  [string[]]$RepositoryPathSegments = $Repository -split '/' -notmatch [regex]'^\s*$'
+  [string[]]$RepositoryPathSegments = $Repository -split '/' -notmatch '^\s*$'
 
   if (-not $RepositoryPathSegments) {
     throw 'No repository name given.'
@@ -761,7 +761,7 @@ function Push-GitRepository {
   Invoke-Git -Verb push -WorkingDirectory $WorkingDirectory -Argument $PushArgument
 }
 
-[regex]$TREE_SPEC = '^(?=.)(?>HEAD)?(?<Branching>(?>~|\^)?)(?<Step>(?>\d{0,10}))$'
+$TREE_SPEC = '^(?=.)(?>HEAD)?(?<Branching>(?>~|\^)?)(?<Step>(?>\d{0,10}))$'
 
 <#
 .SYNOPSIS
