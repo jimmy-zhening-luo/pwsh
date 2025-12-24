@@ -104,13 +104,7 @@ function Get-HelpOnline {
     }
 
     if ($Help) {
-      [string[]]$HelpLinkProperty = $Help.relatedLinks.navigationLink.Uri -replace [regex]'\?(?>.*)$', [string]::Empty |
-        Where-Object {
-          -not [string]::IsNullOrWhiteSpace($PSItem)
-        } |
-        Where-Object {
-          $PSItem -as [uri]
-        }
+      [string[]]$HelpLinkProperty = $Help.relatedLinks.navigationLink.Uri -replace [regex]'\?(?>.*)$', [string]::Empty -like 'http*'
 
       if ($HelpLinkProperty) {
         $HelpLinkArticleList.AddRange(
@@ -125,12 +119,14 @@ function Get-HelpOnline {
       if ($ParameterHelp) {
         $Help = $ParameterHelp
         if ($HelpLinkArticleList.Count -eq 1 -and $Parameter.Count -eq 1) {
-          [uri]$CanonicalHelpLinkArticle = $HelpLinkArticleList[0]
-          $HelpLinkArticleList.RemoveAt(0)
+          [string]$CanonicalHelpLinkArticle = $HelpLinkArticleList[0]
 
-          [uri]$ParameterizedCanonicalHelpLinkArticle = [string]$CanonicalHelpLinkArticle + "#-$Parameter".ToLowerInvariant()
-
-          $HelpLinkArticleList.Add($ParameterizedCanonicalHelpLinkArticle)
+          $HelpLinkArticleList[0] = 
+          $HelpLinkArticleList.Add(
+            [uri](
+              [string]$HelpLinkArticleList[0] + "#-$Parameter".ToLower()
+            )
+          )
         }
       }
     }
