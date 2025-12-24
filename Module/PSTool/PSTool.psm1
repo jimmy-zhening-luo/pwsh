@@ -326,7 +326,6 @@ function Publish-PSProfile {
   [OutputType([void])]
   param(
 
-    [Alias('NoBuild')]
     # If specified, skips the build step after syncing the repository and linter.
     [switch]$SkipBuild,
 
