@@ -1,3 +1,5 @@
+using namespace System.IO;
+
 if (-not $Env:PSModulePath.EndsWith(";$PSScriptRoot\Module;")) {
   $Env:PSModulePath += ";$PSScriptRoot\Module;"
 }
