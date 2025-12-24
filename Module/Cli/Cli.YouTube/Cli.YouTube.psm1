@@ -135,7 +135,7 @@ function Invoke-YouTubeConfig {
   [OutputType([void])]
   param()
 
-  Start-WorkspaceHome -Workspace util\bin\yt\yt-dlp.conf -ProfileName Setting -Window
+  Start-WorkspaceHome -Workspace util\bin\yt\yt-dlp.conf -ProfileName Setting
 }
 
 New-Alias yt Get-YouTube
