@@ -217,11 +217,13 @@ function Measure-PSProfile {
 
   if ($Baseline) {
     switch ($PSCmdlet.ParameterSetName) {
+      Timespan {
+        if ($Timespan) {
+          return $AverageBareStartup
+        }
+      }
       Numeric {
         return $AverageBareStartup.TotalMilliseconds
-      }
-      Timespan {
-        return $AverageBareStartup
       }
     }
   }
