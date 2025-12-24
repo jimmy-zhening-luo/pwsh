@@ -13,7 +13,7 @@ namespace Completer
 
     private protected BaseCompleter(CompletionCase casing) : this() => Casing = casing;
 
-    public IEnumerable<CompletionResult> CompleteArgument(
+    public virtual IEnumerable<CompletionResult> CompleteArgument(
       string commandName,
       string parameterName,
       string wordToComplete,
