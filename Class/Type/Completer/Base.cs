@@ -22,9 +22,7 @@ namespace Completer
     ) => WrapArgumentCompletionResult(
       FulfillCompletion(
         Escaper
-          .Unescape(
-            wordToComplete
-          )
+          .Unescape(wordToComplete)
           .Trim()
       )
     );
