@@ -137,25 +137,30 @@ function Stop-Task {
         }
       }
       Name {
-        foreach ($ProcessHandle in $Name) {
-          if ($ProcessHandle) {
-            $Process = @{
-              Force = $True
-            }
-            if ($ProcessHandle -match [regex]'^(?>\d{1,10})$' -and $ProcessHandle -as [uint]) {
-              $Process.Id = [uint]$ProcessHandle
-            }
-            else {
-              $Process.Name = $ProcessHandle
-            }
+        switch -Regex ($Name) {
+          '^$' { continue }
+          '^(?>\d{1,10})$' {
+            [uint]$Id = $PSItem
 
             if (
               $PSCmdlet.ShouldProcess(
-                $Process.Id ? "Process ID: $($Process.Id)" : "Process Name: $($Process.Name)",
+                "Process ID: $Id",
                 'Stop-Process'
               )
             ) {
-              Stop-Process @Process
+              Stop-Process -Id $Id -Force
+            }
+
+            continue
+          }
+          default {
+            if (
+              $PSCmdlet.ShouldProcess(
+                "Process Name: $PSItem",
+                'Stop-Process'
+              )
+            ) {
+              Stop-Process -Name $PSItem -Force
             }
           }
         }
