@@ -28,85 +28,74 @@ namespace Completer
 
       public override IEnumerable<string> FulfillCompletion(string wordToComplete)
       {
-        string currentPathValue = Canonicalizer.Normalize(
-          wordToComplete,
-          true
-        );
-        string currentDirectoryValue = "";
-        string searchLocation = "";
-        string searchFilter = "";
+        string pathToComplete = Canonicalizer
+          .Normalize(wordToComplete, true)
+          .Trim();
+        string accumulatedSubpath = "";
+        string location = "";
+        string filter = "";
 
-        if (!string.IsNullOrWhiteSpace(currentPathValue))
+        if (pathToComplete != string.Empty)
         {
-          int lastSeparatorIndex = currentPathValue.LastIndexOf('\\');
+          int pathEnd = pathToComplete.LastIndexOf('\\');
 
-          if (lastSeparatorIndex >= 0)
+          if (pathEnd < 0)
           {
-            string beforeSeparator = currentPathValue[..lastSeparatorIndex];
-            string afterSeparator = lastSeparatorIndex + 1 < currentPathValue.Length
-              ? currentPathValue[(lastSeparatorIndex + 1)..]
-              : string.Empty;
-
-            if (!string.IsNullOrWhiteSpace(beforeSeparator))
-            {
-              currentDirectoryValue = beforeSeparator;
-            }
-
-            if (!string.IsNullOrWhiteSpace(afterSeparator))
-            {
-              searchFilter = afterSeparator;
-            }
+            filter = pathToComplete;
           }
           else
           {
-            searchFilter = currentPathValue;
+            accumulatedSubpath = pathToComplete[..pathEnd].Trim();
+
+            int wordStart = pathEnd + 1;
+
+            if (wordStart < pathToComplete.Length) {
+              filter = pathToComplete[wordStart..].Trim();
+            }
           }
 
-          if (currentDirectoryValue != string.Empty)
+          if (accumulatedSubpath != string.Empty)
           {
-            string fullPathAndCurrentDirectory = Path.GetFullPath(
-              currentDirectoryValue,
+            string accumulatedPath = Path.GetFullPath(
+              accumulatedSubpath,
               Root
             );
 
-            if (
-              Directory.Exists(
-                fullPathAndCurrentDirectory
-              )
-            )
+            if (Directory.Exists(accumulatedPath))
             {
-              searchLocation = fullPathAndCurrentDirectory;
-
+              location = accumulatedPath;
             }
           }
         }
 
-        if (searchLocation == string.Empty)
+        if (location == string.Empty)
         {
-          searchLocation = Root;
+          location = Root;
         }
 
-        searchFilter = searchFilter + "*";
+        filter = filter + "*";
         EnumerationOptions attributes = new EnumerationOptions();
 
         attributes.IgnoreInaccessible = false;
 
         if (Type != PathItemType.File)
         {
+          string directoryCap = Flat
+            ? string.Empty
+            : @"\";
+
           foreach (
             string directory in Directory.EnumerateDirectories(
-              searchLocation,
-              searchFilter,
+              location,
+              filter,
               attributes
             )
           )
           {
             yield return Canonicalizer.Denormalize(
-              currentDirectoryValue,
+              accumulatedSubpath,
               Path.GetFileName(directory),
-              Flat
-                ? string.Empty
-                : @"\"
+              directoryCap
             );
           }
         }
@@ -115,28 +104,28 @@ namespace Completer
         {
           foreach (
             string file in Directory.EnumerateFiles(
-              searchLocation,
-              searchFilter,
+              location,
+              filter,
               attributes
             )
           )
           {
             yield return Canonicalizer.Denormalize(
-              currentDirectoryValue,
+              accumulatedSubpath,
               Path.GetFileName(file)
             );
           }
         }
 
         yield return Canonicalizer.Denormalize(
-          currentDirectoryValue,
+          accumulatedSubpath,
           @"..\"
         );
 
-        if (currentDirectoryValue != string.Empty)
+        if (accumulatedSubpath != string.Empty)
         {
           yield return Canonicalizer.Denormalize(
-            currentDirectoryValue,
+            accumulatedSubpath,
             @"\"
           );
         }
