@@ -29,7 +29,7 @@ namespace Completer
       )
     );
 
-    public override abstract IEnumerable<string> FulfillCompletion(
+    public abstract IEnumerable<string> FulfillCompletion(
       string wordToComplete,
       CommandAst commandAst,
       IDictionary fakeBoundParameters
