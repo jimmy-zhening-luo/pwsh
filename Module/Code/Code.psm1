@@ -7,7 +7,6 @@ function Resolve-GitRepository {
   [CmdletBinding()]
   [OutputType([string[]])]
   param(
-
     [Parameter(
       Mandatory,
       Position = 0,
@@ -83,6 +82,47 @@ function Resolve-GitRepository {
   }
 }
 
+function Test-NodePackageDirectory {
+  [CmdletBinding()]
+  [OutputType([bool])]
+  param(
+    [Parameter(
+      Mandatory,
+      Position = 0
+    )]
+    [AllowEmptyString()]
+    [string]$WorkingDirectory
+  )
+
+  if (-not $WorkingDirectory) {
+    $WorkingDirectory = $PWD.Path
+  }
+
+  return Test-Path (
+    Join-Path $WorkingDirectory package.json
+  ) -PathType Leaf
+}
+
+function Resolve-NodePackageDirectory {
+  [CmdletBinding()]
+  [OutputType([string])]
+  param(
+    [Parameter(
+      Mandatory,
+      Position = 0
+    )]
+    [AllowEmptyString()]
+    [string]$WorkingDirectory
+  )
+
+  if (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory) {
+    return $WorkingDirectory ? "--prefix=$((Resolve-Path $WorkingDirectory).Path)" : ''
+  }
+  else {
+    throw "Path '$WorkingDirectory' is not a Node package directory."
+  }
+}
+
 [string[]]$GIT_VERB = @(
   'switch'
   'merge'
@@ -127,12 +167,12 @@ For every verb except for 'clone', 'config', and 'init', the function will throw
 For every verb, if the Git command returns a non-zero exit code, the function will throw an error by default.
 
 .COMPONENT
-Code.Git
+Code
 
 .LINK
 https://git-scm.com/docs
 #>
-function Invoke-GitRepository {
+function Invoke-Git {
 
   [CmdletBinding()]
   param(
@@ -300,7 +340,7 @@ Use Git to get the status of a local repository.
 This function is an alias for 'git status [argument]'.
 
 .COMPONENT
-Code.Git
+Code
 
 .LINK
 https://git-scm.com/docs/git-status
@@ -318,7 +358,7 @@ function Measure-GitRepository {
     [string]$WorkingDirectory
   )
 
-  Invoke-GitRepository -Verb status -WorkingDirectory $WorkingDirectory -Argument $args
+  Invoke-Git -Verb status -WorkingDirectory $WorkingDirectory -Argument $args
 }
 
 <#
@@ -329,7 +369,7 @@ Use Git to clone a repository.
 This function is an alias for 'git clone' and allows you to clone a repository into a specified path.
 
 .COMPONENT
-Code.Git
+Code
 
 .LINK
 https://git-scm.com/docs/git-clone
@@ -378,7 +418,7 @@ function Import-GitRepository {
     )
   }
 
-  Invoke-GitRepository -Verb clone -WorkingDirectory $WorkingDirectory -Argument $CloneArgument
+  Invoke-Git -Verb clone -WorkingDirectory $WorkingDirectory -Argument $CloneArgument
 }
 
 <#
@@ -389,7 +429,7 @@ Use Git to pull changes from a repository.
 This function is an alias for 'git pull [argument]'.
 
 .COMPONENT
-Code.Git
+Code
 
 .LINK
 https://git-scm.com/docs/git-pull
@@ -407,7 +447,7 @@ function Get-GitRepository {
     [string]$WorkingDirectory
   )
 
-  Invoke-GitRepository -Verb pull -WorkingDirectory $WorkingDirectory -Argument $args
+  Invoke-Git -Verb pull -WorkingDirectory $WorkingDirectory -Argument $args
 }
 
 <#
@@ -418,7 +458,7 @@ Use Git to pull changes for all repositories in the top level of %USERPROFILE%\c
 This function runs 'git pull [argument]' in each child repository in %USERPROFILE%\code'.
 
 .COMPONENT
-Code.Git
+Code
 
 .LINK
 https://git-scm.com/docs/git-pull
@@ -443,20 +483,26 @@ function Get-ChildGitRepository {
 
 <#
 .SYNOPSIS
-Use Git to stage all changes in a repository.
+Use Git to diff the current local working tree against the current local index.
 
 .DESCRIPTION
-This function is an alias for 'git add [.]' and stages all changes in the repository.
+This function is an alias for 'git diff [path]'.
 
 .COMPONENT
-Code.Git
+Code
 
 .LINK
-https://git-scm.com/docs/git-add
+https://git-scm.com/docs/git-diff
 #>
-function Add-GitRepository {
+function Compare-GitRepository {
 
   param(
+
+    [RelativePathCompletions(
+      { return $PWD.Path }
+    )]
+    # File pattern of files to diff, defaults to '.' (all)
+    [string]$Name,
 
     [PathCompletions(
       '~\code',
@@ -464,23 +510,13 @@ function Add-GitRepository {
       $True
     )]
     # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
-    [string]$WorkingDirectory,
-
-    # File pattern of files to add, defaults to '.' (all)
-    [string]$Name,
-
-    # Equivalent to git add --renormalize flag
-    [switch]$Renormalize
+    [string]$WorkingDirectory
   )
 
-  $AddArgument = [List[string]]::new()
+  $DiffArgument = [List[string]]::new()
 
-  if (-not $Name) {
-    $Name = '.'
-  }
-  if ($Name -match $GIT_ARGUMENT) {
-    $AddArgument.Add($Name)
-    $Name = ''
+  if ($Name) {
+    $DiffArgument.Add($Name)
   }
 
   if (
@@ -490,18 +526,70 @@ function Add-GitRepository {
       Resolve-GitRepository -WorkingDirectory $WorkingDirectory
     )
   ) {
-    if ($Name) {
-      $AddArgument.Insert(0, $WorkingDirectory)
-    }
-    else {
-      $Name = $WorkingDirectory
-    }
-
+    $DiffArgument.Add($WorkingDirectory)
     $WorkingDirectory = ''
   }
 
-  if ($Name) {
-    $AddArgument.Insert(0, $Name)
+  if ($args) {
+    $DiffArgument.AddRange(
+      [List[string]]$args
+    )
+  }
+
+  Invoke-Git -Verb diff -WorkingDirectory $WorkingDirectory -Argument $DiffArgument
+}
+
+<#
+.SYNOPSIS
+Use Git to stage all changes in a repository.
+
+.DESCRIPTION
+This function is an alias for 'git add [.]' and stages all changes in the repository.
+
+.COMPONENT
+Code
+
+.LINK
+https://git-scm.com/docs/git-add
+#>
+function Add-GitRepository {
+
+  param(
+
+    [RelativePathCompletions(
+      { return $PWD.Path }
+    )]
+    # File pattern of files to add, defaults to '.' (all)
+    [string]$Name,
+
+    [PathCompletions(
+      '~\code',
+      [PathItemType]::Directory,
+      $True
+    )]
+    # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
+    [string]$WorkingDirectory,
+
+    # Equivalent to git add --renormalize flag
+    [switch]$Renormalize
+  )
+
+  if (-not $Name) {
+    $Name = '.'
+  }
+
+  $AddArgument = [List[string]]::new()
+  $AddArgument.Add($Name)
+
+  if (
+    $WorkingDirectory -and (
+      Resolve-GitRepository -WorkingDirectory $PWD.Path
+    ) -and -not (
+      Resolve-GitRepository -WorkingDirectory $WorkingDirectory
+    )
+  ) {
+    $AddArgument.Add($WorkingDirectory)
+    $WorkingDirectory = ''
   }
 
   if ($args) {
@@ -514,7 +602,7 @@ function Add-GitRepository {
     $AddArgument.Add('--renormalize')
   }
 
-  Invoke-GitRepository -Verb add -WorkingDirectory $WorkingDirectory -Argument $AddArgument
+  Invoke-Git -Verb add -WorkingDirectory $WorkingDirectory -Argument $AddArgument
 }
 
 <#
@@ -525,7 +613,7 @@ Commit changes to a Git repository.
 This function commits changes to a Git repository using the 'git commit' command.
 
 .COMPONENT
-Code.Git
+Code
 
 .LINK
 https://git-scm.com/docs/git-commit
@@ -620,7 +708,7 @@ function Write-GitRepository {
     Add-GitRepository -WorkingDirectory $WorkingDirectory
   }
 
-  Invoke-GitRepository -Verb commit -WorkingDirectory $WorkingDirectory -Argument $CommitArgument
+  Invoke-Git -Verb commit -WorkingDirectory $WorkingDirectory -Argument $CommitArgument
 }
 
 <#
@@ -631,7 +719,7 @@ Use Git to push changes to a repository.
 This function is an alias for 'git push'.
 
 .COMPONENT
-Code.Git
+Code
 
 .LINK
 https://git-scm.com/docs/git-push
@@ -670,7 +758,7 @@ function Push-GitRepository {
 
   Get-GitRepository -WorkingDirectory $WorkingDirectory
 
-  Invoke-GitRepository -Verb push -WorkingDirectory $WorkingDirectory -Argument $PushArgument
+  Invoke-Git -Verb push -WorkingDirectory $WorkingDirectory -Argument $PushArgument
 }
 
 [regex]$TREE_SPEC = '^(?=.)(?>HEAD)?(?<Branching>(?>~|\^)?)(?<Step>(?>\d{0,10}))$'
@@ -683,7 +771,7 @@ Use Git to undo changes in a repository.
 This function is an alias for 'git add . && git reset --hard [HEAD]([~]|^)[n]'.
 
 .COMPONENT
-Code.Git
+Code
 
 .LINK
 https://git-scm.com/docs/git-reset
@@ -758,7 +846,7 @@ function Reset-GitRepository {
 
   Add-GitRepository -WorkingDirectory $WorkingDirectory
 
-  Invoke-GitRepository -Verb reset -WorkingDirectory $WorkingDirectory -Argument $ResetArgument
+  Invoke-Git -Verb reset -WorkingDirectory $WorkingDirectory -Argument $ResetArgument
 }
 
 <#
@@ -769,7 +857,7 @@ Use Git to restore a repository to its previous state.
 This function is an alias for 'git add . && git reset --hard && git pull'.
 
 .COMPONENT
-Code.Git
+Code
 
 .LINK
 https://git-scm.com/docs/git-reset
@@ -809,101 +897,6 @@ function Restore-GitRepository {
   Reset-GitRepository -WorkingDirectory $WorkingDirectory @ResetArgument
 
   Get-GitRepository -WorkingDirectory $WorkingDirectory
-}
-
-<#
-.SYNOPSIS
-Test whether a path is the root directory of a Node package.
-
-.DESCRIPTION
-This function tests returns true if the supplied path is the root directory of a Node package, otherwise false.
-
-.COMPONENT
-Code.Node
-
-.LINK
-https://docs.npmjs.com/cli/commands
-#>
-function Test-NodePackageDirectory {
-  [CmdletBinding()]
-  [OutputType([bool])]
-  param(
-
-    [Parameter(
-      Mandatory,
-      Position = 0
-    )]
-    [AllowEmptyString()]
-    # Node package root path to be resolved
-    [string]$WorkingDirectory
-  )
-
-  if (-not $WorkingDirectory) {
-    $WorkingDirectory = $PWD.Path
-  }
-
-  return Test-Path (
-    Join-Path $WorkingDirectory package.json
-  ) -PathType Leaf
-}
-
-<#
-.SYNOPSIS
-Resolve a Node package at its root directory.
-
-.DESCRIPTION
-This function resolves the supplied path to a qualified, rooted path if it is a Node package root. If the supplied path is not a Node package root, an error is thrown.
-
-.COMPONENT
-Code.Node
-
-.LINK
-https://docs.npmjs.com/cli/commands
-#>
-function Resolve-NodePackageDirectory {
-  [CmdletBinding()]
-  [OutputType([string])]
-  param(
-
-    [Parameter(
-      Mandatory,
-      Position = 0
-    )]
-    [AllowEmptyString()]
-    # Node package root path to be resolved
-    [string]$WorkingDirectory
-  )
-
-  if (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory) {
-    return $WorkingDirectory ? "--prefix=$((Resolve-Path $WorkingDirectory).Path)" : ''
-  }
-  else {
-    throw "Path '$WorkingDirectory' is not a Node package directory."
-  }
-}
-
-<#
-.SYNOPSIS
-Run Node.
-
-.DESCRIPTION
-This function is an alias shim for 'node [args]'.
-
-.COMPONENT
-Code.Node
-
-.LINK
-https://nodejs.org/api/cli.html
-#>
-function Invoke-Node {
-
-  if ($args) {
-    & node.exe @args
-
-    if ($LASTEXITCODE -notin 0, 1) {
-      throw "Node.exe error, execution stopped with exit code: $LASTEXITCODE"
-    }
-  }
 }
 
 [string[]]$NODE_VERB = @(
@@ -1013,7 +1006,7 @@ Use Node Package Manager (npm) to run a command in a Node package.
 This function runs an npm command in a specified Node package directory, or the current directory if no path is specified.
 
 .COMPONENT
-Code.Node
+Code
 
 .LINK
 https://docs.npmjs.com/cli/commands
@@ -1021,7 +1014,7 @@ https://docs.npmjs.com/cli/commands
 .LINK
 https://docs.npmjs.com/cli/commands/npm
 #>
-function Invoke-NodePackage {
+function Invoke-Npm {
 
   [CmdletBinding()]
   param(
@@ -1166,13 +1159,37 @@ function Invoke-NodePackage {
 
 <#
 .SYNOPSIS
+Run Node.
+
+.DESCRIPTION
+This function is an alias shim for 'node [args]'.
+
+.COMPONENT
+Code
+
+.LINK
+https://nodejs.org/api/cli.html
+#>
+function Invoke-Node {
+
+  if ($args) {
+    & node.exe @args
+
+    if ($LASTEXITCODE -notin 0, 1) {
+      throw "Node.exe error, execution stopped with exit code: $LASTEXITCODE"
+    }
+  }
+}
+
+<#
+.SYNOPSIS
 Use 'npx' to run a command from a local or remote npm module.
 
 .DESCRIPTION
 This function is an alias shim for 'npx [args]'.
 
 .COMPONENT
-Code.Node
+Code
 
 .LINK
 https://docs.npmjs.com/cli/commands/npx
@@ -1196,7 +1213,7 @@ Use Node Package Manager (npm) to clear the global Node module cache.
 This function is an alias for 'npm cache clean --force'.
 
 .COMPONENT
-Code.Node
+Code
 
 .LINK
 https://docs.npmjs.com/cli/commands/npm-cache
@@ -1215,7 +1232,7 @@ function Clear-NodeModuleCache {
     )
   }
 
-  Invoke-NodePackage -Command cache -Argument $NodeArgument
+  Invoke-Npm -Command cache -Argument $NodeArgument
 }
 
 <#
@@ -1226,7 +1243,7 @@ Use Node Package Manager (npm) to check for outdated packages in a Node package.
 This function is an alias for 'npm outdated [--prefix $WorkingDirectory]'.
 
 .COMPONENT
-Code.Node
+Code
 
 .LINK
 https://docs.npmjs.com/cli/commands/npm-outdated
@@ -1261,7 +1278,7 @@ function Compare-NodeModule {
     )
   }
 
-  Invoke-NodePackage -Command outdated -WorkingDirectory $WorkingDirectory -NoThrow -Argument $NodeArgument
+  Invoke-Npm -Command outdated -WorkingDirectory $WorkingDirectory -NoThrow -Argument $NodeArgument
 }
 
 enum NodePackageNamedVersion {
@@ -1283,7 +1300,7 @@ Use Node Package Manager (npm) to increment the package version of the current N
 This function is an alias for 'npm version [--prefix $WorkingDirectory] [version=patch]'.
 
 .COMPONENT
-Code.Node
+Code
 
 .LINK
 https://docs.npmjs.com/cli/commands/npm-version
@@ -1355,7 +1372,7 @@ function Step-NodePackageVersion {
     )
   }
 
-  Invoke-NodePackage -Command version -WorkingDirectory $WorkingDirectory -Argument $NodeArgument
+  Invoke-Npm -Command version -WorkingDirectory $WorkingDirectory -Argument $NodeArgument
 }
 
 <#
@@ -1366,7 +1383,7 @@ Use Node Package Manager (npm) to run a script defined in a Node package's 'pack
 This function is an alias for 'npm run [script] [--prefix $WorkingDirectory] [--args]'.
 
 .COMPONENT
-Code.Node
+Code
 
 .LINK
 https://docs.npmjs.com/cli/commands/npm-run
@@ -1409,7 +1426,7 @@ function Invoke-NodePackageScript {
     )
   }
 
-  Invoke-NodePackage -Command run -WorkingDirectory $WorkingDirectory -Argument $NodeArgument
+  Invoke-Npm -Command run -WorkingDirectory $WorkingDirectory -Argument $NodeArgument
 }
 
 <#
@@ -1420,7 +1437,7 @@ Use Node Package Manager (npm) to run the 'test' script defined in a Node packag
 This function is an alias for 'npm test [--prefix $WorkingDirectory] [--args]'.
 
 .COMPONENT
-Code.Node
+Code
 
 .LINK
 https://docs.npmjs.com/cli/commands/npm-test
@@ -1455,19 +1472,20 @@ function Test-NodePackage {
     )
   }
 
-  Invoke-NodePackage -Command test -WorkingDirectory $WorkingDirectory -Argument $NodeArgument
+  Invoke-Npm -Command test -WorkingDirectory $WorkingDirectory -Argument $NodeArgument
 }
 
-New-Alias g Invoke-GitRepository
+New-Alias g Invoke-Git
 New-Alias gg Measure-GitRepository
 New-Alias gitcl Import-GitRepository
 New-Alias gpp Get-ChildGitRepository
+New-Alias gd Compare-GitRepository
 New-Alias ga Add-GitRepository
 New-Alias gs Push-GitRepository
 New-Alias gr Reset-GitRepository
 New-Alias grp Restore-GitRepository
+New-Alias n Invoke-Npm
 New-Alias no Invoke-Node
-New-Alias n Invoke-NodePackage
 New-Alias nx Invoke-NodeExecutable
 New-Alias ncc Clear-NodeModuleCache
 New-Alias npo Compare-NodeModule
