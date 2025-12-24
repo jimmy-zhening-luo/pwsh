@@ -22,8 +22,8 @@ namespace Completer
         return preserveTrailingSeparator
           ? normalPath
           : Path.TrimEndingDirectorySeparator(
-            normalPath
-          );
+              normalPath
+            );
       }
 
       public static string Denormalize(

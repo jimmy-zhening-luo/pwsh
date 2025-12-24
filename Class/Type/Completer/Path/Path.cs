@@ -38,9 +38,7 @@ namespace Completer
 
         if (!string.IsNullOrWhiteSpace(currentPathValue))
         {
-          int lastSeparatorIndex = currentPathValue.LastIndexOf(
-            '\\'
-          );
+          int lastSeparatorIndex = currentPathValue.LastIndexOf('\\');
 
           if (lastSeparatorIndex >= 0)
           {
