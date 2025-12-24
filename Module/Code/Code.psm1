@@ -1327,22 +1327,23 @@ function Step-NodePackageVersion {
   $Version = switch ($Version) {
     [string]::Empty {
       [NodePackageNamedVersion]::patch
+      break
     }
     {
       $null -ne [NodePackageNamedVersion]::$Version
     } {
       [NodePackageNamedVersion]::$Version
+      break
+    }
+    {
+      $Version.StartsWith(
+        [char]'v',
+        [StringComparison]::OrdinalIgnoreCase
+      )
+    } {
+      $Version = $Version.Substring(1)
     }
     default {
-      if (
-        $Version.StartsWith(
-          [char]'v',
-          [StringComparison]::OrdinalIgnoreCase
-        )
-      ) {
-        $Version = $Version.Substring(1)
-      }
-
       $Semver = $null
       if ([semver]::TryParse($Version, $Semver)) {
         $Semver.ToString()

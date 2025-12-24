@@ -97,11 +97,17 @@ function Test-Host {
             break
           }
           CommonTCPPort {
-            if ($CommonTCPPort) {
-              if ([TestHostWellKnownPort]::$CommonTCPPort) {
+            switch ($CommonTCPPort) {
+              [string]::Empty { break }
+              {
+                $null -ne [TestHostWellKnownPort]::$CommonTCPPort
+              } {
                 $Destination.CommonTCPPort = [TestHostWellKnownPort]::$CommonTCPPort
+                break
               }
-              elseif ($CommonTCPPort -as [ushort]) {
+              {
+                $CommonTCPPort -as [ushort]
+              } {
                 $Destination.Port = [ushort]$CommonTCPPort
               }
             }
