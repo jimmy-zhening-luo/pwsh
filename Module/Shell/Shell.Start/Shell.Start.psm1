@@ -213,7 +213,7 @@ function Start-Workspace {
   }
   if ($ProfileName) {
     $ArgumentList.Add(
-      $ProfileName.StartsWith('-') ? $ProfileName : "--profile=$ProfileName"
+      $ProfileName.StartsWith([char]'-') ? $ProfileName : "--profile=$ProfileName"
     )
   }
 

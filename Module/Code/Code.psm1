@@ -1095,7 +1095,7 @@ function Invoke-Npm {
     }
   }
 
-  if ($Command.Length -ne 0 -and $Command.StartsWith('-') -or $Command -notin $NODE_VERB -and -not $NODE_ALIAS.ContainsKey($Command)) {
+  if ($Command.Length -ne 0 -and $Command.StartsWith([char]'-') -or $Command -notin $NODE_VERB -and -not $NODE_ALIAS.ContainsKey($Command)) {
     [string]$DeferredVerb = $NodeCommand.Count -eq 0 ? [string]::Empty : $NodeCommand.Find(
       {
         $args[0] -in $NODE_VERB
