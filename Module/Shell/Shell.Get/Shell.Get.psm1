@@ -83,31 +83,34 @@ function Get-Size {
   }
 
   process {
-    foreach ($filepath in $Path) {
-      if (-not (Test-Path $filepath)) {
-        throw "Path '$filepath' does not exist."
+    switch ($Path) {
+      {
+        -not (Test-Path $PSItem)
+      } {
+        throw "Path '$PSItem' does not exist."
       }
+      default {
+        $Size = (
+          Test-Path $PSItem -PathType Container
+        ) ? (
+          Get-ChildItem -Path $PSItem -Recurse -Force -File |
+            Measure-Object -Property Length -Sum |
+            Select-Object -ExpandProperty Sum
+        ) : (
+          Get-Item -Path $PSItem
+        ).Length
 
-      $Size = (
-        Test-Path $filepath -PathType Container
-      ) ? (
-        Get-ChildItem -Path $filepath -Recurse -Force -File |
-          Measure-Object -Property Length -Sum |
-          Select-Object -ExpandProperty Sum
-      ) : (
-        Get-Item -Path $filepath
-      ).Length
+        [double]$ScaledSize = $Size / $Factor
 
-      [double]$ScaledSize = $Size / $Factor
-
-      Write-Output (
-        $Number ? $ScaledSize : (
-          [System.Math]::Round(
-            $ScaledSize,
-            3
-          ).ToString() + " $CanonicalUnit"
+        Write-Output (
+          $Number ? $ScaledSize : (
+            [System.Math]::Round(
+              $ScaledSize,
+              3
+            ).ToString() + " $CanonicalUnit"
+          )
         )
-      )
+      }
     }
   }
 
@@ -119,12 +122,15 @@ function Get-Size {
 
       [double]$ScaledSize = $Size / $Factor
 
-      return $Number ? $ScaledSize : (
-        [System.Math]::Round(
+      if ($Number) {
+        return $ScaledSize
+      }
+      else {
+        return [System.Math]::Round(
           $ScaledSize,
           3
         ).ToString() + " $CanonicalUnit"
-      )
+      }
     }
   }
 }
