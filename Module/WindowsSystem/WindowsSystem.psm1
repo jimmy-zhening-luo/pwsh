@@ -165,18 +165,6 @@ function Stop-Task {
 
   end {
     switch ($PSCmdlet.ParameterSetName) {
-      Name {
-        if (-not $Name) {
-          if (
-            $PSCmdlet.ShouldProcess(
-              'Process Name: explorer',
-              'Stop-Process (default => explorer)'
-            )
-          ) {
-            Stop-Process -Name explorer -Force
-          }
-        }
-      }
       Self {
         if ($Self) {
           if (
@@ -186,6 +174,19 @@ function Stop-Task {
             )
           ) {
             Stop-Process -Name WindowsTerminal -Force
+          }
+        }
+        return
+      }
+      Name {
+        if (-not $Name) {
+          if (
+            $PSCmdlet.ShouldProcess(
+              'Process Name: explorer',
+              'Stop-Process (default => explorer)'
+            )
+          ) {
+            Stop-Process -Name explorer -Force
           }
         }
       }
