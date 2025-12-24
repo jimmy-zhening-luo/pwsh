@@ -9,11 +9,7 @@ namespace Completer
       && escapedText.StartsWith('\'')
       && escapedText.EndsWith('\'')
     )
-      ? escapedText[1..^1]
-        .Replace(
-          "''",
-          "'"
-        )
+      ? escapedText[1..^1].Replace("''", "'")
       : escapedText;
 
     public static string Escape(string text) => text.Contains(' ')
