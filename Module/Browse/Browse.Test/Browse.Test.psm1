@@ -94,6 +94,7 @@ function Test-Host {
         switch ($PSCmdlet.ParameterSetName) {
           RemotePort {
             $Destination.Port = $Port
+            break
           }
           CommonTCPPort {
             if ($CommonTCPPort) {
