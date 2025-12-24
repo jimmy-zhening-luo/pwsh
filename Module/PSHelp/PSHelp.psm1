@@ -119,13 +119,8 @@ function Get-HelpOnline {
       if ($ParameterHelp) {
         $Help = $ParameterHelp
         if ($HelpLinkArticleList.Count -eq 1 -and $Parameter.Count -eq 1) {
-          [string]$CanonicalHelpLinkArticle = $HelpLinkArticleList[0]
-
-          $HelpLinkArticleList[0] = 
-          $HelpLinkArticleList.Add(
-            [uri](
-              [string]$HelpLinkArticleList[0] + "#-$Parameter".ToLower()
-            )
+          $HelpLinkArticleList[0] = [uri](
+            [string]$HelpLinkArticleList[0] + "#-$Parameter".ToLower()
           )
         }
       }
