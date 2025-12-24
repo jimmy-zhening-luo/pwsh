@@ -28,8 +28,7 @@ New-Alias verb PSHelp\Get-VerbList -Option ReadOnly
 # was: clip.exe
 New-Alias clip Set-Clipboard -Option ReadOnly
 
-# was: nvm\run.cmd*
+# was: nvm\run.cmd
 New-Alias run WindowsSystem\Invoke-CommandPrompt -Option ReadOnly, AllScope
-# * dumb bug that nvm guy refuses to fix even after my bug report, has his personal Dropbox in the script lmao
 
 #endregion
