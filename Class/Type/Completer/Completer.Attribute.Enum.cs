@@ -7,29 +7,29 @@ namespace Completer
   [AttributeUsage(AttributeTargets.Parameter)]
   public class EnumCompletionsAttribute : BaseCompletionsAttribute<Completer>
   {
-    public readonly Type EnumType;
+    public readonly string[] EnumMembers;
     public readonly bool Strict;
 
     private EnumCompletionsAttribute() : base(CompletionCase.Lower) { }
 
-    public EnumCompletionsAttribute(Type enumType) : this() => EnumType = enumType;
+    public EnumCompletionsAttribute(in Type enumType) : this() => EnumMembers = Enum.GetNames(enumType);
 
     public EnumCompletionsAttribute(
-      Type enumType,
+      in Type enumType,
       bool strict
-    ) : this(enumType) => Strict = strict;
+    ) : this(in enumType) => Strict = strict;
 
     public EnumCompletionsAttribute(
-      Type enumType,
+      in Type enumType,
       bool strict,
       CompletionCase casing
-    ) : base(casing) => (EnumType, Strict) = (
-      enumType,
+    ) : base(casing) => (EnumMembers, Strict) = (
+      Enum.GetNames(enumType),
       strict
     );
 
     public override Completer Create() => new(
-      Enum.GetNames(EnumType),
+      EnumMembers,
       Strict,
       Casing
     );
