@@ -1,5 +1,3 @@
-using namespace Completer
-
 function Test-Function {
   [CmdletBinding()]
   [OutputType([string])]
@@ -7,9 +5,6 @@ function Test-Function {
 
     [Parameter(
       Position = 0
-    )]
-    [EnumCompletions(
-      [System.IO.MatchCasing]
     )]
     [string]$Name,
 
