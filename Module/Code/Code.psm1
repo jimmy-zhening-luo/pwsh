@@ -1309,7 +1309,9 @@ function Step-NodePackageVersion {
 
     # New package version, default 'patch'
     [EnumCompletions(
-      [NodePackageNamedVersion]
+      [NodePackageNamedVersion],
+      $False,
+      [CompletionCase]::Preserve
     )]
     [string]$Version,
 
