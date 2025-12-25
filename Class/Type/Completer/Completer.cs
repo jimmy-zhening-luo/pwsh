@@ -27,6 +27,7 @@ namespace Completer
         {
           yield return member;
         }
+
         yield break;
       }
       else
@@ -45,6 +46,7 @@ namespace Completer
             yield return member;
           }
         }
+
         if (!Strict && matched <= 1)
         {
           foreach (string member in Domain)
@@ -62,6 +64,7 @@ namespace Completer
             }
           }
         }
+
         yield break;
       }
     }
