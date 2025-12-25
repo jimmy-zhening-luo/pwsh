@@ -61,8 +61,8 @@ function Get-Size {
       ParameterSetName = 'Number',
       Position = 1
     )]
-    [Completions(
-      'b,kb,mb,gb,tb,pb'
+    [EnumCompletions(
+      [DiskSizeUnit]
     )]
     # The unit in which to return the size.
     [string]$Unit,
