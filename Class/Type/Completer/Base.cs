@@ -20,7 +20,7 @@ namespace Completer
       CommandAst commandAst,
       IDictionary fakeBoundParameters
     ) => WrapArgumentCompletionResult(
-      FulfillCompletion(
+      in FulfillCompletion(
         Escaper
           .Unescape(wordToComplete)
           .Trim()
@@ -30,7 +30,7 @@ namespace Completer
     public abstract IEnumerable<string> FulfillCompletion(string wordToComplete);
 
     private protected IEnumerable<CompletionResult> WrapArgumentCompletionResult(
-      IEnumerable<string> completedStrings
+      in IEnumerable<string> completedStrings
     )
     {
       foreach (string completedString in completedStrings)
