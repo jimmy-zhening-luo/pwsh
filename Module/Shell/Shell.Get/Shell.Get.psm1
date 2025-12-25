@@ -522,7 +522,6 @@ function Get-DirectoryDrive {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param(
 
-    [string]$Path
     [Parameter(
       Position = 0,
       ValueFromPipeline,
