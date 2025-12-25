@@ -1308,8 +1308,8 @@ function Step-NodePackageVersion {
   param(
 
     # New package version, default 'patch'
-    [Completions(
-      'patch,minor,major,prerelease,preminor,premajor'
+    [EnumCompletions(
+      [NodePackageNamedVersion]
     )]
     [string]$Version,
 
