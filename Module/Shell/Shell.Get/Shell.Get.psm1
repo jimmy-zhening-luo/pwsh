@@ -27,6 +27,16 @@ $DISK_SIZE_FACTORS = @{
   [DiskSizeUnit]::PB = 1PB
 }
 
+<#
+.SYNOPSIS
+Get the size of a file or directory.
+
+.DESCRIPTION
+Calculates and returns the size(s) of the specified filesystem object(s). For a file, returns the file size. For a directory, calculates and returns the total sum of sizes of all files recursively contained by the directory.
+
+.COMPONENT
+Shell.Get
+#>
 function Get-Size {
   [CmdletBinding(
     DefaultParameterSetName = 'String'

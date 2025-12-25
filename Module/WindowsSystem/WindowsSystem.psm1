@@ -1,4 +1,3 @@
-
 <#
 .SYNOPSIS
 Runs a command in the Windows Command Prompt, 'cmd.exe'.
