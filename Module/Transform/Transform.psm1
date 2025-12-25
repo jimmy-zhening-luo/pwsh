@@ -6,6 +6,9 @@ function Test-Function {
     [Parameter(
       Position = 0
     )]
+    [EnumCompletions(
+      [System.IO.MatchCasing]
+    )]
     [string]$Name,
 
     [Parameter(
