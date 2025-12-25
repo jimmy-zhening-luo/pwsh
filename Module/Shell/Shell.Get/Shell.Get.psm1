@@ -588,6 +588,7 @@ function Get-DirectoryDrive {
 .FORWARDHELPCATEGORY Cmdlet
 #>
 function Get-File {
+
   [OutputType(
     [string[]],
     [System.IO.DirectoryInfo[]],
