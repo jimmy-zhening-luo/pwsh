@@ -33,7 +33,10 @@ namespace Transform
 
         protected override void EndProcessing()
         {
-          WriteObject(T.IsEnum);
+          WriteObject(
+            Enum.GetNames(t),
+            true
+          );
         }
       }
     }
