@@ -1,3 +1,5 @@
+using namespace Completer
+
 function Test-Function {
   [CmdletBinding()]
   [OutputType([string])]
