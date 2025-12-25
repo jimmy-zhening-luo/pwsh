@@ -15,13 +15,13 @@ function Set-Directory {
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
+    [AllowNull()]
+    [AllowEmptyString()]
     [SupportsWildcards()]
     [RelativePathCompletions(
       { return $PWD.Path },
       [PathItemType]::Directory
     )]
-    [AllowEmptyString()]
-    [AllowNull()]
     [string]$Path,
 
     [Parameter(
@@ -36,8 +36,8 @@ function Set-Directory {
       ParameterSetName = 'Stack',
       ValueFromPipelineByPropertyName
     )]
-    [AllowEmptyString()]
     [AllowNull()]
+    [AllowEmptyString()]
     [string]$Stack,
 
     [switch]$PassThru
@@ -73,13 +73,13 @@ function Set-DirectorySibling {
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
+    [AllowNull()]
+    [AllowEmptyString()]
     [SupportsWildcards()]
     [RelativePathCompletions(
       { return Split-Path $PWD.Path },
       [PathItemType]::Directory
     )]
-    [AllowEmptyString()]
-    [AllowNull()]
     [string]$Path,
 
     [switch]$PassThru
@@ -99,13 +99,13 @@ function Set-DirectoryRelative {
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
+    [AllowNull()]
+    [AllowEmptyString()]
     [SupportsWildcards()]
     [RelativePathCompletions(
       { return $PWD.Path | Split-Path | Split-Path },
       [PathItemType]::Directory
     )]
-    [AllowEmptyString()]
-    [AllowNull()]
     [string]$Path,
 
     [switch]$PassThru
@@ -125,13 +125,13 @@ function Set-DirectoryHome {
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
+    [AllowNull()]
+    [AllowEmptyString()]
     [SupportsWildcards()]
     [PathCompletions(
       '~',
       [PathItemType]::Directory
     )]
-    [AllowEmptyString()]
-    [AllowNull()]
     [string]$Path,
 
     [switch]$PassThru
@@ -151,13 +151,13 @@ function Set-DirectoryCode {
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
+    [AllowNull()]
+    [AllowEmptyString()]
     [SupportsWildcards()]
     [PathCompletions(
       '~\code',
       [PathItemType]::Directory
     )]
-    [AllowEmptyString()]
-    [AllowNull()]
     [string]$Path,
 
     [switch]$PassThru
@@ -177,13 +177,13 @@ function Set-Drive {
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
+    [AllowNull()]
+    [AllowEmptyString()]
     [SupportsWildcards()]
     [RelativePathCompletions(
       { return $PWD.Drive.Root },
       [PathItemType]::Directory
     )]
-    [AllowEmptyString()]
-    [AllowNull()]
     [string]$Path,
 
     [switch]$PassThru
@@ -203,13 +203,13 @@ function Set-DriveD {
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
+    [AllowNull()]
+    [AllowEmptyString()]
     [SupportsWildcards()]
     [PathCompletions(
       'D:',
       [PathItemType]::Directory
     )]
-    [AllowEmptyString()]
-    [AllowNull()]
     [string]$Path,
 
     [switch]$PassThru

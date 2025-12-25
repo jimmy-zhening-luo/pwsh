@@ -145,16 +145,80 @@ function Get-Size {
   }
 }
 
+<#
+.FORWARDHELPTARGETNAME Get-ChildItem
+.FORWARDHELPCATEGORY Cmdlet
+#>
 function Get-Directory {
-
+  [CmdletBinding(
+    DefaultParameterSetName = 'Items'
+  )]
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param(
 
+    [Parameter(
+      ParameterSetName = 'Items',
+      Position = 0,
+      ValueFromPipeline,
+      ValueFromPipelineByPropertyName
+    )]
+    [AllowNull()]
+    [AllowEmptyString()]
+    [SupportsWildcards()]
     [RelativePathCompletions(
       { return $PWD.Path },
       [PathItemType]::Directory
     )]
-    [string]$Path
+    [string[]]$Path,
+
+    [Parameter(
+      Position = 1
+    )]
+    [SupportsWildcards()]
+    [string]$Filter,
+
+    [Parameter(
+      ParameterSetName = 'LiteralItems',
+      Mandatory,
+      ValueFromPipelineByPropertyName
+    )]
+    [Alias('PSPath', 'LP')]
+    [string[]]$LiteralPath,
+
+    [SupportsWildcards()]
+    [string[]]$Include,
+
+    [SupportsWildcards()]
+    [string[]]$Exclude,
+
+    [Alias('s', 'r')]
+    [switch]$Recurse,
+
+    [uint]$Depth,
+
+    [Alias('f')]
+    [switch]$Force,
+
+    [switch]$Name,
+
+    [Alias('ad')]
+    [switch]$Directory,
+
+    [Alias('af')]
+    [switch]$File,
+
+    [Alias('ah', 'h')]
+    [switch]$Hidden,
+
+    [Alias('as')]
+    [switch]$System,
+
+    [Alias('ar')]
+    [switch]$ReadOnly,
+
+    [switch]$FollowSymlink,
+
+    [System.IO.FileInfo]$Attributes
   )
 
   if ($Path) {
@@ -165,8 +229,12 @@ function Get-Directory {
   }
 }
 
+<#
+.FORWARDHELPTARGETNAME Get-ChildItem
+.FORWARDHELPCATEGORY Cmdlet
+#>
 function Get-DirectorySibling {
-
+  [CmdletBinding()]
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param(
 
@@ -180,8 +248,12 @@ function Get-DirectorySibling {
   Get-ChildItem -Path (Join-Path (Split-Path $PWD.Path) $Path) @args
 }
 
+<#
+.FORWARDHELPTARGETNAME Get-ChildItem
+.FORWARDHELPCATEGORY Cmdlet
+#>
 function Get-DirectoryRelative {
-
+  [CmdletBinding()]
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param(
 
@@ -195,8 +267,12 @@ function Get-DirectoryRelative {
   Get-ChildItem -Path (Join-Path ($PWD.Path | Split-Path | Split-Path) $Path) @args
 }
 
+<#
+.FORWARDHELPTARGETNAME Get-ChildItem
+.FORWARDHELPCATEGORY Cmdlet
+#>
 function Get-DirectoryHome {
-
+  [CmdletBinding()]
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param(
 
@@ -210,23 +286,38 @@ function Get-DirectoryHome {
   Get-ChildItem -Path (Join-Path $HOME $Path) @args
 }
 
+<#
+.FORWARDHELPTARGETNAME Get-ChildItem
+.FORWARDHELPCATEGORY Cmdlet
+#>
 function Get-DirectoryCode {
-
+  [CmdletBinding()]
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param(
 
+    [Parameter(
+      ParameterSetName = 'Items',
+      Position = 0,
+      ValueFromPipelineByPropertyName
+    )]
     [PathCompletions(
       '~\code',
       [PathItemType]::Directory
     )]
-    [string]$Path
+    [string]$Path,
+
+    [string]$Attributes
   )
 
   Get-ChildItem -Path (Join-Path $REPO_ROOT $Path) @args
 }
 
+<#
+.FORWARDHELPTARGETNAME Get-ChildItem
+.FORWARDHELPCATEGORY Cmdlet
+#>
 function Get-DirectoryDrive {
-
+  [CmdletBinding()]
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param(
 
