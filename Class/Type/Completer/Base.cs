@@ -30,7 +30,7 @@ namespace Completer
     public abstract IEnumerable<string> FulfillCompletion(string wordToComplete);
 
     private protected IEnumerable<CompletionResult> WrapArgumentCompletionResult(
-      in IEnumerable<string> completedStrings
+      IEnumerable<string> completedStrings
     )
     {
       foreach (string completedString in completedStrings)
