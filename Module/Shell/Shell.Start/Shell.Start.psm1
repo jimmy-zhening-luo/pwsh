@@ -2,6 +2,10 @@ using namespace System.Collections.Generic
 using namespace Completer
 using namespace Completer.PathCompleter
 
+<#
+.FORWARDHELPTARGETNAME Invoke-Item
+.FORWARDHELPCATEGORY Cmdlet
+#>
 function Start-Explorer {
 
   [OutputType([void])]
@@ -34,6 +38,10 @@ function Start-Explorer {
   }
 }
 
+<#
+.FORWARDHELPTARGETNAME Invoke-Item
+.FORWARDHELPCATEGORY Cmdlet
+#>
 function Start-ExplorerSibling {
 
   [OutputType([void])]
@@ -50,6 +58,10 @@ function Start-ExplorerSibling {
   ) @args
 }
 
+<#
+.FORWARDHELPTARGETNAME Invoke-Item
+.FORWARDHELPCATEGORY Cmdlet
+#>
 function Start-ExplorerRelative {
 
   [OutputType([void])]
@@ -66,6 +78,10 @@ function Start-ExplorerRelative {
   ) @args
 }
 
+<#
+.FORWARDHELPTARGETNAME Invoke-Item
+.FORWARDHELPCATEGORY Cmdlet
+#>
 function Start-ExplorerHome {
 
   [OutputType([void])]
@@ -80,6 +96,10 @@ function Start-ExplorerHome {
   Start-Explorer -Path (Join-Path $HOME $Path) @args
 }
 
+<#
+.FORWARDHELPTARGETNAME Invoke-Item
+.FORWARDHELPCATEGORY Cmdlet
+#>
 function Start-ExplorerCode {
 
   [OutputType([void])]
@@ -94,6 +114,10 @@ function Start-ExplorerCode {
   Start-Explorer -Path (Join-Path $REPO_ROOT $Path) @args
 }
 
+<#
+.FORWARDHELPTARGETNAME Invoke-Item
+.FORWARDHELPCATEGORY Cmdlet
+#>
 function Start-ExplorerDrive {
 
   [OutputType([void])]
