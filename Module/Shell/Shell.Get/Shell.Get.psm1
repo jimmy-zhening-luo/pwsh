@@ -218,14 +218,22 @@ function Get-Directory {
 
     [switch]$FollowSymlink,
 
-    [System.IO.FileInfo]$Attributes
+    [System.Management.Automation.FlagsExpression[System.IO.FileAttributes]]$Attributes
   )
 
-  if ($Path) {
-    Get-ChildItem -Path $Path @args
+  begin {
+    $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('Get-ChildItem', [System.Management.Automation.CommandTypes]::Cmdlet)
+    $scriptCmd = { & $wrappedCmd @PSBoundParameters }
+    $steppablePipeline = $scriptCmd.GetSteppablePipeline()
+    $steppablePipeline.Begin($PSCmdlet)
   }
-  else {
-    Get-ChildItem @args
+
+  process {
+    $steppablePipeline.Process($PSItem)
+  }
+
+  end {
+    $steppablePipeline.End()
   }
 }
 
@@ -238,14 +246,64 @@ function Get-DirectorySibling {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param(
 
+    [Parameter(
+      Position = 0,
+      ValueFromPipeline,
+      ValueFromPipelineByPropertyName
+    )]
+    [AllowNull()]
+    [AllowEmptyString()]
+    [SupportsWildcards()]
     [RelativePathCompletions(
       { return Split-Path $PWD.Path },
       [PathItemType]::Directory
     )]
-    [string]$Path
+    [string[]]$Path,
+
+    [Parameter(
+      Position = 1
+    )]
+    [SupportsWildcards()]
+    [string]$Filter,
+
+    [SupportsWildcards()]
+    [string[]]$Include,
+
+    [SupportsWildcards()]
+    [string[]]$Exclude,
+
+    [Alias('s', 'r')]
+    [switch]$Recurse,
+
+    [uint]$Depth,
+
+    [Alias('f')]
+    [switch]$Force,
+
+    [switch]$Name,
+
+    [Alias('ad')]
+    [switch]$Directory,
+
+    [Alias('af')]
+    [switch]$File,
+
+    [Alias('ah', 'h')]
+    [switch]$Hidden,
+
+    [Alias('as')]
+    [switch]$System,
+
+    [Alias('ar')]
+    [switch]$ReadOnly,
+
+    [switch]$FollowSymlink,
+
+    [System.Management.Automation.FlagsExpression[System.IO.FileAttributes]]$Attributes
   )
 
-  Get-ChildItem -Path (Join-Path (Split-Path $PWD.Path) $Path) @args
+  $PSBoundParameters.Path = Join-Path (Split-Path $PWD.Path) $Path
+  Get-ChildItem @PSBoundParameters
 }
 
 <#
@@ -257,14 +315,64 @@ function Get-DirectoryRelative {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param(
 
+    [Parameter(
+      Position = 0,
+      ValueFromPipeline,
+      ValueFromPipelineByPropertyName
+    )]
+    [AllowNull()]
+    [AllowEmptyString()]
+    [SupportsWildcards()]
     [RelativePathCompletions(
       { return $PWD.Path | Split-Path | Split-Path },
       [PathItemType]::Directory
     )]
-    [string]$Path
+    [string[]]$Path,
+
+    [Parameter(
+      Position = 1
+    )]
+    [SupportsWildcards()]
+    [string]$Filter,
+
+    [SupportsWildcards()]
+    [string[]]$Include,
+
+    [SupportsWildcards()]
+    [string[]]$Exclude,
+
+    [Alias('s', 'r')]
+    [switch]$Recurse,
+
+    [uint]$Depth,
+
+    [Alias('f')]
+    [switch]$Force,
+
+    [switch]$Name,
+
+    [Alias('ad')]
+    [switch]$Directory,
+
+    [Alias('af')]
+    [switch]$File,
+
+    [Alias('ah', 'h')]
+    [switch]$Hidden,
+
+    [Alias('as')]
+    [switch]$System,
+
+    [Alias('ar')]
+    [switch]$ReadOnly,
+
+    [switch]$FollowSymlink,
+
+    [System.Management.Automation.FlagsExpression[System.IO.FileAttributes]]$Attributes
   )
 
-  Get-ChildItem -Path (Join-Path ($PWD.Path | Split-Path | Split-Path) $Path) @args
+  $PSBoundParameters.Path = Join-Path ($PWD.Path | Split-Path | Split-Path) $Path
+  Get-ChildItem @PSBoundParameters
 }
 
 <#
@@ -276,14 +384,64 @@ function Get-DirectoryHome {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param(
 
+    [Parameter(
+      Position = 0,
+      ValueFromPipeline,
+      ValueFromPipelineByPropertyName
+    )]
+    [AllowNull()]
+    [AllowEmptyString()]
+    [SupportsWildcards()]
     [PathCompletions(
       '~',
       [PathItemType]::Directory
     )]
-    [string]$Path
+    [string[]]$Path,
+
+    [Parameter(
+      Position = 1
+    )]
+    [SupportsWildcards()]
+    [string]$Filter,
+
+    [SupportsWildcards()]
+    [string[]]$Include,
+
+    [SupportsWildcards()]
+    [string[]]$Exclude,
+
+    [Alias('s', 'r')]
+    [switch]$Recurse,
+
+    [uint]$Depth,
+
+    [Alias('f')]
+    [switch]$Force,
+
+    [switch]$Name,
+
+    [Alias('ad')]
+    [switch]$Directory,
+
+    [Alias('af')]
+    [switch]$File,
+
+    [Alias('ah', 'h')]
+    [switch]$Hidden,
+
+    [Alias('as')]
+    [switch]$System,
+
+    [Alias('ar')]
+    [switch]$ReadOnly,
+
+    [switch]$FollowSymlink,
+
+    [System.Management.Automation.FlagsExpression[System.IO.FileAttributes]]$Attributes
   )
 
-  Get-ChildItem -Path (Join-Path $HOME $Path) @args
+  $PSBoundParameters.Path = Join-Path $HOME $Path
+  Get-ChildItem @PSBoundParameters
 }
 
 <#
@@ -296,20 +454,63 @@ function Get-DirectoryCode {
   param(
 
     [Parameter(
-      ParameterSetName = 'Items',
       Position = 0,
+      ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
+    [AllowNull()]
+    [AllowEmptyString()]
+    [SupportsWildcards()]
     [PathCompletions(
       '~\code',
       [PathItemType]::Directory
     )]
-    [string]$Path,
+    [string[]]$Path,
 
-    [string]$Attributes
+    [Parameter(
+      Position = 1
+    )]
+    [SupportsWildcards()]
+    [string]$Filter,
+
+    [SupportsWildcards()]
+    [string[]]$Include,
+
+    [SupportsWildcards()]
+    [string[]]$Exclude,
+
+    [Alias('s', 'r')]
+    [switch]$Recurse,
+
+    [uint]$Depth,
+
+    [Alias('f')]
+    [switch]$Force,
+
+    [switch]$Name,
+
+    [Alias('ad')]
+    [switch]$Directory,
+
+    [Alias('af')]
+    [switch]$File,
+
+    [Alias('ah', 'h')]
+    [switch]$Hidden,
+
+    [Alias('as')]
+    [switch]$System,
+
+    [Alias('ar')]
+    [switch]$ReadOnly,
+
+    [switch]$FollowSymlink,
+
+    [System.Management.Automation.FlagsExpression[System.IO.FileAttributes]]$Attributes
   )
 
-  Get-ChildItem -Path (Join-Path $REPO_ROOT $Path) @args
+  $PSBoundParameters.Path = Join-Path $REPO_ROOT $Path
+  Get-ChildItem @PSBoundParameters
 }
 
 <#
@@ -321,16 +522,71 @@ function Get-DirectoryDrive {
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param(
 
+    [string]$Path
+    [Parameter(
+      Position = 0,
+      ValueFromPipeline,
+      ValueFromPipelineByPropertyName
+    )]
+    [AllowNull()]
+    [AllowEmptyString()]
+    [SupportsWildcards()]
     [RelativePathCompletions(
       { return $PWD.Drive.Root },
       [PathItemType]::Directory
     )]
-    [string]$Path
+    [string[]]$Path,
+
+    [Parameter(
+      Position = 1
+    )]
+    [SupportsWildcards()]
+    [string]$Filter,
+
+    [SupportsWildcards()]
+    [string[]]$Include,
+
+    [SupportsWildcards()]
+    [string[]]$Exclude,
+
+    [Alias('s', 'r')]
+    [switch]$Recurse,
+
+    [uint]$Depth,
+
+    [Alias('f')]
+    [switch]$Force,
+
+    [switch]$Name,
+
+    [Alias('ad')]
+    [switch]$Directory,
+
+    [Alias('af')]
+    [switch]$File,
+
+    [Alias('ah', 'h')]
+    [switch]$Hidden,
+
+    [Alias('as')]
+    [switch]$System,
+
+    [Alias('ar')]
+    [switch]$ReadOnly,
+
+    [switch]$FollowSymlink,
+
+    [System.Management.Automation.FlagsExpression[System.IO.FileAttributes]]$Attributes
   )
 
-  Get-ChildItem -Path (Join-Path $PWD.Drive.Root $Path) @args
+  $PSBoundParameters.Path = Join-Path $PWD.Drive.Root $Path
+  Get-ChildItem @PSBoundParameters
 }
 
+<#
+.FORWARDHELPTARGETNAME Get-Content
+.FORWARDHELPCATEGORY Cmdlet
+#>
 function Get-File {
   [OutputType(
     [string[]],
@@ -385,6 +641,10 @@ function Get-File {
   }
 }
 
+<#
+.FORWARDHELPTARGETNAME Get-Content
+.FORWARDHELPCATEGORY Cmdlet
+#>
 function Get-FileSibling {
 
   [OutputType([string[]])]
@@ -399,6 +659,10 @@ function Get-FileSibling {
   Get-File -Path $Path -Location (Split-Path $PWD.Path) @args
 }
 
+<#
+.FORWARDHELPTARGETNAME Get-Content
+.FORWARDHELPCATEGORY Cmdlet
+#>
 function Get-FileRelative {
 
   [OutputType([string[]])]
@@ -413,6 +677,10 @@ function Get-FileRelative {
   Get-File -Path $Path -Location ($PWD.Path | Split-Path | Split-Path) @args
 }
 
+<#
+.FORWARDHELPTARGETNAME Get-Content
+.FORWARDHELPCATEGORY Cmdlet
+#>
 function Get-FileHome {
 
   [OutputType([string[]])]
@@ -427,6 +695,10 @@ function Get-FileHome {
   Get-File -Path $Path -Location $HOME @args
 }
 
+<#
+.FORWARDHELPTARGETNAME Get-Content
+.FORWARDHELPCATEGORY Cmdlet
+#>
 function Get-FileCode {
 
   [OutputType([string[]])]
@@ -441,6 +713,10 @@ function Get-FileCode {
   Get-File -Path $Path -Location $REPO_ROOT @args
 }
 
+<#
+.FORWARDHELPTARGETNAME Get-Content
+.FORWARDHELPCATEGORY Cmdlet
+#>
 function Get-FileDrive {
 
   [OutputType([string[]])]

@@ -1,5 +1,9 @@
 using namespace Completer.PathCompleter
 
+<#
+.FORWARDHELPTARGETNAME Set-Location
+.FORWARDHELPCATEGORY Cmdlet
+#>
 function Set-Directory {
   [CmdletBinding(
     DefaultParameterSetName = 'Path'
@@ -63,7 +67,12 @@ function Set-Directory {
   }
 }
 
+<#
+.FORWARDHELPTARGETNAME Set-Location
+.FORWARDHELPCATEGORY Cmdlet
+#>
 function Set-DirectorySibling {
+  [CmdletBinding()]
   [OutputType(
     [System.Management.Automation.PathInfo]
   )]
@@ -89,7 +98,12 @@ function Set-DirectorySibling {
   Set-Directory @PSBoundParameters
 }
 
+<#
+.FORWARDHELPTARGETNAME Set-Location
+.FORWARDHELPCATEGORY Cmdlet
+#>
 function Set-DirectoryRelative {
+  [CmdletBinding()]
   [OutputType(
     [System.Management.Automation.PathInfo]
   )]
@@ -115,7 +129,12 @@ function Set-DirectoryRelative {
   Set-Directory @PSBoundParameters
 }
 
+<#
+.FORWARDHELPTARGETNAME Set-Location
+.FORWARDHELPCATEGORY Cmdlet
+#>
 function Set-DirectoryHome {
+  [CmdletBinding()]
   [OutputType(
     [System.Management.Automation.PathInfo]
   )]
@@ -141,7 +160,12 @@ function Set-DirectoryHome {
   Set-Directory @PSBoundParameters
 }
 
+<#
+.FORWARDHELPTARGETNAME Set-Location
+.FORWARDHELPCATEGORY Cmdlet
+#>
 function Set-DirectoryCode {
+  [CmdletBinding()]
   [OutputType(
     [System.Management.Automation.PathInfo]
   )]
@@ -167,7 +191,12 @@ function Set-DirectoryCode {
   Set-Directory @PSBoundParameters
 }
 
+<#
+.FORWARDHELPTARGETNAME Set-Location
+.FORWARDHELPCATEGORY Cmdlet
+#>
 function Set-Drive {
+  [CmdletBinding()]
   [OutputType(
     [System.Management.Automation.PathInfo]
   )]
@@ -193,7 +222,12 @@ function Set-Drive {
   Set-Directory @PSBoundParameters
 }
 
+<#
+.FORWARDHELPTARGETNAME Set-Location
+.FORWARDHELPCATEGORY Cmdlet
+#>
 function Set-DriveD {
+  [CmdletBinding()]
   [OutputType(
     [System.Management.Automation.PathInfo]
   )]
