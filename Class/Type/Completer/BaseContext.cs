@@ -18,7 +18,7 @@ namespace Completer
       CommandAst commandAst,
       IDictionary fakeBoundParameters
     ) => WrapArgumentCompletionResult(
-      in FulfillCompletion(
+      FulfillCompletion(
         Escaper
           .Unescape(wordToComplete)
           .Trim(),
