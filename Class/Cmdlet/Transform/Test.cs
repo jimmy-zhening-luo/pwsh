@@ -15,23 +15,24 @@ namespace Transform
       public class TestCmdlet : Cmdlet
       {
         [Parameter(
+          Mandatory = true,
           Position = 0,
-          HelpMessage = "Name to be displayed"
+          HelpMessage = "Type to reflect"
         )]
         [AllowEmptyString]
-        public string Name
+        public Type T
         {
-          get => name;
-          set => name = value;
+          get => t;
+          set => t = value;
         }
-        private string name = "";
+        private Type t;
 
         [Parameter(DontShow = true)]
         public SwitchParameter z;
 
         protected override void EndProcessing()
         {
-          WriteObject(name);
+          WriteObject(T.IsEnum);
         }
       }
     }
