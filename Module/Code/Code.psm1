@@ -5,7 +5,7 @@ using namespace Completer.PathCompleter
 
 function Resolve-GitRepository {
   [CmdletBinding()]
-  [OutputType([string[]])]
+  [OutputType([string])]
   param(
     [Parameter(
       Mandatory,

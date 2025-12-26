@@ -217,7 +217,7 @@ Get-Alias
 #>
 function Get-CommandAlias {
   [CmdletBinding()]
-  [OutputType([System.Management.Automation.CommandInfo[]])]
+  [OutputType([System.Management.Automation.CommandInfo])]
   param(
 
     [Parameter(

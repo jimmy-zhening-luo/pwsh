@@ -41,8 +41,11 @@ function Get-Size {
   [CmdletBinding(
     DefaultParameterSetName = 'String'
   )]
-  [OutputType([string[]])]
-  [OutputType([double[]], ParameterSetName = 'Number')]
+  [OutputType([string])]
+  [OutputType(
+    [double],
+    ParameterSetName = 'Number'
+  )]
   param(
 
     [Parameter(
@@ -154,7 +157,7 @@ function Get-Directory {
     DefaultParameterSetName = 'Items',
     SupportsTransactions
   )]
-  [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
+  [OutputType([System.IO.DirectoryInfo], [System.IO.FileInfo])]
   param(
 
     [Parameter(
@@ -246,7 +249,7 @@ function Get-DirectorySibling {
   [CmdletBinding(
     SupportsTransactions
   )]
-  [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
+  [OutputType([System.IO.DirectoryInfo], [System.IO.FileInfo])]
   param(
 
     [Parameter(
@@ -317,7 +320,7 @@ function Get-DirectoryRelative {
   [CmdletBinding(
     SupportsTransactions
   )]
-  [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
+  [OutputType([System.IO.DirectoryInfo], [System.IO.FileInfo])]
   param(
 
     [Parameter(
@@ -388,7 +391,7 @@ function Get-DirectoryHome {
   [CmdletBinding(
     SupportsTransactions
   )]
-  [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
+  [OutputType([System.IO.DirectoryInfo], [System.IO.FileInfo])]
   param(
 
     [Parameter(
@@ -459,7 +462,7 @@ function Get-DirectoryCode {
   [CmdletBinding(
     SupportsTransactions
   )]
-  [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
+  [OutputType([System.IO.DirectoryInfo], [System.IO.FileInfo])]
   param(
 
     [Parameter(
@@ -530,7 +533,7 @@ function Get-DirectoryDrive {
   [CmdletBinding(
     SupportsTransactions
   )]
-  [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
+  [OutputType([System.IO.DirectoryInfo], [System.IO.FileInfo])]
   param(
 
     [Parameter(
@@ -647,7 +650,7 @@ function Get-File {
 #>
 function Get-FileSibling {
 
-  [OutputType([string[]])]
+  [OutputType([string])]
   param(
 
     [Parameter(
@@ -669,7 +672,7 @@ function Get-FileSibling {
 #>
 function Get-FileRelative {
 
-  [OutputType([string[]])]
+  [OutputType([string])]
   param(
 
     [RelativePathCompletions(
@@ -687,7 +690,7 @@ function Get-FileRelative {
 #>
 function Get-FileHome {
 
-  [OutputType([string[]])]
+  [OutputType([string])]
   param(
 
     [Parameter(
@@ -709,7 +712,7 @@ function Get-FileHome {
 #>
 function Get-FileCode {
 
-  [OutputType([string[]])]
+  [OutputType([string])]
   param(
 
     [PathCompletions(
@@ -727,7 +730,7 @@ function Get-FileCode {
 #>
 function Get-FileDrive {
 
-  [OutputType([string[]])]
+  [OutputType([string])]
   param(
 
     [Parameter(
