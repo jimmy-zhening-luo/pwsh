@@ -5,21 +5,80 @@ using namespace Completer.PathCompleter
 .FORWARDHELPCATEGORY Cmdlet
 #>
 function Clear-Line {
-
+  [CmdletBinding(
+    DefaultParameterSetName = 'Path',
+    SupportsTransactions
+  )]
   [OutputType([void])]
   param(
 
-    [RelativePathCompletions(
-      { return $PWD.Path }
+    [Parameter(
+      ParameterSetName = 'Path',
+      Position = 0,
+      ValueFromPipelineByPropertyName
     )]
-    [string]$Path
+    [AllowNull()]
+    [AllowEmptyString()]
+    [SupportsWildcards()]
+    [RelativePathCompletions(
+      { return $PWD.Path },
+      [PathItemType]::Directory
+    )]
+    [string[]]$Path,
+
+    [Parameter(
+      Position = 1
+    )]
+    [SupportsWildcards()]
+    [string]$Filter,
+
+    [Parameter(
+      ParameterSetName = 'LiteralPath',
+      Mandatory,
+      ValueFromPipelineByPropertyName
+    )]
+    [Alias('PSPath', 'LP')]
+    [string[]]$LiteralPath,
+
+    [SupportsWildcards()]
+    [string[]]$Include,
+
+    [SupportsWildcards()]
+    [string[]]$Exclude,
+
+    [Alias('f')]
+    [switch]$Force,
+
+    [Parameter()]
+    [string]$Stream
   )
 
-  if ($Path -or $args) {
-    Clear-Content -Path $Path @args
+  begin {
+    if ($Path -or $LiteralPath) {
+      $ProcessRecords = $True
+      $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('Clear-Content', [System.Management.Automation.CommandTypes]::Cmdlet)
+      [scriptblock]$scriptCmd = { & $wrappedCmd @PSBoundParameters }
+      $steppablePipeline = $scriptCmd.GetSteppablePipeline()
+      $steppablePipeline.Begin($PSCmdlet)
+    }
+    else {
+      $ProcessRecords = $False
+    }
   }
-  else {
-    Clear-Host
+
+  process {
+    if ($ProcessRecords) {
+      $steppablePipeline.Process($PSItem)
+    }
+  }
+
+  end {
+    if ($ProcessRecords) {
+      $steppablePipeline.End()
+    }
+    else {
+      Clear-Host
+    }
   }
 }
 
