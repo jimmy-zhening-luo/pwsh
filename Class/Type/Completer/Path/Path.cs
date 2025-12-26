@@ -34,59 +34,63 @@ namespace Completer
         string pathToComplete = Canonicalizer
           .Normalize(wordToComplete, true)
           .Trim();
-        string accumulatedSubpath = "";
-        string location = "";
-        string filter = "";
+        string accumulatedSubpath = string.Empty;
+        string location = string.Empty;
+        string filter = string.Empty;
 
-        if (pathToComplete != string.Empty)
+        while (pathToComplete != string.Empty)
         {
           int pathEnd = pathToComplete.LastIndexOf('\\');
 
           if (pathEnd < 0)
           {
             filter = pathToComplete;
+            pathToComplete = string.Empty;
           }
           else
           {
-            accumulatedSubpath = pathToComplete[..pathEnd].Trim();
+            string subpathPart = pathToComplete[..pathEnd].Trim();
 
             int wordStart = pathEnd + 1;
 
             if (wordStart < pathToComplete.Length) {
               filter = pathToComplete[wordStart..].Trim();
             }
-          }
 
-          if (accumulatedSubpath != string.Empty)
-          {
-            string accumulatedPath = Path.GetFullPath(
-              accumulatedSubpath,
-              Root
-            );
-
-            if (Directory.Exists(accumulatedPath))
+            if (subpathPart == string.Empty)
             {
-              accumulatedSubpath = Path.GetRelativePath(
-                Root,
-                accumulatedPath
-              );
-              location = accumulatedPath;
-            }
-            else if (
-              Reanchor
-              && Directory.Exists(
-                accumulatedSubpath
-              )
-            )
-            {
-              accumulatedSubpath = Path.GetFullPath(
-                accumulatedSubpath
-              );
-              location = accumulatedSubpath;
+              pathToComplete = string.Empty;
             }
             else
             {
-              accumulatedSubpath = string.Empty;
+              string anchoredPath = Path.GetFullPath(
+                subpathPart,
+                Root
+              );
+
+              if (Directory.Exists(anchoredPath))
+              {
+                accumulatedSubpath = Path.GetRelativePath(
+                  Root,
+                  anchoredPath
+                );
+                location = anchoredPath;
+                pathToComplete = string.Empty;
+              }
+              else if (
+                Reanchor
+                && Directory.Exists(subpathPart)
+              )
+              {
+                accumulatedSubpath = Path.GetFullPath(subpathPart);
+                location = accumulatedSubpath;
+                pathToComplete = string.Empty;
+              }
+              else
+              {
+                filter = string.Empty;
+                pathToComplete = subpathPart;
+              }
             }
           }
         }
