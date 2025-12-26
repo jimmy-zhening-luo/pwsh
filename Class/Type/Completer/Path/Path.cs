@@ -66,11 +66,27 @@ namespace Completer
 
             if (Directory.Exists(accumulatedPath))
             {
+              accumulatedSubpath = Path.GetRelativePath(
+                Root,
+                accumulatedPath
+              );
               location = accumulatedPath;
+            }
+            elseif (
+              Reanchor
+              && Directory.Exists(
+                accumulatedSubpath
+              )
+            )
+            {
+              accumulatedSubpath = Path.GetFullPath(
+                accumulatedSubpath
+              );
+              location = accumulatedSubpath;
             }
             else
             {
-              accumulatedPath = string.Empty;
+              accumulatedSubpath = string.Empty;
             }
           }
         }
