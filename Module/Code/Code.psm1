@@ -173,7 +173,6 @@ Code
 https://git-scm.com/docs
 #>
 function Invoke-Git {
-
   [CmdletBinding()]
   param(
 
@@ -464,7 +463,6 @@ Code
 https://git-scm.com/docs/git-pull
 #>
 function Get-ChildGitRepository {
-
   [CmdletBinding()]
   param()
 
@@ -1015,7 +1013,6 @@ https://docs.npmjs.com/cli/commands
 https://docs.npmjs.com/cli/commands/npm
 #>
 function Invoke-Npm {
-
   [CmdletBinding()]
   param(
 
