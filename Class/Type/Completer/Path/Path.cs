@@ -65,6 +65,10 @@ namespace Completer
             {
               location = accumulatedPath;
             }
+            else
+            {
+              accumulatedPath = string.Empty;
+            }
           }
         }
 
