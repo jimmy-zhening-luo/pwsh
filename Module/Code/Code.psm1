@@ -1216,6 +1216,8 @@ Code
 https://docs.npmjs.com/cli/commands/npm-cache
 #>
 function Clear-NodeModuleCache {
+  [CmdletBinding()]
+  param()
 
   $NodeArgument = [List[string]]::new(
     [List[string]]@(
@@ -1223,11 +1225,6 @@ function Clear-NodeModuleCache {
       '--force'
     )
   )
-  if ($args) {
-    $NodeArgument.AddRange(
-      [List[string]]$args
-    )
-  }
 
   Invoke-Npm -Command cache -Argument $NodeArgument
 }

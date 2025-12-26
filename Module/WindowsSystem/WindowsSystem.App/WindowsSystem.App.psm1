@@ -1,4 +1,3 @@
-
 <#
 .SYNOPSIS
 Opens the 'Microsoft Store' app to the 'Updates & downloads' page.
