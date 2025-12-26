@@ -93,8 +93,8 @@ namespace Completer
           )
           {
             yield return Canonicalizer.Denormalize(
-              accumulatedSubpath,
               Path.GetFileName(directory),
+              accumulatedSubpath,
               directoryCap
             );
           }
@@ -111,22 +111,22 @@ namespace Completer
           )
           {
             yield return Canonicalizer.Denormalize(
-              accumulatedSubpath,
-              Path.GetFileName(file)
+              Path.GetFileName(file),
+              accumulatedSubpath
             );
           }
         }
 
         yield return Canonicalizer.Denormalize(
-          accumulatedSubpath,
-          @"..\"
+          @"..\",
+          accumulatedSubpath
         );
 
         if (accumulatedSubpath != string.Empty)
         {
           yield return Canonicalizer.Denormalize(
-            accumulatedSubpath,
-            @"\"
+            @"\",
+            accumulatedSubpath
           );
         }
 
