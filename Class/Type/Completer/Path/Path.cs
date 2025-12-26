@@ -72,7 +72,7 @@ namespace Completer
               );
               location = accumulatedPath;
             }
-            elseif (
+            else if (
               Reanchor
               && Directory.Exists(
                 accumulatedSubpath
