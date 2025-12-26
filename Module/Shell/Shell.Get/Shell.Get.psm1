@@ -151,7 +151,8 @@ function Get-Size {
 #>
 function Get-Directory {
   [CmdletBinding(
-    DefaultParameterSetName = 'Items'
+    DefaultParameterSetName = 'Items',
+    SupportsTransactions
   )]
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param(
@@ -242,7 +243,9 @@ function Get-Directory {
 .FORWARDHELPCATEGORY Cmdlet
 #>
 function Get-DirectorySibling {
-  [CmdletBinding()]
+  [CmdletBinding(
+    SupportsTransactions
+  )]
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param(
 
@@ -311,7 +314,9 @@ function Get-DirectorySibling {
 .FORWARDHELPCATEGORY Cmdlet
 #>
 function Get-DirectoryRelative {
-  [CmdletBinding()]
+  [CmdletBinding(
+    SupportsTransactions
+  )]
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param(
 
@@ -380,7 +385,9 @@ function Get-DirectoryRelative {
 .FORWARDHELPCATEGORY Cmdlet
 #>
 function Get-DirectoryHome {
-  [CmdletBinding()]
+  [CmdletBinding(
+    SupportsTransactions
+  )]
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param(
 
@@ -449,7 +456,9 @@ function Get-DirectoryHome {
 .FORWARDHELPCATEGORY Cmdlet
 #>
 function Get-DirectoryCode {
-  [CmdletBinding()]
+  [CmdletBinding(
+    SupportsTransactions
+  )]
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param(
 
@@ -518,7 +527,9 @@ function Get-DirectoryCode {
 .FORWARDHELPCATEGORY Cmdlet
 #>
 function Get-DirectoryDrive {
-  [CmdletBinding()]
+  [CmdletBinding(
+    SupportsTransactions
+  )]
   [OutputType([System.IO.DirectoryInfo[]], [System.IO.FileInfo[]])]
   param(
 
@@ -589,12 +600,14 @@ function Get-DirectoryDrive {
 function Get-File {
 
   [OutputType(
-    [string[]],
-    [System.IO.DirectoryInfo[]],
-    [System.IO.FileInfo[]]
+    [string[]]
   )]
   param(
 
+    [Parameter(
+      Mandatory,
+      Position = 0
+    )]
     [RelativePathCompletions(
       { return $PWD.Path }
     )]
@@ -614,31 +627,18 @@ function Get-File {
     $Location = [string]::Empty
   }
 
-  if ($Path) {
-    [string]$FullPath = $Location ? (
-      Join-Path $Location $Path
-    ) : $Path
+  [string]$FullPath = $Location ? (
+    Join-Path $Location $Path
+  ) : $Path
 
-    if (-not (Test-Path $FullPath)) {
-      throw "Path '$Target' does not exist."
-    }
+  if (-not (Test-Path $FullPath)) {
+    throw "Path '$Target' does not exist."
+  }
+  elseif (-not (Test-Path $FullPath -PathType Leaf)) {
+    throw "Path '$Target' is not a leaf item."
+  }
 
-    if (Test-Path $FullPath -PathType Container) {
-      return Get-ChildItem -Path $FullPath @Argument @args
-    }
-    else {
-      return Get-Content -Path $FullPath @Argument @args
-    }
-  }
-  else {
-    return Get-ChildItem -Path (
-      (
-        $Location ? (
-          Resolve-Path $Location
-        ) : $PWD
-      ).Path
-    ) @Argument @args
-  }
+  return Get-Content -Path $FullPath @Argument @args
 }
 
 <#
@@ -650,6 +650,10 @@ function Get-FileSibling {
   [OutputType([string[]])]
   param(
 
+    [Parameter(
+      Mandatory,
+      Position = 0
+    )]
     [RelativePathCompletions(
       { return Split-Path $PWD.Path }
     )]
@@ -686,6 +690,10 @@ function Get-FileHome {
   [OutputType([string[]])]
   param(
 
+    [Parameter(
+      Mandatory,
+      Position = 0
+    )]
     [PathCompletions(
       '~'
     )]
@@ -722,6 +730,10 @@ function Get-FileDrive {
   [OutputType([string[]])]
   param(
 
+    [Parameter(
+      Mandatory,
+      Position = 0
+    )]
     [RelativePathCompletions(
       { return $PWD.Drive.Root }
     )]
