@@ -33,7 +33,8 @@ namespace Completer
           .BaseObject
           .ToString(),
         ItemType,
-        Flat
+        Flat,
+        true
       );
     }
   } // namespace PathCompleter

@@ -29,7 +29,8 @@ namespace Completer
       public override PathCompleter Create() => new(
         Location,
         ItemType,
-        Flat
+        Flat,
+        false
       );
     }
   } // namespace PathCompleter

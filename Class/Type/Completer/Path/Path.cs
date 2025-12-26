@@ -10,20 +10,23 @@ namespace Completer
       public readonly string Root;
       public readonly PathItemType Type;
       public readonly bool Flat;
+      public readonly bool Reanchor;
 
       private PathCompleter() : base() { }
 
       public PathCompleter(
         string root,
         PathItemType type,
-        bool flat
-      ) : this() => (Root, Type, Flat) = 
+        bool flat,
+        bool reanchor
+      ) : this() => (Root, Type, Flat, Reanchor) = 
       (
         Canonicalizer.AnchorHome(
           Canonicalizer.Normalize(root)
         ),
         type,
-        flat
+        flat,
+        reanchor
       );
 
       public override IEnumerable<string> FulfillCompletion(string wordToComplete)
