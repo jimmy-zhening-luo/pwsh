@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Diagnostics;
 using System.Management.Automation;
 
@@ -47,29 +48,37 @@ namespace Browse
 
       protected override void ProcessRecord()
       {
-        foreach (Uri u in uri)
+        if (
+          ParameterSetName == "Uri"
+          && Environment.GetEnvironmentVariable("SSH_CLIENT") != null
+        )
         {
-          Process browser = new ();
-          browser.StartInfo = new ProcessStartInfo(
-            Browser,
-            u.ToString()
-          );
+          foreach (Uri u in uri)
+          {
+            string url = u.ToString().Trim();
 
-          Process.Start();
+            if (url != string.Empty)
+            {
+              Process browser = new ();
+              browser.StartInfo = new ProcessStartInfo(
+                Browser,
+                u.ToString()
+              );
+
+              browser.Start();
+            }
+          }
         }
       }
 
       protected override void EndProcessing()
       {
-        foreach (long number in numbers)
+        if (
+          ParameterSetName == "Path"
+          && Environment.GetEnvironmentVariable("SSH_CLIENT") != null
+        )
         {
-          string hex = number.ToString("X");
-
-          WriteObject(
-            Lowercase
-              ? hex.ToLower()
-              : hex
-          );
+          if (Path.Exists())
         }
       }
     }
