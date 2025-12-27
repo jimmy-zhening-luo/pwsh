@@ -28,8 +28,8 @@ namespace Completer
 
       public static string Denormalize(
         string path,
-        string location = "",
-        string subpath = ""
+        string location = string.Empty,
+        string subpath = string.Empty
       ) => Path
         .Join(
           location,
