@@ -149,7 +149,11 @@ namespace Completer
           accumulatedSubpath
         );
 
-        if (accumulatedSubpath != string.Empty)
+        if (accumulatedSubpath == string.Empty)
+        {
+          yield return string.Empty;
+        }
+        else
         {
           yield return Canonicalizer.Denormalize(
             @"\",
