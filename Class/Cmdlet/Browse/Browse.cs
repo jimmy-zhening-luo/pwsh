@@ -15,7 +15,7 @@ namespace Browse
     [OutputType(typeof(void))]
     public class ConvertToHex : Cmdlet
     {
-      private static Browser = @"C:\Program Files\Google\Chrome\Application\chrome.exe";
+      private static string Browser = @"C:\Program Files\Google\Chrome\Application\chrome.exe";
 
       [Parameter(
         ParameterSetName = "Path",
