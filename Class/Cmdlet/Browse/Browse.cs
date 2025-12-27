@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using System.Diagnostics;
 using System.Management.Automation;
 
@@ -79,8 +78,8 @@ namespace Browse
         )
         {
           string cleanPath = path.Trim();
-          string pathUri = Path.Exists(cleanPath)
-            ? Path.GetFullPath(cleanPath)
+          string pathUri = System.IO.Path.Exists(cleanPath)
+            ? System.IO.Path.GetFullPath(cleanPath)
             : cleanPath;
 
           Process browser = new ();
