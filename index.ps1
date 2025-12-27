@@ -10,7 +10,7 @@ $Global:PSDefaultParameterValues = Import-PowerShellDataFile -Path $PSScriptRoot
 
 $Script:REPO_ROOT = Split-Path $PSScriptRoot
 
-. $PSScriptRoot\Script\Alias.ps1
-. $PSScriptRoot\Script\Key.ps1
-. $PSScriptRoot\Script\Native.ps1
 . $PSScriptRoot\Script\Install.ps1
+. $PSScriptRoot\Script\Alias.ps1
+# . $PSScriptRoot\Script\Key.ps1
+. $PSScriptRoot\Script\Native.ps1
