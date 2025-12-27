@@ -100,6 +100,7 @@ namespace Completer
           location = Root;
         }
 
+        int count = 0;
         filter = filter + "*";
         EnumerationOptions attributes = new EnumerationOptions();
 
@@ -119,6 +120,7 @@ namespace Completer
             )
           )
           {
+            ++count;
             yield return Canonicalizer.Denormalize(
               Path.GetFileName(directory),
               accumulatedSubpath,
@@ -137,6 +139,7 @@ namespace Completer
             )
           )
           {
+            ++count;
             yield return Canonicalizer.Denormalize(
               Path.GetFileName(file),
               accumulatedSubpath
@@ -144,19 +147,21 @@ namespace Completer
           }
         }
 
-        yield return Canonicalizer.Denormalize(
-          @"..\",
-          accumulatedSubpath
-        );
-
-        if (accumulatedSubpath == string.Empty)
-        {
-          yield return string.Empty;
-        }
-        else
+        if (accumulatedSubpath != string.Empty)
         {
           yield return Canonicalizer.Denormalize(
             @"\",
+            accumulatedSubpath
+          );
+        }
+
+        if (
+          accumulatedSubpath != string.Empty
+          || count != 0
+        )
+        {
+          yield return Canonicalizer.Denormalize(
+            @"..\",
             accumulatedSubpath
           );
         }
