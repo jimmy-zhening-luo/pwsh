@@ -84,7 +84,7 @@ namespace Browse
             : cleanPath;
 
           Process browser = new ();
-          browser.StartInfo.FilePath = cleanPath == string.Empty
+          browser.StartInfo.FileName = cleanPath == string.Empty
             ? new ProcessStartInfo(Browser)
             : new ProcessStartInfo(
                 Browser,
