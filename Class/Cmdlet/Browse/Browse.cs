@@ -13,7 +13,7 @@ namespace Browse
       DefaultParameterSetName = "Path"
     )]
     [OutputType(typeof(void))]
-    public class ConvertToHex : Cmdlet
+    public class ConvertToHex : PSCmdlet
     {
       private static string Browser = @"C:\Program Files\Google\Chrome\Application\chrome.exe";
 
@@ -74,7 +74,7 @@ namespace Browse
       protected override void EndProcessing()
       {
         if (
-          ParameterSetName == "Path"
+          this.ParameterSetName == "Path"
           && Environment.GetEnvironmentVariable("SSH_CLIENT") != null
         )
         {
