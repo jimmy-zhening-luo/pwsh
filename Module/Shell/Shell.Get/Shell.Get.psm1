@@ -612,7 +612,8 @@ function Get-File {
       Position = 0
     )]
     [RelativePathCompletions(
-      { return $PWD.Path }
+      { return $PWD.Path },
+      [PathItemType]::File
     )]
     [string]$Path,
 
@@ -658,7 +659,8 @@ function Get-FileSibling {
       Position = 0
     )]
     [RelativePathCompletions(
-      { return Split-Path $PWD.Path }
+      { return Split-Path $PWD.Path },
+      [PathItemType]::File
     )]
     [string]$Path
   )
@@ -676,7 +678,8 @@ function Get-FileRelative {
   param(
 
     [RelativePathCompletions(
-      { return $PWD.Path | Split-Path | Split-Path }
+      { return $PWD.Path | Split-Path | Split-Path },
+      [PathItemType]::File
     )]
     [string]$Path
   )
@@ -698,7 +701,8 @@ function Get-FileHome {
       Position = 0
     )]
     [PathCompletions(
-      '~'
+      '~',
+      [PathItemType]::File
     )]
     [string]$Path
   )
@@ -716,7 +720,8 @@ function Get-FileCode {
   param(
 
     [PathCompletions(
-      '~\code'
+      '~\code',
+      [PathItemType]::File
     )]
     [string]$Path
   )
@@ -738,7 +743,8 @@ function Get-FileDrive {
       Position = 0
     )]
     [RelativePathCompletions(
-      { return $PWD.Drive.Root }
+      { return $PWD.Drive.Root },
+      [PathItemType]::File
     )]
     [string]$Path
   )
