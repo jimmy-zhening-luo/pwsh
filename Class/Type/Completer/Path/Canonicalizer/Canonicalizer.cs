@@ -59,7 +59,7 @@ namespace Completer
           location
         )
         .Replace(".", string.Empty)
-        .Replace(@"\", string.Empty);
+        .Replace(@"\", string.Empty) == string.Empty;
 
       public static string RemoveRelativeRoot(string path) => IsRelativelyRooted(path)
         ? path.Length == 1
