@@ -31,10 +31,19 @@ namespace Transform
 
         protected override void EndProcessing()
         {
-          if (System.IO.Path.Exists(path))
+          string pwd = SessionState.Path.CurrentLocation.Path;
+
+          WriteObject(
+            pwd,
+            true
+          );
+
+          string rel = System.IO.Path.GetRelativePath(pwd, path);
+
+          if (System.IO.Path.Exists(rel))
           {
             WriteObject(
-              System.IO.Path.GetFullPath(path),
+              System.IO.Path.GetFullPath(rel),
               true
             );
           }
