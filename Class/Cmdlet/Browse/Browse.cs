@@ -78,7 +78,20 @@ namespace Browse
           && Environment.GetEnvironmentVariable("SSH_CLIENT") != null
         )
         {
-          if (Path.Exists())
+          string cleanPath = path.Trim();
+          string pathUri = Path.Exists(cleanPath)
+            ? Path.GetFullPath(cleanPath)
+            : cleanPath;
+
+          Process browser = new ();
+          browser.StartInfo.FilePath = cleanPath == string.Empty
+            ? new ProcessStartInfo(Browser)
+            : new ProcessStartInfo(
+                Browser,
+                pathUri
+              );
+
+          browser.Start();
         }
       }
     }
