@@ -31,7 +31,7 @@ namespace Transform
 
         protected override void EndProcessing()
         {
-          string pwd = this.SessionState.Path.CurrentLocation.Path;
+          string pwd = this.SessionState.Path.CurrentLocation.Path.Path;
 
           WriteObject(
             pwd,
