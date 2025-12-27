@@ -40,22 +40,22 @@ namespace Browse
       [AllowEmptyCollection]
       public Uri[] Uri
       {
-        get => numbers;
-        set => numbers = value;
+        get => uri;
+        set => uri = value;
       }
       private Uri[] uri;
 
       protected override void ProcessRecord()
       {
-        foreach (long number in numbers)
+        foreach (Uri u in uri)
         {
-          string hex = number.ToString("X");
-
-          WriteObject(
-            Lowercase
-              ? hex.ToLower()
-              : hex
+          Process browser = new ();
+          browser.StartInfo = new ProcessStartInfo(
+            Browser,
+            u.ToString()
           );
+
+          Process.Start();
         }
       }
 
