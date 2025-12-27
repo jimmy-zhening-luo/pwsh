@@ -21,12 +21,12 @@ namespace Transform
           HelpMessage = "Type to reflect"
         )]
         [AllowEmptyString]
-        public Type T
+        public string Path
         {
-          get => t;
-          set => t = value;
+          get => path;
+          set => path = value;
         }
-        private Type t;
+        private string path;
 
         [Parameter(DontShow = true)]
         public SwitchParameter z;
