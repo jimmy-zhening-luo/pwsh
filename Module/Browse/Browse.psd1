@@ -8,6 +8,7 @@
   Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
   PowerShellVersion    = '7.4'
   NestedModules        = @(
+    'Browse.dll'
     @{
       ModuleName    = 'Browse.Test'
       ModuleVersion = '3.0.0'
@@ -15,11 +16,12 @@
     }
   )
   FunctionsToExport    = @(
-    'Open-Url'
     'Test-Host'
     'Test-Url'
   )
-  CmdletsToExport      = @()
+  CmdletsToExport      = @(
+    'Open-Url'
+  )
   VariablesToExport    = @()
   AliasesToExport      = @(
     'go'

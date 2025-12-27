@@ -1,5 +1,6 @@
 @{
   Cmdlets = @(
+    'Browse'
     'Transform'
   )
   Types   = @(
