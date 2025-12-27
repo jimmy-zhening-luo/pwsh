@@ -16,9 +16,7 @@ namespace Transform
       public class TestCmdlet : Cmdlet
       {
         [Parameter(
-          Mandatory = true,
-          Position = 0,
-          HelpMessage = "Type to reflect"
+          Position = 0
         )]
         [AllowEmptyString]
         public string Path
@@ -33,10 +31,13 @@ namespace Transform
 
         protected override void EndProcessing()
         {
-          WriteObject(
-            Enum.GetNames(t),
-            true
-          );
+          if (System.IO.Path.Exists(path))
+          {
+            WriteObject(
+              System.IO.Path.GetFullPath(path),
+              true
+            );
+          }
         }
       }
     }
