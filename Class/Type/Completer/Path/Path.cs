@@ -106,14 +106,10 @@ namespace Completer
 
         attributes.IgnoreInaccessible = false;
 
-        if (Type != PathItemType.File)
+        if (Type == PathItemType.File)
         {
-          string directoryCap = Flat
-            ? string.Empty
-            : @"\";
-
           foreach (
-            string directory in Directory.EnumerateDirectories(
+            string file in Directory.EnumerateFiles(
               location,
               filter,
               attributes
@@ -122,14 +118,33 @@ namespace Completer
           {
             ++count;
             yield return Canonicalizer.Denormalize(
-              Path.GetFileName(directory),
-              accumulatedSubpath,
-              directoryCap
+              Path.GetFileName(file),
+              accumulatedSubpath
             );
           }
         }
 
-        if (Type != PathItemType.Directory)
+        string directoryCap = Flat
+          ? string.Empty
+          : @"\";
+
+        foreach (
+          string directory in Directory.EnumerateDirectories(
+            location,
+            filter,
+            attributes
+          )
+        )
+        {
+          ++count;
+          yield return Canonicalizer.Denormalize(
+            Path.GetFileName(directory),
+            accumulatedSubpath,
+            directoryCap
+          );
+        }
+
+        if (Type == PathItemType.Any)
         {
           foreach (
             string file in Directory.EnumerateFiles(
