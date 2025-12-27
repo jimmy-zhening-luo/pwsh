@@ -43,7 +43,7 @@ namespace Transform
           if (System.IO.Path.Exists(rel))
           {
             WriteObject(
-              System.IO.Path.GetFullPath(rel),
+              System.IO.Path.GetFullPath(path, pwd),
               true
             );
           }
