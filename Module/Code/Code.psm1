@@ -1476,9 +1476,11 @@ function Test-NodePackage {
 New-Alias g Invoke-Git
 New-Alias gg Measure-GitRepository
 New-Alias gitcl Import-GitRepository
+New-Alias gp Get-ChildGitRepository
 New-Alias gpp Get-ChildGitRepository
 New-Alias gd Compare-GitRepository
 New-Alias ga Add-GitRepository
+New-Alias gm Write-GitRepository
 New-Alias gs Push-GitRepository
 New-Alias gr Reset-GitRepository
 New-Alias grp Restore-GitRepository

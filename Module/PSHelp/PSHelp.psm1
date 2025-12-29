@@ -373,4 +373,5 @@ New-Alias psk Get-PSReadLineKeyHandler
 New-Alias upman Update-Help
 
 New-Alias m Get-HelpOnline
+New-Alias man Get-HelpOnline
 New-Alias galc Get-CommandAlias

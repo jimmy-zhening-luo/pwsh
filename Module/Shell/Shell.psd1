@@ -77,6 +77,7 @@
   VariablesToExport    = @()
   AliasesToExport      = @(
     'cl'
+    'clear'
     'touch'
     'mk'
     'mj'
@@ -115,5 +116,6 @@
     'ih'
     'ic'
     'i/'
+    'rd'
   )
 }

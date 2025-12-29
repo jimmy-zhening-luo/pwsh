@@ -25,6 +25,7 @@
     'psk'
     'upman'
     'm'
+    'man'
     'galc'
   )
 }

@@ -77,3 +77,5 @@ function Remove-Directory {
     }
   }
 }
+
+New-Alias rd Remove-Directory
