@@ -36,8 +36,10 @@ namespace Transform
           WriteObject(guid);
         }
 
+        string[] values = { guid };
+
         Microsoft.PowerShell.Commands.SetClipboardCommand clip = new();
-        clip.Value = [guid];
+        clip.Value = values;
 
         clip.Invoke();
       }
