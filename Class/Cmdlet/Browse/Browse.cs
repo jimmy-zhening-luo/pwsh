@@ -47,10 +47,7 @@ namespace Browse
 
       protected override void ProcessRecord()
       {
-        if (
-          ParameterSetName == "Uri"
-          && Environment.GetEnvironmentVariable("SSH_CLIENT") == null
-        )
+        if (Ssh() && ParameterSetName == "Uri")
         {
           foreach (Uri u in uri)
           {
@@ -72,10 +69,7 @@ namespace Browse
 
       protected override void EndProcessing()
       {
-        if (
-          this.ParameterSetName == "Path"
-          && Environment.GetEnvironmentVariable("SSH_CLIENT") == null
-        )
+        if (Ssh() && ParameterSetName == "Path")
         {
           string cleanPath = path.Trim();
           Process browser = new ();
@@ -117,6 +111,10 @@ namespace Browse
           browser.Start();
         }
       }
+
+      private bool Ssh() => Environment.GetEnvironmentVariable(
+        "SSH_CLIENT"
+      ) == null;
 
       private string Pwd() => this
         .SessionState
