@@ -31,17 +31,17 @@ namespace Transform
           guid = guid.ToUpper();
         }
 
-        if (!Silent.IsPresent)
-        {
-          WriteObject(guid);
-        }
-
         string[] values = { guid };
 
         Microsoft.PowerShell.Commands.SetClipboardCommand clip = new();
         clip.Value = values;
 
         clip.Invoke();
+
+        if (!Silent.IsPresent)
+        {
+          WriteObject(guid);
+        }
       }
     }
   }
