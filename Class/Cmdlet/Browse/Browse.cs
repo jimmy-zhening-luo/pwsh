@@ -45,22 +45,11 @@ namespace Browse
       }
       private Uri[] uri;
 
-      private string pwd = string.Empty;
-
-      protected override void BeginProcessing()
-      {
-        pwd = this
-          .SessionState
-          .Path
-          .CurrentLocation
-          .Path;
-      }
-
       protected override void ProcessRecord()
       {
         if (
           ParameterSetName == "Uri"
-          && Environment.GetEnvironmentVariable("SSH_CLIENT") != null
+          && Environment.GetEnvironmentVariable("SSH_CLIENT") == null
         )
         {
           foreach (Uri u in uri)
@@ -85,7 +74,7 @@ namespace Browse
       {
         if (
           this.ParameterSetName == "Path"
-          && Environment.GetEnvironmentVariable("SSH_CLIENT") != null
+          && Environment.GetEnvironmentVariable("SSH_CLIENT") == null
         )
         {
           string cleanPath = path.Trim();
@@ -98,7 +87,7 @@ namespace Browse
           else
           {
             string relativePath = System.IO.Path.GetRelativePath(
-              pwd,
+              Pwd,
               cleanPath
             );
             string testPath = System.IO.Path.IsPathRooted(
@@ -106,7 +95,7 @@ namespace Browse
             )
               ? relativePath
               : System.IO.Path.Combine(
-                  pwd,
+                  Pwd,
                   relativePath
                 );
 
@@ -128,6 +117,12 @@ namespace Browse
           browser.Start();
         }
       }
+
+      private string Pwd() => this
+        .SessionState
+        .Path
+        .CurrentLocation
+        .Path;
     }
   }
 } // namespace Browse
