@@ -24,7 +24,8 @@
   )
   VariablesToExport    = @()
   AliasesToExport      = @(
-    'go'
+    'o'
+    'open'
     'tn'
     'tu'
   )
