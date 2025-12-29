@@ -24,7 +24,7 @@ New-Alias verb PSHelp\Get-VerbList -Option ReadOnly
 #endregion
 
 
-#region Path
+#region Native
 # was: clip.exe
 New-Alias clip Set-Clipboard -Option ReadOnly
 
