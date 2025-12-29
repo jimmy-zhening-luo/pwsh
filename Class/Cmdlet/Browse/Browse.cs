@@ -12,7 +12,7 @@ namespace Browse
       DefaultParameterSetName = "Path"
     )]
     [OutputType(typeof(void))]
-    public class ConvertToHex : PSCmdlet
+    public class OpenUrl : PSCmdlet
     {
       private static string Browser = @"C:\Program Files\Google\Chrome\Application\chrome.exe";
 
