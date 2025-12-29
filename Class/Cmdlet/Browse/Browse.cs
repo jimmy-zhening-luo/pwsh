@@ -14,7 +14,11 @@ namespace Browse
     [OutputType(typeof(void))]
     public class OpenUrl : PSCmdlet
     {
-      private static string Browser = @"C:\Program Files\Google\Chrome\Application\chrome.exe";
+      private OpenUrl() : base()
+      {
+        browser = new();
+        browser.StartInfo.FileName = @"C:\Program Files\Google\Chrome\Application\chrome.exe";
+      }
 
       [Parameter(
         ParameterSetName = "Path",
@@ -45,6 +49,8 @@ namespace Browse
       }
       private Uri[] uri = [];
 
+      private Process browser;
+
       private static bool Ssh() => Environment.GetEnvironmentVariable(
         "SSH_CLIENT"
       ) == null;
@@ -53,9 +59,6 @@ namespace Browse
       {
         if (Ssh() && ParameterSetName == "Uri")
         {
-          Process browser = new();
-          browser.StartInfo.FileName = Browser;
-
           foreach (Uri u in uri)
           {
             string url = u.ToString().Trim();
@@ -74,12 +77,13 @@ namespace Browse
       {
         if (Ssh() && ParameterSetName == "Path")
         {
-          Process browser = new();
-          browser.StartInfo.FileName = Browser;
-
           string cleanPath = path.Trim();
 
-          if (cleanPath != string.Empty)
+          if (cleanPath == string.Empty)
+          {
+            browser.StartInfo.Arguments = string.Empty;
+          }
+          else
           {
             string relativePath = System.IO.Path.GetRelativePath(
               Pwd(),
