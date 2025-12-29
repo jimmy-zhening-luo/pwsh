@@ -12,6 +12,7 @@ namespace Browse
       DefaultParameterSetName = "Path"
     )]
     [OutputType(typeof(void))]
+    [Alias("o", "open")]
     public class OpenUrl : PSCmdlet
     {
       public OpenUrl() : base()
