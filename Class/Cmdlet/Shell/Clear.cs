@@ -33,8 +33,8 @@ namespace Shell
 
       [Parameter(
         ParameterSetName = "LiteralPath",
-        Mandatory,
-        ValueFromPipelineByPropertyName
+        Mandatory = true,
+        ValueFromPipelineByPropertyName = true
       )]
       [Alias("PSPath", "LP")]
       public string[] LiteralPath;
