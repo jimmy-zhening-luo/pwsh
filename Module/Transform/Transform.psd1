@@ -15,6 +15,7 @@
   )
   VariablesToExport    = @()
   AliasesToExport      = @(
+    'gu'
     'guid'
     'hex'
     'test'
