@@ -45,6 +45,17 @@ namespace Browse
       }
       private Uri[] uri;
 
+      private string pwd = string.Empty;
+
+      protected override void BeginProcessing()
+      {
+        pwd = this
+          .SessionState
+          .Path
+          .CurrentLocation
+          .Path;
+      }
+
       protected override void ProcessRecord()
       {
         if (
