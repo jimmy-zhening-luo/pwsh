@@ -19,6 +19,7 @@ function Clear-Line {
     )]
     [AllowNull()]
     [AllowEmptyString()]
+    [AllowEmptyCollection()]
     [SupportsWildcards()]
     [RelativePathCompletions(
       { return $PWD.Path },

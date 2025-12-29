@@ -168,6 +168,7 @@ function Get-Directory {
     )]
     [AllowNull()]
     [AllowEmptyString()]
+    [AllowEmptyCollection()]
     [SupportsWildcards()]
     [RelativePathCompletions(
       { return $PWD.Path },
@@ -259,6 +260,7 @@ function Get-DirectorySibling {
     )]
     [AllowNull()]
     [AllowEmptyString()]
+    [AllowEmptyCollection()]
     [SupportsWildcards()]
     [RelativePathCompletions(
       { return Split-Path $PWD.Path },
@@ -330,6 +332,7 @@ function Get-DirectoryRelative {
     )]
     [AllowNull()]
     [AllowEmptyString()]
+    [AllowEmptyCollection()]
     [SupportsWildcards()]
     [RelativePathCompletions(
       { return $PWD.Path | Split-Path | Split-Path },
@@ -401,6 +404,7 @@ function Get-DirectoryHome {
     )]
     [AllowNull()]
     [AllowEmptyString()]
+    [AllowEmptyCollection()]
     [SupportsWildcards()]
     [PathCompletions(
       '~',
@@ -472,6 +476,7 @@ function Get-DirectoryCode {
     )]
     [AllowNull()]
     [AllowEmptyString()]
+    [AllowEmptyCollection()]
     [SupportsWildcards()]
     [PathCompletions(
       '~\code',
@@ -543,6 +548,7 @@ function Get-DirectoryDrive {
     )]
     [AllowNull()]
     [AllowEmptyString()]
+    [AllowEmptyCollection()]
     [SupportsWildcards()]
     [RelativePathCompletions(
       { return $PWD.Drive.Root },
