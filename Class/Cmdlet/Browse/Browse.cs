@@ -14,7 +14,7 @@ namespace Browse
     [OutputType(typeof(void))]
     public class OpenUrl : PSCmdlet
     {
-      private OpenUrl() : base()
+      public OpenUrl() : base()
       {
         browser = new();
         browser.StartInfo.FileName = @"C:\Program Files\Google\Chrome\Application\chrome.exe";
