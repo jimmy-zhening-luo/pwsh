@@ -1,7 +1,4 @@
 using System.Management.Automation;
-using System.Diagnostics;
-using System.Management.Automation;   // PowerShell assembly.
-using Microsoft.PowerShell.Commands;  // PowerShell cmdlets assembly you want to call.
 
 namespace Transform
 {
