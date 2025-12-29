@@ -74,9 +74,10 @@ namespace Browse
       {
         if (Ssh() && ParameterSetName == "Path")
         {
-          string cleanPath = path.Trim();
           Process browser = new();
           browser.StartInfo.FileName = Browser;
+
+          string cleanPath = path.Trim();
 
           if (cleanPath != string.Empty)
           {
@@ -93,12 +94,11 @@ namespace Browse
                   relativePath
                 );
 
-            if (System.IO.Path.Exists(testPath))
-            {
-              browser.StartInfo.Arguments = System.IO.Path.GetFullPath(
-                testPath
-              );
-            }
+            browser.StartInfo.Arguments = System.IO.Path.Exists(testPath)
+              ? System.IO.Path.GetFullPath(
+                  testPath
+                )
+              : cleanPath;
           }
 
           browser.Start();
