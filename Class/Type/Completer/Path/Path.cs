@@ -19,7 +19,7 @@ namespace Completer
         PathItemType type,
         bool flat,
         bool reanchor
-      ) : this() => (Root, Type, Flat, Reanchor) = 
+      ) : this() => (Root, Type, Flat, Reanchor) =
       (
         Canonicalizer.AnchorHome(
           Canonicalizer.Normalize(root)
@@ -53,7 +53,8 @@ namespace Completer
 
             int wordStart = pathEnd + 1;
 
-            if (wordStart < pathToComplete.Length) {
+            if (wordStart < pathToComplete.Length)
+            {
               filter = pathToComplete[wordStart..].Trim();
             }
 

@@ -55,7 +55,7 @@ namespace Browse
 
             if (url != string.Empty)
             {
-              Process browser = new ();
+              Process browser = new();
               browser.StartInfo = new ProcessStartInfo(
                 Browser,
                 url
@@ -72,7 +72,7 @@ namespace Browse
         if (Ssh() && ParameterSetName == "Path")
         {
           string cleanPath = path.Trim();
-          Process browser = new ();
+          Process browser = new();
 
           if (cleanPath == string.Empty)
           {
