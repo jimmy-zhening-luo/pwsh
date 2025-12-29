@@ -23,7 +23,12 @@ namespace Shell
       [AllowEmptyString()]
       [SupportsWildcards()]
       [AllowNull()]
-      public string Path;
+      public string Path
+      {
+        get => path;
+        set => path = value;
+      }
+      private string path = string.Empty;
 
       [Parameter(
         Position = 1
@@ -58,7 +63,10 @@ namespace Shell
 
       protected override void BeginProcessing()
       {
-        if (Path || LiteralPath)
+        if (
+          path != string.Empty
+          || ParameterSetName == "LiteralPath"
+        )
         {
           processRecords = true;
           /*
