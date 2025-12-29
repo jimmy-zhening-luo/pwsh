@@ -1,5 +1,4 @@
 using System.Management.Automation;
-using Microsoft.PowerShell.Commands;
 
 namespace Transform
 {
@@ -37,7 +36,7 @@ namespace Transform
           WriteObject(guid);
         }
 
-        SetClipboardCommand clip = new();
+        Microsoft.PowerShell.Commands.SetClipboardCommand clip = new();
         clip.Value = guid;
 
         clip.Invoke();
