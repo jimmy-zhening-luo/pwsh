@@ -11,7 +11,7 @@ namespace Shell
       DefaultParameterSetName = "Path",
       SupportsTransactions = true
     )]
-    [Alias("clt")]
+    [Alias("clt", "cleart")]
     [OutputType(typeof(void))]
     public class ClearLine : PSCmdlet
     {
