@@ -43,7 +43,7 @@ namespace Browse
         get => uri;
         set => uri = value;
       }
-      private Uri[] uri;
+      private Uri[] uri = [];
 
       protected override void ProcessRecord()
       {
