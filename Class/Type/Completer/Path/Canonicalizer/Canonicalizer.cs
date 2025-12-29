@@ -9,7 +9,8 @@ namespace Completer
     {
       public static string Normalize(
         string path,
-        bool preserveTrailingSeparator = false
+        bool preserveTrailingSeparator = false,
+        bool expandEnv = false
       )
       {
         string normalPath = RemoveRelativeRoot(
@@ -18,11 +19,14 @@ namespace Completer
             @"\"
           )
         );
+        string expandedPath = expandEnv
+          ? ExpandEnvironmentVariables(normalPath)
+          : normalPath;
 
         return preserveTrailingSeparator
-          ? normalPath
+          ? expandedPath
           : Path.TrimEndingDirectorySeparator(
-              normalPath
+              expandedPath
             );
       }
 
@@ -43,6 +47,9 @@ namespace Completer
           path.Length == 1
           || path[1] == '\\'
         );
+
+      public static string ExpandEnvironmentVariables(string path) =>
+        Environment.ExpandEnvironmentVariables(path);
 
       public static bool IsHomeRooted(string path) => path.StartsWith('~')
         && (
