@@ -31,10 +31,8 @@ namespace Transform
           guid = guid.ToUpper();
         }
 
-        string[] values = { guid };
-
         Microsoft.PowerShell.Commands.SetClipboardCommand clip = new();
-        clip.Value = values;
+        clip.Value = new string[] { guid };
 
         clip.Invoke();
 
