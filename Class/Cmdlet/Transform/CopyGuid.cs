@@ -31,7 +31,7 @@ namespace Transform
           guid = guid.ToUpper();
         }
       
-        Set-Clipboard -Value $Guid
+        // Set-Clipboard -Value $Guid
       
         if (!Silent.IsPresent)
         {
