@@ -9,7 +9,7 @@ namespace Transform
       "Guid"
     )]
     [OutputType(typeof(string))]
-    public class CopyGuid : Cmdlet
+    public class CopyGuid : PSCmdlet
     {
       [Parameter(
         HelpMessage = "Uppercase GUID"
@@ -31,10 +31,27 @@ namespace Transform
           guid = guid.ToUpper();
         }
 
-        Microsoft.PowerShell.Commands.SetClipboardCommand clip = new();
-        clip.Value = new string[] { guid };
+        using var ps = PowerShell.Create(RunspaceMode.CurrentRunspace);
+        ps
+          .AddCommand("Set-Clipboard")
+          .AddParameter(
+            "Value",
+            new string[] { guid }
+          );
 
-        clip.Invoke();
+        ps.Invoke();
+
+        if (ps.HadErrors)
+        {
+          WriteError(
+            new ErrorRecord(
+              ps.Streams.Error[0].Exception,
+              "Set-Clipboard Error",
+              ErrorCategory.NotSpecified,
+              null
+            )
+          );
+        }
 
         if (!Silent.IsPresent)
         {
