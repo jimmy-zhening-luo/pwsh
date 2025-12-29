@@ -68,13 +68,16 @@ namespace Shell
           || ParameterSetName == "LiteralPath"
         )
         {
+          // $processRecords = $true
           processRecords = true;
-          /*
-          $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand("Clear-Content", [System.Management.Automation.CommandTypes]::Cmdlet)
-          [scriptblock]$scriptCmd = { & $wrappedCmd @PSBoundParameters }
-          $steppablePipeline = $scriptCmd.GetSteppablePipeline()
-          $steppablePipeline.Begin($PSCmdlet)
-          */
+          // $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand("Clear-Content", [System.Management.Automation.CommandTypes]::Cmdlet)
+
+          // [scriptblock]$scriptCmd = { & $wrappedCmd @PSBoundParameters }
+
+          // $steppablePipeline = $scriptCmd.GetSteppablePipeline()
+
+          // $steppablePipeline.Begin($PSCmdlet)
+
         }
       }
 
