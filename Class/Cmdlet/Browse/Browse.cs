@@ -45,21 +45,24 @@ namespace Browse
       }
       private Uri[] uri = [];
 
+      private static bool Ssh() => Environment.GetEnvironmentVariable(
+        "SSH_CLIENT"
+      ) == null;
+
       protected override void ProcessRecord()
       {
         if (Ssh() && ParameterSetName == "Uri")
         {
+          Process browser = new();
+          browser.StartInfo.FileName = Browser;
+
           foreach (Uri u in uri)
           {
             string url = u.ToString().Trim();
 
             if (url != string.Empty)
             {
-              Process browser = new();
-              browser.StartInfo = new ProcessStartInfo(
-                Browser,
-                url
-              );
+              browser.StartInfo.Arguments = url;
 
               browser.Start();
             }
@@ -73,12 +76,9 @@ namespace Browse
         {
           string cleanPath = path.Trim();
           Process browser = new();
+          browser.StartInfo.FileName = Browser;
 
-          if (cleanPath == string.Empty)
-          {
-            browser.StartInfo = new ProcessStartInfo(Browser);
-          }
-          else
+          if (cleanPath != string.Empty)
           {
             string relativePath = System.IO.Path.GetRelativePath(
               Pwd(),
@@ -95,26 +95,15 @@ namespace Browse
 
             if (System.IO.Path.Exists(testPath))
             {
-              browser.StartInfo = new ProcessStartInfo(
-                Browser,
-                System.IO.Path.GetFullPath(
-                  relativePath
-                )
+              browser.StartInfo.Arguments = System.IO.Path.GetFullPath(
+                testPath
               );
-            }
-            else
-            {
-              browser.StartInfo = new ProcessStartInfo(Browser);
             }
           }
 
           browser.Start();
         }
       }
-
-      private bool Ssh() => Environment.GetEnvironmentVariable(
-        "SSH_CLIENT"
-      ) == null;
 
       private string Pwd() => this
         .SessionState
