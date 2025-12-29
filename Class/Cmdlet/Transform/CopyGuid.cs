@@ -32,7 +32,9 @@ namespace Transform
           guid = guid.ToUpper();
         }
 
-        using var ps = PowerShell.Create(RunspaceMode.CurrentRunspace);
+        using var ps = PowerShell.Create(
+          RunspaceMode.CurrentRunspace
+        );
         ps
           .AddCommand("Set-Clipboard")
           .AddParameter(
