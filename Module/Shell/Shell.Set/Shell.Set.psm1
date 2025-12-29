@@ -19,8 +19,8 @@ function Set-Directory {
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
-    [AllowNull()]
     [AllowEmptyString()]
+    [AllowNull()]
     [SupportsWildcards()]
     [RelativePathCompletions(
       { return $PWD.Path },
@@ -40,8 +40,8 @@ function Set-Directory {
       ParameterSetName = 'Stack',
       ValueFromPipelineByPropertyName
     )]
-    [AllowNull()]
     [AllowEmptyString()]
+    [AllowNull()]
     [string]$Stack,
 
     [switch]$PassThru
@@ -82,8 +82,8 @@ function Set-DirectorySibling {
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
-    [AllowNull()]
     [AllowEmptyString()]
+    [AllowNull()]
     [SupportsWildcards()]
     [RelativePathCompletions(
       { return Split-Path $PWD.Path },
@@ -113,8 +113,8 @@ function Set-DirectoryRelative {
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
-    [AllowNull()]
     [AllowEmptyString()]
+    [AllowNull()]
     [SupportsWildcards()]
     [RelativePathCompletions(
       { return $PWD.Path | Split-Path | Split-Path },
@@ -144,8 +144,8 @@ function Set-DirectoryHome {
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
-    [AllowNull()]
     [AllowEmptyString()]
+    [AllowNull()]
     [SupportsWildcards()]
     [PathCompletions(
       '~',
@@ -175,8 +175,8 @@ function Set-DirectoryCode {
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
-    [AllowNull()]
     [AllowEmptyString()]
+    [AllowNull()]
     [SupportsWildcards()]
     [PathCompletions(
       '~\code',
@@ -206,8 +206,8 @@ function Set-Drive {
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
-    [AllowNull()]
     [AllowEmptyString()]
+    [AllowNull()]
     [SupportsWildcards()]
     [RelativePathCompletions(
       { return $PWD.Drive.Root },
@@ -237,8 +237,8 @@ function Set-DriveD {
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
-    [AllowNull()]
     [AllowEmptyString()]
+    [AllowNull()]
     [SupportsWildcards()]
     [PathCompletions(
       'D:',

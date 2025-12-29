@@ -17,9 +17,9 @@ function Clear-Line {
       Position = 0,
       ValueFromPipelineByPropertyName
     )]
-    [AllowNull()]
     [AllowEmptyString()]
     [AllowEmptyCollection()]
+    [AllowNull()]
     [SupportsWildcards()]
     [RelativePathCompletions(
       { return $PWD.Path },

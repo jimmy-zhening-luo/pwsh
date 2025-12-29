@@ -166,9 +166,9 @@ function Get-Directory {
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
-    [AllowNull()]
     [AllowEmptyString()]
     [AllowEmptyCollection()]
+    [AllowNull()]
     [SupportsWildcards()]
     [RelativePathCompletions(
       { return $PWD.Path },
@@ -258,9 +258,9 @@ function Get-DirectorySibling {
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
-    [AllowNull()]
     [AllowEmptyString()]
     [AllowEmptyCollection()]
+    [AllowNull()]
     [SupportsWildcards()]
     [RelativePathCompletions(
       { return Split-Path $PWD.Path },
@@ -330,9 +330,9 @@ function Get-DirectoryRelative {
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
-    [AllowNull()]
     [AllowEmptyString()]
     [AllowEmptyCollection()]
+    [AllowNull()]
     [SupportsWildcards()]
     [RelativePathCompletions(
       { return $PWD.Path | Split-Path | Split-Path },
@@ -402,9 +402,9 @@ function Get-DirectoryHome {
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
-    [AllowNull()]
     [AllowEmptyString()]
     [AllowEmptyCollection()]
+    [AllowNull()]
     [SupportsWildcards()]
     [PathCompletions(
       '~',
@@ -474,9 +474,9 @@ function Get-DirectoryCode {
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
-    [AllowNull()]
     [AllowEmptyString()]
     [AllowEmptyCollection()]
+    [AllowNull()]
     [SupportsWildcards()]
     [PathCompletions(
       '~\code',
@@ -546,9 +546,9 @@ function Get-DirectoryDrive {
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
-    [AllowNull()]
     [AllowEmptyString()]
     [AllowEmptyCollection()]
+    [AllowNull()]
     [SupportsWildcards()]
     [RelativePathCompletions(
       { return $PWD.Drive.Root },
