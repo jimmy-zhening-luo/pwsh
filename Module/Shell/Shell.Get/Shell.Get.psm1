@@ -313,8 +313,10 @@ function Get-DirectorySibling {
     [System.Management.Automation.FlagsExpression[System.IO.FileAttributes]]$Attributes
   )
 
-  $PSBoundParameters.Path = Join-Path (Split-Path $PWD.Path) $Path
-  Get-ChildItem @PSBoundParameters
+  process {
+    $PSBoundParameters.Path = Join-Path (Split-Path $PWD.Path) $Path
+    Get-ChildItem @PSBoundParameters
+  }
 }
 
 <#
@@ -386,8 +388,10 @@ function Get-DirectoryRelative {
     [System.Management.Automation.FlagsExpression[System.IO.FileAttributes]]$Attributes
   )
 
-  $PSBoundParameters.Path = Join-Path ($PWD.Path | Split-Path | Split-Path) $Path
-  Get-ChildItem @PSBoundParameters
+  process {
+    $PSBoundParameters.Path = Join-Path ($PWD.Path | Split-Path | Split-Path) $Path
+    Get-ChildItem @PSBoundParameters
+  }
 }
 
 <#
@@ -459,8 +463,10 @@ function Get-DirectoryHome {
     [System.Management.Automation.FlagsExpression[System.IO.FileAttributes]]$Attributes
   )
 
-  $PSBoundParameters.Path = Join-Path $HOME $Path
-  Get-ChildItem @PSBoundParameters
+  process {
+    $PSBoundParameters.Path = Join-Path $HOME $Path
+    Get-ChildItem @PSBoundParameters
+  }
 }
 
 <#
@@ -532,8 +538,10 @@ function Get-DirectoryCode {
     [System.Management.Automation.FlagsExpression[System.IO.FileAttributes]]$Attributes
   )
 
-  $PSBoundParameters.Path = Join-Path $REPO_ROOT $Path
-  Get-ChildItem @PSBoundParameters
+  process {
+    $PSBoundParameters.Path = Join-Path $REPO_ROOT $Path
+    Get-ChildItem @PSBoundParameters
+  }
 }
 
 <#
@@ -605,8 +613,10 @@ function Get-DirectoryDrive {
     [System.Management.Automation.FlagsExpression[System.IO.FileAttributes]]$Attributes
   )
 
-  $PSBoundParameters.Path = Join-Path $PWD.Drive.Root $Path
-  Get-ChildItem @PSBoundParameters
+  process {
+    $PSBoundParameters.Path = Join-Path $PWD.Drive.Root $Path
+    Get-ChildItem @PSBoundParameters
+  }
 }
 
 <#

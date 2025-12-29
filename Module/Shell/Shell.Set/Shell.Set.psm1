@@ -96,8 +96,12 @@ function Set-DirectorySibling {
     [switch]$PassThru
   )
 
-  $PSBoundParameters.Path = Join-Path (Split-Path $PWD.Path) $Path
-  Set-Directory @PSBoundParameters
+  process {
+    $PSBoundParameters.Path = Join-Path (
+      Split-Path $PWD.Path
+    ) $Path
+    Set-Directory @PSBoundParameters
+  }
 }
 
 <#
@@ -128,8 +132,12 @@ function Set-DirectoryRelative {
     [switch]$PassThru
   )
 
-  $PSBoundParameters.Path = Join-Path ($PWD.Path | Split-Path | Split-Path) $Path
-  Set-Directory @PSBoundParameters
+  process {
+    $PSBoundParameters.Path = Join-Path (
+      $PWD.Path | Split-Path | Split-Path
+    ) $Path
+    Set-Directory @PSBoundParameters
+  }
 }
 
 <#
@@ -160,8 +168,10 @@ function Set-DirectoryHome {
     [switch]$PassThru
   )
 
-  $PSBoundParameters.Path = Join-Path $HOME $Path
-  Set-Directory @PSBoundParameters
+  process {
+    $PSBoundParameters.Path = Join-Path $HOME $Path
+    Set-Directory @PSBoundParameters
+  }
 }
 
 <#
@@ -192,8 +202,10 @@ function Set-DirectoryCode {
     [switch]$PassThru
   )
 
-  $PSBoundParameters.Path = Join-Path $REPO_ROOT $Path
-  Set-Directory @PSBoundParameters
+  process {
+    $PSBoundParameters.Path = Join-Path $REPO_ROOT $Path
+    Set-Directory @PSBoundParameters
+  }
 }
 
 <#
@@ -224,8 +236,10 @@ function Set-Drive {
     [switch]$PassThru
   )
 
-  $PSBoundParameters.Path = Join-Path $PWD.Drive.Root $Path
-  Set-Directory @PSBoundParameters
+  process {
+    $PSBoundParameters.Path = Join-Path $PWD.Drive.Root $Path
+    Set-Directory @PSBoundParameters
+  }
 }
 
 <#
@@ -256,6 +270,8 @@ function Set-DriveD {
     [switch]$PassThru
   )
 
-  $PSBoundParameters.Path = Join-Path D: $Path
-  Set-Directory @PSBoundParameters
+  process {
+    $PSBoundParameters.Path = Join-Path D: $Path
+    Set-Directory @PSBoundParameters
+  }
 }
