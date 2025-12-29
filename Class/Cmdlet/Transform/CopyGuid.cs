@@ -1,4 +1,7 @@
 using System.Management.Automation;
+using System.Diagnostics;
+using System.Management.Automation;   // PowerShell assembly.
+using Microsoft.PowerShell.Commands;  // PowerShell cmdlets assembly you want to call.
 
 namespace Transform
 {
@@ -30,13 +33,16 @@ namespace Transform
         {
           guid = guid.ToUpper();
         }
-      
-        // Set-Clipboard -Value $Guid
-      
+
         if (!Silent.IsPresent)
         {
           WriteObject(guid);
         }
+
+        Microsoft.PowerShell.Commands.SetClipboardCommand clip = new();
+        clip.Value = guid;
+
+        clip.Invoke();
       }
     }
   }
