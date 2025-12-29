@@ -89,17 +89,41 @@ namespace Browse
         )
         {
           string cleanPath = path.Trim();
-          string pathUri = System.IO.Path.Exists(cleanPath)
-            ? System.IO.Path.GetFullPath(cleanPath)
-            : cleanPath;
-
           Process browser = new ();
-          browser.StartInfo = cleanPath == string.Empty
-            ? new ProcessStartInfo(Browser)
-            : new ProcessStartInfo(
+
+          if (cleanPath == string.Empty)
+          {
+            browser.StartInfo = new ProcessStartInfo(Browser);
+          }
+          else
+          {
+            string relativePath = System.IO.Path.GetRelativePath(
+              pwd,
+              cleanPath
+            );
+            string testPath = System.IO.Path.IsPathRooted(
+              relativePath
+            )
+              ? relativePath
+              : System.IO.Path.Combine(
+                  pwd,
+                  relativePath
+                );
+
+            if (System.IO.Path.Exists(testPath))
+            {
+              browser.StartInfo = new ProcessStartInfo(
                 Browser,
-                pathUri
+                System.IO.Path.GetFullPath(
+                  relativePath
+                )
               );
+            }
+            else
+            {
+              browser.StartInfo = new ProcessStartInfo(Browser);
+            }
+          }
 
           browser.Start();
         }
