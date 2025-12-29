@@ -1,4 +1,5 @@
 using System.Management.Automation;
+using Microsoft.PowerShell.Commands;
 
 namespace Transform
 {
