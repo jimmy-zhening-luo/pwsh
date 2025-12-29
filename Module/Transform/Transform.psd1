@@ -14,15 +14,15 @@
     'Test-Function'
   )
   CmdletsToExport      = @(
-    'Test-Cmdlet'
     'Copy-Guid'
     'ConvertTo-Hex'
+    'Test-Cmdlet'
   )
   VariablesToExport    = @()
   AliasesToExport      = @(
-    'test'
-    'fest'
     'guid'
     'hex'
+    'test'
+    'fest'
   )
 }

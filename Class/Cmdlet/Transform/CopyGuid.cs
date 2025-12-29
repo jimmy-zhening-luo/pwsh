@@ -8,6 +8,7 @@ namespace Transform
       VerbsCommon.Copy,
       "Guid"
     )]
+    [Alias("guid")]
     [OutputType(typeof(string))]
     public class CopyGuid : PSCmdlet
     {

@@ -8,6 +8,7 @@ namespace Transform
       VerbsData.ConvertTo,
       "Hex"
     )]
+    [Alias("hex")]
     [OutputType(typeof(string))]
     public class ConvertToHex : Cmdlet
     {
