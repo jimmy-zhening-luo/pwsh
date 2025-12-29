@@ -87,7 +87,7 @@ namespace Browse
           else
           {
             string relativePath = System.IO.Path.GetRelativePath(
-              Pwd,
+              Pwd(),
               cleanPath
             );
             string testPath = System.IO.Path.IsPathRooted(
@@ -95,7 +95,7 @@ namespace Browse
             )
               ? relativePath
               : System.IO.Path.Combine(
-                  Pwd,
+                  Pwd(),
                   relativePath
                 );
 
