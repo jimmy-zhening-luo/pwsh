@@ -174,6 +174,7 @@ https://git-scm.com/docs
 #>
 function Invoke-Git {
   [CmdletBinding()]
+  [Alias('g')]
   param(
 
     [Parameter(
@@ -346,6 +347,7 @@ https://git-scm.com/docs/git-status
 #>
 function Measure-GitRepository {
 
+  [Alias('gg')]
   param(
 
     [PathCompletions(
@@ -375,6 +377,7 @@ https://git-scm.com/docs/git-clone
 #>
 function Import-GitRepository {
 
+  [Alias('gitcl')]
   param(
 
     # Remote repository URL or 'org/repo'
@@ -435,6 +438,7 @@ https://git-scm.com/docs/git-pull
 #>
 function Get-GitRepository {
 
+  [Alias('gp')]
   param(
 
     [PathCompletions(
@@ -464,6 +468,7 @@ https://git-scm.com/docs/git-pull
 #>
 function Get-ChildGitRepository {
   [CmdletBinding()]
+  [Alias('gpp')]
   param()
 
   [string[]]$Repositories = Get-ChildItem -Path $REPO_ROOT -Directory |
@@ -494,6 +499,7 @@ https://git-scm.com/docs/git-diff
 #>
 function Compare-GitRepository {
 
+  [Alias('gd')]
   param(
 
     [RelativePathCompletions(
@@ -553,6 +559,7 @@ https://git-scm.com/docs/git-add
 #>
 function Add-GitRepository {
 
+  [Alias('ga')]
   param(
 
     [RelativePathCompletions(
@@ -620,6 +627,7 @@ https://git-scm.com/docs/git-commit
 #>
 function Write-GitRepository {
 
+  [Alias('gm')]
   param(
 
     [PathCompletions(
@@ -726,6 +734,7 @@ https://git-scm.com/docs/git-push
 #>
 function Push-GitRepository {
 
+  [Alias('gs')]
   param(
 
     [PathCompletions(
@@ -778,6 +787,7 @@ https://git-scm.com/docs/git-reset
 #>
 function Reset-GitRepository {
 
+  [Alias('gr')]
   param(
 
     [PathCompletions(
@@ -864,6 +874,7 @@ https://git-scm.com/docs/git-reset
 #>
 function Restore-GitRepository {
 
+  [Alias('grp')]
   param(
 
     [PathCompletions(
@@ -1016,6 +1027,7 @@ https://docs.npmjs.com/cli/commands/npm
 #>
 function Invoke-Npm {
   [CmdletBinding()]
+  [Alias('n')]
   param(
 
     [Parameter(
@@ -1171,6 +1183,9 @@ https://nodejs.org/api/cli.html
 #>
 function Invoke-Node {
 
+  [Alias('no')]
+  param()
+
   if ($args) {
     & node.exe @args
 
@@ -1194,6 +1209,9 @@ Code
 https://docs.npmjs.com/cli/commands/npx
 #>
 function Invoke-NodeExecutable {
+
+  [Alias('nx')]
+  param()
 
   if ($args) {
     & npx.ps1 @args
@@ -1219,6 +1237,7 @@ https://docs.npmjs.com/cli/commands/npm-cache
 #>
 function Clear-NodeModuleCache {
   [CmdletBinding()]
+  [Alias('ncc')]
   param()
 
   $NodeArgument = [List[string]]::new(
@@ -1246,6 +1265,7 @@ https://docs.npmjs.com/cli/commands/npm-outdated
 #>
 function Compare-NodeModule {
 
+  [Alias('npo')]
   param(
 
     [PathCompletions(
@@ -1301,6 +1321,7 @@ https://docs.npmjs.com/cli/commands/npm-version
 #>
 function Step-NodePackageVersion {
 
+  [Alias('nu')]
   param(
 
     # New package version, default 'patch'
@@ -1388,6 +1409,7 @@ https://docs.npmjs.com/cli/commands/npm-run
 #>
 function Invoke-NodePackageScript {
 
+  [Alias('nr')]
   param(
 
     # Name of the npm script to run
@@ -1442,6 +1464,7 @@ https://docs.npmjs.com/cli/commands/npm-test
 #>
 function Test-NodePackage {
 
+  [Alias('nt')]
   param(
 
     [PathCompletions(
@@ -1472,23 +1495,3 @@ function Test-NodePackage {
 
   Invoke-Npm -Command test -WorkingDirectory $WorkingDirectory -Argument $NodeArgument
 }
-
-New-Alias g Invoke-Git
-New-Alias gg Measure-GitRepository
-New-Alias gitcl Import-GitRepository
-New-Alias gp Get-ChildGitRepository
-New-Alias gpp Get-ChildGitRepository
-New-Alias gd Compare-GitRepository
-New-Alias ga Add-GitRepository
-New-Alias gm Write-GitRepository
-New-Alias gs Push-GitRepository
-New-Alias gr Reset-GitRepository
-New-Alias grp Restore-GitRepository
-New-Alias n Invoke-Npm
-New-Alias no Invoke-Node
-New-Alias nx Invoke-NodeExecutable
-New-Alias ncc Clear-NodeModuleCache
-New-Alias npo Compare-NodeModule
-New-Alias nu Step-NodePackageVersion
-New-Alias nr Invoke-NodePackageScript
-New-Alias nt Test-NodePackage

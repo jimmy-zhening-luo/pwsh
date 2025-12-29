@@ -45,6 +45,7 @@ Get-Help
 function Get-HelpOnline {
   [CmdletBinding()]
   [OutputType([string], [System.Object])]
+  [Alias('m', 'man')]
   param(
 
     [Parameter(
@@ -218,6 +219,7 @@ Get-Alias
 function Get-CommandAlias {
   [CmdletBinding()]
   [OutputType([System.Management.Automation.CommandInfo])]
+  [Alias('galc')]
   param(
 
     [Parameter(
@@ -369,9 +371,5 @@ function Get-VerbList {
   }
 }
 
-New-Alias psk Get-PSReadLineKeyHandler
+New-Alias psk PSReadLine\Get-PSReadLineKeyHandler
 New-Alias upman Update-Help
-
-New-Alias m Get-HelpOnline
-New-Alias man Get-HelpOnline
-New-Alias galc Get-CommandAlias

@@ -17,7 +17,6 @@
   CmdletsToExport      = @()
   VariablesToExport    = @()
   AliasesToExport      = @(
-    'su'
     'gapx'
     'remapx'
     'wget'
@@ -25,5 +24,6 @@
     'wga'
     'wgf'
     'wgr'
+    'su'
   )
 }

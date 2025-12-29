@@ -29,11 +29,11 @@
   VariablesToExport    = @()
   AliasesToExport      = @(
     'restart'
-    'wu'
-    'path'
     'sesv'
     'remsv'
     'tkill'
+    'wu'
+    'path'
     'su'
     'gapx'
     'remapx'

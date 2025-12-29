@@ -12,6 +12,7 @@ function Set-Directory {
     [System.Management.Automation.PathInfo],
     [System.Management.Automation.PathInfoStack]
   )]
+  [Alias('c')]
   param(
     [Parameter(
       ParameterSetName = 'Path',
@@ -76,6 +77,7 @@ function Set-DirectorySibling {
   [OutputType(
     [System.Management.Automation.PathInfo]
   )]
+  [Alias('c.')]
   param(
     [Parameter(
       Position = 0,
@@ -107,6 +109,7 @@ function Set-DirectoryRelative {
   [OutputType(
     [System.Management.Automation.PathInfo]
   )]
+  [Alias('c..')]
   param(
     [Parameter(
       Position = 0,
@@ -138,6 +141,7 @@ function Set-DirectoryHome {
   [OutputType(
     [System.Management.Automation.PathInfo]
   )]
+  [Alias('ch')]
   param(
     [Parameter(
       Position = 0,
@@ -169,6 +173,7 @@ function Set-DirectoryCode {
   [OutputType(
     [System.Management.Automation.PathInfo]
   )]
+  [Alias('cc')]
   param(
     [Parameter(
       Position = 0,
@@ -200,6 +205,7 @@ function Set-Drive {
   [OutputType(
     [System.Management.Automation.PathInfo]
   )]
+  [Alias('c/')]
   param(
     [Parameter(
       Position = 0,
@@ -231,6 +237,7 @@ function Set-DriveD {
   [OutputType(
     [System.Management.Automation.PathInfo]
   )]
+  [Alias('d/')]
   param(
     [Parameter(
       Position = 0,
@@ -252,11 +259,3 @@ function Set-DriveD {
   $PSBoundParameters.Path = Join-Path D: $Path
   Set-Directory @PSBoundParameters
 }
-
-New-Alias c Set-Directory
-New-Alias c. Set-DirectorySibling
-New-Alias c.. Set-DirectoryRelative
-New-Alias ch Set-DirectoryHome
-New-Alias cc Set-DirectoryCode
-New-Alias c/ Set-Drive
-New-Alias d/ Set-DriveD

@@ -1,27 +1,5 @@
 <#
 .SYNOPSIS
-Opens the 'Microsoft Store' app to the 'Updates & downloads' page.
-
-.DESCRIPTION
-This function invokes the URI 'ms-windows-store://downloadsandupdates' to open the 'Updates & downloads' page in the 'Microsoft Store' app.
-
-.COMPONENT
-WindowsSystem.App
-#>
-function Update-StoreApp {
-  [CmdletBinding()]
-  [OutputType([void])]
-  param()
-
-  if ($env:SSH_CLIENT) {
-    throw 'Cannot launch Microsoft Store app during SSH session'
-  }
-
-  Start-Process -FilePath ms-windows-store://downloadsandupdates
-}
-
-<#
-.SYNOPSIS
 Use WinGet to install a new package or upgrade an existing package.
 
 .DESCRIPTION
@@ -34,6 +12,9 @@ WindowsSystem.App
 https://learn.microsoft.com/en-us/windows/package-manager/winget/install
 #>
 function Add-WinGetApp {
+
+  [Alias('wga')]
+  param()
 
   if ($args) {
     & $env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe install @args
@@ -62,6 +43,9 @@ https://learn.microsoft.com/en-us/windows/package-manager/winget/upgrade
 #>
 function Update-WinGetApp {
 
+  [Alias('wgu')]
+  param()
+
   & $env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe upgrade @args
 
   if ($LASTEXITCODE -notin 0, 1) {
@@ -83,6 +67,9 @@ WindowsSystem.App
 https://learn.microsoft.com/en-us/windows/package-manager/winget/search
 #>
 function Find-WinGetApp {
+
+  [Alias('wgf')]
+  param()
 
   if ($args) {
     & $env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe search @args
@@ -111,6 +98,9 @@ https://learn.microsoft.com/en-us/windows/package-manager/winget/uninstall
 #>
 function Remove-WinGetApp {
 
+  [Alias('wgr')]
+  param()
+
   & $env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe uninstall @args
 
   if ($LASTEXITCODE -notin 0, 1) {
@@ -118,12 +108,29 @@ function Remove-WinGetApp {
   }
 }
 
+<#
+.SYNOPSIS
+Opens the 'Microsoft Store' app to the 'Updates & downloads' page.
+
+.DESCRIPTION
+This function invokes the URI 'ms-windows-store://downloadsandupdates' to open the 'Updates & downloads' page in the 'Microsoft Store' app.
+
+.COMPONENT
+WindowsSystem.App
+#>
+function Update-StoreApp {
+  [CmdletBinding()]
+  [OutputType([void])]
+  [Alias('su')]
+  param()
+
+  if ($env:SSH_CLIENT) {
+    throw 'Cannot launch Microsoft Store app during SSH session'
+  }
+
+  Start-Process -FilePath ms-windows-store://downloadsandupdates
+}
+
 New-Alias gapx Appx\Get-AppxPackage
 New-Alias remapx Appx\Remove-AppxPackage
-
-New-Alias su Update-StoreApp
 New-Alias wget $env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe
-New-Alias wga Add-WinGetApp
-New-Alias wgu Update-WinGetApp
-New-Alias wgf Find-WinGetApp
-New-Alias wgr Remove-WinGetApp

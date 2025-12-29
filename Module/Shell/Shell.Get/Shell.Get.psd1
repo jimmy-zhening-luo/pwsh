@@ -27,8 +27,8 @@
   AliasesToExport      = @(
     'split'
     'hash'
-    'size'
     'sz'
+    'size'
     'l'
     'l.'
     'l..'

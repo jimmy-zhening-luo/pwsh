@@ -5,4 +5,5 @@ New-Alias k Get-Member
 New-Alias key Get-Member
 New-Alias count Measure-Object
 New-Alias z Sort-Object
+New-Alias form Format-Table
 New-Alias format Format-Table

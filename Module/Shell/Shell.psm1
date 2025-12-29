@@ -10,6 +10,7 @@ function Clear-Line {
     SupportsTransactions
   )]
   [OutputType([void])]
+  [Alias('cl', 'clear')]
   param(
 
     [Parameter(
@@ -82,6 +83,3 @@ function Clear-Line {
     }
   }
 }
-
-New-Alias cl Clear-Line
-New-Alias clear Clear-Line

@@ -9,6 +9,7 @@ using namespace Completer.PathCompleter
 function Start-Explorer {
 
   [OutputType([void])]
+  [Alias('e')]
   param(
 
     [RelativePathCompletions(
@@ -45,6 +46,7 @@ function Start-Explorer {
 function Start-ExplorerSibling {
 
   [OutputType([void])]
+  [Alias('e.')]
   param(
 
     [RelativePathCompletions(
@@ -65,6 +67,7 @@ function Start-ExplorerSibling {
 function Start-ExplorerRelative {
 
   [OutputType([void])]
+  [Alias('e..')]
   param(
 
     [RelativePathCompletions(
@@ -85,6 +88,7 @@ function Start-ExplorerRelative {
 function Start-ExplorerHome {
 
   [OutputType([void])]
+  [Alias('eh')]
   param(
 
     [PathCompletions(
@@ -103,6 +107,7 @@ function Start-ExplorerHome {
 function Start-ExplorerCode {
 
   [OutputType([void])]
+  [Alias('ec')]
   param(
 
     [PathCompletions(
@@ -121,6 +126,7 @@ function Start-ExplorerCode {
 function Start-ExplorerDrive {
 
   [OutputType([void])]
+  [Alias('e/')]
   param(
 
     [RelativePathCompletions(
@@ -135,6 +141,7 @@ function Start-ExplorerDrive {
 function Start-Workspace {
   [CmdletBinding()]
   [OutputType([void])]
+  [Alias('i')]
   param(
 
     [Parameter(
@@ -338,6 +345,7 @@ function Start-Workspace {
 function Start-WorkspaceSibling {
   [CmdletBinding()]
   [OutputType([void])]
+  [Alias('i.')]
   param(
 
     [Parameter(
@@ -375,6 +383,7 @@ function Start-WorkspaceSibling {
 function Start-WorkspaceRelative {
   [CmdletBinding()]
   [OutputType([void])]
+  [Alias('i..')]
   param(
 
     [Parameter(
@@ -412,6 +421,7 @@ function Start-WorkspaceRelative {
 function Start-WorkspaceHome {
   [CmdletBinding()]
   [OutputType([void])]
+  [Alias('ih')]
   param(
 
     [Parameter(
@@ -449,6 +459,7 @@ function Start-WorkspaceHome {
 function Start-WorkspaceCode {
   [CmdletBinding()]
   [OutputType([void])]
+  [Alias('ic')]
   param(
 
     [Parameter(
@@ -483,10 +494,10 @@ function Start-WorkspaceCode {
   Start-Workspace @PSBoundParameters -Location $REPO_ROOT
 }
 
-New-Alias i/ Start-WorkspaceDrive
 function Start-WorkspaceDrive {
   [CmdletBinding()]
   [OutputType([void])]
+  [Alias('i/')]
   param(
 
     [Parameter(
@@ -520,16 +531,3 @@ function Start-WorkspaceDrive {
 
   Start-Workspace @PSBoundParameters -Location $PWD.Drive.Root
 }
-
-New-Alias e Start-Explorer
-New-Alias e. Start-ExplorerSibling
-New-Alias e.. Start-ExplorerRelative
-New-Alias eh Start-ExplorerHome
-New-Alias ec Start-ExplorerCode
-New-Alias e/ Start-ExplorerDrive
-
-New-Alias i Start-Workspace
-New-Alias i. Start-WorkspaceSibling
-New-Alias i.. Start-WorkspaceRelative
-New-Alias ih Start-WorkspaceHome
-New-Alias ic Start-WorkspaceCode

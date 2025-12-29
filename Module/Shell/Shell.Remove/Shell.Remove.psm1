@@ -12,6 +12,7 @@ function Remove-Directory {
     ConfirmImpact = 'Medium'
   )]
   [OutputType([void])]
+  [Alias('rd')]
   param(
 
     [Parameter(
@@ -77,5 +78,3 @@ function Remove-Directory {
     }
   }
 }
-
-New-Alias rd Remove-Directory

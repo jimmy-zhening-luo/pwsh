@@ -12,6 +12,7 @@ function New-Directory {
     ConfirmImpact = 'Medium'
   )]
   [OutputType([System.IO.DirectoryInfo])]
+  [Alias('mk')]
   param(
 
     [Parameter(
@@ -93,6 +94,7 @@ function New-Junction {
     ConfirmImpact = 'Medium'
   )]
   [OutputType([System.IO.DirectoryInfo])]
+  [Alias('mj')]
   param(
 
     [Parameter(
@@ -149,6 +151,3 @@ function New-Junction {
 }
 
 New-Alias touch New-Item
-
-New-Alias mk New-Directory
-New-Alias mj New-Junction

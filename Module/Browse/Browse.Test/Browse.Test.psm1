@@ -32,6 +32,7 @@ function Test-Host {
   [CmdletBinding(
     DefaultParameterSetName = 'CommonTCPPort'
   )]
+  [Alias('tn')]
   [OutputType([System.Object])]
   param(
 
@@ -150,6 +151,7 @@ Invoke-WebRequest
 #>
 function Test-Url {
   [CmdletBinding()]
+  [Alias('tu')]
   [OutputType([uri])]
   param(
 
@@ -204,6 +206,3 @@ function Test-Url {
     }
   }
 }
-
-New-Alias tn Test-Host
-New-Alias tu Test-Url

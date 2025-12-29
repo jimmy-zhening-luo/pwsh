@@ -31,6 +31,7 @@ function Measure-Performance {
     [timespan],
     ParameterSetName = 'Timespan'
   )]
+  [Alias('mc')]
   param(
 
     [Parameter(
@@ -129,6 +130,7 @@ function Measure-PSProfile {
     [timespan],
     ParameterSetName = 'Timespan'
   )]
+  [Alias('mcp')]
   param(
 
     [Parameter(
@@ -263,6 +265,7 @@ PSTool
 function Invoke-PSHistory {
   [CmdletBinding()]
   [OutputType([void])]
+  [Alias('oc')]
   param()
 
   Start-Process -FilePath "$env:LOCALAPPDATA\Programs\Microsoft VS Code\bin\code.cmd" -NoNewWindow -ArgumentList (Get-PSReadLineOption).HistorySavePath, --profile=Setting, --new-window
@@ -283,6 +286,7 @@ PSTool
 function Invoke-PSProfile {
   [CmdletBinding()]
   [OutputType([void])]
+  [Alias('op')]
   param()
 
   Start-Process -FilePath "$env:LOCALAPPDATA\Programs\Microsoft VS Code\bin\code.cmd" -NoNewWindow -ArgumentList $PROFILE_REPO_ROOT, --profile=Default
@@ -302,6 +306,7 @@ function Update-PSProfile {
 
   [CmdletBinding()]
   [OutputType([void])]
+  [Alias('up')]
   param(
     [Parameter(DontShow)][switch]$z
   )
@@ -323,6 +328,7 @@ function Publish-PSProfile {
 
   [CmdletBinding()]
   [OutputType([void])]
+  [Alias('upp')]
   param(
 
     # If specified, skips the build step after syncing the repository and linter.
@@ -450,10 +456,3 @@ function Install-PSModuleDotnet {
     }
   }
 }
-
-New-Alias mc Measure-Performance
-New-Alias mcp Measure-PSProfile
-New-Alias oc Invoke-PSHistory
-New-Alias op Invoke-PSProfile
-New-Alias up Update-PSProfile
-New-Alias upp Publish-PSProfile

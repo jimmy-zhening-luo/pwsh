@@ -13,6 +13,7 @@ https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#usage-and-options
 #>
 function Get-YouTube {
 
+  [Alias('yt')]
   param(
 
     # The YouTube video URL or identifier to process.
@@ -58,6 +59,7 @@ https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#post-processing-options
 #>
 function Get-YouTubeAudio {
 
+  [Alias('yta')]
   param(
 
     # The YouTube video URL or identifier to process.
@@ -93,6 +95,7 @@ https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#video-format-options
 #>
 function Get-YouTubeFormat {
 
+  [Alias('ytf')]
   param(
 
     # The YouTube video URL or identifier to process.
@@ -115,6 +118,7 @@ Cli.YouTube
 function Invoke-YouTubeDirectory {
   [CmdletBinding()]
   [OutputType([void])]
+  [Alias('yte')]
   param()
 
   Invoke-Item -Path Videos\YouTube
@@ -133,13 +137,8 @@ Cli.YouTube
 function Invoke-YouTubeConfig {
   [CmdletBinding()]
   [OutputType([void])]
+  [Alias('ytc')]
   param()
 
   Start-WorkspaceHome -Workspace util\bin\yt\yt-dlp.conf -ProfileName Setting
 }
-
-New-Alias yt Get-YouTube
-New-Alias yta Get-YouTubeAudio
-New-Alias ytf Get-YouTubeFormat
-New-Alias yte Invoke-YouTubeDirectory
-New-Alias ytc Invoke-YouTubeConfig

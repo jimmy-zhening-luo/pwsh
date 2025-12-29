@@ -46,6 +46,7 @@ function Get-Size {
     [double],
     ParameterSetName = 'Number'
   )]
+  [Alias('sz', 'size')]
   param(
 
     [Parameter(
@@ -158,6 +159,7 @@ function Get-Directory {
     SupportsTransactions
   )]
   [OutputType([System.IO.DirectoryInfo], [System.IO.FileInfo])]
+  [Alias('l')]
   param(
 
     [Parameter(
@@ -251,6 +253,7 @@ function Get-DirectorySibling {
     SupportsTransactions
   )]
   [OutputType([System.IO.DirectoryInfo], [System.IO.FileInfo])]
+  [Alias('l.')]
   param(
 
     [Parameter(
@@ -323,6 +326,7 @@ function Get-DirectoryRelative {
     SupportsTransactions
   )]
   [OutputType([System.IO.DirectoryInfo], [System.IO.FileInfo])]
+  [Alias('l..')]
   param(
 
     [Parameter(
@@ -395,6 +399,7 @@ function Get-DirectoryHome {
     SupportsTransactions
   )]
   [OutputType([System.IO.DirectoryInfo], [System.IO.FileInfo])]
+  [Alias('lh')]
   param(
 
     [Parameter(
@@ -467,6 +472,7 @@ function Get-DirectoryCode {
     SupportsTransactions
   )]
   [OutputType([System.IO.DirectoryInfo], [System.IO.FileInfo])]
+  [Alias('lc')]
   param(
 
     [Parameter(
@@ -539,6 +545,7 @@ function Get-DirectoryDrive {
     SupportsTransactions
   )]
   [OutputType([System.IO.DirectoryInfo], [System.IO.FileInfo])]
+  [Alias('l/')]
   param(
 
     [Parameter(
@@ -608,9 +615,8 @@ function Get-DirectoryDrive {
 #>
 function Get-File {
 
-  [OutputType(
-    [string[]]
-  )]
+  [OutputType([string[]])]
+  [Alias('p')]
   param(
 
     [Parameter(
@@ -658,6 +664,7 @@ function Get-File {
 function Get-FileSibling {
 
   [OutputType([string])]
+  [Alias('p.')]
   param(
 
     [Parameter(
@@ -681,6 +688,7 @@ function Get-FileSibling {
 function Get-FileRelative {
 
   [OutputType([string])]
+  [Alias('p..')]
   param(
 
     [RelativePathCompletions(
@@ -700,6 +708,7 @@ function Get-FileRelative {
 function Get-FileHome {
 
   [OutputType([string])]
+  [Alias('ph')]
   param(
 
     [Parameter(
@@ -723,6 +732,7 @@ function Get-FileHome {
 function Get-FileCode {
 
   [OutputType([string])]
+  [Alias('pc')]
   param(
 
     [PathCompletions(
@@ -742,6 +752,7 @@ function Get-FileCode {
 function Get-FileDrive {
 
   [OutputType([string])]
+  [Alias('p/')]
   param(
 
     [Parameter(
@@ -760,20 +771,3 @@ function Get-FileDrive {
 
 New-Alias split Split-Path
 New-Alias hash Get-FileHash
-
-New-Alias size Get-Size
-New-Alias sz Get-Size
-
-New-Alias l Get-Directory
-New-Alias l. Get-DirectorySibling
-New-Alias l.. Get-DirectoryRelative
-New-Alias lh Get-DirectoryHome
-New-Alias lc Get-DirectoryCode
-New-Alias l/ Get-DirectoryDrive
-
-New-Alias p Get-File
-New-Alias p. Get-FileSibling
-New-Alias p.. Get-FileRelative
-New-Alias ph Get-FileHome
-New-Alias pc Get-FileCode
-New-Alias p/ Get-FileDrive
