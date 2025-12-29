@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/Cmdlet/">
     <Project Path="Cmdlet/Browse/Browse.csproj"/>
+    <Project Path="Cmdlet/Shell/Shell.csproj"/>
     <Project Path="Cmdlet/Transform/Transform.csproj"/>
   </Folder>
   <Folder Name="/Type/">

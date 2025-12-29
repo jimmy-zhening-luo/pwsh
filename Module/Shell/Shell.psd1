@@ -8,6 +8,7 @@
   Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
   PowerShellVersion    = '7.4'
   NestedModules        = @(
+    'Shell.dll'
     @{
       ModuleName    = 'Shell.New'
       ModuleVersion = '3.0.0.0'
