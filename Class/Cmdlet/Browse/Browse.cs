@@ -27,7 +27,7 @@ namespace Browse
         get => path;
         set => path = value;
       }
-      private string path;
+      private string path = string.Empty;
 
       [Parameter(
         ParameterSetName = "Uri",
