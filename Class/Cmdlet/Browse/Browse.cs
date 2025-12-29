@@ -58,7 +58,7 @@ namespace Browse
               Process browser = new ();
               browser.StartInfo = new ProcessStartInfo(
                 Browser,
-                u.ToString()
+                url
               );
 
               browser.Start();
