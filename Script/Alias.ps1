@@ -1,18 +1,18 @@
 #region Override
 # was: Clear-Host
-Set-Alias clear Shell\Clear-Line
+Remove-Alias clear
 
 # was: Remove-Item
-Set-Alias rd Shell\Remove-Directory
+Remove-Alias rd
 
 # was: Get-Help
-Set-Alias man PSHelp\Get-HelpOnline
+Remove-Alias man
 
 # was: Get-ItemProperty
-Set-Alias gp Code\Get-GitRepository -Force -Option ReadOnly
+Remove-Alias gp -Force
 
 # was: Get-Member
-Set-Alias gm Code\Write-GitRepository -Force -Option ReadOnly
+Remove-Alias gm -Force
 
 #endregion
 
