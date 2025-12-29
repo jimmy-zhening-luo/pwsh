@@ -9,24 +9,22 @@ namespace Completer
     {
       public static string Normalize(
         string path,
-        bool preserveTrailingSeparator = false,
-        bool expandEnv = false
+        bool preserveTrailingSeparator = false
       )
       {
         string normalPath = RemoveRelativeRoot(
           DuplicateSeparatorRegex().Replace(
-            path.Replace('/', '\\'),
+            Environment
+              .ExpandEnvironmentVariables(path)
+              .Replace('/', '\\'),
             @"\"
           )
         );
-        string expandedPath = expandEnv
-          ? ExpandEnvironmentVariables(normalPath)
-          : normalPath;
 
         return preserveTrailingSeparator
-          ? expandedPath
+          ? normalPath
           : Path.TrimEndingDirectorySeparator(
-              expandedPath
+              normalPath
             );
       }
 
