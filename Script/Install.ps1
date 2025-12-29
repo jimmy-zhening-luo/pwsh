@@ -3,7 +3,6 @@ using namespace System.Collections.Generic
 & {
   #region Solution
   $Root = Split-Path $PSScriptRoot
-  $SourceRoot = "$Root\Class"
 
   $DOTNET_SOLUTION = Import-PowerShellDataFile -Path $Root\Data\Class.psd1
   #endregion
@@ -22,26 +21,26 @@ using namespace System.Collections.Generic
 
       [Parameter(Mandatory)]
       [ValidateNotNullOrWhiteSpace()]
-      [string]$Folder,
+      [string]$Class,
 
       [Parameter(Mandatory)]
       [ValidateNotNullOrWhiteSpace()]
-      [string]$SourceRoot,
+      [string]$Root,
 
       [Parameter(Mandatory)]
       [ValidateNotNullOrWhiteSpace()]
-      [string]$InstallRoot,
+      [string]$InstallLocation,
 
       [switch]$AppendProject
     )
 
     process {
-      $BuildOutput = "$SourceRoot\$Folder\$Project\bin\Release\net9.0\$Project.dll"
+      $BuildOutput = "$Root\Class\$Class\$Project\bin\Release\net9.0\$Project.dll"
   
       if (Test-Path $BuildOutput -PathType Leaf) {
-        $InstallPath = $AppendProject ? (
-          "$InstallRoot\$Project"
-        ) : $InstallRoot
+        $InstallPath = "$Root\$InstallLocation" + (
+          $AppendProject ? "\$Project" : [string]::Empty
+        )
         $InstalledAssembly = "$InstallPath\$Project.dll"
   
         if (
@@ -57,7 +56,7 @@ using namespace System.Collections.Generic
         }
       }
       else {
-        Write-Warning -Message "Project '$Folder\$Project' is not built, skipping."
+        Write-Warning -Message "Project '$Class\$Project' is not built, skipping."
       }
     }
   }
@@ -65,19 +64,19 @@ using namespace System.Collections.Generic
 
   #region Install
   $DOTNET_SOLUTION.Cmdlets |
-    Install-PSProject -Folder Cmdlet -SourceRoot $SourceRoot -InstallRoot $Root\Module -AppendProject
+    Install-PSProject -Class Cmdlet -Root $Root -InstallLocation Module -AppendProject
 
   $DOTNET_SOLUTION.Types |
-    Install-PSProject -Folder Type -SourceRoot $SourceRoot -InstallRoot $SourceRoot
+    Install-PSProject -Class Type -Root $Root -InstallLocation Type
   #endregion
 
   #region Add Type
   $DOTNET_SOLUTION.Types |
     Where-Object {
-      Test-Path $SourceRoot\$PSItem.dll -PathType Leaf
+      Test-Path $Root\Type\$PSItem.dll -PathType Leaf
     } |
     ForEach-Object {
-      Add-Type -Path $SourceRoot\$PSItem.dll
+      Add-Type -Path $Root\Type\$PSItem.dll
     }
   #endregion
 }
