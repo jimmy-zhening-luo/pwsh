@@ -28,7 +28,7 @@ namespace Transform
 
         protected override void EndProcessing()
         {
-          string pwd = this.SessionState.Path.CurrentLocation.Path;
+          string pwd = SessionState.Path.CurrentLocation.Path;
 
           WriteObject(
             pwd,
