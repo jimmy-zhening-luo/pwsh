@@ -11,9 +11,7 @@ namespace Completer
       public readonly PathItemType ItemType;
       public readonly bool Flat;
 
-      private PathCompletionsAttribute() : base() { }
-
-      public PathCompletionsAttribute(string location) : this() => Location = location;
+      public PathCompletionsAttribute(string location) : base() => Location = location;
 
       public PathCompletionsAttribute(
         string location,

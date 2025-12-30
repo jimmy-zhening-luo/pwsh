@@ -8,8 +8,6 @@ namespace Completer
     public readonly IEnumerable<string> Domain;
     public readonly bool Strict;
 
-    private Completer() : base() { }
-
     public Completer(
       IEnumerable<string> domain,
       bool strict,

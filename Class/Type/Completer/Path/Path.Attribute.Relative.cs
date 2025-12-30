@@ -12,9 +12,7 @@ namespace Completer
       public readonly PathItemType ItemType;
       public readonly bool Flat;
 
-      private RelativePathCompletionsAttribute() : base() { }
-
-      public RelativePathCompletionsAttribute(ScriptBlock currentDirectory) : this() => CurrentDirectory = currentDirectory;
+      public RelativePathCompletionsAttribute(ScriptBlock currentDirectory) : base() => CurrentDirectory = currentDirectory;
 
       public RelativePathCompletionsAttribute(
         ScriptBlock currentDirectory,

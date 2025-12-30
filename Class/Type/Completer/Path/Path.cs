@@ -12,14 +12,12 @@ namespace Completer
       public readonly bool Flat;
       public readonly bool Reanchor;
 
-      private PathCompleter() : base() { }
-
       public PathCompleter(
         string root,
         PathItemType type,
         bool flat,
         bool reanchor
-      ) : this() => (Root, Type, Flat, Reanchor) =
+      ) : base() => (Root, Type, Flat, Reanchor) =
       (
         Canonicalizer.AnchorHome(
           Canonicalizer.Normalize(root)

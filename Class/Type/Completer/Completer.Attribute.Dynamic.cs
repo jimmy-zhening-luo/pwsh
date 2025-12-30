@@ -10,9 +10,7 @@ namespace Completer
     public readonly ScriptBlock DomainGenerator;
     public readonly bool Strict;
 
-    private DynamicCompletionsAttribute() : base() { }
-
-    public DynamicCompletionsAttribute(ScriptBlock domainGenerator) : this() => DomainGenerator = domainGenerator;
+    public DynamicCompletionsAttribute(ScriptBlock domainGenerator) : base() => DomainGenerator = domainGenerator;
 
     public DynamicCompletionsAttribute(
       ScriptBlock domainGenerator,

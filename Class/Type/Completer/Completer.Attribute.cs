@@ -8,9 +8,7 @@ namespace Completer
     public readonly string StringifiedDomain;
     public readonly bool Strict;
 
-    private CompletionsAttribute() : base() { }
-
-    public CompletionsAttribute(string stringifiedDomain) : this() => StringifiedDomain = stringifiedDomain;
+    public CompletionsAttribute(string stringifiedDomain) : base() => StringifiedDomain = stringifiedDomain;
 
     public CompletionsAttribute(
       string stringifiedDomain,
