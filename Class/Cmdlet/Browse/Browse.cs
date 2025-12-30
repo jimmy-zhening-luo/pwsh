@@ -87,7 +87,7 @@ namespace Browse
           else
           {
             string relativePath = System.IO.Path.GetRelativePath(
-              Pwd(),
+              SessionState.Path.CurrentLocation.Path,
               cleanPath
             );
             string testPath = System.IO.Path.IsPathRooted(
@@ -95,7 +95,7 @@ namespace Browse
             )
               ? relativePath
               : System.IO.Path.Combine(
-                  Pwd(),
+                  SessionState.Path.CurrentLocation.Path,
                   relativePath
                 );
 
@@ -109,12 +109,6 @@ namespace Browse
           browser.Start();
         }
       }
-
-      private string Pwd() => this
-        .SessionState
-        .Path
-        .CurrentLocation
-        .Path;
     }
   }
 } // namespace Browse
