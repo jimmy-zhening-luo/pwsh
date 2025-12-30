@@ -20,7 +20,7 @@ namespace Transform
         )]
         [AllowEmptyString]
         [AllowNull]
-        public string Path;
+        public string Path = string.Empty;
 
         protected override void EndProcessing()
         {
