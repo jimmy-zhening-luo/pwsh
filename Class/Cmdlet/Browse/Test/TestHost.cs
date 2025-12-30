@@ -35,8 +35,6 @@ namespace Browse
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "The hostname or IP address of the target host."
       )]
-      [AllowEmptyString]
-      [RelativePathCompletions]
       public string[] Name
       {
         get => name;
