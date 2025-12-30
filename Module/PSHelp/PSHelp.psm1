@@ -73,12 +73,10 @@ function Get-HelpOnline {
   if (-not $Name) {
     return Get-Help -Name Get-Help
   }
+
   [string]$Topic = $Name -join '_'
-
-  $Help = [string]::Empty
-  $HelpLinkArticleList = [List[uri]]::new()
-  $ArticleList = [List[uri]]::new()
-
+  $ArticleUrl = [List[uri]]::new()
+  $HelpContent = [string]::Empty
   $Silent = @{
     ErrorAction    = 'SilentlyContinue'
     ProgressAction = 'SilentlyContinue'
@@ -88,80 +86,107 @@ function Get-HelpOnline {
     $CustomHelp = $CUSTOM_HELP[$Topic]
 
     if ($CustomHelp -and $CustomHelp -as [string] -and $CustomHelp -notmatch ':') {
-      [uri[]]$CustomHelp = $CUSTOM_HELP[[string]$CustomHelp]
+      $CustomHelp = $CUSTOM_HELP[[string]$CustomHelp]
     }
 
+    [string[]]$CustomHelpString = @()
+
     if ($CustomHelp) {
-      $ArticleList.AddRange(
-        [List[uri]]$CustomHelp
+      $CustomHelpString += $CustomHelp |
+        Where-Object {
+          $PSItem -as [uri] -and (
+            [uri]$PSItem
+          ).IsAbsoluteUri
+        }
+    }
+
+    if ($CustomHelpString) {
+      $ArticleUrl.AddRange(
+        [List[uri]]$CustomHelpString
       )
     }
   }
   else {
-    $Help = Get-Help -Name $Topic @Silent
+    $HelpArticleUrl = [List[uri]]::new()
+    $HelpContent = Get-Help -Name $Topic @Silent
 
-    if ($Help -and $Help.Count -gt 1) {
-      $Help = [string]::Empty
+    if ($HelpContent -and $HelpContent.Count -gt 1) {
+      $HelpContent = [string]::Empty
     }
 
-    if ($Help) {
-      [string[]]$HelpLinkProperty = $Help.relatedLinks.navigationLink.Uri -replace '\?(?>.*)$', [string]::Empty |
+    if ($HelpContent) {
+      [uri[]]$RelatedUrl = $HelpContent.relatedLinks.navigationLink.Uri |
         Where-Object {
           -not [string]::IsNullOrEmpty($PSItem)
         } |
         Where-Object {
-          $PSItem -match '^(?=https?://\S)'
+          $PSItem -match '^(?=(?>https?://\S|(?>[-\w]+)(?>\.(?>[-\w]+))+/))'
+        } |
+        ForEach-Object {
+          $PSItem -match '^(?=https?:)' ? $PSItem : "https://$PSItem"
+        } |
+        Where-Object {
+          $PSItem -as [uri] -and (
+            [uri]$PSItem
+          ).IsAbsoluteUri
         }
 
-      if ($HelpLinkProperty) {
-        $HelpLinkArticleList.AddRange(
-          [List[uri]]$HelpLinkProperty
+      if ($RelatedUrl.Count -ne 0) {
+        $HelpArticleUrl.AddRange(
+          [List[uri]]$RelatedUrl
         )
       }
     }
 
-    if ($Help -and $Parameter) {
-      $ParameterHelp = Get-Help -Name $Topic -Parameter $Parameter @Silent
+    if ($HelpContent -and $Parameter) {
+      $ParameterHelpContent = Get-Help -Name $Topic -Parameter $Parameter @Silent
 
-      if ($ParameterHelp) {
-        $Help = $ParameterHelp
-        if ($HelpLinkArticleList.Count -eq 1 -and $Parameter.Count -eq 1) {
-          $HelpLinkArticleList[0] = [uri](
-            [string]$HelpLinkArticleList[0] + "#-$Parameter".ToLower()
+      if ($ParameterHelpContent) {
+        $HelpContent = $ParameterHelpContent
+
+        if ($HelpArticleUrl.Count -eq 1 -and $Parameter.Count -eq 1) {
+          $HelpArticleUrl[0] = [uri](
+            [string]$HelpArticleUrl[0] + "#-$Parameter".ToLower()
           )
         }
       }
     }
 
-    if ($HelpLinkArticleList.Count -ne 0) {
-      $ArticleList.AddRange(
-        [List[uri]]$HelpLinkArticleList
+    if ($HelpArticleUrl.Count -ne 0) {
+      $ArticleUrl.AddRange(
+        [List[uri]]$HelpArticleUrl
       )
     }
     else {
-      $about_Article = [string]::Empty
-
-      if ($Help -and $Help.Name) {
-        [string]$LocalHelpTopic = $Help.Name
-
-        if ($LocalHelpTopic.StartsWith('about_')) {
-          $about_Article = [uri]"$ABOUT_BASE_URL/$LocalHelpTopic"
+      if ($HelpContent) {
+        if (
+          $HelpContent.Name -as [string] -and (
+            [string]$HelpContent.Name
+          ).StartsWith(
+            'about_'
+          )
+        ) {
+          $about_Article = [uri]"$ABOUT_BASE_URL/$([string]$HelpContent.Name)"
         }
       }
       else {
         function Resolve-AboutArticle {
+          [CmdletBinding()]
           [OutputType([uri])]
           param(
+            [Parameter()]
             [string]$Topic
           )
 
           [uri]$about_Article = "$ABOUT_BASE_URL/$Topic"
+
           if (Test-Url -Uri $about_Article) {
             return $about_Article
           }
         }
 
-        $about_TopicCandidate = $Topic -replace '(?>[_ :]+)', '_' -replace '^(?>about)?_?', 'about_'
+        $about_Article = [string]::Empty
+        [string]$about_TopicCandidate = $Topic -replace '(?>[_ :]+)', '_' -replace '^(?>about)?_?', 'about_'
 
         $about_Article = Resolve-AboutArticle -Topic $about_TopicCandidate
 
@@ -173,35 +198,52 @@ function Get-HelpOnline {
         }
 
         if ($about_Article) {
-          $Help = Get-Help -Name $about_TopicCandidate @Silent
+          $HelpContent = Get-Help -Name $about_TopicCandidate @Silent
+          $ArticleUrl.Add([uri]$about_Article)
         }
-      }
-
-      if ($about_Article) {
-        $ArticleList.Add([uri]$about_Article)
       }
     }
   }
 
-  if ($Help) {
-    $Help
+  if ($HelpContent) {
+    Write-Output -InputObject $HelpContent
   }
 
-  [string[]]$Articles = $ArticleList.ToArray() -replace '^(?>https?:\/\/)?', 'https://' -replace '(?<=^https:\/\/learn\.microsoft\.com\/)en-us\/', [string]::Empty |
-    Select-Object -Unique -CaseInsensitive
+  $Article = [List[string]]::new()
 
-  if ($Articles) {
-    Write-Information -MessageData "$($Articles -join "`n")" -InformationAction Continue
+  if ($ArticleUrl.Count -ne 0) {
+    [string[]]$ArticalString = $ArticleUrl |
+      ForEach-Object {
+        'https://' + $PSItem.Host + (
+          $PSItem.Host -eq 'go.microsoft.com' ? $PSItem.PathAndQuery : $PSItem.AbsolutePath.Substring(
+            $PSItem.AbsolutePath.StartsWith(
+              '/en-us/',
+              [stringcomparison]::OrdinalIgnoreCase 
+            ) ? 6 : 0
+          )
+        ) + $PSItem.Fragment
+      } |
+      Select-Object -Unique -CaseInsensitive
+
+    if ($ArticleString) {
+      $Article.AddRange(
+        [List[string]]$ArticleString
+      )
+    }
+  }
+
+  if ($Article.Count -ne 0) {
+    Write-Information -MessageData "$($Article -join "`n")" -InformationAction Continue
   }
 
   if (-not $env:SSH_CLIENT) {
-    if ($Articles) {
-      [uri[]]$Articles | Browse\Open-Url
+    if ($Article.Count -eq 0) {
+      if ($HelpContent) {
+        Get-Help -Name $Topic -Online @Silent 2>&1 | Out-Null
+      }
     }
     else {
-      if ($Help) {
-        Get-Help -Name $Topic @Silent 2>&1 | Out-Null
-      }
+      [uri[]]$Article | Browse\Open-Url
     }
   }
 }
