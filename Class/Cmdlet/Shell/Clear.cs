@@ -10,7 +10,8 @@ namespace Shell
       VerbsCommon.Clear,
       "Line",
       DefaultParameterSetName = "Path",
-      SupportsTransactions = true
+      SupportsTransactions = true,
+      HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096807"
     )]
     [Alias("cl", "clear")]
     [OutputType(typeof(void))]

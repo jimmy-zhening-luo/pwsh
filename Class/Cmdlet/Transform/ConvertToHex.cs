@@ -6,7 +6,8 @@ namespace Transform
   {
     [Cmdlet(
       VerbsData.ConvertTo,
-      "Hex"
+      "Hex",
+      HelpUri = "https://learn.microsoft.com/dotnet/standard/base-types/composite-formatting"
     )]
     [Alias("hex")]
     [OutputType(typeof(string))]

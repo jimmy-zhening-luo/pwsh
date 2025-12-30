@@ -6,7 +6,8 @@ namespace Transform
   {
     [Cmdlet(
       VerbsCommon.Copy,
-      "Guid"
+      "Guid",
+      HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097130"
     )]
     [Alias("gu", "guid")]
     [OutputType(typeof(string))]
