@@ -24,7 +24,7 @@ namespace Transform
           get => path;
           set => path = value;
         }
-        private string path;
+        private string path = string.Empty;
 
         protected override void EndProcessing()
         {
