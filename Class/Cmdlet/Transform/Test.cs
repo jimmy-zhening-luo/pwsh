@@ -19,6 +19,7 @@ namespace Transform
           Position = 0
         )]
         [AllowEmptyString]
+        [AllowNull]
         public string Path;
 
         protected override void EndProcessing()
