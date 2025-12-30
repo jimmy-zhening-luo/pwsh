@@ -50,7 +50,7 @@ namespace Browse
       }
       private Uri[] uri = [];
 
-      private Process browser;
+      private readonly Process browser;
 
       private static bool Ssh() => Environment.GetEnvironmentVariable(
         "SSH_CLIENT"
@@ -107,6 +107,7 @@ namespace Browse
           }
 
           browser.Start();
+          browser.Dispose();
         }
       }
     }
