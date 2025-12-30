@@ -105,10 +105,13 @@ function Get-HelpOnline {
     }
 
     if ($Help) {
-      [string[]]$HelpLinkProperty = @()
-
-      $HelpLinkProperty += $Help.relatedLinks.navigationLink.Uri -replace '\?(?>.*)$', [string]::Empty -match '^(?=https?://\S)(?>.+)$'
-      echo $Help.relatedLinks.navigationLink.Uri
+      [string[]]$HelpLinkProperty = $Help.relatedLinks.navigationLink.Uri -replace '\?(?>.*)$', [string]::Empty |
+        Where-Object {
+          -not [string]::IsNullOrEmpty($PSItem)
+        } |
+        Where-Object {
+          $PSItem -match '^(?=https?://\S)'
+        }
 
       if ($HelpLinkProperty) {
         $HelpLinkArticleList.AddRange(
