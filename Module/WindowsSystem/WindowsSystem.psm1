@@ -52,23 +52,25 @@ function Stop-Task {
   process {
     switch ($PSCmdlet.ParameterSetName) {
       Id {
-        foreach ($ProcessId in $Id) {
-          Stop-Process -Id $ProcessId -Force
+        foreach ($i in $Id) {
+          (
+            Get-Process -Id $i
+          ).Kill($True)
         }
       }
       Name {
         switch -Regex ($Name) {
           '^$' { continue }
           '^(?>\d{1,10})$' {
-            [uint]$Id = $PSItem
-
             if (
               $PSCmdlet.ShouldProcess(
-                "Process ID: $Id",
-                'Stop-Process'
+                "Process ID: $PSItem",
+                '(Get-Process).Kill($True)'
               )
             ) {
-              Stop-Process -Id $Id -Force
+              (
+                Get-Process -Id ([uint]$PSItem)
+              ).Kill($True)
             }
 
             continue
@@ -77,10 +79,12 @@ function Stop-Task {
             if (
               $PSCmdlet.ShouldProcess(
                 "Process Name: $PSItem",
-                'Stop-Process'
+                '(Get-Process).Kill($True)'
               )
             ) {
-              Stop-Process -Name $PSItem -Force
+              (
+                Get-Process -Name $PSItem
+              ).Kill($True)
             }
           }
         }
@@ -94,11 +98,13 @@ function Stop-Task {
         if ($Self) {
           if (
             $PSCmdlet.ShouldProcess(
-              'Process Name: WindowsTerminal',
-              'Stop-Process (-Self => WindowsTerminal)'
+              'Process Name: -Self [=> WindowsTerminal]',
+              '(Get-Process).Kill($True)'
             )
           ) {
-            Stop-Process -Name WindowsTerminal -Force
+            (
+              Get-Process -Name WindowsTerminal
+            ).Kill($True)
           }
         }
         return
@@ -107,11 +113,13 @@ function Stop-Task {
         if (-not $Name) {
           if (
             $PSCmdlet.ShouldProcess(
-              'Process Name: explorer',
-              'Stop-Process (default => explorer)'
+              'Process Name: [=> explorer]',
+              '(Get-Process).Kill($True)'
             )
           ) {
-            Stop-Process -Name explorer -Force
+            (
+              Get-Process -Name explorer
+            ).Kill($True)
           }
         }
       }
