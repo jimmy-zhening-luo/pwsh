@@ -17,18 +17,28 @@ namespace Transform
         HelpMessage = "Uppercase GUID"
       )]
       [Alias("Case")]
-      public SwitchParameter Uppercase;
+      public SwitchParameter Uppercase
+      {
+        get { return uppercase; }
+        set { uppercase = value; }
+      }
+      private bool uppercase;
 
       [Parameter(
         HelpMessage = "Only copy GUID to clipboard, omit console output"
       )]
-      public SwitchParameter Silent;
+      public SwitchParameter Silent
+      {
+        get { return silent; }
+        set { silent = value; }
+      }
+      private bool silent;
 
       protected override void EndProcessing()
       {
         string guid = System.Guid.NewGuid().ToString("D");
 
-        if (Uppercase.IsPresent)
+        if (uppercase)
         {
           guid = guid.ToUpper();
         }
@@ -57,7 +67,7 @@ namespace Transform
           );
         }
 
-        if (!Silent.IsPresent)
+        if (!silent)
         {
           WriteObject(guid);
         }

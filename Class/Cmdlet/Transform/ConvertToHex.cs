@@ -34,7 +34,12 @@ namespace Transform
         HelpMessage = "Output hexadecimal letters in lowercase"
       )]
       [Alias("Case")]
-      public SwitchParameter Lowercase;
+      public SwitchParameter Lowercase
+      {
+        get { return lowercase; }
+        set { lowercase = value; }
+      }
+      private bool lowercase;
 
       protected override void ProcessRecord()
       {
@@ -43,7 +48,7 @@ namespace Transform
           string hex = number.ToString("X");
 
           WriteObject(
-            Lowercase
+            lowercase
               ? hex.ToLower()
               : hex
           );

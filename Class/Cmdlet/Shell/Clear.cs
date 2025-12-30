@@ -23,7 +23,6 @@ namespace Shell
       )]
       [AllowEmptyString]
       [SupportsWildcards]
-      [AllowNull]
       [RelativePathCompletions]
       public string Path
       {
