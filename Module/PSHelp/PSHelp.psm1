@@ -89,15 +89,20 @@ function Get-HelpOnline {
       $CustomHelp = $CUSTOM_HELP[[string]$CustomHelp]
     }
 
-    [string[]]$CustomHelpString = @()
+    [uri[]]$CustomHelpString = @()
 
     if ($CustomHelp) {
-      $CustomHelpString += $CustomHelp |
-        Where-Object {
-          $PSItem -as [uri] -and (
+      [uri[]]$CustomHelpString = [uri[]](
+        $CustomHelp |
+          Where-Object {
+            $PSItem -as [uri] -and (
+              [uri]$PSItem
+            ).IsAbsoluteUri
+          } |
+          ForEach-Object {
             [uri]$PSItem
-          ).IsAbsoluteUri
-        }
+          }
+      )
     }
 
     if ($CustomHelpString) {
@@ -110,26 +115,31 @@ function Get-HelpOnline {
     $HelpArticleUrl = [List[uri]]::new()
     $HelpContent = Get-Help -Name $Topic @Silent
 
-    if ($HelpContent -and $HelpContent.Count -gt 1) {
+    if ($HelpContent -and $HelpContent.Count -ne 1) {
       $HelpContent = [string]::Empty
     }
 
     if ($HelpContent) {
-      [uri[]]$RelatedUrl = $HelpContent.relatedLinks.navigationLink.Uri |
-        Where-Object {
-          -not [string]::IsNullOrEmpty($PSItem)
-        } |
-        Where-Object {
-          $PSItem -match '^(?=(?>https?://\S|(?>[-\w]+)(?>\.(?>[-\w]+))+/))'
-        } |
-        ForEach-Object {
-          $PSItem -match '^(?=https?:)' ? $PSItem : "https://$PSItem"
-        } |
-        Where-Object {
-          $PSItem -as [uri] -and (
+      [uri[]]$RelatedUrl = [uri[]](
+        $HelpContent.relatedLinks.navigationLink.Uri |
+          Where-Object {
+            -not [string]::IsNullOrEmpty($PSItem)
+          } |
+          Where-Object {
+            $PSItem -match '^(?=https?://\S|[-\w]+(?>\.[-\w]+)+/)'
+          } |
+          ForEach-Object {
+            $PSItem -match '^(?=https?:)' ? $PSItem : "https://$PSItem"
+          } |
+          Where-Object {
+            $PSItem -as [uri] -and (
+              [uri]$PSItem
+            ).IsAbsoluteUri
+          } |
+          ForEach-Object {
             [uri]$PSItem
-          ).IsAbsoluteUri
-        }
+          }
+      )
 
       if ($RelatedUrl) {
         $HelpArticleUrl.AddRange(
@@ -209,41 +219,46 @@ function Get-HelpOnline {
     Write-Output -InputObject $HelpContent
   }
 
-  $Article = [List[string]]::new()
+  $Article = [List[uri]]::new()
 
   if ($ArticleUrl.Count -ne 0) {
-    [string[]]$ArticalString = $ArticleUrl |
-      ForEach-Object {
-        'https://' + $PSItem.Host + (
-          $PSItem.Host -eq 'go.microsoft.com' ? $PSItem.PathAndQuery : $PSItem.AbsolutePath.Substring(
-            $PSItem.AbsolutePath.StartsWith(
-              '/en-us/',
-              [stringcomparison]::OrdinalIgnoreCase 
-            ) ? 6 : 0
-          )
-        ) + $PSItem.Fragment
-      } |
-      Select-Object -Unique -CaseInsensitive
+    [uri[]]$ArticalString = [uri[]](
+      $ArticleUrl.ToArray() |
+        ForEach-Object {
+          'https://' + $PSItem.Host + (
+            $PSItem.Host -eq 'go.microsoft.com' ? $PSItem.PathAndQuery : $PSItem.AbsolutePath.Substring(
+              $PSItem.AbsolutePath.StartsWith(
+                '/en-us/',
+                [stringcomparison]::OrdinalIgnoreCase 
+              ) ? 6 : 0
+            )
+          ) + $PSItem.Fragment
+        } |
+        Select-Object -Unique -CaseInsensitive |
+        ForEach-Object {
+          [uri]$PSItem
+        }
+    )
 
     if ($ArticleString) {
       $Article.AddRange(
-        [List[string]]$ArticleString
+        [List[uri]]$ArticleString
       )
     }
   }
 
   if ($Article.Count -ne 0) {
-    Write-Information -MessageData "$($Article -join "`n")" -InformationAction Continue
+    Write-Information -MessageData "$($Article.ToArray() -join "`n")" -InformationAction Continue
   }
 
   if (-not $env:SSH_CLIENT) {
-    if ($Article.Count -eq 0) {
+    if ($Article.Count -ne 0) {
+      [uri[]]$Article.ToArray() | Browse\Open-Url
+    }
+    else {
       if ($HelpContent) {
         Get-Help -Name $Topic -Online @Silent 2>&1 | Out-Null
       }
-    }
-    else {
-      [uri[]]$Article | Browse\Open-Url
     }
   }
 }
