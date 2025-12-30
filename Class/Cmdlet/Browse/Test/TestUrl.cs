@@ -41,7 +41,7 @@ namespace Browse
               : u.AbsoluteUri.Trim()
             : u.OriginalString.Trim() == string.Empty
               ? string.Empty
-              : 'http://' + u.OriginalString.Trim();
+              : "http://" + u.OriginalString.Trim();
 
           if (us != string.Empty)
           {
