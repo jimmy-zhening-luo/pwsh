@@ -86,7 +86,7 @@ namespace Browse
                   uu
                 );
 
-              status = ps.Invoke<BasicHtmlWebResponseObject>()[0].BaseObject.StatusCode;
+              status = ps.Invoke<BasicHtmlWebResponseObject>()[0].StatusCode;
             }
             catch (HttpResponseException e)
             {
