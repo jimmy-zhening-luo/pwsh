@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Management.Automation;
 using Microsoft.PowerShell.Commands;
 using System.Net.Http;
+using System.Web.Http;
 
 namespace Browse
 {
