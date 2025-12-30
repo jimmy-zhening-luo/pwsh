@@ -38,12 +38,22 @@ namespace Browse
           string us = u.IsAbsoluteUri
             ? u.Host.Trim() == string.Empty
               ? string.Empty
-              : u.AbsoluteUri
+              : u.AbsoluteUri.Trim()
             : u.OriginalString.Trim() == string.Empty
               ? string.Empty
-              : 'http://u.OriginalString';
+              : 'http://' + u.OriginalString.Trim();
 
-          
+          if (us != string.Empty)
+          {
+            Uri uu = new(us);
+
+            // Invoke-WebRequest
+
+            WriteObject(
+              uu,
+              true
+            );
+          }
         }
       }
     }
