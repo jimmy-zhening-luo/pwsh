@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Management.Automation;
+using Completer.PathCompleter;
 
 namespace Browse
 {
@@ -21,6 +22,7 @@ namespace Browse
         HelpMessage = "The file path or URL to open. Defaults to the current directory."
       )]
       [AllowEmptyString]
+      [RelativePathCompletions]
       public string Path
       {
         get => path;
