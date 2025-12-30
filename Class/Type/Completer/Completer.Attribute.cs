@@ -3,8 +3,9 @@ using System;
 namespace Completer
 {
   [AttributeUsage(
-    AttributeTargets.Parameter
+    AttributeTargets.Field
     | AttributeTargets.Property
+    | AttributeTargets.Parameter
   )]
   public class CompletionsAttribute : BaseCompletionsAttribute<Completer>
   {

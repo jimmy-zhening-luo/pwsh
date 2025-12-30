@@ -6,8 +6,9 @@ namespace Completer
   namespace PathCompleter
   {
     [AttributeUsage(
-      AttributeTargets.Parameter
+      AttributeTargets.Field
       | AttributeTargets.Property
+      | AttributeTargets.Parameter
     )]
     public class RelativePathCompletionsAttribute : BaseCompletionsAttribute<PathCompleter>
     {

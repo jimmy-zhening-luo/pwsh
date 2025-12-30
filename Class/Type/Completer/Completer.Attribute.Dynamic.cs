@@ -5,8 +5,9 @@ using System.Management.Automation;
 namespace Completer
 {
   [AttributeUsage(
-    AttributeTargets.Parameter
+    AttributeTargets.Field
     | AttributeTargets.Property
+    | AttributeTargets.Parameter
   )]
   public class DynamicCompletionsAttribute : BaseCompletionsAttribute<Completer>
   {
