@@ -1,5 +1,5 @@
+using System;
 using System.Management.Automation;
-using Completer.PathCompleter;
 
 namespace Shell
 {
@@ -7,11 +7,11 @@ namespace Shell
   {
     [Cmdlet(
       VerbsCommon.Clear,
-      "LineWip",
+      "Line",
       DefaultParameterSetName = "Path",
       SupportsTransactions = true
     )]
-    [Alias("clt", "cleart")]
+    [Alias("cl", "clear")]
     [OutputType(typeof(void))]
     public class ClearLine : PSCmdlet
     {
@@ -58,7 +58,7 @@ namespace Shell
       [Parameter()]
       public string Stream;
 
-      private bool processRecords;
+      private SteppablePipeline steppablePipeline = null;
 
       protected override void BeginProcessing()
       {
@@ -67,44 +67,45 @@ namespace Shell
           || ParameterSetName == "LiteralPath"
         )
         {
-          // $processRecords = $true
-          processRecords = true;
-          // $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand("Clear-Content", [System.Management.Automation.CommandTypes]::Cmdlet)
+          using PowerShell ps = PowerShell.Create(
+            RunspaceMode.CurrentRunspace
+          );
+          ps
+            .AddCommand(
+              SessionState
+                .InvokeCommand
+                .GetCommand(
+                  "Clear-Content",
+                  CommandTypes.Cmdlet
+                )
+            )
+            .AddParameters(
+              MyInvocation.BoundParameters
+            );
 
-          // [scriptblock]$scriptCmd = { & $wrappedCmd @PSBoundParameters }
-
-          // $steppablePipeline = $scriptCmd.GetSteppablePipeline()
-
-          // $steppablePipeline.Begin($PSCmdlet)
-
+          steppablePipeline = ps.GetSteppablePipeline();
+          steppablePipeline.Begin(this);
         }
       }
 
       protected override void ProcessRecord()
       {
-        if (processRecords)
-        {
-          // $steppablePipeline.Process($PSItem)
-        }
+        steppablePipeline?.Process();
       }
 
       protected override void EndProcessing()
       {
-        if (processRecords)
+        if (steppablePipeline == null)
         {
-          // $steppablePipeline.End()
+          Console.Clear();
         }
         else
         {
-          // Clear-Host
+          steppablePipeline.End();
+          steppablePipeline.Dispose();
+          steppablePipeline = null;
         }
       }
-
-      private string Pwd() => this
-        .SessionState
-        .Path
-        .CurrentLocation
-        .Path;
     }
   }
 } // namespace Shell

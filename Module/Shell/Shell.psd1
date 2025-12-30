@@ -1,5 +1,5 @@
 @{
-  RootModule           = 'Shell.psm1'
+  RootModule           = 'Shell.dll'
   ModuleVersion        = '3.0.0.0'
   CompatiblePSEditions = @('Desktop', 'Core')
   GUID                 = 'e4d07654-6759-4a2f-8293-39df2b809ba7'
@@ -8,7 +8,6 @@
   Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
   PowerShellVersion    = '7.4'
   NestedModules        = @(
-    'Shell.dll'
     @{
       ModuleName    = 'Shell.New'
       ModuleVersion = '3.0.0.0'
@@ -36,7 +35,6 @@
     }
   )
   FunctionsToExport    = @(
-    'Clear-Line'
     'New-Directory'
     'New-Junction'
     'Get-Size'
@@ -73,7 +71,9 @@
     'Start-WorkspaceDrive'
     'Remove-Directory'
   )
-  CmdletsToExport      = @()
+  CmdletsToExport      = @(
+    'Clear-Line'
+  )
   VariablesToExport    = @()
   AliasesToExport      = @(
     'cl'
