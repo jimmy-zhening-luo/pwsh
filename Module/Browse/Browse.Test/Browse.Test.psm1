@@ -150,9 +150,9 @@ https://learn.microsoft.com/powershell/module/microsoft.powershell.utility/invok
 .LINK
 Invoke-WebRequest
 #>
-function Test-Url {
+function Test-UrlOld {
   [CmdletBinding()]
-  [Alias('tu')]
+  # [Alias('tu')]
   [OutputType([uri])]
   param(
 

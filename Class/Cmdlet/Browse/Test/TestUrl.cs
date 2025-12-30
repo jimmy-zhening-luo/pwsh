@@ -10,10 +10,10 @@ namespace Browse
   {
     [Cmdlet(
       VerbsDiagnostic.Test,
-      "UrlWip",
+      "Url",
       HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097126"
     )]
-    // [Alias("tu")]
+    [Alias("tu")]
     [OutputType(typeof(Uri))]
     public class TestUrl : PSCmdlet
     {

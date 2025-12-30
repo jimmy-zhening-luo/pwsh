@@ -16,16 +16,16 @@
   )
   FunctionsToExport    = @(
     'Test-Host'
-    'Test-Url'
   )
   CmdletsToExport      = @(
     'Open-Url'
+    'Test-Url'
   )
   VariablesToExport    = @()
   AliasesToExport      = @(
     'o'
     'open'
-    'tn'
     'tu'
+    'tn'
   )
 }
