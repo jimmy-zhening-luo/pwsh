@@ -12,9 +12,7 @@ function Start-Explorer {
   [Alias('e')]
   param(
 
-    [RelativePathCompletions(
-      ''
-    )]
+    [RelativePathCompletions()]
     [string]$Path
   )
   if (-not $env:SSH_CLIENT) {
@@ -148,9 +146,7 @@ function Start-Workspace {
       Position = 0
     )]
     [AllowEmptyString()]
-    [RelativePathCompletions(
-      ''
-    )]
+    [RelativePathCompletions()]
     [string]$Workspace,
 
     [Parameter(

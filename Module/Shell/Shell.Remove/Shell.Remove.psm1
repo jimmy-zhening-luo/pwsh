@@ -23,9 +23,7 @@ function Remove-Directory {
       ValueFromPipelineByPropertyName
     )]
     [SupportsWildcards()]
-    [RelativePathCompletions(
-      ''
-    )]
+    [RelativePathCompletions()]
     [string[]]$Path,
 
     [Parameter(
