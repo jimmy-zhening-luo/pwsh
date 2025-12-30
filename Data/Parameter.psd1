@@ -9,5 +9,5 @@
   'Install-Module:Scope'          = 'AllUsers'
   'Remove-Item:Force'             = $True
   'Stop-Service:Force'            = $True
-  'Invoke-WebRequest:Method'      = $True
+  'Invoke-WebRequest:Method'      = 'HEAD'
 }
