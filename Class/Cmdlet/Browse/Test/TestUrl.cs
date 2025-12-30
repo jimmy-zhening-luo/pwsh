@@ -63,9 +63,9 @@ namespace Browse
             {
               status = -1;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-              throw e;
+              throw;
             }
 
             if (status >= 200 && status < 300)
