@@ -188,10 +188,10 @@ function Get-HelpOnline {
             [string]$Topic
           )
 
-          [uri]$about_Article = "$ABOUT_BASE_URL/$Topic"
+          [uri]$Test_about_Article = [uri]"$ABOUT_BASE_URL/$Topic"
 
-          if (Test-Url -Uri $about_Article) {
-            return $about_Article
+          if (Test-Url -Uri $Test_about_Article) {
+            return $Test_about_Article
           }
         }
 
@@ -222,14 +222,14 @@ function Get-HelpOnline {
   $Article = [List[uri]]::new()
 
   if ($ArticleUrl.Count -ne 0) {
-    [uri[]]$ArticalString = [uri[]](
+    [uri[]]$ArticleString = [uri[]](
       $ArticleUrl.ToArray() |
         ForEach-Object {
           'https://' + $PSItem.Host + (
             $PSItem.Host -eq 'go.microsoft.com' ? $PSItem.PathAndQuery : $PSItem.AbsolutePath.Substring(
               $PSItem.AbsolutePath.StartsWith(
                 '/en-us/',
-                [stringcomparison]::OrdinalIgnoreCase 
+                [stringcomparison]::OrdinalIgnoreCase
               ) ? 6 : 0
             )
           ) + $PSItem.Fragment
