@@ -27,7 +27,7 @@ namespace Shell
       public string Path
       {
         get => path;
-        set => path = value ?? string.Empty;
+        set => path = value;
       }
       private string path = string.Empty;
 
