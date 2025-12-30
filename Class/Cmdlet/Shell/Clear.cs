@@ -1,5 +1,6 @@
 using System;
 using System.Management.Automation;
+using Completer.PathCompleter;
 
 namespace Shell
 {
@@ -22,6 +23,7 @@ namespace Shell
       [AllowEmptyString]
       [SupportsWildcards]
       [AllowNull]
+      [RelativePathCompletions]
       public string Path
       {
         get => path;
