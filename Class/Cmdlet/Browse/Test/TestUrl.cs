@@ -63,7 +63,7 @@ namespace Browse
             {
               status = -1;
             }
-            catch (Exception)
+            catch
             {
               throw;
             }
