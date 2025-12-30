@@ -418,9 +418,9 @@ function Get-VerbList {
         ) + "$v*"
 
         [VerbInfo[]]$Result = $Group ? (
-          Get-Verb -Verb $vf
-        ) : (
           Get-Verb -Verb $vf -Group $Group
+        ) : (
+          Get-Verb -Verb $vf
         )
 
         if ($Result) {
@@ -446,9 +446,17 @@ function Get-VerbList {
       }
     }
     else {
-      return Get-Verb * |
-        Select-Object -ExpandProperty Verb |
-        Sort-Object
+      [VerbInfo[]]$AllVerbs = $Group ? (
+        Get-Verb -Verb * -Group $Group
+      ) : (
+        Get-Verb -Verb *
+      )
+
+      if ($AllVerbs) {
+        return $AllVerbs |
+          Select-Object -ExpandProperty Verb |
+          Sort-Object
+      }
     }
   }
 }
