@@ -53,6 +53,7 @@ function Test-Host {
     [EnumCompletions(
       [TestHostWellKnownPort]
     )]
+    # Specifies the common service TCP port number.
     [string]$CommonTCPPort,
 
     [Parameter(
