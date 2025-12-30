@@ -62,7 +62,7 @@ function Get-Size {
       ValueFromPipelineByPropertyName
     )]
     [RelativePathCompletions(
-      { return $PWD.Path }
+      ''
     )]
     # The path of the file or directory to be measured.
     [string[]]$Path,
@@ -173,7 +173,7 @@ function Get-Directory {
     [AllowNull()]
     [SupportsWildcards()]
     [RelativePathCompletions(
-      { return $PWD.Path },
+      '',
       [PathItemType]::Directory
     )]
     [string[]]$Path,
@@ -634,7 +634,7 @@ function Get-File {
       Position = 0
     )]
     [RelativePathCompletions(
-      { return $PWD.Path },
+      '',
       [PathItemType]::File
     )]
     [string]$Path,

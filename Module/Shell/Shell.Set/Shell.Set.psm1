@@ -24,7 +24,7 @@ function Set-Directory {
     [AllowNull()]
     [SupportsWildcards()]
     [RelativePathCompletions(
-      { return $PWD.Path },
+      '',
       [PathItemType]::Directory
     )]
     [string]$Path,

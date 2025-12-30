@@ -503,7 +503,7 @@ function Compare-GitRepository {
   param(
 
     [RelativePathCompletions(
-      { return $PWD.Path },
+      '',
       [PathItemType]::File
     )]
     # File pattern of files to diff, defaults to '.' (all)
@@ -563,7 +563,7 @@ function Add-GitRepository {
   param(
 
     [RelativePathCompletions(
-      { return $PWD.Path },
+      '',
       [PathItemType]::File
     )]
     # File pattern of files to add, defaults to '.' (all)

@@ -24,7 +24,7 @@ function Remove-Directory {
     )]
     [SupportsWildcards()]
     [RelativePathCompletions(
-      { return $PWD.Path }
+      ''
     )]
     [string[]]$Path,
 

@@ -13,7 +13,7 @@ function Start-Explorer {
   param(
 
     [RelativePathCompletions(
-      { return $PWD.Path }
+      ''
     )]
     [string]$Path
   )
@@ -149,7 +149,7 @@ function Start-Workspace {
     )]
     [AllowEmptyString()]
     [RelativePathCompletions(
-      { return $PWD.Path }
+      ''
     )]
     [string]$Workspace,
 
