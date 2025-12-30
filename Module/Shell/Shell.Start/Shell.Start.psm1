@@ -48,7 +48,7 @@ function Start-ExplorerSibling {
   param(
 
     [RelativePathCompletions(
-      { return Split-Path $PWD.Path }
+      '..'
     )]
     [string]$Path
   )
@@ -69,7 +69,7 @@ function Start-ExplorerRelative {
   param(
 
     [RelativePathCompletions(
-      { return $PWD.Path | Split-Path | Split-Path }
+      '..\..'
     )]
     [string]$Path
   )
@@ -128,7 +128,7 @@ function Start-ExplorerDrive {
   param(
 
     [RelativePathCompletions(
-      { return $PWD.Drive.Root }
+      '\'
     )]
     [string]$Path
   )
@@ -349,7 +349,7 @@ function Start-WorkspaceSibling {
     )]
     [AllowEmptyString()]
     [RelativePathCompletions(
-      { return Split-Path $PWD.Path }
+      '..'
     )]
     [string]$Workspace,
 
@@ -387,7 +387,7 @@ function Start-WorkspaceRelative {
     )]
     [AllowEmptyString()]
     [RelativePathCompletions(
-      { return $PWD.Path | Split-Path | Split-Path }
+      '..\..'
     )]
     [string]$Workspace,
 
@@ -501,7 +501,7 @@ function Start-WorkspaceDrive {
     )]
     [AllowEmptyString()]
     [RelativePathCompletions(
-      { return $PWD.Drive.Root }
+      '\'
     )]
     [string]$Workspace,
 

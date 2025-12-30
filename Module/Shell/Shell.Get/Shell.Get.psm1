@@ -264,7 +264,7 @@ function Get-DirectorySibling {
     [AllowNull()]
     [SupportsWildcards()]
     [RelativePathCompletions(
-      { return Split-Path $PWD.Path },
+      '..',
       [PathItemType]::Directory
     )]
     [string[]]$Path,
@@ -339,7 +339,7 @@ function Get-DirectoryRelative {
     [AllowNull()]
     [SupportsWildcards()]
     [RelativePathCompletions(
-      { return $PWD.Path | Split-Path | Split-Path },
+      '..\..',
       [PathItemType]::Directory
     )]
     [string[]]$Path,
@@ -564,7 +564,7 @@ function Get-DirectoryDrive {
     [AllowNull()]
     [SupportsWildcards()]
     [RelativePathCompletions(
-      { return $PWD.Drive.Root },
+      '\',
       [PathItemType]::Directory
     )]
     [string[]]$Path,
@@ -680,7 +680,7 @@ function Get-FileSibling {
       Position = 0
     )]
     [RelativePathCompletions(
-      { return Split-Path $PWD.Path },
+      '..',
       [PathItemType]::File
     )]
     [string]$Path
@@ -700,7 +700,7 @@ function Get-FileRelative {
   param(
 
     [RelativePathCompletions(
-      { return $PWD.Path | Split-Path | Split-Path },
+      '..\..',
       [PathItemType]::File
     )]
     [string]$Path
@@ -768,7 +768,7 @@ function Get-FileDrive {
       Position = 0
     )]
     [RelativePathCompletions(
-      { return $PWD.Drive.Root },
+      '\',
       [PathItemType]::File
     )]
     [string]$Path

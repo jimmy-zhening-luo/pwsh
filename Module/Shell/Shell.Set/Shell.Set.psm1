@@ -88,7 +88,7 @@ function Set-DirectorySibling {
     [AllowNull()]
     [SupportsWildcards()]
     [RelativePathCompletions(
-      { return Split-Path $PWD.Path },
+      '..',
       [PathItemType]::Directory
     )]
     [string]$Path,
@@ -124,7 +124,7 @@ function Set-DirectoryRelative {
     [AllowNull()]
     [SupportsWildcards()]
     [RelativePathCompletions(
-      { return $PWD.Path | Split-Path | Split-Path },
+      '..\..',
       [PathItemType]::Directory
     )]
     [string]$Path,
@@ -228,7 +228,7 @@ function Set-Drive {
     [AllowNull()]
     [SupportsWildcards()]
     [RelativePathCompletions(
-      { return $PWD.Drive.Root },
+      '\',
       [PathItemType]::Directory
     )]
     [string]$Path,
