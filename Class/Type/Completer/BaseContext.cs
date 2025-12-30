@@ -7,9 +7,9 @@ namespace Completer
 {
   public abstract class BaseContextCompleter : BaseCompleter
   {
-    private protected BaseContextCompleter() : base() { }
+    protected BaseContextCompleter() : base() { }
 
-    private protected BaseContextCompleter(CompletionCase casing) : base(casing) { }
+    protected BaseContextCompleter(CompletionCase casing) : base(casing) { }
 
     public override IEnumerable<CompletionResult> CompleteArgument(
       string commandName,

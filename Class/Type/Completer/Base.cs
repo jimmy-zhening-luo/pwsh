@@ -9,9 +9,9 @@ namespace Completer
   {
     public readonly CompletionCase Casing;
 
-    private protected BaseCompleter() { }
+    protected BaseCompleter() { }
 
-    private protected BaseCompleter(CompletionCase casing) : this() => Casing = casing;
+    protected BaseCompleter(CompletionCase casing) : this() => Casing = casing;
 
     public virtual IEnumerable<CompletionResult> CompleteArgument(
       string commandName,
@@ -29,7 +29,7 @@ namespace Completer
 
     public abstract IEnumerable<string> FulfillCompletion(string wordToComplete);
 
-    private protected IEnumerable<CompletionResult> WrapArgumentCompletionResult(
+    protected IEnumerable<CompletionResult> WrapArgumentCompletionResult(
       IEnumerable<string> completedStrings
     )
     {
