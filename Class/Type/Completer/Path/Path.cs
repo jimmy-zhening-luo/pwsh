@@ -102,10 +102,11 @@ namespace Completer
         }
 
         int count = 0;
-        filter = filter + "*";
-        EnumerationOptions attributes = new EnumerationOptions();
-
-        attributes.IgnoreInaccessible = false;
+        filter += "*";
+        EnumerationOptions attributes = new()
+        {
+          IgnoreInaccessible = false
+        };
 
         if (Type == PathItemType.File)
         {

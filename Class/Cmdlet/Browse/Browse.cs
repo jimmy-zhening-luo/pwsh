@@ -17,8 +17,7 @@ namespace Browse
     {
       public OpenUrl() : base()
       {
-        browser = new();
-        browser.StartInfo.FileName = @"C:\Program Files\Google\Chrome\Application\chrome.exe";
+
       }
 
       [Parameter(
@@ -50,7 +49,13 @@ namespace Browse
       }
       private Uri[] uri = [];
 
-      private readonly Process browser;
+      private Process browser = new()
+      {
+        StartInfo = new()
+        {
+          FileName = @"C:\Program Files\Google\Chrome\Application\chrome.exe"
+        }
+      };
 
       private static bool Ssh() => Environment.GetEnvironmentVariable(
         "SSH_CLIENT"
@@ -67,8 +72,8 @@ namespace Browse
             if (url != string.Empty)
             {
               browser.StartInfo.Arguments = url;
-
               browser.Start();
+              browser.StartInfo.Arguments = string.Empty;
             }
           }
         }
@@ -78,13 +83,10 @@ namespace Browse
       {
         if (Ssh() && ParameterSetName == "Path")
         {
+          browser.StartInfo.Arguments = string.Empty;
           string cleanPath = path.Trim();
 
-          if (cleanPath == string.Empty)
-          {
-            browser.StartInfo.Arguments = string.Empty;
-          }
-          else
+          if (cleanPath != string.Empty)
           {
             string relativePath = System.IO.Path.GetRelativePath(
               SessionState.Path.CurrentLocation.Path,
@@ -107,7 +109,7 @@ namespace Browse
           }
 
           browser.Start();
-          browser.Dispose();
+          browser.StartInfo.Arguments = string.Empty;
         }
       }
     }
