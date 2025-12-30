@@ -19,9 +19,9 @@ namespace Shell
         ParameterSetName = "Path",
         Position = 0
       )]
-      [AllowEmptyString()]
-      [SupportsWildcards()]
-      [AllowNull()]
+      [AllowEmptyString]
+      [SupportsWildcards]
+      [AllowNull]
       public string Path
       {
         get => path;
@@ -32,7 +32,7 @@ namespace Shell
       [Parameter(
         Position = 1
       )]
-      [SupportsWildcards()]
+      [SupportsWildcards]
       public string Filter;
 
       [Parameter(
@@ -43,19 +43,19 @@ namespace Shell
       [Alias("PSPath", "LP")]
       public string[] LiteralPath;
 
-      [Parameter()]
-      [SupportsWildcards()]
+      [Parameter]
+      [SupportsWildcards]
       public string[] Include;
 
-      [Parameter()]
-      [SupportsWildcards()]
+      [Parameter]
+      [SupportsWildcards]
       public string[] Exclude;
 
-      [Parameter()]
+      [Parameter]
       [Alias("f")]
       public SwitchParameter Force;
 
-      [Parameter()]
+      [Parameter]
       public string Stream;
 
       private SteppablePipeline steppablePipeline = null;
