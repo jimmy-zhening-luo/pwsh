@@ -19,12 +19,7 @@ namespace Transform
           Position = 0
         )]
         [AllowEmptyString]
-        public string Path
-        {
-          get => path;
-          set => path = value;
-        }
-        private string path;
+        public string Path;
 
         protected override void EndProcessing()
         {
@@ -35,12 +30,12 @@ namespace Transform
             true
           );
 
-          string rel = System.IO.Path.GetRelativePath(pwd, path);
+          string rel = System.IO.Path.GetRelativePath(pwd, Path);
 
           if (System.IO.Path.Exists(rel))
           {
             WriteObject(
-              System.IO.Path.GetFullPath(path, pwd),
+              System.IO.Path.GetFullPath(Path, pwd),
               true
             );
           }
