@@ -78,10 +78,6 @@ namespace Browse
                   0
                 )
                 .AddParameter(
-                  "ErrorAction",
-                  ActionPreference.Stop
-                )
-                .AddParameter(
                   "Uri",
                   uu
                 );
