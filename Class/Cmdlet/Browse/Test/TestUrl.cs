@@ -79,7 +79,7 @@ namespace Browse
                 )
                 .AddParameter(
                   "ErrorAction",
-                  ActionPreference.Continue
+                  ActionPreference.SilentlyContinue
                 )
                 .AddParameter(
                   "Uri",
