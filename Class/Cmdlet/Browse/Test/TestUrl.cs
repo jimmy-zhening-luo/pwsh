@@ -67,10 +67,6 @@ namespace Browse
             {
               throw e;
             }
-            catch
-            {
-              throw new InvalidOperationException();
-            }
 
             if (status >= 200 && status < 300)
             {
