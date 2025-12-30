@@ -461,5 +461,30 @@ function Get-VerbList {
   }
 }
 
+<#
+.SYNOPSIS
+Gets the list of all registered type accelerators.
+
+.DESCRIPTION
+Uses [System.Management.Automation.TypeAccelerators] to get the list of all currently-registered type accelerators.
+
+.COMPONENT
+PSHelp
+
+.LINK
+https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about/about_type_accelerators
+#>
+function Get-TypeAccelerator {
+  [CmdletBinding()]
+  [OutputType([string])]
+  [Alias('ty', 'types')]
+  param()
+
+  end {
+    return [psobject].Assembly.GetType('System.Management.Automation.TypeAccelerators')::Get.Keys |
+      Sort-Object -Unique
+  }
+}
+
 New-Alias psk PSReadLine\Get-PSReadLineKeyHandler
 New-Alias upman Update-Help
