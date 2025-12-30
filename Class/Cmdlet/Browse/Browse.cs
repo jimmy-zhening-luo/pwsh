@@ -15,11 +15,6 @@ namespace Browse
     [Alias("o", "open")]
     public class OpenUrl : PSCmdlet
     {
-      public OpenUrl() : base()
-      {
-
-      }
-
       [Parameter(
         ParameterSetName = "Path",
         Position = 0,
@@ -49,7 +44,7 @@ namespace Browse
       }
       private Uri[] uri = [];
 
-      private Process browser = new()
+      private readonly Process browser = new()
       {
         StartInfo = new()
         {
