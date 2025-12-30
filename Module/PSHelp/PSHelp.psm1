@@ -1,4 +1,5 @@
 using namespace System.Collections.Generic
+using namespace System.Management.Automation
 using namespace Completer
 
 $CUSTOM_HELP = Import-PowerShellDataFile -Path $PSScriptRoot\PSHelpTopic.psd1
@@ -378,7 +379,7 @@ Get-Verb
 #>
 function Get-VerbList {
   [CmdletBinding()]
-  [OutputType([string[]])]
+  [OutputType([System.Management.Automation.VerbInfo], [string])]
   param(
 
     [Parameter(
@@ -386,51 +387,69 @@ function Get-VerbList {
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
+    [AllowEmptyCollection()]
     [SupportsWildcards()]
     [Completions('*')]
     # Gets only the specified verbs. Enter the name of a verb or a name pattern. Wildcards are allowed.
     [string[]]$Verb,
 
     [Parameter(
-      Position = 1
+      Position = 1,
+      ValueFromPipelineByPropertyName
     )]
     [Completions(
       'communications,data,diagnostic,lifecycle,security,service,settings,support,system,utility'
     )]
-    # Gets only the specified group. Enter the name of a group. Wildcards aren't allowed.
-    [string]$Group,
+    # Gets only the specified groups. Enter the name of a group. Wildcards aren't allowed.
+    [string[]]$Group,
 
     [Parameter(DontShow)][switch]$z
   )
 
   begin {
-    $VerbList = [List[string]]::new()
+    $Verbs = [SortedDictionary[string, VerbInfo]]::new()
   }
 
   process {
-    $VerbQuery = @{
-      Verb = $Verb ? $Verb.Contains([char]'*') ? $Verb : $Verb.Length -lt 3 ? "$Verb*" : "*$Verb*" : '*'
-    }
+    foreach ($v in $Verb) {
+      if ($v) {
+        [string]$vf = $v.Contains([char]'*') ? $v : (
+          $v.Length -gt 2 ? '*' : [string]::Empty
+        ) + "$v*"
 
-    if ($Group) {
-      $VerbQuery.Group = $Group
-    }
+        [VerbInfo[]]$Result = $Group ? (
+          Get-Verb -Verb $vf
+        ) : (
+          Get-Verb -Verb $vf -Group $Group
+        )
 
-    [string[]]$VerbResults = Get-Verb @VerbQuery |
-      Select-Object -ExpandProperty Verb
-
-    if ($VerbResults) {
-      $VerbList.AddRange(
-        [List[string]]$VerbResults
-      )
+        if ($Result) {
+          foreach ($r in $Result) {
+            if ($r -and $r.Verb -and $r.Verb -as [string]) {
+              $Verbs.Add(
+                [string]$r.Verb,
+                $r
+              )
+            }
+          }
+        }
+      }
     }
   }
 
   end {
-    $VerbList.Sort()
-
-    return $VerbList |
-      Select-Object -Unique -CaseInsensitive
+    if ($Verb) {
+      if ($Verbs.Count -ne 0) {
+        foreach ($v in $Verbs.Values) {
+          Write-Output -InputObject $v
+        }
+      }
+    }
+    else {
+      return Get-Verb * |
+        Select-Object -ExpandProperty Verb |
+        Sort-Object
+    }
   }
 }
 

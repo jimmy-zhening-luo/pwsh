@@ -33,12 +33,18 @@ namespace Browse
 
       protected override void ProcessRecord()
       {
-        return;
-      }
+        foreach (Uri u in uri)
+        {
+          string us = u.IsAbsoluteUri
+            ? u.Host.Trim() == string.Empty
+              ? string.Empty
+              : u.AbsoluteUri
+            : u.OriginalString.Trim() == string.Empty
+              ? string.Empty
+              : 'http://u.OriginalString';
 
-      protected override void EndProcessing()
-      {
-        return;
+          
+        }
       }
     }
   }
