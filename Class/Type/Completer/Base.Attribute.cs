@@ -3,7 +3,10 @@ using System.Management.Automation;
 
 namespace Completer
 {
-  [AttributeUsage(AttributeTargets.Parameter)]
+  [AttributeUsage(
+    AttributeTargets.Parameter
+    | AttributeTargets.Property
+  )]
   public abstract class BaseCompletionsAttribute<TCompleter> : ArgumentCompleterAttribute, IArgumentCompleterFactory where TCompleter : BaseCompleter
   {
     public readonly CompletionCase Casing;

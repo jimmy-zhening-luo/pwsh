@@ -5,7 +5,10 @@ namespace Completer
 {
   namespace PathCompleter
   {
-    [AttributeUsage(AttributeTargets.Parameter)]
+    [AttributeUsage(
+      AttributeTargets.Parameter
+      | AttributeTargets.Property
+    )]
     public class RelativePathCompletionsAttribute : BaseCompletionsAttribute<PathCompleter>
     {
       public readonly ScriptBlock CurrentDirectory;

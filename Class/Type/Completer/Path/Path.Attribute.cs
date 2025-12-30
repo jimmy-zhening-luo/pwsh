@@ -4,7 +4,10 @@ namespace Completer
 {
   namespace PathCompleter
   {
-    [AttributeUsage(AttributeTargets.Parameter)]
+    [AttributeUsage(
+      AttributeTargets.Parameter
+      | AttributeTargets.Property
+    )]
     public class PathCompletionsAttribute : BaseCompletionsAttribute<PathCompleter>
     {
       public readonly string Location;

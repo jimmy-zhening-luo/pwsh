@@ -4,7 +4,10 @@ using System.Management.Automation;
 
 namespace Completer
 {
-  [AttributeUsage(AttributeTargets.Parameter)]
+  [AttributeUsage(
+    AttributeTargets.Parameter
+    | AttributeTargets.Property
+  )]
   public class DynamicCompletionsAttribute : BaseCompletionsAttribute<Completer>
   {
     public readonly ScriptBlock DomainGenerator;

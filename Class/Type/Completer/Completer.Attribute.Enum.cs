@@ -2,7 +2,10 @@ using System;
 
 namespace Completer
 {
-  [AttributeUsage(AttributeTargets.Parameter)]
+  [AttributeUsage(
+    AttributeTargets.Parameter
+    | AttributeTargets.Property
+  )]
   public class EnumCompletionsAttribute : BaseCompletionsAttribute<Completer>
   {
     public readonly Type EnumType;
