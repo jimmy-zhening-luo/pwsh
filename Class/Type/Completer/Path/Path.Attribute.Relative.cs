@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Management.Automation;
 
 namespace Completer
@@ -12,32 +13,49 @@ namespace Completer
     )]
     public class RelativePathCompletionsAttribute : BaseCompletionsAttribute<PathCompleter>
     {
-      public readonly ScriptBlock CurrentDirectory;
+      public readonly string RelativeLocation = string.Empty;
       public readonly PathItemType ItemType;
       public readonly bool Flat;
 
-      public RelativePathCompletionsAttribute(ScriptBlock currentDirectory) : base() => CurrentDirectory = currentDirectory;
+      public RelativePathCompletionsAttribute() : base() { }
+
+      public RelativePathCompletionsAttribute(string relativeLocation) : this() => RelativeLocation = relativeLocation;
 
       public RelativePathCompletionsAttribute(
-        ScriptBlock currentDirectory,
+        string relativeLocation,
         PathItemType itemType
-      ) : this(currentDirectory) => ItemType = itemType;
+      ) : this(relativeLocation) => ItemType = itemType;
 
       public RelativePathCompletionsAttribute(
-        ScriptBlock currentDirectory,
+        string relativeLocation,
         PathItemType itemType,
         bool flat
-      ) : this(currentDirectory, itemType) => Flat = flat;
+      ) : this(relativeLocation, itemType) => Flat = flat;
 
-      public override PathCompleter Create() => new(
-        CurrentDirectory
+      public override PathCompleter Create()
+      {
+        string pwd = PowerShell
+          .Create(RunspaceMode.CurrentRunspace)
+          .AddCommand("Get-Location")
           .Invoke()[0]
           .BaseObject
-          .ToString(),
-        ItemType,
-        Flat,
-        true
-      );
+          .ToString();
+
+        return new(
+          Path.GetFullPath(
+            RelativeLocation == string.Empty
+              ? string.Empty
+              : Path.GetRelativePath(
+                  pwd,
+                  RelativeLocation
+                ),
+            pwd
+          ),
+          ItemType,
+          Flat,
+          RelativeLocation == string.Empty
+        );
+      }
     }
   } // namespace PathCompleter
 } // namespace Completer
