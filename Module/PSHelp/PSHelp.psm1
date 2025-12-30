@@ -241,15 +241,6 @@ function Get-HelpOnline {
             $PSItem -replace '(?<=^https://learn\.microsoft\.com/)en-us/', [string]::Empty
           ) : $PSItem
         } |
-          .Host + (
-            $PSItem.Host -eq 'go.microsoft.com' ? $PSItem.PathAndQuery : $PSItem.AbsolutePath.Substring(
-              $PSItem.AbsolutePath.StartsWith(
-                '/en-us/',
-                [stringcomparison]::OrdinalIgnoreCase
-              ) ? 6 : 0
-            )
-          ) + $PSItem.Fragment
-        } |
         Select-Object -Unique -CaseInsensitive |
         ForEach-Object {
           [uri]$PSItem
