@@ -24,12 +24,10 @@ namespace Browse
         HelpMessage = "The URL to test. If the URL has no scheme, it defaults to 'http'."
       )]
       [AllowEmptyCollection]
-      [AllowEmptyString]
-      [AllowNull]
       public Uri[] Uri
       {
         get => uri;
-        set => uri = value ?? [];
+        set => uri = value;
       }
       private Uri[] uri = [];
 
