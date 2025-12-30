@@ -1,6 +1,8 @@
 using System;
 using System.Diagnostics;
 using System.Management.Automation;
+using Microsoft.PowerShell.Commands;
+using System.Net.Http;
 
 namespace Browse
 {
@@ -46,13 +48,37 @@ namespace Browse
           if (us != string.Empty)
           {
             Uri uu = new(us);
+            int status = 0;
 
-            // Invoke-WebRequest
+            try
+            {
+              // Invoke-WebRequest
+              status = 200;
+            }
+            catch (HttpResponseException e)
+            {
+              e.Response
+            }
+            catch (HttpRequestException e)
+            {
+              status = -1;
+            }
+            catch (Exception e)
+            {
+              throw e;
+            }
+            catch
+            {
+              throw new InvalidOperationException();
+            }
 
-            WriteObject(
-              uu,
-              true
-            );
+            if (status >= 200 && status < 300)
+            {
+              WriteObject(
+                uu,
+                true
+              );
+            }
           }
         }
       }
