@@ -106,6 +106,7 @@ function Get-HelpOnline {
 
     if ($Help) {
       [string[]]$HelpLinkProperty = $Help.relatedLinks.navigationLink.Uri -replace '\?(?>.*)$', [string]::Empty -match '^(?=https?://\S)(?>.+)$'
+      echo $HelpLinkProperty
 
       if ($HelpLinkProperty) {
         $HelpLinkArticleList.AddRange(
