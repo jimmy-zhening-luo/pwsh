@@ -19,8 +19,12 @@ namespace Transform
           Position = 0
         )]
         [AllowEmptyString]
-        [AllowNull]
-        public string Path = string.Empty;
+        public string Path
+        {
+          get => path;
+          set => path = value;
+        }
+        private string path = string.Empty;
 
         protected override void EndProcessing()
         {
@@ -31,7 +35,9 @@ namespace Transform
             true
           );
 
-          string rel = System.IO.Path.GetRelativePath(pwd, Path);
+          string rel = Path == string.Empty
+            ? pwd
+            : System.IO.Path.GetRelativePath(pwd, Path);
 
           if (System.IO.Path.Exists(rel))
           {
