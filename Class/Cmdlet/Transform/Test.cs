@@ -26,9 +26,6 @@ namespace Transform
         }
         private string path;
 
-        [Parameter(DontShow = true)]
-        public SwitchParameter z;
-
         protected override void EndProcessing()
         {
           string pwd = this.SessionState.Path.CurrentLocation.Path;
