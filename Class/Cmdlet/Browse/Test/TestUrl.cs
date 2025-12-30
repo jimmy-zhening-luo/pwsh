@@ -52,8 +52,41 @@ namespace Browse
 
             try
             {
-              // Invoke-WebRequest
-              status = 200;
+              using var ps = PowerShell.Create(
+                RunspaceMode.CurrentRunspace
+              );
+              ps
+                .AddCommand("Invoke-WebRequest")
+                .AddParameter(
+                  "Method",
+                  WebRequestMethod.Head
+                )
+                .AddParameter(
+                  "PreserveHttpMethodOnRedirect",
+                  true
+                )
+                .AddParameter(
+                  "DisableKeepAlive",
+                  true
+                )
+                .AddParameter(
+                  "ConnectionTimeoutSeconds",
+                  5
+                )
+                .AddParameter(
+                  "MaximumRetryCount",
+                  0
+                )
+                .AddParameter(
+                  "ErrorAction",
+                  ActionPreference.Stop
+                )
+                .AddParameter(
+                  "Uri",
+                  uu
+                );
+
+              status = ps.Invoke<BasicHtmlWebResponseObject>()[0].BaseObject.StatusCode;
             }
             catch (HttpResponseException e)
             {
