@@ -131,7 +131,7 @@ function Get-HelpOnline {
           ).IsAbsoluteUri
         }
 
-      if ($RelatedUrl.Count -ne 0) {
+      if ($RelatedUrl) {
         $HelpArticleUrl.AddRange(
           [List[uri]]$RelatedUrl
         )
