@@ -57,9 +57,9 @@ namespace Browse
             }
             catch (HttpResponseException e)
             {
-              e.Response
+              status = e.Response.StatusCode.value__;
             }
-            catch (HttpRequestException e)
+            catch (HttpRequestException)
             {
               status = -1;
             }
