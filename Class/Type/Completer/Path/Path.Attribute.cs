@@ -5,9 +5,9 @@ namespace Completer
   namespace PathCompleter
   {
     [AttributeUsage(
-      AttributeTargets.Field
+      AttributeTargets.Parameter
       | AttributeTargets.Property
-      | AttributeTargets.Parameter
+      | AttributeTargets.Field
     )]
     public class PathCompletionsAttribute : BaseCompletionsAttribute<PathCompleter>
     {

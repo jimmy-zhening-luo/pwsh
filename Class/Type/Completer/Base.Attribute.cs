@@ -4,9 +4,9 @@ using System.Management.Automation;
 namespace Completer
 {
   [AttributeUsage(
-    AttributeTargets.Field
+    AttributeTargets.Parameter
     | AttributeTargets.Property
-    | AttributeTargets.Parameter
+    | AttributeTargets.Field
   )]
   public abstract class BaseCompletionsAttribute<TCompleter> : ArgumentCompleterAttribute, IArgumentCompleterFactory where TCompleter : BaseCompleter
   {

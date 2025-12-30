@@ -3,9 +3,9 @@ using System;
 namespace Completer
 {
   [AttributeUsage(
-    AttributeTargets.Field
+    AttributeTargets.Parameter
     | AttributeTargets.Property
-    | AttributeTargets.Parameter
+    | AttributeTargets.Field
   )]
   public class EnumCompletionsAttribute : BaseCompletionsAttribute<Completer>
   {
