@@ -58,18 +58,58 @@ namespace Browse
                   RunspaceMode.CurrentRunspace
                 );
                 ps
-                  .AddCommand("Invoke-WebRequest")
+                  .AddCommand(
+                    SessionState
+                      .InvokeCommand
+                      .GetCommand(
+                        "Resolve-DnsName",
+                        CommandTypes.Cmdlet
+                      )
+                  )
+                  .AddParameter(
+                    "Name",
+                    uu.Host
+                  )
+                  .AddParameter(
+                    "Server",
+                    "1.1.1.1"
+                  )
+                  .AddParameter("DnsOnly")
+                  .AddParameter("NoHostsFile")
+                  .AddParameter("QuickTimeout");
+              }
+              catch (CmdletInvocationException psException)
+              {
+                throw psException
+                  .ErrorRecord
+                  .Exception;
+              }
+              catch
+              {
+                throw;
+              }
+
+              try
+              {
+                using var ps = PowerShell.Create(
+                  RunspaceMode.CurrentRunspace
+                );
+                ps
+                  .AddCommand(
+                    SessionState
+                      .InvokeCommand
+                      .GetCommand(
+                        "Invoke-WebRequest",
+                        CommandTypes.Cmdlet
+                      )
+                  )
+                  .AddParameter(
+                    "Uri",
+                    uu
+                  )
                   .AddParameter(
                     "Method",
                     WebRequestMethod.Head
-                  )
-                  .AddParameter(
-                    "PreserveHttpMethodOnRedirect",
-                    true
-                  )
-                  .AddParameter(
-                    "DisableKeepAlive",
-                    true
                   )
                   .AddParameter(
                     "ConnectionTimeoutSeconds",
@@ -79,14 +119,9 @@ namespace Browse
                     "MaximumRetryCount",
                     0
                   )
-                  .AddParameter(
-                    "ErrorAction",
-                    ActionPreference.Stop
-                  )
-                  .AddParameter(
-                    "Uri",
-                    uu
-                  );
+                  .AddParameter("DisableKeepAlive")
+                  .AddParameter("PreserveHttpMethodOnRedirect");
+
                 status = ps.Invoke<BasicHtmlWebResponseObject>()[0].StatusCode;
               }
               catch (CmdletInvocationException psException)
@@ -107,6 +142,10 @@ namespace Browse
             catch (HttpRequestException)
             {
               status = -1;
+            }
+            catch (Win32Exception)
+            {
+              status = -2;
             }
             catch
             {
