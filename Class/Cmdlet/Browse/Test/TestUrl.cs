@@ -78,7 +78,7 @@ namespace Browse
                   .AddParameter("DnsOnly")
                   .AddParameter("NoHostsFile")
                   .AddParameter("QuickTimeout");
-                  ps.Invoke();
+                ps.Invoke();
               }
               catch (CmdletInvocationException psException)
               {
