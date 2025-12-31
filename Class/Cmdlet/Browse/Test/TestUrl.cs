@@ -146,6 +146,7 @@ namespace Browse
             }
             catch (Win32Exception)
             {
+              WriteWarning("hi");
               status = -2;
             }
             catch
