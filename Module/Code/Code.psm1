@@ -474,12 +474,17 @@ function Get-ChildGitRepository {
   [string[]]$Repositories = Get-ChildItem -Path $REPO_ROOT -Directory |
     Select-Object -ExpandProperty FullName |
     Resolve-GitRepository
+  $Count = $Repositories.Count
 
+  Write-Progress -Activity Pull -Status "0/$Count" -PercentComplete 0
+
+  $i = 0
   foreach ($Repository in $Repositories) {
     Get-GitRepository -WorkingDirectory $Repository
-  }
 
-  $Count = $Repositories.Count
+    ++$i
+    Write-Progress -Activity Pull -Status "$i/$Count" -PercentComplete ($i * 100 / $Count)
+  }
 
   return "`nPulled $Count repositor" + ($Count -eq 1 ? 'y' : 'ies')
 }
