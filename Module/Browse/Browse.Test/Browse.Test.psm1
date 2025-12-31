@@ -1,17 +1,5 @@
 using namespace Completer
 
-enum TestHostVerbosity {
-  Quiet
-  Detailed
-}
-
-enum TestHostWellKnownPort {
-  HTTP = -4
-  RDP
-  SMB
-  WINRM
-}
-
 <#
 .SYNOPSIS
 Determine if a host is reachable.
