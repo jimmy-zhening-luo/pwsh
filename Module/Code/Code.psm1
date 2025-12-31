@@ -1321,17 +1321,24 @@ https://docs.npmjs.com/cli/commands/npm-version
 #>
 function Step-NodePackageVersion {
 
+  [CmdletBinding()]
   [Alias('nu')]
   param(
 
-    # New package version, default 'patch'
+    [Parameter(
+      Position = 0
+    )]
     [EnumCompletions(
       [NodePackageNamedVersion],
       $False,
       [CompletionCase]::Preserve
     )]
+    # New package version, default 'patch'
     [string]$Version,
 
+    [Parameter(
+      Position = 1
+    )]
     [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
@@ -1340,7 +1347,12 @@ function Step-NodePackageVersion {
     # Node package root at which to run the command
     [string]$WorkingDirectory,
 
-    [Parameter(DontShow)][switch]$z
+    [Parameter(
+      Position = 2,
+      ValueFromRemainingArguments,
+      DontShow
+    )]
+    [string[]]$Argument
   )
 
   $Version = switch ($Version) {
@@ -1354,17 +1366,15 @@ function Step-NodePackageVersion {
       [NodePackageNamedVersion]::$Version
       break
     }
-    {
-      $Version.StartsWith(
-        [char]'v',
-        [StringComparison]::OrdinalIgnoreCase
-      )
-    } {
-      $Version = $Version.Substring(1)
-    }
     default {
-      $Semver = $null
-      if ([semver]::TryParse($Version, $Semver)) {
+      [string]$SpecificVersion = $Version.StartsWith(
+        [char]'v',
+        [stringcomparison]::OrdinalIgnoreCase
+      ) ?  $Version.Substring(1) : $Version
+
+      [semver]$Semver = $null
+
+      if ([semver]::TryParse($SpecificVersion, [ref]$Semver)) {
         $Semver.ToString()
       }
       else {
@@ -1385,9 +1395,9 @@ function Step-NodePackageVersion {
     }
   }
 
-  if ($args) {
+  if ($Argument) {
     $NodeArgument.AddRange(
-      [List[string]]$args
+      [List[string]]$Argument
     )
   }
 
