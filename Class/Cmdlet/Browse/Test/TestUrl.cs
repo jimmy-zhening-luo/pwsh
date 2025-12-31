@@ -78,7 +78,15 @@ namespace Browse
                   .AddParameter("DnsOnly")
                   .AddParameter("NoHostsFile")
                   .AddParameter("QuickTimeout");
-                ps.Invoke();
+                _ = ps.Invoke();
+
+                if (ps.HadErrors)
+                {
+                  throw ps
+                    .Streams
+                    .Error[0]
+                    .Exception;
+                }
               }
               catch (CmdletInvocationException psException)
               {
@@ -147,7 +155,6 @@ namespace Browse
             }
             catch (Win32Exception)
             {
-              WriteWarning("hi");
               status = -2;
             }
             catch
