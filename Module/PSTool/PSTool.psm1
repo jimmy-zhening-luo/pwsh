@@ -339,7 +339,10 @@ function Publish-PSProfile {
     [Parameter(DontShow)][switch]$z
   )
 
+
   #region Pull Repo
+  Write-Progress -Activity 'Update Profile' -Status Pull -PercentComplete 0
+
   $GitCommandManifest = @(
     '-c'
     'color.ui=always'
@@ -356,6 +359,8 @@ function Publish-PSProfile {
 
 
   #region Copy Linter
+  Write-Progress -Activity 'Update Profile' -Status 'Copy Linter' -PercentComplete 30
+
   $LinterConfig = "$PROFILE_REPO_ROOT\Data\PSScriptAnalyzerSettings.psd1"
 
   if (Test-Path $LinterConfig -PathType Leaf) {
@@ -366,6 +371,7 @@ function Publish-PSProfile {
 
   #region Build
   if (-not $SkipBuild) {
+    Write-Progress -Activity 'Update Profile' -Status Prebuild -PercentComplete 40
     [System.Management.Automation.ApplicationInfo]$DotnetNativeCommand = Get-Command -Name dotnet.exe -CommandType Application -All
 
     if (-not $DotnetNativeCommand) {
@@ -385,6 +391,8 @@ function Publish-PSProfile {
 
     try {
       try {
+        Write-Progress -Activity 'Update Profile' -Status Clean -PercentComplete 45
+
         & $DotnetNativeCommand.Source clean $Solution --configuration Release
 
         if ($LASTEXITCODE -notin 0, 1) {
@@ -396,6 +404,8 @@ function Publish-PSProfile {
       }
 
       try {
+        Write-Progress -Activity 'Update Profile' -Status Build -PercentComplete 60
+
         & $DotnetNativeCommand.Source build $Solution --configuration Release
 
         if ($LASTEXITCODE -notin 0, 1) {
@@ -410,12 +420,16 @@ function Publish-PSProfile {
       throw 'Failed to build profile project. ' + $PSItem.Exception
     }
     finally {
+      Write-Progress -Activity 'Update Profile' -Status Cleanup -PercentComplete 90
+
       (
         Get-Process -Name dotnet
       ).Kill($True)
     }
   }
   #endregion
+
+  Write-Progress -Activity 'Update Profile' -Status Finished -PercentComplete 100
 }
 
 function Install-PSModuleDotnet {
