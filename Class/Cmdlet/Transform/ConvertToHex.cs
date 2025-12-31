@@ -41,6 +41,9 @@ namespace Transform
       }
       private bool lowercase;
 
+      [Parameter(DontShow = true)]
+      public SwitchParameter z;
+
       protected override void ProcessRecord()
       {
         foreach (long number in numbers)
