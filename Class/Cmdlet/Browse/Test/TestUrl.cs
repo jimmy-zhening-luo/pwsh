@@ -90,6 +90,9 @@ namespace Browse
 
               if (ps.HadErrors)
               {
+                WriteWarning(
+                  ps.Streams.Error[0].Exception
+                );
                 throw ps.Streams.Error[0].Exception;
               }
 
