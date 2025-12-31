@@ -60,9 +60,7 @@ function Test-Host {
     [string]$InformationLevel,
 
     # Shorthand for InformationLevel Detailed
-    [switch]$Detailed,
-
-    [Parameter(DontShow)][switch]$z
+    [switch]$Detailed
   )
 
   begin {
