@@ -106,7 +106,7 @@ namespace Browse
             {
               status = -1;
             }
-            catch (var e)
+            catch (Exception e)
             {
               WriteWarning(e.Message);
               throw;
