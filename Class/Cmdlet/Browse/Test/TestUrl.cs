@@ -52,51 +52,53 @@ namespace Browse
 
             try
             {
-              using var ps = PowerShell.Create(
-                RunspaceMode.CurrentRunspace
-              );
-              ps
-                .AddCommand("Invoke-WebRequest")
-                .AddParameter(
-                  "Method",
-                  WebRequestMethod.Head
-                )
-                .AddParameter(
-                  "PreserveHttpMethodOnRedirect",
-                  true
-                )
-                .AddParameter(
-                  "DisableKeepAlive",
-                  true
-                )
-                .AddParameter(
-                  "ConnectionTimeoutSeconds",
-                  5
-                )
-                .AddParameter(
-                  "MaximumRetryCount",
-                  0
-                )
-                .AddParameter(
-                  "ErrorAction",
-                  ActionPreference.SilentlyContinue
-                )
-                .AddParameter(
-                  "Uri",
-                  uu
-                );
-
-              var response = ps.Invoke<BasicHtmlWebResponseObject>();
-
-              if (ps.HadErrors)
+              try
               {
-                WriteWarning(
-                  ps.Streams.Error[0].Exception.Message
+                using var ps = PowerShell.Create(
+                  RunspaceMode.CurrentRunspace
                 );
-                throw ps.Streams.Error[0].Exception;
+                ps
+                  .AddCommand("Invoke-WebRequest")
+                  .AddParameter(
+                    "Method",
+                    WebRequestMethod.Head
+                  )
+                  .AddParameter(
+                    "PreserveHttpMethodOnRedirect",
+                    true
+                  )
+                  .AddParameter(
+                    "DisableKeepAlive",
+                    true
+                  )
+                  .AddParameter(
+                    "ConnectionTimeoutSeconds",
+                    5
+                  )
+                  .AddParameter(
+                    "MaximumRetryCount",
+                    0
+                  )
+                  .AddParameter(
+                    "ErrorAction",
+                    ActionPreference.Stop
+                  )
+                  .AddParameter(
+                    "Uri",
+                    uu
+                  );
+                status = ps.Invoke<BasicHtmlWebResponseObject>()[0].StatusCode;
               }
-
-              status = response[0].StatusCode;
+              catch (CmdletInvocationException psException)
+              {
+                throw psException
+                  .ErrorRecord
+                  .Exception;
+              }
+              catch
+              {
+                throw;
+              }
             }
             catch (HttpResponseException e)
             {
@@ -106,9 +108,8 @@ namespace Browse
             {
               status = -1;
             }
-            catch (Exception e)
+            catch
             {
-              WriteWarning(e.Message);
               throw;
             }
 
