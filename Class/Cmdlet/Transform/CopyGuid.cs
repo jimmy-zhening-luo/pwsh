@@ -34,6 +34,9 @@ namespace Transform
       }
       private bool silent;
 
+      [Parameter(DontShow = true)]
+      public SwitchParameter z;
+
       protected override void EndProcessing()
       {
         string guid = System.Guid.NewGuid().ToString("D");
