@@ -207,7 +207,7 @@ function Measure-PSProfile {
       ).Ticks
     )
 
-    Write-Progress -Activity Profiling -Status Progress -PercentComplete ($i / $Iterations)
+    Write-Progress -Activity Profiling -Status Progress -PercentComplete ($i * 100 / $Iterations)
   }
 
   [long]$TotalBareStartupTicks = [System.Linq.Enumerable]::Sum(
