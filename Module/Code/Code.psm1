@@ -1344,7 +1344,7 @@ function Step-NodePackageVersion {
   )
 
   $Version = switch ($Version) {
-    [string]::Empty {
+    '' {
       [NodePackageNamedVersion]::patch
       break
     }

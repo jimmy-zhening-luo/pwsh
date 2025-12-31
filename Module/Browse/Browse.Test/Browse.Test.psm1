@@ -100,7 +100,7 @@ function Test-Host {
           }
           CommonTCPPort {
             switch ($CommonTCPPort) {
-              [string]::Empty { break }
+              '' { break }
               {
                 $null -ne [TestHostWellKnownPort]::$CommonTCPPort
               } {
