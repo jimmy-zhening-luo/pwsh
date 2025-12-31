@@ -168,7 +168,8 @@ function Start-Workspace {
 
     [Parameter(
       Position = 2,
-      ValueFromRemainingArguments
+      ValueFromRemainingArguments,
+      DontShow
     )]
     [string[]]$Argument,
 
@@ -180,9 +181,7 @@ function Start-Workspace {
 
     [switch]$ReuseWindow,
 
-    [switch]$Empty,
-
-    [Parameter(DontShow)][switch]$z
+    [switch]$Empty
   )
 
   if ($env:SSH_CLIENT) {
@@ -361,16 +360,15 @@ function Start-WorkspaceSibling {
 
     [Parameter(
       Position = 2,
-      ValueFromRemainingArguments
+      ValueFromRemainingArguments,
+      DontShow
     )]
     [string[]]$Argument,
 
     [switch]$Window,
 
     [Alias('rw')]
-    [switch]$ReuseWindow,
-
-    [Parameter(DontShow)][switch]$z
+    [switch]$ReuseWindow
   )
 
   Start-Workspace @PSBoundParameters -Location (Split-Path $PWD.Path) -Empty
@@ -399,16 +397,15 @@ function Start-WorkspaceRelative {
 
     [Parameter(
       Position = 2,
-      ValueFromRemainingArguments
+      ValueFromRemainingArguments,
+      DontShow
     )]
     [string[]]$Argument,
 
     [switch]$Window,
 
     [Alias('rw')]
-    [switch]$ReuseWindow,
-
-    [Parameter(DontShow)][switch]$z
+    [switch]$ReuseWindow
   )
 
   Start-Workspace @PSBoundParameters -Location ($PWD.Path | Split-Path | Split-Path)
@@ -437,16 +434,15 @@ function Start-WorkspaceHome {
 
     [Parameter(
       Position = 2,
-      ValueFromRemainingArguments
+      ValueFromRemainingArguments,
+      DontShow
     )]
     [string[]]$Argument,
 
     [switch]$Window,
 
     [Alias('rw')]
-    [switch]$ReuseWindow,
-
-    [Parameter(DontShow)][switch]$z
+    [switch]$ReuseWindow
   )
 
   Start-Workspace @PSBoundParameters -Location $HOME
@@ -475,16 +471,15 @@ function Start-WorkspaceCode {
 
     [Parameter(
       Position = 2,
-      ValueFromRemainingArguments
+      ValueFromRemainingArguments,
+      DontShow
     )]
     [string[]]$Argument,
 
     [switch]$Window,
 
     [Alias('rw')]
-    [switch]$ReuseWindow,
-
-    [Parameter(DontShow)][switch]$z
+    [switch]$ReuseWindow
   )
 
   Start-Workspace @PSBoundParameters -Location $REPO_ROOT
@@ -513,16 +508,15 @@ function Start-WorkspaceDrive {
 
     [Parameter(
       Position = 2,
-      ValueFromRemainingArguments
+      ValueFromRemainingArguments,
+      DontShow
     )]
     [string[]]$Argument,
 
     [switch]$Window,
 
     [Alias('rw')]
-    [switch]$ReuseWindow,
-
-    [Parameter(DontShow)][switch]$z
+    [switch]$ReuseWindow
   )
 
   Start-Workspace @PSBoundParameters -Location $PWD.Drive.Root

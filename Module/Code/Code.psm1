@@ -208,21 +208,27 @@ function Invoke-Git {
     # When git command execution results in a non-zero exit code, write a warning and continue instead of the default behavior of throwing a terminating error.
     [switch]$NoThrow,
 
+    [Parameter(DontShow)]
     # Pass the -D flag as an argument to git
     [switch]$D,
 
+    [Parameter(DontShow)]
     # Pass the -E flag as an argument to git
     [switch]$E,
 
+    [Parameter(DontShow)]
     # Pass the -i flag as an argument to git
     [switch]$I,
 
+    [Parameter(DontShow)]
     # Pass the -o flag as an argument to git
     [switch]$O,
 
+    [Parameter(DontShow)]
     # Pass the -P flag as an argument to git
     [switch]$P,
 
+    [Parameter(DontShow)]
     # Pass the -v flag as an argument to git
     [switch]$V
   )
@@ -1054,7 +1060,8 @@ function Invoke-Npm {
 
     [Parameter(
       Position = 1,
-      ValueFromRemainingArguments
+      ValueFromRemainingArguments,
+      DontShow
     )]
     # Additional arguments to pass to npm
     [string[]]$Argument,
@@ -1065,22 +1072,25 @@ function Invoke-Npm {
     # Show npm version if no command is specified. Otherwise, pass the -v flag.
     [switch]$Version,
 
+    [Parameter(DontShow)]
     # Pass the -D flag as an argument to npm
     [switch]$D,
 
+    [Parameter(DontShow)]
     # Pass the -E flag as an argument to npm
     [switch]$E,
 
+    [Parameter(DontShow)]
     # Pass the -i flag as an argument to npm
     [switch]$I,
 
+    [Parameter(DontShow)]
     # Pass the -o flag as an argument to npm
     [switch]$O,
 
+    [Parameter(DontShow)]
     # Pass the -P flag as an argument to npm
-    [switch]$P,
-
-    [Parameter(DontShow)][switch]$z
+    [switch]$P
   )
 
   $NodeArgument = [List[string]]::new()
@@ -1279,9 +1289,7 @@ function Compare-NodeModule {
       $True
     )]
     # Node package root at which to run the command
-    [string]$WorkingDirectory,
-
-    [Parameter(DontShow)][switch]$z
+    [string]$WorkingDirectory
   )
 
   $NodeArgument = [List[string]]::new()
@@ -1436,9 +1444,7 @@ function Invoke-NodePackageScript {
       $True
     )]
     # Node package root at which to run the command
-    [string]$WorkingDirectory,
-
-    [Parameter(DontShow)][switch]$z
+    [string]$WorkingDirectory
   )
 
   if (-not $Script) {
@@ -1488,9 +1494,7 @@ function Test-NodePackage {
       $True
     )]
     # Node package root at which to run the command
-    [string]$WorkingDirectory,
-
-    [Parameter(DontShow)][switch]$z
+    [string]$WorkingDirectory
   )
 
   $NodeArgument = [List[string]]::new()

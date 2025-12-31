@@ -67,9 +67,7 @@ function Measure-Performance {
       Mandatory
     )]
     # If specified, returns only the command performance as a timespan. Cannot be specified with Numeric.
-    [switch]$Timespan,
-
-    [Parameter(DontShow)][switch]$z
+    [switch]$Timespan
   )
 
   [string]$FullCommand = $Command -join ' '
@@ -170,9 +168,7 @@ function Measure-PSProfile {
       Mandatory
     )]
     # If specified, returns only the profile overhead as a timespan. Cannot be specified with Numeric.
-    [switch]$Timespan,
-
-    [Parameter(DontShow)][switch]$z
+    [switch]$Timespan
   )
 
   if (-not $Iterations) {
@@ -336,9 +332,7 @@ function Publish-PSProfile {
   param(
 
     # If specified, skips the build step after syncing the repository and linter.
-    [switch]$SkipBuild,
-
-    [Parameter(DontShow)][switch]$z
+    [switch]$SkipBuild
   )
 
 

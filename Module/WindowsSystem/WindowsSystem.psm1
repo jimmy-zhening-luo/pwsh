@@ -44,9 +44,7 @@ function Stop-Task {
       ParameterSetName = 'Self',
       Mandatory
     )]
-    [switch]$Self,
-
-    [Parameter(DontShow)][switch]$z
+    [switch]$Self
   )
 
   process {
