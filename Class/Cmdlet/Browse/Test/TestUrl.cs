@@ -108,7 +108,7 @@ namespace Browse
             }
             catch (var e)
             {
-              WriteWarning(e.Message)
+              WriteWarning(e.Message);
               throw;
             }
 
