@@ -39,7 +39,7 @@ function Test-Host {
     )]
     [Alias('TCP')]
     [EnumCompletions(
-      [TestHostWellKnownPort]
+      [Browse.TestHostWellKnownPort]
     )]
     # Specifies the common service TCP port number.
     [string]$CommonTCPPort,
@@ -54,7 +54,7 @@ function Test-Host {
     [ushort]$Port,
 
     [EnumCompletions(
-      [TestHostVerbosity]
+      [Browse.TestHostVerbosity]
     )]
     # The level of information to return, can be Quiet or Detailed. Will not take effect if Detailed switch is set. Defaults to Quiet.
     [string]$InformationLevel,
@@ -67,11 +67,11 @@ function Test-Host {
 
   begin {
     if ($Detailed) {
-      $InformationLevel = [TestHostVerbosity]::Detailed
+      $InformationLevel = [Browse.TestHostVerbosity]::Detailed
     }
 
-    if ($InformationLevel -ne [TestHostVerbosity]::Detailed) {
-      $InformationLevel = [TestHostVerbosity]::Quiet
+    if ($InformationLevel -ne [Browse.TestHostVerbosity]::Detailed) {
+      $InformationLevel = [Browse.TestHostVerbosity]::Quiet
     }
   }
 
@@ -90,9 +90,9 @@ function Test-Host {
             switch ($CommonTCPPort) {
               '' { break }
               {
-                $null -ne [TestHostWellKnownPort]::$CommonTCPPort
+                $null -ne [Browse.TestHostWellKnownPort]::$CommonTCPPort
               } {
-                $Destination.CommonTCPPort = [TestHostWellKnownPort]::$CommonTCPPort
+                $Destination.CommonTCPPort = [Browse.TestHostWellKnownPort]::$CommonTCPPort
                 break
               }
               {
