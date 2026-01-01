@@ -55,38 +55,7 @@ namespace Browse
             {
               try
               {
-                using var ps = PowerShell.Create(
-                  RunspaceMode.CurrentRunspace
-                );
-                ps
-                  .AddCommand(
-                    SessionState
-                      .InvokeCommand
-                      .GetCommand(
-                        "Resolve-DnsName",
-                        CommandTypes.Cmdlet
-                      )
-                  )
-                  .AddParameter(
-                    "Name",
-                    uu.Host
-                  )
-                  .AddParameter(
-                    "Server",
-                    "1.1.1.1"
-                  )
-                  .AddParameter("DnsOnly")
-                  .AddParameter("NoHostsFile")
-                  .AddParameter("QuickTimeout");
-                _ = ps.Invoke();
-
-                if (ps.HadErrors)
-                {
-                  throw ps
-                    .Streams
-                    .Error[0]
-                    .Exception;
-                }
+                ResolveDns(uu.Host);
               }
               catch (CmdletInvocationException psException)
               {
@@ -170,6 +139,42 @@ namespace Browse
               );
             }
           }
+        }
+      }
+
+      private void ResolveDns(string host)
+      {
+        using var ps = PowerShell.Create(
+          RunspaceMode.CurrentRunspace
+        );
+        ps
+          .AddCommand(
+            SessionState
+              .InvokeCommand
+              .GetCommand(
+                "Resolve-DnsName",
+                CommandTypes.Cmdlet
+              )
+          )
+          .AddParameter(
+            "Name",
+            host
+          )
+          .AddParameter(
+            "Server",
+            "1.1.1.1"
+          )
+          .AddParameter("DnsOnly")
+          .AddParameter("NoHostsFile")
+          .AddParameter("QuickTimeout");
+        _ = ps.Invoke();
+
+        if (ps.HadErrors)
+        {
+          throw ps
+            .Streams
+            .Error[0]
+            .Exception;
         }
       }
     }
