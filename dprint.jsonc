@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/jimmy-zhening-luo/pwsh/refs/heads/main/dprint-schema.json",
+  "$schema": "https://raw.githubusercontent.com/jimmy-zhening-luo/dprint/refs/heads/main/dprint-schema.json",
   "plugins": [
     "https://plugins.dprint.dev/roslyn-0.19.1.json@a5daf2404c57680374f255c78f1956916482aa4b4e90825f1a48eb5a7e343b35",
   ],
