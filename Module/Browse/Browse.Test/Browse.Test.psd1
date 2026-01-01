@@ -9,12 +9,10 @@
   PowerShellVersion    = '7.4'
   FunctionsToExport    = @(
     'Test-Host'
-    'Test-Url'
   )
   CmdletsToExport      = @()
   VariablesToExport    = @()
   AliasesToExport      = @(
     'tn'
-    'tu'
   )
 }
