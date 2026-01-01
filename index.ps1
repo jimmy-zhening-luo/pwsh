@@ -1,5 +1,4 @@
 . $PSScriptRoot\Script\Alias.ps1
-. $PSScriptRoot\Script\Native.ps1
 . $PSScriptRoot\Script\Install.ps1
 
 if (-not -not $Env:SSH_CLIENT) {
