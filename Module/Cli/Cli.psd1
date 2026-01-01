@@ -1,5 +1,4 @@
 @{
-  RootModule           = 'Cli.psm1'
   ModuleVersion        = '3.0.0.0'
   CompatiblePSEditions = @('Desktop', 'Core')
   GUID                 = 'f6405b67-31f3-4633-ba81-feb8364d2395'
@@ -36,7 +35,6 @@
   CmdletsToExport      = @()
   VariablesToExport    = @()
   AliasesToExport      = @(
-    'dotnet'
     'yt'
     'yta'
     'ytf'
