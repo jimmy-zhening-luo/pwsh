@@ -21,11 +21,11 @@ namespace Browse
   {
     [Cmdlet(
       VerbsDiagnostic.Test,
-      "HostWip",
+      "Host",
       DefaultParameterSetName = "CommonTCPPort",
       HelpUri = "https://learn.microsoft.com/powershell/module/nettcpip/test-netconnection"
     )]
-    // [Alias("tn")]
+    [Alias("tn")]
     [OutputType(typeof(Object))]
     public class TestHost : PSCmdlet
     {
