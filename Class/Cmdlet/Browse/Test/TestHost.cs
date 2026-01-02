@@ -123,7 +123,7 @@ namespace Browse
                 )
               )
               {
-                p = wellknownPort;
+                p = wellknownPort.ToString();
               }
               else if (
                 ushort.TryParse(
