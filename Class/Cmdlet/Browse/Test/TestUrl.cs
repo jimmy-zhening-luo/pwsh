@@ -38,17 +38,18 @@ namespace Browse
       {
         foreach (Uri u in uri)
         {
-          string stringifiedUrl = u.IsAbsoluteUri
-            ? u.Host.Trim() == string.Empty
-              ? string.Empty
-              : u.AbsoluteUri.Trim()
-            : u.OriginalString.Trim() == string.Empty
-              ? string.Empty
-              : "http://" + u.OriginalString.Trim();
+          Uri U = new(
+            u.IsAbsoluteUri
+              ? u.Host.Trim() == string.Empty
+                ? string.Empty
+                : u.AbsoluteUri.Trim()
+              : u.OriginalString.Trim() == string.Empty
+                ? string.Empty
+                : "http://" + u.OriginalString.Trim()
+          );
 
-          if (stringifiedUrl != string.Empty)
+          if (U.OriginalString != string.Empty)
           {
-            Uri U = new(stringifiedUrl);
             int status = 0;
 
             try
