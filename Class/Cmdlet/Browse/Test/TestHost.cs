@@ -85,6 +85,7 @@ namespace Browse
       }
       private TestHostVerbosity verbosity;
 
+      [Parameter]
       public SwitchParameter Detailed
       {
         get { return detailed; }
