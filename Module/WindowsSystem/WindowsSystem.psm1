@@ -100,12 +100,42 @@ function Stop-Task {
               '(Get-Process).Kill($True)'
             )
           ) {
+            $ParentId = Get-CimInstance -ClassName Win32_Process |
+              Where-Object ProcessId -EQ $PID |
+              Select-Object -ExpandProperty ParentProcessId
+            $Parent = Get-Process -Id $ParentId |
+              Select-Object -First 1
+
+            while ($Parent -and $Parent.Name -ne 'WindowsTerminal') {
+              $ParentId = Get-CimInstance -ClassName Win32_Process |
+                Where-Object ProcessId -EQ $ParentId |
+                Select-Object -ExpandProperty ParentProcessId
+              $Parent = Get-Process -Id $ParentId |
+                Select-Object -First 1
+            }
+
+            if (-not $Parent) {
+              (
+                Get-Process -Name WindowsTerminal
+              ).Kill($True)
+            }
+
             (
-              Get-Process -Name WindowsTerminal
+              Get-CimInstance -ClassName Win32_Process |
+                Where-Object ParentProcessId -EQ $PID |
+                ForEach-Object {
+                  Get-Process -Id $_.ProcessId
+                }
             ).Kill($True)
+
+            if ($Parent) {
+              Stop-Process -Id $Parent.Id -Force
+            }
+
+            Stop-Process -Id $PID -Force
           }
+          return
         }
-        return
       }
       Name {
         if (-not $Name) {
