@@ -49,14 +49,6 @@ namespace Core
         }
         private Uri[] uri = [];
 
-        private readonly Process browser = new()
-        {
-          StartInfo = new()
-          {
-            FileName = @"C:\Program Files\Google\Chrome\Application\chrome.exe"
-          }
-        };
-
         private static bool Ssh() => Environment.GetEnvironmentVariable(
           "SSH_CLIENT"
         ) != null;
@@ -67,13 +59,13 @@ namespace Core
           {
             foreach (Uri u in uri)
             {
+              ProcessStartInfo psi = new(@"C:\Program Files\Google\Chrome\Application\chrome.exe");
               string url = u.ToString().Trim();
 
               if (url != string.Empty)
               {
-                browser.StartInfo.Arguments = url;
-                browser.Start();
-                browser.StartInfo.Arguments = string.Empty;
+                psi.Arguments = url;
+                Process.Start(psi);
               }
             }
           }
@@ -83,7 +75,7 @@ namespace Core
         {
           if (!Ssh() && ParameterSetName == "Path")
           {
-            browser.StartInfo.Arguments = string.Empty;
+            ProcessStartInfo psi = new(@"C:\Program Files\Google\Chrome\Application\chrome.exe");
             string cleanPath = path.Trim();
 
             if (cleanPath != string.Empty)
@@ -101,15 +93,14 @@ namespace Core
                     relativePath
                   );
 
-              browser.StartInfo.Arguments = System.IO.Path.Exists(testPath)
+              psi.Arguments = System.IO.Path.Exists(testPath)
                 ? System.IO.Path.GetFullPath(
                     testPath
                   )
                 : cleanPath;
             }
 
-            browser.Start();
-            browser.StartInfo.Arguments = string.Empty;
+            Process.Start(psi);
           }
         }
       }
