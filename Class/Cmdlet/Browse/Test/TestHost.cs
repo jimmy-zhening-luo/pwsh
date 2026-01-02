@@ -119,7 +119,7 @@ namespace Browse
                 TestHostWellKnownPort.TryParse(
                   commonPort,
                   true,
-                  out wellknownPort
+                  out var wellknownPort
                 )
               )
               {
@@ -128,7 +128,7 @@ namespace Browse
               else if (
                 ushort.TryParse(
                   commonPort,
-                  out portNumber
+                  out var portNumber
                 )
               )
               {
