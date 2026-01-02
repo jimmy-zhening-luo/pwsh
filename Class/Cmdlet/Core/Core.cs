@@ -11,7 +11,7 @@ namespace Core
 
   public interface ICommand
   {
-    public static bool Ssh() => Environment.GetEnvironmentVariable(
+    public bool Ssh() => Environment.GetEnvironmentVariable(
       "SSH_CLIENT"
     ) != null;
   }
