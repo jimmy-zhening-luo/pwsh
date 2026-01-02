@@ -1,14 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
-    <AssemblyName>Browse</AssemblyName>
+    <AssemblyName>Auxiliary</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="PowerShellStandard.Library" Version="5.1.1.0" PrivateAssets="All"/>
     <PackageReference Include="System.Management.Automation" Version="7.4.13" PrivateAssets="All"/>
-    <PackageReference Include="Microsoft.PowerShell.Commands.Utility" Version="7.4.0" PrivateAssets="All"/>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Type\Completer\Completer.csproj"/>
+    <PackageReference Include="Microsoft.PowerShell.Commands.Management" Version="7.4.0" PrivateAssets="All"/>
   </ItemGroup>
 </Project>

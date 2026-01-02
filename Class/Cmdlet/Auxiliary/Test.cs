@@ -1,6 +1,6 @@
 using System.Management.Automation;
 
-namespace Transform
+namespace Auxiliary
 {
   namespace Test
   {
@@ -53,4 +53,4 @@ namespace Transform
       }
     }
   } // namespace Test
-} // namespace Transform
+} // namespace Auxiliary

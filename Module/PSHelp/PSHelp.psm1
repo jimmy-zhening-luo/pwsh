@@ -260,7 +260,7 @@ function Get-HelpOnline {
 
   if (-not $env:SSH_CLIENT) {
     if ($Article.Count -ne 0) {
-      [uri[]]$Article.ToArray() | Browse\Open-Url
+      [uri[]]$Article.ToArray() | Open-Url
     }
     else {
       if ($HelpContent) {

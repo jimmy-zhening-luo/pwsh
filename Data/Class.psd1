@@ -1,8 +1,7 @@
 @{
   Cmdlets = @(
-    'Browse'
-    'Shell'
-    'Transform'
+    'Core'
+    'Auxiliary'
   )
   Types   = @(
     'Completer'

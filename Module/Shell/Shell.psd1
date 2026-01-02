@@ -71,13 +71,9 @@
     'Start-WorkspaceDrive'
     'Remove-Directory'
   )
-  CmdletsToExport      = @(
-    'Clear-Line'
-  )
+  CmdletsToExport      = @()
   VariablesToExport    = @()
   AliasesToExport      = @(
-    'cl'
-    'clear'
     'touch'
     'mk'
     'mj'

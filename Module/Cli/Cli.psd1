@@ -8,14 +8,9 @@
   PowerShellVersion    = '7.4'
   RequiredModules      = @(
     @{
-      ModuleName    = 'Browse'
+      ModuleName    = 'Core'
       ModuleVersion = '3.0.0'
-      GUID          = '5a80488d-6a5a-4f24-b3f1-ff9d275ab8b5'
-    }
-    @{
-      ModuleName    = 'Shell'
-      ModuleVersion = '3.0.0'
-      GUID          = 'e4d07654-6759-4a2f-8293-39df2b809ba7'
+      GUID          = 'a2075667-de18-47e9-9804-bbf47f23131f'
     }
   )
   NestedModules        = @(
