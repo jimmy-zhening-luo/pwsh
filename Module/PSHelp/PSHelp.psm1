@@ -328,7 +328,7 @@ function Get-CommandAlias {
       $Scope = 'Global'
     }
 
-    $AliasList = [List[System.Management.Automation.CommandInfo]]::new()
+    $AliasList = [List[CommandInfo]]::new()
   }
 
   process {
@@ -341,11 +341,11 @@ function Get-CommandAlias {
       $AliasQuery.Exclude = $Exclude
     }
 
-    [System.Management.Automation.CommandInfo[]]$AliasResults = Get-Alias @AliasQuery
+    [CommandInfo[]]$AliasResults = Get-Alias @AliasQuery
 
     if ($AliasResults) {
       $AliasList.AddRange(
-        [List[System.Management.Automation.CommandInfo]]$AliasResults
+        [List[CommandInfo]]$AliasResults
       )
     }
   }
