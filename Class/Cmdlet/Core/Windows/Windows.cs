@@ -14,12 +14,8 @@ namespace Core
       )]
       [Alias("wu")]
       [OutputType(typeof(void))]
-      public class UpdateWindows : PSCmdlet
+      public class UpdateWindows : PSCommand
       {
-        private static bool Ssh() => Environment.GetEnvironmentVariable(
-          "SSH_CLIENT"
-        ) != null;
-
         protected override void EndProcessing()
         {
           if (!Ssh())
