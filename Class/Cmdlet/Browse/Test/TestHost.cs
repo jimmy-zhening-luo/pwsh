@@ -92,14 +92,120 @@ namespace Browse
       }
       private bool detailed;
 
+      protected override void BeginProcessing()
+      {
+        if (detailed)
+        {
+          verbosity = TestHostVerbosity.Detailed;
+        }
+      }
+
       protected override void ProcessRecord()
       {
-        return;
+        foreach (string n in name)
+        {
+          string p = string.Empty;
+          ushort pn = 0;
+
+          if (ParameterSetName == "RemotePort")
+          {
+            pn = port;
+          }
+          else
+          {
+            if (commonPort != string.Empty)
+            {
+              if (
+                TestHostWellKnownPort.TryParse(
+                  commonPort,
+                  true,
+                  out wellknownPort
+                )
+              )
+              {
+                p = wellknownPort;
+              }
+              else if (
+                ushort.TryParse(
+                  commonPort,
+                  out portNumber
+                )
+              )
+              {
+                pn = portNumber;
+              }
+            }
+          }
+
+          WriteTestNetConnection(
+            n,
+            p,
+            pn
+          );
+        }
       }
 
       protected override void EndProcessing()
       {
-        return;
+        if (name.Length == 0)
+        {
+          WriteTestNetConnection(
+            n,
+            p,
+            pn
+          );
+        }
+      }
+
+      private void WriteTestNetConnection(
+        string computerName,
+        string commonTcpPort,
+        ushort portNumber
+      )
+      {
+        using var ps = PowerShell.Create(
+          RunspaceMode.CurrentRunspace
+        );
+        ps
+          .AddCommand(
+            SessionState
+              .InvokeCommand
+              .GetCommand(
+                "Test-NetConnection",
+                CommandTypes.Function
+              )
+          )
+          .AddParameter(
+            "ComputerName",
+            computerName
+          )
+          .AddParameter(
+            "InformationLevel",
+            verbosity
+          );
+
+        if (portNumber != 0)
+        {
+          ps.AddParameter(
+            "Port",
+            portNumber
+          );
+        }
+        else
+        {
+          if (commonTcpPort != string.Empty)
+          {
+            ps.AddParameter(
+              "CommonTCPPort",
+              commonTcpPort
+            );
+          }
+        }
+
+        WriteObject(
+          ps.Invoke(),
+          true
+        );
       }
     }
   }

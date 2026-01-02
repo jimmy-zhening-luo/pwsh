@@ -7,19 +7,11 @@
   CompanyName          = 'Jimmy Zhening Luo'
   Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
   PowerShellVersion    = '7.4'
-  NestedModules        = @(
-    @{
-      ModuleName    = 'Browse.Test'
-      ModuleVersion = '3.0.0'
-      GUID          = 'f9754286-2e29-42e9-997c-221f9ce8e312'
-    }
-  )
-  FunctionsToExport    = @(
-    'Test-Host'
-  )
+  FunctionsToExport    = @()
   CmdletsToExport      = @(
     'Open-Url'
     'Test-Url'
+    'Test-Host'
   )
   VariablesToExport    = @()
   AliasesToExport      = @(
