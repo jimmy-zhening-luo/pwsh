@@ -3,10 +3,10 @@ using System.Management.Automation;
 
 namespace Core
 {
-  public abstract class Command : Cmdlet, ICommand
+  public class Command : Cmdlet, ICommand
   { }
 
-  public abstract class PSCommand : PSCmdlet, ICommand
+  public class PSCommand : PSCmdlet, ICommand
   { }
 
   public interface ICommand
