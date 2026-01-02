@@ -46,8 +46,9 @@ namespace Completer
           || path[1] == '\\'
         );
 
-      public static string ExpandEnvironmentVariables(string path) =>
-        Environment.ExpandEnvironmentVariables(path);
+      public static string ExpandEnvironmentVariables(string path) => Environment.ExpandEnvironmentVariables(
+        path
+      );
 
       public static bool IsHomeRooted(string path) => path.StartsWith('~')
         && (
