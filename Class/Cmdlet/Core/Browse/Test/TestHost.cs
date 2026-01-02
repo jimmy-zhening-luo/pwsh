@@ -7,12 +7,14 @@ namespace Core
 {
   namespace Browse
   {
-    public enum TestHostVerbosity {
+    public enum TestHostVerbosity
+    {
       Quiet,
       Detailed
     }
 
-    public enum TestHostWellKnownPort {
+    public enum TestHostWellKnownPort
+    {
       HTTP = -4,
       RDP,
       SMB,
