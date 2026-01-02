@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics;
 using System.Management.Automation;
 
@@ -14,11 +13,11 @@ namespace Core
       )]
       [Alias("wu")]
       [OutputType(typeof(void))]
-      public class UpdateWindows : PSCommand
+      public class UpdateWindows : PSCmdlet
       {
         protected override void EndProcessing()
         {
-          if (!Ssh())
+          if (!Context.Ssh())
           {
             Process.Start(
               new ProcessStartInfo("ms-settings:windowsupdate")
