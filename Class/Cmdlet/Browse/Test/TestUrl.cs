@@ -38,7 +38,7 @@ namespace Browse
       {
         foreach (Uri u in uri)
         {
-          string us = u.IsAbsoluteUri
+          string stringifiedUrl = u.IsAbsoluteUri
             ? u.Host.Trim() == string.Empty
               ? string.Empty
               : u.AbsoluteUri.Trim()
@@ -46,16 +46,16 @@ namespace Browse
               ? string.Empty
               : "http://" + u.OriginalString.Trim();
 
-          if (us != string.Empty)
+          if (stringifiedUrl != string.Empty)
           {
-            Uri uu = new(us);
+            Uri U = new(stringifiedUrl);
             int status = 0;
 
             try
             {
               try
               {
-                ResolveDns(uu.Host);
+                ResolveDns(U.Host);
               }
               catch (CmdletInvocationException psException)
               {
@@ -70,38 +70,7 @@ namespace Browse
 
               try
               {
-                using var ps = PowerShell.Create(
-                  RunspaceMode.CurrentRunspace
-                );
-                ps
-                  .AddCommand(
-                    SessionState
-                      .InvokeCommand
-                      .GetCommand(
-                        "Invoke-WebRequest",
-                        CommandTypes.Cmdlet
-                      )
-                  )
-                  .AddParameter(
-                    "Uri",
-                    uu
-                  )
-                  .AddParameter(
-                    "Method",
-                    WebRequestMethod.Head
-                  )
-                  .AddParameter(
-                    "ConnectionTimeoutSeconds",
-                    5
-                  )
-                  .AddParameter(
-                    "MaximumRetryCount",
-                    0
-                  )
-                  .AddParameter("DisableKeepAlive")
-                  .AddParameter("PreserveHttpMethodOnRedirect");
-
-                status = ps.Invoke<BasicHtmlWebResponseObject>()[0].StatusCode;
+                status = VisitUrlPath(U);
               }
               catch (CmdletInvocationException psException)
               {
@@ -134,7 +103,7 @@ namespace Browse
             if (status >= 200 && status < 300)
             {
               WriteObject(
-                uu,
+                U,
                 true
               );
             }
@@ -176,6 +145,42 @@ namespace Browse
             .Error[0]
             .Exception;
         }
+      }
+
+      private int VisitUrlPath(Uri fullUrl)
+      {
+        using var ps = PowerShell.Create(
+          RunspaceMode.CurrentRunspace
+        );
+        ps
+          .AddCommand(
+            SessionState
+              .InvokeCommand
+              .GetCommand(
+                "Invoke-WebRequest",
+                CommandTypes.Cmdlet
+              )
+          )
+          .AddParameter(
+            "Uri",
+            fullUrl
+          )
+          .AddParameter(
+            "Method",
+            WebRequestMethod.Head
+          )
+          .AddParameter(
+            "ConnectionTimeoutSeconds",
+            5
+          )
+          .AddParameter(
+            "MaximumRetryCount",
+            0
+          )
+          .AddParameter("DisableKeepAlive")
+          .AddParameter("PreserveHttpMethodOnRedirect");
+
+        return ps.Invoke<BasicHtmlWebResponseObject>()[0].StatusCode;
       }
     }
   }
