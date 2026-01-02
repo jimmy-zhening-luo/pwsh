@@ -116,7 +116,7 @@ namespace Browse
             if (commonPort != string.Empty)
             {
               if (
-                TestHostWellKnownPort.TryParse(
+                Enum.TryParse<TestHostWellKnownPort>(
                   commonPort,
                   true,
                   out var wellknownPort
