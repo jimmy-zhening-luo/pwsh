@@ -49,13 +49,9 @@ namespace Core
         }
         private Uri[] uri = [];
 
-        private static bool Ssh() => Environment.GetEnvironmentVariable(
-          "SSH_CLIENT"
-        ) != null;
-
         protected override void ProcessRecord()
         {
-          if (!Ssh() && ParameterSetName == "Uri")
+          if (!Context.Ssh() && ParameterSetName == "Uri")
           {
             foreach (Uri u in uri)
             {
@@ -73,7 +69,7 @@ namespace Core
 
         protected override void EndProcessing()
         {
-          if (!Ssh() && ParameterSetName == "Path")
+          if (!Context.Ssh() && ParameterSetName == "Path")
           {
             ProcessStartInfo psi = new(@"C:\Program Files\Google\Chrome\Application\chrome.exe");
             string cleanPath = path.Trim();
