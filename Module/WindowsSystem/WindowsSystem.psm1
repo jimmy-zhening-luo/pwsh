@@ -129,6 +129,15 @@ function Stop-Task {
             ).Kill($True)
 
             if ($Parent) {
+              (
+                Get-CimInstance -ClassName Win32_Process |
+                  Where-Object ParentProcessId -EQ $Parent.Id |
+                  Where-Object ProcessId -NE $PID |
+                  ForEach-Object {
+                    Get-Process -Id $_.ProcessId
+                  }
+              ).Kill($True)
+
               Stop-Process -Id $Parent.Id -Force
             }
 
