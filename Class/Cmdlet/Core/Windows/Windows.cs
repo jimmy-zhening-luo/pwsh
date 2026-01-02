@@ -24,14 +24,12 @@ namespace Core
         {
           if (!Ssh())
           {
-            using Process proc = new()
-            {
-              StartInfo = new()
+            Process.Start(
+              new ProcessStartInfo("ms-settings:windowsupdate")
               {
-                FileName = @"ms-settings:windowsupdate"
+                UseShellExecute = true
               }
-            };
-            proc.Start();
+            );
           }
         }
       }
