@@ -47,7 +47,6 @@ namespace Browse
         Position = 1,
         HelpMessage = "Specifies the common service TCP port number."
       )]
-      [Alias("TCP")]
       [EnumCompletions(
         typeof(TestHostWellKnownPort)
       )]
@@ -64,6 +63,7 @@ namespace Browse
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "The port number to test on the target host."
       )]
+      [Alias("RemotePort")]
       [ValidateRange(1, 65535)]
       public ushort Port
       {
