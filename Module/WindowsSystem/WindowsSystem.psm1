@@ -1,5 +1,27 @@
 <#
 .SYNOPSIS
+Runs a command in the Windows Command Prompt, 'cmd.exe'.
+
+.DESCRIPTION
+Starts a new instance of the command interpreter, 'cmd.exe' to carry out the supplied command (along with any flags) before exiting the command processor.
+
+.COMPONENT
+WindowsSystem
+
+.LINK
+https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd
+#>
+function Invoke-CommandPrompt {
+
+  & $env:ComSpec /c @args
+
+  if ($LASTEXITCODE -notin 0, 1) {
+    throw "cmd.exe error, execution stopped with exit code: $LASTEXITCODE"
+  }
+}
+
+<#
+.SYNOPSIS
 Stops one or more running processes by name or ID.
 
 .DESCRIPTION
@@ -162,51 +184,6 @@ function Stop-Task {
       }
     }
   }
-}
-
-<#
-.SYNOPSIS
-Runs a command in the Windows Command Prompt, 'cmd.exe'.
-
-.DESCRIPTION
-Starts a new instance of the command interpreter, 'cmd.exe' to carry out the supplied command (along with any flags) before exiting the command processor.
-
-.COMPONENT
-WindowsSystem
-
-.LINK
-https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd
-#>
-function Invoke-CommandPrompt {
-
-  & $env:ComSpec /c @args
-
-  if ($LASTEXITCODE -notin 0, 1) {
-    throw "cmd.exe error, execution stopped with exit code: $LASTEXITCODE"
-  }
-}
-
-<#
-.SYNOPSIS
-Opens the 'Settings' app to the 'Windows Update' page.
-
-.DESCRIPTION
-This function invokes the URI 'ms-settings:windowsupdate' to open the 'Windows Update' page in the 'Settings' app.
-
-.COMPONENT
-WindowsSystem
-#>
-function Update-Windows {
-  [CmdletBinding()]
-  [OutputType([void])]
-  [Alias('wu')]
-  param()
-
-  if ($env:SSH_CLIENT) {
-    throw 'Cannot open Settings app during SSH session'
-  }
-
-  Start-Process -FilePath ms-settings:windowsupdate
 }
 
 <#

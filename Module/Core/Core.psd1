@@ -10,6 +10,7 @@
   FunctionsToExport    = @()
   CmdletsToExport      = @(
     'Clear-Line'
+    'Update-Windows'
     'Open-Url'
     'Test-Url'
     'Test-Host'
@@ -18,6 +19,7 @@
   AliasesToExport      = @(
     'cl'
     'clear'
+    'wu'
     'o'
     'open'
     'tu'
