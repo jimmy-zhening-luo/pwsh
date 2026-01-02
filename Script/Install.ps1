@@ -36,13 +36,13 @@ using namespace System.Collections.Generic
 
     process {
       $BuildOutput = "$Root\Class\$Class\$Project\bin\Release\net9.0\$Project.dll"
-  
+
       if (Test-Path $BuildOutput -PathType Leaf) {
         $InstallPath = "$Root\$InstallLocation" + (
           $AppendProject ? "\$Project" : [string]::Empty
         )
         $InstalledAssembly = "$InstallPath\$Project.dll"
-  
+
         if (
           -not (
             Test-Path $InstalledAssembly -PathType Leaf
