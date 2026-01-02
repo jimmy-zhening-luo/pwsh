@@ -59,11 +59,11 @@ namespace Core
 
         private static bool Ssh() => Environment.GetEnvironmentVariable(
           "SSH_CLIENT"
-        ) == null;
+        ) != null;
 
         protected override void ProcessRecord()
         {
-          if (Ssh() && ParameterSetName == "Uri")
+          if (!Ssh() && ParameterSetName == "Uri")
           {
             foreach (Uri u in uri)
             {
@@ -81,7 +81,7 @@ namespace Core
 
         protected override void EndProcessing()
         {
-          if (Ssh() && ParameterSetName == "Path")
+          if (!Ssh() && ParameterSetName == "Path")
           {
             browser.StartInfo.Arguments = string.Empty;
             string cleanPath = path.Trim();

@@ -32,13 +32,13 @@ namespace Core
           set => path = value;
         }
         private string path = string.Empty;
-  
+
         [Parameter(
           Position = 1
         )]
         [SupportsWildcards]
         public string Filter;
-  
+
         [Parameter(
           ParameterSetName = "LiteralPath",
           Mandatory = true,
@@ -46,24 +46,24 @@ namespace Core
         )]
         [Alias("PSPath", "LP")]
         public string[] LiteralPath;
-  
+
         [Parameter]
         [SupportsWildcards]
         public string[] Include;
-  
+
         [Parameter]
         [SupportsWildcards]
         public string[] Exclude;
-  
+
         [Parameter]
         [Alias("f")]
         public SwitchParameter Force;
-  
+
         [Parameter]
         public string Stream;
-  
+
         private SteppablePipeline steppablePipeline = null;
-  
+
         protected override void BeginProcessing()
         {
           if (
@@ -86,17 +86,17 @@ namespace Core
               .AddParameters(
                 MyInvocation.BoundParameters
               );
-  
+
             steppablePipeline = ps.GetSteppablePipeline();
             steppablePipeline.Begin(this);
           }
         }
-  
+
         protected override void ProcessRecord()
         {
           steppablePipeline?.Process();
         }
-  
+
         protected override void EndProcessing()
         {
           if (steppablePipeline == null)

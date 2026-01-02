@@ -11,14 +11,14 @@ namespace Core
       Quiet,
       Detailed
     }
-    
+
     public enum TestHostWellKnownPort {
       HTTP = -4,
       RDP,
       SMB,
       WINRM
     }
-  
+
     namespace Commands
     {
       [Cmdlet(
@@ -43,7 +43,7 @@ namespace Core
           set => name = value;
         }
         private string[] name = [];
-  
+
         [Parameter(
           ParameterSetName = "CommonTCPPort",
           Position = 1,
@@ -58,7 +58,7 @@ namespace Core
           set => commonPort = value;
         }
         private string commonPort = string.Empty;
-  
+
         [Parameter(
           ParameterSetName = "RemotePort",
           Mandatory = true,
@@ -73,7 +73,7 @@ namespace Core
           set => port = value;
         }
         private ushort port;
-  
+
         [Parameter(
           HelpMessage = "The level of information to return, can be Quiet or Detailed. Will not take effect if Detailed switch is set. Defaults to Quiet."
         )]
@@ -86,7 +86,7 @@ namespace Core
           set => verbosity = value;
         }
         private TestHostVerbosity verbosity;
-  
+
         [Parameter]
         public SwitchParameter Detailed
         {
@@ -94,7 +94,7 @@ namespace Core
           set { detailed = value; }
         }
         private bool detailed;
-  
+
         protected override void BeginProcessing()
         {
           if (detailed)
@@ -102,14 +102,14 @@ namespace Core
             verbosity = TestHostVerbosity.Detailed;
           }
         }
-  
+
         protected override void ProcessRecord()
         {
           foreach (string n in name)
           {
             string p = string.Empty;
             ushort pn = 0;
-  
+
             if (ParameterSetName == "RemotePort")
             {
               pn = port;
@@ -139,7 +139,7 @@ namespace Core
                 }
               }
             }
-  
+
             WriteTestNetConnection(
               n,
               p,
@@ -147,7 +147,7 @@ namespace Core
             );
           }
         }
-  
+
         protected override void EndProcessing()
         {
           if (name.Length == 0)
@@ -159,7 +159,7 @@ namespace Core
             );
           }
         }
-  
+
         private void WriteTestNetConnection(
           string computerName,
           string commonTcpPort,
@@ -186,7 +186,7 @@ namespace Core
               "InformationLevel",
               verbosity
             );
-  
+
           if (portNumber != 0)
           {
             ps.AddParameter(
@@ -204,7 +204,7 @@ namespace Core
               );
             }
           }
-  
+
           WriteObject(
             ps.Invoke(),
             true

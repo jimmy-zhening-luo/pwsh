@@ -35,7 +35,7 @@ namespace Core
           set => uri = value;
         }
         private Uri[] uri = [];
-  
+
         protected override void ProcessRecord()
         {
           foreach (Uri u in uri)
@@ -49,11 +49,11 @@ namespace Core
                   ? string.Empty
                   : "http://" + u.OriginalString.Trim()
             );
-  
+
             if (U.OriginalString != string.Empty)
             {
               int status = 0;
-  
+
               try
               {
                 try
@@ -70,7 +70,7 @@ namespace Core
                 {
                   throw;
                 }
-  
+
                 try
                 {
                   status = VisitUrlPath(U);
@@ -102,7 +102,7 @@ namespace Core
               {
                 throw;
               }
-  
+
               if (status >= 200 && status < 300)
               {
                 WriteObject(
@@ -113,7 +113,7 @@ namespace Core
             }
           }
         }
-  
+
         private void ResolveDns(string host)
         {
           using var ps = PowerShell.Create(
@@ -140,7 +140,7 @@ namespace Core
             .AddParameter("NoHostsFile")
             .AddParameter("QuickTimeout");
           _ = ps.Invoke();
-  
+
           if (ps.HadErrors)
           {
             throw ps
@@ -149,7 +149,7 @@ namespace Core
               .Exception;
           }
         }
-  
+
         private int VisitUrlPath(Uri fullUrl)
         {
           using var ps = PowerShell.Create(
@@ -182,7 +182,7 @@ namespace Core
             )
             .AddParameter("DisableKeepAlive")
             .AddParameter("PreserveHttpMethodOnRedirect");
-  
+
           return ps.Invoke<BasicHtmlWebResponseObject>()[0].StatusCode;
         }
       }
