@@ -117,6 +117,15 @@ namespace Browse
             if (commonPort != string.Empty)
             {
               if (
+                ushort.TryParse(
+                  commonPort,
+                  out var portNumber
+                )
+              )
+              {
+                pn = portNumber;
+              }
+              else if (
                 Enum.TryParse<TestHostWellKnownPort>(
                   commonPort,
                   true,
@@ -125,15 +134,6 @@ namespace Browse
               )
               {
                 p = wellknownPort.ToString();
-              }
-              else if (
-                ushort.TryParse(
-                  commonPort,
-                  out var portNumber
-                )
-              )
-              {
-                pn = portNumber;
               }
             }
           }
