@@ -13,7 +13,7 @@ namespace Core
       )]
       [Alias("wu")]
       [OutputType(typeof(void))]
-      public class UpdateWindows : PSCmdlet
+      public class UpdateWindows : Cmdlet
       {
         protected override void EndProcessing()
         {
