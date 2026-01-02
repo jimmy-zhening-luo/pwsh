@@ -150,9 +150,9 @@ namespace Browse
         if (name.Length == 0)
         {
           WriteTestNetConnection(
-            n,
-            p,
-            pn
+            "google.com",
+            string.Empty,
+            0
           );
         }
       }
