@@ -8,4 +8,8 @@
     <PackageReference Include="System.Management.Automation" Version="7.4.13" PrivateAssets="All"/>
     <PackageReference Include="Microsoft.PowerShell.Commands.Management" Version="7.4.0" PrivateAssets="All"/>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj"/>
+    <ProjectReference Include="..\..\Type\Completer\Completer.csproj"/>
+  </ItemGroup>
 </Project>
