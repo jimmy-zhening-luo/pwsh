@@ -1,7 +1,6 @@
 namespace Completer.PathCompleter
 {
   using System;
-  using System.IO;
   using System.Management.Automation;
 
   [AttributeUsage(
@@ -40,10 +39,10 @@ namespace Completer.PathCompleter
         .ToString();
 
       return new(
-        Path.GetFullPath(
+        System.IO.Path.GetFullPath(
           RelativeLocation == string.Empty
             ? string.Empty
-            : Path.GetRelativePath(
+            : System.IO.Path.GetRelativePath(
                 pwd,
                 RelativeLocation
               ),
