@@ -22,10 +22,10 @@ namespace Core.Browse.Test.Commands
     )]
     public string[] Name
     {
-      get => name;
-      set => name = value;
+      get => names;
+      set => names = value;
     }
-    private string[] name = [];
+    private string[] names = [];
 
     [Parameter(
       ParameterSetName = "CommonTCPPort",
@@ -88,14 +88,14 @@ namespace Core.Browse.Test.Commands
 
     protected override void ProcessRecord()
     {
-      foreach (string n in name)
+      foreach (string name in names)
       {
-        string p = string.Empty;
-        ushort pn = 0;
+        string portString = string.Empty;
+        ushort portNumber = 0;
 
         if (ParameterSetName == "RemotePort")
         {
-          pn = port;
+          portNumber = port;
         }
         else
         {
@@ -104,36 +104,36 @@ namespace Core.Browse.Test.Commands
             if (
               ushort.TryParse(
                 commonPort,
-                out var portNumber
+                out var parsedPortNumber
               )
             )
             {
-              pn = portNumber;
+              portNumber = parsedPortNumber;
             }
             else if (
               Enum.TryParse<TestHostWellKnownPort>(
                 commonPort,
                 true,
-                out var wellknownPort
+                out var parsedPortEnum
               )
             )
             {
-              p = wellknownPort.ToString();
+              portString = parsedPortEnum.ToString();
             }
           }
         }
 
         WriteTestNetConnection(
-          n,
-          p,
-          pn
+          name,
+          portString,
+          portNumber
         );
       }
     }
 
     protected override void EndProcessing()
     {
-      if (name.Length == 0)
+      if (names.Length == 0)
       {
         WriteTestNetConnection(
           "google.com",

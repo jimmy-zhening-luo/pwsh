@@ -39,18 +39,18 @@ namespace Core.Browse.Commands
     [AllowEmptyCollection]
     public Uri[] Uri
     {
-      get => uri;
-      set => uri = value;
+      get => uris;
+      set => uris = value;
     }
-    private Uri[] uri = [];
+    private Uri[] uris = [];
 
     protected override void ProcessRecord()
     {
       if (ParameterSetName == "Uri")
       {
-        foreach (Uri u in uri)
+        foreach (Uri uri in uris)
         {
-          string url = u.ToString().Trim();
+          string url = uri.ToString().Trim();
 
           if (url != string.Empty)
           {

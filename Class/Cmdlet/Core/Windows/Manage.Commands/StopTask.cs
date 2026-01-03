@@ -24,10 +24,10 @@ namespace Core.Windows.Manage.Commands
     [Alias("ProcessName")]
     public string[] Name
     {
-      get => name;
-      set => name = value;
+      get => names;
+      set => names = value;
     }
-    private string[] name = [];
+    private string[] names = [];
 
     [Parameter(
       ParameterSetName = "Id",
@@ -38,10 +38,10 @@ namespace Core.Windows.Manage.Commands
     )]
     public uint[] Id
     {
-      get => id;
-      set => id = value;
+      get => pids;
+      set => pids = value;
     }
-    private uint[] id;
+    private uint[] pids;
 
     [Parameter(
       ParameterSetName = "Self",
@@ -60,21 +60,22 @@ namespace Core.Windows.Manage.Commands
       switch (ParameterSetName)
       {
         case "Id":
-          foreach (var i in id)
+          foreach (var pid in pids)
           {
             Process
-              .GetProcessById((int)i)
+              .GetProcessById((int)pid)
               .Kill(true);
           }
+
           break;
         default:
-          foreach (var n in name)
+          foreach (var name in names)
           {
-            if (n == string.Empty)
+            if (name == string.Empty)
             {
               continue;
             }
-            else if (uint.TryParse(n, out uint pid))
+            else if (uint.TryParse(name, out uint pid))
             {
               Process
                 .GetProcessById((int)pid)
@@ -82,14 +83,17 @@ namespace Core.Windows.Manage.Commands
             }
             else
             {
-              Process[] processes = Process.GetProcessesByName(n);
-
-              foreach (var process in processes)
+              foreach (
+                var process in Process.GetProcessesByName(
+                  name
+                )
+              )
               {
                 process.Kill(true);
               }
             }
           }
+
           break;
       }
     }
@@ -102,17 +106,21 @@ namespace Core.Windows.Manage.Commands
           {
             WriteWarning("No-op because I'm too lazy to correctly implement this.");
           }
+
           break;
         case "Name":
-          if (name.Length == 0)
+          if (names.Length == 0)
           {
-            var processes = Process.GetProcessesByName("explorer");
-
-            foreach (var process in processes)
+            foreach (
+              var process in Process.GetProcessesByName(
+                "explorer"
+              )
+            )
             {
               process.Kill(true);
             }
           }
+
           break;
       }
     }

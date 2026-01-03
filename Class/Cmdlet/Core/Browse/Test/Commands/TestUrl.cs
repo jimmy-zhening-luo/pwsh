@@ -26,26 +26,26 @@ namespace Core.Browse.Test.Commands
     [AllowEmptyCollection]
     public Uri[] Uri
     {
-      get => uri;
-      set => uri = value;
+      get => uris;
+      set => uris = value;
     }
-    private Uri[] uri = [];
+    private Uri[] uris = [];
 
     protected override void ProcessRecord()
     {
-      foreach (Uri u in uri)
+      foreach (Uri uri in uris)
       {
-        Uri U = new(
-          u.IsAbsoluteUri
-            ? u.Host.Trim() == string.Empty
+        Uri fullUrl = new(
+          uri.IsAbsoluteUri
+            ? uri.Host.Trim() == string.Empty
               ? string.Empty
-              : u.AbsoluteUri.Trim()
-            : u.OriginalString.Trim() == string.Empty
+              : uri.AbsoluteUri.Trim()
+            : uri.OriginalString.Trim() == string.Empty
               ? string.Empty
-              : "http://" + u.OriginalString.Trim()
+              : "http://" + uri.OriginalString.Trim()
         );
 
-        if (U.OriginalString != string.Empty)
+        if (fullUrl.OriginalString != string.Empty)
         {
           int status = 0;
 
@@ -53,7 +53,7 @@ namespace Core.Browse.Test.Commands
           {
             try
             {
-              ResolveDns(U.Host);
+              ResolveDns(fullUrl.Host);
             }
             catch (CmdletInvocationException psException)
             {
@@ -68,7 +68,7 @@ namespace Core.Browse.Test.Commands
 
             try
             {
-              status = VisitUrlPath(U);
+              status = VisitUrlPath(fullUrl);
             }
             catch (CmdletInvocationException psException)
             {
@@ -101,7 +101,7 @@ namespace Core.Browse.Test.Commands
           if (status >= 200 && status < 300)
           {
             WriteObject(
-              U,
+              fullUrl,
               true
             );
           }

@@ -27,24 +27,7 @@ namespace Auxiliary
 
     protected override void EndProcessing()
     {
-      string pwd = SessionState.Path.CurrentLocation.Path;
-
-      WriteObject(
-        pwd,
-        true
-      );
-
-      string rel = Path == string.Empty
-        ? pwd
-        : System.IO.Path.GetRelativePath(pwd, Path);
-
-      if (System.IO.Path.Exists(rel))
-      {
-        WriteObject(
-          System.IO.Path.GetFullPath(Path, pwd),
-          true
-        );
-      }
+      WriteObject(path);
     }
   }
 }

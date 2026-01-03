@@ -26,7 +26,7 @@ namespace Auxiliary.Transform.Commands
       get => numbers;
       set => numbers = value;
     }
-    private long[] numbers;
+    private long[] numbers = [];
 
     [Parameter(
       HelpMessage = "Output hexadecimal letters in lowercase"
