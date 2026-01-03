@@ -13,7 +13,7 @@ namespace Core.Shell.Clear.Commands
   )]
   [Alias("cl", "clear")]
   [OutputType(typeof(void))]
-  public class ClearLine : PSCmdlet
+  public class ClearLine : PSCoreCommand
   {
     [Parameter(
       ParameterSetName = "Path",

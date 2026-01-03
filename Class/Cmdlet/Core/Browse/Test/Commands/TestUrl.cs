@@ -13,7 +13,7 @@ namespace Core.Browse.Test.Commands
   )]
   [Alias("tu")]
   [OutputType(typeof(Uri))]
-  public class TestUrl : PSCmdlet
+  public class TestUrl : PSCoreCommand
   {
     [Parameter(
       Mandatory = true,
@@ -100,10 +100,7 @@ namespace Core.Browse.Test.Commands
 
           if (status >= 200 && status < 300)
           {
-            WriteObject(
-              fullUrl,
-              true
-            );
+            WriteObject(fullUrl);
           }
         }
       }

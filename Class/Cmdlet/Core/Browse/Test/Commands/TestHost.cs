@@ -12,7 +12,7 @@ namespace Core.Browse.Test.Commands
   )]
   [Alias("tn")]
   [OutputType(typeof(Object))]
-  public class TestHost : PSCmdlet
+  public class TestHost : PSCoreCommand
   {
     [Parameter(
       Position = 0,

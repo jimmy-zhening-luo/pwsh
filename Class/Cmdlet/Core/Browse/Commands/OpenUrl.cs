@@ -12,7 +12,7 @@ namespace Core.Browse.Commands
   )]
   [OutputType(typeof(void))]
   [Alias("o", "open")]
-  public class OpenUrl : PSCmdlet
+  public class OpenUrl : PSCoreCommand
   {
     [Parameter(
       ParameterSetName = "Path",

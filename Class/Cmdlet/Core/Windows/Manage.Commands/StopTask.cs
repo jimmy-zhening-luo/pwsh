@@ -11,7 +11,7 @@ namespace Core.Windows.Manage.Commands
   )]
   [Alias("tkill")]
   [OutputType(typeof(void))]
-  public class StopTask : PSCmdlet
+  public class StopTask : PSCoreCommand
   {
     [Parameter(
       ParameterSetName = "Name",
