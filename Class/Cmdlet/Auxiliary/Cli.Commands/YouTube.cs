@@ -12,7 +12,7 @@ namespace Auxiliary.Cli.Commands
   {
     protected override void EndProcessing()
     {
-      Context.CreateProcess(
+      Core.Context.CreateProcess(
         System.IO.Path.Combine(
           @"Videos\YouTube",
           System.Environment.GetFolderPath(
