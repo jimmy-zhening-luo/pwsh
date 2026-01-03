@@ -28,6 +28,28 @@ namespace Core
           }
         }
       }
+
+      [Cmdlet(
+        VerbsData.Update,
+        "StoreApp"
+      )]
+      [Alias("su")]
+      [OutputType(typeof(void))]
+      public class UpdateStoreApp : Cmdlet
+      {
+        protected override void EndProcessing()
+        {
+          if (!Context.Ssh())
+          {
+            Process.Start(
+              new ProcessStartInfo("ms-windows-store://downloadsandupdates")
+              {
+                UseShellExecute = true
+              }
+            );
+          }
+        }
+      }
     }
   } // namespace Windows
 } // namespace Core

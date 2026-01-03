@@ -11,6 +11,7 @@
   CmdletsToExport      = @(
     'Clear-Line'
     'Update-Windows'
+    'Update-StoreApp'
     'Open-Url'
     'Test-Url'
     'Test-Host'
@@ -20,6 +21,7 @@
     'cl'
     'clear'
     'wu'
+    'su'
     'o'
     'open'
     'tu'

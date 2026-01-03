@@ -108,29 +108,6 @@ function Remove-WinGetApp {
   }
 }
 
-<#
-.SYNOPSIS
-Opens the 'Microsoft Store' app to the 'Updates & downloads' page.
-
-.DESCRIPTION
-This function invokes the URI 'ms-windows-store://downloadsandupdates' to open the 'Updates & downloads' page in the 'Microsoft Store' app.
-
-.COMPONENT
-WindowsSystem.App
-#>
-function Update-StoreApp {
-  [CmdletBinding()]
-  [OutputType([void])]
-  [Alias('su')]
-  param()
-
-  if ($env:SSH_CLIENT) {
-    throw 'Cannot launch Microsoft Store app during SSH session'
-  }
-
-  Start-Process -FilePath ms-windows-store://downloadsandupdates
-}
-
 New-Alias gapx Appx\Get-AppxPackage
 New-Alias remapx Appx\Remove-AppxPackage
 New-Alias wget $env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe

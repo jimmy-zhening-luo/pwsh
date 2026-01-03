@@ -8,7 +8,6 @@
   Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
   PowerShellVersion    = '7.4'
   FunctionsToExport    = @(
-    'Update-StoreApp'
     'Update-WinGetApp'
     'Add-WinGetApp'
     'Find-WinGetApp'
@@ -24,6 +23,5 @@
     'wga'
     'wgf'
     'wgr'
-    'su'
   )
 }
