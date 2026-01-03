@@ -44,6 +44,11 @@ namespace Auxiliary.Transform.Commands
         guid = guid.ToUpper();
       }
 
+      if (!silent)
+      {
+        WriteObject(guid);
+      }
+
       using var ps = PowerShell.Create(
         RunspaceMode.CurrentRunspace
       );
@@ -53,25 +58,7 @@ namespace Auxiliary.Transform.Commands
           "Value",
           new string[] { guid }
         );
-
       ps.Invoke();
-
-      if (ps.HadErrors)
-      {
-        WriteError(
-          new ErrorRecord(
-            ps.Streams.Error[0].Exception,
-            "Set-Clipboard Error",
-            ErrorCategory.NotSpecified,
-            null
-          )
-        );
-      }
-
-      if (!silent)
-      {
-        WriteObject(guid);
-      }
     }
   }
 }
