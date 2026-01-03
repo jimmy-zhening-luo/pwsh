@@ -4,6 +4,7 @@
     'Auxiliary'
   )
   Types   = @(
+    'Context'
     'Completer'
   )
 }

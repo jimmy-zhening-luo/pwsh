@@ -1,7 +1,7 @@
 namespace Auxiliary.Cli.Commands
 {
   using System.Management.Automation;
-  using Core;
+  using Context;
 
   [Cmdlet(
     VerbsLifecycle.Invoke,

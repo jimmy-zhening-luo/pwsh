@@ -1,4 +1,4 @@
-namespace Core
+namespace Context
 {
   using System;
   using System.Diagnostics;

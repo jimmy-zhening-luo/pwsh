@@ -9,6 +9,7 @@
     <PackageReference Include="Microsoft.PowerShell.Commands.Utility" Version="7.4.0" PrivateAssets="All"/>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Type\Context\Context.csproj"/>
     <ProjectReference Include="..\..\Type\Completer\Completer.csproj"/>
   </ItemGroup>
 </Project>

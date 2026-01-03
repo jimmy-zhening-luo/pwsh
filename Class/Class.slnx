@@ -4,6 +4,7 @@
     <Project Path="Cmdlet/Auxiliary/Auxiliary.csproj"/>
   </Folder>
   <Folder Name="/Type/">
+    <Project Path="Type/Context/Context.csproj"/>
     <Project Path="Type/Completer/Completer.csproj"/>
   </Folder>
 </Solution>
