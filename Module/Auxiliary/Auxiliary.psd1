@@ -11,6 +11,7 @@
   CmdletsToExport      = @(
     'Copy-Guid'
     'ConvertTo-Hex'
+    'Invoke-YouTubeDirectory'
     'Test-Cmdlet'
   )
   VariablesToExport    = @()
@@ -18,6 +19,7 @@
     'gu'
     'guid'
     'hex'
+    'yte'
     'test'
   )
 }
