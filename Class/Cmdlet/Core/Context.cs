@@ -8,4 +8,4 @@ namespace Core
       "SSH_CLIENT"
     ) != null;
   }
-} // namespace Core
+}
