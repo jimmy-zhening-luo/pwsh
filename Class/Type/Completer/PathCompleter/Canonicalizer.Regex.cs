@@ -1,10 +1,11 @@
 namespace Completer.PathCompleter
 {
+  using System.Text.RegularExpressions;
   public static partial class Canonicalizer
   {
-    [System.Text.RegularExpressions.GeneratedRegex(
+    [GeneratedRegex(
       @"(?<!^)(?>\\\\+)"
     )]
-    public static partial System.Text.RegularExpressions.Regex DuplicateSeparatorRegex();
+    public static partial Regex DuplicateSeparatorRegex();
   }
 }
