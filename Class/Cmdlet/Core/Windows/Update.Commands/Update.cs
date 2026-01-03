@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Management.Automation;
 
 namespace Core.Windows.Update.Commands
@@ -13,15 +12,9 @@ namespace Core.Windows.Update.Commands
   {
     protected override void EndProcessing()
     {
-      if (!Context.Ssh())
-      {
-        Process.Start(
-          new ProcessStartInfo("ms-settings:windowsupdate")
-          {
-            UseShellExecute = true
-          }
-        );
-      }
+      Context.Start(
+        "ms-settings:windowsupdate"
+      );
     }
   }
 
@@ -35,15 +28,9 @@ namespace Core.Windows.Update.Commands
   {
     protected override void EndProcessing()
     {
-      if (!Context.Ssh())
-      {
-        Process.Start(
-          new ProcessStartInfo("ms-windows-store://downloadsandupdates")
-          {
-            UseShellExecute = true
-          }
-        );
-      }
+      Context.Start(
+        "ms-windows-store://downloadsandupdates"
+      );
     }
   }
 }

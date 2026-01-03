@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Management.Automation;
 using Completer.PathCompleter;
 
@@ -47,17 +46,20 @@ namespace Core.Browse.Commands
 
     protected override void ProcessRecord()
     {
-      if (!Context.Ssh() && ParameterSetName == "Uri")
+      if (ParameterSetName == "Uri")
       {
         foreach (Uri u in uri)
         {
-          ProcessStartInfo psi = new(@"C:\Program Files\Google\Chrome\Application\chrome.exe");
           string url = u.ToString().Trim();
 
           if (url != string.Empty)
           {
-            psi.Arguments = url;
-            Process.Start(psi);
+            Context.Start(
+              @"C:\Program Files\Google\Chrome\Application\chrome.exe",
+              url,
+              false,
+              true
+            );
           }
         }
       }
@@ -65,10 +67,10 @@ namespace Core.Browse.Commands
 
     protected override void EndProcessing()
     {
-      if (!Context.Ssh() && ParameterSetName == "Path")
+      if (ParameterSetName == "Path")
       {
-        ProcessStartInfo psi = new(@"C:\Program Files\Google\Chrome\Application\chrome.exe");
         string cleanPath = path.Trim();
+        string target = string.Empty;
 
         if (cleanPath != string.Empty)
         {
@@ -85,14 +87,19 @@ namespace Core.Browse.Commands
                 relativePath
               );
 
-          psi.Arguments = System.IO.Path.Exists(testPath)
+          target = System.IO.Path.Exists(testPath)
             ? System.IO.Path.GetFullPath(
                 testPath
               )
             : cleanPath;
         }
 
-        Process.Start(psi);
+        Context.Start(
+          @"C:\Program Files\Google\Chrome\Application\chrome.exe",
+          target,
+          false,
+          true
+        );
       }
     }
   }

@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Management.Automation;
 
 namespace Core.Windows.Configure.Commands
@@ -23,22 +22,11 @@ namespace Core.Windows.Configure.Commands
 
     protected override void EndProcessing()
     {
-      if (!Context.Ssh())
-      {
-        var startInfo = new ProcessStartInfo(
-          "rundll32.exe",
-          [
-            "sysdm.cpl",
-            "EditEnvironmentVariables"
-          ]
-        );
-        if (administrator)
-        {
-          startInfo.UseShellExecute = true;
-          startInfo.Verb = "runas";
-        }
-        Process.Start(startInfo);
-      }
+      Context.Start(
+        "rundll32.exe",
+        "sysdm.cpl,EditEnvironmentVariables",
+        administrator
+      );
     }
   }
 }
