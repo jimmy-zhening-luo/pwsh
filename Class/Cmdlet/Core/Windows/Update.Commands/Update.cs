@@ -12,7 +12,7 @@ namespace Core.Windows.Update.Commands
   {
     protected override void EndProcessing()
     {
-      Context.Start(
+      Context.ShellExecute(
         "ms-settings:windowsupdate"
       );
     }
@@ -28,7 +28,7 @@ namespace Core.Windows.Update.Commands
   {
     protected override void EndProcessing()
     {
-      Context.Start(
+      Context.ShellExecute(
         "ms-windows-store://downloadsandupdates"
       );
     }

@@ -54,11 +54,9 @@ namespace Core.Browse.Commands
 
           if (url != string.Empty)
           {
-            Context.Start(
+            Context.ShellExecute(
               @"C:\Program Files\Google\Chrome\Application\chrome.exe",
-              url,
-              false,
-              true
+              url
             );
           }
         }
@@ -94,11 +92,9 @@ namespace Core.Browse.Commands
             : cleanPath;
         }
 
-        Context.Start(
+        Context.ShellExecute(
           @"C:\Program Files\Google\Chrome\Application\chrome.exe",
-          target,
-          false,
-          true
+          target
         );
       }
     }

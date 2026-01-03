@@ -22,7 +22,7 @@ namespace Core.Windows.Configure.Commands
 
     protected override void EndProcessing()
     {
-      Context.Start(
+      Context.ShellExecute(
         "rundll32.exe",
         "sysdm.cpl,EditEnvironmentVariables",
         administrator

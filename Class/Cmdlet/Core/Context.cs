@@ -9,11 +9,9 @@ namespace Core
       "SSH_CLIENT"
     ) != null;
 
-    public static void Start(
+    public static void CreateProcess(
       string fileName,
-      string arguments = "",
-      bool runAsAdmin = false,
-      bool noShellExecute = false
+      string arguments = ""
     )
     {
       if (!Ssh())
@@ -25,15 +23,31 @@ namespace Core
           startInfo.Arguments = arguments;
         }
 
-        if (runAsAdmin)
+        Process.Start(startInfo);
+      }
+    }
+
+    public static void ShellExecute(
+      string fileName,
+      string arguments = "",
+      bool runAsAdmin = false
+    )
+    {
+      if (!Ssh())
+      {
+        var startInfo = new ProcessStartInfo(fileName)
         {
-          startInfo.UseShellExecute = true;
-          startInfo.Verb = "RunAs";
+          UseShellExecute = true
+        };
+
+        if (arguments != string.Empty)
+        {
+          startInfo.Arguments = arguments;
         }
 
-        if (!noShellExecute)
+        if (runAsAdmin)
         {
-          startInfo.UseShellExecute = true;
+          startInfo.Verb = "RunAs";
         }
 
         Process.Start(startInfo);
