@@ -1,8 +1,8 @@
-using System.Diagnostics;
-using System.Management.Automation;
-
 namespace Core.Windows.Manage.Commands
 {
+  using System.Diagnostics;
+  using System.Management.Automation;
+
   [Cmdlet(
     VerbsLifecycle.Stop,
     "Task",

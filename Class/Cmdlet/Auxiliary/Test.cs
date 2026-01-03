@@ -1,7 +1,7 @@
-using System.Management.Automation;
-
 namespace Auxiliary
 {
+  using System.Management.Automation;
+
   [Cmdlet(
     VerbsDiagnostic.Test,
     "Cmdlet",

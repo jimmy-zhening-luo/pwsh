@@ -1,7 +1,7 @@
-using System.Management.Automation;
-
 namespace Auxiliary.Transform.Commands
 {
+  using System.Management.Automation;
+
   [Cmdlet(
     VerbsData.ConvertTo,
     "Hex",

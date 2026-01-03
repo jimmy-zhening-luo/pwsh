@@ -1,8 +1,8 @@
-using System;
-using System.Diagnostics;
-
 namespace Core
 {
+  using System;
+  using System.Diagnostics;
+
   public static class Context
   {
     public static bool Ssh() => Environment.GetEnvironmentVariable(

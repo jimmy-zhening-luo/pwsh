@@ -1,9 +1,9 @@
-using System;
-using System.Management.Automation;
-using Completer.PathCompleter;
-
 namespace Core.Browse.Commands
 {
+  using System;
+  using System.Management.Automation;
+  using Completer.PathCompleter;
+
   [Cmdlet(
     VerbsCommon.Open,
     "Url",

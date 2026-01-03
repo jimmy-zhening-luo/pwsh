@@ -1,9 +1,9 @@
-using System;
-using System.Management.Automation;
-using Completer;
-
 namespace Core.Browse.Test.Commands
 {
+  using System;
+  using System.Management.Automation;
+  using Completer;
+
   [Cmdlet(
     VerbsDiagnostic.Test,
     "Host",

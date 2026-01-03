@@ -1,7 +1,7 @@
-using System.Management.Automation;
-
 namespace Core.Windows.Configure.Commands
 {
+  using System.Management.Automation;
+
   [Cmdlet(
     VerbsData.Edit,
     "SystemPath"

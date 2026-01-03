@@ -1,7 +1,7 @@
-using System.Management.Automation;
-
 namespace Core.Windows.Update.Commands
 {
+  using System.Management.Automation;
+
   [Cmdlet(
     VerbsData.Update,
     "Windows"
