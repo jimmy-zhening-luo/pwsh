@@ -2,60 +2,57 @@ using System;
 using System.IO;
 using System.Management.Automation;
 
-namespace Completer
+namespace Completer.PathCompleter
 {
-  namespace PathCompleter
+  [AttributeUsage(
+    AttributeTargets.Parameter
+    | AttributeTargets.Property
+    | AttributeTargets.Field
+  )]
+  public class RelativePathCompletionsAttribute : BaseCompletionsAttribute<PathCompleter>
   {
-    [AttributeUsage(
-      AttributeTargets.Parameter
-      | AttributeTargets.Property
-      | AttributeTargets.Field
-    )]
-    public class RelativePathCompletionsAttribute : BaseCompletionsAttribute<PathCompleter>
+    public readonly string RelativeLocation = string.Empty;
+    public readonly PathItemType ItemType;
+    public readonly bool Flat;
+
+    public RelativePathCompletionsAttribute() : base() { }
+
+    public RelativePathCompletionsAttribute(string relativeLocation) : this() => RelativeLocation = relativeLocation;
+
+    public RelativePathCompletionsAttribute(
+      string relativeLocation,
+      PathItemType itemType
+    ) : this(relativeLocation) => ItemType = itemType;
+
+    public RelativePathCompletionsAttribute(
+      string relativeLocation,
+      PathItemType itemType,
+      bool flat
+    ) : this(relativeLocation, itemType) => Flat = flat;
+
+    public override PathCompleter Create()
     {
-      public readonly string RelativeLocation = string.Empty;
-      public readonly PathItemType ItemType;
-      public readonly bool Flat;
+      string pwd = PowerShell
+        .Create(RunspaceMode.CurrentRunspace)
+        .AddCommand("Get-Location")
+        .Invoke()[0]
+        .BaseObject
+        .ToString();
 
-      public RelativePathCompletionsAttribute() : base() { }
-
-      public RelativePathCompletionsAttribute(string relativeLocation) : this() => RelativeLocation = relativeLocation;
-
-      public RelativePathCompletionsAttribute(
-        string relativeLocation,
-        PathItemType itemType
-      ) : this(relativeLocation) => ItemType = itemType;
-
-      public RelativePathCompletionsAttribute(
-        string relativeLocation,
-        PathItemType itemType,
-        bool flat
-      ) : this(relativeLocation, itemType) => Flat = flat;
-
-      public override PathCompleter Create()
-      {
-        string pwd = PowerShell
-          .Create(RunspaceMode.CurrentRunspace)
-          .AddCommand("Get-Location")
-          .Invoke()[0]
-          .BaseObject
-          .ToString();
-
-        return new(
-          Path.GetFullPath(
-            RelativeLocation == string.Empty
-              ? string.Empty
-              : Path.GetRelativePath(
-                  pwd,
-                  RelativeLocation
-                ),
-            pwd
-          ),
-          ItemType,
-          Flat,
+      return new(
+        Path.GetFullPath(
           RelativeLocation == string.Empty
-        );
-      }
+            ? string.Empty
+            : Path.GetRelativePath(
+                pwd,
+                RelativeLocation
+              ),
+          pwd
+        ),
+        ItemType,
+        Flat,
+        RelativeLocation == string.Empty
+      );
     }
-  } // namespace PathCompleter
-} // namespace Completer
+  }
+}

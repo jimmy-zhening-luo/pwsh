@@ -1,17 +1,14 @@
-namespace Completer
+namespace Completer.PathCompleter
 {
-  namespace PathCompleter
+  public enum PathItemType
   {
-    public enum PathItemType
-    {
-      Any,
-      File,
-      Directory,
-      RegistryKey,
-      EnvironmentVariable,
-      Variable,
-      Alias,
-      Function
-    }
-  } // namespace PathCompleter
-} // namespace Completer
+    Any,
+    File,
+    Directory,
+    RegistryKey,
+    EnvironmentVariable,
+    Variable,
+    Alias,
+    Function
+  }
+}

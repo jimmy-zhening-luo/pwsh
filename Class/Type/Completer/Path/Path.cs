@@ -1,135 +1,113 @@
 using System.IO;
 using System.Collections.Generic;
 
-namespace Completer
+namespace Completer.PathCompleter
 {
-  namespace PathCompleter
+  public class PathCompleter : BaseCompleter
   {
-    public class PathCompleter : BaseCompleter
+    public readonly string Root;
+    public readonly PathItemType Type;
+    public readonly bool Flat;
+    public readonly bool Reanchor;
+
+    public PathCompleter(
+      string root,
+      PathItemType type,
+      bool flat,
+      bool reanchor
+    ) : base() => (Root, Type, Flat, Reanchor) =
+    (
+      Canonicalizer.AnchorHome(
+        Canonicalizer.Normalize(root)
+      ),
+      type,
+      flat,
+      reanchor
+    );
+
+    public override IEnumerable<string> FulfillCompletion(string wordToComplete)
     {
-      public readonly string Root;
-      public readonly PathItemType Type;
-      public readonly bool Flat;
-      public readonly bool Reanchor;
+      string pathToComplete = Canonicalizer
+        .Normalize(wordToComplete, true)
+        .Trim();
+      string accumulatedSubpath = string.Empty;
+      string location = string.Empty;
+      string filter = string.Empty;
 
-      public PathCompleter(
-        string root,
-        PathItemType type,
-        bool flat,
-        bool reanchor
-      ) : base() => (Root, Type, Flat, Reanchor) =
-      (
-        Canonicalizer.AnchorHome(
-          Canonicalizer.Normalize(root)
-        ),
-        type,
-        flat,
-        reanchor
-      );
-
-      public override IEnumerable<string> FulfillCompletion(string wordToComplete)
+      while (pathToComplete != string.Empty)
       {
-        string pathToComplete = Canonicalizer
-          .Normalize(wordToComplete, true)
-          .Trim();
-        string accumulatedSubpath = string.Empty;
-        string location = string.Empty;
-        string filter = string.Empty;
+        int pathEnd = pathToComplete.LastIndexOf('\\');
 
-        while (pathToComplete != string.Empty)
+        if (pathEnd < 0)
         {
-          int pathEnd = pathToComplete.LastIndexOf('\\');
+          filter = pathToComplete;
+          pathToComplete = string.Empty;
+        }
+        else
+        {
+          string subpathPart = pathToComplete[..pathEnd].Trim();
 
-          if (pathEnd < 0)
+          int wordStart = pathEnd + 1;
+
+          if (wordStart < pathToComplete.Length)
           {
-            filter = pathToComplete;
+            filter = pathToComplete[wordStart..].Trim();
+          }
+
+          if (subpathPart == string.Empty)
+          {
             pathToComplete = string.Empty;
           }
           else
           {
-            string subpathPart = pathToComplete[..pathEnd].Trim();
+            string anchoredPath = Path.GetFullPath(
+              subpathPart,
+              Root
+            );
 
-            int wordStart = pathEnd + 1;
-
-            if (wordStart < pathToComplete.Length)
+            if (Directory.Exists(anchoredPath))
             {
-              filter = pathToComplete[wordStart..].Trim();
+              accumulatedSubpath = Path.GetRelativePath(
+                Root,
+                anchoredPath
+              );
+              location = anchoredPath;
+              pathToComplete = string.Empty;
             }
-
-            if (subpathPart == string.Empty)
+            else if (
+              Reanchor
+              && Directory.Exists(subpathPart)
+            )
             {
+              accumulatedSubpath = Path.GetFullPath(subpathPart);
+              location = accumulatedSubpath;
               pathToComplete = string.Empty;
             }
             else
             {
-              string anchoredPath = Path.GetFullPath(
-                subpathPart,
-                Root
-              );
-
-              if (Directory.Exists(anchoredPath))
-              {
-                accumulatedSubpath = Path.GetRelativePath(
-                  Root,
-                  anchoredPath
-                );
-                location = anchoredPath;
-                pathToComplete = string.Empty;
-              }
-              else if (
-                Reanchor
-                && Directory.Exists(subpathPart)
-              )
-              {
-                accumulatedSubpath = Path.GetFullPath(subpathPart);
-                location = accumulatedSubpath;
-                pathToComplete = string.Empty;
-              }
-              else
-              {
-                filter = string.Empty;
-                pathToComplete = subpathPart;
-              }
+              filter = string.Empty;
+              pathToComplete = subpathPart;
             }
           }
         }
+      }
 
-        if (location == string.Empty)
-        {
-          location = Root;
-        }
+      if (location == string.Empty)
+      {
+        location = Root;
+      }
 
-        int count = 0;
-        filter += "*";
-        EnumerationOptions attributes = new()
-        {
-          IgnoreInaccessible = false
-        };
+      int count = 0;
+      filter += "*";
+      EnumerationOptions attributes = new()
+      {
+        IgnoreInaccessible = false
+      };
 
-        if (Type == PathItemType.File)
-        {
-          foreach (
-            string file in Directory.EnumerateFiles(
-              location,
-              filter,
-              attributes
-            )
-          )
-          {
-            ++count;
-            yield return Canonicalizer.Denormalize(
-              Path.GetFileName(file),
-              accumulatedSubpath
-            );
-          }
-        }
-
-        string directoryCap = Flat
-          ? string.Empty
-          : @"\";
-
+      if (Type == PathItemType.File)
+      {
         foreach (
-          string directory in Directory.EnumerateDirectories(
+          string file in Directory.EnumerateFiles(
             location,
             filter,
             attributes
@@ -138,51 +116,70 @@ namespace Completer
         {
           ++count;
           yield return Canonicalizer.Denormalize(
-            Path.GetFileName(directory),
-            accumulatedSubpath,
-            directoryCap
-          );
-        }
-
-        if (Type == PathItemType.Any)
-        {
-          foreach (
-            string file in Directory.EnumerateFiles(
-              location,
-              filter,
-              attributes
-            )
-          )
-          {
-            ++count;
-            yield return Canonicalizer.Denormalize(
-              Path.GetFileName(file),
-              accumulatedSubpath
-            );
-          }
-        }
-
-        if (accumulatedSubpath != string.Empty)
-        {
-          yield return Canonicalizer.Denormalize(
-            @"\",
+            Path.GetFileName(file),
             accumulatedSubpath
           );
         }
+      }
 
-        if (
-          accumulatedSubpath != string.Empty
-          || count != 0
+      string directoryCap = Flat
+        ? string.Empty
+        : @"\";
+
+      foreach (
+        string directory in Directory.EnumerateDirectories(
+          location,
+          filter,
+          attributes
+        )
+      )
+      {
+        ++count;
+        yield return Canonicalizer.Denormalize(
+          Path.GetFileName(directory),
+          accumulatedSubpath,
+          directoryCap
+        );
+      }
+
+      if (Type == PathItemType.Any)
+      {
+        foreach (
+          string file in Directory.EnumerateFiles(
+            location,
+            filter,
+            attributes
+          )
         )
         {
+          ++count;
           yield return Canonicalizer.Denormalize(
-            @"..\",
+            Path.GetFileName(file),
             accumulatedSubpath
           );
         }
-
-        yield break;
       }
+
+      if (accumulatedSubpath != string.Empty)
+      {
+        yield return Canonicalizer.Denormalize(
+          @"\",
+          accumulatedSubpath
+        );
+      }
+
+      if (
+        accumulatedSubpath != string.Empty
+        || count != 0
+      )
+      {
+        yield return Canonicalizer.Denormalize(
+          @"..\",
+          accumulatedSubpath
+        );
+      }
+
+      yield break;
     }
-  } // namespace PathCompleter
-} // namespace Completer
+  }
+}

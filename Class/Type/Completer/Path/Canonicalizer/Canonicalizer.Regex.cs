@@ -1,15 +1,12 @@
 using System.Text.RegularExpressions;
 
-namespace Completer
+namespace Completer.PathCompleter
 {
-  namespace PathCompleter
+  public static partial class Canonicalizer
   {
-    public static partial class Canonicalizer
-    {
-      [GeneratedRegex(
-        @"(?<!^)(?>\\\\+)"
-      )]
-      public static partial Regex DuplicateSeparatorRegex();
-    }
-  } // namespace PathCompleter
-} // namespace Completer
+    [GeneratedRegex(
+      @"(?<!^)(?>\\\\+)"
+    )]
+    public static partial Regex DuplicateSeparatorRegex();
+  }
+}
