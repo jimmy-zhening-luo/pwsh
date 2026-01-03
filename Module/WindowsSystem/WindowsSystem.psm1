@@ -186,43 +186,6 @@ function Stop-Task {
   }
 }
 
-<#
-.SYNOPSIS
-Opens the 'Environment Variables' dialog as a standalone window.
-
-.DESCRIPTION
-This function invokes 'rundll32' on 'sysdm.cpl' ('System Properties' control panel) with the 'EditEnvironmentVariables' argument, which opens the 'Environment Variables' dialog directly.
-
-.COMPONENT
-WindowsSystem
-#>
-function Edit-SystemPath {
-  [CmdletBinding()]
-  [OutputType([void])]
-  [Alias('path')]
-  param(
-
-    # Launch Environment Variables control panel as administrator to edit system variables
-    [switch]$Administrator
-  )
-
-  if ($env:SSH_CLIENT) {
-    throw 'Cannot present Control Panel during SSH session'
-  }
-
-  $ControlPanel = @{
-    FilePath     = "$env:SystemRoot\System32\rundll32.exe"
-    ArgumentList = @(
-      'sysdm.cpl'
-      'EditEnvironmentVariables'
-    )
-  }
-  if ($Administrator) {
-    $ControlPanel.Verb = 'RunAs'
-  }
-  Start-Process @ControlPanel
-}
-
 New-Alias restart Restart-Computer
 New-Alias sesv Set-Service
 New-Alias remsv Remove-Service
