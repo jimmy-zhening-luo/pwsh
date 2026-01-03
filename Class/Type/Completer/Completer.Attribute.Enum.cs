@@ -1,7 +1,7 @@
-using System;
-
 namespace Completer
 {
+  using System;
+
   [AttributeUsage(
     AttributeTargets.Parameter
     | AttributeTargets.Property

@@ -1,7 +1,7 @@
-using System.Management.Automation.Language;
-
 namespace Completer
 {
+  using System.Management.Automation.Language;
+
   public static class Escaper
   {
     public static string Unescape(string escapedText) => (

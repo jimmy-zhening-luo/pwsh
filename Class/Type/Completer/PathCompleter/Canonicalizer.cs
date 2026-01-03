@@ -1,8 +1,8 @@
-using System;
-using System.IO;
-
 namespace Completer.PathCompleter
 {
+  using System;
+  using System.IO;
+
   public static partial class Canonicalizer
   {
     public static string Normalize(

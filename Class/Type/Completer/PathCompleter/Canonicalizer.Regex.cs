@@ -1,7 +1,7 @@
-using System.Text.RegularExpressions;
-
 namespace Completer.PathCompleter
 {
+  using System.Text.RegularExpressions;
+
   public static partial class Canonicalizer
   {
     [GeneratedRegex(

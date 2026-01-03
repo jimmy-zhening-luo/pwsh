@@ -1,8 +1,9 @@
-using System;
-using System.Collections.Generic;
-
 namespace Completer
 {
+  using System;
+  using System.Collections.Generic;
+
+
   public class Completer : BaseCompleter
   {
     public readonly IEnumerable<string> Domain;

@@ -1,8 +1,8 @@
-using System.IO;
-using System.Collections.Generic;
-
 namespace Completer.PathCompleter
 {
+  using System.IO;
+  using System.Collections.Generic;
+
   public class PathCompleter : BaseCompleter
   {
     public readonly string Root;

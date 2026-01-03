@@ -1,10 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Management.Automation;
-using System.Management.Automation.Language;
-
 namespace Completer
 {
+  using System.Collections;
+  using System.Collections.Generic;
+  using System.Management.Automation;
+  using System.Management.Automation.Language;
+
   public abstract class BaseContextCompleter : BaseCompleter
   {
     protected BaseContextCompleter() : base() { }

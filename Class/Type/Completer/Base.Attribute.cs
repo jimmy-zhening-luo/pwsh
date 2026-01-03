@@ -1,8 +1,8 @@
-using System;
-using System.Management.Automation;
-
 namespace Completer
 {
+  using System;
+  using System.Management.Automation;
+
   [AttributeUsage(
     AttributeTargets.Parameter
     | AttributeTargets.Property

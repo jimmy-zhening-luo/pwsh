@@ -1,9 +1,9 @@
-using System;
-using System.IO;
-using System.Management.Automation;
-
 namespace Completer.PathCompleter
 {
+  using System;
+  using System.IO;
+  using System.Management.Automation;
+
   [AttributeUsage(
     AttributeTargets.Parameter
     | AttributeTargets.Property
