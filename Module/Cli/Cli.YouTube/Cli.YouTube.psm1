@@ -107,25 +107,6 @@ function Get-YouTubeFormat {
 
 <#
 .SYNOPSIS
-Opens yt-dlp download location in File Explorer.
-
-.DESCRIPTION
-Opens yt-dlp download location in File Explorer, not by config though lmao.
-
-.COMPONENT
-Cli.YouTube
-#>
-function Invoke-YouTubeDirectory {
-  [CmdletBinding()]
-  [OutputType([void])]
-  [Alias('yte')]
-  param()
-
-  Invoke-Item -Path Videos\YouTube
-}
-
-<#
-.SYNOPSIS
 Opens yt-dlp configuration file for editing.
 
 .DESCRIPTION

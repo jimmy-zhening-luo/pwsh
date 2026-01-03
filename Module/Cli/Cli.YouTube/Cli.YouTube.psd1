@@ -11,7 +11,6 @@
     'Get-YouTube'
     'Get-YouTubeAudio'
     'Get-YouTubeFormat'
-    'Invoke-YouTubeDirectory'
     'Invoke-YouTubeConfig'
   )
   CmdletsToExport      = @()
@@ -20,7 +19,6 @@
     'yt'
     'yta'
     'ytf'
-    'yte'
     'ytc'
   )
 }
