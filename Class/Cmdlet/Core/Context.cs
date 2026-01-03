@@ -1,10 +1,8 @@
-using System;
-
 namespace Core
 {
   public static class Context
   {
-    public static bool Ssh() => Environment.GetEnvironmentVariable(
+    public static bool Ssh() => System.Environment.GetEnvironmentVariable(
       "SSH_CLIENT"
     ) != null;
   }

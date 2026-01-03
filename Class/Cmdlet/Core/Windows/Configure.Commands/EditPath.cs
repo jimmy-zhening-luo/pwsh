@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using System.Management.Automation;
 
-namespace Core.Windows
+namespace Core.Windows.Configure.Commands
 {
   [Cmdlet(
     VerbsData.Edit,
