@@ -1,6 +1,7 @@
 namespace Auxiliary.Cli.Commands
 {
   using System.Management.Automation;
+  using Core;
 
   [Cmdlet(
     VerbsLifecycle.Invoke,
@@ -12,7 +13,7 @@ namespace Auxiliary.Cli.Commands
   {
     protected override void EndProcessing()
     {
-      Core.Context.CreateProcess(
+      Context.CreateProcess(
         System.IO.Path.Combine(
           @"Videos\YouTube",
           System.Environment.GetFolderPath(
