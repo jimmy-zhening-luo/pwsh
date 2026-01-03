@@ -50,24 +50,7 @@ namespace Completer.PathCompleter
         || path[1] == '\\'
       );
 
-    public static bool IsDescendantOf(
-      string path,
-      string location
-    ) => Path
-      .GetRelativePath(
-        path,
-        location
-      )
-      .Replace(".", string.Empty)
-      .Replace(@"\", string.Empty) == string.Empty;
-
     public static string RemoveRelativeRoot(string path) => IsRelativelyRooted(path)
-      ? path.Length == 1
-        ? string.Empty
-        : path[2..]
-      : path;
-
-    public static string RemoveHomeRoot(string path) => IsHomeRooted(path)
       ? path.Length == 1
         ? string.Empty
         : path[2..]
