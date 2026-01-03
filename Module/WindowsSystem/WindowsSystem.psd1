@@ -16,7 +16,6 @@
   )
   FunctionsToExport    = @(
     'Invoke-CommandPrompt'
-    'Stop-Task'
     'Update-WinGetApp'
     'Add-WinGetApp'
     'Find-WinGetApp'
@@ -28,7 +27,6 @@
     'restart'
     'sesv'
     'remsv'
-    'tkill'
     'gapx'
     'remapx'
     'wget'
