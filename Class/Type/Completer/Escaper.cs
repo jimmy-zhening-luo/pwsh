@@ -1,7 +1,5 @@
 namespace Completer
 {
-  using System.Management.Automation.Language;
-
   public static class Escaper
   {
     public static string Unescape(string escapedText) => (
@@ -14,7 +12,7 @@ namespace Completer
 
     public static string Escape(string text) => text.Contains(' ')
       ? "'"
-        + CodeGeneration.EscapeSingleQuotedStringContent(text)
+        + System.Management.Automation.Language.CodeGeneration.EscapeSingleQuotedStringContent(text)
         + "'"
       : text;
   }
