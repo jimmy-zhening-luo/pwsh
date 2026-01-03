@@ -34,8 +34,8 @@ namespace Auxiliary.Transform.Commands
     [Alias("Case")]
     public SwitchParameter Lowercase
     {
-      get { return lowercase; }
-      set { lowercase = value; }
+      get => lowercase;
+      set => lowercase = value;
     }
     private bool lowercase;
 

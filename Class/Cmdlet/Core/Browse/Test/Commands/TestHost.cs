@@ -73,8 +73,8 @@ namespace Core.Browse.Test.Commands
     [Parameter]
     public SwitchParameter Detailed
     {
-      get { return detailed; }
-      set { detailed = value; }
+      get => detailed;
+      set => detailed = value;
     }
     private bool detailed;
 

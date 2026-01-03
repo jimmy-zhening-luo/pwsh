@@ -17,8 +17,8 @@ namespace Auxiliary.Transform.Commands
     [Alias("Case")]
     public SwitchParameter Uppercase
     {
-      get { return uppercase; }
-      set { uppercase = value; }
+      get => uppercase;
+      set => uppercase = value;
     }
     private bool uppercase;
 
@@ -27,8 +27,8 @@ namespace Auxiliary.Transform.Commands
     )]
     public SwitchParameter Silent
     {
-      get { return silent; }
-      set { silent = value; }
+      get => silent;
+      set => silent = value;
     }
     private bool silent;
 
