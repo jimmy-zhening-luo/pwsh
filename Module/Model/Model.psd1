@@ -12,12 +12,15 @@
   VariablesToExport    = @()
   AliasesToExport      = @(
     '^'
-    't'
-    'to'
+    's'
+    'sel'
     'k'
     'key'
+    'keys'
     'count'
     'z'
+    'tab'
+    'table'
     'format'
   )
 }

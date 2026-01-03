@@ -1,9 +1,11 @@
 New-Alias ^ Select-Object
-New-Alias t Select-Object
-New-Alias to Select-Object
+New-Alias s Select-Object
+New-Alias sel Select-Object
 New-Alias k Get-Member
 New-Alias key Get-Member
+New-Alias keys Get-Member
 New-Alias count Measure-Object
 New-Alias z Sort-Object
-New-Alias form Format-Table
+New-Alias tab Format-Table
+New-Alias table Format-Table
 New-Alias format Format-Table
