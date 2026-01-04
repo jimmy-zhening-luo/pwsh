@@ -2,7 +2,7 @@
 . $PSScriptRoot\Script\Install.ps1
 . $PSScriptRoot\Script\Test.ps1
 
-if (-not -not $Env:SSH_CLIENT) {
+if ($null -ne $Env:SSH_CLIENT) {
   . $PSScriptRoot\Script\Key.ps1
 }
 
