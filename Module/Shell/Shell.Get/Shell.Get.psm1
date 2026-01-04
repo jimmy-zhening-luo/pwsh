@@ -1,15 +1,6 @@
 using namespace Completer
 using namespace Completer.PathCompleter
 
-enum DiskSizeUnit {
-  B
-  KB
-  MB
-  GB
-  TB
-  PB
-}
-
 $DISK_SIZE_UNIT_ALIAS = @{
   K = [DiskSizeUnit]::KB
   M = [DiskSizeUnit]::MB
