@@ -1,6 +1,5 @@
 . $PSScriptRoot\Script\Alias.ps1
 . $PSScriptRoot\Script\Install.ps1
-. $PSScriptRoot\Script\Test.ps1
 
 if ($null -ne $Env:SSH_CLIENT) {
   . $PSScriptRoot\Script\Key.ps1
