@@ -12,7 +12,7 @@ namespace Completer
     public readonly Type EnumType;
     public readonly bool Strict;
 
-    public EnumCompletionsAttribute(Type enumType) : base() => EnumType = enumType;
+    public EnumCompletionsAttribute(Type enumType) : base(CompletionCase.Lower) => EnumType = enumType;
 
     public EnumCompletionsAttribute(
       Type enumType,
