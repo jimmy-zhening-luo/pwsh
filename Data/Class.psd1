@@ -1,5 +1,5 @@
 @{
-  Cmdlets = @(
+  Modules = @(
     'Core'
     'Auxiliary'
   )

@@ -1,7 +1,7 @@
 <Solution>
-  <Folder Name="/Cmdlet/">
-    <Project Path="Cmdlet/Core/Core.csproj"/>
-    <Project Path="Cmdlet/Auxiliary/Auxiliary.csproj"/>
+  <Folder Name="/Module/">
+    <Project Path="Module/Core/Core.csproj"/>
+    <Project Path="Module/Auxiliary/Auxiliary.csproj"/>
   </Folder>
   <Folder Name="/Type/">
     <Project Path="Type/Context/Context.csproj"/>

@@ -59,8 +59,8 @@ using namespace System.Collections.Generic
   #endregion
 
   #region Install
-  $DOTNET_SOLUTION.Cmdlets |
-    Install-PSProject -Class Cmdlet -InstallLocation Module -AppendProject
+  $DOTNET_SOLUTION.Modules |
+    Install-PSProject -Class Module -InstallLocation Module -AppendProject
 
   $DOTNET_SOLUTION.Types |
     Install-PSProject -Class Type -InstallLocation Type
