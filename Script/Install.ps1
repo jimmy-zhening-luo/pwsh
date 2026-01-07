@@ -2,9 +2,41 @@ using namespace System.Collections.Generic
 
 & {
   #region Solution
-  $Root = Split-Path $PSScriptRoot
+  $ROOT = Split-Path $PSScriptRoot
+  $SLNX = Select-Xml -XPath Solution -Path $ROOT\Class\Class.slnx |
+    Select-Object -ExpandProperty Node
 
-  $DOTNET_SOLUTION = Import-PowerShellDataFile -Path $Root\Data\Class.psd1
+  function Expand-PSProject {
+    [CmdletBinding()]
+    [OutputType([string[]])]
+    param(
+      [Parameter(Mandatory)]
+      [ValidateNotNullOrWhiteSpace()]
+      [string]$Class
+    )
+    end {
+      return $SLNX |
+        Select-Xml -XPath (
+          'Folder[@Name="/' + $Class + '/"]'
+        ) |
+        Select-Object -ExpandProperty Node |
+        Select-Object -ExpandProperty Project |
+        Select-Object -ExpandProperty Path |
+        ForEach-Object {
+          $PSItem.Substring(
+            $PSItem.LastIndexOf([char]'/') + 1
+          )
+        } |
+        ForEach-Object {
+          $PSItem.Remove(
+            $PSItem.Length - 7
+          )
+        }
+    }
+  }
+
+  $Modules = Expand-PSProject -Class Module
+  $Types = Expand-PSProject -Class Type
   #endregion
 
   #region Installer
@@ -55,15 +87,14 @@ using namespace System.Collections.Generic
   #endregion
 
   #region Install
-  $DOTNET_SOLUTION.Modules |
+  $Modules |
     Install-PSProject -Class Module -AppendProject
-
-  $DOTNET_SOLUTION.Types |
+  $Types |
     Install-PSProject -Class Type
   #endregion
 
   #region Add Type
-  $DOTNET_SOLUTION.Types |
+  $Types |
     Where-Object {
       Test-Path $Root\Type\$PSItem.dll -PathType Leaf
     } |
