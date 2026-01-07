@@ -27,7 +27,7 @@ using namespace System.Collections.Generic
     )
 
     process {
-      $BuildOutput = "$Root\Class\$Class\$Project\bin\Release\net9.0\$Project.dll"
+      $BuildOutput = "$ROOT\Class\$Class\$Project\bin\Release\net9.0\$Project.dll"
 
       if (Test-Path $BuildOutput -PathType Leaf) {
         $InstallPath = "$Root\$Class" + (
