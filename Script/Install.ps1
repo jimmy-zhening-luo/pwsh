@@ -3,40 +3,20 @@ using namespace System.Collections.Generic
 & {
   #region Solution
   $ROOT = Split-Path $PSScriptRoot
-  $SLNX = Select-Xml -XPath Solution -Path $ROOT\Class\Class.slnx |
-    Select-Object -ExpandProperty Node
+  $CACHE = "$ROOT\Class\Class.json"
 
-  function Expand-PSProject {
-    [CmdletBinding()]
-    [OutputType([string[]])]
-    param(
-      [Parameter(Mandatory)]
-      [ValidateNotNullOrWhiteSpace()]
-      [string]$Class
-    )
-    end {
-      return $SLNX |
-        Select-Xml -XPath (
-          'Folder[@Name="/' + $Class + '/"]'
-        ) |
-        Select-Object -ExpandProperty Node |
-        Select-Object -ExpandProperty Project |
-        Select-Object -ExpandProperty Path |
-        ForEach-Object {
-          $PSItem.Substring(
-            $PSItem.LastIndexOf([char]'/') + 1
-          )
-        } |
-        ForEach-Object {
-          $PSItem.Remove(
-            $PSItem.Length - 7
-          )
-        }
-    }
+  if (-not (Test-Path $CACHE -PathType Leaf)) {
+    throw "Cache file not found: $CACHE"
   }
 
-  $Modules = Expand-PSProject -Class Module
-  $Types = Expand-PSProject -Class Type
+  $Solution = Get-Content -Path $CACHE |
+    ConvertFrom-Json -AsHashtable
+  $Modules = $Solution.Modules
+  $Types = $Solution.Types
+
+  if (-not $Modules -or -not $Types) {
+    throw "Cache file is corrupted: $CACHE"
+  }
   #endregion
 
   #region Installer
