@@ -25,10 +25,6 @@ using namespace System.Collections.Generic
 
       [Parameter(Mandatory)]
       [ValidateNotNullOrWhiteSpace()]
-      [string]$Root,
-
-      [Parameter(Mandatory)]
-      [ValidateNotNullOrWhiteSpace()]
       [string]$InstallLocation,
 
       [switch]$AppendProject
@@ -64,10 +60,10 @@ using namespace System.Collections.Generic
 
   #region Install
   $DOTNET_SOLUTION.Cmdlets |
-    Install-PSProject -Class Cmdlet -Root $Root -InstallLocation Module -AppendProject
+    Install-PSProject -Class Cmdlet -InstallLocation Module -AppendProject
 
   $DOTNET_SOLUTION.Types |
-    Install-PSProject -Class Type -Root $Root -InstallLocation Type
+    Install-PSProject -Class Type -InstallLocation Type
   #endregion
 
   #region Add Type
