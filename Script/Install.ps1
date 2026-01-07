@@ -23,10 +23,6 @@ using namespace System.Collections.Generic
       [ValidateNotNullOrWhiteSpace()]
       [string]$Class,
 
-      [Parameter(Mandatory)]
-      [ValidateNotNullOrWhiteSpace()]
-      [string]$InstallLocation,
-
       [switch]$AppendProject
     )
 
@@ -34,8 +30,8 @@ using namespace System.Collections.Generic
       $BuildOutput = "$Root\Class\$Class\$Project\bin\Release\net9.0\$Project.dll"
 
       if (Test-Path $BuildOutput -PathType Leaf) {
-        $InstallPath = "$Root\$InstallLocation" + (
-          $AppendProject ? "\$Project" : [string]::Empty
+        $InstallPath = "$Root\$Class" + (
+          $AppendProject ? "\$Project" : ''
         )
         $InstalledAssembly = "$InstallPath\$Project.dll"
 
@@ -60,10 +56,10 @@ using namespace System.Collections.Generic
 
   #region Install
   $DOTNET_SOLUTION.Modules |
-    Install-PSProject -Class Module -InstallLocation Module -AppendProject
+    Install-PSProject -Class Module -AppendProject
 
   $DOTNET_SOLUTION.Types |
-    Install-PSProject -Class Type -InstallLocation Type
+    Install-PSProject -Class Type
   #endregion
 
   #region Add Type
