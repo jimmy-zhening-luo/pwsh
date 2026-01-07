@@ -237,7 +237,7 @@ function Publish-PSProfile {
   )
 
 
-  #region Pull Repo
+  #region Repo
   Write-Progress -Activity 'Update Profile' -Status Pull -PercentComplete 0
 
   $GitCommandManifest = @(
@@ -255,7 +255,7 @@ function Publish-PSProfile {
   #endregion
 
 
-  #region Copy Linter
+  #region Linter
   Write-Progress -Activity 'Update Profile' -Status 'Copy Linter' -PercentComplete 30
 
   $LinterConfig = "$PROFILE_REPO_ROOT\Data\PSScriptAnalyzerSettings.psd1"
