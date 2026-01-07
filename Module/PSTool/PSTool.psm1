@@ -226,7 +226,6 @@ This function updates the local PowerShell profile repository by pulling the lat
 PSTool
 #>
 function Publish-PSProfile {
-
   [CmdletBinding()]
   [OutputType([void])]
   [Alias('upp')]
@@ -235,7 +234,6 @@ function Publish-PSProfile {
     # If specified, skips the build step after syncing the repository and linter.
     [switch]$SkipBuild
   )
-
 
   #region Repo
   Write-Progress -Activity 'Update Profile' -Status Pull -PercentComplete 0
@@ -254,7 +252,6 @@ function Publish-PSProfile {
   }
   #endregion
 
-
   #region Linter
   Write-Progress -Activity 'Update Profile' -Status 'Copy Linter' -PercentComplete 30
 
@@ -264,7 +261,6 @@ function Publish-PSProfile {
     Copy-Item -Path $LinterConfig -Destination $HOME -Force
   }
   #endregion
-
 
   #region Build
   if (-not $SkipBuild) {
