@@ -196,7 +196,7 @@ function Start-Workspace {
     )
   ) {
     $ArgumentList.Add($Location)
-    $Location = [string]::Empty
+    $Location = ''
   }
 
   if ($Workspace) {
@@ -215,7 +215,7 @@ function Start-Workspace {
       }
 
       $ArgumentList.Insert(0, $Workspace)
-      $Workspace = [string]::Empty
+      $Workspace = ''
     }
   }
 
@@ -253,7 +253,7 @@ function Start-Workspace {
       throw 'Visual Studio Code profile argument was specified more than once.'
     }
 
-    [string]$ProfileArgumentValue = [string]::Empty
+    [string]$ProfileArgumentValue = ''
 
     if ($FullProfileArgumentMatch) {
       [string]$_profile, [string]$ProfileArgumentValue = $FullProfileArgumentMatch[0] -split '='

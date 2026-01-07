@@ -116,7 +116,7 @@ function Resolve-NodePackageDirectory {
   )
 
   if (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory) {
-    return $WorkingDirectory ? "--prefix=$((Resolve-Path $WorkingDirectory).Path)" : [string]::Empty
+    return $WorkingDirectory ? "--prefix=$((Resolve-Path $WorkingDirectory).Path)" : ''
   }
   else {
     throw "Path '$WorkingDirectory' is not a Node package directory."
@@ -240,7 +240,7 @@ function Invoke-Git {
       if ($Verb -in $NEWABLE_GIT_VERB) {
         if ($WorkingDirectory -match $GIT_ARGUMENT) {
           $GitArgument.Add($WorkingDirectory)
-          $WorkingDirectory = [string]::Empty
+          $WorkingDirectory = ''
         }
       }
       else {
@@ -543,7 +543,7 @@ function Compare-GitRepository {
     )
   ) {
     $DiffArgument.Add($WorkingDirectory)
-    $WorkingDirectory = [string]::Empty
+    $WorkingDirectory = ''
   }
 
   if ($args) {
@@ -607,7 +607,7 @@ function Add-GitRepository {
     )
   ) {
     $AddArgument.Add($WorkingDirectory)
-    $WorkingDirectory = [string]::Empty
+    $WorkingDirectory = ''
   }
 
   if ($args) {
@@ -700,7 +700,7 @@ function Write-GitRepository {
       $Messages.Insert(0, $WorkingDirectory)
     }
 
-    $WorkingDirectory = [string]::Empty
+    $WorkingDirectory = ''
   }
 
   if ($AllowEmpty -and '--allow-empty' -notin $CommitArgument) {
@@ -767,7 +767,7 @@ function Push-GitRepository {
     )
   ) {
     $PushArgument.Add($WorkingDirectory)
-    $WorkingDirectory = [string]::Empty
+    $WorkingDirectory = ''
   }
 
   if ($args) {
@@ -834,7 +834,7 @@ function Reset-GitRepository {
     }
     else {
       $ResetArgument.Insert(0, $Tree)
-      $Tree = [string]::Empty
+      $Tree = ''
     }
   }
 
@@ -857,7 +857,7 @@ function Reset-GitRepository {
       $ResetArgument.Insert(0, $WorkingDirectory)
     }
 
-    $WorkingDirectory = [string]::Empty
+    $WorkingDirectory = ''
   }
 
   if ($Tree) {
@@ -907,7 +907,7 @@ function Restore-GitRepository {
     )
   ) {
     $ResetArgument.Add($WorkingDirectory)
-    $WorkingDirectory = [string]::Empty
+    $WorkingDirectory = ''
   }
 
   if ($args) {
@@ -1110,7 +1110,7 @@ function Invoke-Npm {
       )
     ) {
       $NodeCommand.Add($WorkingDirectory)
-      $WorkingDirectory = [string]::Empty
+      $WorkingDirectory = ''
     }
     else {
       $PackagePrefix = Resolve-NodePackageDirectory -WorkingDirectory $WorkingDirectory
@@ -1122,7 +1122,7 @@ function Invoke-Npm {
   }
 
   if ($Command.Length -ne 0 -and $Command.StartsWith([char]'-') -or $Command -notin $NODE_VERB -and -not $NODE_ALIAS.ContainsKey($Command)) {
-    [string]$DeferredVerb = $NodeCommand.Count -eq 0 ? [string]::Empty : $NodeCommand.Find(
+    [string]$DeferredVerb = $NodeCommand.Count -eq 0 ? '' : $NodeCommand.Find(
       {
         $args[0] -in $NODE_VERB
       }
@@ -1297,7 +1297,7 @@ function Compare-NodeModule {
   if ($WorkingDirectory) {
     if (-not (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)) {
       $NodeArgument.Add($WorkingDirectory)
-      $WorkingDirectory = [string]::Empty
+      $WorkingDirectory = ''
     }
   }
 
@@ -1404,7 +1404,7 @@ function Step-NodePackageVersion {
   if ($WorkingDirectory) {
     if (-not (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)) {
       $NodeArgument.Add($WorkingDirectory)
-      $WorkingDirectory = [string]::Empty
+      $WorkingDirectory = ''
     }
   }
 
@@ -1457,7 +1457,7 @@ function Invoke-NodePackageScript {
   if ($WorkingDirectory) {
     if (-not (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)) {
       $NodeArgument.Add($WorkingDirectory)
-      $WorkingDirectory = [string]::Empty
+      $WorkingDirectory = ''
     }
   }
 
@@ -1502,7 +1502,7 @@ function Test-NodePackage {
   if ($WorkingDirectory) {
     if (-not (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)) {
       $NodeArgument.Add($WorkingDirectory)
-      $WorkingDirectory = [string]::Empty
+      $WorkingDirectory = ''
     }
   }
 

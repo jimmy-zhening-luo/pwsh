@@ -637,7 +637,7 @@ function Get-File {
     )
   ) {
     $Argument += $Location
-    $Location = [string]::Empty
+    $Location = ''
   }
 
   [string]$FullPath = $Location ? (

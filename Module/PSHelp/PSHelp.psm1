@@ -77,7 +77,7 @@ function Get-HelpOnline {
 
   [string]$Topic = $Name -join '_'
   $ArticleUrl = [List[uri]]::new()
-  $HelpContent = [string]::Empty
+  $HelpContent = ''
   $Silent = @{
     ErrorAction    = 'SilentlyContinue'
     ProgressAction = 'SilentlyContinue'
@@ -117,7 +117,7 @@ function Get-HelpOnline {
     $HelpContent = Get-Help -Name $Topic @Silent
 
     if ($HelpContent -and $HelpContent.Count -ne 1) {
-      $HelpContent = [string]::Empty
+      $HelpContent = ''
     }
 
     if ($HelpContent) {
@@ -196,7 +196,7 @@ function Get-HelpOnline {
           }
         }
 
-        $about_Article = [string]::Empty
+        $about_Article = ''
         [string]$about_TopicCandidate = $Topic -replace '(?>[_ :]+)', '_' -replace '^(?>about)?_?', 'about_'
 
         $about_Article = Resolve-AboutArticle -Topic $about_TopicCandidate
@@ -238,7 +238,7 @@ function Get-HelpOnline {
             'https://learn.microsoft.com/en-us/',
             [stringcomparison]::OrdinalIgnoreCase
           ) ? (
-            $PSItem -replace '(?<=^https://learn\.microsoft\.com/)en-us/', [string]::Empty
+            $PSItem -replace '(?<=^https://learn\.microsoft\.com/)en-us/', ''
           ) : $PSItem
         } |
         Select-Object -Unique -CaseInsensitive |
@@ -420,7 +420,7 @@ function Get-VerbList {
     foreach ($v in $Verb) {
       if ($v) {
         [string]$vf = $v.Contains([char]'*') ? $v : (
-          $v.Length -gt 2 ? '*' : [string]::Empty
+          $v.Length -gt 2 ? '*' : ''
         ) + "$v*"
 
         [VerbInfo[]]$Result = $Group ? (
