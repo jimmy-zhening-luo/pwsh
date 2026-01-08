@@ -1,5 +1,6 @@
 if (-not $Env:PSModulePath.EndsWith(";$PSScriptRoot\Module;")) {
   $Env:PSModulePath += ";$PSScriptRoot\Module;"
+  Write-Warning -Message 'Appended module path'
 }
 
 $Global:PSDefaultParameterValues = Import-PowerShellDataFile -Path $PSScriptRoot\Data\Parameter.psd1
