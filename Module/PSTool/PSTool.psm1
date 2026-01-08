@@ -258,7 +258,7 @@ function Restore-PSProfile {
     & "$env:ProgramFiles\Git\cmd\git.exe" @GitCommandManifest
 
     if ($LASTEXITCODE -notin 0, 1) {
-      throw "Failed to pull pwsh profile repository at '$PROFILE_REPO_ROOT'. Git returned exit code: $LASTEXITCODE"
+      throw "Failed to pull pwsh profile repository. Git returned exit code: $LASTEXITCODE"
     }
     #endregion
 
