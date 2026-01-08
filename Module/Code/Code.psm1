@@ -693,7 +693,7 @@ function Write-GitRepository {
       Resolve-GitRepository -WorkingDirectory $WorkingDirectory
     )
   ) {
-    if ($WorkingDirectory -match $GIT_ARGUMENT -and $Messages.Count -eq 0) {
+    if ($WorkingDirectory -match $GIT_ARGUMENT -and -not $Messages.Count) {
       $CommitArgument.Insert(0, $WorkingDirectory)
     }
     else {
@@ -707,7 +707,7 @@ function Write-GitRepository {
     $CommitArgument.Add('--allow-empty')
   }
 
-  if ($Messages.Count -eq 0) {
+  if (-not $Messages.Count) {
     if ('--allow-empty' -in $CommitArgument) {
       $Messages.Add('No message.')
     }
@@ -1103,7 +1103,7 @@ function Invoke-Npm {
     )
   }
 
-  if ($WorkingDirectory.Length -ne 0) {
+  if ($WorkingDirectory.Length) {
     if (
       $WorkingDirectory.StartsWith([char]'-') -or -not (
         Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory
@@ -1121,12 +1121,12 @@ function Invoke-Npm {
     }
   }
 
-  if ($Command.Length -ne 0 -and $Command.StartsWith([char]'-') -or $Command -notin $NODE_VERB -and -not $NODE_ALIAS.ContainsKey($Command)) {
-    [string]$DeferredVerb = $NodeCommand.Count -eq 0 ? '' : $NodeCommand.Find(
+  if ($Command.Length -and $Command.StartsWith([char]'-') -or $Command -notin $NODE_VERB -and -not $NODE_ALIAS.ContainsKey($Command)) {
+    [string]$DeferredVerb = $NodeCommand.Count ? $NodeCommand.Find(
       {
         $args[0] -in $NODE_VERB
       }
-    )
+    ) : ''
 
     if ($DeferredVerb) {
       [void]$NodeCommand.Remove($DeferredVerb)
@@ -1163,7 +1163,7 @@ function Invoke-Npm {
     }
   }
 
-  if ($NodeCommand.Count -ne 0) {
+  if ($NodeCommand.Count) {
     $NodeArgument.AddRange(
       $NodeCommand
     )

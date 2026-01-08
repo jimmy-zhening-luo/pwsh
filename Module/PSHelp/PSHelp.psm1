@@ -76,8 +76,9 @@ function Get-HelpOnline {
   }
 
   [string]$Topic = $Name -join '_'
-  $ArticleUrl = [List[uri]]::new()
+
   $HelpContent = ''
+  $ArticleUrl = [List[uri]]::new()
   $Silent = @{
     ErrorAction    = 'SilentlyContinue'
     ProgressAction = 'SilentlyContinue'
@@ -90,26 +91,16 @@ function Get-HelpOnline {
       $CustomHelp = $CUSTOM_HELP[[string]$CustomHelp]
     }
 
-    [uri[]]$CustomHelpString = @()
-
     if ($CustomHelp) {
-      [uri[]]$CustomHelpString = [uri[]](
-        $CustomHelp |
-          Where-Object {
-            $PSItem -as [uri] -and (
-              [uri]$PSItem
-            ).IsAbsoluteUri
-          } |
-          ForEach-Object {
+      $CustomHelp |
+        Where-Object {
+          $PSItem -as [uri] -and (
             [uri]$PSItem
-          }
-      )
-    }
-
-    if ($CustomHelpString) {
-      $ArticleUrl.AddRange(
-        [List[uri]]$CustomHelpString
-      )
+          ).IsAbsoluteUri
+        } |
+        ForEach-Object {
+          $ArticleUrl.Add($PSItem)
+        }
     }
   }
   else {
@@ -121,32 +112,24 @@ function Get-HelpOnline {
     }
 
     if ($HelpContent) {
-      [uri[]]$RelatedUrl = [uri[]](
-        $HelpContent.relatedLinks.navigationLink.Uri |
-          Where-Object {
-            -not [string]::IsNullOrEmpty($PSItem)
-          } |
-          Where-Object {
-            $PSItem -match '^(?=https?://\S|[-\w]+(?>\.[-\w]+)+/)'
-          } |
-          ForEach-Object {
-            $PSItem -match '^(?=https?:)' ? $PSItem : "https://$PSItem"
-          } |
-          Where-Object {
-            $PSItem -as [uri] -and (
-              [uri]$PSItem
-            ).IsAbsoluteUri
-          } |
-          ForEach-Object {
+      $HelpContent.relatedLinks.navigationLink.Uri |
+        Where-Object {
+          -not [string]::IsNullOrEmpty($PSItem)
+        } |
+        Where-Object {
+          $PSItem -match '^(?=https?://\S|[-\w]+(?>\.[-\w]+)+/)'
+        } |
+        ForEach-Object {
+          $PSItem -match '^(?=https?:)' ? $PSItem : "https://$PSItem"
+        } |
+        Where-Object {
+          $PSItem -as [uri] -and (
             [uri]$PSItem
-          }
-      )
-
-      if ($RelatedUrl) {
-        $HelpArticleUrl.AddRange(
-          [List[uri]]$RelatedUrl
-        )
-      }
+          ).IsAbsoluteUri
+        } |
+        ForEach-Object {
+          $HelpArticleUrl.Add($PSItem)
+        }
     }
 
     if ($HelpContent -and $Parameter) {
@@ -163,10 +146,8 @@ function Get-HelpOnline {
       }
     }
 
-    if ($HelpArticleUrl.Count -ne 0) {
-      $ArticleUrl.AddRange(
-        [List[uri]]$HelpArticleUrl
-      )
+    if ($HelpArticleUrl.Count) {
+      $ArticleUrl.AddRange($HelpArticleUrl)
     }
     else {
       if ($HelpContent) {
@@ -189,7 +170,7 @@ function Get-HelpOnline {
             [string]$Topic
           )
 
-          [uri]$Test_about_Article = [uri]"$ABOUT_BASE_URL/$Topic"
+          $Test_about_Article = [uri]"$ABOUT_BASE_URL/$Topic"
 
           if (Test-Url -Uri $Test_about_Article) {
             return $Test_about_Article
@@ -201,16 +182,16 @@ function Get-HelpOnline {
 
         $about_Article = Resolve-AboutArticle -Topic $about_TopicCandidate
 
-        if (-not $about_Article) {
+        if (-not [string]$about_Article) {
           if ($about_TopicCandidate -notmatch 's$') {
             $about_TopicCandidate += 's'
             $about_Article = Resolve-AboutArticle -Topic $about_TopicCandidate
           }
         }
 
-        if ($about_Article) {
+        if ([string]$about_Article) {
           $HelpContent = Get-Help -Name $about_TopicCandidate @Silent
-          $ArticleUrl.Add([uri]$about_Article)
+          $ArticleUrl.Add($about_Article)
         }
       }
     }
@@ -222,45 +203,37 @@ function Get-HelpOnline {
 
   $Article = [List[uri]]::new()
 
-  if ($ArticleUrl.Count -ne 0) {
-    [uri[]]$ArticleString = [uri[]](
-      $ArticleUrl.ToArray() |
-        ForEach-Object {
-          'https://' + $PSItem.GetComponents(
-            [uricomponents]::Host -bor [uricomponents]::Path -bor (
-              $PSItem.Host -eq 'go.microsoft.com' ? [uricomponents]::Query : 0
-            ) -bor [uricomponents]::Fragment,
-            [uriformat]::Unescaped
-          )
-        } |
-        ForEach-Object {
-          $PSItem.StartsWith(
-            'https://learn.microsoft.com/en-us/',
-            [stringcomparison]::OrdinalIgnoreCase
-          ) ? (
-            $PSItem -replace '(?<=^https://learn\.microsoft\.com/)en-us/', ''
-          ) : $PSItem
-        } |
-        Select-Object -Unique -CaseInsensitive |
-        ForEach-Object {
-          [uri]$PSItem
-        }
-    )
-
-    if ($ArticleString) {
-      $Article.AddRange(
-        [List[uri]]$ArticleString
-      )
-    }
+  if ($ArticleUrl.Count) {
+    $ArticleUrl.ToArray() |
+      ForEach-Object {
+        'https://' + $PSItem.GetComponents(
+          [uricomponents]::Host -bor [uricomponents]::Path -bor (
+            $PSItem.Host -eq 'go.microsoft.com' ? [uricomponents]::Query : 0
+          ) -bor [uricomponents]::Fragment,
+          [uriformat]::Unescaped
+        )
+      } |
+      ForEach-Object {
+        $PSItem.StartsWith(
+          'https://learn.microsoft.com/en-us/',
+          [stringcomparison]::OrdinalIgnoreCase
+        ) ? (
+          $PSItem -replace '(?<=^https://learn\.microsoft\.com/)en-us/', ''
+        ) : $PSItem
+      } |
+      Select-Object -Unique -CaseInsensitive |
+      ForEach-Object {
+        $Article.Add($PSItem)
+      }
   }
 
-  if ($Article.Count -ne 0) {
+  if ($Article.Count) {
     Write-Information -MessageData "$($Article.ToArray() -join "`n")" -InformationAction Continue
   }
 
   if (-not $env:SSH_CLIENT) {
-    if ($Article.Count -ne 0) {
-      [uri[]]$Article.ToArray() | Open-Url
+    if ($Article.Count) {
+      $Article.ToArray() | Open-Url
     }
     else {
       if ($HelpContent) {
@@ -445,7 +418,7 @@ function Get-VerbList {
 
   end {
     if ($Verb) {
-      if ($Verbs.Count -ne 0) {
+      if ($Verbs.Count) {
         foreach ($v in $Verbs.Values) {
           Write-Output -InputObject $v
         }

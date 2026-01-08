@@ -288,8 +288,7 @@ function Start-Workspace {
       $ArgumentList.RemoveRange($ProfileArgumentIndex, 2)
     }
 
-    [string[]]$Profiles = @('Default')
-    $Profiles += Get-Content -Raw $Env:APPDATA\Code\User\sync\profiles\lastSyncprofiles.json |
+    $Profiles = Get-Content -Raw $Env:APPDATA\Code\User\sync\profiles\lastSyncprofiles.json |
       ConvertFrom-Json |
       Select-Object -ExpandProperty syncData |
       Select-Object -ExpandProperty content |
