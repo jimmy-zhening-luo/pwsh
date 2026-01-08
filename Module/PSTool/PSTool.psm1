@@ -1,5 +1,3 @@
-using namespace System.Collections.Generic
-
 <#
 .SYNOPSIS
 Measure PowerShell profile load overhead.
@@ -81,8 +79,8 @@ function Measure-PSProfile {
 
     Write-Progress -Activity Profiling -Status "0/$Iterations" -PercentComplete 0
 
-    $BareStartupTicks = [List[long]]::new()
-    $StartupWithProfileTicks = [List[long]]::new()
+    $BareStartupTicks = [System.Collections.Generic.List[long]]::new()
+    $StartupWithProfileTicks = [System.Collections.Generic.List[long]]::new()
 
     for (
       $i = 0
