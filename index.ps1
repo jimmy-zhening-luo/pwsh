@@ -10,7 +10,10 @@ $Script:REPO_ROOT = Split-Path $PSScriptRoot
 . $PSScriptRoot\Script\Install.ps1
 
 if ($null -ne $Env:SSH_CLIENT) {
-  # testing
-  Set-Location $HOME\code
+  if($HOME -eq $PWD)
+  {
+    Set-Location code
+  }
+
   . $PSScriptRoot\Script\Key.ps1
 }
