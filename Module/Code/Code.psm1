@@ -1129,7 +1129,7 @@ function Invoke-Npm {
     )
 
     if ($DeferredVerb) {
-      $NodeCommand.Remove($DeferredVerb) | Out-Null
+      [void]$NodeCommand.Remove($DeferredVerb)
     }
 
     $NodeCommand.Insert(0, $Command)

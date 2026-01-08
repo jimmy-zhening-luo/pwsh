@@ -258,7 +258,7 @@ function Start-Workspace {
     if ($FullProfileArgumentMatch) {
       [string]$_profile, [string]$ProfileArgumentValue = $FullProfileArgumentMatch[0] -split '='
 
-      $ArgumentList.Remove($FullProfileArgumentMatch[0]) | Out-Null
+      [void]$ArgumentList.Remove($FullProfileArgumentMatch[0])
     }
     else {
       $ProfileArgumentIndex = $ArgumentList.IndexOf($ProfileArgumentMatch[0])
@@ -317,7 +317,7 @@ function Start-Workspace {
 
   if ($Window) {
     if ($ArgumentList.Contains('--reuse-window')) {
-      $ArgumentList.Remove('--reuse-window') | Out-Null
+      [void]$ArgumentList.Remove('--reuse-window')
     }
 
     if (-not $ArgumentList.Contains('--new-window')) {

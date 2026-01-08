@@ -264,7 +264,7 @@ function Get-HelpOnline {
     }
     else {
       if ($HelpContent) {
-        Get-Help -Name $Topic -Online @Silent 2>&1 | Out-Null
+        $null = Get-Help -Name $Topic -Online @Silent 2>&1
       }
     }
   }
