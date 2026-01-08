@@ -5,7 +5,7 @@
   Author               = 'Jimmy Zhening Luo'
   CompanyName          = 'Jimmy Zhening Luo'
   Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
-  PowerShellVersion    = '7.4'
+  PowerShellVersion    = '7.5'
   RequiredModules      = @(
     @{
       ModuleName    = 'Core'
