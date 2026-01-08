@@ -1,11 +1,11 @@
 <#
 .SYNOPSIS
-Measure PowerShell profile load overhead.
+Measure PowerShell profile load time.
 
 .DESCRIPTION
-This function measures the load overhead of the PowerShell profile by comparing PowerShell startup time with and without loading the profile.
+This function measures the loading time of the PowerShell profile by comparing PowerShell startup time with and without loading the profile.
 
-It can perform multiple iterations to calculate a mean load overhead.
+It can perform multiple iterations to give a more accurate measurement.
 
 .COMPONENT
 PSTool
@@ -25,10 +25,6 @@ function Measure-PSProfile {
     [double],
     ParameterSetName = 'Numeric'
   )]
-  [OutputType(
-    [timespan],
-    ParameterSetName = 'Timespan'
-  )]
   [Alias('mcp')]
   param(
 
@@ -40,10 +36,6 @@ function Measure-PSProfile {
       ParameterSetName = 'Numeric',
       Position = 0
     )]
-    [Parameter(
-      ParameterSetName = 'Timespan',
-      Position = 0
-    )]
     [ValidateRange(1, 50)]
     # The number of iterations to perform, maximum 50. Default is 8.
     [int]$Iterations,
@@ -51,25 +43,15 @@ function Measure-PSProfile {
     [Parameter(
       ParameterSetName = 'Numeric'
     )]
-    [Parameter(
-      ParameterSetName = 'Timespan'
-    )]
-    # If specified along with Numeric or with Timespan, returns the baseline instead of the profile overhead.
+    # If specified along with Numeric, returns the baseline instead of the profile overhead.
     [switch]$Baseline,
 
     [Parameter(
       ParameterSetName = 'Numeric',
       Mandatory
     )]
-    # If specified, returns only the numeric profile overhead in milliseconds. Cannot be specified with Timespan.
-    [switch]$Numeric,
-
-    [Parameter(
-      ParameterSetName = 'Timespan',
-      Mandatory
-    )]
-    # If specified, returns only the profile overhead as a timespan. Cannot be specified with Numeric.
-    [switch]$Timespan
+    # If specified, returns only the numeric profile overhead in milliseconds.
+    [switch]$Numeric
   )
 
   end {
@@ -119,38 +101,25 @@ function Measure-PSProfile {
     )
 
     if ($Baseline) {
-      switch ($PSCmdlet.ParameterSetName) {
-        Timespan {
-          if ($Timespan) {
-            return $AverageBareStartup
-          }
-        }
-        Numeric {
-          return $AverageBareStartup.TotalMilliseconds
-        }
-      }
+      return $AverageBareStartup.TotalMilliseconds
+    }
+
+    [long]$TotalStartupWithProfileTicks = [System.Linq.Enumerable]::Sum(
+      $StartupWithProfileTicks
+    )
+
+    [long]$TotalProfileCostTicks = $TotalStartupWithProfileTicks - $TotalBareStartupTicks
+    [long]$AverageProfileCostTicks =
+    $TotalProfileCostTicks / $Iterations
+    $AverageProfileCost = [timespan]::new(
+      $AverageProfileCostTicks
+    )
+
+    if ($Numeric) {
+      return $AverageProfileCost.TotalMilliseconds
     }
     else {
-      [long]$TotalStartupWithProfileTicks = [System.Linq.Enumerable]::Sum(
-        $StartupWithProfileTicks
-      )
-
-      [long]$TotalProfileCostTicks = $TotalStartupWithProfileTicks - $TotalBareStartupTicks
-      [long]$AverageProfileCostTicks =
-      $TotalProfileCostTicks / $Iterations
-      $AverageProfileCost = [timespan]::new(
-        $AverageProfileCostTicks
-      )
-
-      if ($Numeric) {
-        return $AverageProfileCost.TotalMilliseconds
-      }
-      elseif ($Timespan) {
-        return $AverageProfileCost
-      }
-      else {
-        return "$([long]$AverageProfileCost.TotalMilliseconds) ms`n(Base: $([long]$AverageBareStartup.TotalMilliseconds) ms)"
-      }
+      return "$([long]$AverageProfileCost.TotalMilliseconds) ms`n(Base: $([long]$AverageBareStartup.TotalMilliseconds) ms)"
     }
   }
 }
