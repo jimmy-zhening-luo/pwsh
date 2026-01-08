@@ -12,7 +12,7 @@
     'Invoke-PSHistory'
     'Invoke-PSProfile'
     'Update-PSProfile'
-    'Publish-PSProfile'
+    'Restore-PSProfile'
     'Write-PSModuleCache'
   )
   CmdletsToExport      = @()
