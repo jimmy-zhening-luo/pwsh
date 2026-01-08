@@ -66,9 +66,7 @@ function Get-HelpOnline {
     )]
     [string[]]$Name,
 
-    [string[]]$Parameter,
-
-    [Parameter(DontShow)][switch]$z
+    [string[]]$Parameter
   )
 
   if (-not $Name) {
@@ -291,9 +289,7 @@ function Get-CommandAlias {
     )]
     [SupportsWildcards()]
     # Omits the specified items. The value of this parameter qualifies the Definition parameter. Enter a name, a definition, or a pattern, such as "s*". Wildcards are permitted.
-    [string[]]$Exclude,
-
-    [Parameter(DontShow)][switch]$z
+    [string[]]$Exclude
   )
 
   begin {
@@ -380,9 +376,7 @@ function Get-VerbList {
       'communications,data,diagnostic,lifecycle,security,service,settings,support,system,utility'
     )]
     # Gets only the specified groups. Enter the name of a group. Wildcards aren't allowed.
-    [string[]]$Group,
-
-    [Parameter(DontShow)][switch]$z
+    [string[]]$Group
   )
 
   begin {
