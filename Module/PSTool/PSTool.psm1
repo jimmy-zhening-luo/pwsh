@@ -170,10 +170,35 @@ function Invoke-PSProfile {
 
 <#
 .SYNOPSIS
+Update and build the local PowerShell profile repository.
+
+.DESCRIPTION
+This function updates the local PowerShell profile repository by pulling the latest changes from the remote Git repository and updating the PSScriptAnalyzer settings file in the user's home directory.
+
+It also builds the profile's .NET assemblies.
+
+.COMPONENT
+PSTool
+#>
+function Restore-PSProfile {
+  [CmdletBinding()]
+  [OutputType([void])]
+  [Alias('upp')]
+  param()
+
+  end {
+    Update-PSProfile -Build
+  }
+}
+
+<#
+.SYNOPSIS
 Update the local PowerShell profile repository.
 
 .DESCRIPTION
-This function updates the local PowerShell profile repository by invoking Restore-PSProfile, which pulls the latest changes from the remote Git repository and updating the PSScriptAnalyzer settings file in the user's home directory. It specifies the SkipBuild flag, thereby skipping the build step.
+This function updates the local PowerShell profile repository by invoking Restore-PSProfile, which pulls the latest changes from the remote Git repository and updating the PSScriptAnalyzer settings file in the user's home directory.
+
+If the Build flag is specified, it also builds the profile's .NET assemblies.
 
 .COMPONENT
 PSTool
@@ -183,32 +208,9 @@ function Update-PSProfile {
   [OutputType([void])]
   [Alias('up')]
   param(
-    [Parameter(DontShow)][switch]$z
-  )
 
-  end {
-    Restore-PSProfile -SkipBuild
-  }
-}
-
-<#
-.SYNOPSIS
-Update and restore the local PowerShell profile repository.
-
-.DESCRIPTION
-This function updates the local PowerShell profile repository by pulling the latest changes from the remote Git repository and updating the PSScriptAnalyzer settings file in the user's home directory. It also locally restorees the profile by rebuilding its .NET assemblies unless the SkipBuild switch is specified.
-
-.COMPONENT
-PSTool
-#>
-function Restore-PSProfile {
-  [CmdletBinding()]
-  [OutputType([void])]
-  [Alias('upp')]
-  param(
-
-    # If specified, skips the build step after syncing the repository and linter.
-    [switch]$SkipBuild
+    # If specified, builds the profile's .NET assemblies
+    [switch]$Build
   )
 
   end {
@@ -240,7 +242,7 @@ function Restore-PSProfile {
     #endregion
 
     #region Build
-    if (-not $SkipBuild) {
+    if ($Build) {
       Write-Progress -Activity 'Update Profile' -Status Prebuild -PercentComplete 40
       [System.Management.Automation.ApplicationInfo]$DotnetNativeCommand = Get-Command -Name dotnet.exe -CommandType Application -All
 
