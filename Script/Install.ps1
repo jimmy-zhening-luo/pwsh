@@ -38,13 +38,16 @@ using namespace System.Collections.Generic
       [switch]$AppendProject
     )
 
+    begin {
+      $ClassRoot = "$ROOT\Class\$Class"
+      $InstallLocation = "$Root\$Class"
+    }
+
     process {
-      $BuildOutput = "$ROOT\Class\$Class\$Project\bin\Release\net9.0\$Project.dll"
+      $BuildOutput = "$ClassRoot\$Project\bin\Release\net9.0\$Project.dll"
 
       if (Test-Path $BuildOutput -PathType Leaf) {
-        $InstallPath = "$Root\$Class" + (
-          $AppendProject ? "\$Project" : ''
-        )
+        $InstallPath = $AppendProject ? "$InstallLocation\$Project" : $InstallLocation
         $InstalledAssembly = "$InstallPath\$Project.dll"
 
         if (
