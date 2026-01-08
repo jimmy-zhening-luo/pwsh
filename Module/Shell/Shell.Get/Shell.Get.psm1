@@ -1,3 +1,4 @@
+using namespace System.Collections.Generic
 using namespace Completer
 using namespace Completer.PathCompleter
 
@@ -629,14 +630,14 @@ function Get-File {
     [string]$Location
   )
 
-  [string[]]$Argument = @()
+  $Argument = [List[string]]::new()
 
   if (
     $Location -and -not (
       Test-Path $Location -PathType Container
     )
   ) {
-    $Argument += $Location
+    $Argument.Add($Location)
     $Location = ''
   }
 
@@ -651,7 +652,13 @@ function Get-File {
     throw "Path '$Target' is not a leaf item."
   }
 
-  return Get-Content -Path $FullPath @Argument @args
+  if ($args) {
+    foreach ($i in $args) {
+      $Argument.Add($i)
+    }
+  }
+
+  return Get-Content -Path $FullPath @Argument
 }
 
 <#
