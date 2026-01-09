@@ -16,19 +16,16 @@ Remove-Alias gp -Force
 
 # was: Get-Unique
 Remove-Alias gu -Force
-
 #endregion
 
 
 #region Implicit
 # was: Get-Verb (implicit)
 New-Alias verb Get-VerbList -Option ReadOnly
-
 #endregion
 
 
 #region Native
 # was: clip.exe
 New-Alias clip Set-Clipboard -Option ReadOnly
-
 #endregion
