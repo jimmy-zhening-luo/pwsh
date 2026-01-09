@@ -15,7 +15,6 @@
     }
   )
   FunctionsToExport    = @(
-    'Invoke-CommandPrompt'
     'Update-WinGetApp'
     'Add-WinGetApp'
     'Find-WinGetApp'
