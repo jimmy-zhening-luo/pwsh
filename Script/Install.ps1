@@ -67,7 +67,7 @@ using namespace System.Collections.Generic
       }
 
       $InstallPath = "$ROOT\$Class" + (
-        $Module ? 'Module' : ''
+        $Module ? '\Module' : ''
       )
       $InstalledAssembly = "$InstallPath\$Project.dll"
 
