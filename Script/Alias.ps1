@@ -22,7 +22,7 @@ Remove-Alias gu -Force
 
 #region Implicit
 # was: Get-Verb (implicit)
-New-Alias verb PSHelp\Get-VerbList -Option ReadOnly
+New-Alias verb Get-VerbList -Option ReadOnly
 
 #endregion
 
