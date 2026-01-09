@@ -35,6 +35,7 @@ using namespace System.Collections.Generic
         ).Hash -ne (
           Get-FileHash -Path $Source -Algorithm MD5
         ).Hash
+      )
     }
   }
 
