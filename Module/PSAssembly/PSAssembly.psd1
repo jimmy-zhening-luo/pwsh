@@ -1,8 +1,8 @@
 @{
-  RootModule           = 'PSTool.psm1'
+  RootModule           = 'PSAssembly.psm1'
   ModuleVersion        = '3.0.0.0'
   CompatiblePSEditions = @('Desktop', 'Core')
-  GUID                 = 'c84491db-0b43-4dfc-80ea-890b16269a28'
+  GUID                 = '6c21e4fb-7a36-4659-9ac4-1f2f95553648'
   Author               = 'Jimmy Zhening Luo'
   CompanyName          = 'Jimmy Zhening Luo'
   Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
