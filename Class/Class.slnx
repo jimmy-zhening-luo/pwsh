@@ -1,7 +1,6 @@
 <Solution>
   <Folder Name="/Module/">
-    <Project Path="Module/Core/Core.csproj"/>
-    <Project Path="Module/Auxiliary/Auxiliary.csproj"/>
+    <Project Path="Module/Module.csproj"/>
   </Folder>
   <Folder Name="/Type/">
     <Project Path="Type/Context/Context.csproj"/>

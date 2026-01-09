@@ -301,60 +301,7 @@ function Update-PSProfile {
     }
     #endregion
 
-    #region Cache
-    Write-Progress -Activity 'Update Profile' -Status 'Save Cache' -PercentComplete 95
-
-    Write-PSModuleCache
-    #endregion
-
     Write-Progress -Activity 'Update Profile' -Status Finished -PercentComplete 100
-  }
-}
-
-function Write-PSModuleCache {
-  [CmdletBinding()]
-  [OutputType([void])]
-  param()
-
-  end {
-    $SLNX = Select-Xml -XPath Solution -Path $PROFILE_REPO_ROOT\Class\Class.slnx |
-      Select-Object -ExpandProperty Node
-
-    function Expand-PSProject {
-      [CmdletBinding()]
-      [OutputType([string[]])]
-      param(
-        [Parameter(Mandatory)]
-        [ValidateNotNullOrWhiteSpace()]
-        [string]$Class
-      )
-      end {
-        return $SLNX |
-          Select-Xml -XPath (
-            'Folder[@Name="/' + $Class + '/"]'
-          ) |
-          Select-Object -ExpandProperty Node |
-          Select-Object -ExpandProperty Project |
-          Select-Object -ExpandProperty Path |
-          ForEach-Object {
-            $PSItem.Substring(
-              $PSItem.LastIndexOf([char]'/') + 1
-            )
-          } |
-          ForEach-Object {
-            $PSItem.Remove(
-              $PSItem.Length - 7
-            )
-          }
-      }
-    }
-
-    @{
-      Modules = Expand-PSProject -Class Module
-      Types   = Expand-PSProject -Class Type
-    } |
-      ConvertTo-Json -Compress |
-      Set-Content -Path $PROFILE_REPO_ROOT\Class\Class.json -Encoding UTF8
   }
 }
 

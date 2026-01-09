@@ -1,26 +1,44 @@
 using namespace System.Collections.Generic
 
 & {
-  #region Solution
   $ROOT = Split-Path $PSScriptRoot
-  $CACHE = "$ROOT\Class\Class.json"
+  $Types = @(
+    'Completer'
+    'Context'
+  )
 
-  if (-not (Test-Path $CACHE -PathType Leaf)) {
-    throw "Cache file not found: $CACHE"
+  function Test-PSAssembly {
+    [CmdletBinding()]
+    [OutputType([bool])]
+    param(
+      [Parameter(
+        Mandatory,
+        Position = 0
+      )]
+      [ValidateNotNullOrWhiteSpace()]
+      [string[]]$Source,
+
+      [Parameter(
+        Mandatory,
+        Position = 1
+      )]
+      [ValidateNotNullOrWhiteSpace()]
+      [string]$Destination
+    )
+
+    end {
+      return (
+        -not (
+          Test-Path $Destination -PathType Leaf
+        ) -or (
+          Get-FileHash -Path $Destination -Algorithm MD5
+        ).Hash -ne (
+          Get-FileHash -Path $Source -Algorithm MD5
+        ).Hash
+    }
   }
 
-  $Solution = Get-Content -Path $CACHE |
-    ConvertFrom-Json -AsHashtable
-  $Modules = $Solution.Modules
-  $Types = $Solution.Types
-
-  if (-not $Modules -or -not $Types) {
-    throw "Cache file is corrupted: $CACHE"
-  }
-  #endregion
-
-  #region Installer
-  function Install-PSProject {
+  function Install-PSAssembly {
     [CmdletBinding()]
     [OutputType([void])]
     param(
@@ -35,48 +53,34 @@ using namespace System.Collections.Generic
       [ValidateNotNullOrWhiteSpace()]
       [string]$Class,
 
-      [switch]$AppendProject
+      [switch]$Module
     )
 
-    begin {
-      $ClassRoot = "$ROOT\Class\$Class"
-      $InstallLocation = "$Root\$Class"
-    }
-
     process {
-      $BuildOutput = "$ClassRoot\$Project\bin\Release\net9.0\$Project.dll"
+      $BuildOutput = "$ROOT\Class\$Class\" + (
+        $Module ? '' : "$Project\"
+      ) + "bin\Release\net9.0\$Project.dll"
 
-      if (Test-Path $BuildOutput -PathType Leaf) {
-        $InstallPath = $AppendProject ? "$InstallLocation\$Project" : $InstallLocation
-        $InstalledAssembly = "$InstallPath\$Project.dll"
-
-        if (
-          -not (
-            Test-Path $InstalledAssembly -PathType Leaf
-          ) -or (
-            Get-FileHash -Path $InstalledAssembly -Algorithm MD5
-          ).Hash -ne (
-            Get-FileHash -Path $BuildOutput -Algorithm MD5
-          ).Hash
-        ) {
-          Copy-Item -Path $BuildOutput -Destination $InstallPath -Force -ErrorAction Continue
-        }
-      }
-      else {
+      if (-not (Test-Path $BuildOutput -PathType Leaf)) {
         Write-Warning -Message "Project '$Class\$Project' is not built, skipping."
+      }
+
+      $InstallPath = "$ROOT\$Class" + (
+        $Module ? 'Module' : ''
+      )
+      $InstalledAssembly = "$InstallPath\$Project.dll"
+
+      if (Test-PSAssembly $BuildOutput $InstalledAssembly) {
+        Copy-Item -Path $BuildOutput -Destination $InstallPath -Force -ErrorAction Continue
       }
     }
   }
-  #endregion
 
-  #region Install
-  $Modules |
-    Install-PSProject -Class Module -AppendProject
+  "Module" |
+    Install-PSAssembly -Class Module -Module
   $Types |
-    Install-PSProject -Class Type
-  #endregion
+    Install-PSAssembly -Class Type
 
-  #region Add Type
   $Types |
     Where-Object {
       Test-Path $Root\Type\$PSItem.dll -PathType Leaf
@@ -84,5 +88,4 @@ using namespace System.Collections.Generic
     ForEach-Object {
       Add-Type -Path $Root\Type\$PSItem.dll
     }
-  #endregion
 }

@@ -13,7 +13,6 @@
     'Invoke-PSProfile'
     'Update-PSProfile'
     'Restore-PSProfile'
-    'Write-PSModuleCache'
   )
   CmdletsToExport      = @()
   VariablesToExport    = @()
