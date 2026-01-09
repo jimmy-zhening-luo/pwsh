@@ -31,7 +31,4 @@ New-Alias verb PSHelp\Get-VerbList -Option ReadOnly
 # was: clip.exe
 New-Alias clip Set-Clipboard -Option ReadOnly
 
-# was: nvm\run.cmd
-New-Alias run WindowsSystem\Invoke-CommandPrompt -Option ReadOnly, AllScope
-
 #endregion
