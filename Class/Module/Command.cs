@@ -15,6 +15,22 @@ namespace Module
 
     protected Collection<PSObject> Call(
       string nativeCommand,
+      string verb,
+      string[] arguments = null,
+      CommandTypes commandType = CommandTypes.Application
+    )
+    {
+      return Call(
+        nativeCommand,
+        arguments == null
+          ? new string[] { verb }
+          : new string[] { verb, ..arguments },
+        commandType
+      );
+    }
+
+    protected Collection<PSObject> Call(
+      string nativeCommand,
       string[] arguments = null,
       CommandTypes commandType = CommandTypes.Application
     )
