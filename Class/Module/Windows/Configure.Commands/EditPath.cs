@@ -1,7 +1,6 @@
 namespace Module.Windows.Configure.Commands
 {
   using System.Management.Automation;
-  using Context;
 
   [Cmdlet(
     VerbsData.Edit,

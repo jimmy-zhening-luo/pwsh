@@ -2,7 +2,6 @@ namespace Module.Browse.Commands
 {
   using System;
   using System.Management.Automation;
-  using Context;
   using Completer.PathCompleter;
 
   [Cmdlet(

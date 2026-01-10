@@ -1,4 +1,4 @@
-namespace Context
+namespace Module
 {
   using System;
   using System.Diagnostics;

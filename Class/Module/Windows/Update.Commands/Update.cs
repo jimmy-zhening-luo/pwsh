@@ -1,7 +1,6 @@
 namespace Module.Windows.Update.Commands
 {
   using System.Management.Automation;
-  using Context;
 
   [Cmdlet(
     VerbsData.Update,
