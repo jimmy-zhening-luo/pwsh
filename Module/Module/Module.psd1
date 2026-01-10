@@ -2,17 +2,17 @@
   RootModule           = 'Module.dll'
   ModuleVersion        = '3.0.0.0'
   CompatiblePSEditions = @('Desktop', 'Core')
-  GUID                 = 'a2075667-de18-47e9-9804-bbf47f23131f'
+  GUID                 = '0d6f7f29-9175-410d-bd89-622ad5926f29'
   Author               = 'Jimmy Zhening Luo'
   CompanyName          = 'Jimmy Zhening Luo'
   Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
   PowerShellVersion    = '7.5'
   FunctionsToExport    = @()
   CmdletsToExport      = @(
-    'Edit-SystemPath'
     'Update-Windows'
-    'Update-StoreApp'
+    'Edit-SystemPath'
     'Stop-Task'
+    'Update-StoreApp'
     'Clear-Line'
     'Open-Url'
     'Test-Url'
