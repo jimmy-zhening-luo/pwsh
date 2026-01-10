@@ -9,9 +9,9 @@
   PowerShellVersion    = '7.5'
   RequiredModules      = @(
     @{
-      ModuleName    = 'Core'
+      ModuleName    = 'Module'
       ModuleVersion = '3.0.0'
-      GUID          = 'a2075667-de18-47e9-9804-bbf47f23131f'
+      GUID          = '0d6f7f29-9175-410d-bd89-622ad5926f29'
     }
   )
   FunctionsToExport    = @(
