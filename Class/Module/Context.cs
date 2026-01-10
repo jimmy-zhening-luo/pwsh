@@ -9,6 +9,8 @@ namespace Module
       "SSH_CLIENT"
     ) != null;
 
+    public static string? Env(string variable) => Environment.GetEnvironmentVariable(variable);
+
     public static void CreateProcess(
       string fileName,
       string arguments = ""
