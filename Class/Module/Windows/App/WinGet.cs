@@ -57,7 +57,7 @@ namespace Module.Windows.App.Commands
     {
       if (arguments.Length == 0)
       {
-        Call(WinGet());
+        WriteOutput(Call(WinGet()), true);
       }
       else
       {
