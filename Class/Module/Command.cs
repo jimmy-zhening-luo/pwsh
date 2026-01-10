@@ -15,7 +15,7 @@ namespace Module
 
     protected Collection<PSObject> Call(
       string nativeCommand,
-      string[] arguments,
+      string[] arguments = [],
       CommandTypes commandType = CommandTypes.Application
     )
     {
