@@ -61,13 +61,18 @@ namespace Module.Windows.App.Commands
           Call(
             WinGet(),
             "upgrade"
-          ),
-          true
+          )
         );
       }
       else
       {
-        // winget install
+        WriteObject(
+          Call(
+            WinGet(),
+            "install",
+            arguments
+          )
+        );
       }
 
       CheckStatus();
