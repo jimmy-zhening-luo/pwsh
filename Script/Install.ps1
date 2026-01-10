@@ -12,7 +12,7 @@ using namespace System.Collections.Generic
         Position = 0
       )]
       [ValidateNotNullOrWhiteSpace()]
-      [string[]]$Source,
+      [string]$Source,
 
       [Parameter(
         Mandatory,
@@ -41,30 +41,20 @@ using namespace System.Collections.Generic
     param(
       [Parameter(
         Mandatory,
-        ValueFromPipeline
+        Position = 0
       )]
       [ValidateNotNullOrWhiteSpace()]
-      [string[]]$Project,
-
-      [Parameter(Mandatory)]
-      [ValidateNotNullOrWhiteSpace()]
-      [string]$Class,
-
-      [switch]$Module
+      [string]$Class
     )
 
-    process {
-      $BuildOutput = "$ROOT\Class\$Class\" + (
-        $Module ? '' : "$Project\"
-      ) + "bin\Release\net9.0\$Project.dll"
+    end {
+      $BuildOutput = "$ROOT\Class\$Class\bin\Release\net9.0\$Class.dll"
 
       if (-not (Test-Path $BuildOutput -PathType Leaf)) {
-        Write-Warning -Message "Project '$Class\$Project' is not built, skipping."
+        Write-Warning -Message "Class '$Class' is not built, skipping."
       }
 
-      $InstallPath = "$ROOT\$Class" + (
-        $Module ? '\Module' : ''
-      )
+      $InstallPath = "$ROOT\Module\$Class"
       $InstalledAssembly = "$InstallPath\$Project.dll"
 
       if (Test-PSAssembly $BuildOutput $InstalledAssembly) {
@@ -73,16 +63,11 @@ using namespace System.Collections.Generic
     }
   }
 
-  "Module" |
-    Install-PSAssembly -Class Module -Module
-  "Completer" |
-    Install-PSAssembly -Class Type
+  Install-PSAssembly -Class Module -Module
+  Install-PSAssembly -Class Completer
 
-  "Completer" |
-    Where-Object {
-      Test-Path $Root\Type\$PSItem.dll -PathType Leaf
-    } |
-    ForEach-Object {
-      Add-Type -Path $Root\Type\$PSItem.dll
-    }
+  $InstalledCompleter = "$Root\Module\Completer\Completer.dll"
+  if (Test-Path $InstalledCompleter -PathType Leaf) {
+    Add-Type -Path $InstalledCompleter
+  }
 }
