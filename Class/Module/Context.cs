@@ -5,9 +5,7 @@ namespace Module
 
   public static class Context
   {
-    public static bool Ssh() => Environment.GetEnvironmentVariable(
-      "SSH_CLIENT"
-    ) != null;
+    public static bool Ssh() => Env("SSH_CLIENT") != string.Empty;
 
     public static string Env(string variable) => Environment.GetEnvironmentVariable(variable) ?? string.Empty;
 
