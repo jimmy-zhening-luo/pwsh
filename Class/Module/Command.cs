@@ -5,6 +5,13 @@ namespace Module
 
   public abstract class PSCoreCommand : PSCmdlet
   {
+    protected Object Var(string variable) => SessionState
+      .PSVariable
+      .GetValue(
+        variable,
+        string.Empty
+      ) ?? string.Empty;
+
     protected Collection<PSObject> Call(
       string nativeCommand,
       string[] arguments,
