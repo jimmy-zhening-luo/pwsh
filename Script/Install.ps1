@@ -55,7 +55,7 @@ using namespace System.Collections.Generic
       }
 
       $InstallPath = "$ROOT\Module\$Class"
-      $InstalledAssembly = "$InstallPath\$Project.dll"
+      $InstalledAssembly = "$InstallPath\$Class.dll"
 
       if (Test-PSAssembly $BuildOutput $InstalledAssembly) {
         Copy-Item -Path $BuildOutput -Destination $InstallPath -Force -ErrorAction Continue
