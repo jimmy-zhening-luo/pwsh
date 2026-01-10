@@ -2,9 +2,6 @@ using namespace System.Collections.Generic
 
 & {
   $ROOT = Split-Path $PSScriptRoot
-  $Types = @(
-    'Completer'
-  )
 
   function Test-PSAssembly {
     [CmdletBinding()]
@@ -78,10 +75,10 @@ using namespace System.Collections.Generic
 
   "Module" |
     Install-PSAssembly -Class Module -Module
-  $Types |
+  "Completer" |
     Install-PSAssembly -Class Type
 
-  $Types |
+  "Completer" |
     Where-Object {
       Test-Path $Root\Type\$PSItem.dll -PathType Leaf
     } |
