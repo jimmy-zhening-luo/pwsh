@@ -16,12 +16,12 @@ namespace Module.Windows.App.Commands
         status != null
         && (
           status.GetType() == typeof(string)
-          && status != string.Empty
-          && status != "0"
-          && status != "1"
+          && (string)status != string.Empty
+          && (string)status != "0"
+          && (string)status != "1"
           || status.GetType() == typeof(int)
-          && status != 0
-          && status != 1
+          && (int)status != 0
+          && (int)status != 1
         )
       )
       {
