@@ -112,6 +112,6 @@ New-Alias restart Restart-Computer
 New-Alias sesv Set-Service
 New-Alias remsv Remove-Service
 
-New-Alias gapx Appx\Get-AppxPackage
-New-Alias remapx Appx\Remove-AppxPackage
+New-Alias gapx Get-AppxPackage
+New-Alias remapx Remove-AppxPackage
 New-Alias wget $env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe
