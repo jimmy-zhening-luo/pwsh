@@ -2,38 +2,8 @@ using namespace System.Collections.Generic
 
 & {
   $ROOT = Split-Path $PSScriptRoot
-
-  function Test-PSAssembly {
-    [CmdletBinding()]
-    [OutputType([bool])]
-    param(
-      [Parameter(
-        Mandatory,
-        Position = 0
-      )]
-      [ValidateNotNullOrWhiteSpace()]
-      [string]$Source,
-
-      [Parameter(
-        Mandatory,
-        Position = 1
-      )]
-      [ValidateNotNullOrWhiteSpace()]
-      [string]$Destination
-    )
-
-    end {
-      return (
-        -not (
-          Test-Path $Destination -PathType Leaf
-        ) -or (
-          Get-FileHash -Path $Destination -Algorithm MD5
-        ).Hash -ne (
-          Get-FileHash -Path $Source -Algorithm MD5
-        ).Hash
-      )
-    }
-  }
+  $SOURCE_ROOT = "$ROOT\Class"
+  $INSTALL_ROOT = "$ROOT\Module"
 
   function Install-PSAssembly {
     [CmdletBinding()]
@@ -48,25 +18,33 @@ using namespace System.Collections.Generic
     )
 
     end {
-      $BuildOutput = "$ROOT\Class\$Class\bin\Release\net9.0\$Class.dll"
+      $BuildOutput = "$SOURCE_ROOT\$Class\bin\Release\net9.0\$Class.dll"
 
       if (-not (Test-Path $BuildOutput -PathType Leaf)) {
         Write-Warning -Message "Class '$Class' is not built, skipping."
       }
 
-      $InstallPath = "$ROOT\Module\$Class"
-      $InstalledAssembly = "$InstallPath\$Class.dll"
+      $InstallLocation = "$INSTALL_ROOT\$Class"
+      $InstalledAssembly = "$InstallLocation\$Class.dll"
 
-      if (Test-PSAssembly $BuildOutput $InstalledAssembly) {
-        Copy-Item -Path $BuildOutput -Destination $InstallPath -Force -ErrorAction Continue
+      if (
+        -not (
+          Test-Path $InstalledAssembly -PathType Leaf
+        ) -or (
+          Get-FileHash -Path $InstalledAssembly -Algorithm MD5
+        ).Hash -ne (
+          Get-FileHash -Path $BuildOutput -Algorithm MD5
+        ).Hash
+      ) {
+        Copy-Item -Path $BuildOutput -InstalledAssembly $InstallLocation -Force -ErrorAction Continue
       }
     }
   }
 
-  Install-PSAssembly -Class Module -Module
+  Install-PSAssembly -Class Module
   Install-PSAssembly -Class Completer
 
-  $InstalledCompleter = "$Root\Module\Completer\Completer.dll"
+  $InstalledCompleter = "$INSTALL_ROOT\Completer\Completer.dll"
   if (Test-Path $InstalledCompleter -PathType Leaf) {
     Add-Type -Path $InstalledCompleter
   }
