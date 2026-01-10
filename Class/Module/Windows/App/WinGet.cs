@@ -31,4 +31,40 @@ namespace Module.Windows.App.Commands
       }
     }
   }
+
+  [Cmdlet(
+    VerbsCommon.Add,
+    "WinGetApp",
+    HelpUri = "https://learn.microsoft.com/en-us/windows/package-manager/winget/install"
+  )]
+  [Alias("wga")]
+  public class AddWinGetApp : WinGetAppCommand
+  {
+    [Parameter(
+      Position = 0,
+      ValueFromRemainingArguments = true,
+      HelpMessage = "Arguments for winget install"
+    )]
+    [AllowEmptyCollection]
+    public string[] Argument
+    {
+      get => arguments;
+      set => arguments = value;
+    }
+    private string[] arguments = [];
+
+    protected override void EndProcessing()
+    {
+      if (arguments.Length == 0)
+      {
+        // winget upgrade
+      }
+      else
+      {
+        // winget install
+      }
+
+      CheckStatus();
+    }
+  }
 }
