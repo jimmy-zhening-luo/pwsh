@@ -4,7 +4,6 @@ using namespace System.Collections.Generic
   $ROOT = Split-Path $PSScriptRoot
   $Types = @(
     'Completer'
-    'Context'
   )
 
   function Test-PSAssembly {
