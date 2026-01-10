@@ -57,7 +57,13 @@ namespace Module.Windows.App.Commands
     {
       if (arguments.Length == 0)
       {
-        WriteObject(Call(WinGet()), true);
+        WriteObject(
+          Call(
+            WinGet(),
+            "upgrade"
+          ),
+          true
+        );
       }
       else
       {
