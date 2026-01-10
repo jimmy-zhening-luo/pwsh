@@ -36,7 +36,7 @@ using namespace System.Collections.Generic
           Get-FileHash -Path $BuildOutput -Algorithm MD5
         ).Hash
       ) {
-        Copy-Item -Path $BuildOutput -InstalledAssembly $InstallLocation -Force -ErrorAction Continue
+        Copy-Item -Path $BuildOutput -Destination $InstallLocation -Force -ErrorAction Continue
       }
     }
   }
