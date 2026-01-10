@@ -23,8 +23,8 @@ namespace Module
       return Call(
         nativeCommand,
         arguments == null
-          ? new string[] { verb }
-          : new string[] { verb, ..arguments },
+          ? [verb]
+          : [verb, ..arguments],
         commandType
       );
     }
