@@ -27,6 +27,10 @@ namespace Module
 
     public static bool Ssh() => Env("SSH_CLIENT") != string.Empty;
 
+    public static string AppData() => Env("APPDATA");
+
+    public static string LocalAppData() => Env("LOCALAPPDATA");
+
     public static void ShellExecute(
       string fileName,
       string arguments = "",
