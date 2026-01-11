@@ -9,7 +9,6 @@
   PowerShellVersion    = '7.5'
   FunctionsToExport    = @(
     'Measure-PSProfile'
-    'Invoke-PSHistory'
     'Invoke-PSProfile'
     'Update-PSProfile'
     'Restore-PSProfile'
@@ -18,7 +17,6 @@
   VariablesToExport    = @()
   AliasesToExport      = @(
     'mcp'
-    'oc'
     'op'
     'up'
     'upp'

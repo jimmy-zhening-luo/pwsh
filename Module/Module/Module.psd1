@@ -21,6 +21,7 @@
     'ConvertTo-Hex'
     'Invoke-YouTubeDirectory'
     'Test-Cmdlet'
+    'Start-History'
   )
   VariablesToExport    = @()
   AliasesToExport      = @(
@@ -39,5 +40,6 @@
     'hex'
     'yte'
     'test'
+    'oc'
   )
 }
