@@ -8,10 +8,7 @@ namespace Module
   {
     protected Object Var(string variable) => SessionState
       .PSVariable
-      .GetValue(
-        variable,
-        string.Empty
-      ) ?? string.Empty;
+      .GetValue(variable);
 
     protected void Call(
       string nativeCommand,

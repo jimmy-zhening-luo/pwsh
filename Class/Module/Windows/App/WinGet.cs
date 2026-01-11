@@ -13,20 +13,13 @@ namespace Module.Windows.App.Commands
       var status = Var("LASTEXITCODE");
 
       if (
-        status != null
-        && (
-          status.GetType() == typeof(string)
-          && (string)status != string.Empty
-          && (string)status != "0"
-          && (string)status != "1"
-          || status.GetType() == typeof(int)
-          && (int)status != 0
-          && (int)status != 1
-        )
+        status is int istatus
+        && istatus != 0
+        && istatus != 1
       )
       {
         throw new InvalidOperationException(
-          "winget.exe error, execution stopped with exit code: " + (string)status
+          "winget.exe error, execution stopped with exit code: " + istatus.ToString()
         );
       }
     }
