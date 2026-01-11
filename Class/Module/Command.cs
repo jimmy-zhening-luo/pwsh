@@ -16,7 +16,7 @@ namespace Module
       string verb,
       string[] arguments = null,
       CommandTypes commandType = CommandTypes.Application
-    ) => InvokeNative(
+    ) => Call(
       nativeCommand,
       arguments == null
         ? [verb]
