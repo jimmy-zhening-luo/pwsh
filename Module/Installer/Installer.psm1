@@ -1,5 +1,3 @@
-$PROFILE_REPO_ROOT = "$REPO_ROOT\pwsh"
-
 function Restore-PSProfile {
   [CmdletBinding()]
   [OutputType([void])]
@@ -21,6 +19,7 @@ function Update-PSProfile {
   )
 
   end {
+    $PROFILE_REPO_ROOT = "$REPO_ROOT\pwsh"
     $GitCommandManifest = @(
       '-c'
       'color.ui=always'
@@ -34,10 +33,7 @@ function Update-PSProfile {
       throw "Failed to pull pwsh profile repository. Git returned exit code: $LASTEXITCODE"
     }
 
-    $LinterConfig = "$PROFILE_REPO_ROOT\Data\PSScriptAnalyzerSettings.psd1"
-    if (Test-Path $LinterConfig -PathType Leaf) {
-      Copy-Item -Path $LinterConfig -Destination $HOME -Force
-    }
+    Copy-Item -Path $PROFILE_REPO_ROOT\Data\PSScriptAnalyzerSettings.psd1 -Destination $HOME -Force
 
     if ($Build) {
       [System.Management.Automation.ApplicationInfo]$DotnetNativeCommand = Get-Command -Name dotnet.exe -CommandType Application -All
