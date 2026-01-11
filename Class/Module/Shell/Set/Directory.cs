@@ -30,12 +30,7 @@ namespace Module.Shell.Set.Commands
       "",
       PathItemType.Directory
     )]
-    public string Path
-    {
-      get => path;
-      set => path = value;
-    }
-    private string path = string.Empty;
+    public string Path;
 
     [Parameter(
       ParameterSetName = "LiteralPath",
@@ -59,6 +54,14 @@ namespace Module.Shell.Set.Commands
 
     protected override void BeginProcessing()
     {
+      if (Path == null && LiteralPath == null)
+      {
+        MyInvocation.BoundParameters["Path"] = System.IO.Path.GetFullPath(
+          "..",
+          Pwd()
+        );
+      }
+
       using PowerShell ps = PowerShell.Create(
         RunspaceMode.CurrentRunspace
       );
