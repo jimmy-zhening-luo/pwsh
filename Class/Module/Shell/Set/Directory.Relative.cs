@@ -1,6 +1,7 @@
 namespace Module.Shell.Set.Commands
 {
   using System;
+  using System.IO;
   using System.Management.Automation;
   using Completer.PathCompleter;
 
@@ -17,7 +18,13 @@ namespace Module.Shell.Set.Commands
   )]
   public class SetDirectorySibling : SetDirectoryLocation
   {
-    protected string Reanchor(string typedPath) => 
+    protected string Reanchor(string typedPath) => Path.GetFullPath(
+      typedPath,
+      Path.GetFullPath(
+        "..",
+        Pwd()
+      )
+    );
   }
 
   public abstract class SetDirectoryLocation : PSCoreCommand

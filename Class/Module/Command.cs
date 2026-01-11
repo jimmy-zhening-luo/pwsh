@@ -1,6 +1,7 @@
 namespace Module
 {
   using System;
+  using System.IO;
   using System.Collections.ObjectModel;
   using System.Management.Automation;
   using System.Management.Automation.Runspaces;
@@ -27,9 +28,9 @@ namespace Module
         .BaseObject
         .ToString();
 
-      return Pathing.Resolve(
-        pwd,
-        subpath
+      return Path.GetFullPath(
+        subpath,
+        pwd
       );
     }
 
