@@ -24,6 +24,10 @@ namespace Module.Shell.Set.Commands
     )]
     [AllowEmptyString]
     [SupportsWildcards]
+    [RelativePathCompletions(
+      "..",
+      PathItemType.Directory
+    )]
     public new string Path;
 
     protected override string Reanchor(string typedPath) => System.IO.Path.GetFullPath(
