@@ -13,6 +13,7 @@ function Resolve-GitRepository {
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
+    [AllowEmptyString()]
     [AllowEmptyCollection()]
     [string[]]$WorkingDirectory,
 
