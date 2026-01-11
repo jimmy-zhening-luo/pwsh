@@ -21,9 +21,6 @@ function Update-PSProfile {
   )
 
   end {
-    #region Repo
-    Write-Progress -Activity 'Update Profile' -Status Pull -PercentComplete 0
-
     $GitCommandManifest = @(
       '-c'
       'color.ui=always'
@@ -36,21 +33,13 @@ function Update-PSProfile {
     if ($LASTEXITCODE -notin 0, 1) {
       throw "Failed to pull pwsh profile repository. Git returned exit code: $LASTEXITCODE"
     }
-    #endregion
-
-    #region Linter
-    Write-Progress -Activity 'Update Profile' -Status 'Copy Linter' -PercentComplete 30
 
     $LinterConfig = "$PROFILE_REPO_ROOT\Data\PSScriptAnalyzerSettings.psd1"
-
     if (Test-Path $LinterConfig -PathType Leaf) {
       Copy-Item -Path $LinterConfig -Destination $HOME -Force
     }
-    #endregion
 
-    #region Build
     if ($Build) {
-      Write-Progress -Activity 'Update Profile' -Status Prebuild -PercentComplete 40
       [System.Management.Automation.ApplicationInfo]$DotnetNativeCommand = Get-Command -Name dotnet.exe -CommandType Application -All
 
       if (-not $DotnetNativeCommand) {
@@ -70,8 +59,6 @@ function Update-PSProfile {
 
       try {
         try {
-          Write-Progress -Activity 'Update Profile' -Status Clean -PercentComplete 45
-
           & $DotnetNativeCommand.Source clean $Solution --configuration Release
 
           if ($LASTEXITCODE -notin 0, 1) {
@@ -83,8 +70,6 @@ function Update-PSProfile {
         }
 
         try {
-          Write-Progress -Activity 'Update Profile' -Status Build -PercentComplete 60
-
           & $DotnetNativeCommand.Source build $Solution --configuration Release
 
           if ($LASTEXITCODE -notin 0, 1) {
@@ -99,16 +84,11 @@ function Update-PSProfile {
         throw 'Failed to build profile project. ' + $PSItem.Exception
       }
       finally {
-        Write-Progress -Activity 'Update Profile' -Status Cleanup -PercentComplete 90
-
         (
           Get-Process -Name dotnet
         ).Kill($True)
       }
     }
-    #endregion
-
-    Write-Progress -Activity 'Update Profile' -Status Finished -PercentComplete 100
   }
 }
 
