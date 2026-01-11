@@ -34,7 +34,6 @@ function New-Directory {
       ValueFromPipelineByPropertyName
     )]
     [AllowEmptyString()]
-    [AllowNull()]
     [string]$Name,
 
     [Parameter(

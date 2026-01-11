@@ -354,7 +354,6 @@ function Start-WorkspaceSibling {
     [Parameter(
       Position = 1
     )]
-    [AllowEmptyString()]
     [string]$ProfileName,
 
     [Parameter(
@@ -391,7 +390,6 @@ function Start-WorkspaceRelative {
     [Parameter(
       Position = 1
     )]
-    [AllowEmptyString()]
     [string]$ProfileName,
 
     [Parameter(
@@ -428,7 +426,6 @@ function Start-WorkspaceHome {
     [Parameter(
       Position = 1
     )]
-    [AllowEmptyString()]
     [string]$ProfileName,
 
     [Parameter(
@@ -465,7 +462,6 @@ function Start-WorkspaceCode {
     [Parameter(
       Position = 1
     )]
-    [AllowEmptyString()]
     [string]$ProfileName,
 
     [Parameter(
@@ -502,7 +498,6 @@ function Start-WorkspaceDrive {
     [Parameter(
       Position = 1
     )]
-    [AllowEmptyString()]
     [string]$ProfileName,
 
     [Parameter(

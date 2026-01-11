@@ -21,7 +21,6 @@ function Set-Directory {
       ValueFromPipelineByPropertyName
     )]
     [AllowEmptyString()]
-    [AllowNull()]
     [SupportsWildcards()]
     [RelativePathCompletions(
       '',
@@ -42,7 +41,6 @@ function Set-Directory {
       ValueFromPipelineByPropertyName
     )]
     [AllowEmptyString()]
-    [AllowNull()]
     [string]$Stack,
 
     [switch]$PassThru
@@ -85,7 +83,6 @@ function Set-DirectorySibling {
       ValueFromPipelineByPropertyName
     )]
     [AllowEmptyString()]
-    [AllowNull()]
     [SupportsWildcards()]
     [RelativePathCompletions(
       '..',
@@ -121,7 +118,6 @@ function Set-DirectoryRelative {
       ValueFromPipelineByPropertyName
     )]
     [AllowEmptyString()]
-    [AllowNull()]
     [SupportsWildcards()]
     [RelativePathCompletions(
       '..\..',
@@ -157,7 +153,6 @@ function Set-DirectoryHome {
       ValueFromPipelineByPropertyName
     )]
     [AllowEmptyString()]
-    [AllowNull()]
     [SupportsWildcards()]
     [PathCompletions(
       '~',
@@ -191,7 +186,6 @@ function Set-DirectoryCode {
       ValueFromPipelineByPropertyName
     )]
     [AllowEmptyString()]
-    [AllowNull()]
     [SupportsWildcards()]
     [PathCompletions(
       '~\code',
@@ -225,7 +219,6 @@ function Set-Drive {
       ValueFromPipelineByPropertyName
     )]
     [AllowEmptyString()]
-    [AllowNull()]
     [SupportsWildcards()]
     [RelativePathCompletions(
       '\',
@@ -259,7 +252,6 @@ function Set-DriveD {
       ValueFromPipelineByPropertyName
     )]
     [AllowEmptyString()]
-    [AllowNull()]
     [SupportsWildcards()]
     [PathCompletions(
       'D:',
