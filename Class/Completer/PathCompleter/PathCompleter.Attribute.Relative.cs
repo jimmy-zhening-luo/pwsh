@@ -45,10 +45,7 @@ namespace Completer.PathCompleter
         System.IO.Path.GetFullPath(
           RelativeLocation == string.Empty
             ? string.Empty
-            : System.IO.Path.GetRelativePath(
-                pwd,
-                RelativeLocation
-              ),
+            : RelativeLocation,
           pwd
         ),
         ItemType,
