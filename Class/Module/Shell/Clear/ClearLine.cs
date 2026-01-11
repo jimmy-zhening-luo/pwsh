@@ -102,6 +102,7 @@ namespace Module.Shell.Clear.Commands
       else
       {
         steppablePipeline.End();
+        steppablePipeline.Clean();
         steppablePipeline.Dispose();
         steppablePipeline = null;
       }
