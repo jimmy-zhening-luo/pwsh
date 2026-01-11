@@ -25,8 +25,12 @@ namespace Module.Shell.Set.Commands
 
     private SteppablePipeline steppablePipeline = null;
 
+    protected abstract string Reanchor(string typedPath);
+
     protected override void BeginProcessing()
     {
+      path = Reanchor(path);
+
       using PowerShell ps = PowerShell.Create(
         RunspaceMode.CurrentRunspace
       );
