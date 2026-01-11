@@ -33,7 +33,7 @@ namespace Module
           : nativeCommand,
         true,
         PipelineResultTypes.All,
-        new [] {}
+        new Object[] {}
       );
 
     protected Collection<PSObject> InvokeNative(
