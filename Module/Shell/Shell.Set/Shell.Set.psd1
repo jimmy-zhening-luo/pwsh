@@ -8,21 +8,11 @@
   Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
   PowerShellVersion    = '7.5'
   FunctionsToExport    = @(
-    'Set-DirectorySibling'
-    'Set-DirectoryRelative'
-    'Set-DirectoryHome'
-    'Set-DirectoryCode'
-    'Set-Drive'
-    'Set-DriveD'
+
   )
   CmdletsToExport      = @()
   VariablesToExport    = @()
   AliasesToExport      = @(
-    'c.'
-    'c..'
-    'ch'
-    'cc'
-    'c/'
-    'd/'
+
   )
 }
