@@ -17,6 +17,15 @@ namespace Module.Shell.Set.Commands
   )]
   public class SetDirectorySibling : SetDirectoryLocation
   {
+    [Parameter(
+      Position = 0,
+      ValueFromPipeline = true,
+      ValueFromPipelineByPropertyName = true
+    )]
+    [AllowEmptyString]
+    [SupportsWildcards]
+    public override string Path;
+
     protected override string Reanchor(string typedPath) => System.IO.Path.GetFullPath(
       typedPath,
       System.IO.Path.GetFullPath(
