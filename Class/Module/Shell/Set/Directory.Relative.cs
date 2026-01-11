@@ -18,7 +18,7 @@ namespace Module.Shell.Set.Commands
   )]
   public class SetDirectorySibling : SetDirectoryLocation
   {
-    protected string Reanchor(string typedPath) => Path.GetFullPath(
+    protected override string Reanchor(string typedPath) => Path.GetFullPath(
       typedPath,
       Path.GetFullPath(
         "..",
