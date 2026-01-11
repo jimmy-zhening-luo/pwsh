@@ -1,74 +1,3 @@
-using namespace Completer.PathCompleter
-
-<#
-.FORWARDHELPTARGETNAME Set-Location
-.FORWARDHELPCATEGORY Cmdlet
-#>
-function Set-PrivateDirectory {
-  [CmdletBinding(
-    DefaultParameterSetName = 'Path'
-  )]
-  [OutputType(
-    [System.Management.Automation.PathInfo],
-    [System.Management.Automation.PathInfoStack]
-  )]
-  param(
-    [Parameter(
-      ParameterSetName = 'Path',
-      Position = 0,
-      ValueFromPipeline,
-      ValueFromPipelineByPropertyName
-    )]
-    [AllowEmptyString()]
-    [SupportsWildcards()]
-    [RelativePathCompletions(
-      '',
-      [PathItemType]::Directory
-    )]
-    [string]$Path,
-
-    [Parameter(
-      ParameterSetName = 'LiteralPath',
-      Mandatory,
-      ValueFromPipelineByPropertyName
-    )]
-    [Alias('PSPath', 'LP')]
-    [string]$LiteralPath,
-
-    [Parameter(
-      ParameterSetName = 'Stack',
-      ValueFromPipelineByPropertyName
-    )]
-    [AllowEmptyString()]
-    [string]$Stack,
-
-    [switch]$PassThru
-  )
-
-  begin {
-    $wrappedCmd = $ExecutionContext.InvokeCommand.GetCommand('Set-Location', [System.Management.Automation.CommandTypes]::Cmdlet)
-
-    if (-not $Path -and -not $LiteralPath) {
-      $PSBoundParameters.Path = Split-Path $PWD.Path
-    }
-    $scriptCmd = { & $wrappedCmd @PSBoundParameters }
-    $steppablePipeline = $scriptCmd.GetSteppablePipeline()
-    $steppablePipeline.Begin($PSCmdlet)
-  }
-
-  process {
-    $steppablePipeline.Process($PSItem)
-  }
-
-  end {
-    $steppablePipeline.End()
-  }
-}
-
-<#
-.FORWARDHELPTARGETNAME Set-Location
-.FORWARDHELPCATEGORY Cmdlet
-#>
 function Set-DirectorySibling {
   [CmdletBinding()]
   [OutputType(
@@ -100,10 +29,6 @@ function Set-DirectorySibling {
   }
 }
 
-<#
-.FORWARDHELPTARGETNAME Set-Location
-.FORWARDHELPCATEGORY Cmdlet
-#>
 function Set-DirectoryRelative {
   [CmdletBinding()]
   [OutputType(
@@ -135,10 +60,6 @@ function Set-DirectoryRelative {
   }
 }
 
-<#
-.FORWARDHELPTARGETNAME Set-Location
-.FORWARDHELPCATEGORY Cmdlet
-#>
 function Set-DirectoryHome {
   [CmdletBinding()]
   [OutputType(
@@ -168,10 +89,6 @@ function Set-DirectoryHome {
   }
 }
 
-<#
-.FORWARDHELPTARGETNAME Set-Location
-.FORWARDHELPCATEGORY Cmdlet
-#>
 function Set-DirectoryCode {
   [CmdletBinding()]
   [OutputType(
@@ -201,10 +118,6 @@ function Set-DirectoryCode {
   }
 }
 
-<#
-.FORWARDHELPTARGETNAME Set-Location
-.FORWARDHELPCATEGORY Cmdlet
-#>
 function Set-Drive {
   [CmdletBinding()]
   [OutputType(
@@ -234,10 +147,6 @@ function Set-Drive {
   }
 }
 
-<#
-.FORWARDHELPTARGETNAME Set-Location
-.FORWARDHELPCATEGORY Cmdlet
-#>
 function Set-DriveD {
   [CmdletBinding()]
   [OutputType(
