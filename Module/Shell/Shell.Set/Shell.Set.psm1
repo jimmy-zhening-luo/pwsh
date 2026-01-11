@@ -1,33 +1,3 @@
-function Set-DirectorySibling {
-  [CmdletBinding()]
-  [OutputType(
-    [System.Management.Automation.PathInfo]
-  )]
-  [Alias('c.')]
-  param(
-    [Parameter(
-      Position = 0,
-      ValueFromPipeline,
-      ValueFromPipelineByPropertyName
-    )]
-    [AllowEmptyString()]
-    [SupportsWildcards()]
-    [RelativePathCompletions(
-      '..',
-      [PathItemType]::Directory
-    )]
-    [string]$Path,
-
-    [switch]$PassThru
-  )
-
-  process {
-    $PSBoundParameters.Path = Join-Path (
-      Split-Path $PWD.Path
-    ) $Path
-    Set-PrivateDirectory @PSBoundParameters
-  }
-}
 
 function Set-DirectoryRelative {
   [CmdletBinding()]
