@@ -2,7 +2,7 @@
   RootModule           = 'Native.psm1'
   ModuleVersion        = '3.0.0.0'
   CompatiblePSEditions = @('Desktop', 'Core')
-  GUID                 = 'b86449cf-6ac6-4ac9-9b01-92b628894b32'
+  GUID                 = '7da18ef1-68e8-4a56-8365-bcb500357072'
   Author               = 'Jimmy Zhening Luo'
   CompanyName          = 'Jimmy Zhening Luo'
   Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
