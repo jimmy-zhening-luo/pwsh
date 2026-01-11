@@ -56,10 +56,15 @@ namespace Module.Shell.Set.Commands
     {
       if (Path == null && LiteralPath == null)
       {
-        MyInvocation.BoundParameters["Path"] = System.IO.Path.GetFullPath(
+        string pwd = Pwd();
+        string parent = System.IO.Path.GetFullPath(
           "..",
-          Pwd()
+          pwd
         );
+
+        MyInvocation.BoundParameters["Path"] = parent == pwd
+          ? fag
+          : parent;
       }
 
       using PowerShell ps = PowerShell.Create(

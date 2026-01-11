@@ -10,6 +10,12 @@ namespace Module
 
     public static bool Ssh() => Env("SSH_CLIENT") != string.Empty;
 
+    public static string Home() => Environment.GetFolderPath(
+      Environment
+        .SpecialFolder
+        .UserProfile
+    );
+
     public static string AppData(
       string subpath = ""
     ) => Path.GetFullPath(
