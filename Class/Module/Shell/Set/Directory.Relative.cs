@@ -35,12 +35,7 @@ namespace Module.Shell.Set.Commands
     )]
     [AllowEmptyString]
     [SupportsWildcards]
-    public string Path
-    {
-      get => path;
-      set => path = value;
-    }
-    private string path = string.Empty;
+    public string Path;
 
     [Parameter]
     public SwitchParameter PassThru;
@@ -51,7 +46,7 @@ namespace Module.Shell.Set.Commands
 
     protected override void BeginProcessing()
     {
-      path = Reanchor(path);
+      MyInvocation.BoundParameters["Path"] = Reanchor(path);
 
       using PowerShell ps = PowerShell.Create(
         RunspaceMode.CurrentRunspace
