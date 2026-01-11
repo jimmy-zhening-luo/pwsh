@@ -50,17 +50,21 @@ namespace Module.Windows.App.Commands
     {
       if (arguments.Length == 0)
       {
-        Call(
-          WinGet(),
-          "upgrade"
+        WriteObject(
+          Call(
+            WinGet(),
+            "upgrade"
+          )
         );
       }
       else
       {
-        Call(
-          WinGet(),
-          "install",
-          arguments
+        WriteObject(
+          Call(
+            WinGet(),
+            "install",
+            arguments
+          )
         );
       }
 

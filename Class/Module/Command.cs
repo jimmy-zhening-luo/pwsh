@@ -11,7 +11,7 @@ namespace Module
       .PSVariable
       .GetValue(variable);
 
-    protected void Call(
+    protected Collection<PSObject> Call(
       string nativeCommand,
       string verb,
       string[] arguments = null
@@ -20,19 +20,17 @@ namespace Module
       arguments
     );
 
-    protected void Call(
+    protected Collection<PSObject> Call(
       string nativeCommand,
       string[] arguments = null
     ) => SessionState
       .InvokeCommand
       .InvokeScript(
-        SessionState,
         arguments != null && arguments.Length != 0
           ? nativeCommand
             + " "
             + string.Join(' ', arguments)
-          : nativeCommand,
-        new Object[] {}
+          : nativeCommand
       );
 
     protected Collection<PSObject> InvokeNative(
