@@ -1,17 +1,5 @@
 $PROFILE_REPO_ROOT = "$REPO_ROOT\pwsh"
 
-<#
-.SYNOPSIS
-Update and build the local PowerShell profile repository.
-
-.DESCRIPTION
-This function updates the local PowerShell profile repository by pulling the latest changes from the remote Git repository and updating the PSScriptAnalyzer settings file in the user's home directory.
-
-It also builds the profile's .NET assemblies.
-
-.COMPONENT
-Installer
-#>
 function Restore-PSProfile {
   [CmdletBinding()]
   [OutputType([void])]
@@ -23,25 +11,12 @@ function Restore-PSProfile {
   }
 }
 
-<#
-.SYNOPSIS
-Update the local PowerShell profile repository.
-
-.DESCRIPTION
-This function updates the local PowerShell profile repository by invoking Restore-PSProfile, which pulls the latest changes from the remote Git repository and updating the PSScriptAnalyzer settings file in the user's home directory.
-
-If the Build flag is specified, it also builds the profile's .NET assemblies.
-
-.COMPONENT
-Installer
-#>
 function Update-PSProfile {
   [CmdletBinding()]
   [OutputType([void])]
   [Alias('up')]
   param(
 
-    # If specified, builds the profile's .NET assemblies
     [switch]$Build
   )
 
