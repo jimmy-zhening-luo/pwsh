@@ -31,7 +31,8 @@ namespace Module
           ? nativeCommand
             + " "
             + string.Join(' ', arguments)
-          : nativeCommand
+          : nativeCommand,
+        new Object[] {}
       );
 
     protected Collection<PSObject> InvokeNative(
