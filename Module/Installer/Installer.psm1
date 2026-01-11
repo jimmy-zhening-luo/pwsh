@@ -36,19 +36,10 @@ function Update-PSProfile {
     Copy-Item -Path $PROFILE_REPO_ROOT\Data\PSScriptAnalyzerSettings.psd1 -Destination $HOME -Force
 
     if ($Build) {
-      [System.Management.Automation.ApplicationInfo]$DotnetNativeCommand = Get-Command -Name dotnet.exe -CommandType Application -All
+      $DotnetNativeCommand = Get-Command -Name dotnet.exe -CommandType Application -All
 
       if (-not $DotnetNativeCommand) {
-        try {
-          [System.Management.Automation.ApplicationInfo]$DotnetNativeCommand = Install-PSModuleDotnet
-
-          if (-not $DotnetNativeCommand) {
-            throw 'Failed to locate Microsoft.DotNet.SDK.10 executable post-installation'
-          }
-        }
-        catch {
-          throw 'Failed to install Microsoft.DotNet.SDK.10' + $PSItem.Exception
-        }
+        throw 'Microsoft.DotNet.SDK.10 is not installed'
       }
 
       $Solution = "$PROFILE_REPO_ROOT\Class\Class.slnx"
@@ -73,11 +64,11 @@ function Update-PSProfile {
           }
         }
         catch {
-          throw 'Failed to clean project. ' + $PSItem.Exception
+          throw 'Failed to build project. ' + $PSItem.Exception
         }
       }
       catch {
-        throw 'Failed to build profile project. ' + $PSItem.Exception
+        throw $PSItem.Exception
       }
       finally {
         (
