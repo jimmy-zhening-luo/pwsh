@@ -1,7 +1,6 @@
 namespace Module.Shell.Set.Commands
 {
   using System;
-  using System.IO;
   using System.Management.Automation;
   using Completer.PathCompleter;
 
@@ -18,9 +17,9 @@ namespace Module.Shell.Set.Commands
   )]
   public class SetDirectorySibling : SetDirectoryLocation
   {
-    protected override string Reanchor(string typedPath) => Path.GetFullPath(
+    protected override string Reanchor(string typedPath) => System.IO.Path.GetFullPath(
       typedPath,
-      Path.GetFullPath(
+      System.IO.Path.GetFullPath(
         "..",
         Pwd()
       )
