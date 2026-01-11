@@ -19,7 +19,15 @@ namespace Module.Shell.Set
 
     private SteppablePipeline steppablePipeline = null;
 
-    protected abstract string Reanchor(string typedPath);
+    protected abstract string location();
+
+    protected virtual string Reanchor(string typedPath) => System.IO.Path.GetFullPath(
+      typedPath,
+      System.IO.Path.GetFullPath(
+        location(),
+        Pwd()
+      )
+    );
 
     protected override void BeginProcessing()
     {

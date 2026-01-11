@@ -30,13 +30,7 @@ namespace Module.Shell.Set.Commands
     )]
     public new string Path;
 
-    protected override string Reanchor(string typedPath) => System.IO.Path.GetFullPath(
-      typedPath,
-      System.IO.Path.GetFullPath(
-        "..",
-        Pwd()
-      )
-    );
+    protected override string location() => "..";
   }
 
   [Cmdlet(
@@ -65,12 +59,6 @@ namespace Module.Shell.Set.Commands
     )]
     public new string Path;
 
-    protected override string Reanchor(string typedPath) => System.IO.Path.GetFullPath(
-      typedPath,
-      System.IO.Path.GetFullPath(
-        @"..\..",
-        Pwd()
-      )
-    );
+    protected override string location() => @"..\..";
   }
 }
