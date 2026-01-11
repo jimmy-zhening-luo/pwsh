@@ -26,13 +26,12 @@ namespace Module
     ) => SessionState
       .InvokeCommand
       .InvokeScript(
+        SessionState,
         arguments != null && arguments.Length != 0
           ? nativeCommand
             + " "
             + string.Join(' ', arguments)
-          : nativeCommand,
-        false,
-        PipelineResultTypes.Output
+          : nativeCommand
       );
 
     protected Collection<PSObject> InvokeNative(
