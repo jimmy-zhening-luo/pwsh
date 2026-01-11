@@ -8,14 +8,12 @@
   Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
   PowerShellVersion    = '7.5'
   FunctionsToExport    = @(
-    'Measure-PSProfile'
     'Update-PSProfile'
     'Restore-PSProfile'
   )
   CmdletsToExport      = @()
   VariablesToExport    = @()
   AliasesToExport      = @(
-    'mcp'
     'up'
     'upp'
   )
