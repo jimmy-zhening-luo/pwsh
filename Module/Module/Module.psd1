@@ -9,11 +9,12 @@
   PowerShellVersion    = '7.5'
   FunctionsToExport    = @()
   CmdletsToExport      = @(
+    'Clear-Line'
+    'Set-Directory'
     'Stop-Task'
     'Edit-SystemPath'
     'Update-Windows'
     'Update-StoreApp'
-    'Clear-Line'
     'Open-Url'
     'Test-Url'
     'Test-Host'
@@ -26,12 +27,13 @@
   )
   VariablesToExport    = @()
   AliasesToExport      = @(
+    'cl'
+    'clear'
+    'c'
     'tkill'
     'path'
     'wu'
     'su'
-    'cl'
-    'clear'
     'o'
     'open'
     'tu'

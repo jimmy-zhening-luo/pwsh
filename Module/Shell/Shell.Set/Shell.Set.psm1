@@ -4,7 +4,7 @@ using namespace Completer.PathCompleter
 .FORWARDHELPTARGETNAME Set-Location
 .FORWARDHELPCATEGORY Cmdlet
 #>
-function Set-Directory {
+function Set-PrivateDirectory {
   [CmdletBinding(
     DefaultParameterSetName = 'Path'
   )]
@@ -12,7 +12,6 @@ function Set-Directory {
     [System.Management.Automation.PathInfo],
     [System.Management.Automation.PathInfoStack]
   )]
-  [Alias('c')]
   param(
     [Parameter(
       ParameterSetName = 'Path',
@@ -97,7 +96,7 @@ function Set-DirectorySibling {
     $PSBoundParameters.Path = Join-Path (
       Split-Path $PWD.Path
     ) $Path
-    Set-Directory @PSBoundParameters
+    Set-PrivateDirectory @PSBoundParameters
   }
 }
 
@@ -132,7 +131,7 @@ function Set-DirectoryRelative {
     $PSBoundParameters.Path = Join-Path (
       $PWD.Path | Split-Path | Split-Path
     ) $Path
-    Set-Directory @PSBoundParameters
+    Set-PrivateDirectory @PSBoundParameters
   }
 }
 
@@ -165,7 +164,7 @@ function Set-DirectoryHome {
 
   process {
     $PSBoundParameters.Path = Join-Path $HOME $Path
-    Set-Directory @PSBoundParameters
+    Set-PrivateDirectory @PSBoundParameters
   }
 }
 
@@ -198,7 +197,7 @@ function Set-DirectoryCode {
 
   process {
     $PSBoundParameters.Path = Join-Path $REPO_ROOT $Path
-    Set-Directory @PSBoundParameters
+    Set-PrivateDirectory @PSBoundParameters
   }
 }
 
@@ -231,7 +230,7 @@ function Set-Drive {
 
   process {
     $PSBoundParameters.Path = Join-Path $PWD.Drive.Root $Path
-    Set-Directory @PSBoundParameters
+    Set-PrivateDirectory @PSBoundParameters
   }
 }
 
@@ -264,6 +263,6 @@ function Set-DriveD {
 
   process {
     $PSBoundParameters.Path = Join-Path D: $Path
-    Set-Directory @PSBoundParameters
+    Set-PrivateDirectory @PSBoundParameters
   }
 }

@@ -8,7 +8,6 @@
   Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
   PowerShellVersion    = '7.5'
   FunctionsToExport    = @(
-    'Set-Directory'
     'Set-DirectorySibling'
     'Set-DirectoryRelative'
     'Set-DirectoryHome'
@@ -19,7 +18,6 @@
   CmdletsToExport      = @()
   VariablesToExport    = @()
   AliasesToExport      = @(
-    'c'
     'c.'
     'c..'
     'ch'
