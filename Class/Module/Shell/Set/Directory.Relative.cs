@@ -6,7 +6,19 @@ namespace Module.Shell.Set.Commands
 
   public abstract class SetDirectoryLocation : PSCoreCommand
   {
-    public abstract string Path;
+    [Parameter(
+      Position = 0,
+      ValueFromPipeline = true,
+      ValueFromPipelineByPropertyName = true
+    )]
+    [AllowEmptyString]
+    [SupportsWildcards]
+    public string Path
+    {
+      get => path;
+      set => path = value;
+    }
+    private string path = string.Empty;
 
     [Parameter]
     public SwitchParameter PassThru;
