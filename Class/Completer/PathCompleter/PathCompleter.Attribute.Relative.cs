@@ -31,9 +31,12 @@ namespace Completer.PathCompleter
 
     public override PathCompleter Create()
     {
-      string pwd = PowerShell
-        .Create(RunspaceMode.CurrentRunspace)
-        .AddCommand("Get-Location")
+      using var ps = PowerShell.Create(
+        RunspaceMode.CurrentRunspace
+      );
+      ps.AddCommand("Get-Location");
+
+      string pwd = ps
         .Invoke()[0]
         .BaseObject
         .ToString();
