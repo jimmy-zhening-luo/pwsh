@@ -124,27 +124,6 @@ function Measure-PSProfile {
   }
 }
 
-<#
-.SYNOPSIS
-Open PowerShell command history in a text editor.
-
-.DESCRIPTION
-This function opens the PowerShell command history file in Visual Studio Code.
-
-.COMPONENT
-Installer
-#>
-function Invoke-PSHistory {
-  [CmdletBinding()]
-  [OutputType([void])]
-  [Alias('oc')]
-  param()
-
-  end {
-    Start-Process -FilePath "$env:LOCALAPPDATA\Programs\Microsoft VS Code\bin\code.cmd" -NoNewWindow -ArgumentList (Get-PSReadLineOption).HistorySavePath, --profile=Setting, --new-window
-  }
-}
-
 $PROFILE_REPO_ROOT = "$REPO_ROOT\pwsh"
 
 <#
