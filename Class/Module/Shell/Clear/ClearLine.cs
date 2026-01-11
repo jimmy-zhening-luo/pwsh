@@ -22,12 +22,7 @@ namespace Module.Shell.Clear.Commands
     [AllowEmptyString]
     [SupportsWildcards]
     [RelativePathCompletions]
-    public string Path
-    {
-      get => path;
-      set => path = value;
-    }
-    private string path = string.Empty;
+    public string Path;
 
     [Parameter(
       Position = 1
@@ -63,7 +58,7 @@ namespace Module.Shell.Clear.Commands
     protected override void BeginProcessing()
     {
       if (
-        path != string.Empty
+        Path != null
         || ParameterSetName == "LiteralPath"
       )
       {
