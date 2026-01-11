@@ -24,7 +24,7 @@ namespace Module.Shell.Set.Commands
     )]
     [AllowEmptyString]
     [SupportsWildcards]
-    public override string Path;
+    public new string Path;
 
     protected override string Reanchor(string typedPath) => System.IO.Path.GetFullPath(
       typedPath,
