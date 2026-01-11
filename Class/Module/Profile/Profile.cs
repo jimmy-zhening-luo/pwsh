@@ -12,7 +12,7 @@ namespace Module.Profile.Commands
   {
     protected override void EndProcessing() => Context.CreateProcess(
       Context.LocalAppData(
-        @"\Programs\Microsoft VS Code\bin\code.cmd"
+        @"Programs\Microsoft VS Code\bin\code.cmd"
       ),
       System.IO.Path.GetFullPath(
         "pwsh",
