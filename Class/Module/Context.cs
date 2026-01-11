@@ -1,6 +1,7 @@
 namespace Module
 {
   using System;
+  using System.IO;
   using System.Diagnostics;
 
   public static class Context
@@ -9,9 +10,19 @@ namespace Module
 
     public static bool Ssh() => Env("SSH_CLIENT") != string.Empty;
 
-    public static string AppData() => Env("APPDATA");
+    public static string AppData(
+      string subpath = ""
+    ) => Path.GetFullPath(
+      subpath,
+      Env("APPDATA")
+    );
 
-    public static string LocalAppData() => Env("LOCALAPPDATA");
+    public static string LocalAppData(
+      string subpath = ""
+    ) => Path.GetFullPath(
+      subpath,
+      Env("LOCALAPPDATA")
+    );
 
     public static void CreateProcess(
       string fileName,
