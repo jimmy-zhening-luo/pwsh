@@ -29,7 +29,6 @@ namespace Module
       .InvokeCommand
       .InvokeScript(
         nativeCommand,
-        true,
         arguments ?? []
       );
 
