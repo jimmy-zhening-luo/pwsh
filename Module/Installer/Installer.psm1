@@ -8,7 +8,7 @@ This function measures the loading time of the PowerShell profile by comparing P
 It can perform multiple iterations to give a more accurate measurement.
 
 .COMPONENT
-PSAssembly
+Installer
 
 .LINK
 https://learn.microsoft.com/powershell/module/microsoft.powershell.utility/measure-command
@@ -132,7 +132,7 @@ Open PowerShell command history in a text editor.
 This function opens the PowerShell command history file in Visual Studio Code.
 
 .COMPONENT
-PSAssembly
+Installer
 #>
 function Invoke-PSHistory {
   [CmdletBinding()]
@@ -155,7 +155,7 @@ Open PowerShell profile repository.
 This function opens the PowerShell profile repository in Visual Studio Code.
 
 .COMPONENT
-PSAssembly
+Installer
 #>
 function Invoke-PSProfile {
   [CmdletBinding()]
@@ -178,7 +178,7 @@ This function updates the local PowerShell profile repository by pulling the lat
 It also builds the profile's .NET assemblies.
 
 .COMPONENT
-PSAssembly
+Installer
 #>
 function Restore-PSProfile {
   [CmdletBinding()]
@@ -201,7 +201,7 @@ This function updates the local PowerShell profile repository by invoking Restor
 If the Build flag is specified, it also builds the profile's .NET assemblies.
 
 .COMPONENT
-PSAssembly
+Installer
 #>
 function Update-PSProfile {
   [CmdletBinding()]
