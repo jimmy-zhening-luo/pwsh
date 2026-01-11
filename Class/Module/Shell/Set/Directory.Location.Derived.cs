@@ -50,7 +50,7 @@ namespace Module.Shell.Set.Commands
     typeof(System.Management.Automation.PathInfo),
     typeof(System.Management.Automation.PathInfoStack)
   )]
-  public class SetDirectorySibling : SetDirectoryLocation
+  public class SetDirectoryRelative : SetDirectoryLocation
   {
     [Parameter(
       Position = 0,
