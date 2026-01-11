@@ -32,7 +32,7 @@ namespace Module
             + string.Join(' ', arguments)
           : nativeCommand,
         false,
-        PipelineResultTypes.All
+        PipelineResultTypes.Output
       );
 
     protected Collection<PSObject> InvokeNative(
