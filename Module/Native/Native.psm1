@@ -6,7 +6,7 @@ Use WinGet to install a new package or upgrade an existing package.
 This function is an alias for 'winget install', unless no arguments are provided, in which case it calls 'winget upgrade' with no arguments, listing apps with available upgrades.
 
 .COMPONENT
-WindowsSystem
+Native
 
 .LINK
 https://learn.microsoft.com/en-us/windows/package-manager/winget/install
@@ -36,7 +36,7 @@ Use WinGet to check for a package upgrade or to upgrade a package.
 This function is an alias for 'winget upgrade'.
 
 .COMPONENT
-WindowsSystem
+Native
 
 .LINK
 https://learn.microsoft.com/en-us/windows/package-manager/winget/upgrade
@@ -61,7 +61,7 @@ Use WinGet to search WinGet repositories for a package.
 This function is an alias for 'winget search', unless no arguments are provided, in which case it calls 'winget list' with no arguments, listing all available packages.
 
 .COMPONENT
-WindowsSystem
+Native
 
 .LINK
 https://learn.microsoft.com/en-us/windows/package-manager/winget/search
@@ -91,7 +91,7 @@ Use WinGet to uninstall a package.
 This function is an alias for 'winget uninstall'.
 
 .COMPONENT
-WindowsSystem
+Native
 
 .LINK
 https://learn.microsoft.com/en-us/windows/package-manager/winget/uninstall
