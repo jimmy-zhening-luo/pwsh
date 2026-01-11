@@ -63,7 +63,7 @@ namespace Module.Shell.Set.Commands
         );
 
         MyInvocation.BoundParameters["Path"] = parent == pwd
-          ? Home()
+          ? Context.Home()
           : parent;
       }
 
