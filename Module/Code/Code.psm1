@@ -209,8 +209,8 @@ function Invoke-Git {
     [switch]$NoThrow,
 
     [Parameter(DontShow)]
-    # Pass the -D flag as an argument to git
-    [switch]$D,
+    # Pass the -d flag as an argument to git
+    [switch]$d,
 
     [Parameter(DontShow)]
     # Pass the -E flag as an argument to git
@@ -230,7 +230,7 @@ function Invoke-Git {
 
     [Parameter(DontShow)]
     # Pass the -v flag as an argument to git
-    [switch]$V
+    [switch]$v
   )
 
   $GitArgument = [List[string]]::new()
