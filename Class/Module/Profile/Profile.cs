@@ -16,7 +16,7 @@ namespace Module.Profile.Commands
       ),
       System.IO.Path.GetFullPath(
         "pwsh",
-        (string)(Var("REPO_ROOT").BaseObject.ToString())
+        (string)(Var("REPO_ROOT").ToString())
       )
         + " --profile=Default",
       true
