@@ -7,6 +7,12 @@ namespace Module
   {
     public static string Env(string variable) => Environment.GetEnvironmentVariable(variable) ?? string.Empty;
 
+    public static bool Ssh() => Env("SSH_CLIENT") != string.Empty;
+
+    public static string AppData() => Env("APPDATA");
+
+    public static string LocalAppData() => Env("LOCALAPPDATA");
+
     public static void CreateProcess(
       string fileName,
       string arguments = "",
@@ -28,12 +34,6 @@ namespace Module
         Process.Start(startInfo);
       }
     }
-
-    public static bool Ssh() => Env("SSH_CLIENT") != string.Empty;
-
-    public static string AppData() => Env("APPDATA");
-
-    public static string LocalAppData() => Env("LOCALAPPDATA");
 
     public static void ShellExecute(
       string fileName,
