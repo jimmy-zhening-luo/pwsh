@@ -3,6 +3,7 @@ namespace Module
   using System;
   using System.Collections.ObjectModel;
   using System.Management.Automation;
+  using System.Management.Automation.Runspaces;
 
   public abstract class PSCoreCommand : PSCmdlet
   {
@@ -25,8 +26,15 @@ namespace Module
     ) => SessionState
       .InvokeCommand
       .InvokeScript(
-        nativeCommand,
-        arguments ?? []
+        arguments != null && arguments.Length != 0
+          ? nativeCommand
+            + " "
+            + string.Join(' ', arguments)
+          : nativeCommand,
+        true,
+        PipelineResultTypes.All,
+        null,
+        null
       );
 
     protected Collection<PSObject> InvokeNative(
