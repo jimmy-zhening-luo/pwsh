@@ -21,6 +21,7 @@
     'ConvertTo-Hex'
     'Invoke-YouTubeDirectory'
     'Test-Cmdlet'
+    'Start-Profile'
     'Start-History'
   )
   VariablesToExport    = @()
@@ -40,6 +41,7 @@
     'hex'
     'yte'
     'test'
+    'op'
     'oc'
   )
 }

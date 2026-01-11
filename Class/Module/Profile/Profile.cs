@@ -4,20 +4,21 @@ namespace Module.Profile.Commands
 
   [Cmdlet(
     VerbsLifecycle.Start,
-    "History"
+    "Profile"
   )]
-  [Alias("oc")]
+  [Alias("op")]
   [OutputType(typeof(void))]
-  public class StartHistory : Cmdlet
+  public class StartProfile : PSCoreCommand
   {
     protected override void EndProcessing() => Context.CreateProcess(
       Context.LocalAppData(
-        @"Programs\Microsoft VS Code\bin\code.cmd"
+        @"\Programs\Microsoft VS Code\bin\code.cmd"
       ),
-      Context.AppData(
-        @"Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt"
+      System.IO.Path.GetFullPath(
+        "pwsh",
+        (string)Var("REPO_ROOT")
       )
-        + " --profile=Setting --new-window",
+        + " --profile=Default",
       true
     );
   }

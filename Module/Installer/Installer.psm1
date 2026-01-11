@@ -128,27 +128,6 @@ $PROFILE_REPO_ROOT = "$REPO_ROOT\pwsh"
 
 <#
 .SYNOPSIS
-Open PowerShell profile repository.
-
-.DESCRIPTION
-This function opens the PowerShell profile repository in Visual Studio Code.
-
-.COMPONENT
-Installer
-#>
-function Invoke-PSProfile {
-  [CmdletBinding()]
-  [OutputType([void])]
-  [Alias('op')]
-  param()
-
-  end {
-    Start-Process -FilePath "$env:LOCALAPPDATA\Programs\Microsoft VS Code\bin\code.cmd" -NoNewWindow -ArgumentList $PROFILE_REPO_ROOT, --profile=Default
-  }
-}
-
-<#
-.SYNOPSIS
 Update and build the local PowerShell profile repository.
 
 .DESCRIPTION
