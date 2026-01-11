@@ -27,14 +27,9 @@ namespace Module
         .BaseObject
         .ToString();
 
-      return System.IO.Path.GetFullPath(
-        RelativeLocation == string.Empty
-          ? string.Empty
-          : System.IO.Path.GetRelativePath(
-              pwd,
-              RelativeLocation
-            ),
-        pwd
+      return Pathing.Resolve(
+        pwd,
+        subpath
       );
     }
 
