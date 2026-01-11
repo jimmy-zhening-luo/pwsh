@@ -14,28 +14,6 @@ namespace Module
     protected Collection<PSObject> Call(
       string nativeCommand,
       string verb,
-      string[] arguments = null
-    ) => Call(
-      nativeCommand + " " + verb,
-      arguments
-    );
-
-    protected Collection<PSObject> Call(
-      string nativeCommand,
-      string[] arguments = null
-    ) => SessionState
-      .InvokeCommand
-      .InvokeScript(
-        arguments != null && arguments.Length != 0
-          ? nativeCommand
-            + " "
-            + string.Join(' ', arguments)
-          : nativeCommand
-      );
-
-    protected Collection<PSObject> InvokeNative(
-      string nativeCommand,
-      string verb,
       string[] arguments = null,
       CommandTypes commandType = CommandTypes.Application
     ) => InvokeNative(
@@ -46,7 +24,7 @@ namespace Module
       commandType
     );
 
-    protected Collection<PSObject> InvokeNative(
+    protected Collection<PSObject> Call(
       string nativeCommand,
       string[] arguments = null,
       CommandTypes commandType = CommandTypes.Application
