@@ -46,7 +46,7 @@ namespace Module.Shell.Set.Commands
 
     protected override void BeginProcessing()
     {
-      MyInvocation.BoundParameters["Path"] = Reanchor(path);
+      MyInvocation.BoundParameters["Path"] = Reanchor(Path ?? string.Empty);
 
       using PowerShell ps = PowerShell.Create(
         RunspaceMode.CurrentRunspace
