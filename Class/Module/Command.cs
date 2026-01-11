@@ -13,23 +13,40 @@ namespace Module
         string.Empty
       ) ?? string.Empty;
 
-    protected Collection<PSObject> Call(
+    protected void Call(
+      string nativeCommand,
+      string verb,
+      string[] arguments = null
+    ) => Call(
+      nativeCommand + " " + verb,
+      arguments
+    );
+
+    protected void Call(
+      string nativeCommand,
+      string[] arguments = null
+    ) => SessionState
+      .InvokeCommand
+      .InvokeScript(
+        nativeCommand,
+        true,
+        arguments ?? []
+      );
+
+    protected Collection<PSObject> InvokeNative(
       string nativeCommand,
       string verb,
       string[] arguments = null,
       CommandTypes commandType = CommandTypes.Application
-    )
-    {
-      return Call(
-        nativeCommand,
-        arguments == null
-          ? [verb]
-          : [verb, ..arguments],
-        commandType
-      );
-    }
+    ) => InvokeNative(
+      nativeCommand,
+      arguments == null
+        ? [verb]
+        : [verb, ..arguments],
+      commandType
+    );
 
-    protected Collection<PSObject> Call(
+    protected Collection<PSObject> InvokeNative(
       string nativeCommand,
       string[] arguments = null,
       CommandTypes commandType = CommandTypes.Application
