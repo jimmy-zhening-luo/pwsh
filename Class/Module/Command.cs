@@ -33,7 +33,6 @@ namespace Module
           : nativeCommand,
         true,
         PipelineResultTypes.All,
-        null,
         null
       );
 
