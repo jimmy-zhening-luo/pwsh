@@ -11,7 +11,7 @@
   CmdletsToExport      = @(
     'Clear-Line'
     'Set-Directory'
-    # 'Set-DirectorySibling'
+    'Set-DirectorySibling'
     # 'Set-DirectoryRelative'
     # 'Set-DirectoryHome'
     # 'Set-DirectoryCode'
@@ -36,7 +36,7 @@
     'cl'
     'clear'
     'c'
-    # 'c.'
+    'c.'
     # 'c..'
     # 'ch'
     # 'cc'
