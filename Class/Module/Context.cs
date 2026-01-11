@@ -9,12 +9,16 @@ namespace Module
 
     public static void CreateProcess(
       string fileName,
-      string arguments = ""
+      string arguments = "",
+      bool noNewWindow = false
     )
     {
       if (!Ssh())
       {
-        var startInfo = new ProcessStartInfo(fileName);
+        var startInfo = new ProcessStartInfo(fileName)
+        {
+          CreateNoWindow = noNewWindow
+        };
 
         if (arguments != string.Empty)
         {
@@ -34,14 +38,16 @@ namespace Module
     public static void ShellExecute(
       string fileName,
       string arguments = "",
-      bool runAsAdmin = false
+      bool runAsAdmin = false,
+      bool noNewWindow = false
     )
     {
       if (!Ssh())
       {
         var startInfo = new ProcessStartInfo(fileName)
         {
-          UseShellExecute = true
+          UseShellExecute = true,
+          CreateNoWindow = noNewWindow
         };
 
         if (arguments != string.Empty)
