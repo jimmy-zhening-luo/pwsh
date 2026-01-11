@@ -4,6 +4,22 @@ namespace Module.Shell.Set.Commands
   using System.Management.Automation;
   using Completer.PathCompleter;
 
+  [Cmdlet(
+    VerbsCommon.Set,
+    "DirectorySibling",
+    SupportsTransactions = true,
+    HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
+  )]
+  [Alias("c.")]
+  [OutputType(
+    typeof(System.Management.Automation.PathInfo),
+    typeof(System.Management.Automation.PathInfoStack)
+  )]
+  public class SetDirectorySibling : SetDirectoryLocation
+  {
+    protected string Reanchor(string typedPath) => 
+  }
+
   public abstract class SetDirectoryLocation : PSCoreCommand
   {
     [Parameter(

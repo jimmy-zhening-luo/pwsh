@@ -7,9 +7,36 @@ namespace Module
 
   public abstract class PSCoreCommand : PSCmdlet
   {
-    protected Object Var(string variable) => SessionState
+    protected Object Var(
+      string variable
+    ) => SessionState
       .PSVariable
       .GetValue(variable);
+
+    protected string Pwd(
+      string subpath = ""
+    )
+    {
+      using var ps = PowerShell.Create(
+        RunspaceMode.CurrentRunspace
+      );
+      ps.AddCommand("Get-Location");
+
+      string pwd = ps
+        .Invoke()[0]
+        .BaseObject
+        .ToString();
+
+      return System.IO.Path.GetFullPath(
+        RelativeLocation == string.Empty
+          ? string.Empty
+          : System.IO.Path.GetRelativePath(
+              pwd,
+              RelativeLocation
+            ),
+        pwd
+      );
+    }
 
     protected Collection<PSObject> Call(
       string nativeCommand,
