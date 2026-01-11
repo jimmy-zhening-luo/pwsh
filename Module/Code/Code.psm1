@@ -301,7 +301,7 @@ function Invoke-Git {
   )
 
   if ($D) {
-    $GitArgument.Add('-D')
+    $GitArgument.Add('-d')
   }
   if ($E) {
     $GitArgument.Add('-E')
