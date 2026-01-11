@@ -16,6 +16,18 @@
   CmdletsToExport      = @()
   VariablesToExport    = @()
   AliasesToExport      = @(
+New-Alias ^ Select-Object
+New-Alias s Select-Object
+New-Alias sel Select-Object
+New-Alias k Get-Member
+New-Alias key Get-Member
+New-Alias keys Get-Member
+New-Alias count Measure-Object
+New-Alias z Sort-Object
+New-Alias tab Format-Table
+New-Alias table Format-Table
+New-Alias format Format-Table
+
     'restart'
     'sesv'
     'remsv'
