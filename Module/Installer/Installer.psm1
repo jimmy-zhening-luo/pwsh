@@ -42,11 +42,12 @@ function Update-PSProfile {
         throw 'Microsoft.DotNet.SDK.10 is not installed'
       }
 
+      $DotnetExecutable = $DotnetNativeCommand.Source
       $Solution = "$PROFILE_REPO_ROOT\Class\Class.slnx"
 
       try {
         try {
-          & $DotnetNativeCommand.Source clean $Solution --configuration Release
+          & $DotnetExecutable clean $Solution --configuration Release
 
           if ($LASTEXITCODE -notin 0, 1) {
             throw "dotnet.exe returned a non-zero exit code ($LASTEXITCODE) when trying to clean the project."
@@ -57,7 +58,7 @@ function Update-PSProfile {
         }
 
         try {
-          & $DotnetNativeCommand.Source build $Solution --configuration Release
+          & $DotnetExecutable build $Solution --configuration Release
 
           if ($LASTEXITCODE -notin 0, 1) {
             throw "dotnet.exe returned a non-zero exit code ($LASTEXITCODE) when trying to build the project."
