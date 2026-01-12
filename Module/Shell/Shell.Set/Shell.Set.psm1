@@ -1,32 +1,3 @@
-function Set-DirectoryCode {
-  [CmdletBinding()]
-  [OutputType(
-    [System.Management.Automation.PathInfo]
-  )]
-  [Alias('cc')]
-  param(
-    [Parameter(
-      Position = 0,
-      ValueFromPipeline,
-      ValueFromPipelineByPropertyName
-    )]
-    [AllowEmptyString()]
-    [SupportsWildcards()]
-    [PathCompletions(
-      '~\code',
-      [PathItemType]::Directory
-    )]
-    [string]$Path,
-
-    [switch]$PassThru
-  )
-
-  process {
-    $PSBoundParameters.Path = Join-Path $REPO_ROOT $Path
-    Set-PrivateDirectory @PSBoundParameters
-  }
-}
-
 function Set-Drive {
   [CmdletBinding()]
   [OutputType(

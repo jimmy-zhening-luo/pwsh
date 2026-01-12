@@ -21,6 +21,13 @@ namespace Module
       SessionState.Path.CurrentLocation.Path
     );
 
+    protected string Drive(
+      string subpath = ""
+    ) => Path.GetFullPath(
+      subpath,
+      SessionState.Drive.Current.Root
+    );
+
     protected Collection<PSObject> Call(
       string nativeCommand,
       string verb,
