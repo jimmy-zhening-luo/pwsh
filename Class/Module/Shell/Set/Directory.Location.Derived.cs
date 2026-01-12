@@ -12,8 +12,7 @@ namespace Module.Shell.Set.Commands
   )]
   [Alias("c.")]
   [OutputType(
-    typeof(System.Management.Automation.PathInfo),
-    typeof(System.Management.Automation.PathInfoStack)
+    typeof(System.Management.Automation.PathInfo)
   )]
   public class SetDirectorySibling : SetDirectoryLocation
   {
@@ -40,7 +39,9 @@ namespace Module.Shell.Set.Commands
     HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
   )]
   [Alias("c..")]
-  [OutputType(typeof(System.Management.Automation.PathInfo))]
+  [OutputType(
+    typeof(System.Management.Automation.PathInfo)
+  )]
   public class SetDirectoryRelative : SetDirectoryLocation
   {
     [Parameter(
@@ -66,7 +67,9 @@ namespace Module.Shell.Set.Commands
     HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
   )]
   [Alias("ch")]
-  [OutputType(typeof(System.Management.Automation.PathInfo))]
+  [OutputType(
+    typeof(System.Management.Automation.PathInfo)
+  )]
   public class SetDirectoryHome : SetDirectoryLocation
   {
     [Parameter(
