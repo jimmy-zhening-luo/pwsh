@@ -179,8 +179,8 @@ namespace Module.Shell.Set.Commands
     )]
     public new string Path;
 
-    protected override string location() => "code";
+    protected override string location() => "";
 
-    protected override string root() => Context.Home();
+    protected override string root() => Drive();
   }
 }
