@@ -1,32 +1,3 @@
-function Set-DirectoryHome {
-  [CmdletBinding()]
-  [OutputType(
-    [System.Management.Automation.PathInfo]
-  )]
-  [Alias('ch')]
-  param(
-    [Parameter(
-      Position = 0,
-      ValueFromPipeline,
-      ValueFromPipelineByPropertyName
-    )]
-    [AllowEmptyString()]
-    [SupportsWildcards()]
-    [PathCompletions(
-      '~',
-      [PathItemType]::Directory
-    )]
-    [string]$Path,
-
-    [switch]$PassThru
-  )
-
-  process {
-    $PSBoundParameters.Path = Join-Path $HOME $Path
-    Set-PrivateDirectory @PSBoundParameters
-  }
-}
-
 function Set-DirectoryCode {
   [CmdletBinding()]
   [OutputType(

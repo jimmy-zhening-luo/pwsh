@@ -19,7 +19,7 @@ namespace Module.Shell.Set
 
     private SteppablePipeline steppablePipeline = null;
 
-    protected abstract string location();
+    protected virtual string location() => "";
 
     protected virtual string Reanchor(string typedPath) => System.IO.Path.GetFullPath(
       typedPath,

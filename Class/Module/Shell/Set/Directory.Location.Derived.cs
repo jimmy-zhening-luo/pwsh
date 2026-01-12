@@ -40,10 +40,7 @@ namespace Module.Shell.Set.Commands
     HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
   )]
   [Alias("c..")]
-  [OutputType(
-    typeof(System.Management.Automation.PathInfo),
-    typeof(System.Management.Automation.PathInfoStack)
-  )]
+  [OutputType(typeof(System.Management.Automation.PathInfo))]
   public class SetDirectoryRelative : SetDirectoryLocation
   {
     [Parameter(
@@ -60,5 +57,34 @@ namespace Module.Shell.Set.Commands
     public new string Path;
 
     protected override string location() => @"..\..";
+  }
+
+  [Cmdlet(
+    VerbsCommon.Set,
+    "DirectoryHome",
+    SupportsTransactions = true,
+    HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
+  )]
+  [Alias("ch")]
+  [OutputType(typeof(System.Management.Automation.PathInfo))]
+  public class SetDirectoryHome : SetDirectoryLocation
+  {
+    [Parameter(
+      Position = 0,
+      ValueFromPipeline = true,
+      ValueFromPipelineByPropertyName = true
+    )]
+    [AllowEmptyString]
+    [SupportsWildcards]
+    [PathCompletions(
+      "~",
+      PathItemType.Directory
+    )]
+    public new string Path;
+
+    protected override string Reanchor(string typedPath) => System.IO.Path.GetFullPath(
+      typedPath,
+      Context.Home()
+    );
   }
 }
