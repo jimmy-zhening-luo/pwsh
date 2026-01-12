@@ -16,23 +16,10 @@ namespace Module
 
     protected string Pwd(
       string subpath = ""
-    )
-    {
-      using var ps = PowerShell.Create(
-        RunspaceMode.CurrentRunspace
-      );
-      ps.AddCommand("Get-Location");
-
-      string pwd = ps
-        .Invoke()[0]
-        .BaseObject
-        .ToString();
-
-      return Path.GetFullPath(
-        subpath,
-        pwd
-      );
-    }
+    ) => Path.GetFullPath(
+      subpath,
+      SessionState.Path.CurrentLocation.Path
+    );
 
     protected Collection<PSObject> Call(
       string nativeCommand,
