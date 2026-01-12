@@ -30,6 +30,8 @@ namespace Module.Shell.Set.Commands
     public new string Path;
 
     protected override string location() => "..";
+
+    protected override string root() => Pwd();
   }
 
   [Cmdlet(
@@ -58,6 +60,8 @@ namespace Module.Shell.Set.Commands
     public new string Path;
 
     protected override string location() => @"..\..";
+
+    protected override string root() => Pwd();
   }
 
   [Cmdlet(
@@ -85,9 +89,8 @@ namespace Module.Shell.Set.Commands
     )]
     public new string Path;
 
-    protected override string Reanchor(string typedPath) => System.IO.Path.GetFullPath(
-      typedPath,
-      Context.Home()
-    );
+    protected override string location() => "";
+
+    protected override string root() => Context.Home();
   }
 }
