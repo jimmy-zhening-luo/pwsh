@@ -33,7 +33,7 @@ namespace Module.Shell.Set
 
     protected override void BeginProcessing()
     {
-      MyInvocation.BoundParameters["Path"] = Reanchor(Path ?? string.Empty);
+      MyInvocation.BoundParameters["Path"] = Reanchor(MyInvocation.BoundParameters["Path"] ?? string.Empty);
 
       using PowerShell ps = PowerShell.Create(
         RunspaceMode.CurrentRunspace
