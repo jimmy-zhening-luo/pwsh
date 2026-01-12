@@ -164,7 +164,7 @@ namespace Module.Shell.Set.Commands
   [OutputType(
     typeof(System.Management.Automation.PathInfo)
   )]
-  public class SetDirectoryCode : SetDirectoryLocation
+  public class SetDrive : SetDirectoryLocation
   {
     [Parameter(
       Position = 0,
@@ -182,5 +182,35 @@ namespace Module.Shell.Set.Commands
     protected override string location() => "";
 
     protected override string root() => Drive();
+  }
+
+  [Cmdlet(
+    VerbsCommon.Set,
+    "DriveD",
+    SupportsTransactions = true,
+    HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
+  )]
+  [Alias("d/")]
+  [OutputType(
+    typeof(System.Management.Automation.PathInfo)
+  )]
+  public class SetDriveD : SetDirectoryLocation
+  {
+    [Parameter(
+      Position = 0,
+      ValueFromPipeline = true,
+      ValueFromPipelineByPropertyName = true
+    )]
+    [AllowEmptyString]
+    [SupportsWildcards]
+    [RelativePathCompletions(
+      "D:",
+      PathItemType.Directory
+    )]
+    public new string Path;
+
+    protected override string location() => "";
+
+    protected override string root() => @"D:\";
   }
 }
