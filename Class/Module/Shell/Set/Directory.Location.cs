@@ -34,7 +34,9 @@ namespace Module.Shell.Set
     protected override void BeginProcessing()
     {
       MyInvocation.BoundParameters["Path"] = Reanchor(
-        MyInvocation.BoundParameters["Path"] == null ? string.Empty : MyInvocation.BoundParameters["Path"].ToString()
+        MyInvocation.BoundParameters.ContainsKey("Path")
+          ? MyInvocation.BoundParameters["Path"].ToString()
+          : string.Empty
       );
 
       using PowerShell ps = PowerShell.Create(
