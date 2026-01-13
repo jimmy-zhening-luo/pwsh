@@ -37,7 +37,7 @@ namespace Module
       nativeCommand,
       arguments == null
         ? [verb]
-        : [verb, ..arguments],
+        : [verb, .. arguments],
       commandType
     );
 
