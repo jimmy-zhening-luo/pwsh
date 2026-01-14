@@ -1,101 +1,104 @@
-namespace Module.Browse.Commands
+namespace Module.Browse
 {
-  using System;
-  using System.Management.Automation;
-  using Completer.PathCompleter;
-
-  [Cmdlet(
-    VerbsCommon.Open,
-    "Url",
-    DefaultParameterSetName = "Path",
-    HelpUri = "https://www.chromium.org/developers/how-tos/run-chromium-with-flags/"
-  )]
-  [OutputType(typeof(void))]
-  [Alias("o", "open")]
-  public class OpenUrl : PSCoreCommand
+  namespace Commands
   {
-    [Parameter(
-      ParameterSetName = "Path",
-      Position = 0,
-      HelpMessage = "The file path or URL to open. Defaults to the current directory."
-    )]
-    [AllowEmptyString]
-    [RelativePathCompletions]
-    public string Path
-    {
-      get => path;
-      set => path = value;
-    }
-    private string path = string.Empty;
+    using System;
+    using System.Management.Automation;
+    using Completer.PathCompleter;
 
-    [Parameter(
-      ParameterSetName = "Uri",
-      Mandatory = true,
-      Position = 0,
-      ValueFromPipeline = true,
-      ValueFromPipelineByPropertyName = true,
-      HelpMessage = "The URL(s) to open."
+    [Cmdlet(
+      VerbsCommon.Open,
+      "Url",
+      DefaultParameterSetName = "Path",
+      HelpUri = "https://www.chromium.org/developers/how-tos/run-chromium-with-flags/"
     )]
-    [AllowEmptyCollection]
-    public Uri[] Uri
+    [OutputType(typeof(void))]
+    [Alias("o", "open")]
+    public class OpenUrl : PSCoreCommand
     {
-      get => uris;
-      set => uris = value;
-    }
-    private Uri[] uris = [];
-
-    protected override void ProcessRecord()
-    {
-      if (ParameterSetName == "Uri")
+      [Parameter(
+        ParameterSetName = "Path",
+        Position = 0,
+        HelpMessage = "The file path or URL to open. Defaults to the current directory."
+      )]
+      [AllowEmptyString]
+      [RelativePathCompletions]
+      public string Path
       {
-        foreach (Uri uri in uris)
-        {
-          string url = uri.ToString().Trim();
+        get => path;
+        set => path = value;
+      }
+      private string path = string.Empty;
 
-          if (url != string.Empty)
+      [Parameter(
+        ParameterSetName = "Uri",
+        Mandatory = true,
+        Position = 0,
+        ValueFromPipeline = true,
+        ValueFromPipelineByPropertyName = true,
+        HelpMessage = "The URL(s) to open."
+      )]
+      [AllowEmptyCollection]
+      public Uri[] Uri
+      {
+        get => uris;
+        set => uris = value;
+      }
+      private Uri[] uris = [];
+
+      protected override void ProcessRecord()
+      {
+        if (ParameterSetName == "Uri")
+        {
+          foreach (Uri uri in uris)
           {
-            Context.ShellExecute(
-              @"C:\Program Files\Google\Chrome\Application\chrome.exe",
-              url
-            );
+            string url = uri.ToString().Trim();
+
+            if (url != string.Empty)
+            {
+              Context.ShellExecute(
+                @"C:\Program Files\Google\Chrome\Application\chrome.exe",
+                url
+              );
+            }
           }
         }
       }
-    }
 
-    protected override void EndProcessing()
-    {
-      if (ParameterSetName == "Path")
+      protected override void EndProcessing()
       {
-        string cleanPath = path.Trim();
-        string target = string.Empty;
-
-        if (cleanPath != string.Empty)
+        if (ParameterSetName == "Path")
         {
-          string relativePath = System.IO.Path.GetRelativePath(
-            SessionState.Path.CurrentLocation.Path,
-            cleanPath
+          string cleanPath = path.Trim();
+          string target = string.Empty;
+
+          if (cleanPath != string.Empty)
+          {
+            string relativePath = System.IO.Path.GetRelativePath(
+              SessionState.Path.CurrentLocation.Path,
+              cleanPath
+            );
+            string testPath = System.IO.Path.IsPathRooted(
+              relativePath
+            )
+              ? relativePath
+              : System.IO.Path.Combine(
+                  SessionState.Path.CurrentLocation.Path,
+                  relativePath
+                );
+
+            target = System.IO.Path.Exists(testPath)
+              ? System.IO.Path.GetFullPath(
+                  testPath
+                )
+              : cleanPath;
+          }
+
+          Context.ShellExecute(
+            @"C:\Program Files\Google\Chrome\Application\chrome.exe",
+            target
           );
-          string testPath = System.IO.Path.IsPathRooted(
-            relativePath
-          )
-            ? relativePath
-            : System.IO.Path.Combine(
-                SessionState.Path.CurrentLocation.Path,
-                relativePath
-              );
-
-          target = System.IO.Path.Exists(testPath)
-            ? System.IO.Path.GetFullPath(
-                testPath
-              )
-            : cleanPath;
         }
-
-        Context.ShellExecute(
-          @"C:\Program Files\Google\Chrome\Application\chrome.exe",
-          target
-        );
       }
     }
   }

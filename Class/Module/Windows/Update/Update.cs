@@ -1,36 +1,39 @@
-namespace Module.Windows.Update.Commands
+namespace Module.Windows.Update
 {
-  using System.Management.Automation;
-
-  [Cmdlet(
-    VerbsData.Update,
-    "Windows"
-  )]
-  [Alias("wu")]
-  [OutputType(typeof(void))]
-  public class UpdateWindows : Cmdlet
+  namespace Commands
   {
-    protected override void EndProcessing()
+    using System.Management.Automation;
+
+    [Cmdlet(
+      VerbsData.Update,
+      "Windows"
+    )]
+    [Alias("wu")]
+    [OutputType(typeof(void))]
+    public class UpdateWindows : Cmdlet
     {
-      Context.ShellExecute(
-        "ms-settings:windowsupdate"
-      );
+      protected override void EndProcessing()
+      {
+        Context.ShellExecute(
+          "ms-settings:windowsupdate"
+        );
+      }
     }
-  }
 
-  [Cmdlet(
-    VerbsData.Update,
-    "StoreApp"
-  )]
-  [Alias("su")]
-  [OutputType(typeof(void))]
-  public class UpdateStoreApp : Cmdlet
-  {
-    protected override void EndProcessing()
+    [Cmdlet(
+      VerbsData.Update,
+      "StoreApp"
+    )]
+    [Alias("su")]
+    [OutputType(typeof(void))]
+    public class UpdateStoreApp : Cmdlet
     {
-      Context.ShellExecute(
-        "ms-windows-store://downloadsandupdates"
-      );
+      protected override void EndProcessing()
+      {
+        Context.ShellExecute(
+          "ms-windows-store://downloadsandupdates"
+        );
+      }
     }
   }
 }

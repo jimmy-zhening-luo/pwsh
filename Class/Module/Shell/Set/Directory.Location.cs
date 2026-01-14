@@ -1,6 +1,5 @@
 namespace Module.Shell.Set
 {
-  using System;
   using System.Management.Automation;
 
   public abstract class SetDirectoryLocation : PSCoreCommand

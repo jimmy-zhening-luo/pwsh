@@ -4,11 +4,10 @@ namespace Module
   using System.IO;
   using System.Collections.ObjectModel;
   using System.Management.Automation;
-  using System.Management.Automation.Runspaces;
 
   public abstract class PSCoreCommand : PSCmdlet
   {
-    protected Object Var(
+    protected object Var(
       string variable
     ) => SessionState
       .PSVariable
