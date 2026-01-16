@@ -305,8 +305,14 @@ function Get-DirectorySibling {
     [System.Management.Automation.FlagsExpression[System.IO.FileAttributes]]$Attributes
   )
 
-  process {
-    $PSBoundParameters.Path = Join-Path (Split-Path $PWD.Path) $Path
+  end {
+    $Location = Split-Path $PWD.Path
+
+    $PSBoundParameters.Path = $Path |
+      ForEach-Object {
+        Join-Path $Location $PSItem
+      }
+
     Get-ChildItem @PSBoundParameters
   }
 }
@@ -381,8 +387,14 @@ function Get-DirectoryRelative {
     [System.Management.Automation.FlagsExpression[System.IO.FileAttributes]]$Attributes
   )
 
-  process {
-    $PSBoundParameters.Path = Join-Path ($PWD.Path | Split-Path | Split-Path) $Path
+  end {
+    $Location = $PWD.Path | Split-Path | Split-Path
+
+    $PSBoundParameters.Path = $Path |
+      ForEach-Object {
+        Join-Path $Location $PSItem
+      }
+
     Get-ChildItem @PSBoundParameters
   }
 }
@@ -457,8 +469,12 @@ function Get-DirectoryHome {
     [System.Management.Automation.FlagsExpression[System.IO.FileAttributes]]$Attributes
   )
 
-  process {
-    $PSBoundParameters.Path = Join-Path $HOME $Path
+  end {
+    $PSBoundParameters.Path = $Path |
+      ForEach-Object {
+        Join-Path $HOME $PSItem
+      }
+
     Get-ChildItem @PSBoundParameters
   }
 }
@@ -533,8 +549,12 @@ function Get-DirectoryCode {
     [System.Management.Automation.FlagsExpression[System.IO.FileAttributes]]$Attributes
   )
 
-  process {
-    $PSBoundParameters.Path = Join-Path $REPO_ROOT $Path
+  end {
+    $PSBoundParameters.Path = $Path |
+      ForEach-Object {
+        Join-Path $REPO_ROOT $PSItem
+      }
+
     Get-ChildItem @PSBoundParameters
   }
 }
@@ -609,8 +629,12 @@ function Get-DirectoryDrive {
     [System.Management.Automation.FlagsExpression[System.IO.FileAttributes]]$Attributes
   )
 
-  process {
-    $PSBoundParameters.Path = Join-Path $PWD.Drive.Root $Path
+  end {
+    $PSBoundParameters.Path = $Path |
+      ForEach-Object {
+        Join-Path $PWD.Drive.Root $PSItem
+      }
+
     Get-ChildItem @PSBoundParameters
   }
 }
