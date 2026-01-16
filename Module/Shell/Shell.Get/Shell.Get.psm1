@@ -165,18 +165,23 @@ function Get-Directory {
     [string[]]$Path,
 
     [Parameter(
-      Position = 1
-    )]
-    [SupportsWildcards()]
-    [string]$Filter,
-
-    [Parameter(
       ParameterSetName = 'LiteralItems',
       Mandatory,
       ValueFromPipelineByPropertyName
     )]
     [Alias('PSPath', 'LP')]
     [string[]]$LiteralPath,
+
+    [Parameter(
+      ParameterSetName = 'Items',
+      Position = 1
+    )]
+    [Parameter(
+      ParameterSetName = 'LiteralItems',
+      Position = 1
+    )]
+    [SupportsWildcards()]
+    [string]$Filter,
 
     [SupportsWildcards()]
     [string[]]$Include,
