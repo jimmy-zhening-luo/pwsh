@@ -241,6 +241,7 @@ function Get-Directory {
 #>
 function Get-DirectorySibling {
   [CmdletBinding(
+    DefaultParameterSetName = 'Items',
     SupportsTransactions
   )]
   [OutputType([System.IO.DirectoryInfo], [System.IO.FileInfo])]
@@ -248,6 +249,7 @@ function Get-DirectorySibling {
   param(
 
     [Parameter(
+      ParameterSetName = 'Items',
       Position = 0,
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
@@ -261,6 +263,7 @@ function Get-DirectorySibling {
     [string[]]$Path,
 
     [Parameter(
+      ParameterSetName = 'Items',
       Position = 1
     )]
     [SupportsWildcards()]
@@ -314,6 +317,7 @@ function Get-DirectorySibling {
 #>
 function Get-DirectoryRelative {
   [CmdletBinding(
+    DefaultParameterSetName = 'Items',
     SupportsTransactions
   )]
   [OutputType([System.IO.DirectoryInfo], [System.IO.FileInfo])]
@@ -321,6 +325,7 @@ function Get-DirectoryRelative {
   param(
 
     [Parameter(
+      ParameterSetName = 'Items',
       Position = 0,
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
@@ -334,6 +339,7 @@ function Get-DirectoryRelative {
     [string[]]$Path,
 
     [Parameter(
+      ParameterSetName = 'Items',
       Position = 1
     )]
     [SupportsWildcards()]
@@ -387,6 +393,7 @@ function Get-DirectoryRelative {
 #>
 function Get-DirectoryHome {
   [CmdletBinding(
+    DefaultParameterSetName = 'Items',
     SupportsTransactions
   )]
   [OutputType([System.IO.DirectoryInfo], [System.IO.FileInfo])]
@@ -394,6 +401,7 @@ function Get-DirectoryHome {
   param(
 
     [Parameter(
+      ParameterSetName = 'Items',
       Position = 0,
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
@@ -407,6 +415,7 @@ function Get-DirectoryHome {
     [string[]]$Path,
 
     [Parameter(
+      ParameterSetName = 'Items',
       Position = 1
     )]
     [SupportsWildcards()]
@@ -460,6 +469,7 @@ function Get-DirectoryHome {
 #>
 function Get-DirectoryCode {
   [CmdletBinding(
+    DefaultParameterSetName = 'Items',
     SupportsTransactions
   )]
   [OutputType([System.IO.DirectoryInfo], [System.IO.FileInfo])]
@@ -467,6 +477,7 @@ function Get-DirectoryCode {
   param(
 
     [Parameter(
+      ParameterSetName = 'Items',
       Position = 0,
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
@@ -480,6 +491,7 @@ function Get-DirectoryCode {
     [string[]]$Path,
 
     [Parameter(
+      ParameterSetName = 'Items',
       Position = 1
     )]
     [SupportsWildcards()]
@@ -533,6 +545,7 @@ function Get-DirectoryCode {
 #>
 function Get-DirectoryDrive {
   [CmdletBinding(
+    DefaultParameterSetName = 'Items',
     SupportsTransactions
   )]
   [OutputType([System.IO.DirectoryInfo], [System.IO.FileInfo])]
@@ -540,6 +553,7 @@ function Get-DirectoryDrive {
   param(
 
     [Parameter(
+      ParameterSetName = 'Items',
       Position = 0,
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
@@ -553,6 +567,7 @@ function Get-DirectoryDrive {
     [string[]]$Path,
 
     [Parameter(
+      ParameterSetName = 'Items',
       Position = 1
     )]
     [SupportsWildcards()]
