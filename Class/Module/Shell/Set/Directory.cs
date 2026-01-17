@@ -14,8 +14,8 @@ namespace Module.Shell.Set
     )]
     [Alias("c")]
     [OutputType(
-      typeof(System.Management.Automation.PathInfo),
-      typeof(System.Management.Automation.PathInfoStack)
+      typeof(PathInfo),
+      typeof(PathInfoStack)
     )]
     public class SetDirectory : PSCoreCommand
     {

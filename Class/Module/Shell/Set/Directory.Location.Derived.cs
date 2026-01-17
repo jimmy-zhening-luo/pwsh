@@ -13,7 +13,7 @@ namespace Module.Shell.Set
     )]
     [Alias("c.")]
     [OutputType(
-      typeof(System.Management.Automation.PathInfo)
+      typeof(PathInfo)
     )]
     public class SetDirectorySibling : SetDirectoryLocation
     {
@@ -43,7 +43,7 @@ namespace Module.Shell.Set
     )]
     [Alias("c..")]
     [OutputType(
-      typeof(System.Management.Automation.PathInfo)
+      typeof(PathInfo)
     )]
     public class SetDirectoryRelative : SetDirectoryLocation
     {
@@ -73,7 +73,7 @@ namespace Module.Shell.Set
     )]
     [Alias("ch")]
     [OutputType(
-      typeof(System.Management.Automation.PathInfo)
+      typeof(PathInfo)
     )]
     public class SetDirectoryHome : SetDirectoryLocation
     {
@@ -103,7 +103,7 @@ namespace Module.Shell.Set
     )]
     [Alias("cc")]
     [OutputType(
-      typeof(System.Management.Automation.PathInfo)
+      typeof(PathInfo)
     )]
     public class SetDirectoryCode : SetDirectoryLocation
     {
@@ -133,7 +133,7 @@ namespace Module.Shell.Set
     )]
     [Alias("c/")]
     [OutputType(
-      typeof(System.Management.Automation.PathInfo)
+      typeof(PathInfo)
     )]
     public class SetDrive : SetDirectoryLocation
     {
@@ -163,7 +163,7 @@ namespace Module.Shell.Set
     )]
     [Alias("d/")]
     [OutputType(
-      typeof(System.Management.Automation.PathInfo)
+      typeof(PathInfo)
     )]
     public class SetDriveD : SetDirectoryLocation
     {

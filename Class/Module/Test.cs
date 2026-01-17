@@ -24,9 +24,6 @@ namespace Module
       }
       private string path = string.Empty;
 
-      [Parameter(DontShow = true)]
-      public SwitchParameter z;
-
       protected override void EndProcessing()
       {
         WriteObject(path);
