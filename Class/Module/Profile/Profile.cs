@@ -10,7 +10,7 @@ namespace Module.Profile
     )]
     [Alias("op")]
     [OutputType(typeof(void))]
-    public class StartProfile : PSCoreCommand
+    public class StartProfile : CoreCommand
     {
       protected override void EndProcessing() => Context.CreateProcess(
         Context.LocalAppData(

@@ -11,7 +11,7 @@ namespace Module.Transform
     )]
     [Alias("gu", "guid")]
     [OutputType(typeof(string))]
-    public class CopyGuid : PSCoreCommand
+    public class CopyGuid : CoreCommand
     {
       [Parameter(
         HelpMessage = "Uppercase GUID"

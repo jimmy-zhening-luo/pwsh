@@ -17,7 +17,7 @@ namespace Module.Shell.Set
       typeof(PathInfo),
       typeof(PathInfoStack)
     )]
-    public class SetDirectory : PSCoreCommand
+    public class SetDirectory : CoreCommand
     {
       [Parameter(
         ParameterSetName = "Path",

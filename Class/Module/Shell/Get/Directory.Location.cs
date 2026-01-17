@@ -3,7 +3,7 @@ namespace Module.Shell.Get
   using System.IO;
   using System.Management.Automation;
 
-  public abstract class GetDirectoryLocation : PSCoreCommand
+  public abstract class GetDirectoryLocation : CoreCommand
   {
     [Parameter(
       ParameterSetName = "Items",

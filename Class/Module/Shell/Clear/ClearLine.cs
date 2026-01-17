@@ -15,7 +15,7 @@ namespace Module.Shell.Clear
     )]
     [Alias("cl", "clear")]
     [OutputType(typeof(void))]
-    public class ClearLine : PSCoreCommand
+    public class ClearLine : CoreCommand
     {
       [Parameter(
         ParameterSetName = "Path",

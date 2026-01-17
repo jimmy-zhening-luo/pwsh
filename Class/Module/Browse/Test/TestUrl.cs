@@ -15,7 +15,7 @@ namespace Module.Browse.Test
     )]
     [Alias("tu")]
     [OutputType(typeof(Uri))]
-    public class TestUrl : PSCoreCommand
+    public class TestUrl : CoreCommand
     {
       [Parameter(
         Mandatory = true,

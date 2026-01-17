@@ -2,7 +2,7 @@ namespace Module.Shell.Set
 {
   using System.Management.Automation;
 
-  public abstract class SetDirectoryLocation : PSCoreCommand
+  public abstract class SetDirectoryLocation : CoreCommand
   {
     [Parameter(
       Position = 0,

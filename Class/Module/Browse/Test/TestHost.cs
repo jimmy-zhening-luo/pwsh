@@ -14,7 +14,7 @@ namespace Module.Browse.Test
     )]
     [Alias("tn")]
     [OutputType(typeof(object))]
-    public class TestHost : PSCoreCommand
+    public class TestHost : CoreCommand
     {
       [Parameter(
         Position = 0,

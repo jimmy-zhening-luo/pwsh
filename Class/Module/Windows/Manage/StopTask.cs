@@ -13,7 +13,7 @@ namespace Module.Windows.Manage
     )]
     [Alias("tkill")]
     [OutputType(typeof(void))]
-    public class StopTask : PSCoreCommand
+    public class StopTask : CoreCommand
     {
       [Parameter(
         ParameterSetName = "Name",

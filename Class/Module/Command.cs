@@ -4,7 +4,7 @@ namespace Module
   using System.Collections.ObjectModel;
   using System.Management.Automation;
 
-  public abstract class PSCoreCommand : PSCmdlet
+  public abstract class CoreCommand : PSCmdlet
   {
     protected object Var(
       string variable

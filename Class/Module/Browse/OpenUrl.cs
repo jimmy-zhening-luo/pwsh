@@ -14,7 +14,7 @@ namespace Module.Browse
     )]
     [OutputType(typeof(void))]
     [Alias("o", "open")]
-    public class OpenUrl : PSCoreCommand
+    public class OpenUrl : CoreCommand
     {
       [Parameter(
         ParameterSetName = "Path",

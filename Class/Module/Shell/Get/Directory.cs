@@ -18,7 +18,7 @@ namespace Module.Shell.Get
       typeof(DirectoryInfo),
       typeof(FileInfo)
     )]
-    public class GetDirectory : PSCoreCommand
+    public class GetDirectory : CoreCommand
     {
       [Parameter(
         ParameterSetName = "Items",

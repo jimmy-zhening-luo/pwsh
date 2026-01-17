@@ -11,7 +11,7 @@ namespace Module
     )]
     [Alias("test")]
     [OutputType(typeof(string))]
-    public class TestCmdlet : PSCoreCommand
+    public class TestCmdlet : CoreCommand
     {
       [Parameter(
         Position = 0
