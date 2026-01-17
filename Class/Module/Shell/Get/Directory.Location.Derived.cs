@@ -18,7 +18,7 @@ namespace Module.Shell.Get
       typeof(DirectoryInfo),
       typeof(FileInfo)
     )]
-    public class GetDirectorySibling : GetDirectoryLocation
+    public class GetDirectorySibling : GetLocalDirectoryCommand
     {
       [Parameter(
         Position = 0,
@@ -50,7 +50,7 @@ namespace Module.Shell.Get
       typeof(DirectoryInfo),
       typeof(FileInfo)
     )]
-    public class GetDirectoryRelative : GetDirectoryLocation
+    public class GetDirectoryRelative : GetLocalDirectoryCommand
     {
       [Parameter(
         Position = 0,
@@ -82,7 +82,7 @@ namespace Module.Shell.Get
       typeof(DirectoryInfo),
       typeof(FileInfo)
     )]
-    public class GetDirectoryHome : GetDirectoryLocation
+    public class GetDirectoryHome : GetLocalDirectoryCommand
     {
       [Parameter(
         Position = 0,
@@ -114,7 +114,7 @@ namespace Module.Shell.Get
       typeof(DirectoryInfo),
       typeof(FileInfo)
     )]
-    public class GetDirectoryCode : GetDirectoryLocation
+    public class GetDirectoryCode : GetLocalDirectoryCommand
     {
       [Parameter(
         Position = 0,
@@ -146,7 +146,7 @@ namespace Module.Shell.Get
       typeof(DirectoryInfo),
       typeof(FileInfo)
     )]
-    public class GetDirectoryDrive : GetDirectoryLocation
+    public class GetDirectoryDrive : GetLocalDirectoryCommand
     {
       [Parameter(
         Position = 0,

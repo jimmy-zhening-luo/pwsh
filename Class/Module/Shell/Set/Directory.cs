@@ -17,7 +17,7 @@ namespace Module.Shell.Set
       typeof(PathInfo),
       typeof(PathInfoStack)
     )]
-    public class SetDirectory : CoreCommand
+    public class SetDirectory : WrappedCommand
     {
       [Parameter(
         ParameterSetName = "Path",
@@ -50,8 +50,6 @@ namespace Module.Shell.Set
 
       [Parameter]
       public SwitchParameter PassThru;
-
-      private SteppablePipeline steppablePipeline = null;
 
       protected override void BeginProcessing()
       {
@@ -86,22 +84,6 @@ namespace Module.Shell.Set
 
         steppablePipeline = ps.GetSteppablePipeline();
         steppablePipeline.Begin(this);
-      }
-
-      protected override void ProcessRecord()
-      {
-        steppablePipeline?.Process();
-      }
-
-      protected override void EndProcessing()
-      {
-        if (steppablePipeline != null)
-        {
-          steppablePipeline.End();
-          steppablePipeline.Clean();
-          steppablePipeline.Dispose();
-          steppablePipeline = null;
-        }
       }
     }
   }

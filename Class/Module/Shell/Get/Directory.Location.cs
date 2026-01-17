@@ -3,7 +3,7 @@ namespace Module.Shell.Get
   using System.IO;
   using System.Management.Automation;
 
-  public abstract class GetDirectoryLocation : CoreCommand
+  public abstract class GetLocalDirectoryCommand : WrappedCommand
   {
     [Parameter(
       ParameterSetName = "Items",
@@ -70,8 +70,6 @@ namespace Module.Shell.Get
     [Parameter]
     public FlagsExpression<FileAttributes> Attributes;
 
-    private SteppablePipeline steppablePipeline = null;
-
     protected abstract string location();
 
     protected abstract string root();
@@ -120,22 +118,6 @@ namespace Module.Shell.Get
 
       steppablePipeline = ps.GetSteppablePipeline();
       steppablePipeline.Begin(this);
-    }
-
-    protected override void ProcessRecord()
-    {
-      steppablePipeline?.Process();
-    }
-
-    protected override void EndProcessing()
-    {
-      if (steppablePipeline != null)
-      {
-        steppablePipeline.End();
-        steppablePipeline.Clean();
-        steppablePipeline.Dispose();
-        steppablePipeline = null;
-      }
     }
   }
 }

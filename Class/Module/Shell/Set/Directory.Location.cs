@@ -2,7 +2,7 @@ namespace Module.Shell.Set
 {
   using System.Management.Automation;
 
-  public abstract class SetDirectoryLocation : CoreCommand
+  public abstract class SetLocalDirectoryCommand : WrappedCommand
   {
     [Parameter(
       Position = 0,
@@ -15,8 +15,6 @@ namespace Module.Shell.Set
 
     [Parameter]
     public SwitchParameter PassThru;
-
-    private SteppablePipeline steppablePipeline = null;
 
     protected abstract string location();
 
@@ -56,22 +54,6 @@ namespace Module.Shell.Set
 
       steppablePipeline = ps.GetSteppablePipeline();
       steppablePipeline.Begin(this);
-    }
-
-    protected override void ProcessRecord()
-    {
-      steppablePipeline?.Process();
-    }
-
-    protected override void EndProcessing()
-    {
-      if (steppablePipeline != null)
-      {
-        steppablePipeline.End();
-        steppablePipeline.Clean();
-        steppablePipeline.Dispose();
-        steppablePipeline = null;
-      }
     }
   }
 }

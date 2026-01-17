@@ -18,7 +18,7 @@ namespace Module.Shell.Get
       typeof(DirectoryInfo),
       typeof(FileInfo)
     )]
-    public class GetDirectory : CoreCommand
+    public class GetDirectory : WrappedCommand
     {
       [Parameter(
         ParameterSetName = "Items",
@@ -101,8 +101,6 @@ namespace Module.Shell.Get
       [Parameter]
       public FlagsExpression<FileAttributes> Attributes;
 
-      private SteppablePipeline steppablePipeline = null;
-
       protected override void BeginProcessing()
       {
         using PowerShell ps = PowerShell.Create(
@@ -123,22 +121,6 @@ namespace Module.Shell.Get
 
         steppablePipeline = ps.GetSteppablePipeline();
         steppablePipeline.Begin(this);
-      }
-
-      protected override void ProcessRecord()
-      {
-        steppablePipeline?.Process();
-      }
-
-      protected override void EndProcessing()
-      {
-        if (steppablePipeline != null)
-        {
-          steppablePipeline.End();
-          steppablePipeline.Clean();
-          steppablePipeline.Dispose();
-          steppablePipeline = null;
-        }
       }
     }
   }

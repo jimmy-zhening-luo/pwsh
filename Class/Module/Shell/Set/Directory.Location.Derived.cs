@@ -15,7 +15,7 @@ namespace Module.Shell.Set
     [OutputType(
       typeof(PathInfo)
     )]
-    public class SetDirectorySibling : SetDirectoryLocation
+    public class SetDirectorySibling : SetLocalDirectoryCommand
     {
       [Parameter(
         Position = 0,
@@ -45,7 +45,7 @@ namespace Module.Shell.Set
     [OutputType(
       typeof(PathInfo)
     )]
-    public class SetDirectoryRelative : SetDirectoryLocation
+    public class SetDirectoryRelative : SetLocalDirectoryCommand
     {
       [Parameter(
         Position = 0,
@@ -75,7 +75,7 @@ namespace Module.Shell.Set
     [OutputType(
       typeof(PathInfo)
     )]
-    public class SetDirectoryHome : SetDirectoryLocation
+    public class SetDirectoryHome : SetLocalDirectoryCommand
     {
       [Parameter(
         Position = 0,
@@ -105,7 +105,7 @@ namespace Module.Shell.Set
     [OutputType(
       typeof(PathInfo)
     )]
-    public class SetDirectoryCode : SetDirectoryLocation
+    public class SetDirectoryCode : SetLocalDirectoryCommand
     {
       [Parameter(
         Position = 0,
@@ -135,7 +135,7 @@ namespace Module.Shell.Set
     [OutputType(
       typeof(PathInfo)
     )]
-    public class SetDrive : SetDirectoryLocation
+    public class SetDrive : SetLocalDirectoryCommand
     {
       [Parameter(
         Position = 0,
@@ -165,7 +165,7 @@ namespace Module.Shell.Set
     [OutputType(
       typeof(PathInfo)
     )]
-    public class SetDriveD : SetDirectoryLocation
+    public class SetDriveD : SetLocalDirectoryCommand
     {
       [Parameter(
         Position = 0,
