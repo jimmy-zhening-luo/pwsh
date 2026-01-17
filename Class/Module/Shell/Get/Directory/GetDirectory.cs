@@ -1,4 +1,4 @@
-namespace Module.Shell.Get
+namespace Module.Shell.Get.Directory
 {
   namespace Commands
   {

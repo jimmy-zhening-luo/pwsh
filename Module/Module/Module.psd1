@@ -33,7 +33,6 @@
     'Copy-Guid'
     'ConvertTo-Hex'
     'Invoke-YouTubeDirectory'
-    'Test-Cmdlet'
     'Start-Profile'
     'Start-History'
   )
@@ -66,7 +65,6 @@
     'guid'
     'hex'
     'yte'
-    'test'
     'op'
     'oc'
   )

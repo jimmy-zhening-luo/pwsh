@@ -1,8 +1,8 @@
-namespace Module.Shell.Set
+namespace Module.Shell.Set.Directory.Local
 {
   using System.Management.Automation;
 
-  public abstract class SetLocalDirectoryCommand : WrappedCommand
+  public abstract class SetLocalDirectoryCommand : LocalWrappedCommand
   {
     [Parameter(
       Position = 0,
@@ -15,18 +15,6 @@ namespace Module.Shell.Set
 
     [Parameter]
     public SwitchParameter PassThru;
-
-    protected abstract string location();
-
-    protected abstract string root();
-
-    protected string Reanchor(string typedPath) => System.IO.Path.GetFullPath(
-      typedPath,
-      System.IO.Path.GetFullPath(
-        location(),
-        root()
-      )
-    );
 
     protected override void BeginProcessing()
     {

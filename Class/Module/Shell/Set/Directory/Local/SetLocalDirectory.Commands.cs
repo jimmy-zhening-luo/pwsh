@@ -1,4 +1,4 @@
-namespace Module.Shell.Set
+namespace Module.Shell.Set.Directory.Local
 {
   namespace Commands
   {
@@ -30,9 +30,9 @@ namespace Module.Shell.Set
       )]
       public new string Path;
 
-      protected override string location() => "..";
+      protected override string RelativeLocation() => "..";
 
-      protected override string root() => Pwd();
+      protected override string LocationRoot() => Pwd();
     }
 
     [Cmdlet(
@@ -60,9 +60,9 @@ namespace Module.Shell.Set
       )]
       public new string Path;
 
-      protected override string location() => @"..\..";
+      protected override string RelativeLocation() => @"..\..";
 
-      protected override string root() => Pwd();
+      protected override string LocationRoot() => Pwd();
     }
 
     [Cmdlet(
@@ -90,9 +90,9 @@ namespace Module.Shell.Set
       )]
       public new string Path;
 
-      protected override string location() => "";
+      protected override string RelativeLocation() => "";
 
-      protected override string root() => Context.Home();
+      protected override string LocationRoot() => Context.Home();
     }
 
     [Cmdlet(
@@ -120,9 +120,9 @@ namespace Module.Shell.Set
       )]
       public new string Path;
 
-      protected override string location() => "code";
+      protected override string RelativeLocation() => "code";
 
-      protected override string root() => Context.Home();
+      protected override string LocationRoot() => Context.Home();
     }
 
     [Cmdlet(
@@ -150,9 +150,9 @@ namespace Module.Shell.Set
       )]
       public new string Path;
 
-      protected override string location() => "";
+      protected override string RelativeLocation() => "";
 
-      protected override string root() => Drive();
+      protected override string LocationRoot() => Drive();
     }
 
     [Cmdlet(
@@ -180,9 +180,9 @@ namespace Module.Shell.Set
       )]
       public new string Path;
 
-      protected override string location() => "";
+      protected override string RelativeLocation() => "";
 
-      protected override string root() => @"D:\";
+      protected override string LocationRoot() => @"D:\";
     }
   }
 }

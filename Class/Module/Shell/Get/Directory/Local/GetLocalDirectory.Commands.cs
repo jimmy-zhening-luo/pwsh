@@ -1,4 +1,4 @@
-namespace Module.Shell.Get
+namespace Module.Shell.Get.Directory.Local
 {
   namespace Commands
   {
@@ -33,9 +33,9 @@ namespace Module.Shell.Get
       )]
       public new string[] Path;
 
-      protected override string location() => "..";
+      protected override string RelativeLocation() => "..";
 
-      protected override string root() => Pwd();
+      protected override string LocationRoot() => Pwd();
     }
 
     [Cmdlet(
@@ -65,9 +65,9 @@ namespace Module.Shell.Get
       )]
       public new string[] Path;
 
-      protected override string location() => @"..\..";
+      protected override string RelativeLocation() => @"..\..";
 
-      protected override string root() => Pwd();
+      protected override string LocationRoot() => Pwd();
     }
 
     [Cmdlet(
@@ -97,9 +97,9 @@ namespace Module.Shell.Get
       )]
       public new string[] Path;
 
-      protected override string location() => "";
+      protected override string RelativeLocation() => "";
 
-      protected override string root() => Context.Home();
+      protected override string LocationRoot() => Context.Home();
     }
 
     [Cmdlet(
@@ -129,9 +129,9 @@ namespace Module.Shell.Get
       )]
       public new string[] Path;
 
-      protected override string location() => "code";
+      protected override string RelativeLocation() => "code";
 
-      protected override string root() => Context.Home();
+      protected override string LocationRoot() => Context.Home();
     }
 
     [Cmdlet(
@@ -161,9 +161,9 @@ namespace Module.Shell.Get
       )]
       public new string[] Path;
 
-      protected override string location() => "";
+      protected override string RelativeLocation() => "";
 
-      protected override string root() => Drive();
+      protected override string LocationRoot() => Drive();
     }
   }
 }

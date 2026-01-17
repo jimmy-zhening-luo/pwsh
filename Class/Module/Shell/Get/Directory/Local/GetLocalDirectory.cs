@@ -1,9 +1,9 @@
-namespace Module.Shell.Get
+namespace Module.Shell.Get.Directory.Local
 {
   using System.IO;
   using System.Management.Automation;
 
-  public abstract class GetLocalDirectoryCommand : WrappedCommand
+  public abstract class GetLocalDirectoryCommand : LocalWrappedCommand
   {
     [Parameter(
       ParameterSetName = "Items",
@@ -69,18 +69,6 @@ namespace Module.Shell.Get
 
     [Parameter]
     public FlagsExpression<FileAttributes> Attributes;
-
-    protected abstract string location();
-
-    protected abstract string root();
-
-    protected string Reanchor(string typedPath) => global::System.IO.Path.GetFullPath(
-      typedPath,
-      global::System.IO.Path.GetFullPath(
-        location(),
-        root()
-      )
-    );
 
     protected override void BeginProcessing()
     {
