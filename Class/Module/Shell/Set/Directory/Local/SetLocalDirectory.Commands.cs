@@ -8,6 +8,7 @@ namespace Module.Shell.Set.Directory.Local
     [Cmdlet(
       VerbsCommon.Set,
       "DirectorySibling",
+      DefaultParameterSetName = "Path",
       SupportsTransactions = true,
       HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
     )]
@@ -18,6 +19,7 @@ namespace Module.Shell.Set.Directory.Local
     public class SetDirectorySibling : SetLocalDirectoryCommand
     {
       [Parameter(
+        ParameterSetName = "Path",
         Position = 0,
         ValueFromPipeline = true,
         ValueFromPipelineByPropertyName = true
@@ -38,6 +40,7 @@ namespace Module.Shell.Set.Directory.Local
     [Cmdlet(
       VerbsCommon.Set,
       "DirectoryRelative",
+      DefaultParameterSetName = "Path",
       SupportsTransactions = true,
       HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
     )]
@@ -48,6 +51,7 @@ namespace Module.Shell.Set.Directory.Local
     public class SetDirectoryRelative : SetLocalDirectoryCommand
     {
       [Parameter(
+        ParameterSetName = "Path",
         Position = 0,
         ValueFromPipeline = true,
         ValueFromPipelineByPropertyName = true
@@ -68,6 +72,7 @@ namespace Module.Shell.Set.Directory.Local
     [Cmdlet(
       VerbsCommon.Set,
       "DirectoryHome",
+      DefaultParameterSetName = "Path",
       SupportsTransactions = true,
       HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
     )]
@@ -78,6 +83,7 @@ namespace Module.Shell.Set.Directory.Local
     public class SetDirectoryHome : SetLocalDirectoryCommand
     {
       [Parameter(
+        ParameterSetName = "Path",
         Position = 0,
         ValueFromPipeline = true,
         ValueFromPipelineByPropertyName = true
@@ -98,6 +104,7 @@ namespace Module.Shell.Set.Directory.Local
     [Cmdlet(
       VerbsCommon.Set,
       "DirectoryCode",
+      DefaultParameterSetName = "Path",
       SupportsTransactions = true,
       HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
     )]
@@ -108,6 +115,7 @@ namespace Module.Shell.Set.Directory.Local
     public class SetDirectoryCode : SetLocalDirectoryCommand
     {
       [Parameter(
+        ParameterSetName = "Path",
         Position = 0,
         ValueFromPipeline = true,
         ValueFromPipelineByPropertyName = true
@@ -128,6 +136,7 @@ namespace Module.Shell.Set.Directory.Local
     [Cmdlet(
       VerbsCommon.Set,
       "Drive",
+      DefaultParameterSetName = "Path",
       SupportsTransactions = true,
       HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
     )]
@@ -138,6 +147,7 @@ namespace Module.Shell.Set.Directory.Local
     public class SetDrive : SetLocalDirectoryCommand
     {
       [Parameter(
+        ParameterSetName = "Path",
         Position = 0,
         ValueFromPipeline = true,
         ValueFromPipelineByPropertyName = true
@@ -158,6 +168,7 @@ namespace Module.Shell.Set.Directory.Local
     [Cmdlet(
       VerbsCommon.Set,
       "DriveD",
+      DefaultParameterSetName = "Path",
       SupportsTransactions = true,
       HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
     )]
@@ -168,6 +179,7 @@ namespace Module.Shell.Set.Directory.Local
     public class SetDriveD : SetLocalDirectoryCommand
     {
       [Parameter(
+        ParameterSetName = "Path",
         Position = 0,
         ValueFromPipeline = true,
         ValueFromPipelineByPropertyName = true

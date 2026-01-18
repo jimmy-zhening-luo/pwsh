@@ -5,6 +5,7 @@ namespace Module.Shell.Set.Directory.Local
   public abstract class SetLocalDirectoryCommand : LocalWrappedCommand
   {
     [Parameter(
+      ParameterSetName = "Path",
       Position = 0,
       ValueFromPipeline = true,
       ValueFromPipelineByPropertyName = true

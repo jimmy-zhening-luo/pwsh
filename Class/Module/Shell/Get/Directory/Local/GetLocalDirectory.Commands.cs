@@ -21,6 +21,7 @@ namespace Module.Shell.Get.Directory.Local
     public class GetDirectorySibling : GetLocalDirectoryCommand
     {
       [Parameter(
+        ParameterSetName = "Items",
         Position = 0,
         ValueFromPipeline = true,
         ValueFromPipelineByPropertyName = true
@@ -53,6 +54,7 @@ namespace Module.Shell.Get.Directory.Local
     public class GetDirectoryRelative : GetLocalDirectoryCommand
     {
       [Parameter(
+        ParameterSetName = "Items",
         Position = 0,
         ValueFromPipeline = true,
         ValueFromPipelineByPropertyName = true
@@ -85,6 +87,7 @@ namespace Module.Shell.Get.Directory.Local
     public class GetDirectoryHome : GetLocalDirectoryCommand
     {
       [Parameter(
+        ParameterSetName = "Items",
         Position = 0,
         ValueFromPipeline = true,
         ValueFromPipelineByPropertyName = true
@@ -117,6 +120,7 @@ namespace Module.Shell.Get.Directory.Local
     public class GetDirectoryCode : GetLocalDirectoryCommand
     {
       [Parameter(
+        ParameterSetName = "Items",
         Position = 0,
         ValueFromPipeline = true,
         ValueFromPipelineByPropertyName = true
@@ -149,6 +153,7 @@ namespace Module.Shell.Get.Directory.Local
     public class GetDirectoryDrive : GetLocalDirectoryCommand
     {
       [Parameter(
+        ParameterSetName = "Items",
         Position = 0,
         ValueFromPipeline = true,
         ValueFromPipelineByPropertyName = true
