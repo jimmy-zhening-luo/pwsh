@@ -87,7 +87,7 @@ namespace Module.Shell.Get.Directory.Local
       }
       else
       {
-        BoundParameters()["Path"] = new string[] { Reanchor(string.Empty) };
+        BoundParameters()["Path"] = new string[] { Reanchor() };
       }
       return true;
     }

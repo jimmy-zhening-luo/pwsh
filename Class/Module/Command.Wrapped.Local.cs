@@ -8,7 +8,9 @@ namespace Module
 
     protected abstract string LocationRoot();
 
-    protected string Reanchor(string typedPath) => Path.GetFullPath(
+    protected string Reanchor(
+      string typedPath = ""
+    ) => Path.GetFullPath(
       typedPath,
       Path.GetFullPath(
         RelativeLocation(),
