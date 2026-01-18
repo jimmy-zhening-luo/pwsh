@@ -42,6 +42,7 @@ namespace Completer.PathCompleter
             .Invoke()[0]
             .BaseObject
             .ToString()
+            ?? string.Empty
         ),
         ItemType,
         Flat,
