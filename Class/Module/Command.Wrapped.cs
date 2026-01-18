@@ -9,9 +9,9 @@ namespace Module
       get => false;
     }
 
-    private SteppablePipeline? steppablePipeline = null;
-
     protected abstract string WrappedCommandName();
+
+    private SteppablePipeline? steppablePipeline = null;
 
     protected virtual bool BeforeBeginProcessing() => true;
 
