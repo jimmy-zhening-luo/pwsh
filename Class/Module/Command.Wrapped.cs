@@ -56,6 +56,7 @@ namespace Module
     {
       if (steppablePipeline != null)
       {
+        steppablePipeline.End();
         steppablePipeline.Clean();
         steppablePipeline.Dispose();
         steppablePipeline = null;
