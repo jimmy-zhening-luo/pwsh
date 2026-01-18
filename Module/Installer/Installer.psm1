@@ -58,7 +58,7 @@ function Update-PSProfile {
         }
 
         try {
-          & $DotnetExecutable build $Solution --configuration Release
+          & $DotnetExecutable build $Solution --configuration Release --disable-build-servers --force --no-incremental --nologo
 
           if ($LASTEXITCODE -notin 0, 1) {
             throw "dotnet.exe returned a non-zero exit code ($LASTEXITCODE) when trying to build the project."
