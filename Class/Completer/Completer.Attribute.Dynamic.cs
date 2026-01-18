@@ -37,6 +37,7 @@ namespace Completer
           member => member
             .BaseObject
             .ToString()
+            ?? string.Empty
         ),
       Strict,
       Casing
