@@ -4,6 +4,8 @@ namespace Module
 
   public abstract class WrappedCommand : CoreCommand
   {
+    protected virtual string NoSsh = false;
+
     protected SteppablePipeline steppablePipeline = null;
 
     protected abstract string WrappedCommandName();
