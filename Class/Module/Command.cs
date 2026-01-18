@@ -20,11 +20,11 @@ namespace Module
       RunspaceMode.CurrentRunspace
     );
 
-    protected Dictionary<string, object> BoundParameters() => MyInvocation.BoundParameters;
+    protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
 
     protected bool IsPresent(
       string parameterName
-    ) => BoundParameters().ContainsKey(parameterName);
+    ) => BoundParameters.ContainsKey(parameterName);
 
     protected PowerShell AddCommand(
       string command,

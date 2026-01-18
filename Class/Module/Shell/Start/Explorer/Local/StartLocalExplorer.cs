@@ -38,18 +38,18 @@ namespace Module.Shell.Start.Explorer.Local
     {
       if (IsPresent("Path"))
       {
-        string[] paths = (string[])BoundParameters()["Path"];
+        string[] paths = (string[])BoundParameters["Path"];
 
         for (int i = 0; i < paths.Length; i++)
         {
           paths[i] = Reanchor(paths[i]);
         }
 
-        BoundParameters()["Path"] = paths;
+        BoundParameters["Path"] = paths;
       }
       else
       {
-        BoundParameters()["Path"] = new string[] { Reanchor() };
+        BoundParameters["Path"] = new string[] { Reanchor() };
       }
 
       return true;

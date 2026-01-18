@@ -60,8 +60,8 @@ namespace Module.Shell.Remove.Directory
 
       protected override bool BeforeBeginProcessing()
       {
-        BoundParameters()["Recurse"] = SwitchParameter.Present;
-        BoundParameters()["Force"] = SwitchParameter.Present;
+        BoundParameters["Recurse"] = SwitchParameter.Present;
+        BoundParameters["Force"] = SwitchParameter.Present;
 
         return true;
       }

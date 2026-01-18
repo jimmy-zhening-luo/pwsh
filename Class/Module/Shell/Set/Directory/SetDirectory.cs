@@ -63,7 +63,7 @@ namespace Module.Shell.Set.Directory
             pwd
           );
 
-          BoundParameters()["Path"] = parent == pwd
+          BoundParameters["Path"] = parent == pwd
             ? Context.Home()
             : parent;
         }

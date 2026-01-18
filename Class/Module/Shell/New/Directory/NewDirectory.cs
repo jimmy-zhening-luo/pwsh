@@ -54,7 +54,7 @@ namespace Module.Shell.New.Directory
 
       protected override bool BeforeBeginProcessing()
       {
-        BoundParameters()["ItemType"] = "Directory";
+        BoundParameters["ItemType"] = "Directory";
 
         return true;
       }

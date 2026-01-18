@@ -59,7 +59,7 @@ namespace Module.Shell.Start.Explorer
       {
         if (!IsPresent("Path"))
         {
-          BoundParameters()["Path"] = new string[] { Pwd() };
+          BoundParameters["Path"] = new string[] { Pwd() };
         }
 
         return true;

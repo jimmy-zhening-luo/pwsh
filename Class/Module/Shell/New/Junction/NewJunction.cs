@@ -39,8 +39,8 @@ namespace Module.Shell.New.Junction
 
       protected override bool BeforeBeginProcessing()
       {
-        BoundParameters()["ItemType"] = "Junction";
-        BoundParameters()["Force"] = SwitchParameter.Present;
+        BoundParameters["ItemType"] = "Junction";
+        BoundParameters["Force"] = SwitchParameter.Present;
 
         return true;
       }

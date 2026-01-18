@@ -25,8 +25,12 @@ namespace Module
       )
       {
         Begin(
-          AddCommand(WrappedCommandName)
-            .AddParameters(BoundParameters())
+          AddCommand(
+            WrappedCommandName
+          )
+            .AddParameters(
+              BoundParameters
+            )
         );
       }
     }

@@ -22,8 +22,8 @@ namespace Module.Shell.Set.Directory.Local
 
     protected override bool BeforeBeginProcessing()
     {
-      BoundParameters()["Path"] = Reanchor(
-        BoundParameters().TryGetValue("Path", out var path)
+      BoundParameters["Path"] = Reanchor(
+        BoundParameters.TryGetValue("Path", out var path)
           ? path?.ToString() ?? string.Empty
           : string.Empty
       );
