@@ -8,19 +8,12 @@
   PowerShellVersion    = '7.5'
   NestedModules        = @(
     @{
-      ModuleName    = 'Shell.New'
-      ModuleVersion = '3.0.0.0'
-      GUID          = '9a3324b2-207d-4635-a8d6-ac8261181fb1'
-    }
-    @{
       ModuleName    = 'Shell.Start'
       ModuleVersion = '3.0.0.0'
       GUID          = '043fee19-632c-4e0a-ac64-31b9fe02be00'
     }
   )
   FunctionsToExport    = @(
-    'New-Directory'
-    'New-Junction'
     'Start-Explorer'
     'Start-ExplorerSibling'
     'Start-ExplorerRelative'
@@ -37,9 +30,6 @@
   CmdletsToExport      = @()
   VariablesToExport    = @()
   AliasesToExport      = @(
-    'touch'
-    'mk'
-    'mj'
     'e'
     'e.'
     'e..'
