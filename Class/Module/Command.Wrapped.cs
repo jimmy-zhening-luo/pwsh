@@ -4,7 +4,7 @@ namespace Module
 
   public abstract class WrappedCommand : CoreCommand
   {
-    protected static string NoSsh = false;
+    protected static bool NoSsh = false;
 
     protected SteppablePipeline steppablePipeline = null;
 
@@ -16,7 +16,10 @@ namespace Module
 
     protected override void BeginProcessing()
     {
-      if (BeforeBeginProcessing())
+      if (
+        !NoSsh
+        && BeforeBeginProcessing()
+      )
       {
         Begin(
           AddCommand(
@@ -32,7 +35,7 @@ namespace Module
     protected void Begin(PowerShell ps)
     {
       steppablePipeline = ps.GetSteppablePipeline();
-      steppablePipeline?.Begin(this);
+      steppablePipeline.Begin(this);
     }
 
     protected override void ProcessRecord()
