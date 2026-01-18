@@ -8,12 +8,6 @@
   Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
   PowerShellVersion    = '7.5'
   FunctionsToExport    = @(
-    'Start-Explorer'
-    'Start-ExplorerSibling'
-    'Start-ExplorerRelative'
-    'Start-ExplorerHome'
-    'Start-ExplorerCode'
-    'Start-ExplorerDrive'
     'Start-Workspace'
     'Start-WorkspaceSibling'
     'Start-WorkspaceRelative'
@@ -24,12 +18,6 @@
   CmdletsToExport      = @()
   VariablesToExport    = @()
   AliasesToExport      = @(
-    'e'
-    'e.'
-    'e..'
-    'eh'
-    'ec'
-    'e/'
     'i'
     'i.'
     'i..'
