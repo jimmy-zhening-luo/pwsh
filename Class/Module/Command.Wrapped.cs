@@ -9,7 +9,7 @@ namespace Module
       get => false;
     }
 
-    protected SteppablePipeline steppablePipeline = null;
+    protected SteppablePipeline? steppablePipeline = null;
 
     protected abstract string WrappedCommandName();
 

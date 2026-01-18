@@ -49,19 +49,17 @@ namespace Module
     protected Collection<PSObject> Call(
       string nativeCommand,
       string verb,
-      string[] arguments = null,
+      string[] arguments,
       CommandTypes commandType = CommandTypes.Application
     ) => Call(
       nativeCommand,
-      arguments == null
-        ? [verb]
-        : [verb, .. arguments],
+      [verb, .. arguments],
       commandType
     );
 
     protected Collection<PSObject> Call(
       string nativeCommand,
-      string[] arguments = null,
+      string[] arguments,
       CommandTypes commandType = CommandTypes.Application
     )
     {
@@ -69,13 +67,9 @@ namespace Module
         nativeCommand,
         commandType
       );
-
-      if (arguments != null)
+      foreach (string argument in arguments)
       {
-        foreach (string argument in arguments)
-        {
-          ps.AddArgument(argument);
-        }
+        ps.AddArgument(argument);
       }
 
       return ps.Invoke();
