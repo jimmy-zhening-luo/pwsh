@@ -56,13 +56,6 @@ namespace Module.Shell.Remove.Directory
       [SupportsWildcards]
       public string[] Exclude;
 
-      [Parameter]
-      public SwitchParameter Recurse;
-
-      [Parameter]
-      [Alias("f")]
-      public SwitchParameter Force;
-
       protected override string WrappedCommandName() => "Remove-Item";
 
       protected override bool BeforeBeginProcessing()
