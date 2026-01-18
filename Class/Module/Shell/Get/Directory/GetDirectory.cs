@@ -101,27 +101,7 @@ namespace Module.Shell.Get.Directory
       [Parameter]
       public FlagsExpression<FileAttributes> Attributes;
 
-      protected override void BeginProcessing()
-      {
-        using PowerShell ps = PowerShell.Create(
-          RunspaceMode.CurrentRunspace
-        );
-        ps
-          .AddCommand(
-            SessionState
-              .InvokeCommand
-              .GetCommand(
-                "Get-ChildItem",
-                CommandTypes.Cmdlet
-              )
-          )
-          .AddParameters(
-            MyInvocation.BoundParameters
-          );
-
-        steppablePipeline = ps.GetSteppablePipeline();
-        steppablePipeline.Begin(this);
-      }
+      protected override string WrappedCommandName() => "Get-ChildItem";
     }
   }
 }

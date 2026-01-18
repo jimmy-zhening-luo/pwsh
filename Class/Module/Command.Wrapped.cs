@@ -6,6 +6,33 @@ namespace Module
   {
     protected SteppablePipeline steppablePipeline = null;
 
+    protected abstract string WrappedCommandName();
+
+    protected virtual bool BeforeBeginProcessing() => true;
+
+    protected virtual void BeforeEndProcessing() { }
+
+    protected override void BeginProcessing()
+    {
+      if (BeforeBeginProcessing())
+      {
+        Begin(
+          AddCommand(
+            WrappedCommandName()
+          )
+            .AddParameters(
+              BoundParameters()
+            )
+        );
+      }
+    }
+
+    protected void Begin(PowerShell ps)
+    {
+      steppablePipeline = ps.GetSteppablePipeline();
+      steppablePipeline?.Begin(this);
+    }
+
     protected override void ProcessRecord()
     {
       steppablePipeline?.Process();
@@ -13,10 +40,11 @@ namespace Module
 
     protected override void EndProcessing()
     {
+      BeforeEndProcessing();
       Clean();
     }
 
-    protected void Clean()
+    private void Clean()
     {
       if (steppablePipeline != null)
       {

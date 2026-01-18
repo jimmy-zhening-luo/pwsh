@@ -110,18 +110,7 @@ namespace Module.Browse.Test
 
       private void ResolveDns(string host)
       {
-        using var ps = PowerShell.Create(
-          RunspaceMode.CurrentRunspace
-        );
-        ps
-          .AddCommand(
-            SessionState
-              .InvokeCommand
-              .GetCommand(
-                "Resolve-DnsName",
-                CommandTypes.Cmdlet
-              )
-          )
+        using PowerShell ps = AddCommand("Resolve-DnsName")
           .AddParameter(
             "Name",
             host
@@ -146,18 +135,7 @@ namespace Module.Browse.Test
 
       private int VisitUrlPath(Uri fullUrl)
       {
-        using var ps = PowerShell.Create(
-          RunspaceMode.CurrentRunspace
-        );
-        ps
-          .AddCommand(
-            SessionState
-              .InvokeCommand
-              .GetCommand(
-                "Invoke-WebRequest",
-                CommandTypes.Cmdlet
-              )
-          )
+        using PowerShell ps = AddCommand("Invoke-WebRequest")
           .AddParameter(
             "Uri",
             fullUrl

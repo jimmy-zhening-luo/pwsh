@@ -51,7 +51,9 @@ namespace Module.Shell.Set.Directory
       [Parameter]
       public SwitchParameter PassThru;
 
-      protected override void BeginProcessing()
+      protected override string WrappedCommandName() => "Set-Location";
+
+      protected override bool BeforeBeginProcessing()
       {
         if (Path == null && LiteralPath == null)
         {
@@ -61,29 +63,12 @@ namespace Module.Shell.Set.Directory
             pwd
           );
 
-          MyInvocation.BoundParameters["Path"] = parent == pwd
+          BoundParameters()["Path"] = parent == pwd
             ? Context.Home()
             : parent;
         }
 
-        using PowerShell ps = PowerShell.Create(
-          RunspaceMode.CurrentRunspace
-        );
-        ps
-          .AddCommand(
-            SessionState
-              .InvokeCommand
-              .GetCommand(
-                "Set-Location",
-                CommandTypes.Cmdlet
-              )
-          )
-          .AddParameters(
-            MyInvocation.BoundParameters
-          );
-
-        steppablePipeline = ps.GetSteppablePipeline();
-        steppablePipeline.Begin(this);
+        return true;
       }
     }
   }

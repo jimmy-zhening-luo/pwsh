@@ -31,22 +31,17 @@ namespace Completer.PathCompleter
 
     public override PathCompleter Create()
     {
-      using var ps = PowerShell.Create(
-        RunspaceMode.CurrentRunspace
-      );
-      ps.AddCommand("Get-Location");
-
-      string pwd = ps
-        .Invoke()[0]
-        .BaseObject
-        .ToString();
-
       return new(
         System.IO.Path.GetFullPath(
           RelativeLocation == string.Empty
             ? string.Empty
             : RelativeLocation,
-          pwd
+          PowerShell
+            .Create(RunspaceMode.CurrentRunspace)
+            .AddCommand("Get-Location")
+            .Invoke()[0]
+            .BaseObject
+            .ToString()
         ),
         ItemType,
         Flat,

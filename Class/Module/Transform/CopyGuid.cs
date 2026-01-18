@@ -51,16 +51,12 @@ namespace Module.Transform
           WriteObject(guid);
         }
 
-        using var ps = PowerShell.Create(
-          RunspaceMode.CurrentRunspace
-        );
-        ps
-          .AddCommand("Set-Clipboard")
+        AddCommand("Set-Clipboard")
           .AddParameter(
             "Value",
             new string[] { guid }
-          );
-        ps.Invoke();
+          )
+          .Invoke();
       }
     }
   }

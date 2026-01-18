@@ -15,7 +15,7 @@ namespace Module.Shell.Clear
     )]
     [Alias("cl", "clear")]
     [OutputType(typeof(void))]
-    public class ClearLine : CoreCommand
+    public class ClearLine : WrappedCommand
     {
       [Parameter(
         ParameterSetName = "Path",
@@ -55,53 +55,16 @@ namespace Module.Shell.Clear
       [Parameter]
       public string Stream;
 
-      private SteppablePipeline steppablePipeline = null;
+      protected override string WrappedCommandName() => "Clear-Content";
 
-      protected override void BeginProcessing()
-      {
-        if (
-          Path != null
-          || ParameterSetName == "LiteralPath"
-        )
-        {
-          using PowerShell ps = PowerShell.Create(
-            RunspaceMode.CurrentRunspace
-          );
-          ps
-            .AddCommand(
-              SessionState
-                .InvokeCommand
-                .GetCommand(
-                  "Clear-Content",
-                  CommandTypes.Cmdlet
-                )
-            )
-            .AddParameters(
-              MyInvocation.BoundParameters
-            );
+      protected override bool BeforeBeginProcessing() => Path != null
+        || ParameterSetName == "LiteralPath";
 
-          steppablePipeline = ps.GetSteppablePipeline();
-          steppablePipeline.Begin(this);
-        }
-      }
-
-      protected override void ProcessRecord()
-      {
-        steppablePipeline?.Process();
-      }
-
-      protected override void EndProcessing()
+      protected override void BeforeEndProcessing()
       {
         if (steppablePipeline == null)
         {
           Console.Clear();
-        }
-        else
-        {
-          steppablePipeline.End();
-          steppablePipeline.Clean();
-          steppablePipeline.Dispose();
-          steppablePipeline = null;
         }
       }
     }

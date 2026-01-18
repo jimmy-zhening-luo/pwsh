@@ -16,32 +16,17 @@ namespace Module.Shell.Set.Directory.Local
     [Parameter]
     public SwitchParameter PassThru;
 
-    protected override void BeginProcessing()
+    protected override string WrappedCommandName() => "Set-Location";
+
+    protected override bool BeforeBeginProcessing()
     {
-      MyInvocation.BoundParameters["Path"] = Reanchor(
-        MyInvocation.BoundParameters.ContainsKey("Path")
-          ? MyInvocation.BoundParameters["Path"].ToString()
+      BoundParameters()["Path"] = Reanchor(
+        IsPresent("Path")
+          ? BoundParameters()["Path"].ToString()
           : string.Empty
       );
 
-      using PowerShell ps = PowerShell.Create(
-        RunspaceMode.CurrentRunspace
-      );
-      ps
-        .AddCommand(
-          SessionState
-            .InvokeCommand
-            .GetCommand(
-              "Set-Location",
-              CommandTypes.Cmdlet
-            )
-        )
-        .AddParameters(
-          MyInvocation.BoundParameters
-        );
-
-      steppablePipeline = ps.GetSteppablePipeline();
-      steppablePipeline.Begin(this);
+      return true;
     }
   }
 }

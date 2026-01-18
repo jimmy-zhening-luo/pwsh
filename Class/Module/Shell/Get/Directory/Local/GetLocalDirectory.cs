@@ -70,42 +70,26 @@ namespace Module.Shell.Get.Directory.Local
     [Parameter]
     public FlagsExpression<FileAttributes> Attributes;
 
-    protected override void BeginProcessing()
+    protected override string WrappedCommandName() => "Get-ChildItem";
+
+    protected override bool BeforeBeginProcessing()
     {
-      if (MyInvocation.BoundParameters.ContainsKey("Path"))
+      if (IsPresent("Path"))
       {
-        string[] paths = (string[])MyInvocation.BoundParameters["Path"];
+        string[] paths = (string[])BoundParameters()["Path"];
 
         for (int i = 0; i < paths.Length; i++)
         {
           paths[i] = Reanchor(paths[i]);
         }
 
-        MyInvocation.BoundParameters["Path"] = paths;
+        BoundParameters()["Path"] = paths;
       }
       else
       {
-        MyInvocation.BoundParameters["Path"] = new string[] { Reanchor(string.Empty) };
+        BoundParameters()["Path"] = new string[] { Reanchor(string.Empty) };
       }
-
-      using PowerShell ps = PowerShell.Create(
-        RunspaceMode.CurrentRunspace
-      );
-      ps
-        .AddCommand(
-          SessionState
-            .InvokeCommand
-            .GetCommand(
-              "Get-ChildItem",
-              CommandTypes.Cmdlet
-            )
-        )
-        .AddParameters(
-          MyInvocation.BoundParameters
-        );
-
-      steppablePipeline = ps.GetSteppablePipeline();
-      steppablePipeline.Begin(this);
+      return true;
     }
   }
 }

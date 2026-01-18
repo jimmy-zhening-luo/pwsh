@@ -1,29 +1,42 @@
 namespace Module
 {
   using System.IO;
+  using System.Collections.Generic;
   using System.Collections.ObjectModel;
   using System.Management.Automation;
 
   public abstract class CoreCommand : PSCmdlet
   {
-    protected object Var(
-      string variable
-    ) => SessionState
-      .PSVariable
-      .GetValue(variable);
+    protected Dictionary<string, object> BoundParameters() => MyInvocation.BoundParameters;
 
-    protected string Pwd(
-      string subpath = ""
-    ) => Path.GetFullPath(
-      subpath,
-      SessionState.Path.CurrentLocation.Path
+    protected bool IsPresent(
+      string parameterName
+    ) => BoundParameters().ContainsKey(parameterName);
+
+    protected static PowerShell PS() => PowerShell.Create(
+      RunspaceMode.CurrentRunspace
     );
 
-    protected string Drive(
-      string subpath = ""
-    ) => Path.GetFullPath(
-      subpath,
-      SessionState.Drive.Current.Root
+    protected PowerShell AddCommand(
+      string command,
+      CommandTypes commandType = CommandTypes.Cmdlet
+    ) => AddCommand(
+      PS(),
+      command,
+      commandType
+    );
+
+    protected PowerShell AddCommand(
+      PowerShell ps,
+      string command,
+      CommandTypes commandType = CommandTypes.Cmdlet
+    ) => ps.AddCommand(
+      SessionState
+        .InvokeCommand
+        .GetCommand(
+          command,
+          commandType
+        )
     );
 
     protected Collection<PSObject> Call(
@@ -45,16 +58,9 @@ namespace Module
       CommandTypes commandType = CommandTypes.Application
     )
     {
-      using var ps = PowerShell.Create(
-        RunspaceMode.CurrentRunspace
-      );
-      ps.AddCommand(
-        SessionState
-          .InvokeCommand
-          .GetCommand(
-            nativeCommand,
-            commandType
-          )
+      using PowerShell ps = AddCommand(
+        nativeCommand,
+        commandType
       );
 
       if (arguments != null)
@@ -67,5 +73,25 @@ namespace Module
 
       return ps.Invoke();
     }
+
+    protected object Var(
+      string variable
+    ) => SessionState
+      .PSVariable
+      .GetValue(variable);
+
+    protected string Pwd(
+      string subpath = ""
+    ) => Path.GetFullPath(
+      subpath,
+      SessionState.Path.CurrentLocation.Path
+    );
+
+    protected string Drive(
+      string subpath = ""
+    ) => Path.GetFullPath(
+      subpath,
+      SessionState.Drive.Current.Root
+    );
   }
 }

@@ -151,18 +151,10 @@ namespace Module.Browse.Test
         ushort portNumber
       )
       {
-        using var ps = PowerShell.Create(
-          RunspaceMode.CurrentRunspace
-        );
-        ps
-          .AddCommand(
-            SessionState
-              .InvokeCommand
-              .GetCommand(
-                "Test-NetConnection",
-                CommandTypes.Function
-              )
-          )
+        using PowerShell ps = AddCommand(
+          "Test-NetConnection",
+          CommandTypes.Function
+        )
           .AddParameter(
             "ComputerName",
             computerName
