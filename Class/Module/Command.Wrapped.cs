@@ -52,7 +52,7 @@ namespace Module
       Clean();
     }
 
-    private void Clean()
+    protected void Clean()
     {
       if (steppablePipeline != null)
       {
