@@ -63,7 +63,7 @@ namespace Module.Shell.Remove.Directory
       [Alias("f")]
       public SwitchParameter Force;
 
-      protected override string WrappedCommandName() => "Remove-Directory";
+      protected override string WrappedCommandName() => "Remove-Item";
 
       protected override bool BeforeBeginProcessing()
       {
