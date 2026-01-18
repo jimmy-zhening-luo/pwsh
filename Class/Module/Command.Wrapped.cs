@@ -43,12 +43,19 @@ namespace Module
 
     protected override void ProcessRecord()
     {
-      steppablePipeline?.Process();
+      if (!NoSsh || !Context.Ssh())
+      {
+        steppablePipeline?.Process();
+      }
     }
 
     protected override void EndProcessing()
     {
-      BeforeEndProcessing();
+      if (!NoSsh || !Context.Ssh())
+      {
+        BeforeEndProcessing();
+      }
+
       Clean();
     }
 
