@@ -101,7 +101,7 @@ namespace Module.Browse.Test
           }
           else
           {
-            if (commonPort != string.Empty)
+            if (!string.IsNullOrEmpty(commonPort))
             {
               if (
                 ushort.TryParse(
@@ -173,7 +173,7 @@ namespace Module.Browse.Test
         }
         else
         {
-          if (commonTcpPort != string.Empty)
+          if (!string.IsNullOrEmpty(commonTcpPort))
           {
             ps.AddParameter(
               "CommonTCPPort",

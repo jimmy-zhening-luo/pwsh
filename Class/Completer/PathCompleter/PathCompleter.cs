@@ -34,7 +34,7 @@ namespace Completer.PathCompleter
       string location = string.Empty;
       string filter = string.Empty;
 
-      while (pathToComplete != string.Empty)
+      while (!string.IsNullOrEmpty(pathToComplete))
       {
         int pathEnd = pathToComplete.LastIndexOf('\\');
 
@@ -54,7 +54,7 @@ namespace Completer.PathCompleter
             filter = pathToComplete[wordStart..].Trim();
           }
 
-          if (subpathPart == string.Empty)
+          if (string.IsNullOrEmpty(subpathPart))
           {
             pathToComplete = string.Empty;
           }
@@ -92,7 +92,7 @@ namespace Completer.PathCompleter
         }
       }
 
-      if (location == string.Empty)
+      if (string.IsNullOrEmpty(location))
       {
         location = Root;
       }
@@ -160,7 +160,7 @@ namespace Completer.PathCompleter
         }
       }
 
-      if (accumulatedSubpath != string.Empty)
+      if (!string.IsNullOrEmpty(accumulatedSubpath))
       {
         yield return Canonicalizer.Denormalize(
           @"\",
@@ -169,7 +169,7 @@ namespace Completer.PathCompleter
       }
 
       if (
-        accumulatedSubpath != string.Empty
+        !string.IsNullOrEmpty(accumulatedSubpath)
         || count != 0
       )
       {

@@ -19,7 +19,7 @@ namespace Completer
 
     public override IEnumerable<string> FulfillCompletion(string wordToComplete)
     {
-      if (wordToComplete == string.Empty)
+      if (string.IsNullOrEmpty(wordToComplete))
       {
         foreach (string member in Domain)
         {

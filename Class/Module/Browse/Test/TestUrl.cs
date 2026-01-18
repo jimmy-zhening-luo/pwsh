@@ -39,15 +39,19 @@ namespace Module.Browse.Test
         {
           Uri fullUrl = new(
             uri.IsAbsoluteUri
-              ? uri.Host.Trim() == string.Empty
+              ? string.IsNullOrEmpty(
+                  uri.Host.Trim()
+                )
                 ? string.Empty
                 : uri.AbsoluteUri.Trim()
-              : uri.OriginalString.Trim() == string.Empty
+              : string.IsNullOrEmpty(
+                  uri.OriginalString.Trim()
+                )
                 ? string.Empty
                 : "http://" + uri.OriginalString.Trim()
           );
 
-          if (fullUrl.OriginalString != string.Empty)
+          if (!string.IsNullOrEmpty(fullUrl.OriginalString))
           {
             int status = 0;
 

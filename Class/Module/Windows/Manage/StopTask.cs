@@ -73,7 +73,7 @@ namespace Module.Windows.Manage
           default:
             foreach (var name in names)
             {
-              if (name == string.Empty)
+              if (string.IsNullOrEmpty(name))
               {
                 continue;
               }

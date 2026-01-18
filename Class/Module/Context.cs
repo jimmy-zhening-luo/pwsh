@@ -6,9 +6,12 @@ namespace Module
 
   public static class Context
   {
-    public static string Env(string variable) => Environment.GetEnvironmentVariable(variable) ?? string.Empty;
+    public static string Env(string variable) => Environment.GetEnvironmentVariable(variable)
+      ?? string.Empty;
 
-    public static bool Ssh() => Env("SSH_CLIENT") != string.Empty;
+    public static bool Ssh() => !string.IsNullOrEmpty(
+      Env("SSH_CLIENT")
+    );
 
     public static string Home() => Environment.GetFolderPath(
       Environment
@@ -43,7 +46,7 @@ namespace Module
           CreateNoWindow = noNewWindow
         };
 
-        if (arguments != string.Empty)
+        if (!string.IsNullOrEmpty(arguments))
         {
           startInfo.Arguments = arguments;
         }
@@ -67,7 +70,7 @@ namespace Module
           CreateNoWindow = noNewWindow
         };
 
-        if (arguments != string.Empty)
+        if (!string.IsNullOrEmpty(arguments))
         {
           startInfo.Arguments = arguments;
         }

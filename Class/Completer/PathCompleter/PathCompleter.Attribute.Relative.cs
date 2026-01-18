@@ -33,7 +33,7 @@ namespace Completer.PathCompleter
     {
       return new(
         System.IO.Path.GetFullPath(
-          RelativeLocation == string.Empty
+          string.IsNullOrEmpty(RelativeLocation)
             ? string.Empty
             : RelativeLocation,
           PowerShell
@@ -45,7 +45,7 @@ namespace Completer.PathCompleter
         ),
         ItemType,
         Flat,
-        RelativeLocation == string.Empty
+        string.IsNullOrEmpty(RelativeLocation)
       );
     }
   }

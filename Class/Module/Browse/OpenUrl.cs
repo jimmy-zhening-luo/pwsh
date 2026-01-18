@@ -54,7 +54,7 @@ namespace Module.Browse
           {
             string url = uri.ToString().Trim();
 
-            if (url != string.Empty)
+            if (!string.IsNullOrEmpty(url))
             {
               Context.ShellExecute(
                 @"C:\Program Files\Google\Chrome\Application\chrome.exe",
@@ -72,7 +72,7 @@ namespace Module.Browse
           string cleanPath = path.Trim();
           string target = string.Empty;
 
-          if (cleanPath != string.Empty)
+          if (!string.IsNullOrEmpty(cleanPath))
           {
             string relativePath = System.IO.Path.GetRelativePath(
               SessionState.Path.CurrentLocation.Path,
