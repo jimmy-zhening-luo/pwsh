@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net9.0-windows</TargetFramework>
     <AssemblyName>Module</AssemblyName>
+    <Nullable>enable</Nullable>
     <NoWarn>$(NoWarn)</NoWarn>
   </PropertyGroup>
   <ItemGroup>
