@@ -47,7 +47,7 @@ function Update-PSProfile {
 
       try {
         try {
-          & $DotnetExecutable clean $Solution --configuration Release
+          & $DotnetExecutable clean $Solution --configuration Release --verbosity quiet
 
           if ($LASTEXITCODE -notin 0, 1) {
             throw "dotnet.exe returned a non-zero exit code ($LASTEXITCODE) when trying to clean the project."
