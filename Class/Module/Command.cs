@@ -3,7 +3,9 @@ namespace Module
   using System.IO;
   using System.Collections.Generic;
   using System.Collections.ObjectModel;
+  using System.Diagnostics.CodeAnalysis;
   using System.Management.Automation;
+  using System;
 
   public enum FileSystemItemType
   {
@@ -14,6 +16,35 @@ namespace Module
 
   public abstract class CoreCommand : PSCmdlet
   {
+    [DoesNotReturn]
+    protected void Throw(
+      string message,
+      string id,
+      ErrorCategory category,
+      object? target = null
+    ) => Throw(
+      new Exception(
+        message
+      ),
+      id,
+      category,
+      target
+    );
+
+    [DoesNotReturn]
+    protected void Throw(
+      Exception exception,
+      string id,
+      ErrorCategory category,
+      object? target = null
+    ) => ThrowTerminatingError(
+      new ErrorRecord(
+        exception,
+        id,
+        category,
+        target
+      )
+    );
     protected Dictionary<string, object> BoundParameters() => MyInvocation.BoundParameters;
 
     protected bool IsPresent(
