@@ -29,14 +29,14 @@ namespace Module.Shell.New.Directory
         ValueFromPipelineByPropertyName = true
       )]
       [RelativePathCompletions]
-      public string[] Path;
+      public string[]? Path;
 
       [Parameter(
         ParameterSetName = "nameSet",
         Mandatory = true,
         ValueFromPipelineByPropertyName = true
       )]
-      public string Name;
+      public string? Name;
 
       [Parameter(
         ValueFromPipeline = true,
@@ -44,11 +44,11 @@ namespace Module.Shell.New.Directory
       )]
       [Alias("Target")]
       [RelativePathCompletions]
-      public object Value;
+      public object? Value;
 
       [Parameter]
       [Alias("f")]
-      public SwitchParameter Force;
+      public SwitchParameter? Force;
 
       protected override string WrappedCommandName() => "New-Item";
 

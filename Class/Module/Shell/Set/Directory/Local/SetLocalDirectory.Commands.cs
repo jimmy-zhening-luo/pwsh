@@ -30,7 +30,7 @@ namespace Module.Shell.Set.Directory.Local
         "..",
         PathItemType.Directory
       )]
-      public new string Path;
+      public new string? Path;
 
       protected override string RelativeLocation() => "..";
 
@@ -62,7 +62,7 @@ namespace Module.Shell.Set.Directory.Local
         @"..\..",
         PathItemType.Directory
       )]
-      public new string Path;
+      public new string? Path;
 
       protected override string RelativeLocation() => @"..\..";
 
@@ -94,7 +94,7 @@ namespace Module.Shell.Set.Directory.Local
         "~",
         PathItemType.Directory
       )]
-      public new string Path;
+      public new string? Path;
 
       protected override string RelativeLocation() => "";
 
@@ -126,7 +126,7 @@ namespace Module.Shell.Set.Directory.Local
         @"~\code",
         PathItemType.Directory
       )]
-      public new string Path;
+      public new string? Path;
 
       protected override string RelativeLocation() => "code";
 
@@ -158,7 +158,7 @@ namespace Module.Shell.Set.Directory.Local
         @"\",
         PathItemType.Directory
       )]
-      public new string Path;
+      public new string? Path;
 
       protected override string RelativeLocation() => "";
 
@@ -190,7 +190,7 @@ namespace Module.Shell.Set.Directory.Local
         "D:",
         PathItemType.Directory
       )]
-      public new string Path;
+      public new string? Path;
 
       protected override string RelativeLocation() => "";
 

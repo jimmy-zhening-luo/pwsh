@@ -24,7 +24,7 @@ namespace Module.Shell.New.Junction
         ValueFromPipelineByPropertyName = true
       )]
       [RelativePathCompletions]
-      public string[] Path;
+      public string[]? Path;
 
       [Parameter(
         Mandatory = true,
@@ -33,7 +33,7 @@ namespace Module.Shell.New.Junction
       )]
       [Alias("Target")]
       [RelativePathCompletions]
-      public object Value;
+      public object? Value;
 
       protected override string WrappedCommandName() => "New-Item";
 

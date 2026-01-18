@@ -31,7 +31,7 @@ namespace Module.Shell.Set.Directory
         "",
         PathItemType.Directory
       )]
-      public string Path;
+      public string? Path;
 
       [Parameter(
         ParameterSetName = "LiteralPath",
@@ -39,17 +39,17 @@ namespace Module.Shell.Set.Directory
         ValueFromPipelineByPropertyName = true
       )]
       [Alias("PSPath", "LP")]
-      public string LiteralPath;
+      public string? LiteralPath;
 
       [Parameter(
         ParameterSetName = "Stack",
         ValueFromPipelineByPropertyName = true
       )]
       [AllowEmptyString]
-      public string Stack;
+      public string? Stack;
 
       [Parameter]
-      public SwitchParameter PassThru;
+      public SwitchParameter? PassThru;
 
       protected override string WrappedCommandName() => "Set-Location";
 

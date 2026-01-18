@@ -13,62 +13,62 @@ namespace Module.Shell.Get.Directory.Local
     )]
     [AllowEmptyCollection]
     [SupportsWildcards]
-    public string[] Path;
+    public string[]? Path;
 
     [Parameter(
       ParameterSetName = "Items",
       Position = 1
     )]
     [SupportsWildcards]
-    public string Filter;
+    public string? Filter;
 
     [Parameter]
     [SupportsWildcards]
-    public string[] Include;
+    public string[]? Include;
 
     [Parameter]
     [SupportsWildcards]
-    public string[] Exclude;
+    public string[]? Exclude;
 
     [Parameter]
     [Alias("s", "r")]
-    public SwitchParameter Recurse;
+    public SwitchParameter? Recurse;
 
     [Parameter]
-    public uint Depth;
+    public uint? Depth;
 
     [Parameter]
     [Alias("f")]
-    public SwitchParameter Force;
+    public SwitchParameter? Force;
 
     [Parameter]
-    public SwitchParameter Name;
+    public SwitchParameter? Name;
 
     [Parameter]
     [Alias("ad")]
-    public SwitchParameter Directory;
+    public SwitchParameter? Directory;
 
     [Parameter]
     [Alias("af")]
-    public SwitchParameter File;
+    public SwitchParameter? File;
 
     [Parameter]
     [Alias("ah", "h")]
-    public SwitchParameter Hidden;
+    public SwitchParameter? Hidden;
 
     [Parameter]
     [Alias("as")]
-    public SwitchParameter System;
+    public SwitchParameter? System;
 
     [Parameter]
     [Alias("ar")]
-    public SwitchParameter ReadOnly;
+    public SwitchParameter? ReadOnly;
 
     [Parameter]
-    public SwitchParameter FollowSymlink;
+    public SwitchParameter? FollowSymlink;
 
     [Parameter]
-    public FlagsExpression<FileAttributes> Attributes;
+    public FlagsExpression<FileAttributes>? Attributes;
 
     protected override string WrappedCommandName() => "Get-ChildItem";
 

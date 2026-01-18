@@ -12,63 +12,63 @@ namespace Module.Shell.Get.File.Local
       ValueFromPipelineByPropertyName = true
     )]
     [SupportsWildcards]
-    public string[] Path;
+    public string[]? Path;
 
     [Parameter(
       ParameterSetName = "Path",
       Position = 1
     )]
     [SupportsWildcards]
-    public string Filter;
+    public string? Filter;
 
     [Parameter]
     [SupportsWildcards]
-    public string[] Include;
+    public string[]? Include;
 
     [Parameter]
     [SupportsWildcards]
-    public string[] Exclude;
+    public string[]? Exclude;
 
     [Parameter(
       ValueFromPipelineByPropertyName = true
     )]
-    public long ReadCount;
+    public long? ReadCount;
 
     [Parameter(
       ValueFromPipelineByPropertyName = true
     )]
     [Alias("First", "Head")]
     [ValidateRange(0, 9223372036854775807)]
-    public long TotalCount;
+    public long? TotalCount;
 
     [Parameter(
       ValueFromPipelineByPropertyName = true
     )]
     [Alias("Last")]
     [ValidateRange(0, 2147483647)]
-    public int Tail;
+    public int? Tail;
 
     [Parameter]
-    public string Delimiter;
+    public string? Delimiter;
 
     [Parameter]
-    public string Stream;
+    public string? Stream;
 
     [Parameter]
-    public Encoding Encoding;
+    public Encoding? Encoding;
 
     [Parameter]
     [Alias("f")]
-    public SwitchParameter Force;
+    public SwitchParameter? Force;
 
     [Parameter]
-    public SwitchParameter AsByteStream;
+    public SwitchParameter? AsByteStream;
 
     [Parameter]
-    public SwitchParameter Raw;
+    public SwitchParameter? Raw;
 
     [Parameter]
-    public SwitchParameter Wait;
+    public SwitchParameter? Wait;
 
     protected override string WrappedCommandName() => "Get-Content";
 

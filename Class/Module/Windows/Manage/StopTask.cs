@@ -43,7 +43,7 @@ namespace Module.Windows.Manage
         get => pids;
         set => pids = value;
       }
-      private uint[] pids;
+      private uint[] pids = [];
 
       [Parameter(
         ParameterSetName = "Self",

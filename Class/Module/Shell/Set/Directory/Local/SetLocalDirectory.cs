@@ -1,5 +1,6 @@
 namespace Module.Shell.Set.Directory.Local
 {
+  using System;
   using System.Management.Automation;
 
   public abstract class SetLocalDirectoryCommand : LocalWrappedCommand
@@ -12,18 +13,18 @@ namespace Module.Shell.Set.Directory.Local
     )]
     [AllowEmptyString]
     [SupportsWildcards]
-    public string Path;
+    public string? Path;
 
     [Parameter]
-    public SwitchParameter PassThru;
+    public SwitchParameter? PassThru;
 
     protected override string WrappedCommandName() => "Set-Location";
 
     protected override bool BeforeBeginProcessing()
     {
       BoundParameters()["Path"] = Reanchor(
-        IsPresent("Path")
-          ? BoundParameters()["Path"].ToString()
+        BoundParameters().TryGetValue("Path", out var path)
+          ? path?.ToString() ?? string.Empty
           : string.Empty
       );
 

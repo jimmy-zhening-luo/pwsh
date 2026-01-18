@@ -24,13 +24,13 @@ namespace Module.Shell.Clear
       [AllowEmptyString]
       [SupportsWildcards]
       [RelativePathCompletions]
-      public string Path;
+      public string? Path;
 
       [Parameter(
         Position = 1
       )]
       [SupportsWildcards]
-      public string Filter;
+      public string? Filter;
 
       [Parameter(
         ParameterSetName = "LiteralPath",
@@ -38,22 +38,22 @@ namespace Module.Shell.Clear
         ValueFromPipelineByPropertyName = true
       )]
       [Alias("PSPath", "LP")]
-      public string[] LiteralPath;
+      public string[]? LiteralPath;
 
       [Parameter]
       [SupportsWildcards]
-      public string[] Include;
+      public string[]? Include;
 
       [Parameter]
       [SupportsWildcards]
-      public string[] Exclude;
+      public string[]? Exclude;
 
       [Parameter]
       [Alias("f")]
-      public SwitchParameter Force;
+      public SwitchParameter? Force;
 
       [Parameter]
-      public string Stream;
+      public string? Stream;
 
       protected override string WrappedCommandName() => "Clear-Content";
 

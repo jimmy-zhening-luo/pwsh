@@ -28,7 +28,7 @@ namespace Module.Shell.Start.Explorer.Local
       [RelativePathCompletions(
         ".."
       )]
-      public new string[] Path;
+      public new string[]? Path;
 
       protected override string RelativeLocation() => "..";
 
@@ -57,7 +57,7 @@ namespace Module.Shell.Start.Explorer.Local
       [RelativePathCompletions(
         @"..\.."
       )]
-      public new string[] Path;
+      public new string[]? Path;
 
       protected override string RelativeLocation() => @"..\..";
 
@@ -86,7 +86,7 @@ namespace Module.Shell.Start.Explorer.Local
       [PathCompletions(
         "~"
       )]
-      public new string[] Path;
+      public new string[]? Path;
 
       protected override string RelativeLocation() => "";
 
@@ -115,7 +115,7 @@ namespace Module.Shell.Start.Explorer.Local
       [PathCompletions(
         @"~\code"
       )]
-      public new string[] Path;
+      public new string[]? Path;
 
       protected override string RelativeLocation() => "code";
 
@@ -144,7 +144,7 @@ namespace Module.Shell.Start.Explorer.Local
       [RelativePathCompletions(
         @"\"
       )]
-      public new string[] Path;
+      public new string[]? Path;
 
       protected override string RelativeLocation() => "";
 

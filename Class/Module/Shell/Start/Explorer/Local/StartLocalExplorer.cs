@@ -13,19 +13,19 @@ namespace Module.Shell.Start.Explorer.Local
     )]
     [AllowEmptyCollection]
     [SupportsWildcards]
-    public string[] Path;
+    public string[]? Path;
 
     [Parameter]
     [SupportsWildcards]
-    public string Filter;
+    public string? Filter;
 
     [Parameter]
     [SupportsWildcards]
-    public string[] Include;
+    public string[]? Include;
 
     [Parameter]
     [SupportsWildcards]
-    public string[] Exclude;
+    public string[]? Exclude;
 
     protected override string WrappedCommandName() => "Invoke-Item";
 

@@ -27,7 +27,7 @@ namespace Module.Shell.Remove.Directory
       )]
       [SupportsWildcards]
       [RelativePathCompletions]
-      public string[] Path;
+      public string[]? Path;
 
       [Parameter(
         ParameterSetName = "LiteralPath",
@@ -35,7 +35,7 @@ namespace Module.Shell.Remove.Directory
         ValueFromPipelineByPropertyName = true
       )]
       [Alias("PSPath", "LP")]
-      public string[] LiteralPath;
+      public string[]? LiteralPath;
 
       [Parameter(
         ParameterSetName = "Path",
@@ -46,15 +46,15 @@ namespace Module.Shell.Remove.Directory
         Position = 1
       )]
       [SupportsWildcards]
-      public string Filter;
+      public string? Filter;
 
       [Parameter]
       [SupportsWildcards]
-      public string[] Include;
+      public string[]? Include;
 
       [Parameter]
       [SupportsWildcards]
-      public string[] Exclude;
+      public string[]? Exclude;
 
       protected override string WrappedCommandName() => "Remove-Item";
 
