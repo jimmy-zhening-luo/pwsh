@@ -186,7 +186,7 @@ namespace Module.Shell.Set.Directory.Local
       )]
       [AllowEmptyString]
       [SupportsWildcards]
-      [RelativePathCompletions(
+      [PathCompletions(
         "D:",
         PathItemType.Directory
       )]
