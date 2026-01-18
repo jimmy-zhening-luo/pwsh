@@ -14,7 +14,6 @@
   CmdletsToExport      = @()
   VariablesToExport    = @()
   AliasesToExport      = @(
-    'touch'
     'mk'
     'mj'
   )

@@ -5,6 +5,13 @@ namespace Module
   using System.Collections.ObjectModel;
   using System.Management.Automation;
 
+  public enum FileSystemItemType
+  {
+    Any,
+    File,
+    Directory
+  }
+
   public abstract class CoreCommand : PSCmdlet
   {
     protected Dictionary<string, object> BoundParameters() => MyInvocation.BoundParameters;
@@ -72,6 +79,22 @@ namespace Module
       }
 
       return ps.Invoke();
+    }
+
+    protected bool TestPath(
+      string path,
+      FileSystemItemType type = FileSystemItemType.Any
+    )
+    {
+      string psPath = Pwd(path);
+
+      return type switch
+      {
+        FileSystemItemType.File => File.Exists(psPath),
+        FileSystemItemType.Directory => Directory.Exists(psPath),
+        _ => Directory.Exists(psPath)
+          || File.Exists(psPath)
+      };
     }
 
     protected object Var(

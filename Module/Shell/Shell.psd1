@@ -31,7 +31,6 @@
   FunctionsToExport    = @(
     'New-Directory'
     'New-Junction'
-    'Get-Size'
     'Get-File'
     'Get-FileSibling'
     'Get-FileRelative'
@@ -58,10 +57,6 @@
     'touch'
     'mk'
     'mj'
-    'split'
-    'hash'
-    'size'
-    'sz'
     'p'
     'p.'
     'p..'

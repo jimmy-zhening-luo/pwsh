@@ -113,10 +113,10 @@ namespace Module.Browse.Test
                 portNumber = parsedPortNumber;
               }
               else if (
-                Enum.TryParse<TestHostWellKnownPort>(
+                Enum.TryParse(
                   commonPort,
                   true,
-                  out var parsedPortEnum
+                  out TestHostWellKnownPort parsedPortEnum
                 )
               )
               {

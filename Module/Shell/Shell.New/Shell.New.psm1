@@ -144,5 +144,3 @@ function New-Junction {
     }
   }
 }
-
-New-Alias touch New-Item

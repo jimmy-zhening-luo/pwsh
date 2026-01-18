@@ -120,6 +120,10 @@ New-Alias tab Format-Table
 New-Alias table Format-Table
 New-Alias format Format-Table
 
+New-Alias split Split-Path
+New-Alias hash Get-FileHash
+New-Alias touch New-Item
+
 New-Alias restart Restart-Computer
 New-Alias sesv Set-Service
 New-Alias remsv Remove-Service
