@@ -17,11 +17,6 @@
       ModuleVersion = '3.0.0.0'
       GUID          = '043fee19-632c-4e0a-ac64-31b9fe02be00'
     }
-    @{
-      ModuleName    = 'Shell.Remove'
-      ModuleVersion = '3.0.0.0'
-      GUID          = '1099153a-7f76-415c-8b8f-d18f5351d581'
-    }
   )
   FunctionsToExport    = @(
     'New-Directory'
@@ -38,7 +33,6 @@
     'Start-WorkspaceHome'
     'Start-WorkspaceCode'
     'Start-WorkspaceDrive'
-    'Remove-Directory'
   )
   CmdletsToExport      = @()
   VariablesToExport    = @()
@@ -58,6 +52,5 @@
     'ih'
     'ic'
     'i/'
-    'rd'
   )
 }

@@ -1,30 +1,3 @@
-using namespace Completer.PathCompleter
-
-<#
-.FORWARDHELPTARGETNAME Remove-Item
-.FORWARDHELPCATEGORY Cmdlet
-#>
-function Remove-Directory {
-  [CmdletBinding(
-    DefaultParameterSetName = 'Path',
-    SupportsShouldProcess,
-    SupportsTransactions,
-    ConfirmImpact = 'Medium'
-  )]
-  [OutputType([void])]
-  [Alias('rd')]
-  param(
-
-    [Parameter(
-      ParameterSetName = 'Path',
-      Mandatory,
-      Position = 0,
-      ValueFromPipeline,
-      ValueFromPipelineByPropertyName
-    )]
-    [SupportsWildcards()]
-    [RelativePathCompletions()]
-    [string[]]$Path,
 
     [Parameter(
       ParameterSetName = 'LiteralPath',
@@ -58,21 +31,3 @@ function Remove-Directory {
       $steppablePipeline.Begin($PSCmdlet)
     }
   }
-
-  process {
-    if (
-      $PSCmdlet.ShouldProcess(
-        $Value,
-        "> Step: Remove-Item -Recurse -Force -Path [[$Path]] -LiteralPath [$LiteralPath] -- " + (ConvertTo-Json $PSBoundParameters -EnumsAsStrings -Depth 6)
-      )
-    ) {
-      $steppablePipeline.Process($PSItem)
-    }
-  }
-
-  end {
-    if ($PSCmdlet.ShouldProcess('Transaction', 'Close')) {
-      $steppablePipeline.End()
-    }
-  }
-}
