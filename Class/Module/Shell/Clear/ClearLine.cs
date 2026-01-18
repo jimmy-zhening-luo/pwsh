@@ -62,7 +62,10 @@ namespace Module.Shell.Clear
 
       protected override void BeforeEndProcessing()
       {
-        if (steppablePipeline == null)
+        if (
+          !IsPresent("Path")
+          && !IsPresent("LiteralPath")
+        )
         {
           Console.Clear();
         }
