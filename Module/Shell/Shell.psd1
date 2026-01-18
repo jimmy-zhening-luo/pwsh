@@ -13,11 +13,6 @@
       GUID          = '9a3324b2-207d-4635-a8d6-ac8261181fb1'
     }
     @{
-      ModuleName    = 'Shell.Get'
-      ModuleVersion = '3.0.0.0'
-      GUID          = '83fda875-8f8c-4bce-a5da-e840d832378d'
-    }
-    @{
       ModuleName    = 'Shell.Start'
       ModuleVersion = '3.0.0.0'
       GUID          = '043fee19-632c-4e0a-ac64-31b9fe02be00'
@@ -31,12 +26,6 @@
   FunctionsToExport    = @(
     'New-Directory'
     'New-Junction'
-    'Get-File'
-    'Get-FileSibling'
-    'Get-FileRelative'
-    'Get-FileHome'
-    'Get-FileCode'
-    'Get-FileDrive'
     'Start-Explorer'
     'Start-ExplorerSibling'
     'Start-ExplorerRelative'
@@ -57,12 +46,6 @@
     'touch'
     'mk'
     'mj'
-    'p'
-    'p.'
-    'p..'
-    'ph'
-    'pc'
-    'p/'
     'e'
     'e.'
     'e..'
