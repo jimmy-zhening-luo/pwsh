@@ -13,10 +13,15 @@ namespace Module
       Env("SSH_CLIENT")
     );
 
-    public static string Home() => Environment.GetFolderPath(
-      Environment
-        .SpecialFolder
-        .UserProfile
+    public static string Home(
+      string subpath = ""
+    ) => Path.GetFullPath(
+      subpath,
+      Environment.GetFolderPath(
+        Environment
+          .SpecialFolder
+          .UserProfile
+      )
     );
 
     public static string AppData(
