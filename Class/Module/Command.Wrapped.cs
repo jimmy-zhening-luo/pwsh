@@ -4,12 +4,12 @@ namespace Module
 
   public abstract class WrappedCommand : CoreCommand
   {
+    protected abstract string WrappedCommandName { get; }
+
     protected virtual bool NoSsh
     {
       get => false;
     }
-
-    protected abstract string WrappedCommandName();
 
     private SteppablePipeline? steppablePipeline = null;
 
@@ -25,12 +25,8 @@ namespace Module
       )
       {
         Begin(
-          AddCommand(
-            WrappedCommandName()
-          )
-            .AddParameters(
-              BoundParameters()
-            )
+          AddCommand(WrappedCommandName)
+            .AddParameters(BoundParameters())
         );
       }
     }

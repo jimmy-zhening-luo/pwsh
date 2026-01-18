@@ -98,7 +98,7 @@ namespace Module.Shell.Get.File
       [Parameter]
       public SwitchParameter? Wait;
 
-      protected override string WrappedCommandName() => "Get-Content";
+      protected override string WrappedCommandName => "Get-Content";
     }
   }
 }

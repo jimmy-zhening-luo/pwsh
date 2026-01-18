@@ -70,7 +70,7 @@ namespace Module.Shell.Get.Directory.Local
     [Parameter]
     public FlagsExpression<FileAttributes>? Attributes;
 
-    protected override string WrappedCommandName() => "Get-ChildItem";
+    protected override string WrappedCommandName => "Get-ChildItem";
 
     protected override bool BeforeBeginProcessing()
     {

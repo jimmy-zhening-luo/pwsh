@@ -18,7 +18,7 @@ namespace Module.Shell.Set.Directory.Local
     [Parameter]
     public SwitchParameter? PassThru;
 
-    protected override string WrappedCommandName() => "Set-Location";
+    protected override string WrappedCommandName => "Set-Location";
 
     protected override bool BeforeBeginProcessing()
     {

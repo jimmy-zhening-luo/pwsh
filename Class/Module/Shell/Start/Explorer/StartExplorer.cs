@@ -48,7 +48,7 @@ namespace Module.Shell.Start.Explorer
       [SupportsWildcards]
       public string[]? Exclude;
 
-      protected override string WrappedCommandName() => "Invoke-Item";
+      protected override string WrappedCommandName => "Invoke-Item";
 
       protected override bool NoSsh
       {

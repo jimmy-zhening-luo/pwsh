@@ -50,7 +50,7 @@ namespace Module.Shell.New.Directory
       [Alias("f")]
       public SwitchParameter? Force;
 
-      protected override string WrappedCommandName() => "New-Item";
+      protected override string WrappedCommandName => "New-Item";
 
       protected override bool BeforeBeginProcessing()
       {

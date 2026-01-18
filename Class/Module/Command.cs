@@ -16,6 +16,38 @@ namespace Module
 
   public abstract class CoreCommand : PSCmdlet
   {
+    protected static PowerShell PS() => PowerShell.Create(
+      RunspaceMode.CurrentRunspace
+    );
+
+    protected Dictionary<string, object> BoundParameters() => MyInvocation.BoundParameters;
+
+    protected bool IsPresent(
+      string parameterName
+    ) => BoundParameters().ContainsKey(parameterName);
+
+    protected PowerShell AddCommand(
+      string command,
+      CommandTypes commandType = CommandTypes.Cmdlet
+    ) => AddCommand(
+      PS(),
+      command,
+      commandType
+    );
+
+    protected PowerShell AddCommand(
+      PowerShell ps,
+      string command,
+      CommandTypes commandType = CommandTypes.Cmdlet
+    ) => ps.AddCommand(
+      SessionState
+        .InvokeCommand
+        .GetCommand(
+          command,
+          commandType
+        )
+    );
+
     [DoesNotReturn]
     protected void Throw(
       string message,
@@ -44,37 +76,6 @@ namespace Module
         category,
         target
       )
-    );
-    protected Dictionary<string, object> BoundParameters() => MyInvocation.BoundParameters;
-
-    protected bool IsPresent(
-      string parameterName
-    ) => BoundParameters().ContainsKey(parameterName);
-
-    protected static PowerShell PS() => PowerShell.Create(
-      RunspaceMode.CurrentRunspace
-    );
-
-    protected PowerShell AddCommand(
-      string command,
-      CommandTypes commandType = CommandTypes.Cmdlet
-    ) => AddCommand(
-      PS(),
-      command,
-      commandType
-    );
-
-    protected PowerShell AddCommand(
-      PowerShell ps,
-      string command,
-      CommandTypes commandType = CommandTypes.Cmdlet
-    ) => ps.AddCommand(
-      SessionState
-        .InvokeCommand
-        .GetCommand(
-          command,
-          commandType
-        )
     );
 
     protected Collection<PSObject> Call(

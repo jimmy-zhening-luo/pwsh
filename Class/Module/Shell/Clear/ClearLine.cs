@@ -55,7 +55,7 @@ namespace Module.Shell.Clear
       [Parameter]
       public string? Stream;
 
-      protected override string WrappedCommandName() => "Clear-Content";
+      protected override string WrappedCommandName => "Clear-Content";
 
       protected override bool BeforeBeginProcessing() => Path != null
         || ParameterSetName == "LiteralPath";

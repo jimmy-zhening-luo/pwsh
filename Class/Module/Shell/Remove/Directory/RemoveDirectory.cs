@@ -56,7 +56,7 @@ namespace Module.Shell.Remove.Directory
       [SupportsWildcards]
       public string[]? Exclude;
 
-      protected override string WrappedCommandName() => "Remove-Item";
+      protected override string WrappedCommandName => "Remove-Item";
 
       protected override bool BeforeBeginProcessing()
       {

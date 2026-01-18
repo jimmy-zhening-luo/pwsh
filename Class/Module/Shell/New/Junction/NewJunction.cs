@@ -35,7 +35,7 @@ namespace Module.Shell.New.Junction
       [RelativePathCompletions]
       public object? Value;
 
-      protected override string WrappedCommandName() => "New-Item";
+      protected override string WrappedCommandName => "New-Item";
 
       protected override bool BeforeBeginProcessing()
       {
