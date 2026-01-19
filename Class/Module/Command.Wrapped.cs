@@ -23,7 +23,7 @@ namespace Module
     protected override void BeginProcessing()
     {
       if (
-        (!NoSsh || !Context.Ssh())
+        (!NoSsh || !Context.Ssh)
         && BeforeBeginProcessing()
       )
       {
@@ -46,7 +46,7 @@ namespace Module
 
     protected override void ProcessRecord()
     {
-      if (!NoSsh || !Context.Ssh())
+      if (!NoSsh || !Context.Ssh)
       {
         steppablePipeline?.Process();
       }
@@ -54,7 +54,7 @@ namespace Module
 
     protected override void EndProcessing()
     {
-      if (!NoSsh || !Context.Ssh())
+      if (!NoSsh || !Context.Ssh)
       {
         BeforeEndProcessing();
       }

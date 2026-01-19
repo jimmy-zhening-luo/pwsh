@@ -7,6 +7,10 @@ namespace Module
 
   public static class Context
   {
+    public static bool Ssh => !string.IsNullOrEmpty(
+      Env("SSH_CLIENT")
+    );
+
     public static PowerShell PS() => PowerShell.Create(
       RunspaceMode.CurrentRunspace
     );
@@ -17,10 +21,6 @@ namespace Module
       variable
     )
       ?? string.Empty;
-
-    public static bool Ssh() => !string.IsNullOrEmpty(
-      Env("SSH_CLIENT")
-    );
 
     public static string Home(
       string subpath = ""
@@ -53,7 +53,7 @@ namespace Module
       bool noNewWindow = false
     )
     {
-      if (!Ssh())
+      if (!Ssh)
       {
         var startInfo = new ProcessStartInfo(fileName)
         {
@@ -76,7 +76,7 @@ namespace Module
       bool noNewWindow = false
     )
     {
-      if (!Ssh())
+      if (!Ssh)
       {
         var startInfo = new ProcessStartInfo(fileName)
         {
