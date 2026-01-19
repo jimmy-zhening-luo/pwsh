@@ -1,5 +1,8 @@
 namespace Completer.PathCompleter
 {
+  using System.IO;
+  using System.Environment;
+
   public static partial class Canonicalizer
   {
     public static string Normalize(
@@ -9,9 +12,9 @@ namespace Completer.PathCompleter
     {
       string normalPath = RemoveRelativeRoot(
         DuplicateSeparatorRegex().Replace(
-          System
-            .Environment
-            .ExpandEnvironmentVariables(path)
+          ExpandEnvironmentVariables(
+            path
+          )
             .Replace('/', '\\'),
           @"\"
         )
@@ -19,7 +22,7 @@ namespace Completer.PathCompleter
 
       return preserveTrailingSeparator
         ? normalPath
-        : System.IO.Path.TrimEndingDirectorySeparator(
+        : Path.TrimEndingDirectorySeparator(
             normalPath
           );
     }
@@ -28,9 +31,7 @@ namespace Completer.PathCompleter
       string path,
       string location = "",
       string subpath = ""
-    ) => System
-      .IO
-      .Path
+    ) => Path
       .Join(
         location,
         path,
@@ -56,11 +57,8 @@ namespace Completer.PathCompleter
         : path[2..]
       : path;
 
-    public static string Home() => System.Environment.GetFolderPath(
-      System
-        .Environment
-        .SpecialFolder
-        .UserProfile
+    public static string Home() => GetFolderPath(
+      SpecialFolder.UserProfile
     );
 
     public static string AnchorHome(string path) => IsHomeRooted(path)
