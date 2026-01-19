@@ -31,7 +31,7 @@ namespace Module.Help.Type
             BindingFlags.Static
             | BindingFlags.Public
           )
-          ?.GetValue(null) as IDictionary<string, object>;
+          ?.GetValue(null) as IDictionary;
 
         if (typeAccelerators != null)
         {
