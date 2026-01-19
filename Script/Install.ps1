@@ -18,7 +18,7 @@ using namespace System.Collections.Generic
     )
 
     end {
-      $BuildOutput = "$SOURCE_ROOT\$Class\bin\Release\net10.0-windows\$Class.dll"
+      $BuildOutput = "$SOURCE_ROOT\$Class\bin\Release\net9.0-windows\$Class.dll"
 
       if (-not (Test-Path $BuildOutput -PathType Leaf)) {
         Write-Warning -Message "Class '$Class' is not built, skipping."
