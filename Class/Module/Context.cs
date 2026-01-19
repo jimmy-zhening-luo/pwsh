@@ -1,9 +1,9 @@
 namespace Module
 {
-  using System;
-  using System.IO;
   using System.Diagnostics;
   using System.Management.Automation;
+  using static System.Environment;
+  using static System.IO.Path;
 
   public static class Context
   {
@@ -20,32 +20,30 @@ namespace Module
 
     public static string Env(
       string variable
-    ) => Environment.GetEnvironmentVariable(
+    ) => GetEnvironmentVariable(
       variable
     )
       ?? string.Empty;
 
     public static string Home(
       string subpath = ""
-    ) => Path.GetFullPath(
+    ) => GetFullPath(
       subpath,
-      Environment.GetFolderPath(
-        Environment
-          .SpecialFolder
-          .UserProfile
+      GetFolderPath(
+        SpecialFolder.UserProfile
       )
     );
 
     public static string AppData(
       string subpath = ""
-    ) => Path.GetFullPath(
+    ) => GetFullPath(
       subpath,
       Env("APPDATA")
     );
 
     public static string LocalAppData(
       string subpath = ""
-    ) => Path.GetFullPath(
+    ) => GetFullPath(
       subpath,
       Env("LOCALAPPDATA")
     );

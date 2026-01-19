@@ -1,7 +1,7 @@
 namespace Completer.PathCompleter
 {
-  using System.IO;
-  using System.Environment;
+  using static System.Environment;
+  using static System.IO.Path;
 
   public static partial class Canonicalizer
   {
@@ -15,14 +15,17 @@ namespace Completer.PathCompleter
           ExpandEnvironmentVariables(
             path
           )
-            .Replace('/', '\\'),
+            .Replace(
+              '/',
+              '\\'
+            ),
           @"\"
         )
       );
 
       return preserveTrailingSeparator
         ? normalPath
-        : Path.TrimEndingDirectorySeparator(
+        : TrimEndingDirectorySeparator(
             normalPath
           );
     }
@@ -31,27 +34,41 @@ namespace Completer.PathCompleter
       string path,
       string location = "",
       string subpath = ""
-    ) => Path
-      .Join(
-        location,
-        path,
-        subpath
-      )
-      .Replace('\\', '/');
-
-    public static bool IsRelativelyRooted(string path) => path.StartsWith('.')
-      && (
-        path.Length == 1
-        || path[1] == '\\'
+    ) => Join(
+      location,
+      path,
+      subpath
+    )
+      .Replace(
+        '\\',
+        '/'
       );
 
-    public static bool IsHomeRooted(string path) => path.StartsWith('~')
-      && (
-        path.Length == 1
-        || path[1] == '\\'
-      );
+    public static bool IsRelativelyRooted(
+      string path
+    ) => path.StartsWith(
+      '.'
+    )
+    && (
+      path.Length == 1
+      || path[1] == '\\'
+    );
 
-    public static string RemoveRelativeRoot(string path) => IsRelativelyRooted(path)
+    public static bool IsHomeRooted(
+      string path
+    ) => path.StartsWith(
+      '~'
+    )
+    && (
+      path.Length == 1
+      || path[1] == '\\'
+    );
+
+    public static string RemoveRelativeRoot(
+      string path
+    ) => IsRelativelyRooted(
+      path
+    )
       ? path.Length == 1
         ? string.Empty
         : path[2..]
@@ -61,8 +78,13 @@ namespace Completer.PathCompleter
       SpecialFolder.UserProfile
     );
 
-    public static string AnchorHome(string path) => IsHomeRooted(path)
-      ? Home() + path[1..]
+    public static string AnchorHome(
+      string path
+    ) => IsHomeRooted(
+      path
+    )
+      ? Home()
+        + path[1..]
       : path;
   }
 }
