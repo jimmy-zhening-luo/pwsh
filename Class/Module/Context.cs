@@ -7,7 +7,7 @@ namespace Module
 
   public static class Context
   {
-    protected static PowerShell PS() => PowerShell.Create(
+    public static PowerShell PS() => PowerShell.Create(
       RunspaceMode.CurrentRunspace
     );
 
