@@ -14,7 +14,9 @@ namespace Module.Profile
     {
       protected override void EndProcessing()
       {
-        var repoRoot = ((PSObject)Var("REPO_ROOT")).BaseObject.ToString();
+        var repoRoot = Var("REPO_ROOT")
+          .BaseObject
+          .ToString();
 
         if (repoRoot == null)
         {

@@ -118,7 +118,7 @@ namespace Module
 
     protected T Var<T>(
       string variable
-    ) where T : object => SessionState
+    ) => SessionState
       .PSVariable
       .GetValue(variable);
 
