@@ -44,13 +44,11 @@ namespace Module.Help.Type
             _ = uniqueTypes.Add(type.ToString()!);
           }
 
-          var sortedUniqueTypes = new SortedSet<string>(
-            uniqueTypes,
-            StringComparer.OrdinalIgnoreCase
-          );
-
           WriteObject(
-            sortedUniqueTypes,
+            new SortedSet<string>(
+              uniqueTypes,
+              StringComparer.OrdinalIgnoreCase
+            ),
             true
           );
         }
