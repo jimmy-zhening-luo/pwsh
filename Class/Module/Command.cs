@@ -112,9 +112,13 @@ namespace Module
       };
     }
 
-    protected object Var(
+    protected PSObject Var(
       string variable
-    ) => SessionState
+    ) => Var<PSObject>(variable);
+
+    protected T Var<T>(
+      string variable
+    ) where T : object => SessionState
       .PSVariable
       .GetValue(variable);
 
