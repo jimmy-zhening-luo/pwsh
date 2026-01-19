@@ -11,7 +11,11 @@ namespace Module
       RunspaceMode.CurrentRunspace
     );
 
-    public static string Env(string variable) => Environment.GetEnvironmentVariable(variable)
+    public static string Env(
+      string variable
+    ) => Environment.GetEnvironmentVariable(
+      variable
+    )
       ?? string.Empty;
 
     public static bool Ssh() => !string.IsNullOrEmpty(
