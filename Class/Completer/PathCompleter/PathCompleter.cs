@@ -1,7 +1,8 @@
 namespace Completer.PathCompleter
 {
+  using static System.IO.Path;
   using System.IO;
-  using System.Collections.Generic;
+  using IStringEnumerable = System.Collections.Generic.IEnumerable<string>;
 
   public class PathCompleter : BaseCompleter
   {
@@ -32,7 +33,7 @@ namespace Completer.PathCompleter
       reanchor
     );
 
-    public override IEnumerable<string> FulfillCompletion(
+    public override IStringEnumerable FulfillCompletion(
       string wordToComplete
     )
     {
@@ -72,14 +73,14 @@ namespace Completer.PathCompleter
           }
           else
           {
-            string anchoredPath = Path.GetFullPath(
+            string anchoredPath = GetFullPath(
               subpathPart,
               Root
             );
 
             if (Directory.Exists(anchoredPath))
             {
-              accumulatedSubpath = Path.GetRelativePath(
+              accumulatedSubpath = GetRelativePath(
                 Root,
                 anchoredPath
               );
@@ -91,7 +92,7 @@ namespace Completer.PathCompleter
               && Directory.Exists(subpathPart)
             )
             {
-              accumulatedSubpath = Path.GetFullPath(subpathPart);
+              accumulatedSubpath = GetFullPath(subpathPart);
               location = accumulatedSubpath;
               pathToComplete = string.Empty;
             }
@@ -128,7 +129,7 @@ namespace Completer.PathCompleter
         {
           ++count;
           yield return Canonicalizer.Denormalize(
-            Path.GetFileName(file),
+            GetFileName(file),
             accumulatedSubpath
           );
         }
@@ -148,7 +149,7 @@ namespace Completer.PathCompleter
       {
         ++count;
         yield return Canonicalizer.Denormalize(
-          Path.GetFileName(directory),
+          GetFileName(directory),
           accumulatedSubpath,
           directoryCap
         );
@@ -166,7 +167,7 @@ namespace Completer.PathCompleter
         {
           ++count;
           yield return Canonicalizer.Denormalize(
-            Path.GetFileName(file),
+            GetFileName(file),
             accumulatedSubpath
           );
         }

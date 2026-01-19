@@ -1,13 +1,15 @@
 namespace Completer.PathCompleter
 {
-  using System;
-  using System.IO;
   using System.Management.Automation;
+  using static System.Management.Automation.RunspaceMode;
+  using static System.IO.Path;
+  using static System.AttributeTargets;
+  using AttributeUsage = System.AttributeUsageAttribute;
 
   [AttributeUsage(
-    AttributeTargets.Parameter
-    | AttributeTargets.Property
-    | AttributeTargets.Field
+    Parameter
+    | Property
+    | Field
   )]
   public class RelativePathCompletionsAttribute : BaseCompletionsAttribute<PathCompleter>
   {
@@ -43,12 +45,11 @@ namespace Completer.PathCompleter
     public override PathCompleter Create()
     {
       return new(
-        Path.GetFullPath(
+        GetFullPath(
           string.IsNullOrEmpty(RelativeLocation)
             ? string.Empty
             : RelativeLocation,
-          PowerShell
-            .Create(RunspaceMode.CurrentRunspace)
+          PowerShell.Create(CurrentRunspace)
             .AddCommand("Get-Location")
             .Invoke()[0]
             .BaseObject

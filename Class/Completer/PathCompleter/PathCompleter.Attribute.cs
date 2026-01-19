@@ -1,11 +1,12 @@
 namespace Completer.PathCompleter
 {
-  using System;
+  using static System.AttributeTargets;
+  using AttributeUsage = System.AttributeUsageAttribute;
 
   [AttributeUsage(
-    AttributeTargets.Parameter
-    | AttributeTargets.Property
-    | AttributeTargets.Field
+    Parameter
+    | Property
+    | Field
   )]
   public class PathCompletionsAttribute(
     string Location

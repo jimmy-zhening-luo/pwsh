@@ -1,14 +1,15 @@
 namespace Completer
 {
-  using System;
   using System.Management.Automation;
+  using static System.AttributeTargets;
+  using AttributeUsage = System.AttributeUsageAttribute;
 
   [AttributeUsage(
-    AttributeTargets.Parameter
-    | AttributeTargets.Property
-    | AttributeTargets.Field
+    Parameter
+    | Property
+    | Field
   )]
-  public abstract class BaseCompletionsAttribute<TCompleter> : ArgumentCompleterAttribute, IArgumentCompleterFactory where TCompleter : BaseCompleter
+  public abstract class BaseCompletionsAttribute<T> : ArgumentCompleterAttribute, IArgumentCompleterFactory where T : BaseCompleter
   {
     public readonly CompletionCase Casing;
 
@@ -19,7 +20,7 @@ namespace Completer
       CompletionCase casing
     ) : this() => Casing = casing;
 
-    public abstract TCompleter Create();
+    public abstract T Create();
     IArgumentCompleter IArgumentCompleterFactory
       .Create() => Create();
   }
