@@ -41,7 +41,7 @@ namespace Module.Help.Type
 
           foreach (var type in typeAccelerators.Keys)
           {
-            _ = uniqueTypes.Add(type.ToString());
+            _ = uniqueTypes.Add(type.ToString()!);
           }
 
           /*
