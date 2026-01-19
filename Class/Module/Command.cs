@@ -7,13 +7,6 @@ namespace Module
   using System.Management.Automation;
   using System;
 
-  public enum FileSystemItemType
-  {
-    Any,
-    File,
-    Directory
-  }
-
   public abstract class CoreCommand : PSCmdlet
   {
     protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
