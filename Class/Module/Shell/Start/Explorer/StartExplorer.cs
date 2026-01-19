@@ -50,10 +50,7 @@ namespace Module.Shell.Start.Explorer
 
       protected override string WrappedCommandName => "Invoke-Item";
 
-      protected override bool NoSsh
-      {
-        get => true;
-      }
+      protected override bool NoSsh => true;
 
       protected override bool BeforeBeginProcessing()
       {

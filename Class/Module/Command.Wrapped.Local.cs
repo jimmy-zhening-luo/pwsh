@@ -4,17 +4,23 @@ namespace Module
 
   public abstract class LocalWrappedCommand : WrappedCommand
   {
-    protected abstract string RelativeLocation();
+    protected abstract string LocationRoot
+    {
+      get;
+    }
 
-    protected abstract string LocationRoot();
+    protected virtual string RelativeLocation
+    {
+      get => "";
+    }
 
     protected string Reanchor(
       string typedPath = ""
     ) => Path.GetFullPath(
       typedPath,
       Path.GetFullPath(
-        RelativeLocation(),
-        LocationRoot()
+        RelativeLocation,
+        LocationRoot
       )
     );
   }

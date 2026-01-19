@@ -4,7 +4,10 @@ namespace Module
 
   public abstract class WrappedCommand : CoreCommand
   {
-    protected abstract string WrappedCommandName { get; }
+    protected abstract string WrappedCommandName
+    {
+      get;
+    }
 
     protected virtual bool NoSsh
     {

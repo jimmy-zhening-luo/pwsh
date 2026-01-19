@@ -32,9 +32,9 @@ namespace Module.Shell.Set.Directory.Local
       )]
       public new string? Path;
 
-      protected override string RelativeLocation() => "..";
+      protected override string RelativeLocation => "..";
 
-      protected override string LocationRoot() => Pwd();
+      protected override string LocationRoot => Pwd();
     }
 
     [Cmdlet(
@@ -64,9 +64,9 @@ namespace Module.Shell.Set.Directory.Local
       )]
       public new string? Path;
 
-      protected override string RelativeLocation() => @"..\..";
+      protected override string RelativeLocation => @"..\..";
 
-      protected override string LocationRoot() => Pwd();
+      protected override string LocationRoot => Pwd();
     }
 
     [Cmdlet(
@@ -96,9 +96,7 @@ namespace Module.Shell.Set.Directory.Local
       )]
       public new string? Path;
 
-      protected override string RelativeLocation() => "";
-
-      protected override string LocationRoot() => Context.Home();
+      protected override string LocationRoot => Context.Home();
     }
 
     [Cmdlet(
@@ -128,9 +126,9 @@ namespace Module.Shell.Set.Directory.Local
       )]
       public new string? Path;
 
-      protected override string RelativeLocation() => "code";
+      protected override string RelativeLocation => "code";
 
-      protected override string LocationRoot() => Context.Home();
+      protected override string LocationRoot => Context.Home();
     }
 
     [Cmdlet(
@@ -160,9 +158,7 @@ namespace Module.Shell.Set.Directory.Local
       )]
       public new string? Path;
 
-      protected override string RelativeLocation() => "";
-
-      protected override string LocationRoot() => Drive();
+      protected override string LocationRoot => Drive();
     }
 
     [Cmdlet(
@@ -192,9 +188,7 @@ namespace Module.Shell.Set.Directory.Local
       )]
       public new string? Path;
 
-      protected override string RelativeLocation() => "";
-
-      protected override string LocationRoot() => @"D:\";
+      protected override string LocationRoot => @"D:\";
     }
   }
 }
