@@ -1,6 +1,5 @@
 namespace Module.Shell.Start.Explorer.Local
 {
-  using System.IO;
   using System.Management.Automation;
 
   public abstract class StartLocalExplorerCommand : LocalWrappedCommand

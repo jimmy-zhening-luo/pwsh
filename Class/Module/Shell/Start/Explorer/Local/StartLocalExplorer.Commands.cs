@@ -2,7 +2,6 @@ namespace Module.Shell.Start.Explorer.Local
 {
   namespace Commands
   {
-    using System.IO;
     using System.Management.Automation;
     using Completer.PathCompleter;
 
