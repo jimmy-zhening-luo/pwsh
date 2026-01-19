@@ -7,9 +7,12 @@ namespace Module
 
   public static class Context
   {
-    public static bool Ssh => !string.IsNullOrEmpty(
-      Env("SSH_CLIENT")
-    );
+    public static bool Ssh
+    {
+      get => !string.IsNullOrEmpty(
+        Env("SSH_CLIENT")
+      );
+    }
 
     public static PowerShell PS() => PowerShell.Create(
       RunspaceMode.CurrentRunspace
