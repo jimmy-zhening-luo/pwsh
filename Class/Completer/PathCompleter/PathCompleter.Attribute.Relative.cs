@@ -21,13 +21,18 @@ namespace Completer.PathCompleter
     public RelativePathCompletionsAttribute(
       string relativeLocation,
       PathItemType itemType
-    ) : this(relativeLocation) => ItemType = itemType;
+    ) : this(
+      relativeLocation
+    ) => ItemType = itemType;
 
     public RelativePathCompletionsAttribute(
       string relativeLocation,
       PathItemType itemType,
       bool flat
-    ) : this(relativeLocation, itemType) => Flat = flat;
+    ) : this(
+      relativeLocation,
+      itemType
+    ) => Flat = flat;
 
     public override PathCompleter Create()
     {

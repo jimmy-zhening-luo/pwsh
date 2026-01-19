@@ -7,7 +7,9 @@ namespace Completer.PathCompleter
     | AttributeTargets.Property
     | AttributeTargets.Field
   )]
-  public class PathCompletionsAttribute(string Location) : BaseCompletionsAttribute<PathCompleter>
+  public class PathCompletionsAttribute(
+    string Location
+  ) : BaseCompletionsAttribute<PathCompleter>
   {
     public readonly PathItemType ItemType;
     public readonly bool Flat;
