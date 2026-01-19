@@ -3,9 +3,14 @@ namespace Module
   using System;
   using System.IO;
   using System.Diagnostics;
+  using System.Management.Automation;
 
   public static class Context
   {
+    protected static PowerShell PS() => PowerShell.Create(
+      RunspaceMode.CurrentRunspace
+    );
+
     public static string Env(string variable) => Environment.GetEnvironmentVariable(variable)
       ?? string.Empty;
 

@@ -16,10 +16,6 @@ namespace Module
 
   public abstract class CoreCommand : PSCmdlet
   {
-    protected static PowerShell PS() => PowerShell.Create(
-      RunspaceMode.CurrentRunspace
-    );
-
     protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
 
     protected bool IsPresent(
@@ -30,7 +26,7 @@ namespace Module
       string command,
       CommandTypes commandType = CommandTypes.Cmdlet
     ) => AddCommand(
-      PS(),
+      Context.PS(),
       command,
       commandType
     );
