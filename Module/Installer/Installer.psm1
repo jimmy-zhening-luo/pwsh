@@ -60,13 +60,9 @@ function Update-PSProfile {
 
     if ($Build) {
       try {
-        $DotnetNativeCommand = Get-Command -Name dotnet.exe -CommandType Application -All
-
-        if (-not $DotnetNativeCommand) {
-          throw 'Microsoft.DotNet.SDK.10 is not installed'
-        }
-
-        $DotnetExecutable = $DotnetNativeCommand.Source
+        $DotnetExecutable = (
+          Get-Command -Name dotnet.exe -CommandType Application -All
+        ).Source
         $DotnetArgument = @(
           "$PROFILE_REPO_ROOT\Class\Class.slnx"
           '--configuration=Release'
