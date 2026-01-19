@@ -6,18 +6,26 @@ namespace Completer
   public class Completer : BaseCompleter
   {
     public readonly IEnumerable<string> Domain;
+
     public readonly bool Strict;
 
     public Completer(
       IEnumerable<string> domain,
       bool strict,
       CompletionCase casing
-    ) : base(casing) => (Domain, Strict) = (
+    ) : base(
+      casing
+    ) => (
+      Domain,
+      Strict
+    ) = (
       domain,
       strict
     );
 
-    public override IEnumerable<string> FulfillCompletion(string wordToComplete)
+    public override IEnumerable<string> FulfillCompletion(
+      string wordToComplete
+    )
     {
       if (string.IsNullOrEmpty(wordToComplete))
       {
@@ -45,7 +53,10 @@ namespace Completer
           }
         }
 
-        if (!Strict && matched <= 1)
+        if (
+          !Strict
+          && matched < 2
+        )
         {
           foreach (string member in Domain)
           {
@@ -55,7 +66,7 @@ namespace Completer
                 wordToComplete,
                 1,
                 StringComparison.OrdinalIgnoreCase
-              ) >= 1
+              ) > 0
             )
             {
               yield return member;

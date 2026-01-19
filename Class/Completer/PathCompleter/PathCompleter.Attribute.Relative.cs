@@ -1,6 +1,7 @@
 namespace Completer.PathCompleter
 {
   using System;
+  using System.IO;
   using System.Management.Automation;
 
   [AttributeUsage(
@@ -11,12 +12,17 @@ namespace Completer.PathCompleter
   public class RelativePathCompletionsAttribute : BaseCompletionsAttribute<PathCompleter>
   {
     public readonly string RelativeLocation = string.Empty;
+
     public readonly PathItemType ItemType;
+
     public readonly bool Flat;
 
-    public RelativePathCompletionsAttribute() : base() { }
+    public RelativePathCompletionsAttribute() : base()
+    { }
 
-    public RelativePathCompletionsAttribute(string relativeLocation) : this() => RelativeLocation = relativeLocation;
+    public RelativePathCompletionsAttribute(
+      string relativeLocation
+    ) : this() => RelativeLocation = relativeLocation;
 
     public RelativePathCompletionsAttribute(
       string relativeLocation,
@@ -37,7 +43,7 @@ namespace Completer.PathCompleter
     public override PathCompleter Create()
     {
       return new(
-        System.IO.Path.GetFullPath(
+        Path.GetFullPath(
           string.IsNullOrEmpty(RelativeLocation)
             ? string.Empty
             : RelativeLocation,

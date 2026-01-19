@@ -12,11 +12,15 @@ namespace Completer
   {
     public readonly CompletionCase Casing;
 
-    protected BaseCompletionsAttribute() : base() { }
+    protected BaseCompletionsAttribute() : base()
+    { }
 
-    protected BaseCompletionsAttribute(CompletionCase casing) : this() => Casing = casing;
+    protected BaseCompletionsAttribute(
+      CompletionCase casing
+    ) : this() => Casing = casing;
 
     public abstract TCompleter Create();
-    IArgumentCompleter IArgumentCompleterFactory.Create() => Create();
+    IArgumentCompleter IArgumentCompleterFactory
+      .Create() => Create();
   }
 }

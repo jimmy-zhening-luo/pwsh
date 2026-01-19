@@ -10,20 +10,30 @@ namespace Completer
   public class CompletionsAttribute : BaseCompletionsAttribute<Completer>
   {
     public readonly string StringifiedDomain;
+
     public readonly bool Strict;
 
-    public CompletionsAttribute(string stringifiedDomain) : base() => StringifiedDomain = stringifiedDomain;
+    public CompletionsAttribute(
+      string stringifiedDomain
+    ) : base() => StringifiedDomain = stringifiedDomain;
 
     public CompletionsAttribute(
       string stringifiedDomain,
       bool strict
-    ) : this(stringifiedDomain) => Strict = strict;
+    ) : this(
+      stringifiedDomain
+    ) => Strict = strict;
 
     public CompletionsAttribute(
       string stringifiedDomain,
       bool strict,
       CompletionCase casing
-    ) : base(casing) => (StringifiedDomain, Strict) = (
+    ) : base(
+      casing
+    ) => (
+      StringifiedDomain,
+      Strict
+    ) = (
       stringifiedDomain,
       strict
     );

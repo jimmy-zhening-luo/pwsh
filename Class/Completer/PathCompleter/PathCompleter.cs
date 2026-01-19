@@ -6,8 +6,11 @@ namespace Completer.PathCompleter
   public class PathCompleter : BaseCompleter
   {
     public readonly string Root;
+
     public readonly PathItemType Type;
+
     public readonly bool Flat;
+
     public readonly bool Reanchor;
 
     public PathCompleter(
@@ -15,8 +18,12 @@ namespace Completer.PathCompleter
       PathItemType type,
       bool flat,
       bool reanchor
-    ) : base() => (Root, Type, Flat, Reanchor) =
-    (
+    ) : base() => (
+      Root,
+      Type,
+      Flat,
+      Reanchor
+    ) = (
       Canonicalizer.AnchorHome(
         Canonicalizer.Normalize(root)
       ),
@@ -25,10 +32,15 @@ namespace Completer.PathCompleter
       reanchor
     );
 
-    public override IEnumerable<string> FulfillCompletion(string wordToComplete)
+    public override IEnumerable<string> FulfillCompletion(
+      string wordToComplete
+    )
     {
       string pathToComplete = Canonicalizer
-        .Normalize(wordToComplete, true)
+        .Normalize(
+          wordToComplete,
+          true
+        )
         .Trim();
       string accumulatedSubpath = string.Empty;
       string location = string.Empty;

@@ -12,18 +12,24 @@ namespace Completer.PathCompleter
   ) : BaseCompletionsAttribute<PathCompleter>
   {
     public readonly PathItemType ItemType;
+
     public readonly bool Flat;
 
     public PathCompletionsAttribute(
       string location,
       PathItemType itemType
-    ) : this(location) => ItemType = itemType;
+    ) : this(
+      location
+    ) => ItemType = itemType;
 
     public PathCompletionsAttribute(
       string location,
       PathItemType itemType,
       bool flat
-    ) : this(location, itemType) => Flat = flat;
+    ) : this(
+      location,
+      itemType
+    ) => Flat = flat;
 
     public override PathCompleter Create() => new(
       Location,
