@@ -75,7 +75,7 @@ namespace Module
     public static void ShellExecute(
       string fileName,
       string arguments = "",
-      bool runAsAdmin = false,
+      bool administrator = false,
       bool noNewWindow = false
     )
     {
@@ -92,7 +92,7 @@ namespace Module
           startInfo.Arguments = arguments;
         }
 
-        if (runAsAdmin)
+        if (administrator)
         {
           startInfo.Verb = "RunAs";
         }
