@@ -35,10 +35,17 @@ namespace Module.Help.Type
 
         if (typeAccelerators != null)
         {
-          // Sort-Object -Unique
+          var uniqueTypes = new HashSet<string>(
+            typeAccelerators.Keys,
+            StringComparer.OrdinalIgnoreCase
+          );
+          var sortedUniqueTypes = new SortedSet<string>(
+            uniqueTypes,
+            StringComparer.OrdinalIgnoreCase
+          );
 
           WriteObject(
-            typeAccelerators.Keys,
+            sortedUniqueTypes,
             true
           );
         }
