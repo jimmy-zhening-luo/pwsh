@@ -3,6 +3,7 @@ namespace Module.Help.Type
   namespace Commands
   {
     using System;
+    using System.Reflection;
     using System.Management.Automation;
 
     [Cmdlet(
