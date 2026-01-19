@@ -18,7 +18,6 @@
     'Get-HelpOnline'
     'Get-CommandAlias'
     'Get-VerbList'
-    'Get-TypeAccelerator'
   )
   CmdletsToExport      = @()
   VariablesToExport    = @()
@@ -26,7 +25,5 @@
     'm'
     'man'
     'galc'
-    'ty'
-    'types'
   )
 }
