@@ -1,11 +1,13 @@
 namespace Module
 {
   using System;
-  using System.IO;
   using System.Collections.Generic;
   using System.Collections.ObjectModel;
   using System.Diagnostics.CodeAnalysis;
   using System.Management.Automation;
+  using static System.IO.Path;
+  using File = System.IO.File;
+  using Directory = System.IO.Directory;
 
   public abstract class CoreCommand : PSCmdlet
   {
@@ -124,14 +126,14 @@ namespace Module
 
     protected string Pwd(
       string subpath = ""
-    ) => Path.GetFullPath(
+    ) => GetFullPath(
       subpath,
       SessionState.Path.CurrentLocation.Path
     );
 
     protected string Drive(
       string subpath = ""
-    ) => Path.GetFullPath(
+    ) => GetFullPath(
       subpath,
       SessionState.Drive.Current.Root
     );
