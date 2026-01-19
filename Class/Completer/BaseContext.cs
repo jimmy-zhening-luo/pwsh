@@ -12,9 +12,7 @@ namespace Completer
 
     protected BaseContextCompleter(
       CompletionCase casing
-    ) : base(
-      casing
-    )
+    ) : base(casing)
     { }
 
     public override IEnumerable<CompletionResult> CompleteArgument(
