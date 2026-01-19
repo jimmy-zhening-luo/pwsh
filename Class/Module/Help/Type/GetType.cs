@@ -31,7 +31,7 @@ namespace Module.Help.Type
             BindingFlags.Static
             | BindingFlags.Public
           )
-          ?.GetValue(null);
+          ?.GetValue(null) as IDictionary;
 
         string[] keys = typeAccelerators.Keys;
 
