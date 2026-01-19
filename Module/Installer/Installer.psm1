@@ -59,20 +59,20 @@ function Update-PSProfile {
     Copy-Item -Path $PROFILE_REPO_ROOT\Data\PSScriptAnalyzerSettings.psd1 -Destination $HOME -Force
 
     if ($Build) {
-      $DotnetNativeCommand = Get-Command -Name dotnet.exe -CommandType Application -All
-
-      if (-not $DotnetNativeCommand) {
-        throw 'Microsoft.DotNet.SDK.10 is not installed'
-      }
-
-      $DotnetExecutable = $DotnetNativeCommand.Source
-      $DotnetArgument = @(
-        "$PROFILE_REPO_ROOT\Class\Class.slnx"
-        '--configuration=Release'
-        '--nologo'
-      )
-
       try {
+        $DotnetNativeCommand = Get-Command -Name dotnet.exe -CommandType Application -All
+
+        if (-not $DotnetNativeCommand) {
+          throw 'Microsoft.DotNet.SDK.10 is not installed'
+        }
+
+        $DotnetExecutable = $DotnetNativeCommand.Source
+        $DotnetArgument = @(
+          "$PROFILE_REPO_ROOT\Class\Class.slnx"
+          '--configuration=Release'
+          '--nologo'
+        )
+
         try {
           $DotnetCleanArgument = @(
             '--verbosity=quiet'
@@ -114,9 +114,14 @@ function Update-PSProfile {
         throw $PSItem.Exception
       }
       finally {
-        (
-          Get-Process -Name dotnet
-        ).Kill($True)
+        $DotnetProcess = Get-Process |
+          Where-Object {
+            $PSItem.ProcessName -eq 'dotnet'
+          }
+
+        if ($null -ne $DotnetProcess) {
+          $DotnetProcess.Kill($True)
+        }
       }
     }
   }
