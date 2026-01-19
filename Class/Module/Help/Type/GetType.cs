@@ -33,11 +33,14 @@ namespace Module.Help.Type
           )
           ?.GetValue(null) as IDictionary;
 
-        string[] keys = typeAccelerators.Keys;
+        if (typeAccelerators != null)
+        {
+          string[] keys = typeAccelerators.Keys;
 
-        // Sort-Object -Unique
+          // Sort-Object -Unique
 
-        WriteObject(keys, true);
+          WriteObject(keys, true);
+        }
       }
     }
   }
