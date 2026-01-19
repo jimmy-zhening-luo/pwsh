@@ -3,7 +3,7 @@ namespace Completer
   using System.Collections;
   using System.Collections.Generic;
   using System.Management.Automation;
-  using static System.Management.Automation.Language.CommandAst;
+  using System.Management.Automation.Language;
 
   public abstract class BaseCompleter : IArgumentCompleter
   {
