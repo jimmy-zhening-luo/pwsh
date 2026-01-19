@@ -30,6 +30,8 @@
     'split'
     'hash'
     'touch'
+    'upman'
+    'psk'
     'restart'
     'sesv'
     'remsv'

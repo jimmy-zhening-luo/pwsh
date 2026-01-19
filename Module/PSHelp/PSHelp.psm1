@@ -458,6 +458,3 @@ function Get-TypeAccelerator {
       Sort-Object -Unique
   }
 }
-
-New-Alias psk PSReadLine\Get-PSReadLineKeyHandler
-New-Alias upman Update-Help

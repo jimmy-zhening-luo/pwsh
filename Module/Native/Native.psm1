@@ -124,6 +124,9 @@ New-Alias split Split-Path
 New-Alias hash Get-FileHash
 New-Alias touch New-Item
 
+New-Alias upman Update-Help
+New-Alias psk Get-PSReadLineKeyHandler
+
 New-Alias restart Restart-Computer
 New-Alias sesv Set-Service
 New-Alias remsv Remove-Service

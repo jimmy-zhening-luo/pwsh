@@ -23,8 +23,6 @@
   CmdletsToExport      = @()
   VariablesToExport    = @()
   AliasesToExport      = @(
-    'psk'
-    'upman'
     'm'
     'man'
     'galc'
