@@ -120,7 +120,7 @@ namespace Module
       string variable
     ) => SessionState
       .PSVariable
-      .GetValue(variable);
+      .GetValue(variable) as T;
 
     protected string Pwd(
       string subpath = ""
