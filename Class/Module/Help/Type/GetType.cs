@@ -35,6 +35,7 @@ namespace Module.Help.Type
 
         if (typeAccelerators != null)
         {
+          /*
           var uniqueTypes = new HashSet<string>(
             typeAccelerators.Keys,
             StringComparer.OrdinalIgnoreCase
@@ -43,9 +44,10 @@ namespace Module.Help.Type
             uniqueTypes,
             StringComparer.OrdinalIgnoreCase
           );
+          */
 
           WriteObject(
-            sortedUniqueTypes.Count,
+            typeAccelerators.Keys,
             true
           );
         }
