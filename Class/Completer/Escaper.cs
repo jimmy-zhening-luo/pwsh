@@ -1,6 +1,6 @@
 namespace Completer
 {
-  using System.Management.Automation.Language;
+  using static System.Management.Automation.Language.CodeGeneration;
 
   public static class Escaper
   {
@@ -8,7 +8,7 @@ namespace Completer
       string text
     ) => text.Contains(' ')
       ? "'"
-        + CodeGeneration.EscapeSingleQuotedStringContent(text)
+        + EscapeSingleQuotedStringContent(text)
         + "'"
       : text;
 
