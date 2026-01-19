@@ -18,7 +18,8 @@ namespace Module
 
     protected virtual bool BeforeBeginProcessing() => true;
 
-    protected virtual void BeforeEndProcessing() { }
+    protected virtual void BeforeEndProcessing()
+    { }
 
     protected override void BeginProcessing()
     {
