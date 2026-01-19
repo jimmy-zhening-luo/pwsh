@@ -1,11 +1,11 @@
 namespace Module
 {
+  using System;
   using System.IO;
   using System.Collections.Generic;
   using System.Collections.ObjectModel;
   using System.Diagnostics.CodeAnalysis;
   using System.Management.Automation;
-  using System;
 
   public abstract class CoreCommand : PSCmdlet
   {
