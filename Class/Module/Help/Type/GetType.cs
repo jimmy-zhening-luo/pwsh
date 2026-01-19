@@ -38,6 +38,12 @@ namespace Module.Help.Type
           var uniqueTypes = new HashSet<string>(
             StringComparer.OrdinalIgnoreCase
           );
+
+          foreach (var type in typeAccelerators)
+          {
+            uniqueTypes.Add(type);
+          }
+
           /*
           var sortedUniqueTypes = new SortedSet<string>(
             uniqueTypes,
