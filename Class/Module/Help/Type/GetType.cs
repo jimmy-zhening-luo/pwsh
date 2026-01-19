@@ -35,11 +35,12 @@ namespace Module.Help.Type
 
         if (typeAccelerators != null)
         {
-          string[] keys = typeAccelerators.Keys;
-
           // Sort-Object -Unique
 
-          WriteObject(keys, true);
+          WriteObject(
+            typeAccelerators.Keys,
+            true
+          );
         }
       }
     }
