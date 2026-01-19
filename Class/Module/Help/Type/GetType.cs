@@ -39,9 +39,9 @@ namespace Module.Help.Type
             StringComparer.OrdinalIgnoreCase
           );
 
-          foreach (var type in typeAccelerators)
+          foreach (var type in typeAccelerators.Keys)
           {
-            uniqueTypes.Add(type);
+            uniqueTypes.Add(type.ToString());
           }
 
           /*
