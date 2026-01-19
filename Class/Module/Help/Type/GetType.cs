@@ -45,7 +45,7 @@ namespace Module.Help.Type
           );
 
           WriteObject(
-            sortedUniqueTypes,
+            sortedUniqueTypes.Count,
             true
           );
         }
