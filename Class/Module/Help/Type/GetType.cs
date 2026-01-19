@@ -1,0 +1,41 @@
+namespace Module.Help.Type
+{
+  namespace Commands
+  {
+    using System;
+    using System.Management.Automation;
+
+    [Cmdlet(
+      VerbsCommon.Get,
+      "Type",
+      HelpUri = "https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about/about_type_accelerators"
+    )]
+    [Alias("types", "ty")]
+    [OutputType(typeof(string))]
+    public class GetType : CoreCommand
+    {
+      protected override void EndProcessing()
+      {
+        var typeAccelerators = typeof(
+          PSObject
+        )
+          .Assembly
+          .GetType(
+            "System.Management.Automation.TypeAccelerators"
+          )
+          ?.GetProperty(
+            "Get",
+            BindingFlags.Static
+            | BindingFlags.Public
+          )
+          ?.GetValue(null);
+
+        string[] keys = typeAccelerators.Keys;
+
+        // Sort-Object -Unique
+
+        WriteObject(keys, true);
+      }
+    }
+  }
+}

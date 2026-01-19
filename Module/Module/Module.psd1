@@ -50,6 +50,7 @@
     'ConvertTo-Hex'
     'Start-Profile'
     'Start-History'
+    'Get-Type'
   )
   VariablesToExport    = @()
   AliasesToExport      = @(
@@ -98,5 +99,7 @@
     'hex'
     'op'
     'oc'
+    'ty'
+    'types'
   )
 }
