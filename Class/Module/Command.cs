@@ -118,9 +118,9 @@ namespace Module
 
     protected T Var<T>(
       string variable
-    ) => SessionState
+    ) => (T)SessionState
       .PSVariable
-      .GetValue(variable) as T;
+      .GetValue(variable);
 
     protected string Pwd(
       string subpath = ""
