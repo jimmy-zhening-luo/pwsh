@@ -52,7 +52,7 @@ namespace Module.Help.Type
           */
 
           WriteObject(
-            typeAccelerators.Keys,
+            uniqueTypes,
             true
           );
         }
