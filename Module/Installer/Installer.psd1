@@ -9,6 +9,7 @@
   PowerShellVersion    = '7.5'
   FunctionsToExport    = @(
     'Update-PSProfile'
+    'Build-PSProfile'
     'Restore-PSProfile'
   )
   CmdletsToExport      = @()
@@ -16,5 +17,6 @@
   AliasesToExport      = @(
     'up'
     'upp'
+    'upr'
   )
 }

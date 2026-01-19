@@ -1,6 +1,17 @@
 function Restore-PSProfile {
   [CmdletBinding()]
   [OutputType([void])]
+  [Alias('upr')]
+  param()
+
+  end {
+    Update-PSProfile -Build -Restore
+  }
+}
+
+function Build-PSProfile {
+  [CmdletBinding()]
+  [OutputType([void])]
   [Alias('upp')]
   param()
 
@@ -15,19 +26,31 @@ function Update-PSProfile {
   [Alias('up')]
   param(
 
-    [switch]$Build
+    [Parameter()]
+    [switch]$Build,
+
+    [Parameter()]
+    [switch]$Restore
   )
 
   end {
     $PROFILE_REPO_ROOT = "$REPO_ROOT\pwsh"
-    $GitCommandManifest = @(
+    $GitArgument = @(
       '-c'
       'color.ui=always'
       '-C'
       $PROFILE_REPO_ROOT
-      'pull'
     )
-    & "$env:ProgramFiles\Git\cmd\git.exe" @GitCommandManifest
+
+    if ($Restore) {
+      & $env:ProgramFiles\Git\cmd\git.exe @GitArgument reset
+
+      if ($LASTEXITCODE -notin 0, 1) {
+        throw "Failed to pull pwsh profile repository. Git returned exit code: $LASTEXITCODE"
+      }
+    }
+
+    & $env:ProgramFiles\Git\cmd\git.exe @GitArgument pull
 
     if ($LASTEXITCODE -notin 0, 1) {
       throw "Failed to pull pwsh profile repository. Git returned exit code: $LASTEXITCODE"
@@ -43,11 +66,19 @@ function Update-PSProfile {
       }
 
       $DotnetExecutable = $DotnetNativeCommand.Source
-      $Solution = "$PROFILE_REPO_ROOT\Class\Class.slnx"
+      $DotnetArgument = @(
+        "$PROFILE_REPO_ROOT\Class\Class.slnx"
+        '--configuration=Release'
+        '--nologo'
+      )
 
       try {
         try {
-          & $DotnetExecutable clean $Solution --configuration Release --verbosity quiet --nologo
+          $DotnetCleanArgument = @(
+            '--verbosity=quiet'
+          )
+
+          & $DotnetExecutable clean @DotnetArgument @DotnetCleanArgument
 
           if ($LASTEXITCODE -notin 0, 1) {
             throw "dotnet.exe returned a non-zero exit code ($LASTEXITCODE) when trying to clean the project."
@@ -58,7 +89,18 @@ function Update-PSProfile {
         }
 
         try {
-          & $DotnetExecutable build $Solution --configuration Release --disable-build-servers --force --no-incremental --nologo
+          $DotnetBuildArgument = @(
+            '--force'
+          )
+
+          if ($Restore) {
+            $DotnetBuildArgument += @(
+              '--no-incremental'
+              '--disable-build-servers'
+            )
+          }
+
+          & $DotnetExecutable build @DotnetArgument @DotnetBuildArgument
 
           if ($LASTEXITCODE -notin 0, 1) {
             throw "dotnet.exe returned a non-zero exit code ($LASTEXITCODE) when trying to build the project."
