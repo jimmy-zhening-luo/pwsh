@@ -5,9 +5,7 @@ namespace Module
   public abstract class WrappedCommand : CoreCommand
   {
     protected abstract string WrappedCommandName
-    {
-      get;
-    }
+    { get; }
 
     protected virtual bool NoSsh
     {
