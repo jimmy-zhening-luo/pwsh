@@ -48,7 +48,6 @@
     'Test-Host'
     'Copy-Guid'
     'ConvertTo-Hex'
-    'Invoke-YouTubeDirectory'
     'Start-Profile'
     'Start-History'
   )
@@ -97,7 +96,6 @@
     'gu'
     'guid'
     'hex'
-    'yte'
     'op'
     'oc'
   )
