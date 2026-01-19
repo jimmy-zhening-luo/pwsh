@@ -23,7 +23,10 @@ namespace Module
     protected override void BeginProcessing()
     {
       if (
-        (!NoSsh || !Context.Ssh)
+        (
+          !NoSsh
+          || !Context.Ssh
+        )
         && BeforeBeginProcessing()
       )
       {
