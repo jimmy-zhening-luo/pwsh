@@ -1,5 +1,6 @@
 namespace Completer
 {
+  using static System.Enum;
   using Type = System.Type;
 
   [AttributeUsage(
@@ -41,7 +42,7 @@ namespace Completer
     );
 
     public override Completer Create() => new(
-      Enum.GetNames(
+      GetNames(
         EnumType
       ),
       Strict,
