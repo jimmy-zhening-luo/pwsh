@@ -1,10 +1,7 @@
 namespace Completer.PathCompleter
 {
   using System.Management.Automation;
-  using static System.Management.Automation.RunspaceMode;
   using static System.IO.Path;
-  using static System.AttributeTargets;
-  using AttributeUsage = System.AttributeUsageAttribute;
 
   [AttributeUsage(
     Parameter

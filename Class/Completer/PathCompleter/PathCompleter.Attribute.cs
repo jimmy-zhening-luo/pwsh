@@ -1,8 +1,5 @@
 namespace Completer.PathCompleter
 {
-  using static System.AttributeTargets;
-  using AttributeUsage = System.AttributeUsageAttribute;
-
   [AttributeUsage(
     Parameter
     | Property
