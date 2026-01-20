@@ -1,6 +1,5 @@
 # Project-specific
 *.dll
-/Class.json
 
 # MINIMAL: https://github.com/github/gitignore/blob/main/Dotnet.gitignore
 [Dd]ebug/
