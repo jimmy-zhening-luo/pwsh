@@ -1,6 +1,5 @@
 namespace Module.Shell.Set.Directory.Local
 {
-  using System;
   using System.Management.Automation;
 
   public abstract class SetLocalDirectoryCommand : LocalWrappedCommand
