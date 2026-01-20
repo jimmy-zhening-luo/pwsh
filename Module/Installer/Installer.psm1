@@ -64,7 +64,7 @@ function Update-PSProfile {
           Get-Command -Name dotnet.exe -CommandType Application -All
         ).Source
         $DotnetArgument = @(
-          "$PROFILE_REPO_ROOT\Class\Class.slnx"
+          "$PROFILE_REPO_ROOT\Class.slnx"
           '--configuration=Release'
           '--nologo'
         )

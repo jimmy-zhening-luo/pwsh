@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/Class/">
+    <Project Path="Class/Module.csproj"/>
+  </Folder>
+</Solution>

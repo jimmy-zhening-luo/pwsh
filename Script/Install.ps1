@@ -1,30 +1,31 @@
 & {
+  $CLASS = 'Module'
+
   $ROOT = Split-Path $PSScriptRoot
-  $NAME = "Module"
-  $SOURCE = "$ROOT\Class\$NAME"
-  $INSTALL = "$ROOT\Module\$NAME"
+  $MODULE = "$ROOT\Module\$CLASS"
+  $ASSEMBLY = "$MODULE\$CLASS.dll"
 
-  $BuildOutput = "$SOURCE\bin\Release\net9.0-windows\$NAME.dll"
+  $Exists = Test-Path $ASSEMBLY -PathType Leaf
 
-  if (-not (Test-Path $BuildOutput -PathType Leaf)) {
-    Write-Warning -Message "Class '$NAME' is not built."
+  $SRC = "$ROOT\Class"
+  $DIST = "$SRC\bin\Release\net9.0-windows\$CLASS.dll"
+
+  if (Test-Path $DIST -PathType Leaf) {
+    if (
+      -not $Exists -or (
+        Get-FileHash -Path $ASSEMBLY -Algorithm MD5
+      ).Hash -ne (
+        Get-FileHash -Path $DIST -Algorithm MD5
+      ).Hash
+    ) {
+      Copy-Item -Path $DIST -Destination $MODULE -Force -ErrorAction Continue
+    }
+  }
+  else {
+    Write-Warning -Message "Class '$CLASS' is not built."
   }
 
-  $InstalledAssembly = "$INSTALL\$NAME.dll"
-
-  if (
-    -not (
-      Test-Path $InstalledAssembly -PathType Leaf
-    ) -or (
-      Get-FileHash -Path $InstalledAssembly -Algorithm MD5
-    ).Hash -ne (
-      Get-FileHash -Path $BuildOutput -Algorithm MD5
-    ).Hash
-  ) {
-    Copy-Item -Path $BuildOutput -Destination $INSTALL -Force -ErrorAction Continue
-  }
-
-  if (Test-Path $InstalledAssembly -PathType Leaf) {
-    Add-Type -Path $InstalledAssembly
+  if ($Exists) {
+    Add-Type -Path $ASSEMBLY
   }
 }
