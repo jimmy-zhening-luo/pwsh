@@ -1,13 +1,12 @@
 namespace Completer
 {
-  using System;
   using System.Linq;
   using System.Management.Automation;
 
   [AttributeUsage(
-    AttributeTargets.Parameter
-    | AttributeTargets.Property
-    | AttributeTargets.Field
+    Parameter
+    | Property
+    | Field
   )]
   public class DynamicCompletionsAttribute : BaseCompletionsAttribute<Completer>
   {

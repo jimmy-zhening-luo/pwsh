@@ -1,5 +1,7 @@
 namespace Completer
 {
+  using Type = System.Type;
+
   [AttributeUsage(
     Parameter
     | Property
