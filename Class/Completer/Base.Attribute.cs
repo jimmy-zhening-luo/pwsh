@@ -1,8 +1,6 @@
 namespace Completer
 {
   using System.Management.Automation;
-  using static System.AttributeTargets;
-  using AttributeUsage = System.AttributeUsageAttribute;
 
   [AttributeUsage(
     Parameter

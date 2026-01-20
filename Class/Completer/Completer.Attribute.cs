@@ -1,5 +1,7 @@
 namespace Completer
 {
+  using static System.StringSplitOptions;
+
   [AttributeUsage(
     Parameter
     | Property
@@ -40,8 +42,8 @@ namespace Completer
       StringifiedDomain
         .Split(
           ',',
-          StringSplitOptions.RemoveEmptyEntries
-          | StringSplitOptions.TrimEntries
+          RemoveEmptyEntries
+          | TrimEntries
         ),
       Strict,
       Casing
