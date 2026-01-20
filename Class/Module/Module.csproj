@@ -11,7 +11,4 @@
     <PackageReference Include="Microsoft.PowerShell.Commands.Management" Version="7.5.4" PrivateAssets="All"/>
     <PackageReference Include="Microsoft.PowerShell.Commands.Utility" Version="7.5.4" PrivateAssets="All"/>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Completer\Completer.csproj"/>
-  </ItemGroup>
 </Project>
