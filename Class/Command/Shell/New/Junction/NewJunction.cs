@@ -4,7 +4,6 @@ namespace Module.Shell.New.Junction
   {
     using System.IO;
     using System.Management.Automation;
-    using Module.Completer.PathCompleter;
 
     [Cmdlet(
       VerbsCommon.New,

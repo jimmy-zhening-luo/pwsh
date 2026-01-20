@@ -1,4 +1,6 @@
 global using Module.Input.PathResolution;
+global using Module.Completer;
+global using Module.Completer.PathCompleter;
 
 global using static System.AttributeTargets;
 global using static System.Management.Automation.RunspaceMode;

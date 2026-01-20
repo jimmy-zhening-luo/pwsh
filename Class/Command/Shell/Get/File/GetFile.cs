@@ -4,7 +4,6 @@ namespace Module.Shell.Get.File
   {
     using System.Text;
     using System.Management.Automation;
-    using Module.Completer.PathCompleter;
 
     [Cmdlet(
       VerbsCommon.Get,

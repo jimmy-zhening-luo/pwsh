@@ -4,7 +4,6 @@ namespace Module.Browse
   {
     using System;
     using System.Management.Automation;
-    using Module.Completer.PathCompleter;
 
     [Cmdlet(
       VerbsCommon.Open,

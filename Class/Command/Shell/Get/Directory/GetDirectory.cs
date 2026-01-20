@@ -4,7 +4,6 @@ namespace Module.Shell.Get.Directory
   {
     using System.IO;
     using System.Management.Automation;
-    using Module.Completer.PathCompleter;
 
     [Cmdlet(
       VerbsCommon.Get,
