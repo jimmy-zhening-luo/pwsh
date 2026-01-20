@@ -4,7 +4,7 @@ namespace Module.Shell.Get.File.Local
   {
     using System.IO;
     using System.Management.Automation;
-    using Completer.PathCompleter;
+    using Module.Completer.PathCompleter;
 
     [Cmdlet(
       VerbsCommon.Get,

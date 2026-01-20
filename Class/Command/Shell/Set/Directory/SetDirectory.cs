@@ -3,7 +3,7 @@ namespace Module.Shell.Set.Directory
   namespace Commands
   {
     using System.Management.Automation;
-    using Completer.PathCompleter;
+    using Module.Completer.PathCompleter;
 
     [Cmdlet(
       VerbsCommon.Set,

@@ -1,4 +1,4 @@
-namespace Completer
+namespace Module.Completer
 {
   using IArgumentCompleter = System.Management.Automation.IArgumentCompleter;
   using CompletionResult = System.Management.Automation.CompletionResult;

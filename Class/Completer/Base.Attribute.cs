@@ -1,4 +1,4 @@
-namespace Completer
+namespace Module.Completer
 {
   using System.Management.Automation;
 

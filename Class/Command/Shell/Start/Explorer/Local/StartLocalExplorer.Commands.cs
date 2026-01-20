@@ -3,7 +3,7 @@ namespace Module.Shell.Start.Explorer.Local
   namespace Commands
   {
     using System.Management.Automation;
-    using Completer.PathCompleter;
+    using Module.Completer.PathCompleter;
 
     [Cmdlet(
       VerbsLifecycle.Start,

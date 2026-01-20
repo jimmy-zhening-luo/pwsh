@@ -1,4 +1,4 @@
-namespace Completer
+namespace Module.Completer
 {
   public abstract class BaseContextCompleter : BaseCompleter
   {

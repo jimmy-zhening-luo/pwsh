@@ -1,4 +1,4 @@
-namespace Completer.PathCompleter
+namespace Module.Completer.PathCompleter
 {
   using System.Management.Automation;
   using static System.IO.Path;

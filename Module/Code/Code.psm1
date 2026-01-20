@@ -1,7 +1,7 @@
 using namespace System.IO
 using namespace System.Collections.Generic
-using namespace Completer
-using namespace Completer.PathCompleter
+using namespace Module.Completer
+using namespace Module.Completer.PathCompleter
 
 function Resolve-GitRepository {
   [CmdletBinding()]

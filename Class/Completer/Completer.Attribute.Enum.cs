@@ -1,4 +1,4 @@
-namespace Completer
+namespace Module.Completer
 {
   using static System.Enum;
   using Type = System.Type;

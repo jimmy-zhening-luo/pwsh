@@ -1,6 +1,6 @@
 using namespace System.Collections.Generic
 using namespace System.Management.Automation
-using namespace Completer
+using namespace Module.Completer
 
 $CUSTOM_HELP = Import-PowerShellDataFile -Path $PSScriptRoot\PSHelpTopic.psd1
 $ABOUT_BASE_URL = 'https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about'

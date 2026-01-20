@@ -6,8 +6,8 @@ namespace Module.Shell.Get.Attribute
     using System.IO;
     using System.Linq;
     using System.Management.Automation;
-    using Completer;
-    using Completer.PathCompleter;
+    using Module.Completer;
+    using Module.Completer.PathCompleter;
 
     [Cmdlet(
       VerbsCommon.Get,

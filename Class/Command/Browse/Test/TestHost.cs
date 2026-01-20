@@ -4,7 +4,7 @@ namespace Module.Browse.Test
   {
     using System;
     using System.Management.Automation;
-    using Completer;
+    using Module.Completer;
 
     [Cmdlet(
       VerbsDiagnostic.Test,

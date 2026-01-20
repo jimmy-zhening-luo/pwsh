@@ -1,4 +1,4 @@
-namespace Completer.PathCompleter
+namespace Module.Completer.PathCompleter
 {
   public enum PathItemType
   {
