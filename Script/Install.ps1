@@ -7,10 +7,10 @@
   $BuildOutput = "$SOURCE\bin\Release\net9.0-windows\$NAME.dll"
 
   if (-not (Test-Path $BuildOutput -PathType Leaf)) {
-    Write-Warning -Message "Class '$Class' is not built."
+    Write-Warning -Message "Class '$NAME' is not built."
   }
 
-  $InstalledAssembly = "$INSTALL\$Class.dll"
+  $InstalledAssembly = "$INSTALL\$NAME.dll"
 
   if (
     -not (
