@@ -1,6 +1,5 @@
 namespace Module.Command.Shell.Get.Attribute;
 
-using System;
 using System.IO;
 using System.Linq;
 
@@ -96,29 +95,42 @@ public class GetSize : CoreCommand
     {
       if (!TestPath(path))
       {
-        throw new Exception(
-          $"Path not found: {path}"
+        Throw(
+          new FileNotFoundException($"The path '{path}' does not exist."),
+          "PathNotFound",
+          ErrorCategory.InvalidOperation,
+          path
         );
       }
 
       long bytes = TestPath(path, FileSystemItemType.Directory)
-        ? new DirectoryInfo(Pwd(path))
+        ? new DirectoryInfo(
+            Pwd(path)
+          )
           .EnumerateFiles(
             "*",
             SearchOption.AllDirectories
           )
-          .Sum(file => file.Length)
-        : new FileInfo(Pwd(path)).Length;
+          .Sum(
+            file => file.Length
+          )
+        : new FileInfo(
+            Pwd(path)
+          )
+          .Length;
 
       double scaledSize = (double)bytes / factor;
 
       WriteObject(
         number
           ? scaledSize
-          : Math.Round(
+          : Round(
               scaledSize,
               3
-            ).ToString() + " " + unit.ToString()
+            )
+            .ToString()
+            + " "
+            + unit.ToString()
       );
     }
   }

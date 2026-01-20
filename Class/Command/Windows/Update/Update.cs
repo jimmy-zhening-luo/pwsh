@@ -1,6 +1,5 @@
 namespace Module.Command.Windows.Update;
 
-
 [Cmdlet(
   VerbsData.Update,
   "Windows"

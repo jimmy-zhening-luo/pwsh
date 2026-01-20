@@ -1,6 +1,5 @@
 namespace Module.Command.Profile;
 
-
 [Cmdlet(
   VerbsLifecycle.Start,
   "History"

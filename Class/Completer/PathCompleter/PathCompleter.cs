@@ -1,7 +1,8 @@
 namespace Module.Completer.PathCompleter;
 
-using System.IO;
 using static System.IO.Path;
+using Directory = System.IO.Directory;
+using EnumerationOptions = System.IO.EnumerationOptions;
 
 public class PathCompleter : BaseCompleter
 {

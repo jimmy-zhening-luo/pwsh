@@ -1,6 +1,5 @@
 namespace Module.Command.Windows.Configure;
 
-
 [Cmdlet(
   VerbsData.Edit,
   "SystemPath"

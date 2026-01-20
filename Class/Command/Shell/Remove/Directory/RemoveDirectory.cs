@@ -1,8 +1,5 @@
 namespace Module.Command.Shell.Remove.Directory;
 
-using System.IO;
-using System.Text;
-
 [Cmdlet(
   VerbsCommon.Remove,
   "Directory",

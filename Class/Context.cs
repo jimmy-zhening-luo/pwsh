@@ -1,8 +1,9 @@
 namespace Module;
 
-using System.Diagnostics;
+using static System.Diagnostics.Process;
 using static System.Environment;
 using static System.IO.Path;
+using ProcessStartInfo = System.Diagnostics.ProcessStartInfo;
 
 public static class Context
 {
@@ -65,7 +66,7 @@ public static class Context
         startInfo.Arguments = arguments;
       }
 
-      Process.Start(startInfo);
+      Start(startInfo);
     }
   }
 
@@ -94,7 +95,7 @@ public static class Context
         startInfo.Verb = "RunAs";
       }
 
-      Process.Start(startInfo);
+      Start(startInfo);
     }
   }
 }

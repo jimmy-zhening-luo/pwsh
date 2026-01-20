@@ -1,6 +1,5 @@
 namespace Module.Command.Shell.Set.Directory.Local;
 
-
 [Cmdlet(
   VerbsCommon.Set,
   "DirectorySibling",

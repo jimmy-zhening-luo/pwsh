@@ -1,7 +1,5 @@
 namespace Module.Command.Shell.Get.File.Local;
 
-using System.Text;
-
 public abstract class GetLocalFileCommand : LocalWrappedCommand
 {
   [Parameter(
@@ -53,7 +51,7 @@ public abstract class GetLocalFileCommand : LocalWrappedCommand
   public string? Stream;
 
   [Parameter]
-  public Encoding? Encoding;
+  public System.Text.Encoding? Encoding;
 
   [Parameter]
   [Alias("f")]

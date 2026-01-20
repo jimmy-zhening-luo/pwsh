@@ -1,7 +1,5 @@
 namespace Module.Command.Browse.Test;
 
-using System;
-
 [Cmdlet(
   VerbsDiagnostic.Test,
   "Host",

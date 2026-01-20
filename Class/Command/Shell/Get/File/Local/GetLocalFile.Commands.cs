@@ -1,6 +1,5 @@
 namespace Module.Command.Shell.Get.File.Local;
 
-
 [Cmdlet(
   VerbsCommon.Get,
   "FileSibling",

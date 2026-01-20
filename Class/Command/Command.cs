@@ -1,17 +1,16 @@
 namespace Module.Command;
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
-using Module.Input.PathResolution;
 using static System.IO.Path;
+using Exception = System.Exception;
 using File = System.IO.File;
 using Directory = System.IO.Directory;
+using DoesNotReturn = System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute;
+using BoundParameterDictionary = System.Collections.Generic.Dictionary<string, object>;
+using PSObjectCollection = System.Collections.ObjectModel.Collection<PSObject>;
 
 public abstract class CoreCommand : PSCmdlet
 {
-  protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
+  protected BoundParameterDictionary BoundParameters => MyInvocation.BoundParameters;
 
   protected bool IsPresent(
     string parameterName
@@ -69,7 +68,7 @@ public abstract class CoreCommand : PSCmdlet
     )
   );
 
-  protected Collection<PSObject> Call(
+  protected PSObjectCollection Call(
     string nativeCommand,
     string verb,
     string[] arguments,
@@ -80,7 +79,7 @@ public abstract class CoreCommand : PSCmdlet
     commandType
   );
 
-  protected Collection<PSObject> Call(
+  protected PSObjectCollection Call(
     string nativeCommand,
     string[] arguments,
     CommandTypes commandType = CommandTypes.Application

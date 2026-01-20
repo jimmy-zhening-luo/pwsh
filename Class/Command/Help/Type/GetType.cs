@@ -1,7 +1,6 @@
 namespace Module.Command.Help.Type;
 
-using System.Collections.Generic;
-using System.Reflection;
+using static System.Reflection.BindingFlags;
 
 [Cmdlet(
   VerbsCommon.Get,
@@ -24,13 +23,13 @@ public class GetType : CoreCommand
         )
         ?.GetProperty(
           "Get",
-          BindingFlags.Static
-          | BindingFlags.Public
+          Static
+          | Public
         )
         ?.GetValue(null) is IDictionary typeAccelerators
     )
     {
-      var uniqueTypes = new HashSet<string>(
+      var uniqueTypes = new StringHashSet(
         StringComparer.OrdinalIgnoreCase
       );
 
@@ -40,7 +39,7 @@ public class GetType : CoreCommand
       }
 
       WriteObject(
-        new SortedSet<string>(
+        new SortedStringSet(
           uniqueTypes,
           StringComparer.OrdinalIgnoreCase
         ),

@@ -1,6 +1,5 @@
 namespace Module.Command.Shell.Start.Explorer;
 
-
 [Cmdlet(
   VerbsLifecycle.Start,
   "Explorer",

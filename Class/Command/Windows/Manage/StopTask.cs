@@ -1,6 +1,6 @@
 namespace Module.Command.Windows.Manage;
 
-using System.Diagnostics;
+using static System.Diagnostics.Process;
 
 [Cmdlet(
   VerbsLifecycle.Stop,
@@ -61,8 +61,7 @@ public class StopTask : CoreCommand
       case "Id":
         foreach (var pid in pids)
         {
-          Process
-            .GetProcessById((int)pid)
+          GetProcessById((int)pid)
             .Kill(true);
         }
 
@@ -76,14 +75,13 @@ public class StopTask : CoreCommand
           }
           else if (uint.TryParse(name, out uint pid))
           {
-            Process
-              .GetProcessById((int)pid)
+            GetProcessById((int)pid)
               .Kill(true);
           }
           else
           {
             foreach (
-              var process in Process.GetProcessesByName(
+              var process in GetProcessesByName(
                 name
               )
             )
@@ -111,7 +109,7 @@ public class StopTask : CoreCommand
         if (names.Length == 0)
         {
           foreach (
-            var process in Process.GetProcessesByName(
+            var process in GetProcessesByName(
               "explorer"
             )
           )

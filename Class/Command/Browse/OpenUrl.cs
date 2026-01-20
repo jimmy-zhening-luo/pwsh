@@ -1,7 +1,5 @@
 namespace Module.Command.Browse;
 
-using System;
-
 [Cmdlet(
   VerbsCommon.Open,
   "Url",

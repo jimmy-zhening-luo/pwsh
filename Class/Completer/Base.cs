@@ -1,8 +1,5 @@
 namespace Module.Completer;
 
-using IArgumentCompleter = System.Management.Automation.IArgumentCompleter;
-using CompletionResult = System.Management.Automation.CompletionResult;
-
 public abstract class BaseCompleter : IArgumentCompleter
 {
   public readonly CompletionCase Casing;

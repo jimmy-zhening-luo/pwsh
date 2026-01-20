@@ -1,9 +1,8 @@
 namespace Module.Command.Browse.Test;
 
-using System;
-using System.ComponentModel;
-using Microsoft.PowerShell.Commands;
-using System.Net.Http;
+using static Microsoft.PowerShell.Commands.WebRequestMethod;
+using BasicHtmlWebResponseObject = Microsoft.PowerShell.Commands.BasicHtmlWebResponseObject;
+using HttpResponseException = Microsoft.PowerShell.Commands.HttpResponseException;
 
 [Cmdlet(
   VerbsDiagnostic.Test,
@@ -88,11 +87,11 @@ public class TestUrl : CoreCommand
         {
           status = (int)e.Response.StatusCode;
         }
-        catch (HttpRequestException)
+        catch (System.Net.Http.HttpRequestException)
         {
           status = -1;
         }
-        catch (Win32Exception)
+        catch (System.ComponentModel.Win32Exception)
         {
           status = -2;
         }
@@ -143,7 +142,7 @@ public class TestUrl : CoreCommand
       )
       .AddParameter(
         "Method",
-        WebRequestMethod.Head
+        Head
       )
       .AddParameter(
         "ConnectionTimeoutSeconds",
