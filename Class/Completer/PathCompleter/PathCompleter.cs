@@ -1,8 +1,7 @@
 namespace Completer.PathCompleter
 {
-  using static System.IO.Path;
   using System.IO;
-  using IStringEnumerable = System.Collections.Generic.IEnumerable<string>;
+  using static System.IO.Path;
 
   public class PathCompleter : BaseCompleter
   {
