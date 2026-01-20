@@ -1,5 +1,7 @@
 namespace Completer
 {
+  using static System.StringSplitOptions;
+
   [AttributeUsage(
     Parameter
     | Property
