@@ -1,11 +1,9 @@
 namespace Completer
 {
-  using System;
-
   [AttributeUsage(
-    AttributeTargets.Parameter
-    | AttributeTargets.Property
-    | AttributeTargets.Field
+    Parameter
+    | Property
+    | Field
   )]
   public class EnumCompletionsAttribute : BaseCompletionsAttribute<Completer>
   {
