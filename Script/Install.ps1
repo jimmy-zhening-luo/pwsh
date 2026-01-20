@@ -21,7 +21,7 @@
       Get-FileHash -Path $BuildOutput -Algorithm MD5
     ).Hash
   ) {
-    Copy-Item -Path $BuildOutput -Destination $InstallLocation -Force -ErrorAction Continue
+    Copy-Item -Path $BuildOutput -Destination $INSTALL -Force -ErrorAction Continue
   }
 
   if (Test-Path $InstalledAssembly -PathType Leaf) {
