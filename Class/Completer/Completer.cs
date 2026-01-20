@@ -1,16 +1,15 @@
 namespace Completer
 {
-  using System;
   using System.Collections.Generic;
 
   public class Completer : BaseCompleter
   {
-    public readonly IEnumerable<string> Domain;
+    public readonly IStringEnumerable Domain;
 
     public readonly bool Strict;
 
     public Completer(
-      IEnumerable<string> domain,
+      IStringEnumerable domain,
       bool strict,
       CompletionCase casing
     ) : base(
@@ -23,7 +22,7 @@ namespace Completer
       strict
     );
 
-    public override IEnumerable<string> FulfillCompletion(
+    public override IStringEnumerable FulfillCompletion(
       string wordToComplete
     )
     {

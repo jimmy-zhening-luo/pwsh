@@ -1,10 +1,5 @@
 namespace Completer
 {
-  using System.Collections;
-  using System.Collections.Generic;
-  using System.Management.Automation;
-  using System.Management.Automation.Language;
-
   public abstract class BaseContextCompleter : BaseCompleter
   {
     protected BaseContextCompleter() : base()
@@ -15,7 +10,7 @@ namespace Completer
     ) : base(casing)
     { }
 
-    public override IEnumerable<CompletionResult> CompleteArgument(
+    public override ICompletionEnumerable CompleteArgument(
       string commandName,
       string parameterName,
       string wordToComplete,
@@ -31,7 +26,7 @@ namespace Completer
       )
     );
 
-    public abstract IEnumerable<string> FulfillCompletion(
+    public abstract IStringEnumerable FulfillCompletion(
       string wordToComplete,
       CommandAst commandAst,
       IDictionary fakeBoundParameters
