@@ -36,7 +36,7 @@ namespace Module.Help.Type
         if (typeAccelerators != null)
         {
           var uniqueTypes = new HashSet<string>(
-            OrdinalIgnoreCase
+            StringComparer.OrdinalIgnoreCase
           );
 
           foreach (var type in typeAccelerators.Keys)
@@ -47,7 +47,7 @@ namespace Module.Help.Type
           WriteObject(
             new SortedSet<string>(
               uniqueTypes,
-              OrdinalIgnoreCase
+              StringComparer.OrdinalIgnoreCase
             ),
             true
           );

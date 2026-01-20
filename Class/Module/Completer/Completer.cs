@@ -43,7 +43,7 @@ namespace Completer
           if (
             member.StartsWith(
               wordToComplete,
-              OrdinalIgnoreCase
+              StringComparison.OrdinalIgnoreCase
             )
           )
           {
@@ -64,7 +64,7 @@ namespace Completer
               && member.IndexOf(
                 wordToComplete,
                 1,
-                OrdinalIgnoreCase
+                StringComparison.OrdinalIgnoreCase
               ) > 0
             )
             {
