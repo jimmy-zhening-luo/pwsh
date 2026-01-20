@@ -1,51 +1,30 @@
-using namespace System.Collections.Generic
-
 & {
   $ROOT = Split-Path $PSScriptRoot
-  $SOURCE_ROOT = "$ROOT\Class"
-  $INSTALL_ROOT = "$ROOT\Module"
+  $NAME = "Module"
+  $SOURCE = "$ROOT\Class\$NAME"
+  $INSTALL = "$ROOT\Module\$NAME"
 
-  function Install-PSAssembly {
-    [CmdletBinding()]
-    [OutputType([void])]
-    param(
-      [Parameter(
-        Mandatory,
-        Position = 0
-      )]
-      [ValidateNotNullOrWhiteSpace()]
-      [string]$Class
-    )
+  $BuildOutput = "$SOURCE\bin\Release\net9.0-windows\$NAME.dll"
 
-    end {
-      $BuildOutput = "$SOURCE_ROOT\$Class\bin\Release\net9.0-windows\$Class.dll"
-
-      if (-not (Test-Path $BuildOutput -PathType Leaf)) {
-        Write-Warning -Message "Class '$Class' is not built, skipping."
-      }
-
-      $InstallLocation = "$INSTALL_ROOT\$Class"
-      $InstalledAssembly = "$InstallLocation\$Class.dll"
-
-      if (
-        -not (
-          Test-Path $InstalledAssembly -PathType Leaf
-        ) -or (
-          Get-FileHash -Path $InstalledAssembly -Algorithm MD5
-        ).Hash -ne (
-          Get-FileHash -Path $BuildOutput -Algorithm MD5
-        ).Hash
-      ) {
-        Copy-Item -Path $BuildOutput -Destination $InstallLocation -Force -ErrorAction Continue
-      }
-    }
+  if (-not (Test-Path $BuildOutput -PathType Leaf)) {
+    Write-Warning -Message "Class '$Class' is not built."
   }
 
-  Install-PSAssembly -Class Module
-  Install-PSAssembly -Class Completer
+  $InstalledAssembly = "$INSTALL\$Class.dll"
 
-  $InstalledCompleter = "$INSTALL_ROOT\Completer\Completer.dll"
-  if (Test-Path $InstalledCompleter -PathType Leaf) {
-    Add-Type -Path $InstalledCompleter
+  if (
+    -not (
+      Test-Path $InstalledAssembly -PathType Leaf
+    ) -or (
+      Get-FileHash -Path $InstalledAssembly -Algorithm MD5
+    ).Hash -ne (
+      Get-FileHash -Path $BuildOutput -Algorithm MD5
+    ).Hash
+  ) {
+    Copy-Item -Path $BuildOutput -Destination $InstallLocation -Force -ErrorAction Continue
+  }
+
+  if (Test-Path $InstalledAssembly -PathType Leaf) {
+    Add-Type -Path $InstalledAssembly
   }
 }

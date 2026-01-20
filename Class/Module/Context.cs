@@ -15,7 +15,7 @@ namespace Module
     }
 
     public static PowerShell PS() => PowerShell.Create(
-      RunspaceMode.CurrentRunspace
+      CurrentRunspace
     );
 
     public static string Env(

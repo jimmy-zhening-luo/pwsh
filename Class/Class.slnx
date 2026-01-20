@@ -2,7 +2,4 @@
   <Folder Name="/Module/">
     <Project Path="Module/Module.csproj"/>
   </Folder>
-  <Folder Name="/Completer/">
-    <Project Path="Completer/Completer.csproj"/>
-  </Folder>
 </Solution>
