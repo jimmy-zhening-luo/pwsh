@@ -4,9 +4,9 @@ namespace Module.Completer
   using Type = System.Type;
 
   [AttributeUsage(
-    Parameter
-    | Property
-    | Field
+    AttributeTargets.Parameter
+    | AttributeTargets.Property
+    | AttributeTargets.Field
   )]
   public class EnumCompletionsAttribute : BaseCompletionsAttribute<Completer>
   {

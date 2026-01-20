@@ -3,7 +3,6 @@ namespace Module.Shell.Get.Directory.Local
   namespace Commands
   {
     using System.IO;
-    using System.Management.Automation;
 
     [Cmdlet(
       VerbsCommon.Get,

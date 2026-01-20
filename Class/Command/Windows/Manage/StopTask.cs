@@ -3,7 +3,6 @@ namespace Module.Windows.Manage
   namespace Commands
   {
     using System.Diagnostics;
-    using System.Management.Automation;
 
     [Cmdlet(
       VerbsLifecycle.Stop,

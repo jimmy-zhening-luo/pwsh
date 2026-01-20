@@ -2,7 +2,6 @@ namespace Module.Transform
 {
   namespace Commands
   {
-    using System.Management.Automation;
 
     [Cmdlet(
       VerbsCommon.Copy,

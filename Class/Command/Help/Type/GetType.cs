@@ -2,10 +2,8 @@ namespace Module.Help.Type
 {
   namespace Commands
   {
-    using System.Collections;
     using System.Collections.Generic;
     using System.Reflection;
-    using System.Management.Automation;
 
     [Cmdlet(
       VerbsCommon.Get,

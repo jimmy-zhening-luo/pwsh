@@ -3,7 +3,6 @@ namespace Module.Browse
   namespace Commands
   {
     using System;
-    using System.Management.Automation;
 
     [Cmdlet(
       VerbsCommon.Open,

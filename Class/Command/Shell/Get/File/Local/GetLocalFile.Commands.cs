@@ -2,7 +2,6 @@ namespace Module.Shell.Get.File.Local
 {
   namespace Commands
   {
-    using System.Management.Automation;
 
     [Cmdlet(
       VerbsCommon.Get,

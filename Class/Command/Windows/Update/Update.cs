@@ -2,7 +2,6 @@ namespace Module.Windows.Update
 {
   namespace Commands
   {
-    using System.Management.Automation;
 
     [Cmdlet(
       VerbsData.Update,

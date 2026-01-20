@@ -2,7 +2,6 @@ namespace Module.Profile
 {
   namespace Commands
   {
-    using System.Management.Automation;
 
     [Cmdlet(
       VerbsLifecycle.Start,

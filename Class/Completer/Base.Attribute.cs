@@ -1,11 +1,10 @@
 namespace Module.Completer
 {
-  using System.Management.Automation;
 
   [AttributeUsage(
-    Parameter
-    | Property
-    | Field
+    AttributeTargets.Parameter
+    | AttributeTargets.Property
+    | AttributeTargets.Field
   )]
   public abstract class BaseCompletionsAttribute<T> : ArgumentCompleterAttribute, IArgumentCompleterFactory where T : BaseCompleter
   {

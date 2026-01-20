@@ -3,7 +3,6 @@ namespace Module.Shell.New.Directory
   namespace Commands
   {
     using System.IO;
-    using System.Management.Automation;
 
     [Cmdlet(
       VerbsCommon.New,

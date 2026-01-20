@@ -4,7 +4,6 @@ namespace Module.Browse.Test
   {
     using System;
     using System.ComponentModel;
-    using System.Management.Automation;
     using Microsoft.PowerShell.Commands;
     using System.Net.Http;
 

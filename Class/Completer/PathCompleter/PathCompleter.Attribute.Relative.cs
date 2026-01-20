@@ -1,12 +1,11 @@
 namespace Module.Completer.PathCompleter
 {
-  using System.Management.Automation;
   using static System.IO.Path;
 
   [AttributeUsage(
-    Parameter
-    | Property
-    | Field
+    AttributeTargets.Parameter
+    | AttributeTargets.Property
+    | AttributeTargets.Field
   )]
   public class RelativePathCompletionsAttribute : BaseCompletionsAttribute<PathCompleter>
   {

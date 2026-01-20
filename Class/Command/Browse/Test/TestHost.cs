@@ -3,7 +3,6 @@ namespace Module.Browse.Test
   namespace Commands
   {
     using System;
-    using System.Management.Automation;
 
     [Cmdlet(
       VerbsDiagnostic.Test,

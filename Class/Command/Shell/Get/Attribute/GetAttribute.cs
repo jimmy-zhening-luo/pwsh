@@ -5,7 +5,6 @@ namespace Module.Shell.Get.Attribute
     using System;
     using System.IO;
     using System.Linq;
-    using System.Management.Automation;
 
     [Cmdlet(
       VerbsCommon.Get,

@@ -1,7 +1,6 @@
 namespace Module.Shell.Get.Directory.Local
 {
   using System.IO;
-  using System.Management.Automation;
 
   public abstract class GetLocalDirectoryCommand : LocalWrappedCommand
   {

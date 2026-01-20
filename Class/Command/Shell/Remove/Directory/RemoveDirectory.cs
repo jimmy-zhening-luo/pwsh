@@ -4,7 +4,6 @@ namespace Module.Shell.Remove.Directory
   {
     using System.IO;
     using System.Text;
-    using System.Management.Automation;
 
     [Cmdlet(
       VerbsCommon.Remove,

@@ -1,9 +1,9 @@
 namespace Module.Completer.PathCompleter
 {
   [AttributeUsage(
-    Parameter
-    | Property
-    | Field
+    AttributeTargets.Parameter
+    | AttributeTargets.Property
+    | AttributeTargets.Field
   )]
   public class PathCompletionsAttribute(
     string Location

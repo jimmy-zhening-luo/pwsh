@@ -3,9 +3,9 @@ namespace Module.Completer
   using static System.StringSplitOptions;
 
   [AttributeUsage(
-    Parameter
-    | Property
-    | Field
+    AttributeTargets.Parameter
+    | AttributeTargets.Property
+    | AttributeTargets.Field
   )]
   public class CompletionsAttribute : BaseCompletionsAttribute<Completer>
   {

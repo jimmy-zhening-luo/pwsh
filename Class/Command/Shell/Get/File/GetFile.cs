@@ -3,7 +3,6 @@ namespace Module.Shell.Get.File
   namespace Commands
   {
     using System.Text;
-    using System.Management.Automation;
 
     [Cmdlet(
       VerbsCommon.Get,

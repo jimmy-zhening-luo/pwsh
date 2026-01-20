@@ -3,7 +3,6 @@ namespace Module.Shell.New.Junction
   namespace Commands
   {
     using System.IO;
-    using System.Management.Automation;
 
     [Cmdlet(
       VerbsCommon.New,

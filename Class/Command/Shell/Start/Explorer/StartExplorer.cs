@@ -2,7 +2,6 @@ namespace Module.Shell.Start.Explorer
 {
   namespace Commands
   {
-    using System.Management.Automation;
 
     [Cmdlet(
       VerbsLifecycle.Start,

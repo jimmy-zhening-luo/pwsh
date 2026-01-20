@@ -1,7 +1,6 @@
 namespace Module
 {
   using System.Diagnostics;
-  using System.Management.Automation;
   using static System.Environment;
   using static System.IO.Path;
 

@@ -3,7 +3,6 @@ namespace Module.Shell.Clear
   namespace Commands
   {
     using System;
-    using System.Management.Automation;
 
     [Cmdlet(
       VerbsCommon.Clear,

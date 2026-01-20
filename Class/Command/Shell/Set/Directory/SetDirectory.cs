@@ -2,7 +2,6 @@ namespace Module.Shell.Set.Directory
 {
   namespace Commands
   {
-    using System.Management.Automation;
 
     [Cmdlet(
       VerbsCommon.Set,

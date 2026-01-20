@@ -4,7 +4,6 @@ namespace Module
   using System.Collections.Generic;
   using System.Collections.ObjectModel;
   using System.Diagnostics.CodeAnalysis;
-  using System.Management.Automation;
   using Module.Input.PathResolution;
   using static System.IO.Path;
   using File = System.IO.File;

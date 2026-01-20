@@ -1,6 +1,5 @@
 namespace Module
 {
-  using System.Management.Automation;
 
   public abstract class WrappedCommand : CoreCommand
   {
