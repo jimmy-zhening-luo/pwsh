@@ -1,4 +1,4 @@
-namespace Module.Shell.Set.Directory.Local
+namespace Module.Command.Shell.Set.Directory.Local
 {
 
   public abstract class SetLocalDirectoryCommand : LocalWrappedCommand

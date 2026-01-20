@@ -1,4 +1,4 @@
-namespace Module.Shell.Start.Explorer.Local
+namespace Module.Command.Shell.Start.Explorer.Local
 {
 
   public abstract class StartLocalExplorerCommand : LocalWrappedCommand

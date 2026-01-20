@@ -1,4 +1,4 @@
-namespace Module.Help.Type
+namespace Module.Command.Help.Type
 {
   namespace Commands
   {

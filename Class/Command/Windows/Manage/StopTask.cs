@@ -1,4 +1,4 @@
-namespace Module.Windows.Manage
+namespace Module.Command.Windows.Manage
 {
   namespace Commands
   {

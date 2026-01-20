@@ -1,4 +1,4 @@
-namespace Module.Browse.Test
+namespace Module.Command.Browse.Test
 {
   public enum TestHostVerbosity
   {

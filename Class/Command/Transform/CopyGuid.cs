@@ -1,4 +1,4 @@
-namespace Module.Transform
+namespace Module.Command.Transform
 {
   namespace Commands
   {

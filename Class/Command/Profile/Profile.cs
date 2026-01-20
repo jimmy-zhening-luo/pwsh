@@ -1,4 +1,4 @@
-namespace Module.Profile
+namespace Module.Command.Profile
 {
   namespace Commands
   {

@@ -1,4 +1,4 @@
-namespace Module.Shell.Start.Explorer
+namespace Module.Command.Shell.Start.Explorer
 {
   namespace Commands
   {

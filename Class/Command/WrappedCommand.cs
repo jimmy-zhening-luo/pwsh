@@ -1,4 +1,4 @@
-namespace Module
+namespace Module.Command
 {
 
   public abstract class WrappedCommand : CoreCommand

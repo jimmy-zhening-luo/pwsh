@@ -1,4 +1,4 @@
-namespace Module.Shell.Get.Directory.Local
+namespace Module.Command.Shell.Get.Directory.Local
 {
   namespace Commands
   {

@@ -1,4 +1,4 @@
-namespace Module
+namespace Module.Command
 {
   using System;
   using System.Collections.Generic;

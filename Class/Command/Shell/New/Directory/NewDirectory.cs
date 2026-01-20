@@ -1,4 +1,4 @@
-namespace Module.Shell.New.Directory
+namespace Module.Command.Shell.New.Directory
 {
   namespace Commands
   {

@@ -1,4 +1,4 @@
-namespace Module.Shell.Get.File
+namespace Module.Command.Shell.Get.File
 {
   namespace Commands
   {

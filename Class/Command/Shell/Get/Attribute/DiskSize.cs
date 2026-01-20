@@ -1,4 +1,4 @@
-namespace Module.Shell.Get.Attribute
+namespace Module.Command.Shell.Get.Attribute
 {
   using System.Collections.Generic;
 

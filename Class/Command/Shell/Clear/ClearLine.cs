@@ -1,4 +1,4 @@
-namespace Module.Shell.Clear
+namespace Module.Command.Shell.Clear
 {
   namespace Commands
   {

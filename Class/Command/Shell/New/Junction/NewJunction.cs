@@ -1,4 +1,4 @@
-namespace Module.Shell.New.Junction
+namespace Module.Command.Shell.New.Junction
 {
   namespace Commands
   {

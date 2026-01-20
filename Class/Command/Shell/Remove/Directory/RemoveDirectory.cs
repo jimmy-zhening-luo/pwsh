@@ -1,4 +1,4 @@
-namespace Module.Shell.Remove.Directory
+namespace Module.Command.Shell.Remove.Directory
 {
   namespace Commands
   {

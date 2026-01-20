@@ -1,4 +1,4 @@
-namespace Module.Browse
+namespace Module.Command.Browse
 {
   namespace Commands
   {

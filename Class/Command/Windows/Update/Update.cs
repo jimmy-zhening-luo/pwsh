@@ -1,4 +1,4 @@
-namespace Module.Windows.Update
+namespace Module.Command.Windows.Update
 {
   namespace Commands
   {
