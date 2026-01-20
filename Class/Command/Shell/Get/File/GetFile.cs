@@ -2,7 +2,6 @@ namespace Module.Shell.Get.File
 {
   namespace Commands
   {
-    using System.IO;
     using System.Text;
     using System.Management.Automation;
     using Module.Completer.PathCompleter;

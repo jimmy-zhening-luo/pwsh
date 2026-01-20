@@ -1,6 +1,5 @@
 namespace Module.Shell.Get.File.Local
 {
-  using System.IO;
   using System.Text;
   using System.Management.Automation;
 
