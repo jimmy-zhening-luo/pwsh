@@ -2,7 +2,6 @@ namespace Module.Help.Type
 {
   namespace Commands
   {
-    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Reflection;
@@ -19,21 +18,21 @@ namespace Module.Help.Type
     {
       protected override void EndProcessing()
       {
-        var typeAccelerators = typeof(
-          PSObject
+        if (
+          typeof(
+            PSObject
+          )
+            .Assembly
+            .GetType(
+              "System.Management.Automation.TypeAccelerators"
+            )
+            ?.GetProperty(
+              "Get",
+              BindingFlags.Static
+              | BindingFlags.Public
+            )
+            ?.GetValue(null) is IDictionary typeAccelerators
         )
-          .Assembly
-          .GetType(
-            "System.Management.Automation.TypeAccelerators"
-          )
-          ?.GetProperty(
-            "Get",
-            BindingFlags.Static
-            | BindingFlags.Public
-          )
-          ?.GetValue(null) as IDictionary;
-
-        if (typeAccelerators != null)
         {
           var uniqueTypes = new HashSet<string>(
             StringComparer.OrdinalIgnoreCase
