@@ -1,13 +1,12 @@
-namespace Module.Input.PathResolution
-{
-  using Regex = System.Text.RegularExpressions.Regex;
-  using GeneratedRegex = System.Text.RegularExpressions.GeneratedRegexAttribute;
+namespace Module.Input.PathResolution;
 
-  public static partial class Canonicalizer
-  {
-    [GeneratedRegex(
-      @"(?<!^)(?>\\\\+)"
-    )]
-    public static partial Regex DuplicateSeparatorRegex();
-  }
+using Regex = System.Text.RegularExpressions.Regex;
+using GeneratedRegex = System.Text.RegularExpressions.GeneratedRegexAttribute;
+
+public static partial class Canonicalizer
+{
+  [GeneratedRegex(
+    @"(?<!^)(?>\\\\+)"
+  )]
+  public static partial Regex DuplicateSeparatorRegex();
 }

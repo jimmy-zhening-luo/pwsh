@@ -1,9 +1,8 @@
-namespace Module.Completer
+namespace Module.Completer;
+
+public enum CompletionCase
 {
-  public enum CompletionCase
-  {
-    Preserve,
-    Lower,
-    Upper
-  }
+  Preserve,
+  Lower,
+  Upper
 }

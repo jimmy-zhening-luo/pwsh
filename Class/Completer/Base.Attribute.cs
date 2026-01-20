@@ -1,24 +1,22 @@
-namespace Module.Completer
+namespace Module.Completer;
+
+[AttributeUsage(
+  AttributeTargets.Parameter
+  | AttributeTargets.Property
+  | AttributeTargets.Field
+)]
+public abstract class BaseCompletionsAttribute<T> : ArgumentCompleterAttribute, IArgumentCompleterFactory where T : BaseCompleter
 {
+  public readonly CompletionCase Casing;
 
-  [AttributeUsage(
-    AttributeTargets.Parameter
-    | AttributeTargets.Property
-    | AttributeTargets.Field
-  )]
-  public abstract class BaseCompletionsAttribute<T> : ArgumentCompleterAttribute, IArgumentCompleterFactory where T : BaseCompleter
-  {
-    public readonly CompletionCase Casing;
+  protected BaseCompletionsAttribute() : base()
+  { }
 
-    protected BaseCompletionsAttribute() : base()
-    { }
+  protected BaseCompletionsAttribute(
+    CompletionCase casing
+  ) : this() => Casing = casing;
 
-    protected BaseCompletionsAttribute(
-      CompletionCase casing
-    ) : this() => Casing = casing;
-
-    public abstract T Create();
-    IArgumentCompleter IArgumentCompleterFactory
-      .Create() => Create();
-  }
+  public abstract T Create();
+  IArgumentCompleter IArgumentCompleterFactory
+    .Create() => Create();
 }

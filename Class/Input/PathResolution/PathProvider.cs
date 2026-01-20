@@ -1,13 +1,12 @@
-namespace Module.Input.PathResolution
+namespace Module.Input.PathResolution;
+
+public enum PathProvider
 {
-  public enum PathProvider
-  {
-    Any,
-    FileSystem,
-    Registry,
-    Environment,
-    Variable,
-    Alias,
-    Function
-  }
+  Any,
+  FileSystem,
+  Registry,
+  Environment,
+  Variable,
+  Alias,
+  Function
 }

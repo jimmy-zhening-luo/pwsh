@@ -1,53 +1,51 @@
-namespace Module.Command.Shell.Start.Explorer.Local
+namespace Module.Command.Shell.Start.Explorer.Local;
+
+public abstract class StartLocalExplorerCommand : LocalWrappedCommand
 {
+  [Parameter(
+    ParameterSetName = "Path",
+    Position = 0,
+    ValueFromPipeline = true,
+    ValueFromPipelineByPropertyName = true
+  )]
+  [AllowEmptyCollection]
+  [SupportsWildcards]
+  public string[]? Path;
 
-  public abstract class StartLocalExplorerCommand : LocalWrappedCommand
+  [Parameter]
+  [SupportsWildcards]
+  public string? Filter;
+
+  [Parameter]
+  [SupportsWildcards]
+  public string[]? Include;
+
+  [Parameter]
+  [SupportsWildcards]
+  public string[]? Exclude;
+
+  protected override string WrappedCommandName => "Invoke-Item";
+
+  protected override bool NoSsh => true;
+
+  protected override bool BeforeBeginProcessing()
   {
-    [Parameter(
-      ParameterSetName = "Path",
-      Position = 0,
-      ValueFromPipeline = true,
-      ValueFromPipelineByPropertyName = true
-    )]
-    [AllowEmptyCollection]
-    [SupportsWildcards]
-    public string[]? Path;
-
-    [Parameter]
-    [SupportsWildcards]
-    public string? Filter;
-
-    [Parameter]
-    [SupportsWildcards]
-    public string[]? Include;
-
-    [Parameter]
-    [SupportsWildcards]
-    public string[]? Exclude;
-
-    protected override string WrappedCommandName => "Invoke-Item";
-
-    protected override bool NoSsh => true;
-
-    protected override bool BeforeBeginProcessing()
+    if (IsPresent("Path"))
     {
-      if (IsPresent("Path"))
-      {
-        string[] paths = (string[])BoundParameters["Path"];
+      string[] paths = (string[])BoundParameters["Path"];
 
-        for (int i = 0; i < paths.Length; i++)
-        {
-          paths[i] = Reanchor(paths[i]);
-        }
-
-        BoundParameters["Path"] = paths;
-      }
-      else
+      for (int i = 0; i < paths.Length; i++)
       {
-        BoundParameters["Path"] = new string[] { Reanchor() };
+        paths[i] = Reanchor(paths[i]);
       }
 
-      return true;
+      BoundParameters["Path"] = paths;
     }
+    else
+    {
+      BoundParameters["Path"] = new string[] { Reanchor() };
+    }
+
+    return true;
   }
 }

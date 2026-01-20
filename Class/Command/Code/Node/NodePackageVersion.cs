@@ -1,12 +1,11 @@
-namespace Module.Command.Code.Node
+namespace Module.Command.Code.Node;
+
+public enum NodePackageNamedVersion
 {
-  public enum NodePackageNamedVersion
-  {
-    patch,
-    minor,
-    major,
-    prerelease,
-    preminor,
-    premajor
-  }
+  patch,
+  minor,
+  major,
+  prerelease,
+  preminor,
+  premajor
 }

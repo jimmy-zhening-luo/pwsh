@@ -1,78 +1,77 @@
-namespace Module.Completer
+namespace Module.Completer;
+
+public class Completer : BaseCompleter
 {
-  public class Completer : BaseCompleter
+  public readonly IStringEnumerable Domain;
+
+  public readonly bool Strict;
+
+  public Completer(
+    IStringEnumerable domain,
+    bool strict,
+    CompletionCase casing
+  ) : base(
+    casing
+  ) => (
+    Domain,
+    Strict
+  ) = (
+    domain,
+    strict
+  );
+
+  public override IStringEnumerable FulfillCompletion(
+    string wordToComplete
+  )
   {
-    public readonly IStringEnumerable Domain;
-
-    public readonly bool Strict;
-
-    public Completer(
-      IStringEnumerable domain,
-      bool strict,
-      CompletionCase casing
-    ) : base(
-      casing
-    ) => (
-      Domain,
-      Strict
-    ) = (
-      domain,
-      strict
-    );
-
-    public override IStringEnumerable FulfillCompletion(
-      string wordToComplete
-    )
+    if (string.IsNullOrEmpty(wordToComplete))
     {
-      if (string.IsNullOrEmpty(wordToComplete))
+      foreach (string member in Domain)
       {
-        foreach (string member in Domain)
+        yield return member;
+      }
+
+      yield break;
+    }
+    else
+    {
+      int matched = 0;
+      foreach (string member in Domain)
+      {
+        if (
+          member.StartsWith(
+            wordToComplete,
+            StringComparison.OrdinalIgnoreCase
+          )
+        )
         {
+          ++matched;
           yield return member;
         }
-
-        yield break;
       }
-      else
+
+      if (
+        !Strict
+        && matched < 2
+      )
       {
-        int matched = 0;
         foreach (string member in Domain)
         {
           if (
-            member.StartsWith(
+            member.Length > wordToComplete.Length
+            && member.IndexOf(
               wordToComplete,
+              1,
               StringComparison.OrdinalIgnoreCase
-            )
+            ) > 0
           )
           {
-            ++matched;
             yield return member;
           }
         }
-
-        if (
-          !Strict
-          && matched < 2
-        )
-        {
-          foreach (string member in Domain)
-          {
-            if (
-              member.Length > wordToComplete.Length
-              && member.IndexOf(
-                wordToComplete,
-                1,
-                StringComparison.OrdinalIgnoreCase
-              ) > 0
-            )
-            {
-              yield return member;
-            }
-          }
-        }
-
-        yield break;
       }
+
+      yield break;
     }
   }
 }

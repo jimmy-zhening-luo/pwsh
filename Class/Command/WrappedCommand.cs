@@ -1,77 +1,75 @@
-namespace Module.Command
+namespace Module.Command;
+
+public abstract class WrappedCommand : CoreCommand
 {
+  protected abstract string WrappedCommandName
+  { get; }
 
-  public abstract class WrappedCommand : CoreCommand
+  protected virtual bool NoSsh
   {
-    protected abstract string WrappedCommandName
-    { get; }
+    get => false;
+  }
 
-    protected virtual bool NoSsh
-    {
-      get => false;
-    }
+  private SteppablePipeline? steppablePipeline = null;
 
-    private SteppablePipeline? steppablePipeline = null;
+  protected virtual bool BeforeBeginProcessing() => true;
 
-    protected virtual bool BeforeBeginProcessing() => true;
+  protected virtual void BeforeEndProcessing()
+  { }
 
-    protected virtual void BeforeEndProcessing()
-    { }
-
-    protected override void BeginProcessing()
-    {
-      if (
-        (
-          !NoSsh
-          || !Ssh
-        )
-        && BeforeBeginProcessing()
+  protected override void BeginProcessing()
+  {
+    if (
+      (
+        !NoSsh
+        || !Ssh
       )
-      {
-        Begin(
-          AddCommand(
-            WrappedCommandName
+      && BeforeBeginProcessing()
+    )
+    {
+      Begin(
+        AddCommand(
+          WrappedCommandName
+        )
+          .AddParameters(
+            BoundParameters
           )
-            .AddParameters(
-              BoundParameters
-            )
-        );
-      }
+      );
+    }
+  }
+
+  protected void Begin(PowerShell ps)
+  {
+    steppablePipeline = ps.GetSteppablePipeline();
+    steppablePipeline.Begin(this);
+  }
+
+  protected override void ProcessRecord()
+  {
+    if (!NoSsh || !Ssh)
+    {
+      steppablePipeline?.Process();
+    }
+  }
+
+  protected override void EndProcessing()
+  {
+    if (!NoSsh || !Ssh)
+    {
+      BeforeEndProcessing();
     }
 
-    protected void Begin(PowerShell ps)
-    {
-      steppablePipeline = ps.GetSteppablePipeline();
-      steppablePipeline.Begin(this);
-    }
+    Clean();
+  }
 
-    protected override void ProcessRecord()
+  protected void Clean()
+  {
+    if (steppablePipeline != null)
     {
-      if (!NoSsh || !Ssh)
-      {
-        steppablePipeline?.Process();
-      }
-    }
-
-    protected override void EndProcessing()
-    {
-      if (!NoSsh || !Ssh)
-      {
-        BeforeEndProcessing();
-      }
-
-      Clean();
-    }
-
-    protected void Clean()
-    {
-      if (steppablePipeline != null)
-      {
-        steppablePipeline.End();
-        steppablePipeline.Clean();
-        steppablePipeline.Dispose();
-        steppablePipeline = null;
-      }
+      steppablePipeline.End();
+      steppablePipeline.Clean();
+      steppablePipeline.Dispose();
+      steppablePipeline = null;
     }
   }
 }

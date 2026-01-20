@@ -1,36 +1,35 @@
-namespace Module.Completer
+namespace Module.Completer;
+
+public abstract class BaseContextCompleter : BaseCompleter
 {
-  public abstract class BaseContextCompleter : BaseCompleter
-  {
-    protected BaseContextCompleter() : base()
-    { }
+  protected BaseContextCompleter() : base()
+  { }
 
-    protected BaseContextCompleter(
-      CompletionCase casing
-    ) : base(casing)
-    { }
+  protected BaseContextCompleter(
+    CompletionCase casing
+  ) : base(casing)
+  { }
 
-    public override ICompletionEnumerable CompleteArgument(
-      string commandName,
-      string parameterName,
-      string wordToComplete,
-      CommandAst commandAst,
-      IDictionary fakeBoundParameters
-    ) => WrapArgumentCompletionResult(
-      FulfillCompletion(
-        Unescape(
-          wordToComplete
-        )
-          .Trim(),
-        commandAst,
-        fakeBoundParameters
+  public override ICompletionEnumerable CompleteArgument(
+    string commandName,
+    string parameterName,
+    string wordToComplete,
+    CommandAst commandAst,
+    IDictionary fakeBoundParameters
+  ) => WrapArgumentCompletionResult(
+    FulfillCompletion(
+      Unescape(
+        wordToComplete
       )
-    );
+        .Trim(),
+      commandAst,
+      fakeBoundParameters
+    )
+  );
 
-    public abstract IStringEnumerable FulfillCompletion(
-      string wordToComplete,
-      CommandAst commandAst,
-      IDictionary fakeBoundParameters
-    );
-  }
+  public abstract IStringEnumerable FulfillCompletion(
+    string wordToComplete,
+    CommandAst commandAst,
+    IDictionary fakeBoundParameters
+  );
 }

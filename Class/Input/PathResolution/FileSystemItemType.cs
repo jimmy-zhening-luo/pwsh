@@ -1,9 +1,8 @@
-namespace Module.Input.PathResolution
+namespace Module.Input.PathResolution;
+
+public enum FileSystemItemType
 {
-  public enum FileSystemItemType
-  {
-    Any,
-    File,
-    Directory
-  }
+  Any,
+  File,
+  Directory
 }
