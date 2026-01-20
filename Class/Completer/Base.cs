@@ -1,9 +1,7 @@
 namespace Completer
 {
-  using System.Collections;
-  using System.Collections.Generic;
-  using System.Management.Automation;
-  using System.Management.Automation.Language;
+  using IArgumentCompleter = System.Management.Automation.IArgumentCompleter;
+  using CompletionResult = System.Management.Automation.CompletionResult;
 
   public abstract class BaseCompleter : IArgumentCompleter
   {
@@ -16,7 +14,7 @@ namespace Completer
       CompletionCase casing
     ) : this() => Casing = casing;
 
-    public virtual IEnumerable<CompletionResult> CompleteArgument(
+    public virtual ICompletionEnumerable CompleteArgument(
       string commandName,
       string parameterName,
       string wordToComplete,
@@ -24,24 +22,27 @@ namespace Completer
       IDictionary fakeBoundParameters
     ) => WrapArgumentCompletionResult(
       FulfillCompletion(
-        Escaper
-          .Unescape(wordToComplete)
+        Unescape(
+          wordToComplete
+        )
           .Trim()
       )
     );
 
-    public abstract IEnumerable<string> FulfillCompletion(
+    public abstract IStringEnumerable FulfillCompletion(
       string wordToComplete
     );
 
-    protected IEnumerable<CompletionResult> WrapArgumentCompletionResult(
-      IEnumerable<string> completedStrings
+    protected ICompletionEnumerable WrapArgumentCompletionResult(
+      IStringEnumerable completedStrings
     )
     {
-      foreach (string completedString in completedStrings)
+      foreach (
+        string completedString in completedStrings
+      )
       {
         yield return new CompletionResult(
-          Escaper.Escape(
+          Escape(
             Casing switch
             {
               CompletionCase.Upper => completedString.ToUpper(),
