@@ -1,4 +1,5 @@
 global using static System.AttributeTargets;
+global using static System.StringComparison;
 global using static System.StringSplitOptions;
 global using static System.Management.Automation.RunspaceMode;
 global using static Completer.Escaper;
