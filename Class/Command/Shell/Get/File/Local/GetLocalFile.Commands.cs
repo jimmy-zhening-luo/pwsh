@@ -7,7 +7,7 @@ namespace Module.Command.Shell.Get.File.Local;
   SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096490"
 )]
-[Alias("p.")]
+[Alias("p.", "px")]
 [OutputType(typeof(string))]
 public class GetFileSibling : GetLocalFileCommand
 {
@@ -35,7 +35,7 @@ public class GetFileSibling : GetLocalFileCommand
   SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096490"
 )]
-[Alias("p..")]
+[Alias("p..", "pxx")]
 [OutputType(typeof(string))]
 public class GetFileRelative : GetLocalFileCommand
 {

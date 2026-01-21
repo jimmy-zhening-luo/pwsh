@@ -205,7 +205,7 @@ function Start-Workspace {
 function Start-WorkspaceSibling {
   [CmdletBinding()]
   [OutputType([void])]
-  [Alias('i.')]
+  [Alias('i.', 'ix')]
   param(
 
     [Parameter(
@@ -241,7 +241,7 @@ function Start-WorkspaceSibling {
 function Start-WorkspaceRelative {
   [CmdletBinding()]
   [OutputType([void])]
-  [Alias('i..')]
+  [Alias('i..', 'ixx')]
   param(
 
     [Parameter(

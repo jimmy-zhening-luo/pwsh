@@ -20,7 +20,9 @@
   AliasesToExport      = @(
     'i'
     'i.'
+    'ix'
     'i..'
+    'ixx'
     'ih'
     'ic'
     'i/'

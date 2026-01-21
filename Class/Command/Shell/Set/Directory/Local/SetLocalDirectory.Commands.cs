@@ -7,7 +7,7 @@ namespace Module.Command.Shell.Set.Directory.Local;
   SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
 )]
-[Alias("c.")]
+[Alias("c.", "cx")]
 [OutputType(
   typeof(PathInfo)
 )]
@@ -39,7 +39,7 @@ public class SetDirectorySibling : SetLocalDirectoryCommand
   SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
 )]
-[Alias("c..")]
+[Alias("c..", "cxx")]
 [OutputType(
   typeof(PathInfo)
 )]

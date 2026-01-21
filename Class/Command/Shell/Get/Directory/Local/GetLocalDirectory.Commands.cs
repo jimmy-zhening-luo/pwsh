@@ -7,7 +7,7 @@ namespace Module.Command.Shell.Get.Directory.Local;
   SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096492"
 )]
-[Alias("l.")]
+[Alias("l.", "lx")]
 [OutputType(
   typeof(DirectoryInfo),
   typeof(FileInfo)
@@ -40,7 +40,7 @@ public class GetDirectorySibling : GetLocalDirectoryCommand
   SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096492"
 )]
-[Alias("l..")]
+[Alias("l..", "lxx")]
 [OutputType(
   typeof(DirectoryInfo),
   typeof(FileInfo)

@@ -7,7 +7,7 @@ namespace Module.Command.Shell.Start.Explorer.Local;
   SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096590"
 )]
-[Alias("e.")]
+[Alias("e.", "ex")]
 [OutputType(typeof(void))]
 public class StartExplorerSibling : StartLocalExplorerCommand
 {
@@ -36,7 +36,7 @@ public class StartExplorerSibling : StartLocalExplorerCommand
   SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096590"
 )]
-[Alias("e..")]
+[Alias("e..", "exx")]
 [OutputType(typeof(void))]
 public class StartExplorerRelative : StartLocalExplorerCommand
 {
