@@ -1,14 +1,12 @@
 namespace Module.Input;
 
-using static System.Management.Automation.Language.CodeGeneration;
-
 public static class Escaper
 {
   public static string Escape(
     string text
   ) => text.Contains(' ')
     ? "'"
-      + EscapeSingleQuotedStringContent(text)
+      + System.Management.Automation.Language.CodeGeneration.EscapeSingleQuotedStringContent(text)
       + "'"
     : text;
 

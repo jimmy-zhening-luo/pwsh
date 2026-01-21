@@ -1,7 +1,5 @@
 namespace Module.Command.Shell.Get.File;
 
-using System.Text;
-
 [Cmdlet(
   VerbsCommon.Get,
   "File",
@@ -78,7 +76,7 @@ public class GetFile : WrappedCommand
   public string? Stream;
 
   [Parameter]
-  public Encoding? Encoding;
+  public System.Text.Encoding? Encoding;
 
   [Parameter]
   [Alias("f")]

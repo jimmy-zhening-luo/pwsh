@@ -1,3 +1,5 @@
+global using System.Collections.Generic;
+global using System.Collections.ObjectModel;
 global using System.Management.Automation;
 global using Module.Input.PathResolution;
 global using Module.Completer;
@@ -20,6 +22,7 @@ global using DirectoryInfo = System.IO.DirectoryInfo;
 global using FileInfo = System.IO.FileInfo;
 global using FileAttributes = System.IO.FileAttributes;
 global using SearchOption = System.IO.SearchOption;
+global using ProcessStartInfo = System.Diagnostics.ProcessStartInfo;
 global using IDictionary = System.Collections.IDictionary;
 global using IStringEnumerable = System.Collections.Generic.IEnumerable<string>;
 global using ICompletionEnumerable = System.Collections.Generic.IEnumerable<System.Management.Automation.CompletionResult>;

@@ -46,7 +46,11 @@ public class PathCompleter : BaseCompleter
     string location = string.Empty;
     string filter = string.Empty;
 
-    while (!string.IsNullOrEmpty(pathToComplete))
+    while (
+      !string.IsNullOrEmpty(
+        pathToComplete
+      )
+    )
     {
       int pathEnd = pathToComplete.LastIndexOf('\\');
 
@@ -66,20 +70,28 @@ public class PathCompleter : BaseCompleter
           filter = pathToComplete[wordStart..].Trim();
         }
 
-        if (string.IsNullOrEmpty(subpathPart))
+        if (
+          string.IsNullOrEmpty(
+            subpathPart
+          )
+        )
         {
           pathToComplete = string.Empty;
         }
         else
         {
-          string anchoredPath = GetFullPath(
+          string anchoredPath = Path.GetFullPath(
             subpathPart,
             Root
           );
 
-          if (Directory.Exists(anchoredPath))
+          if (
+            Directory.Exists(
+              anchoredPath
+            )
+          )
           {
-            accumulatedSubpath = GetRelativePath(
+            accumulatedSubpath = Path.GetRelativePath(
               Root,
               anchoredPath
             );
@@ -88,10 +100,14 @@ public class PathCompleter : BaseCompleter
           }
           else if (
             Reanchor
-            && Directory.Exists(subpathPart)
+            && Directory.Exists(
+              subpathPart
+            )
           )
           {
-            accumulatedSubpath = GetFullPath(subpathPart);
+            accumulatedSubpath = Path.GetFullPath(
+              subpathPart
+            );
             location = accumulatedSubpath;
             pathToComplete = string.Empty;
           }
@@ -104,7 +120,11 @@ public class PathCompleter : BaseCompleter
       }
     }
 
-    if (string.IsNullOrEmpty(location))
+    if (
+      string.IsNullOrEmpty(
+        location
+      )
+    )
     {
       location = Root;
     }
@@ -128,7 +148,9 @@ public class PathCompleter : BaseCompleter
       {
         ++count;
         yield return Denormalize(
-          GetFileName(file),
+          Path.GetFileName(
+            file
+          ),
           accumulatedSubpath
         );
       }
@@ -148,7 +170,9 @@ public class PathCompleter : BaseCompleter
     {
       ++count;
       yield return Denormalize(
-        GetFileName(directory),
+        Path.GetFileName(
+          directory
+        ),
         accumulatedSubpath,
         directoryCap
       );
@@ -166,13 +190,19 @@ public class PathCompleter : BaseCompleter
       {
         ++count;
         yield return Denormalize(
-          GetFileName(file),
+          Path.GetFileName(
+            file
+          ),
           accumulatedSubpath
         );
       }
     }
 
-    if (!string.IsNullOrEmpty(accumulatedSubpath))
+    if (
+      !string.IsNullOrEmpty(
+        accumulatedSubpath
+      )
+    )
     {
       yield return Denormalize(
         @"\",
@@ -181,7 +211,9 @@ public class PathCompleter : BaseCompleter
     }
 
     if (
-      !string.IsNullOrEmpty(accumulatedSubpath)
+      !string.IsNullOrEmpty(
+        accumulatedSubpath
+      )
       || count != 0
     )
     {

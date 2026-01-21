@@ -3,12 +3,10 @@ namespace Module.Command;
 using static System.IO.Path;
 using Exception = System.Exception;
 using DoesNotReturn = System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute;
-using BoundParameterDictionary = System.Collections.Generic.Dictionary<string, object>;
-using PSObjectCollection = System.Collections.ObjectModel.Collection<PSObject>;
 
 public abstract class CoreCommand : PSCmdlet
 {
-  protected BoundParameterDictionary BoundParameters => MyInvocation.BoundParameters;
+  protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
 
   protected bool IsPresent(
     string parameterName
@@ -66,7 +64,7 @@ public abstract class CoreCommand : PSCmdlet
     )
   );
 
-  protected PSObjectCollection Call(
+  protected Collection<PSObject> Call(
     string nativeCommand,
     string verb,
     string[] arguments,
@@ -77,7 +75,7 @@ public abstract class CoreCommand : PSCmdlet
     commandType
   );
 
-  protected PSObjectCollection Call(
+  protected Collection<PSObject> Call(
     string nativeCommand,
     string[] arguments,
     CommandTypes commandType = CommandTypes.Application

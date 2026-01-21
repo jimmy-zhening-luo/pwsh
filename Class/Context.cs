@@ -3,7 +3,6 @@ namespace Module;
 using static System.Diagnostics.Process;
 using static System.Environment;
 using static System.IO.Path;
-using ProcessStartInfo = System.Diagnostics.ProcessStartInfo;
 
 public static class Context
 {

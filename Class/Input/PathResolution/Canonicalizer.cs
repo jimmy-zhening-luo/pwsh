@@ -1,7 +1,6 @@
 namespace Module.Input.PathResolution;
 
-using static System.Environment;
-using static System.IO.Path;
+using Path = System.IO.Path;
 
 public static partial class Canonicalizer
 {
@@ -11,21 +10,24 @@ public static partial class Canonicalizer
   )
   {
     string normalPath = RemoveRelativeRoot(
-      DuplicateSeparatorRegex().Replace(
-        ExpandEnvironmentVariables(
-          path
+      DuplicateSeparatorRegex()
+        .Replace(
+          System
+            .Environment
+            .ExpandEnvironmentVariables(
+              path
+            )
+            .Replace(
+              '/',
+              '\\'
+            ),
+          @"\"
         )
-          .Replace(
-            '/',
-            '\\'
-          ),
-        @"\"
-      )
     );
 
     return preserveTrailingSeparator
       ? normalPath
-      : TrimEndingDirectorySeparator(
+      : Path.TrimEndingDirectorySeparator(
           normalPath
         );
   }
@@ -34,11 +36,12 @@ public static partial class Canonicalizer
     string path,
     string location = "",
     string subpath = ""
-  ) => Join(
-    location,
-    path,
-    subpath
-  )
+  ) => Path
+    .Join(
+      location,
+      path,
+      subpath
+    )
     .Replace(
       '\\',
       '/'
@@ -49,20 +52,20 @@ public static partial class Canonicalizer
   ) => path.StartsWith(
     '.'
   )
-  && (
-    path.Length == 1
-    || path[1] == '\\'
-  );
+    && (
+      path.Length == 1
+      || path[1] == '\\'
+    );
 
   public static bool IsHomeRooted(
     string path
   ) => path.StartsWith(
     '~'
   )
-  && (
-    path.Length == 1
-    || path[1] == '\\'
-  );
+    && (
+        path.Length == 1
+      || path[1] == '\\'
+    );
 
   public static string RemoveRelativeRoot(
     string path

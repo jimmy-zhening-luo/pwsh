@@ -1,7 +1,5 @@
 namespace Module.Command.Shell.Clear;
 
-using static System.Console;
-
 [Cmdlet(
   VerbsCommon.Clear,
   "Line",
@@ -63,7 +61,7 @@ public class ClearLine : WrappedCommand
       && !IsPresent("LiteralPath")
     )
     {
-      Clear();
+      System.Console.Clear();
     }
   }
 }

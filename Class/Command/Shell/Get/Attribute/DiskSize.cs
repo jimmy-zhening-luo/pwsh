@@ -1,7 +1,5 @@
 namespace Module.Command.Shell.Get.Attribute;
 
-using System.Collections.Generic;
-
 public enum DiskSizeUnit
 {
   B,

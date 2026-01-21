@@ -1,7 +1,7 @@
 namespace Module.Command.Browse.Test;
 
-using static Microsoft.PowerShell.Commands.WebRequestMethod;
 using BasicHtmlWebResponseObject = Microsoft.PowerShell.Commands.BasicHtmlWebResponseObject;
+using WebRequestMethod = Microsoft.PowerShell.Commands.WebRequestMethod;
 
 [Cmdlet(
   VerbsDiagnostic.Test,
@@ -141,7 +141,7 @@ public class TestUrl : CoreCommand
       )
       .AddParameter(
         "Method",
-        Head
+        WebRequestMethod.Head
       )
       .AddParameter(
         "ConnectionTimeoutSeconds",
