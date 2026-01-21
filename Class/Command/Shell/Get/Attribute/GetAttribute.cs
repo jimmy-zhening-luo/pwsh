@@ -1,6 +1,5 @@
 namespace Module.Command.Shell.Get.Attribute;
 
-using System.IO;
 using System.Linq;
 
 [Cmdlet(

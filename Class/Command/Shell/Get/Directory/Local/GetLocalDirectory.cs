@@ -65,7 +65,7 @@ public abstract class GetLocalDirectoryCommand : LocalWrappedCommand
   public SwitchParameter? FollowSymlink;
 
   [Parameter]
-  public FlagsExpression<System.IO.FileAttributes>? Attributes;
+  public FlagsExpression<FileAttributes>? Attributes;
 
   protected override string WrappedCommandName => "Get-ChildItem";
 

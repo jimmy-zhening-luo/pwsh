@@ -9,12 +9,15 @@ global using static Module.Context;
 global using static Module.Input.Escaper;
 global using static Module.Input.PathResolution.Canonicalizer;
 
-global using Uri = System.Uri;
 global using Enum = System.Enum;
+global using Uri = System.Uri;
 global using StringComparer = System.StringComparer;
 global using StringComparison = System.StringComparison;
 global using AttributeUsage = System.AttributeUsageAttribute;
 global using AttributeTargets = System.AttributeTargets;
+global using DirectoryInfo = System.IO.DirectoryInfo;
+global using FileInfo = System.IO.FileInfo;
+global using FileAttributes = System.IO.FileAttributes;
 global using IDictionary = System.Collections.IDictionary;
 global using IStringEnumerable = System.Collections.Generic.IEnumerable<string>;
 global using ICompletionEnumerable = System.Collections.Generic.IEnumerable<System.Management.Automation.CompletionResult>;

@@ -1,7 +1,5 @@
 namespace Module.Command.Shell.New.Junction;
 
-using System.IO;
-
 [Cmdlet(
   VerbsCommon.New,
   "Junction",

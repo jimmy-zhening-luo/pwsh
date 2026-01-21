@@ -1,7 +1,5 @@
 namespace Module.Command.Shell.Get.Directory;
 
-using System.IO;
-
 [Cmdlet(
   VerbsCommon.Get,
   "Directory",

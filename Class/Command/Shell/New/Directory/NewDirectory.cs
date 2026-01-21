@@ -1,7 +1,5 @@
 namespace Module.Command.Shell.New.Directory;
 
-using System.IO;
-
 [Cmdlet(
   VerbsCommon.New,
   "Directory",
