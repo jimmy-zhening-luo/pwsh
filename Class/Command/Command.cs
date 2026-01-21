@@ -2,8 +2,6 @@ namespace Module.Command;
 
 using static System.IO.Path;
 using Exception = System.Exception;
-using File = System.IO.File;
-using Directory = System.IO.Directory;
 using DoesNotReturn = System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute;
 using BoundParameterDictionary = System.Collections.Generic.Dictionary<string, object>;
 using PSObjectCollection = System.Collections.ObjectModel.Collection<PSObject>;
@@ -106,8 +104,8 @@ public abstract class CoreCommand : PSCmdlet
 
     return type switch
     {
-      FileSystemItemType.File => File.Exists(psPath),
-      FileSystemItemType.Directory => Directory.Exists(psPath),
+      FileSystemItemType.File => System.IO.File.Exists(psPath),
+      FileSystemItemType.Directory => System.IO.Directory.Exists(psPath),
       _ => Exists(psPath)
     };
   }

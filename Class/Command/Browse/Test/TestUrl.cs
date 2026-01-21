@@ -2,7 +2,6 @@ namespace Module.Command.Browse.Test;
 
 using static Microsoft.PowerShell.Commands.WebRequestMethod;
 using BasicHtmlWebResponseObject = Microsoft.PowerShell.Commands.BasicHtmlWebResponseObject;
-using HttpResponseException = Microsoft.PowerShell.Commands.HttpResponseException;
 
 [Cmdlet(
   VerbsDiagnostic.Test,
@@ -83,7 +82,7 @@ public class TestUrl : CoreCommand
             throw;
           }
         }
-        catch (HttpResponseException e)
+        catch (Microsoft.PowerShell.Commands.HttpResponseException e)
         {
           status = (int)e.Response.StatusCode;
         }

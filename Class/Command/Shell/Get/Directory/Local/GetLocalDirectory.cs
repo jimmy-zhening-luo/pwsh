@@ -1,7 +1,5 @@
 namespace Module.Command.Shell.Get.Directory.Local;
 
-using System.IO;
-
 public abstract class GetLocalDirectoryCommand : LocalWrappedCommand
 {
   [Parameter(
@@ -67,7 +65,7 @@ public abstract class GetLocalDirectoryCommand : LocalWrappedCommand
   public SwitchParameter? FollowSymlink;
 
   [Parameter]
-  public FlagsExpression<FileAttributes>? Attributes;
+  public FlagsExpression<System.IO.FileAttributes>? Attributes;
 
   protected override string WrappedCommandName => "Get-ChildItem";
 
