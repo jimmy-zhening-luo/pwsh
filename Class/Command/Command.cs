@@ -34,7 +34,7 @@ public abstract class CoreCommand : PSCmdlet
   protected void Throw(
     string message,
     string id,
-    ErrorCategory category,
+    ErrorCategory category = ErrorCategory.InvalidOperation,
     object? target = null
   ) => Throw(
     new System.Exception(
@@ -49,7 +49,7 @@ public abstract class CoreCommand : PSCmdlet
   protected void Throw(
     System.Exception exception,
     string id,
-    ErrorCategory category,
+    ErrorCategory category = ErrorCategory.InvalidOperation,
     object? target = null
   ) => ThrowTerminatingError(
     new ErrorRecord(
