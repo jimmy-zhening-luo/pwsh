@@ -46,7 +46,9 @@ public class PathCompleter : BaseCompleter
       )
     )
     {
-      int pathEnd = pathToComplete.LastIndexOf('\\');
+      int pathEnd = pathToComplete.LastIndexOf(
+        '\\'
+      );
 
       if (pathEnd < 0)
       {
@@ -147,6 +149,11 @@ public class PathCompleter : BaseCompleter
           ),
           accumulatedSubpath
         );
+      }
+
+      if (count == 0)
+      {
+        attributes.AttributesToSkip = FileAttributes.System;
       }
     }
 
