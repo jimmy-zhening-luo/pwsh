@@ -10,29 +10,33 @@ public class StartProfile : CoreCommand
 {
   protected override void EndProcessing()
   {
-    var repoRoot = Var("REPO_ROOT")
-      .BaseObject
-      .ToString();
+    var repoRootVariable = Var(
+      "REPO_ROOT"
+    )
+      .BaseObject;
 
-    if (repoRoot == null)
+    if (repoRootVariable is string repoRoot)
     {
-      Throw(
-        "REPO_ROOT environment variable is not set.",
-        "PSProfileGlobalVariableNotSet",
-        ErrorCategory.ResourceUnavailable
+      CreateProcess(
+        LocalAppData(
+          @"Programs\Microsoft VS Code\bin\code.cmd"
+        ),
+        Path.GetFullPath(
+          "pwsh",
+          repoRoot
+        )
+          + " --profile=Default",
+        true
       );
     }
-
-    CreateProcess(
-      LocalAppData(
-        @"Programs\Microsoft VS Code\bin\code.cmd"
-      ),
-      Path.GetFullPath(
-        "pwsh",
-        repoRoot
-      )
-        + " --profile=Default",
-      true
-    );
+    else
+    {
+      Throw(
+        "Expected global Powershell variable '$REPO_ROOT' was not found",
+        "PSProfileGlobalVariableNotSet",
+        ErrorCategory.ObjectNotFound,
+        repoRootVariable
+      );
+    }
   }
 }
