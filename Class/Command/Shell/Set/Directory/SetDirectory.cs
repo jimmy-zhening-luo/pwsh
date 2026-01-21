@@ -53,7 +53,7 @@ public class SetDirectory : WrappedCommand
     if (Path == null && LiteralPath == null)
     {
       string pwd = Pwd();
-      string parent = global::Path.GetFullPath(
+      string parent = IO.Path.GetFullPath(
         "..",
         pwd
       );

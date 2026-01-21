@@ -11,6 +11,8 @@ global using Module.Input.PathResolution;
 global using Module.Completer;
 global using Module.Completer.PathCompleter;
 
+global using IO = System.IO;
+
 global using Enum = System.Enum;
 global using Uri = System.Uri;
 global using Environment = System.Environment;

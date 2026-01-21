@@ -95,7 +95,7 @@ public class GetSize : CoreCommand
       if (!TestPath(path))
       {
         Throw(
-          new System.IO.FileNotFoundException(
+          new IO.FileNotFoundException(
             $"The path '{path}' does not exist."
           ),
           "PathNotFound",
