@@ -1,7 +1,5 @@
 namespace Module.Input.PathResolution;
 
-using Path = System.IO.Path;
-
 public static partial class Canonicalizer
 {
   public static string Normalize(

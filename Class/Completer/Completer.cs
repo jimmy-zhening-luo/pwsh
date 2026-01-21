@@ -2,12 +2,12 @@ namespace Module.Completer;
 
 public class Completer : BaseCompleter
 {
-  public readonly IStringEnumerable Domain;
+  public readonly IEnumerable<string> Domain;
 
   public readonly bool Strict;
 
   public Completer(
-    IStringEnumerable domain,
+    IEnumerable<string> domain,
     bool strict,
     CompletionCase casing
   ) : base(
@@ -20,7 +20,7 @@ public class Completer : BaseCompleter
     strict
   );
 
-  public override IStringEnumerable FulfillCompletion(
+  public override IEnumerable<string> FulfillCompletion(
     string wordToComplete
   )
   {

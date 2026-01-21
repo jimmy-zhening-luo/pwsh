@@ -1,9 +1,5 @@
 namespace Module.Completer.PathCompleter;
 
-using static System.IO.Path;
-using Directory = System.IO.Directory;
-using EnumerationOptions = System.IO.EnumerationOptions;
-
 public class PathCompleter : BaseCompleter
 {
   public readonly string Root;
@@ -26,14 +22,16 @@ public class PathCompleter : BaseCompleter
     Reanchor
   ) = (
     AnchorHome(
-      Normalize(root)
+      Normalize(
+        root
+      )
     ),
     type,
     flat,
     reanchor
   );
 
-  public override IStringEnumerable FulfillCompletion(
+  public override IEnumerable<string> FulfillCompletion(
     string wordToComplete
   )
   {

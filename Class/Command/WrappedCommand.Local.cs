@@ -1,7 +1,5 @@
 namespace Module.Command;
 
-using static System.IO.Path;
-
 public abstract class LocalWrappedCommand : WrappedCommand
 {
   protected abstract string LocationRoot
@@ -16,9 +14,9 @@ public abstract class LocalWrappedCommand : WrappedCommand
 
   protected string Reanchor(
     string typedPath = ""
-  ) => GetFullPath(
+  ) => Path.GetFullPath(
     typedPath,
-    GetFullPath(
+    Path.GetFullPath(
       RelativeLocation,
       LocationRoot
     )

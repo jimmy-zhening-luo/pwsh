@@ -1,9 +1,5 @@
 namespace Module.Command;
 
-using static System.IO.Path;
-using Exception = System.Exception;
-using DoesNotReturn = System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute;
-
 public abstract class CoreCommand : PSCmdlet
 {
   protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
@@ -41,7 +37,7 @@ public abstract class CoreCommand : PSCmdlet
     ErrorCategory category,
     object? target = null
   ) => Throw(
-    new Exception(
+    new System.Exception(
       message
     ),
     id,
@@ -51,7 +47,7 @@ public abstract class CoreCommand : PSCmdlet
 
   [DoesNotReturn]
   protected void Throw(
-    Exception exception,
+    System.Exception exception,
     string id,
     ErrorCategory category,
     object? target = null
@@ -102,9 +98,9 @@ public abstract class CoreCommand : PSCmdlet
 
     return type switch
     {
-      FileSystemItemType.File => System.IO.File.Exists(psPath),
-      FileSystemItemType.Directory => System.IO.Directory.Exists(psPath),
-      _ => Exists(psPath)
+      FileSystemItemType.File => File.Exists(psPath),
+      FileSystemItemType.Directory => Directory.Exists(psPath),
+      _ => Path.Exists(psPath)
     };
   }
 
@@ -120,14 +116,14 @@ public abstract class CoreCommand : PSCmdlet
 
   protected string Pwd(
     string subpath = ""
-  ) => GetFullPath(
+  ) => Path.GetFullPath(
     subpath,
     SessionState.Path.CurrentLocation.Path
   );
 
   protected string Drive(
     string subpath = ""
-  ) => GetFullPath(
+  ) => Path.GetFullPath(
     subpath,
     SessionState.Drive.Current.Root
   );

@@ -68,21 +68,21 @@ public class OpenUrl : CoreCommand
 
       if (!string.IsNullOrEmpty(cleanPath))
       {
-        string relativePath = System.IO.Path.GetRelativePath(
+        string relativePath = global::Path.GetRelativePath(
           SessionState.Path.CurrentLocation.Path,
           cleanPath
         );
-        string testPath = System.IO.Path.IsPathRooted(
+        string testPath = global::Path.IsPathRooted(
           relativePath
         )
           ? relativePath
-          : System.IO.Path.Combine(
+          : global::Path.Combine(
               SessionState.Path.CurrentLocation.Path,
               relativePath
             );
 
-        target = System.IO.Path.Exists(testPath)
-          ? System.IO.Path.GetFullPath(
+        target = global::Path.Exists(testPath)
+          ? global::Path.GetFullPath(
               testPath
             )
           : cleanPath;

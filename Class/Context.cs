@@ -1,9 +1,5 @@
 namespace Module;
 
-using static System.Diagnostics.Process;
-using static System.Environment;
-using static System.IO.Path;
-
 public static class Context
 {
   public static bool Ssh
@@ -19,7 +15,7 @@ public static class Context
 
   public static string Env(
     string variable
-  ) => GetEnvironmentVariable(
+  ) => Environment.GetEnvironmentVariable(
     variable
   )
     ?? string.Empty;
@@ -28,21 +24,23 @@ public static class Context
     string subpath = ""
   ) => GetFullPath(
     subpath,
-    GetFolderPath(
-      SpecialFolder.UserProfile
+    Environment.GetFolderPath(
+      Environment
+        .SpecialFolder
+        .UserProfile
     )
   );
 
   public static string AppData(
     string subpath = ""
-  ) => GetFullPath(
+  ) => Path.GetFullPath(
     subpath,
     Env("APPDATA")
   );
 
   public static string LocalAppData(
     string subpath = ""
-  ) => GetFullPath(
+  ) => Path.GetFullPath(
     subpath,
     Env("LOCALAPPDATA")
   );
@@ -55,17 +53,25 @@ public static class Context
   {
     if (!Ssh)
     {
-      var startInfo = new ProcessStartInfo(fileName)
+      var startInfo = new ProcessStartInfo(
+        fileName
+      )
       {
         CreateNoWindow = noNewWindow
       };
 
-      if (!string.IsNullOrEmpty(arguments))
+      if (
+        !string.IsNullOrEmpty(
+          arguments
+        )
+      )
       {
         startInfo.Arguments = arguments;
       }
 
-      Start(startInfo);
+      Process.Start(
+        startInfo
+      );
     }
   }
 
@@ -78,13 +84,19 @@ public static class Context
   {
     if (!Ssh)
     {
-      var startInfo = new ProcessStartInfo(fileName)
+      var startInfo = new ProcessStartInfo(
+        fileName
+      )
       {
         UseShellExecute = true,
         CreateNoWindow = noNewWindow
       };
 
-      if (!string.IsNullOrEmpty(arguments))
+      if (
+        !string.IsNullOrEmpty(
+          arguments
+        )
+      )
       {
         startInfo.Arguments = arguments;
       }
@@ -94,7 +106,9 @@ public static class Context
         startInfo.Verb = "RunAs";
       }
 
-      Start(startInfo);
+      Process.Start(
+        startInfo
+      );
     }
   }
 }

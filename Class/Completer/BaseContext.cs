@@ -10,7 +10,7 @@ public abstract class BaseContextCompleter : BaseCompleter
   ) : base(casing)
   { }
 
-  public override ICompletionEnumerable CompleteArgument(
+  public override IEnumerable<CompletionResult> CompleteArgument(
     string commandName,
     string parameterName,
     string wordToComplete,
@@ -27,7 +27,7 @@ public abstract class BaseContextCompleter : BaseCompleter
     )
   );
 
-  public abstract IStringEnumerable FulfillCompletion(
+  public abstract IEnumerable<string> FulfillCompletion(
     string wordToComplete,
     CommandAst commandAst,
     IDictionary fakeBoundParameters

@@ -1,7 +1,5 @@
 namespace Module.Completer.PathCompleter;
 
-using static System.IO.Path;
-
 [AttributeUsage(
   AttributeTargets.Parameter
   | AttributeTargets.Property
@@ -40,12 +38,16 @@ public class RelativePathCompletionsAttribute : BaseCompletionsAttribute<PathCom
 
   public override PathCompleter Create()
   {
+    bool here = string.IsNullOrEmpty(
+      RelativeLocation
+    );
+
     return new(
-      GetFullPath(
-        string.IsNullOrEmpty(RelativeLocation)
+      Path.GetFullPath(
+        here
           ? string.Empty
           : RelativeLocation,
-        PowerShell.Create(CurrentRunspace)
+        PS()
           .AddCommand("Get-Location")
           .Invoke()[0]
           .BaseObject
@@ -54,7 +56,7 @@ public class RelativePathCompletionsAttribute : BaseCompletionsAttribute<PathCom
       ),
       ItemType,
       Flat,
-      string.IsNullOrEmpty(RelativeLocation)
+      here
     );
   }
 }

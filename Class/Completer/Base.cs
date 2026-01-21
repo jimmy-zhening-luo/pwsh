@@ -11,7 +11,7 @@ public abstract class BaseCompleter : IArgumentCompleter
     CompletionCase casing
   ) : this() => Casing = casing;
 
-  public virtual ICompletionEnumerable CompleteArgument(
+  public virtual IEnumerable<CompletionResult> CompleteArgument(
     string commandName,
     string parameterName,
     string wordToComplete,
@@ -26,12 +26,12 @@ public abstract class BaseCompleter : IArgumentCompleter
     )
   );
 
-  public abstract IStringEnumerable FulfillCompletion(
+  public abstract IEnumerable<string> FulfillCompletion(
     string wordToComplete
   );
 
-  protected ICompletionEnumerable WrapArgumentCompletionResult(
-    IStringEnumerable completedStrings
+  protected IEnumerable<CompletionResult> WrapArgumentCompletionResult(
+    IEnumerable<string> completedStrings
   )
   {
     foreach (
