@@ -22,7 +22,7 @@ public class NewDirectory : WrappedCommand
     Position = 0,
     ValueFromPipelineByPropertyName = true
   )]
-  [RelativePathCompletions]
+  [PathCompletions]
   public string[]? Path;
 
   [Parameter(
@@ -37,7 +37,7 @@ public class NewDirectory : WrappedCommand
     ValueFromPipelineByPropertyName = true
   )]
   [Alias("Target")]
-  [RelativePathCompletions]
+  [PathCompletions]
   public object? Value;
 
   [Parameter]

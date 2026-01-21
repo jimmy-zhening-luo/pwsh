@@ -17,7 +17,7 @@ public class ClearLine : WrappedCommand
   )]
   [AllowEmptyString]
   [SupportsWildcards]
-  [RelativePathCompletions]
+  [PathCompletions]
   public string? Path;
 
   [Parameter(

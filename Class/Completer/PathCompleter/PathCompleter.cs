@@ -21,11 +21,7 @@ public class PathCompleter : BaseCompleter
     Flat,
     Reanchor
   ) = (
-    AnchorHome(
-      Normalize(
-        root
-      )
-    ),
+    root,
     type,
     flat,
     reanchor

@@ -22,7 +22,7 @@ public class GetDirectorySibling : GetLocalDirectoryCommand
   )]
   [AllowEmptyCollection]
   [SupportsWildcards]
-  [RelativePathCompletions(
+  [PathCompletions(
     "..",
     PathItemType.Directory
   )]
@@ -55,7 +55,7 @@ public class GetDirectoryRelative : GetLocalDirectoryCommand
   )]
   [AllowEmptyCollection]
   [SupportsWildcards]
-  [RelativePathCompletions(
+  [PathCompletions(
     @"..\..",
     PathItemType.Directory
   )]
@@ -152,7 +152,7 @@ public class GetDirectoryDrive : GetLocalDirectoryCommand
   )]
   [AllowEmptyCollection]
   [SupportsWildcards]
-  [RelativePathCompletions(
+  [PathCompletions(
     @"\",
     PathItemType.Directory
   )]

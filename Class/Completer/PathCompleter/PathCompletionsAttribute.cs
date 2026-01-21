@@ -5,48 +5,52 @@ namespace Module.Completer.PathCompleter;
   | AttributeTargets.Property
   | AttributeTargets.Field
 )]
-public class RelativePathCompletionsAttribute : BaseCompletionsAttribute<PathCompleter>
+public class PathCompletionsAttribute : BaseCompletionsAttribute<PathCompleter>
 {
-  public readonly string RelativeLocation = string.Empty;
+  public readonly string Location = string.Empty;
 
   public readonly PathItemType ItemType;
 
   public readonly bool Flat;
 
-  public RelativePathCompletionsAttribute() : base()
+  public PathCompletionsAttribute() : base()
   { }
 
-  public RelativePathCompletionsAttribute(
-    string relativeLocation
-  ) : this() => RelativeLocation = relativeLocation;
+  public PathCompletionsAttribute(
+    string location
+  ) : this() => Location = AnchorHome(
+    Normalize(
+      location
+    )
+  );
 
-  public RelativePathCompletionsAttribute(
-    string relativeLocation,
+  public PathCompletionsAttribute(
+    string location,
     PathItemType itemType
   ) : this(
-    relativeLocation
+    location
   ) => ItemType = itemType;
 
-  public RelativePathCompletionsAttribute(
-    string relativeLocation,
+  public PathCompletionsAttribute(
+    string location,
     PathItemType itemType,
     bool flat
   ) : this(
-    relativeLocation,
+    location,
     itemType
   ) => Flat = flat;
 
   public override PathCompleter Create()
   {
-    bool here = string.IsNullOrEmpty(
-      RelativeLocation
+    bool nullPath = string.IsNullOrEmpty(
+      Location
     );
 
     return new(
       Path.GetFullPath(
-        here
+        nullPath
           ? string.Empty
-          : RelativeLocation,
+          : Location,
         PS()
           .AddCommand("Get-Location")
           .Invoke()[0]
@@ -56,7 +60,7 @@ public class RelativePathCompletionsAttribute : BaseCompletionsAttribute<PathCom
       ),
       ItemType,
       Flat,
-      here
+      nullPath
     );
   }
 }

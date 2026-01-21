@@ -17,7 +17,7 @@ public class NewJunction : WrappedCommand
     Position = 0,
     ValueFromPipelineByPropertyName = true
   )]
-  [RelativePathCompletions]
+  [PathCompletions]
   public string[]? Path;
 
   [Parameter(
@@ -26,7 +26,7 @@ public class NewJunction : WrappedCommand
     ValueFromPipelineByPropertyName = true
   )]
   [Alias("Target")]
-  [RelativePathCompletions]
+  [PathCompletions]
   public object? Value;
 
   protected override string WrappedCommandName => "New-Item";

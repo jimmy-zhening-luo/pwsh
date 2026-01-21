@@ -21,7 +21,7 @@ public class SetDirectorySibling : SetLocalDirectoryCommand
   )]
   [AllowEmptyString]
   [SupportsWildcards]
-  [RelativePathCompletions(
+  [PathCompletions(
     "..",
     PathItemType.Directory
   )]
@@ -53,7 +53,7 @@ public class SetDirectoryRelative : SetLocalDirectoryCommand
   )]
   [AllowEmptyString]
   [SupportsWildcards]
-  [RelativePathCompletions(
+  [PathCompletions(
     @"..\..",
     PathItemType.Directory
   )]
@@ -147,7 +147,7 @@ public class SetDrive : SetLocalDirectoryCommand
   )]
   [AllowEmptyString]
   [SupportsWildcards]
-  [RelativePathCompletions(
+  [PathCompletions(
     @"\",
     PathItemType.Directory
   )]

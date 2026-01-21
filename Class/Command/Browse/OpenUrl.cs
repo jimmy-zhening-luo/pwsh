@@ -16,7 +16,7 @@ public class OpenUrl : CoreCommand
     HelpMessage = "The file path or URL to open. Defaults to the current directory."
   )]
   [AllowEmptyString]
-  [RelativePathCompletions]
+  [PathCompletions]
   public string Path
   {
     get => path;

@@ -19,7 +19,7 @@ public class StartExplorerSibling : StartLocalExplorerCommand
   )]
   [AllowEmptyCollection]
   [SupportsWildcards]
-  [RelativePathCompletions(
+  [PathCompletions(
     ".."
   )]
   public new string[]? Path;
@@ -48,7 +48,7 @@ public class StartExplorerRelative : StartLocalExplorerCommand
   )]
   [AllowEmptyCollection]
   [SupportsWildcards]
-  [RelativePathCompletions(
+  [PathCompletions(
     @"..\.."
   )]
   public new string[]? Path;
@@ -133,7 +133,7 @@ public class StartExplorerDrive : StartLocalExplorerCommand
   )]
   [AllowEmptyCollection]
   [SupportsWildcards]
-  [RelativePathCompletions(
+  [PathCompletions(
     @"\"
   )]
   public new string[]? Path;

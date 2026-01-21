@@ -17,7 +17,7 @@ public class GetFile : WrappedCommand
     ValueFromPipelineByPropertyName = true
   )]
   [SupportsWildcards]
-  [RelativePathCompletions(
+  [PathCompletions(
     "",
     PathItemType.File
   )]

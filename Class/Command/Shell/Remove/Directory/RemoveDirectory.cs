@@ -19,7 +19,7 @@ public class RemoveDirectory : WrappedCommand
     ValueFromPipelineByPropertyName = true
   )]
   [SupportsWildcards]
-  [RelativePathCompletions]
+  [PathCompletions]
   public string[]? Path;
 
   [Parameter(

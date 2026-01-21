@@ -29,7 +29,7 @@ public class GetSize : CoreCommand
     ValueFromPipelineByPropertyName = true,
     HelpMessage = "The path of the file or directory to be measured."
   )]
-  [RelativePathCompletions]
+  [PathCompletions]
   public string[] Path
   {
     get => paths;

@@ -19,7 +19,7 @@ public class StartExplorer : WrappedCommand
   )]
   [AllowEmptyCollection]
   [SupportsWildcards]
-  [RelativePathCompletions]
+  [PathCompletions]
   public string[]? Path;
 
   [Parameter(

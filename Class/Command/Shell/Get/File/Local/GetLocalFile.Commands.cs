@@ -17,7 +17,7 @@ public class GetFileSibling : GetLocalFileCommand
     ValueFromPipelineByPropertyName = true
   )]
   [SupportsWildcards]
-  [RelativePathCompletions(
+  [PathCompletions(
     "..",
     PathItemType.File
   )]
@@ -45,7 +45,7 @@ public class GetFileRelative : GetLocalFileCommand
     ValueFromPipelineByPropertyName = true
   )]
   [SupportsWildcards]
-  [RelativePathCompletions(
+  [PathCompletions(
     @"..\..",
     PathItemType.File
   )]
@@ -127,7 +127,7 @@ public class GetFileDrive : GetLocalFileCommand
     ValueFromPipelineByPropertyName = true
   )]
   [SupportsWildcards]
-  [RelativePathCompletions(
+  [PathCompletions(
     @"\",
     PathItemType.File
   )]

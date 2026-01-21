@@ -513,7 +513,7 @@ function Compare-GitRepository {
   [Alias('gd')]
   param(
 
-    [RelativePathCompletions(
+    [PathCompletions(
       '',
       [PathItemType]::File
     )]
@@ -573,7 +573,7 @@ function Add-GitRepository {
   [Alias('ga')]
   param(
 
-    [RelativePathCompletions(
+    [PathCompletions(
       '',
       [PathItemType]::File
     )]

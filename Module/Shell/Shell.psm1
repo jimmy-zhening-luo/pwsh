@@ -12,7 +12,7 @@ function Start-Workspace {
       Position = 0
     )]
     [AllowEmptyString()]
-    [RelativePathCompletions()]
+    [PathCompletions()]
     [string]$Workspace,
 
     [Parameter(
@@ -212,7 +212,7 @@ function Start-WorkspaceSibling {
       Position = 0
     )]
     [AllowEmptyString()]
-    [RelativePathCompletions(
+    [PathCompletions(
       '..'
     )]
     [string]$Workspace,
@@ -248,7 +248,7 @@ function Start-WorkspaceRelative {
       Position = 0
     )]
     [AllowEmptyString()]
-    [RelativePathCompletions(
+    [PathCompletions(
       '..\..'
     )]
     [string]$Workspace,
@@ -356,7 +356,7 @@ function Start-WorkspaceDrive {
       Position = 0
     )]
     [AllowEmptyString()]
-    [RelativePathCompletions(
+    [PathCompletions(
       '\'
     )]
     [string]$Workspace,

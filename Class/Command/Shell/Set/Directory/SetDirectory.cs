@@ -22,7 +22,7 @@ public class SetDirectory : WrappedCommand
   )]
   [AllowEmptyString]
   [SupportsWildcards]
-  [RelativePathCompletions(
+  [PathCompletions(
     "",
     PathItemType.Directory
   )]
