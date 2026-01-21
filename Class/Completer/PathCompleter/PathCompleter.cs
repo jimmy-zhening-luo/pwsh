@@ -134,6 +134,7 @@ public class PathCompleter : BaseCompleter
 
     if (Type == PathItemType.File)
     {
+      FileFirstMatch:
       foreach (
         string file in Directory.EnumerateFiles(
           location,
@@ -151,16 +152,23 @@ public class PathCompleter : BaseCompleter
         );
       }
 
-      if (count == 0)
+      if (
+        count == 0
+        && attributes.AttributesToSkip != FileAttributes.System
+      )
       {
         attributes.AttributesToSkip = FileAttributes.System;
+
+        goto FileFirstMatch;
       }
     }
 
+    int checkpoint = count;
     string directoryCap = Flat
       ? string.Empty
       : @"\";
 
+    DirectoryMatch:
     foreach (
       string directory in Directory.EnumerateDirectories(
         location,
@@ -179,6 +187,18 @@ public class PathCompleter : BaseCompleter
       );
     }
 
+    if (
+      count == checkpoint
+      && attributes.AttributesToSkip != FileAttributes.System
+    )
+    {
+      attributes.AttributesToSkip = FileAttributes.System;
+
+      goto DirectoryMatch;
+    }
+
+    checkpoint = count;
+
     if (Type == PathItemType.Any)
     {
       foreach (
@@ -196,6 +216,14 @@ public class PathCompleter : BaseCompleter
           ),
           accumulatedSubpath
         );
+      }
+
+      if (
+        count == checkpoint
+        && attributes.AttributesToSkip != FileAttributes.System
+      )
+      {
+        
       }
     }
 
