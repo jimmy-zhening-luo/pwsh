@@ -34,7 +34,7 @@ public class Completer : BaseCompleter
       yield break;
     }
 
-    int matched = 0;
+    int count = 0;
     foreach (string member in Domain)
     {
       if (
@@ -44,12 +44,15 @@ public class Completer : BaseCompleter
         )
       )
       {
-        ++matched;
+        ++count;
         yield return member;
       }
     }
 
-    if (strict || matched > 1)
+    if (
+      Strict
+      || count > 1
+    )
     {
       yield break;
     }
