@@ -1,14 +1,11 @@
 & {
   $CLASS = 'Module'
-
   $ROOT = Split-Path $PSScriptRoot
+  $DIST = "$ROOT\Class\bin\Release\net9.0-windows\$CLASS.dll"
   $MODULE = "$ROOT\Module\$CLASS"
   $ASSEMBLY = "$MODULE\$CLASS.dll"
 
   $Exists = Test-Path $ASSEMBLY -PathType Leaf
-
-  $SRC = "$ROOT\Class"
-  $DIST = "$SRC\bin\Release\net9.0-windows\$CLASS.dll"
 
   if (Test-Path $DIST -PathType Leaf) {
     if (
