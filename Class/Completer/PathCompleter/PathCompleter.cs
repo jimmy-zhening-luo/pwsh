@@ -154,6 +154,7 @@ public class PathCompleter : BaseCompleter
 
       if (
         count == 0
+        && filter.Length > 1
         && attributes.AttributesToSkip != FileAttributes.System
       )
       {
@@ -168,7 +169,7 @@ public class PathCompleter : BaseCompleter
       ? string.Empty
       : @"\";
 
-    DirectoryMatch:
+    Match:
     foreach (
       string directory in Directory.EnumerateDirectories(
         location,
@@ -189,12 +190,13 @@ public class PathCompleter : BaseCompleter
 
     if (
       count == checkpoint
+      && filter.Length > 1
       && attributes.AttributesToSkip != FileAttributes.System
     )
     {
       attributes.AttributesToSkip = FileAttributes.System;
 
-      goto DirectoryMatch;
+      goto Match;
     }
 
     checkpoint = count;
@@ -220,10 +222,13 @@ public class PathCompleter : BaseCompleter
 
       if (
         count == checkpoint
+        && filter.Length > 1
         && attributes.AttributesToSkip != FileAttributes.System
       )
       {
-        
+        attributes.AttributesToSkip = FileAttributes.System;
+
+        goto Match;
       }
     }
 
