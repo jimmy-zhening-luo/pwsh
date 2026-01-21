@@ -33,45 +33,40 @@ public class Completer : BaseCompleter
 
       yield break;
     }
-    else
-    {
-      int matched = 0;
-      foreach (string member in Domain)
-      {
-        if (
-          member.StartsWith(
-            wordToComplete,
-            StringComparison.OrdinalIgnoreCase
-          )
-        )
-        {
-          ++matched;
-          yield return member;
-        }
-      }
 
+    int matched = 0;
+    foreach (string member in Domain)
+    {
       if (
-        !Strict
-        && matched < 2
+        member.StartsWith(
+          wordToComplete,
+          StringComparison.OrdinalIgnoreCase
+        )
       )
       {
-        foreach (string member in Domain)
-        {
-          if (
-            member.Length > wordToComplete.Length
-            && member.IndexOf(
-              wordToComplete,
-              1,
-              StringComparison.OrdinalIgnoreCase
-            ) > 0
-          )
-          {
-            yield return member;
-          }
-        }
+        ++matched;
+        yield return member;
       }
+    }
 
+    if (strict || matched > 1)
+    {
       yield break;
+    }
+
+    foreach (string member in Domain)
+    {
+      if (
+        member.Length > wordToComplete.Length
+        && member.IndexOf(
+          wordToComplete,
+          1,
+          StringComparison.OrdinalIgnoreCase
+        ) > 0
+      )
+      {
+        yield return member;
+      }
     }
   }
 }
