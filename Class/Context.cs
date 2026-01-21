@@ -22,7 +22,7 @@ public static class Context
 
   public static string Home(
     string subpath = ""
-  ) => GetFullPath(
+  ) => Path.GetFullPath(
     subpath,
     Environment.GetFolderPath(
       Environment
