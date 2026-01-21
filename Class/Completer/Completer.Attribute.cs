@@ -1,7 +1,5 @@
 namespace Module.Completer;
 
-using static System.StringSplitOptions;
-
 [AttributeUsage(
   AttributeTargets.Parameter
   | AttributeTargets.Property
@@ -42,8 +40,8 @@ public class CompletionsAttribute : BaseCompletionsAttribute<Completer>
     StringifiedDomain
       .Split(
         ',',
-        RemoveEmptyEntries
-        | TrimEntries
+        StringSplitOptions.RemoveEmptyEntries
+        | StringSplitOptions.TrimEntries
       ),
     Strict,
     Casing

@@ -13,6 +13,7 @@ global using Enum = System.Enum;
 global using Uri = System.Uri;
 global using StringComparer = System.StringComparer;
 global using StringComparison = System.StringComparison;
+global using StringSplitOptions = System.StringSplitOptions;
 global using AttributeUsage = System.AttributeUsageAttribute;
 global using AttributeTargets = System.AttributeTargets;
 global using DirectoryInfo = System.IO.DirectoryInfo;
