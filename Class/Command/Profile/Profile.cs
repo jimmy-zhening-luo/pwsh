@@ -12,10 +12,12 @@ public class StartProfile : CoreCommand
   {
     var repoRootVariable = Var(
       "REPO_ROOT"
-    )
-      .BaseObject;
+    );
 
-    if (repoRootVariable is string repoRoot)
+    if (
+      repoRootVariable is PSObject repoRootObject
+      && repoRootObject.BaseObject is string repoRoot
+    )
     {
       CreateProcess(
         LocalAppData(
