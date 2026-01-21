@@ -128,6 +128,7 @@ New-Alias upman Update-Help
 New-Alias psk Get-PSReadLineKeyHandler
 
 New-Alias restart Restart-Computer
+New-Alias clb Clear-RecycleBin
 New-Alias sesv Set-Service
 New-Alias remsv Remove-Service
 New-Alias gapx Get-AppxPackage

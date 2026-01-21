@@ -33,6 +33,7 @@
     'upman'
     'psk'
     'restart'
+    'clb'
     'sesv'
     'remsv'
     'gapx'
