@@ -6,7 +6,11 @@ public static class Escaper
     string text
   ) => text.Contains(' ')
     ? "'"
-      + System.Management.Automation.Language.CodeGeneration.EscapeSingleQuotedStringContent(text)
+      + Language
+        .CodeGeneration
+        .EscapeSingleQuotedStringContent(
+          text
+        )
       + "'"
     : text;
 
