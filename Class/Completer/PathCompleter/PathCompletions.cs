@@ -13,6 +13,8 @@ public class PathCompletionsAttribute : BaseCompletionsAttribute<PathCompleter>
 
   public readonly bool Flat;
 
+  public readonly bool Hidden;
+
   public PathCompletionsAttribute() : base()
   { }
 
@@ -40,6 +42,17 @@ public class PathCompletionsAttribute : BaseCompletionsAttribute<PathCompleter>
     itemType
   ) => Flat = flat;
 
+  public PathCompletionsAttribute(
+    string location,
+    PathItemType itemType,
+    bool flat,
+    bool hidden
+  ) : this(
+    location,
+    itemType,
+    flat
+  ) => Hidden = hidden;
+
   public override PathCompleter Create()
   {
     bool nullPath = string.IsNullOrEmpty(
@@ -60,6 +73,7 @@ public class PathCompletionsAttribute : BaseCompletionsAttribute<PathCompleter>
       ),
       ItemType,
       Flat,
+      Hidden,
       nullPath
     );
   }

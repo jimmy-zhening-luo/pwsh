@@ -8,22 +8,27 @@ public class PathCompleter : BaseCompleter
 
   public readonly bool Flat;
 
+  public readonly bool Hidden;
+
   public readonly bool Reanchor;
 
   public PathCompleter(
     string root,
     PathItemType type,
     bool flat,
+    bool hidden,
     bool reanchor
   ) : base() => (
     Root,
     Type,
     Flat,
+    Hidden,
     Reanchor
   ) = (
     root,
     type,
     flat,
+    hidden,
     reanchor
   );
 
@@ -131,6 +136,11 @@ public class PathCompleter : BaseCompleter
     {
       IgnoreInaccessible = false
     };
+
+    if (Hidden)
+    {
+      attributes.AttributesToSkip = FileAttributes.System;
+    }
 
     if (Type == PathItemType.File)
     {
