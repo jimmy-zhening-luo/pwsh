@@ -57,14 +57,9 @@ public class TestUrl : CoreCommand
           }
           catch (CmdletInvocationException psException)
           {
-            Throw(
-              psException
-                .ErrorRecord
-                .Exception,
-              "TestUrlNoDns",
-              ErrorCategory.ObjectNotFound,
-              fullUrl
-            );
+            throw psException
+              .ErrorRecord
+              .Exception;
           }
           catch
           {
