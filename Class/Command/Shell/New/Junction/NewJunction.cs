@@ -22,6 +22,7 @@ public class NewJunction : WrappedCommand
 
   [Parameter(
     Mandatory = true,
+    Position = 1,
     ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true
   )]
