@@ -1,5 +1,5 @@
-if (-not $Env:PSModulePath.EndsWith(";$PSScriptRoot\Module;")) {
-  $Env:PSModulePath += ";$PSScriptRoot\Module;"
+if (-not $Env:PSModulePath.StartsWith("$PSScriptRoot\Module;")) {
+  $Env:PSModulePath = "$PSScriptRoot\Module;$Env:PSModulePath"
   Write-Warning -Message 'Appended module path'
 }
 
@@ -11,8 +11,7 @@ $Script:REPO_ROOT = Split-Path $PSScriptRoot
 . $PSScriptRoot\Script\Install.ps1
 
 if ($null -ne $Env:SSH_CLIENT) {
-  if($HOME -eq $PWD)
-  {
+  if ($HOME -eq $PWD) {
     Set-Location code
   }
 
