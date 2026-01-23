@@ -1,4 +1,4 @@
-if (-not $Env:PSModulePath.StartsWith(";$PSScriptRoot\Module")) {
+if (-not $Env:PSModulePath.EndsWith(";$PSScriptRoot\Module")) {
   Write-Warning -Message "Appended module path to current module path: $Env:PSModulePath"
   $Env:PSModulePath += ";$PSScriptRoot\Module"
 }
