@@ -8,7 +8,7 @@ namespace Module.Command.Profile;
 [OutputType(typeof(void))]
 public class StartProfile : CoreCommand
 {
-  protected override void EndProcessing()
+  private protected sealed override void AfterEndProcessing()
   {
     var repoRootVariable = Var(
       "REPO_ROOT"

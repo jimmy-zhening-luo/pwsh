@@ -98,7 +98,8 @@ public class StopTask : CoreCommand
         break;
     }
   }
-  protected override void EndProcessing()
+
+  private protected sealed override void AfterEndProcessing()
   {
     switch (ParameterSetName)
     {
