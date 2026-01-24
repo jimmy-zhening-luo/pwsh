@@ -11,7 +11,7 @@ namespace Module.Command.Shell.New.Directory;
 [OutputType(typeof(DirectoryInfo))]
 public class NewDirectory : WrappedCommand
 {
-  private NewDirectory() : base(
+  public NewDirectory() : base(
     "New-Item"
   )
   { }

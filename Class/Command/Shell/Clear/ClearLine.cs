@@ -11,7 +11,7 @@ namespace Module.Command.Shell.Clear;
 [OutputType(typeof(void))]
 public class ClearLine : WrappedCommand
 {
-  private ClearLine() : base(
+  public ClearLine() : base(
     "Clear-Content"
   )
   { }

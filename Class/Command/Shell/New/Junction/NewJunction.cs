@@ -11,7 +11,7 @@ namespace Module.Command.Shell.New.Junction;
 [OutputType(typeof(DirectoryInfo))]
 public class NewJunction : WrappedCommand
 {
-  private NewJunction() : base(
+  public NewJunction() : base(
     "New-Item"
   )
   { }
