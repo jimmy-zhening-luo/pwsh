@@ -31,7 +31,7 @@ public class TestHost : CoreCommand
   [EnumCompletions(
     typeof(TestHostWellKnownPort)
   )]
-  public string CommonTCPPort;
+  public string? CommonTCPPort;
 
   [Parameter(
     ParameterSetName = "RemotePort",
