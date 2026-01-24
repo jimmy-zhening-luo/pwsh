@@ -40,7 +40,7 @@ public class OpenUrl : CoreCommand
   }
   private Uri[] uris = [];
 
-  protected override void ProcessRecord()
+  protected sealed override void ProcessRecord()
   {
     if (ParameterSetName == "Uri")
     {
