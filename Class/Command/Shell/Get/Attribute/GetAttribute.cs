@@ -9,7 +9,10 @@ using System.Linq;
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096492"
 )]
 [Alias("sz", "size")]
-[OutputType(typeof(string))]
+[OutputType(
+  typeof(string),
+  ParameterSetName = ["String"]
+)]
 [OutputType(
   typeof(double),
   ParameterSetName = ["Number"]

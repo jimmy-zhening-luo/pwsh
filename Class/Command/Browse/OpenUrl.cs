@@ -6,8 +6,8 @@ namespace Module.Command.Browse;
   DefaultParameterSetName = "Path",
   HelpUri = "https://www.chromium.org/developers/how-tos/run-chromium-with-flags/"
 )]
-[OutputType(typeof(void))]
 [Alias("o", "open")]
+[OutputType(typeof(void))]
 public class OpenUrl : CoreCommand
 {
   [Parameter(
