@@ -27,7 +27,7 @@ public class TestUrl : CoreCommand
   }
   private Uri[] uris = [];
 
-  protected override void ProcessRecord()
+  protected sealed override void ProcessRecord()
   {
     foreach (Uri uri in uris)
     {
@@ -110,9 +110,14 @@ public class TestUrl : CoreCommand
     }
   }
 
-  private void ResolveDns(string host)
+  private void ResolveDns(
+    string host
+  )
   {
-    using var ps = AddCommand("Resolve-DnsName")
+    using var ps = CreatePS();
+
+    ps
+      .AddCommand("Resolve-DnsName")
       .AddParameter(
         "Name",
         host
@@ -135,9 +140,14 @@ public class TestUrl : CoreCommand
     }
   }
 
-  private int VisitUrlPath(Uri fullUrl)
+  private int VisitUrlPath(
+    Uri fullUrl
+  )
   {
-    using var ps = AddCommand("Invoke-WebRequest")
+    using var ps = CreatePS();
+
+    ps
+      .AddCommand("Invoke-WebRequest")
       .AddParameter(
         "Uri",
         fullUrl

@@ -11,7 +11,7 @@ using BindingFlags = System.Reflection.BindingFlags;
 [OutputType(typeof(string))]
 public class GetType : Cmdlet
 {
-  protected override void EndProcessing()
+  protected sealed override void EndProcessing()
   {
     if (
       typeof(

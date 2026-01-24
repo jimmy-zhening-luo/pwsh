@@ -18,7 +18,7 @@ public class EditSystemPath : Cmdlet
   }
   private bool administrator;
 
-  protected override void EndProcessing()
+  protected sealed override void EndProcessing()
   {
     ShellExecute(
       "rundll32.exe",

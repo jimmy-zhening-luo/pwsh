@@ -114,10 +114,13 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
     CommandTypes commandType = CommandTypes.Application
   )
   {
-    using var ps = AddCommand(
+    using var ps = CreatePS();
+
+    ps.AddCommand(
       nativeCommand,
       commandType
     );
+
     foreach (string argument in arguments)
     {
       ps.AddArgument(

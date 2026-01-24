@@ -37,7 +37,7 @@ public class ConvertToHex : Cmdlet
   }
   private bool lowercase;
 
-  protected override void ProcessRecord()
+  protected sealed override void ProcessRecord()
   {
     foreach (long number in numbers)
     {

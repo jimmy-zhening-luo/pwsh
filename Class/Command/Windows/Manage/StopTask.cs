@@ -52,7 +52,7 @@ public class StopTask : CoreCommand
   }
   private bool self;
 
-  protected override void ProcessRecord()
+  protected sealed override void ProcessRecord()
   {
     switch (ParameterSetName)
     {

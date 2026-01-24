@@ -8,7 +8,7 @@ namespace Module.Command.Windows.Update;
 [OutputType(typeof(void))]
 public class UpdateWindows : Cmdlet
 {
-  protected override void EndProcessing()
+  protected sealed override void EndProcessing()
   {
     ShellExecute(
       "ms-settings:windowsupdate"
@@ -24,7 +24,7 @@ public class UpdateWindows : Cmdlet
 [OutputType(typeof(void))]
 public class UpdateStoreApp : Cmdlet
 {
-  protected override void EndProcessing()
+  protected sealed override void EndProcessing()
   {
     ShellExecute(
       "ms-windows-store://downloadsandupdates"

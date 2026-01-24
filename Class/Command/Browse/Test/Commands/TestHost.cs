@@ -59,7 +59,7 @@ public class TestHost : CoreCommand
   }
   private bool detailed;
 
-  protected override void BeginProcessing()
+  protected sealed override void BeginProcessing()
   {
     if (detailed)
     {
@@ -67,7 +67,7 @@ public class TestHost : CoreCommand
     }
   }
 
-  protected override void ProcessRecord()
+  protected sealed override void ProcessRecord()
   {
     foreach (string name in names)
     {
@@ -148,10 +148,13 @@ public class TestHost : CoreCommand
     ushort portNumber = 0
   )
   {
-    using var ps = AddCommand(
-      "Test-NetConnection",
-      CommandTypes.Function
-    )
+    using var ps = CreatePS();
+
+    ps
+      .AddCommand(
+        "Test-NetConnection",
+        CommandTypes.Function
+      )
       .AddParameter(
         "ComputerName",
         computerName

@@ -78,7 +78,7 @@ public class GetSize : CoreCommand
 
   private long factor = DiskSize.Factor[DiskSizeUnit.KB];
 
-  protected override void BeginProcessing()
+  protected sealed override void BeginProcessing()
   {
     if (paths.Length == 0)
     {
@@ -91,7 +91,7 @@ public class GetSize : CoreCommand
     }
   }
 
-  protected override void ProcessRecord()
+  protected sealed override void ProcessRecord()
   {
     foreach (string path in paths)
     {

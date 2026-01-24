@@ -8,7 +8,7 @@ namespace Module.Command.Profile;
 [OutputType(typeof(void))]
 public class StartHistory : Cmdlet
 {
-  protected override void EndProcessing() => CreateProcess(
+  protected sealed override void EndProcessing() => CreateProcess(
     LocalAppData(
       @"Programs\Microsoft VS Code\bin\code.cmd"
     ),
