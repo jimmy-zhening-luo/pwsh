@@ -7,7 +7,7 @@ using Type = System.Type;
   | AttributeTargets.Property
   | AttributeTargets.Field
 )]
-public class EnumCompletionsAttribute : BaseCompletionsAttribute<Completer>
+public sealed class EnumCompletionsAttribute : BaseCompletionsAttribute<Completer>
 {
   public readonly Type EnumType;
 

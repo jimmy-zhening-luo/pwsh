@@ -5,7 +5,7 @@ namespace Module.Completer.PathCompleter;
   | AttributeTargets.Property
   | AttributeTargets.Field
 )]
-public class PathCompletionsAttribute : BaseCompletionsAttribute<PathCompleter>
+public sealed class PathCompletionsAttribute : BaseCompletionsAttribute<PathCompleter>
 {
   public readonly string Location = string.Empty;
 

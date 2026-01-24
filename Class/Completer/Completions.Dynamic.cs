@@ -7,7 +7,7 @@ using System.Linq;
   | AttributeTargets.Property
   | AttributeTargets.Field
 )]
-public class DynamicCompletionsAttribute : BaseCompletionsAttribute<Completer>
+public sealed class DynamicCompletionsAttribute : BaseCompletionsAttribute<Completer>
 {
   public readonly ScriptBlock DomainGenerator;
 

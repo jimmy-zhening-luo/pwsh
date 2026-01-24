@@ -5,7 +5,7 @@ namespace Module.Completer;
   | AttributeTargets.Property
   | AttributeTargets.Field
 )]
-public class CompletionsAttribute : BaseCompletionsAttribute<Completer>
+public sealed class CompletionsAttribute : BaseCompletionsAttribute<Completer>
 {
   public readonly string StringifiedDomain;
 
