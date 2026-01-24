@@ -40,7 +40,7 @@ public class EnumCompletionsAttribute : BaseCompletionsAttribute<Completer>
     strict
   );
 
-  public override Completer Create() => new(
+  public sealed override Completer Create() => new(
     Enum.GetNames(
       EnumType
     ),

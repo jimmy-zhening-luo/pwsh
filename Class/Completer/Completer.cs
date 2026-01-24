@@ -20,7 +20,7 @@ public class Completer : BaseCompleter
     strict
   );
 
-  public override IEnumerable<string> FulfillCompletion(
+  public sealed override IEnumerable<string> FulfillCompletion(
     string wordToComplete
   )
   {

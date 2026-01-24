@@ -38,7 +38,7 @@ public class DynamicCompletionsAttribute : BaseCompletionsAttribute<Completer>
     strict
   );
 
-  public override Completer Create() => new(
+  public sealed override Completer Create() => new(
     DomainGenerator
       .Invoke()
       .Select(

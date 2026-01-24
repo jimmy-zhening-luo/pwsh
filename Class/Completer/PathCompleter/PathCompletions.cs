@@ -53,7 +53,7 @@ public class PathCompletionsAttribute : BaseCompletionsAttribute<PathCompleter>
     flat
   ) => Hidden = hidden;
 
-  public override PathCompleter Create()
+  public sealed override PathCompleter Create()
   {
     bool nullPath = string.IsNullOrEmpty(
       Location

@@ -36,7 +36,7 @@ public class CompletionsAttribute : BaseCompletionsAttribute<Completer>
     strict
   );
 
-  public override Completer Create() => new(
+  public sealed override Completer Create() => new(
     StringifiedDomain
       .Split(
         ',',
