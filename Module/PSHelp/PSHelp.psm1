@@ -69,7 +69,7 @@ function Get-HelpOnline {
     [string[]]$Parameter
   )
 
-  if (-not $Name) {
+  if (!$Name) {
     return Get-Help -Name Get-Help
   }
 
@@ -112,7 +112,7 @@ function Get-HelpOnline {
     if ($HelpContent) {
       $HelpContent.relatedLinks.navigationLink.Uri |
         Where-Object {
-          -not [string]::IsNullOrEmpty($PSItem)
+          ![string]::IsNullOrEmpty($PSItem)
         } |
         Where-Object {
           $PSItem -match '^(?=https?://\S|[-\w]+(?>\.[-\w]+)+/)'
@@ -180,7 +180,7 @@ function Get-HelpOnline {
 
         $about_Article = Resolve-AboutArticle -Topic $about_TopicCandidate
 
-        if (-not [string]$about_Article) {
+        if (![string]$about_Article) {
           if ($about_TopicCandidate -notmatch 's$') {
             $about_TopicCandidate += 's'
             $about_Article = Resolve-AboutArticle -Topic $about_TopicCandidate
@@ -229,7 +229,7 @@ function Get-HelpOnline {
     Write-Information -MessageData "$($Article.ToArray() -join "`n")" -InformationAction Continue
   }
 
-  if (-not $env:SSH_CLIENT) {
+  if (!$env:SSH_CLIENT) {
     if ($Article.Count) {
       $Article.ToArray() | Open-Url
     }
@@ -293,7 +293,7 @@ function Get-CommandAlias {
   )
 
   begin {
-    if (-not $Scope) {
+    if (!$Scope) {
       $Scope = 'Global'
     }
 

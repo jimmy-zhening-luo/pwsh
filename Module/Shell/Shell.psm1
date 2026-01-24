@@ -57,7 +57,7 @@ function Start-Workspace {
   $ArgumentList = [List[string]]::new()
 
   if (
-    $Location -and -not (
+    $Location -and !(
       Test-Path $Location -PathType Container
     )
   ) {
@@ -76,7 +76,7 @@ function Start-Workspace {
       )
     }
     else {
-      if (-not $Workspace.StartsWith([char]'-')) {
+      if (!$Workspace.StartsWith([char]'-')) {
         throw "Path '$Workspace' does not exist."
       }
 
@@ -85,8 +85,8 @@ function Start-Workspace {
     }
   }
 
-  if (-not $Workspace) {
-    if ($Location -and -not $Empty -or $ReuseWindow) {
+  if (!$Workspace) {
+    if ($Location -and !$Empty -or $ReuseWindow) {
       $ArgumentList.Insert(
         0,
         (
@@ -172,7 +172,7 @@ function Start-Workspace {
       } |
       Select-Object -First 1
 
-    if (-not $MatchedProfile) {
+    if (!$MatchedProfile) {
       throw "Visual Studio Code profile '$TrimmedProfileName' does not exist."
     }
 
@@ -185,7 +185,7 @@ function Start-Workspace {
       [void]$ArgumentList.Remove('--reuse-window')
     }
 
-    if (-not $ArgumentList.Contains('--new-window')) {
+    if (!$ArgumentList.Contains('--new-window')) {
       $ArgumentList.Add('--new-window')
     }
   }
@@ -194,7 +194,7 @@ function Start-Workspace {
       throw 'Cannot specify --reuse-window when --new-window is specified, as --new-window will always take precedence.'
     }
 
-    if (-not $ArgumentList.Contains('--reuse-window')) {
+    if (!$ArgumentList.Contains('--reuse-window')) {
       $ArgumentList.Add('--reuse-window')
     }
   }

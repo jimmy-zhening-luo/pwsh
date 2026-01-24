@@ -23,7 +23,7 @@ function Resolve-GitRepository {
   process {
     foreach ($wd in $WorkingDirectory) {
       if ($Newable) {
-        if (-not $wd) {
+        if (!$wd) {
           Write-Output $PWD.Path
         }
         elseif (Test-Path $wd -PathType Container) {
@@ -32,7 +32,7 @@ function Resolve-GitRepository {
           ).Path
         }
         elseif (
-          -not [Path]::IsPathRooted(
+          ![Path]::IsPathRooted(
             $wd
           ) -and (
             Test-Path (
@@ -48,7 +48,7 @@ function Resolve-GitRepository {
         }
       }
       else {
-        if (-not $wd) {
+        if (!$wd) {
           if (Test-Path .git -PathType Container) {
             Write-Output $PWD.Path
           }
@@ -63,7 +63,7 @@ function Resolve-GitRepository {
           ).Path
         }
         elseif (
-          -not [Path]::IsPathRooted(
+          ![Path]::IsPathRooted(
             $wd
           ) -and (
             Test-Path (
@@ -94,7 +94,7 @@ function Test-NodePackageDirectory {
     [string]$WorkingDirectory
   )
 
-  if (-not $WorkingDirectory) {
+  if (!$WorkingDirectory) {
     $WorkingDirectory = $PWD.Path
   }
 
@@ -245,9 +245,9 @@ function Invoke-Git {
       }
       else {
         if (
-          $WorkingDirectory -and -not (
+          $WorkingDirectory -and !(
             Resolve-GitRepository -WorkingDirectory $PWD.Path
-          ) -and -not (
+          ) -and !(
             Resolve-GitRepository -WorkingDirectory $WorkingDirectory
           ) -and (
             Resolve-GitRepository -WorkingDirectory $Verb
@@ -279,7 +279,7 @@ function Invoke-Git {
   }
   $Repository = Resolve-GitRepository @Resolve
 
-  if (-not $Repository) {
+  if (!$Repository) {
     if ($WorkingDirectory) {
       $GitArgument.Insert(0, $WorkingDirectory)
 
@@ -287,7 +287,7 @@ function Invoke-Git {
       $Repository = Resolve-GitRepository @Resolve
     }
 
-    if (-not $Repository) {
+    if (!$Repository) {
       throw "Path '$WorkingDirectory' is not a Git repository"
     }
   }
@@ -404,7 +404,7 @@ function Import-GitRepository {
 
   [string[]]$RepositoryPathSegments = $Repository -split '/' -notmatch '^\s*$'
 
-  if (-not $RepositoryPathSegments) {
+  if (!$RepositoryPathSegments) {
     throw 'No repository name given.'
   }
 
@@ -538,7 +538,7 @@ function Compare-GitRepository {
   if (
     $WorkingDirectory -and (
       Resolve-GitRepository -WorkingDirectory $PWD.Path
-    ) -and -not (
+    ) -and !(
       Resolve-GitRepository -WorkingDirectory $WorkingDirectory
     )
   ) {
@@ -592,7 +592,7 @@ function Add-GitRepository {
     [switch]$Renormalize
   )
 
-  if (-not $Name) {
+  if (!$Name) {
     $Name = '.'
   }
 
@@ -602,7 +602,7 @@ function Add-GitRepository {
   if (
     $WorkingDirectory -and (
       Resolve-GitRepository -WorkingDirectory $PWD.Path
-    ) -and -not (
+    ) -and !(
       Resolve-GitRepository -WorkingDirectory $WorkingDirectory
     )
   ) {
@@ -689,11 +689,11 @@ function Write-GitRepository {
   if (
     $WorkingDirectory -and (
       Resolve-GitRepository -WorkingDirectory $PWD.Path
-    ) -and -not (
+    ) -and !(
       Resolve-GitRepository -WorkingDirectory $WorkingDirectory
     )
   ) {
-    if ($WorkingDirectory -match $GIT_ARGUMENT -and -not $Messages.Count) {
+    if ($WorkingDirectory -match $GIT_ARGUMENT -and !$Messages.Count) {
       $CommitArgument.Insert(0, $WorkingDirectory)
     }
     else {
@@ -707,7 +707,7 @@ function Write-GitRepository {
     $CommitArgument.Add('--allow-empty')
   }
 
-  if (-not $Messages.Count) {
+  if (!$Messages.Count) {
     if ('--allow-empty' -in $CommitArgument) {
       $Messages.Add('No message.')
     }
@@ -723,7 +723,7 @@ function Write-GitRepository {
     )
   )
 
-  if (-not $Staged) {
+  if (!$Staged) {
     Add-GitRepository -WorkingDirectory $WorkingDirectory
   }
 
@@ -762,7 +762,7 @@ function Push-GitRepository {
   if (
     $WorkingDirectory -and (
       Resolve-GitRepository -WorkingDirectory $PWD.Path
-    ) -and -not (
+    ) -and !(
       Resolve-GitRepository -WorkingDirectory $WorkingDirectory
     )
   ) {
@@ -826,7 +826,7 @@ function Reset-GitRepository {
   if ($Tree) {
     if (
       $Tree -match $TREE_SPEC -and (
-        -not $Matches.Step -or $Matches.Step -as [int]
+        !$Matches.Step -or $Matches.Step -as [int]
       )
     ) {
       [string]$Branching = $Matches.Branching ? $Matches.Branching : '~'
@@ -841,13 +841,13 @@ function Reset-GitRepository {
   if (
     $WorkingDirectory -and (
       Resolve-GitRepository -WorkingDirectory $PWD.Path
-    ) -and -not (
+    ) -and !(
       Resolve-GitRepository -WorkingDirectory $WorkingDirectory
     )
   ) {
     if (
-      -not $Tree -and $WorkingDirectory -match $TREE_SPEC -and (
-        -not $Matches.Step -or $Matches.Step -as [int]
+      !$Tree -and $WorkingDirectory -match $TREE_SPEC -and (
+        !$Matches.Step -or $Matches.Step -as [int]
       )
     ) {
       [string]$Branching = $Matches.Branching ? $Matches.Branching : '~'
@@ -902,7 +902,7 @@ function Restore-GitRepository {
   if (
     $WorkingDirectory -and (
       Resolve-GitRepository -WorkingDirectory $PWD.Path
-    ) -and -not (
+    ) -and !(
       Resolve-GitRepository -WorkingDirectory $WorkingDirectory
     )
   ) {
@@ -1105,7 +1105,7 @@ function Invoke-Npm {
 
   if ($WorkingDirectory.Length) {
     if (
-      $WorkingDirectory.StartsWith([char]'-') -or -not (
+      $WorkingDirectory.StartsWith([char]'-') -or !(
         Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory
       )
     ) {
@@ -1121,7 +1121,7 @@ function Invoke-Npm {
     }
   }
 
-  if ($Command.Length -and $Command.StartsWith([char]'-') -or $Command -notin $NODE_VERB -and -not $NODE_ALIAS.ContainsKey($Command)) {
+  if ($Command.Length -and $Command.StartsWith([char]'-') -or $Command -notin $NODE_VERB -and !$NODE_ALIAS.ContainsKey($Command)) {
     [string]$DeferredVerb = $NodeCommand.Count ? $NodeCommand.Find(
       {
         $args[0] -in $NODE_VERB
@@ -1295,7 +1295,9 @@ function Compare-NodeModule {
   $NodeArgument = [List[string]]::new()
 
   if ($WorkingDirectory) {
-    if (-not (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)) {
+    if (
+      !(Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)
+    ) {
       $NodeArgument.Add($WorkingDirectory)
       $WorkingDirectory = ''
     }
@@ -1402,7 +1404,9 @@ function Step-NodePackageVersion {
   )
 
   if ($WorkingDirectory) {
-    if (-not (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)) {
+    if (
+      !(Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)
+    ) {
       $NodeArgument.Add($WorkingDirectory)
       $WorkingDirectory = ''
     }
@@ -1447,7 +1451,7 @@ function Invoke-NodePackageScript {
     [string]$WorkingDirectory
   )
 
-  if (-not $Script) {
+  if (!$Script) {
     throw 'Script name is required.'
   }
 
@@ -1455,7 +1459,9 @@ function Invoke-NodePackageScript {
   $NodeArgument.Add($Script)
 
   if ($WorkingDirectory) {
-    if (-not (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)) {
+    if (
+      !(Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)
+    ) {
       $NodeArgument.Add($WorkingDirectory)
       $WorkingDirectory = ''
     }
@@ -1500,7 +1506,9 @@ function Test-NodePackage {
   $NodeArgument = [List[string]]::new()
 
   if ($WorkingDirectory) {
-    if (-not (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)) {
+    if (
+      !(Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)
+    ) {
       $NodeArgument.Add($WorkingDirectory)
       $WorkingDirectory = ''
     }

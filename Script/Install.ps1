@@ -9,7 +9,7 @@
 
   if (Test-Path $DIST -PathType Leaf) {
     if (
-      -not $Exists -or (
+      !$Exists -or (
         Get-FileHash -Path $ASSEMBLY -Algorithm MD5
       ).Hash -ne (
         Get-FileHash -Path $DIST -Algorithm MD5
