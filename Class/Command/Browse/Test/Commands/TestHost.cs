@@ -165,15 +165,16 @@ public class TestHost : CoreCommand
         portNumber
       );
     }
-    else
+    else if (
+      !string.IsNullOrEmpty(
+        commonTcpPort
+      )
+    )
     {
-      if (!string.IsNullOrEmpty(commonTcpPort))
-      {
-        ps.AddParameter(
-          "CommonTCPPort",
-          commonTcpPort
-        );
-      }
+      ps.AddParameter(
+        "CommonTCPPort",
+        commonTcpPort
+      );
     }
 
     WriteObject(
