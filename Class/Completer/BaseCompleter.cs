@@ -11,7 +11,7 @@ public abstract class BaseCompleter : IArgumentCompleter
     CompletionCase casing
   ) : this() => Casing = casing;
 
-  public virtual IEnumerable<CompletionResult> CompleteArgument(
+  public IEnumerable<CompletionResult> CompleteArgument(
     string commandName,
     string parameterName,
     string wordToComplete,
