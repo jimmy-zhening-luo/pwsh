@@ -1,6 +1,6 @@
 namespace Module.Command;
 
-public abstract class CoreCommand : PSCmdlet, IDisposable
+public abstract class CoreCommand : PSCmdlet, System.IDisposable
 {
   private bool disposed;
 
