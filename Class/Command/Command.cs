@@ -8,9 +8,9 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
 
   private protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
 
-  private protected PowerShell PS
+  private protected ref PowerShell PS
   {
-    get => (powershell ??= CreatePS());
+    get => ref (powershell ??= CreatePS());
   }
   private PowerShell? powershell;
 
