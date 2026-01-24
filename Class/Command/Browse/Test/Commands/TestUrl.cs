@@ -112,7 +112,7 @@ public class TestUrl : CoreCommand
 
   private void ResolveDns(string host)
   {
-    using PowerShell ps = AddCommand("Resolve-DnsName")
+    using var ps = AddCommand("Resolve-DnsName")
       .AddParameter(
         "Name",
         host
@@ -137,7 +137,7 @@ public class TestUrl : CoreCommand
 
   private int VisitUrlPath(Uri fullUrl)
   {
-    using PowerShell ps = AddCommand("Invoke-WebRequest")
+    using var ps = AddCommand("Invoke-WebRequest")
       .AddParameter(
         "Uri",
         fullUrl

@@ -148,7 +148,7 @@ public class TestHost : CoreCommand
     ushort portNumber = 0
   )
   {
-    using PowerShell ps = AddCommand(
+    using var ps = AddCommand(
       "Test-NetConnection",
       CommandTypes.Function
     )
