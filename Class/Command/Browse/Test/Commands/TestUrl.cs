@@ -9,7 +9,7 @@ using Microsoft.PowerShell.Commands;
 )]
 [Alias("tu")]
 [OutputType(typeof(Uri))]
-public class TestUrl : CoreCommand
+public sealed class TestUrl : CoreCommand
 {
   [Parameter(
     Mandatory = true,

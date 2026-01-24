@@ -12,7 +12,7 @@ namespace Module.Command.Shell.Set.Directory.Commands;
   typeof(PathInfo),
   typeof(PathInfoStack)
 )]
-public class SetDirectory : WrappedSetDirectory
+public sealed class SetDirectory : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -55,7 +55,7 @@ public class SetDirectory : WrappedSetDirectory
 [OutputType(
   typeof(PathInfo)
 )]
-public class SetDirectorySibling : WrappedSetDirectory
+public sealed class SetDirectorySibling : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -85,7 +85,7 @@ public class SetDirectorySibling : WrappedSetDirectory
 [OutputType(
   typeof(PathInfo)
 )]
-public class SetDirectoryRelative : WrappedSetDirectory
+public sealed class SetDirectoryRelative : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -115,7 +115,7 @@ public class SetDirectoryRelative : WrappedSetDirectory
 [OutputType(
   typeof(PathInfo)
 )]
-public class SetDirectoryHome : WrappedSetDirectory
+public sealed class SetDirectoryHome : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -145,7 +145,7 @@ public class SetDirectoryHome : WrappedSetDirectory
 [OutputType(
   typeof(PathInfo)
 )]
-public class SetDirectoryCode : WrappedSetDirectory
+public sealed class SetDirectoryCode : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -177,7 +177,7 @@ public class SetDirectoryCode : WrappedSetDirectory
 [OutputType(
   typeof(PathInfo)
 )]
-public class SetDrive : WrappedSetDirectory
+public sealed class SetDrive : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -207,7 +207,7 @@ public class SetDrive : WrappedSetDirectory
 [OutputType(
   typeof(PathInfo)
 )]
-public class SetDriveD : WrappedSetDirectory
+public sealed class SetDriveD : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",

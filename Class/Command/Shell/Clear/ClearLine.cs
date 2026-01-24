@@ -9,7 +9,7 @@ namespace Module.Command.Shell.Clear;
 )]
 [Alias("cl", "clear")]
 [OutputType(typeof(void))]
-public class ClearLine : WrappedCommandShouldProcess
+public sealed class ClearLine : WrappedCommandShouldProcess
 {
   public ClearLine() : base(
     "Clear-Content"

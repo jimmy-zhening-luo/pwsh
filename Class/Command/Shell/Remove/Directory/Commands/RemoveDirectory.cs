@@ -9,7 +9,7 @@ namespace Module.Command.Shell.Remove.Directory.Commands;
 )]
 [Alias("rd")]
 [OutputType(typeof(void))]
-public class RemoveDirectory : WrappedRemoveDirectory
+public sealed class RemoveDirectory : WrappedRemoveDirectory
 {
   [Parameter(
     ParameterSetName = "Path",

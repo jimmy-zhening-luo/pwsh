@@ -6,7 +6,7 @@ namespace Module.Command.Profile;
 )]
 [Alias("op")]
 [OutputType(typeof(void))]
-public class StartProfile : CoreCommand
+public sealed class StartProfile : CoreCommand
 {
   private protected sealed override void AfterEndProcessing()
   {

@@ -12,7 +12,7 @@ namespace Module.Command.Shell.Get.Directory.Commands;
   typeof(DirectoryInfo),
   typeof(FileInfo)
 )]
-public class GetDirectory : WrappedGetDirectory
+public sealed class GetDirectory : WrappedGetDirectory
 {
   [Parameter(
     ParameterSetName = "Items",
@@ -60,7 +60,7 @@ public class GetDirectory : WrappedGetDirectory
   typeof(DirectoryInfo),
   typeof(FileInfo)
 )]
-public class GetDirectorySibling : WrappedGetDirectory
+public sealed class GetDirectorySibling : WrappedGetDirectory
 {
   [Parameter(
     ParameterSetName = "Items",
@@ -91,7 +91,7 @@ public class GetDirectorySibling : WrappedGetDirectory
   typeof(DirectoryInfo),
   typeof(FileInfo)
 )]
-public class GetDirectoryRelative : WrappedGetDirectory
+public sealed class GetDirectoryRelative : WrappedGetDirectory
 {
   [Parameter(
     ParameterSetName = "Items",
@@ -122,7 +122,7 @@ public class GetDirectoryRelative : WrappedGetDirectory
   typeof(DirectoryInfo),
   typeof(FileInfo)
 )]
-public class GetDirectoryHome : WrappedGetDirectory
+public sealed class GetDirectoryHome : WrappedGetDirectory
 {
   [Parameter(
     ParameterSetName = "Items",
@@ -153,7 +153,7 @@ public class GetDirectoryHome : WrappedGetDirectory
   typeof(DirectoryInfo),
   typeof(FileInfo)
 )]
-public class GetDirectoryCode : WrappedGetDirectory
+public sealed class GetDirectoryCode : WrappedGetDirectory
 {
   [Parameter(
     ParameterSetName = "Items",
@@ -186,7 +186,7 @@ public class GetDirectoryCode : WrappedGetDirectory
   typeof(DirectoryInfo),
   typeof(FileInfo)
 )]
-public class GetDirectoryDrive : WrappedGetDirectory
+public sealed class GetDirectoryDrive : WrappedGetDirectory
 {
   [Parameter(
     ParameterSetName = "Items",

@@ -6,7 +6,7 @@ namespace Module.Command.Windows.Configure;
 )]
 [Alias("path")]
 [OutputType(typeof(void))]
-public class EditSystemPath : Cmdlet
+public sealed class EditSystemPath : Cmdlet
 {
   [Parameter(
     HelpMessage = "Launch Environment Variables control panel as administrator to edit system variables, triggering a UAC prompt if needed."

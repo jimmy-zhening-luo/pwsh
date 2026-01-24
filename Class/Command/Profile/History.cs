@@ -6,7 +6,7 @@ namespace Module.Command.Profile;
 )]
 [Alias("oc")]
 [OutputType(typeof(void))]
-public class StartHistory : Cmdlet
+public sealed class StartHistory : Cmdlet
 {
   protected sealed override void EndProcessing() => CreateProcess(
     LocalAppData(

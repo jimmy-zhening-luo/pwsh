@@ -8,7 +8,7 @@ namespace Module.Command.Windows.Manage;
 )]
 [Alias("tkill")]
 [OutputType(typeof(void))]
-public class StopTask : CoreCommand
+public sealed class StopTask : CoreCommand
 {
   [Parameter(
     ParameterSetName = "Name",

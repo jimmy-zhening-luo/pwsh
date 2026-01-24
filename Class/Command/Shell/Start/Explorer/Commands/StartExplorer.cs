@@ -9,7 +9,7 @@ namespace Module.Command.Shell.Start.Explorer.Commands;
 )]
 [Alias("e")]
 [OutputType(typeof(void))]
-public class StartExplorer : WrappedStartExplorer
+public sealed class StartExplorer : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -40,7 +40,7 @@ public class StartExplorer : WrappedStartExplorer
 )]
 [Alias("e.", "ex")]
 [OutputType(typeof(void))]
-public class StartExplorerSibling : WrappedStartExplorer
+public sealed class StartExplorerSibling : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -67,7 +67,7 @@ public class StartExplorerSibling : WrappedStartExplorer
 )]
 [Alias("e..", "exx")]
 [OutputType(typeof(void))]
-public class StartExplorerRelative : WrappedStartExplorer
+public sealed class StartExplorerRelative : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -94,7 +94,7 @@ public class StartExplorerRelative : WrappedStartExplorer
 )]
 [Alias("eh")]
 [OutputType(typeof(void))]
-public class StartExplorerHome : WrappedStartExplorer
+public sealed class StartExplorerHome : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -121,7 +121,7 @@ public class StartExplorerHome : WrappedStartExplorer
 )]
 [Alias("ec")]
 [OutputType(typeof(void))]
-public class StartExplorerCode : WrappedStartExplorer
+public sealed class StartExplorerCode : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -150,7 +150,7 @@ public class StartExplorerCode : WrappedStartExplorer
 )]
 [Alias("e/")]
 [OutputType(typeof(void))]
-public class StartExplorerDrive : WrappedStartExplorer
+public sealed class StartExplorerDrive : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",

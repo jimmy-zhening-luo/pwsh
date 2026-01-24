@@ -9,7 +9,7 @@ using BindingFlags = System.Reflection.BindingFlags;
 )]
 [Alias("types", "ty")]
 [OutputType(typeof(string))]
-public class GetType : Cmdlet
+public sealed class GetType : Cmdlet
 {
   protected sealed override void EndProcessing()
   {

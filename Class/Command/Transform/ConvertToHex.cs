@@ -7,7 +7,7 @@ namespace Module.Command.Transform;
 )]
 [Alias("hex")]
 [OutputType(typeof(string))]
-public class ConvertToHex : Cmdlet
+public sealed class ConvertToHex : Cmdlet
 {
   [Parameter(
     Mandatory = true,

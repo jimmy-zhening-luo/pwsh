@@ -25,7 +25,7 @@ public enum DiskSizeAlias
   P = PB
 }
 
-public class DiskSize
+public sealed class DiskSize
 {
   public static readonly Dictionary<DiskSizeUnit, long> Factor = new() {
       { DiskSizeUnit.B, 1L },

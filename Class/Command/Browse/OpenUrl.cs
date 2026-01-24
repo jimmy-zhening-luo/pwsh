@@ -8,7 +8,7 @@ namespace Module.Command.Browse;
 )]
 [Alias("o", "open")]
 [OutputType(typeof(void))]
-public class OpenUrl : CoreCommand
+public sealed class OpenUrl : CoreCommand
 {
   [Parameter(
     ParameterSetName = "Path",

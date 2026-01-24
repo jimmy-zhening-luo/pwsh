@@ -9,7 +9,7 @@ namespace Module.Command.Shell.Get.File.Commands;
 )]
 [Alias("p")]
 [OutputType(typeof(string))]
-public class GetFile : WrappedGetFile
+public sealed class GetFile : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -52,7 +52,7 @@ public class GetFile : WrappedGetFile
 )]
 [Alias("p.", "px")]
 [OutputType(typeof(string))]
-public class GetFileSibling : WrappedGetFile
+public sealed class GetFileSibling : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -78,7 +78,7 @@ public class GetFileSibling : WrappedGetFile
 )]
 [Alias("p..", "pxx")]
 [OutputType(typeof(string))]
-public class GetFileRelative : WrappedGetFile
+public sealed class GetFileRelative : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -104,7 +104,7 @@ public class GetFileRelative : WrappedGetFile
 )]
 [Alias("ph")]
 [OutputType(typeof(string))]
-public class GetFileHome : WrappedGetFile
+public sealed class GetFileHome : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -130,7 +130,7 @@ public class GetFileHome : WrappedGetFile
 )]
 [Alias("pc")]
 [OutputType(typeof(string))]
-public class GetFileCode : WrappedGetFile
+public sealed class GetFileCode : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -158,7 +158,7 @@ public class GetFileCode : WrappedGetFile
 )]
 [Alias("p/")]
 [OutputType(typeof(string))]
-public class GetFileDrive : WrappedGetFile
+public sealed class GetFileDrive : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",

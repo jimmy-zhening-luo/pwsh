@@ -6,7 +6,7 @@ namespace Module.Command.Windows.Update;
 )]
 [Alias("wu")]
 [OutputType(typeof(void))]
-public class UpdateWindows : Cmdlet
+public sealed class UpdateWindows : Cmdlet
 {
   protected sealed override void EndProcessing()
   {
@@ -22,7 +22,7 @@ public class UpdateWindows : Cmdlet
 )]
 [Alias("su")]
 [OutputType(typeof(void))]
-public class UpdateStoreApp : Cmdlet
+public sealed class UpdateStoreApp : Cmdlet
 {
   protected sealed override void EndProcessing()
   {

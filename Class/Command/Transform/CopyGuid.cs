@@ -7,7 +7,7 @@ namespace Module.Command.Transform;
 )]
 [Alias("gu", "guid")]
 [OutputType(typeof(string))]
-public class CopyGuid : CoreCommand
+public sealed class CopyGuid : CoreCommand
 {
   [Parameter(
     HelpMessage = "Uppercase GUID"

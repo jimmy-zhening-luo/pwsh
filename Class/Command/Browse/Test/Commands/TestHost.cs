@@ -8,7 +8,7 @@ namespace Module.Command.Browse.Test.Commands;
 )]
 [Alias("tn")]
 [OutputType(typeof(object))]
-public class TestHost : CoreCommand
+public sealed class TestHost : CoreCommand
 {
   [Parameter(
     Position = 0,
