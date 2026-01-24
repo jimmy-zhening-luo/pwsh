@@ -116,8 +116,10 @@ public class TestUrl : CoreCommand
   {
     using var ps = CreatePS();
 
-    ps
-      .AddCommand("Resolve-DnsName")
+    AddCommand(
+      ps,
+      "Resolve-DnsName"
+    )
       .AddParameter(
         "Name",
         host
@@ -146,8 +148,10 @@ public class TestUrl : CoreCommand
   {
     using var ps = CreatePS();
 
-    ps
-      .AddCommand("Invoke-WebRequest")
+    AddCommand(
+      ps,
+      "Invoke-WebRequest"
+    )
       .AddParameter(
         "Uri",
         fullUrl

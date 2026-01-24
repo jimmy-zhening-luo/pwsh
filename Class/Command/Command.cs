@@ -39,6 +39,16 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
     parameterName
   );
 
+  private protected CommandInfo GetCommand(
+    string command,
+    CommandTypes commandType = CommandTypes.Cmdlet
+  ) => SessionState
+    .InvokeCommand
+    .GetCommand(
+      command,
+      commandType
+    );
+
   private protected PowerShell AddCommand(
     string command,
     CommandTypes commandType = CommandTypes.Cmdlet
@@ -53,12 +63,10 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
     string command,
     CommandTypes commandType = CommandTypes.Cmdlet
   ) => ps.AddCommand(
-    SessionState
-      .InvokeCommand
-      .GetCommand(
-        command,
-        commandType
-      )
+    GetCommand(
+      command,
+      commandType
+    )
   );
 
   [DoesNotReturn]
