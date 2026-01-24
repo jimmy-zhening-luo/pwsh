@@ -14,7 +14,7 @@ public abstract class CoreCommand : PSCmdlet
     string command,
     CommandTypes commandType = CommandTypes.Cmdlet
   ) => AddCommand(
-    PS(),
+    CreatePS(),
     command,
     commandType
   );

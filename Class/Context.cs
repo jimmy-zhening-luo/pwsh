@@ -11,7 +11,7 @@ internal static class Context
     );
   }
 
-  internal static PowerShell PS() => PowerShell.Create(
+  internal static PowerShell CreatePS() => PowerShell.Create(
     CurrentRunspace
   );
 

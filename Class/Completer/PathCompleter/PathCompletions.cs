@@ -59,7 +59,7 @@ public class PathCompletionsAttribute : BaseCompletionsAttribute<PathCompleter>
       Location
     );
 
-    using var ps = PS();
+    using var ps = CreatePS();
 
     return new(
       Path.GetFullPath(
