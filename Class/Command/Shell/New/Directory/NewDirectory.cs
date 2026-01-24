@@ -9,7 +9,7 @@ namespace Module.Command.Shell.New.Directory;
 )]
 [Alias("mk")]
 [OutputType(typeof(DirectoryInfo))]
-public class NewDirectory : WrappedCommand
+public class NewDirectory : WrappedCommandShouldProcess
 {
   public NewDirectory() : base(
     "New-Item"

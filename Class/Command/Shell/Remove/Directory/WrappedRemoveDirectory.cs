@@ -1,6 +1,6 @@
 namespace Module.Command.Shell.Remove.Directory;
 
-public abstract class WrappedRemoveDirectory : WrappedCommand
+public abstract class WrappedRemoveDirectory : WrappedCommandShouldProcess
 {
   private protected WrappedRemoveDirectory() : base(
     "Remove-Item"

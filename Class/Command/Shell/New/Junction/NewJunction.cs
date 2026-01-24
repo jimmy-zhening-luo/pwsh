@@ -9,7 +9,7 @@ namespace Module.Command.Shell.New.Junction;
 )]
 [Alias("mj")]
 [OutputType(typeof(DirectoryInfo))]
-public class NewJunction : WrappedCommand
+public class NewJunction : WrappedCommandShouldProcess
 {
   public NewJunction() : base(
     "New-Item"

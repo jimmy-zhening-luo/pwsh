@@ -1,6 +1,6 @@
 namespace Module.Command.Shell.Start.Explorer;
 
-public abstract class WrappedStartExplorer : WrappedCommand
+public abstract class WrappedStartExplorer : WrappedCommandShouldProcess
 {
   private protected WrappedStartExplorer() : base(
     "Invoke-Item"
