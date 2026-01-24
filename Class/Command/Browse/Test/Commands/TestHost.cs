@@ -49,12 +49,7 @@ public class TestHost : CoreCommand
   [EnumCompletions(
     typeof(TestHostVerbosity)
   )]
-  public TestHostVerbosity InformationLevel
-  {
-    get => verbosity;
-    set => verbosity = value;
-  }
-  private TestHostVerbosity verbosity;
+  public TestHostVerbosity InformationLevel;
 
   [Parameter]
   public SwitchParameter Detailed
@@ -68,7 +63,7 @@ public class TestHost : CoreCommand
   {
     if (detailed)
     {
-      verbosity = TestHostVerbosity.Detailed;
+      InformationLevel = TestHostVerbosity.Detailed;
     }
   }
 
@@ -163,7 +158,7 @@ public class TestHost : CoreCommand
       )
       .AddParameter(
         "InformationLevel",
-        verbosity
+        InformationLevel
       );
 
     if (portNumber != 0)
