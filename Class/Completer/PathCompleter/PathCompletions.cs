@@ -59,12 +59,14 @@ public class PathCompletionsAttribute : BaseCompletionsAttribute<PathCompleter>
       Location
     );
 
+    using var ps = PS();
+
     return new(
       Path.GetFullPath(
         nullPath
           ? string.Empty
           : Location,
-        PS()
+        ps
           .AddCommand(
             "Get-Location"
           )
