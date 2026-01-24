@@ -31,10 +31,10 @@ public abstract class CoreCommand : PSCmdlet, IDisposable
   protected sealed override void StopProcessing() => Dispose();
 
   private protected virtual void AfterEndProcessing()
-  { };
+  { }
 
   private protected virtual void Clean()
-  { };
+  { }
 
   private protected bool IsPresent(
     string parameterName

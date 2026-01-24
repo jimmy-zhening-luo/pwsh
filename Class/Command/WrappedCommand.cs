@@ -38,7 +38,11 @@ public abstract class WrappedCommand(
           BoundParameters
         );
 
-      Begin();
+      steppablePipeline = PS.GetSteppablePipeline();
+
+      steppablePipeline.Begin(
+        this
+      );
     }
   }
 
@@ -91,15 +95,4 @@ public abstract class WrappedCommand(
         : Location
     )
   );
-
-  private void Begin()
-  {
-    if (powershell != null)
-    {
-      steppablePipeline = powershell.GetSteppablePipeline();
-      steppablePipeline.Begin(
-        this
-      );
-    }
-  }
 }
