@@ -52,7 +52,7 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
   );
 
   private protected PowerShell AddCommand(
-    PowerShell ps,
+    ref readonly PowerShell ps,
     string command,
     CommandTypes commandType = CommandTypes.Cmdlet
   ) => ps.AddCommand(
