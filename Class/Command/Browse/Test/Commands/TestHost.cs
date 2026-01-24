@@ -31,12 +31,7 @@ public class TestHost : CoreCommand
   [EnumCompletions(
     typeof(TestHostWellKnownPort)
   )]
-  public string CommonTCPPort
-  {
-    get => commonPort;
-    set => commonPort = value;
-  }
-  private string commonPort = string.Empty;
+  public string CommonTCPPort;
 
   [Parameter(
     ParameterSetName = "RemotePort",
@@ -46,12 +41,7 @@ public class TestHost : CoreCommand
   )]
   [Alias("RemotePort")]
   [ValidateRange(1, 65535)]
-  public ushort Port
-  {
-    get => port;
-    set => port = value;
-  }
-  private ushort port;
+  public ushort Port;
 
   [Parameter(
     HelpMessage = "The level of information to return, can be Quiet or Detailed. Will not take effect if Detailed switch is set. Defaults to Quiet."
@@ -86,44 +76,62 @@ public class TestHost : CoreCommand
   {
     foreach (string name in names)
     {
-      string portString = string.Empty;
-      ushort portNumber = 0;
-
       if (ParameterSetName == "RemotePort")
       {
-        portNumber = port;
+        WriteTestNetConnection(
+          name,
+          string.Empty,
+          Port
+        );
+
+        continue;
+      }
+
+      if (
+        !IsPresent(
+          "CommonTCPPort"
+        )
+      )
+      {
+        WriteTestNetConnection(
+          name
+        );
+
+        continue;
+      }
+
+      if (
+        ushort.TryParse(
+          CommonTCPPort,
+          out var parsedPortNumber
+        )
+      )
+      {
+        WriteTestNetConnection(
+          name,
+          string.Empty,
+          parsedPortNumber
+        );
+      }
+      else if (
+        Enum.TryParse(
+          CommonTCPPort,
+          true,
+          out TestHostWellKnownPort parsedPortEnum
+        )
+      )
+      {
+        WriteTestNetConnection(
+          name,
+          parsedPortEnum.ToString()
+        );
       }
       else
       {
-        if (!string.IsNullOrEmpty(commonPort))
-        {
-          if (
-            ushort.TryParse(
-              commonPort,
-              out var parsedPortNumber
-            )
-          )
-          {
-            portNumber = parsedPortNumber;
-          }
-          else if (
-            Enum.TryParse(
-              commonPort,
-              true,
-              out TestHostWellKnownPort parsedPortEnum
-            )
-          )
-          {
-            portString = parsedPortEnum.ToString();
-          }
-        }
+        WriteTestNetConnection(
+          name
+        );
       }
-
-      WriteTestNetConnection(
-        name,
-        portString,
-        portNumber
-      );
     }
   }
 
@@ -141,8 +149,8 @@ public class TestHost : CoreCommand
 
   private void WriteTestNetConnection(
     string computerName,
-    string commonTcpPort,
-    ushort portNumber
+    string commonTcpPort = "",
+    ushort portNumber = 0
   )
   {
     using PowerShell ps = AddCommand(
