@@ -150,11 +150,11 @@ public class TestHost : CoreCommand
   {
     using var ps = CreatePS();
 
-    ps
-      .AddCommand(
-        "Test-NetConnection",
-        CommandTypes.Function
-      )
+    AddCommand(
+      ps,
+      "Test-NetConnection",
+      CommandTypes.Function
+    )
       .AddParameter(
         "ComputerName",
         computerName

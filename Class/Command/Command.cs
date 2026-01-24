@@ -8,10 +8,7 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
 
   private protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
 
-  private protected ref PowerShell PS
-  {
-    get => ref (powershell ??= CreatePS());
-  }
+  private protected PowerShell PS => powershell ??= CreatePS();
   private PowerShell? powershell;
 
   public void Dispose()
@@ -52,7 +49,7 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
   );
 
   private protected PowerShell AddCommand(
-    ref readonly PowerShell ps,
+    PowerShell ps,
     string command,
     CommandTypes commandType = CommandTypes.Cmdlet
   ) => ps.AddCommand(
@@ -116,7 +113,8 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
   {
     using var ps = CreatePS();
 
-    ps.AddCommand(
+    AddCommand(
+      ps,
       nativeCommand,
       commandType
     );
