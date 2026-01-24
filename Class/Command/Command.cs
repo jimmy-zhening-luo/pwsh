@@ -4,6 +4,11 @@ public abstract class CoreCommand : PSCmdlet
 {
   private protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
 
+  protected override void StopProcessing() => Clean();
+
+  private protected virtual void Clean()
+  { }
+
   private protected bool IsPresent(
     string parameterName
   ) => BoundParameters.ContainsKey(

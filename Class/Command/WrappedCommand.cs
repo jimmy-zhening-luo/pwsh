@@ -30,14 +30,13 @@ public abstract class WrappedCommand(
     )
     {
       AnchorBoundPath();
-      Begin(
-        AddCommand(
-          WrappedCommandName
-        )
-          .AddParameters(
-            BoundParameters
-          )
-      );
+      AddCommand(
+        WrappedCommandName
+      )
+        .AddParameters(
+          BoundParameters
+        );
+      Begin();
     }
   }
 
@@ -67,6 +66,19 @@ public abstract class WrappedCommand(
   private protected virtual void BeforeEndProcessing()
   { }
 
+  private protected override void Clean()
+  {
+    if (steppablePipeline != null)
+    {
+      steppablePipeline.End();
+      steppablePipeline.Clean();
+      steppablePipeline.Dispose();
+      steppablePipeline = null;
+    }
+
+    base.Clean();
+  }
+
   private protected string Reanchor(
     string typedPath = ""
   ) => Path.GetFullPath(
@@ -81,24 +93,14 @@ public abstract class WrappedCommand(
     )
   );
 
-  private void Begin(
-    PowerShell ps
-  )
+  private void Begin()
   {
-    steppablePipeline = ps.GetSteppablePipeline();
-    steppablePipeline.Begin(
-      this
-    );
-  }
-
-  private void Clean()
-  {
-    if (steppablePipeline != null)
+    if (powershell != null)
     {
-      steppablePipeline.End();
-      steppablePipeline.Clean();
-      steppablePipeline.Dispose();
-      steppablePipeline = null;
+      steppablePipeline = powershell.GetSteppablePipeline();
+      steppablePipeline.Begin(
+        this
+      );
     }
   }
 }
