@@ -11,6 +11,11 @@ namespace Module.Command.Shell.New.Junction;
 [OutputType(typeof(DirectoryInfo))]
 public class NewJunction : WrappedCommand
 {
+  private NewJunction() : base(
+    "New-Item"
+  )
+  { }
+
   [Parameter(
     ParameterSetName = "pathSet",
     Mandatory = true,
@@ -30,9 +35,7 @@ public class NewJunction : WrappedCommand
   [PathCompletions]
   public object? Value;
 
-  protected override string WrappedCommandName => "New-Item";
-
-  protected override bool BeforeBeginProcessing()
+  private protected override bool BeforeBeginProcessing()
   {
     BoundParameters["ItemType"] = "Junction";
     BoundParameters["Force"] = SwitchParameter.Present;

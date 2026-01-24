@@ -2,13 +2,15 @@ namespace Module.Command;
 
 public abstract class CoreCommand : PSCmdlet
 {
-  protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
+  private protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
 
-  protected bool IsPresent(
+  private protected bool IsPresent(
     string parameterName
-  ) => BoundParameters.ContainsKey(parameterName);
+  ) => BoundParameters.ContainsKey(
+    parameterName
+  );
 
-  protected PowerShell AddCommand(
+  private protected PowerShell AddCommand(
     string command,
     CommandTypes commandType = CommandTypes.Cmdlet
   ) => AddCommand(
@@ -17,7 +19,7 @@ public abstract class CoreCommand : PSCmdlet
     commandType
   );
 
-  protected PowerShell AddCommand(
+  private protected PowerShell AddCommand(
     PowerShell ps,
     string command,
     CommandTypes commandType = CommandTypes.Cmdlet
@@ -31,7 +33,7 @@ public abstract class CoreCommand : PSCmdlet
   );
 
   [DoesNotReturn]
-  protected void Throw(
+  private protected void Throw(
     string message,
     string id,
     ErrorCategory category = ErrorCategory.InvalidOperation,
@@ -46,7 +48,7 @@ public abstract class CoreCommand : PSCmdlet
   );
 
   [DoesNotReturn]
-  protected void Throw(
+  private protected void Throw(
     System.Exception exception,
     string id,
     ErrorCategory category = ErrorCategory.InvalidOperation,
@@ -60,18 +62,21 @@ public abstract class CoreCommand : PSCmdlet
     )
   );
 
-  protected Collection<PSObject> Call(
+  private protected Collection<PSObject> Call(
     string nativeCommand,
     string verb,
     string[] arguments,
     CommandTypes commandType = CommandTypes.Application
   ) => Call(
     nativeCommand,
-    [verb, .. arguments],
+    [
+      verb,
+      .. arguments
+    ],
     commandType
   );
 
-  protected Collection<PSObject> Call(
+  private protected Collection<PSObject> Call(
     string nativeCommand,
     string[] arguments,
     CommandTypes commandType = CommandTypes.Application
@@ -83,45 +88,59 @@ public abstract class CoreCommand : PSCmdlet
     );
     foreach (string argument in arguments)
     {
-      ps.AddArgument(argument);
+      ps.AddArgument(
+        argument
+      );
     }
 
     return ps.Invoke();
   }
 
-  protected bool TestPath(
+  private protected bool TestPath(
     string path,
     FileSystemItemType type = FileSystemItemType.Any
   )
   {
-    string psPath = Pwd(path);
+    string psPath = Pwd(
+      path
+    );
 
     return type switch
     {
-      FileSystemItemType.File => File.Exists(psPath),
-      FileSystemItemType.Directory => Directory.Exists(psPath),
-      _ => Path.Exists(psPath)
+      FileSystemItemType.File => File.Exists(
+        psPath
+      ),
+      FileSystemItemType.Directory => Directory.Exists(
+        psPath
+      ),
+      _ => Path.Exists(
+        psPath
+      )
     };
   }
 
-  protected PSObject Var(
+  private protected PSObject Var(
     string variable
-  ) => Var<PSObject>(variable);
+  ) => Var<PSObject>(
+    variable
+  );
 
-  protected T Var<T>(
+  private protected T Var<T>(
     string variable
   ) => (T)SessionState
     .PSVariable
-    .GetValue(variable);
+    .GetValue(
+      variable
+    );
 
-  protected string Pwd(
+  private protected string Pwd(
     string subpath = ""
   ) => Path.GetFullPath(
     subpath,
     SessionState.Path.CurrentLocation.Path
   );
 
-  protected string Drive(
+  private protected string Drive(
     string subpath = ""
   ) => Path.GetFullPath(
     subpath,

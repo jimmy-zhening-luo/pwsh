@@ -1,4 +1,4 @@
-namespace Module.Command.Browse.Test;
+namespace Module.Command.Browse.Test.Commands;
 
 using Microsoft.PowerShell.Commands;
 

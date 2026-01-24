@@ -1,4 +1,47 @@
-namespace Module.Command.Shell.Get.File.Local;
+namespace Module.Command.Shell.Get.File.Commands;
+
+[Cmdlet(
+  VerbsCommon.Get,
+  "File",
+  DefaultParameterSetName = "Path",
+  SupportsTransactions = true,
+  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096490"
+)]
+[Alias("p")]
+[OutputType(typeof(string))]
+public class GetFile : WrappedGetFile
+{
+  [Parameter(
+    ParameterSetName = "Path",
+    Position = 0,
+    ValueFromPipelineByPropertyName = true
+  )]
+  [SupportsWildcards]
+  [PathCompletions(
+    "",
+    PathItemType.File
+  )]
+  public new string[]? Path;
+
+  [Parameter(
+    ParameterSetName = "LiteralPath",
+    Mandatory = true,
+    ValueFromPipelineByPropertyName = true
+  )]
+  [Alias("PSPath", "LP")]
+  public string[]? LiteralPath;
+
+  [Parameter(
+    ParameterSetName = "Path",
+    Position = 1
+  )]
+  [Parameter(
+    ParameterSetName = "LiteralPath",
+    Position = 1
+  )]
+  [SupportsWildcards]
+  public new string? Filter;
+}
 
 [Cmdlet(
   VerbsCommon.Get,
@@ -9,7 +52,7 @@ namespace Module.Command.Shell.Get.File.Local;
 )]
 [Alias("p.", "px")]
 [OutputType(typeof(string))]
-public class GetFileSibling : GetLocalFileCommand
+public class GetFileSibling : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -23,9 +66,7 @@ public class GetFileSibling : GetLocalFileCommand
   )]
   public new string[]? Path;
 
-  protected override string RelativeLocation => "..";
-
-  protected override string LocationRoot => Pwd();
+  private protected override string LocationSubpath => "..";
 }
 
 [Cmdlet(
@@ -37,7 +78,7 @@ public class GetFileSibling : GetLocalFileCommand
 )]
 [Alias("p..", "pxx")]
 [OutputType(typeof(string))]
-public class GetFileRelative : GetLocalFileCommand
+public class GetFileRelative : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -51,9 +92,7 @@ public class GetFileRelative : GetLocalFileCommand
   )]
   public new string[]? Path;
 
-  protected override string RelativeLocation => @"..\..";
-
-  protected override string LocationRoot => Pwd();
+  private protected override string LocationSubpath => @"..\..";
 }
 
 [Cmdlet(
@@ -65,7 +104,7 @@ public class GetFileRelative : GetLocalFileCommand
 )]
 [Alias("ph")]
 [OutputType(typeof(string))]
-public class GetFileHome : GetLocalFileCommand
+public class GetFileHome : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -79,7 +118,7 @@ public class GetFileHome : GetLocalFileCommand
   )]
   public new string[]? Path;
 
-  protected override string LocationRoot => Home();
+  private protected override string Location => Home();
 }
 
 [Cmdlet(
@@ -91,7 +130,7 @@ public class GetFileHome : GetLocalFileCommand
 )]
 [Alias("pc")]
 [OutputType(typeof(string))]
-public class GetFileCode : GetLocalFileCommand
+public class GetFileCode : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -105,9 +144,9 @@ public class GetFileCode : GetLocalFileCommand
   )]
   public new string[]? Path;
 
-  protected override string RelativeLocation => "code";
+  private protected override string Location => Home();
 
-  protected override string LocationRoot => Home();
+  private protected override string LocationSubpath => "code";
 }
 
 [Cmdlet(
@@ -119,7 +158,7 @@ public class GetFileCode : GetLocalFileCommand
 )]
 [Alias("p/")]
 [OutputType(typeof(string))]
-public class GetFileDrive : GetLocalFileCommand
+public class GetFileDrive : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -133,5 +172,5 @@ public class GetFileDrive : GetLocalFileCommand
   )]
   public new string[]? Path;
 
-  protected override string LocationRoot => Drive();
+  private protected override string Location => Drive();
 }

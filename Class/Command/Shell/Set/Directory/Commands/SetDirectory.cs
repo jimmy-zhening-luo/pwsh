@@ -1,4 +1,48 @@
-namespace Module.Command.Shell.Set.Directory.Local;
+namespace Module.Command.Shell.Set.Directory.Commands;
+
+[Cmdlet(
+  VerbsCommon.Set,
+  "Directory",
+  DefaultParameterSetName = "Path",
+  SupportsTransactions = true,
+  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
+)]
+[Alias("c")]
+[OutputType(
+  typeof(PathInfo),
+  typeof(PathInfoStack)
+)]
+public class SetDirectory : WrappedSetDirectory
+{
+  [Parameter(
+    ParameterSetName = "Path",
+    Position = 0,
+    ValueFromPipeline = true,
+    ValueFromPipelineByPropertyName = true
+  )]
+  [AllowEmptyString]
+  [SupportsWildcards]
+  [PathCompletions(
+    "",
+    PathItemType.Directory
+  )]
+  public new string? Path;
+
+  [Parameter(
+    ParameterSetName = "LiteralPath",
+    Mandatory = true,
+    ValueFromPipelineByPropertyName = true
+  )]
+  [Alias("PSPath", "LP")]
+  public string? LiteralPath;
+
+  [Parameter(
+    ParameterSetName = "Stack",
+    ValueFromPipelineByPropertyName = true
+  )]
+  [AllowEmptyString]
+  public string? Stack;
+}
 
 [Cmdlet(
   VerbsCommon.Set,
@@ -11,7 +55,7 @@ namespace Module.Command.Shell.Set.Directory.Local;
 [OutputType(
   typeof(PathInfo)
 )]
-public class SetDirectorySibling : SetLocalDirectoryCommand
+public class SetDirectorySibling : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -27,9 +71,7 @@ public class SetDirectorySibling : SetLocalDirectoryCommand
   )]
   public new string? Path;
 
-  protected override string RelativeLocation => "..";
-
-  protected override string LocationRoot => Pwd();
+  private protected override string LocationSubpath => "..";
 }
 
 [Cmdlet(
@@ -43,7 +85,7 @@ public class SetDirectorySibling : SetLocalDirectoryCommand
 [OutputType(
   typeof(PathInfo)
 )]
-public class SetDirectoryRelative : SetLocalDirectoryCommand
+public class SetDirectoryRelative : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -59,9 +101,7 @@ public class SetDirectoryRelative : SetLocalDirectoryCommand
   )]
   public new string? Path;
 
-  protected override string RelativeLocation => @"..\..";
-
-  protected override string LocationRoot => Pwd();
+  private protected override string LocationSubpath => @"..\..";
 }
 
 [Cmdlet(
@@ -75,7 +115,7 @@ public class SetDirectoryRelative : SetLocalDirectoryCommand
 [OutputType(
   typeof(PathInfo)
 )]
-public class SetDirectoryHome : SetLocalDirectoryCommand
+public class SetDirectoryHome : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -91,7 +131,7 @@ public class SetDirectoryHome : SetLocalDirectoryCommand
   )]
   public new string? Path;
 
-  protected override string LocationRoot => Home();
+  private protected override string Location => Home();
 }
 
 [Cmdlet(
@@ -105,7 +145,7 @@ public class SetDirectoryHome : SetLocalDirectoryCommand
 [OutputType(
   typeof(PathInfo)
 )]
-public class SetDirectoryCode : SetLocalDirectoryCommand
+public class SetDirectoryCode : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -121,9 +161,9 @@ public class SetDirectoryCode : SetLocalDirectoryCommand
   )]
   public new string? Path;
 
-  protected override string RelativeLocation => "code";
+  private protected override string Location => Home();
 
-  protected override string LocationRoot => Home();
+  private protected override string LocationSubpath => "code";
 }
 
 [Cmdlet(
@@ -137,7 +177,7 @@ public class SetDirectoryCode : SetLocalDirectoryCommand
 [OutputType(
   typeof(PathInfo)
 )]
-public class SetDrive : SetLocalDirectoryCommand
+public class SetDrive : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -153,7 +193,7 @@ public class SetDrive : SetLocalDirectoryCommand
   )]
   public new string? Path;
 
-  protected override string LocationRoot => Drive();
+  private protected override string Location => Drive();
 }
 
 [Cmdlet(
@@ -167,7 +207,7 @@ public class SetDrive : SetLocalDirectoryCommand
 [OutputType(
   typeof(PathInfo)
 )]
-public class SetDriveD : SetLocalDirectoryCommand
+public class SetDriveD : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -183,5 +223,5 @@ public class SetDriveD : SetLocalDirectoryCommand
   )]
   public new string? Path;
 
-  protected override string LocationRoot => @"D:\";
+  private protected override string Location => @"D:\";
 }

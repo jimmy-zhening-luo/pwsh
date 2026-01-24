@@ -24,7 +24,11 @@ public class Completer : BaseCompleter
     string wordToComplete
   )
   {
-    if (string.IsNullOrEmpty(wordToComplete))
+    if (
+      string.IsNullOrEmpty(
+        wordToComplete
+      )
+    )
     {
       foreach (string member in Domain)
       {

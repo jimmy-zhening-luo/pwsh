@@ -1,4 +1,35 @@
-namespace Module.Command.Shell.Start.Explorer.Local;
+namespace Module.Command.Shell.Start.Explorer.Commands;
+
+[Cmdlet(
+  VerbsLifecycle.Start,
+  "Explorer",
+  DefaultParameterSetName = "Path",
+  SupportsTransactions = true,
+  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096590"
+)]
+[Alias("e")]
+[OutputType(typeof(void))]
+public class StartExplorer : WrappedStartExplorer
+{
+  [Parameter(
+    ParameterSetName = "Path",
+    Position = 0,
+    ValueFromPipeline = true,
+    ValueFromPipelineByPropertyName = true
+  )]
+  [AllowEmptyCollection]
+  [SupportsWildcards]
+  [PathCompletions]
+  public new string[]? Path;
+
+  [Parameter(
+    ParameterSetName = "LiteralPath",
+    Mandatory = true,
+    ValueFromPipelineByPropertyName = true
+  )]
+  [Alias("PSPath", "LP")]
+  public string[]? LiteralPath;
+}
 
 [Cmdlet(
   VerbsLifecycle.Start,
@@ -9,7 +40,7 @@ namespace Module.Command.Shell.Start.Explorer.Local;
 )]
 [Alias("e.", "ex")]
 [OutputType(typeof(void))]
-public class StartExplorerSibling : StartLocalExplorerCommand
+public class StartExplorerSibling : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -24,9 +55,7 @@ public class StartExplorerSibling : StartLocalExplorerCommand
   )]
   public new string[]? Path;
 
-  protected override string RelativeLocation => "..";
-
-  protected override string LocationRoot => Pwd();
+  private protected override string LocationSubpath => "..";
 }
 
 [Cmdlet(
@@ -38,7 +67,7 @@ public class StartExplorerSibling : StartLocalExplorerCommand
 )]
 [Alias("e..", "exx")]
 [OutputType(typeof(void))]
-public class StartExplorerRelative : StartLocalExplorerCommand
+public class StartExplorerRelative : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -53,9 +82,7 @@ public class StartExplorerRelative : StartLocalExplorerCommand
   )]
   public new string[]? Path;
 
-  protected override string RelativeLocation => @"..\..";
-
-  protected override string LocationRoot => Pwd();
+  private protected override string LocationSubpath => @"..\..";
 }
 
 [Cmdlet(
@@ -67,7 +94,7 @@ public class StartExplorerRelative : StartLocalExplorerCommand
 )]
 [Alias("eh")]
 [OutputType(typeof(void))]
-public class StartExplorerHome : StartLocalExplorerCommand
+public class StartExplorerHome : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -82,7 +109,7 @@ public class StartExplorerHome : StartLocalExplorerCommand
   )]
   public new string[]? Path;
 
-  protected override string LocationRoot => Home();
+  private protected override string Location => Home();
 }
 
 [Cmdlet(
@@ -94,7 +121,7 @@ public class StartExplorerHome : StartLocalExplorerCommand
 )]
 [Alias("ec")]
 [OutputType(typeof(void))]
-public class StartExplorerCode : StartLocalExplorerCommand
+public class StartExplorerCode : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -109,9 +136,9 @@ public class StartExplorerCode : StartLocalExplorerCommand
   )]
   public new string[]? Path;
 
-  protected override string RelativeLocation => "code";
+  private protected override string Location => Home();
 
-  protected override string LocationRoot => Home();
+  private protected override string LocationSubpath => "code";
 }
 
 [Cmdlet(
@@ -123,7 +150,7 @@ public class StartExplorerCode : StartLocalExplorerCommand
 )]
 [Alias("e/")]
 [OutputType(typeof(void))]
-public class StartExplorerDrive : StartLocalExplorerCommand
+public class StartExplorerDrive : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -138,5 +165,5 @@ public class StartExplorerDrive : StartLocalExplorerCommand
   )]
   public new string[]? Path;
 
-  protected override string LocationRoot => Drive();
+  private protected override string Location => Drive();
 }

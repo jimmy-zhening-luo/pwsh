@@ -1,4 +1,52 @@
-namespace Module.Command.Shell.Get.Directory.Local;
+namespace Module.Command.Shell.Get.Directory.Commands;
+
+[Cmdlet(
+  VerbsCommon.Get,
+  "Directory",
+  DefaultParameterSetName = "Items",
+  SupportsTransactions = true,
+  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096492"
+)]
+[Alias("l")]
+[OutputType(
+  typeof(DirectoryInfo),
+  typeof(FileInfo)
+)]
+public class GetDirectory : WrappedGetDirectory
+{
+  [Parameter(
+    ParameterSetName = "Items",
+    Position = 0,
+    ValueFromPipeline = true,
+    ValueFromPipelineByPropertyName = true
+  )]
+  [AllowEmptyCollection]
+  [SupportsWildcards]
+  [PathCompletions(
+    "",
+    PathItemType.Directory
+  )]
+  public new string[]? Path;
+
+  [Parameter(
+    ParameterSetName = "LiteralItems",
+    Mandatory = true,
+    ValueFromPipelineByPropertyName = true
+  )]
+  [Alias("PSPath", "LP")]
+  public string[]? LiteralPath;
+
+  [Parameter(
+    ParameterSetName = "Items",
+    Position = 1
+  )]
+  [Parameter(
+    ParameterSetName = "LiteralItems",
+    Position = 1
+  )]
+  [SupportsWildcards]
+  public new string? Filter;
+}
 
 [Cmdlet(
   VerbsCommon.Get,
@@ -12,7 +60,7 @@ namespace Module.Command.Shell.Get.Directory.Local;
   typeof(DirectoryInfo),
   typeof(FileInfo)
 )]
-public class GetDirectorySibling : GetLocalDirectoryCommand
+public class GetDirectorySibling : WrappedGetDirectory
 {
   [Parameter(
     ParameterSetName = "Items",
@@ -28,9 +76,7 @@ public class GetDirectorySibling : GetLocalDirectoryCommand
   )]
   public new string[]? Path;
 
-  protected override string RelativeLocation => "..";
-
-  protected override string LocationRoot => Pwd();
+  private protected override string LocationSubpath => "..";
 }
 
 [Cmdlet(
@@ -45,7 +91,7 @@ public class GetDirectorySibling : GetLocalDirectoryCommand
   typeof(DirectoryInfo),
   typeof(FileInfo)
 )]
-public class GetDirectoryRelative : GetLocalDirectoryCommand
+public class GetDirectoryRelative : WrappedGetDirectory
 {
   [Parameter(
     ParameterSetName = "Items",
@@ -61,9 +107,7 @@ public class GetDirectoryRelative : GetLocalDirectoryCommand
   )]
   public new string[]? Path;
 
-  protected override string RelativeLocation => @"..\..";
-
-  protected override string LocationRoot => Pwd();
+  private protected override string LocationSubpath => @"..\..";
 }
 
 [Cmdlet(
@@ -78,7 +122,7 @@ public class GetDirectoryRelative : GetLocalDirectoryCommand
   typeof(DirectoryInfo),
   typeof(FileInfo)
 )]
-public class GetDirectoryHome : GetLocalDirectoryCommand
+public class GetDirectoryHome : WrappedGetDirectory
 {
   [Parameter(
     ParameterSetName = "Items",
@@ -94,7 +138,7 @@ public class GetDirectoryHome : GetLocalDirectoryCommand
   )]
   public new string[]? Path;
 
-  protected override string LocationRoot => Home();
+  private protected override string Location => Home();
 }
 
 [Cmdlet(
@@ -109,7 +153,7 @@ public class GetDirectoryHome : GetLocalDirectoryCommand
   typeof(DirectoryInfo),
   typeof(FileInfo)
 )]
-public class GetDirectoryCode : GetLocalDirectoryCommand
+public class GetDirectoryCode : WrappedGetDirectory
 {
   [Parameter(
     ParameterSetName = "Items",
@@ -125,9 +169,9 @@ public class GetDirectoryCode : GetLocalDirectoryCommand
   )]
   public new string[]? Path;
 
-  protected override string RelativeLocation => "code";
+  private protected override string Location => Home();
 
-  protected override string LocationRoot => Home();
+  private protected override string LocationSubpath => "code";
 }
 
 [Cmdlet(
@@ -142,7 +186,7 @@ public class GetDirectoryCode : GetLocalDirectoryCommand
   typeof(DirectoryInfo),
   typeof(FileInfo)
 )]
-public class GetDirectoryDrive : GetLocalDirectoryCommand
+public class GetDirectoryDrive : WrappedGetDirectory
 {
   [Parameter(
     ParameterSetName = "Items",
@@ -158,5 +202,5 @@ public class GetDirectoryDrive : GetLocalDirectoryCommand
   )]
   public new string[]? Path;
 
-  protected override string LocationRoot => Drive();
+  private protected override string Location => Drive();
 }

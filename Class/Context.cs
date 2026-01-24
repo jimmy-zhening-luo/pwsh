@@ -1,26 +1,28 @@
 namespace Module;
 
-public static class Context
+internal static class Context
 {
-  public static bool Ssh
+  internal static bool Ssh
   {
     get => !string.IsNullOrEmpty(
-      Env("SSH_CLIENT")
+      Env(
+        "SSH_CLIENT"
+      )
     );
   }
 
-  public static PowerShell PS() => PowerShell.Create(
+  internal static PowerShell PS() => PowerShell.Create(
     CurrentRunspace
   );
 
-  public static string Env(
+  internal static string Env(
     string variable
   ) => Environment.GetEnvironmentVariable(
     variable
   )
     ?? string.Empty;
 
-  public static string Home(
+  internal static string Home(
     string subpath = ""
   ) => Path.GetFullPath(
     subpath,
@@ -31,21 +33,21 @@ public static class Context
     )
   );
 
-  public static string AppData(
+  internal static string AppData(
     string subpath = ""
   ) => Path.GetFullPath(
     subpath,
     Env("APPDATA")
   );
 
-  public static string LocalAppData(
+  internal static string LocalAppData(
     string subpath = ""
   ) => Path.GetFullPath(
     subpath,
     Env("LOCALAPPDATA")
   );
 
-  public static void CreateProcess(
+  internal static void CreateProcess(
     string fileName,
     string arguments = "",
     bool noNewWindow = false
@@ -75,7 +77,7 @@ public static class Context
     }
   }
 
-  public static void ShellExecute(
+  internal static void ShellExecute(
     string fileName,
     string arguments = "",
     bool administrator = false,

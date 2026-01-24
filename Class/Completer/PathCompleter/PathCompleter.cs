@@ -144,7 +144,7 @@ public class PathCompleter : BaseCompleter
 
     if (Type == PathItemType.File)
     {
-      FileFirstMatch:
+FileFirstMatch:
       foreach (
         string file in Directory.EnumerateFiles(
           location,
@@ -179,7 +179,7 @@ public class PathCompleter : BaseCompleter
       ? string.Empty
       : @"\";
 
-    Match:
+Match:
     foreach (
       string directory in Directory.EnumerateDirectories(
         location,

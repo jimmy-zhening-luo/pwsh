@@ -1,21 +1,23 @@
 namespace Module.Command;
 
-public abstract class WrappedCommand : CoreCommand
+public abstract class WrappedCommand(
+  string WrappedCommandName
+) : CoreCommand
 {
-  protected abstract string WrappedCommandName
-  { get; }
+  private protected virtual string Location => string.Empty;
 
-  protected virtual bool NoSsh
-  {
-    get => false;
-  }
+  private protected virtual string LocationSubpath => string.Empty;
+
+  private protected virtual bool NoSsh => false;
+
+  private protected bool Here => string.IsNullOrEmpty(
+    Location
+  )
+    && string.IsNullOrEmpty(
+      LocationSubpath
+    );
 
   private SteppablePipeline? steppablePipeline = null;
-
-  protected virtual bool BeforeBeginProcessing() => true;
-
-  protected virtual void BeforeEndProcessing()
-  { }
 
   protected override void BeginProcessing()
   {
@@ -27,6 +29,7 @@ public abstract class WrappedCommand : CoreCommand
       && BeforeBeginProcessing()
     )
     {
+      AnchorBoundPath();
       Begin(
         AddCommand(
           WrappedCommandName
@@ -36,12 +39,6 @@ public abstract class WrappedCommand : CoreCommand
           )
       );
     }
-  }
-
-  protected void Begin(PowerShell ps)
-  {
-    steppablePipeline = ps.GetSteppablePipeline();
-    steppablePipeline.Begin(this);
   }
 
   protected override void ProcessRecord()
@@ -62,7 +59,39 @@ public abstract class WrappedCommand : CoreCommand
     Clean();
   }
 
-  protected void Clean()
+  private protected virtual void AnchorBoundPath()
+  { }
+
+  private protected virtual bool BeforeBeginProcessing() => true;
+
+  private protected virtual void BeforeEndProcessing()
+  { }
+
+  private protected string Reanchor(
+    string typedPath = ""
+  ) => Path.GetFullPath(
+    typedPath,
+    Path.GetFullPath(
+      LocationSubpath,
+      string.IsNullOrEmpty(
+        Location
+      )
+        ? Pwd()
+        : Location
+    )
+  );
+
+  private void Begin(
+    PowerShell ps
+  )
+  {
+    steppablePipeline = ps.GetSteppablePipeline();
+    steppablePipeline.Begin(
+      this
+    );
+  }
+
+  private void Clean()
   {
     if (steppablePipeline != null)
     {

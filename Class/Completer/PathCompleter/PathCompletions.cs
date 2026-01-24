@@ -65,7 +65,9 @@ public class PathCompletionsAttribute : BaseCompletionsAttribute<PathCompleter>
           ? string.Empty
           : Location,
         PS()
-          .AddCommand("Get-Location")
+          .AddCommand(
+            "Get-Location"
+          )
           .Invoke()[0]
           .BaseObject
           .ToString()

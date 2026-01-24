@@ -9,10 +9,10 @@ public abstract class BaseCompletionsAttribute<T> : ArgumentCompleterAttribute, 
 {
   public readonly CompletionCase Casing;
 
-  protected BaseCompletionsAttribute() : base()
+  private protected BaseCompletionsAttribute() : base()
   { }
 
-  protected BaseCompletionsAttribute(
+  private protected BaseCompletionsAttribute(
     CompletionCase casing
   ) : this() => Casing = casing;
 

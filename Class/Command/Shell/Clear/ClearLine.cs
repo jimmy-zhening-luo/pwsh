@@ -11,6 +11,11 @@ namespace Module.Command.Shell.Clear;
 [OutputType(typeof(void))]
 public class ClearLine : WrappedCommand
 {
+  private ClearLine() : base(
+    "Clear-Content"
+  )
+  { }
+
   [Parameter(
     ParameterSetName = "Path",
     Position = 0
@@ -49,12 +54,10 @@ public class ClearLine : WrappedCommand
   [Parameter]
   public string? Stream;
 
-  protected override string WrappedCommandName => "Clear-Content";
-
-  protected override bool BeforeBeginProcessing() => Path != null
+  private protected override bool BeforeBeginProcessing() => Path != null
     || ParameterSetName == "LiteralPath";
 
-  protected override void BeforeEndProcessing()
+  private protected override void BeforeEndProcessing()
   {
     if (
       !IsPresent("Path")

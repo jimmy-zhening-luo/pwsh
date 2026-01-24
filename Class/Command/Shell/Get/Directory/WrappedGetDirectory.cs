@@ -1,19 +1,12 @@
 namespace Module.Command.Shell.Get.Directory;
 
-[Cmdlet(
-  VerbsCommon.Get,
-  "Directory",
-  DefaultParameterSetName = "Items",
-  SupportsTransactions = true,
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096492"
-)]
-[Alias("l")]
-[OutputType(
-  typeof(DirectoryInfo),
-  typeof(FileInfo)
-)]
-public class GetDirectory : WrappedCommand
+public abstract class WrappedGetDirectory : WrappedCommand
 {
+  private protected WrappedGetDirectory() : base(
+    "Get-ChildItem"
+  )
+  { }
+
   [Parameter(
     ParameterSetName = "Items",
     Position = 0,
@@ -22,26 +15,10 @@ public class GetDirectory : WrappedCommand
   )]
   [AllowEmptyCollection]
   [SupportsWildcards]
-  [PathCompletions(
-    "",
-    PathItemType.Directory
-  )]
   public string[]? Path;
 
   [Parameter(
-    ParameterSetName = "LiteralItems",
-    Mandatory = true,
-    ValueFromPipelineByPropertyName = true
-  )]
-  [Alias("PSPath", "LP")]
-  public string[]? LiteralPath;
-
-  [Parameter(
     ParameterSetName = "Items",
-    Position = 1
-  )]
-  [Parameter(
-    ParameterSetName = "LiteralItems",
     Position = 1
   )]
   [SupportsWildcards]
@@ -95,5 +72,22 @@ public class GetDirectory : WrappedCommand
   [Parameter]
   public FlagsExpression<FileAttributes>? Attributes;
 
-  protected override string WrappedCommandName => "Get-ChildItem";
+  private protected override void AnchorBoundPath()
+  {
+    if (IsPresent("Path"))
+    {
+      string[] paths = (string[])BoundParameters["Path"];
+
+      for (int i = 0; i < paths.Length; i++)
+      {
+        paths[i] = Reanchor(paths[i]);
+      }
+
+      BoundParameters["Path"] = paths;
+    }
+    else
+    {
+      BoundParameters["Path"] = new string[] { Reanchor() };
+    }
+  }
 }

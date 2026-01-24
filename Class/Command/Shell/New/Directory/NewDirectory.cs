@@ -11,6 +11,11 @@ namespace Module.Command.Shell.New.Directory;
 [OutputType(typeof(DirectoryInfo))]
 public class NewDirectory : WrappedCommand
 {
+  private NewDirectory() : base(
+    "New-Item"
+  )
+  { }
+
   [Parameter(
     ParameterSetName = "pathSet",
     Mandatory = true,
@@ -44,9 +49,7 @@ public class NewDirectory : WrappedCommand
   [Alias("f")]
   public SwitchParameter? Force;
 
-  protected override string WrappedCommandName => "New-Item";
-
-  protected override bool BeforeBeginProcessing()
+  private protected override bool BeforeBeginProcessing()
   {
     BoundParameters["ItemType"] = "Directory";
 

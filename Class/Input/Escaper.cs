@@ -1,10 +1,12 @@
 namespace Module.Input;
 
-public static class Escaper
+internal static class Escaper
 {
-  public static string Escape(
+  internal static string Escape(
     string text
-  ) => text.Contains(' ')
+  ) => text.Contains(
+    ' '
+  )
     ? "'"
       + Language
         .CodeGeneration
@@ -14,12 +16,16 @@ public static class Escaper
       + "'"
     : text;
 
-  public static string Unescape(
+  internal static string Unescape(
     string escapedText
   ) => (
     escapedText.Length > 1
-    && escapedText.StartsWith('\'')
-    && escapedText.EndsWith('\'')
+    && escapedText.StartsWith(
+      '\''
+    )
+    && escapedText.EndsWith(
+      '\''
+    )
   )
     ? escapedText[1..^1].Replace(
         "''",

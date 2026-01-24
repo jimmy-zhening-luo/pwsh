@@ -4,10 +4,10 @@ public abstract class BaseCompleter : IArgumentCompleter
 {
   public readonly CompletionCase Casing;
 
-  protected BaseCompleter()
+  private protected BaseCompleter()
   { }
 
-  protected BaseCompleter(
+  private protected BaseCompleter(
     CompletionCase casing
   ) : this() => Casing = casing;
 
@@ -30,7 +30,7 @@ public abstract class BaseCompleter : IArgumentCompleter
     string wordToComplete
   );
 
-  protected IEnumerable<CompletionResult> WrapArgumentCompletionResult(
+  private protected IEnumerable<CompletionResult> WrapArgumentCompletionResult(
     IEnumerable<string> completedStrings
   )
   {

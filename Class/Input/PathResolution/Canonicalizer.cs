@@ -1,8 +1,8 @@
 namespace Module.Input.PathResolution;
 
-public static partial class Canonicalizer
+internal static partial class Canonicalizer
 {
-  public static string Normalize(
+  internal static string Normalize(
     string path,
     bool preserveTrailingSeparator = false
   )
@@ -30,7 +30,7 @@ public static partial class Canonicalizer
         );
   }
 
-  public static string Denormalize(
+  internal static string Denormalize(
     string path,
     string location = "",
     string subpath = ""
@@ -45,7 +45,7 @@ public static partial class Canonicalizer
       '/'
     );
 
-  public static bool IsRelativelyRooted(
+  internal static bool IsRelativelyRooted(
     string path
   ) => path.StartsWith(
     '.'
@@ -55,7 +55,7 @@ public static partial class Canonicalizer
       || path[1] == '\\'
     );
 
-  public static bool IsHomeRooted(
+  internal static bool IsHomeRooted(
     string path
   ) => path.StartsWith(
     '~'
@@ -65,7 +65,7 @@ public static partial class Canonicalizer
       || path[1] == '\\'
     );
 
-  public static string RemoveRelativeRoot(
+  internal static string RemoveRelativeRoot(
     string path
   ) => IsRelativelyRooted(
     path
@@ -75,7 +75,7 @@ public static partial class Canonicalizer
       : path[2..]
     : path;
 
-  public static string AnchorHome(
+  internal static string AnchorHome(
     string path
   ) => IsHomeRooted(
     path

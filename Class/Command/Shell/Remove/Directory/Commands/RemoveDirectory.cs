@@ -1,4 +1,4 @@
-namespace Module.Command.Shell.Remove.Directory;
+namespace Module.Command.Shell.Remove.Directory.Commands;
 
 [Cmdlet(
   VerbsCommon.Remove,
@@ -9,7 +9,7 @@ namespace Module.Command.Shell.Remove.Directory;
 )]
 [Alias("rd")]
 [OutputType(typeof(void))]
-public class RemoveDirectory : WrappedCommand
+public class RemoveDirectory : WrappedRemoveDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -20,7 +20,7 @@ public class RemoveDirectory : WrappedCommand
   )]
   [SupportsWildcards]
   [PathCompletions]
-  public string[]? Path;
+  public new string[]? Path;
 
   [Parameter(
     ParameterSetName = "LiteralPath",
@@ -39,23 +39,5 @@ public class RemoveDirectory : WrappedCommand
     Position = 1
   )]
   [SupportsWildcards]
-  public string? Filter;
-
-  [Parameter]
-  [SupportsWildcards]
-  public string[]? Include;
-
-  [Parameter]
-  [SupportsWildcards]
-  public string[]? Exclude;
-
-  protected override string WrappedCommandName => "Remove-Item";
-
-  protected override bool BeforeBeginProcessing()
-  {
-    BoundParameters["Recurse"] = SwitchParameter.Present;
-    BoundParameters["Force"] = SwitchParameter.Present;
-
-    return true;
-  }
+  public new string? Filter;
 }

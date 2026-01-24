@@ -1,7 +1,12 @@
-namespace Module.Command.Shell.Get.File.Local;
+namespace Module.Command.Shell.Get.File;
 
-public abstract class GetLocalFileCommand : LocalWrappedCommand
+public abstract class WrappedGetFile : WrappedCommand
 {
+  private protected WrappedGetFile() : base(
+    "Get-Content"
+  )
+  { }
+
   [Parameter(
     ParameterSetName = "Path",
     Position = 0,
@@ -66,9 +71,7 @@ public abstract class GetLocalFileCommand : LocalWrappedCommand
   [Parameter]
   public SwitchParameter? Wait;
 
-  protected override string WrappedCommandName => "Get-Content";
-
-  protected override bool BeforeBeginProcessing()
+  private protected override void AnchorBoundPath()
   {
     if (IsPresent("Path"))
     {
@@ -85,6 +88,5 @@ public abstract class GetLocalFileCommand : LocalWrappedCommand
     {
       BoundParameters["Path"] = new string[] { Reanchor() };
     }
-    return true;
   }
 }

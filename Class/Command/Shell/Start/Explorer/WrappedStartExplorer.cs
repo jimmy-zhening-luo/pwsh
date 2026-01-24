@@ -1,7 +1,12 @@
-namespace Module.Command.Shell.Start.Explorer.Local;
+namespace Module.Command.Shell.Start.Explorer;
 
-public abstract class StartLocalExplorerCommand : LocalWrappedCommand
+public abstract class WrappedStartExplorer : WrappedCommand
 {
+  private protected WrappedStartExplorer() : base(
+    "Invoke-Item"
+  )
+  { }
+
   [Parameter(
     ParameterSetName = "Path",
     Position = 0,
@@ -24,11 +29,9 @@ public abstract class StartLocalExplorerCommand : LocalWrappedCommand
   [SupportsWildcards]
   public string[]? Exclude;
 
-  protected override string WrappedCommandName => "Invoke-Item";
+  private protected override bool NoSsh => true;
 
-  protected override bool NoSsh => true;
-
-  protected override bool BeforeBeginProcessing()
+  private protected override void AnchorBoundPath()
   {
     if (IsPresent("Path"))
     {
@@ -44,6 +47,17 @@ public abstract class StartLocalExplorerCommand : LocalWrappedCommand
     else
     {
       BoundParameters["Path"] = new string[] { Reanchor() };
+    }
+  }
+
+  private protected override bool BeforeBeginProcessing()
+  {
+    if (
+      Here
+      && !IsPresent("Path")
+    )
+    {
+      BoundParameters["Path"] = new string[] { Pwd() };
     }
 
     return true;
