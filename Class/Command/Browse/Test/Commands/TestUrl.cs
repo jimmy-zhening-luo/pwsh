@@ -45,7 +45,11 @@ public class TestUrl : CoreCommand
             : "http://" + uri.OriginalString.Trim()
       );
 
-      if (!string.IsNullOrEmpty(fullUrl.OriginalString))
+      if (
+        !string.IsNullOrEmpty(
+          fullUrl.OriginalString
+        )
+      )
       {
         int status = 0;
 
