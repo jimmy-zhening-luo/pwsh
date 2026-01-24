@@ -55,7 +55,7 @@ public class StartExplorerSibling : WrappedStartExplorer
   )]
   public new string[]? Path;
 
-  private protected override string LocationSubpath => "..";
+  private protected sealed override string LocationSubpath => "..";
 }
 
 [Cmdlet(
@@ -82,7 +82,7 @@ public class StartExplorerRelative : WrappedStartExplorer
   )]
   public new string[]? Path;
 
-  private protected override string LocationSubpath => @"..\..";
+  private protected sealed override string LocationSubpath => @"..\..";
 }
 
 [Cmdlet(
@@ -109,7 +109,7 @@ public class StartExplorerHome : WrappedStartExplorer
   )]
   public new string[]? Path;
 
-  private protected override string Location => Home();
+  private protected sealed override string Location => Home();
 }
 
 [Cmdlet(
@@ -136,9 +136,9 @@ public class StartExplorerCode : WrappedStartExplorer
   )]
   public new string[]? Path;
 
-  private protected override string Location => Home();
+  private protected sealed override string Location => Home();
 
-  private protected override string LocationSubpath => "code";
+  private protected sealed override string LocationSubpath => "code";
 }
 
 [Cmdlet(
@@ -165,5 +165,5 @@ public class StartExplorerDrive : WrappedStartExplorer
   )]
   public new string[]? Path;
 
-  private protected override string Location => Drive();
+  private protected sealed override string Location => Drive();
 }

@@ -54,10 +54,10 @@ public class ClearLine : WrappedCommandShouldProcess
   [Parameter]
   public string? Stream;
 
-  private protected override bool BeforeBeginProcessing() => Path != null
+  private protected sealed override bool BeforeBeginProcessing() => Path != null
     || ParameterSetName == "LiteralPath";
 
-  private protected override void BeforeEndProcessing()
+  private protected sealed override void Default()
   {
     if (
       !IsPresent("Path")

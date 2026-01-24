@@ -71,7 +71,7 @@ public abstract class WrappedGetFile : WrappedCommand
   [Parameter]
   public SwitchParameter? Wait;
 
-  private protected override void AnchorBoundPath()
+  private protected sealed override void AnchorBoundPath()
   {
     if (IsPresent("Path"))
     {

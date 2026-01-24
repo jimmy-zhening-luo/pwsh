@@ -49,7 +49,7 @@ public class NewDirectory : WrappedCommandShouldProcess
   [Alias("f")]
   public SwitchParameter? Force;
 
-  private protected override bool BeforeBeginProcessing()
+  private protected sealed override bool BeforeBeginProcessing()
   {
     BoundParameters["ItemType"] = "Directory";
 

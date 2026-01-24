@@ -1,13 +1,40 @@
 namespace Module.Command;
 
-public abstract class CoreCommand : PSCmdlet
+public abstract class CoreCommand : PSCmdlet, IDisposable
 {
+  private bool disposed;
+
+  ~CoreCommand() => Dispose(false);
+
   private protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
 
-  protected override void StopProcessing() => Clean();
+  private protected PowerShell PS
+  {
+    get => (powershell ??= CreatePS());
+  }
+  private PowerShell? powershell;
+
+  public void Dispose()
+  {
+    Dispose(true);
+
+    System.GC.SuppressFinalize(this);
+  }
+
+  protected sealed override void EndProcessing()
+  {
+    AfterEndProcessing();
+
+    Dispose();
+  }
+
+  protected sealed override void StopProcessing() => Dispose();
+
+  private protected virtual void AfterEndProcessing()
+  { };
 
   private protected virtual void Clean()
-  { }
+  { };
 
   private protected bool IsPresent(
     string parameterName
@@ -19,7 +46,7 @@ public abstract class CoreCommand : PSCmdlet
     string command,
     CommandTypes commandType = CommandTypes.Cmdlet
   ) => AddCommand(
-    CreatePS(),
+    PS,
     command,
     commandType
   );
@@ -87,7 +114,7 @@ public abstract class CoreCommand : PSCmdlet
     CommandTypes commandType = CommandTypes.Application
   )
   {
-    using PowerShell ps = AddCommand(
+    using var ps = AddCommand(
       nativeCommand,
       commandType
     );
@@ -151,4 +178,25 @@ public abstract class CoreCommand : PSCmdlet
     subpath,
     SessionState.Drive.Current.Root
   );
+
+  private void Dispose(
+    bool disposing
+  )
+  {
+    if (!disposed)
+    {
+      if (disposing)
+      {
+        Clean();
+
+        if (powershell != null)
+        {
+          powershell.Dispose();
+          powershell = null;
+        }
+      }
+
+      disposed = true;
+    }
+  }
 }

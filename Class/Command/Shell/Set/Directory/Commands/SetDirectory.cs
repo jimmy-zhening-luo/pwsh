@@ -71,7 +71,7 @@ public class SetDirectorySibling : WrappedSetDirectory
   )]
   public new string? Path;
 
-  private protected override string LocationSubpath => "..";
+  private protected sealed override string LocationSubpath => "..";
 }
 
 [Cmdlet(
@@ -101,7 +101,7 @@ public class SetDirectoryRelative : WrappedSetDirectory
   )]
   public new string? Path;
 
-  private protected override string LocationSubpath => @"..\..";
+  private protected sealed override string LocationSubpath => @"..\..";
 }
 
 [Cmdlet(
@@ -131,7 +131,7 @@ public class SetDirectoryHome : WrappedSetDirectory
   )]
   public new string? Path;
 
-  private protected override string Location => Home();
+  private protected sealed override string Location => Home();
 }
 
 [Cmdlet(
@@ -161,9 +161,9 @@ public class SetDirectoryCode : WrappedSetDirectory
   )]
   public new string? Path;
 
-  private protected override string Location => Home();
+  private protected sealed override string Location => Home();
 
-  private protected override string LocationSubpath => "code";
+  private protected sealed override string LocationSubpath => "code";
 }
 
 [Cmdlet(
@@ -193,7 +193,7 @@ public class SetDrive : WrappedSetDirectory
   )]
   public new string? Path;
 
-  private protected override string Location => Drive();
+  private protected sealed override string Location => Drive();
 }
 
 [Cmdlet(
@@ -223,5 +223,5 @@ public class SetDriveD : WrappedSetDirectory
   )]
   public new string? Path;
 
-  private protected override string Location => @"D:\";
+  private protected sealed override string Location => @"D:\";
 }

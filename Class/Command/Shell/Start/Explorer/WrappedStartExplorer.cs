@@ -29,9 +29,9 @@ public abstract class WrappedStartExplorer : WrappedCommandShouldProcess
   [SupportsWildcards]
   public string[]? Exclude;
 
-  private protected override bool NoSsh => true;
+  private protected sealed override bool NoSsh => true;
 
-  private protected override void AnchorBoundPath()
+  private protected sealed override void AnchorBoundPath()
   {
     if (IsPresent("Path"))
     {
@@ -53,7 +53,7 @@ public abstract class WrappedStartExplorer : WrappedCommandShouldProcess
     }
   }
 
-  private protected override bool BeforeBeginProcessing()
+  private protected sealed override bool BeforeBeginProcessing()
   {
     if (
       Here

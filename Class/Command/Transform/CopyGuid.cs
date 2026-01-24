@@ -30,7 +30,7 @@ public class CopyGuid : CoreCommand
   }
   private bool silent;
 
-  protected override void EndProcessing()
+  private protected sealed override void AfterEndProcessing()
   {
     string guid = System.Guid
       .NewGuid()

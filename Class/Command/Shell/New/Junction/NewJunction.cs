@@ -35,7 +35,7 @@ public class NewJunction : WrappedCommandShouldProcess
   [PathCompletions]
   public object? Value;
 
-  private protected override bool BeforeBeginProcessing()
+  private protected sealed override bool BeforeBeginProcessing()
   {
     BoundParameters["ItemType"] = "Junction";
     BoundParameters["Force"] = SwitchParameter.Present;

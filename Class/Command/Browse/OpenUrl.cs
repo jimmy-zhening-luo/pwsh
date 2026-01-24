@@ -59,7 +59,7 @@ public class OpenUrl : CoreCommand
     }
   }
 
-  protected override void EndProcessing()
+  private protected sealed override void AfterEndProcessing()
   {
     if (ParameterSetName == "Path")
     {

@@ -76,7 +76,7 @@ public class GetDirectorySibling : WrappedGetDirectory
   )]
   public new string[]? Path;
 
-  private protected override string LocationSubpath => "..";
+  private protected sealed override string LocationSubpath => "..";
 }
 
 [Cmdlet(
@@ -107,7 +107,7 @@ public class GetDirectoryRelative : WrappedGetDirectory
   )]
   public new string[]? Path;
 
-  private protected override string LocationSubpath => @"..\..";
+  private protected sealed override string LocationSubpath => @"..\..";
 }
 
 [Cmdlet(
@@ -138,7 +138,7 @@ public class GetDirectoryHome : WrappedGetDirectory
   )]
   public new string[]? Path;
 
-  private protected override string Location => Home();
+  private protected sealed override string Location => Home();
 }
 
 [Cmdlet(
@@ -169,9 +169,9 @@ public class GetDirectoryCode : WrappedGetDirectory
   )]
   public new string[]? Path;
 
-  private protected override string Location => Home();
+  private protected sealed override string Location => Home();
 
-  private protected override string LocationSubpath => "code";
+  private protected sealed override string LocationSubpath => "code";
 }
 
 [Cmdlet(
@@ -202,5 +202,5 @@ public class GetDirectoryDrive : WrappedGetDirectory
   )]
   public new string[]? Path;
 
-  private protected override string Location => Drive();
+  private protected sealed override string Location => Drive();
 }

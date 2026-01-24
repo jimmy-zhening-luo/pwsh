@@ -130,7 +130,7 @@ public class TestHost : CoreCommand
     }
   }
 
-  protected override void EndProcessing()
+  private protected sealed override void AfterEndProcessing()
   {
     if (names.Length == 0)
     {

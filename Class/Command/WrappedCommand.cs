@@ -4,6 +4,8 @@ public abstract class WrappedCommand(
   string WrappedCommandName
 ) : CoreCommand
 {
+  private SteppablePipeline? steppablePipeline = null;
+
   private protected virtual string Location => string.Empty;
 
   private protected virtual string LocationSubpath => string.Empty;
@@ -17,9 +19,7 @@ public abstract class WrappedCommand(
       LocationSubpath
     );
 
-  private SteppablePipeline? steppablePipeline = null;
-
-  protected override void BeginProcessing()
+  protected sealed override void BeginProcessing()
   {
     if (
       (
@@ -30,17 +30,19 @@ public abstract class WrappedCommand(
     )
     {
       AnchorBoundPath();
+
       AddCommand(
         WrappedCommandName
       )
         .AddParameters(
           BoundParameters
         );
+
       Begin();
     }
   }
 
-  protected override void ProcessRecord()
+  protected sealed override void ProcessRecord()
   {
     if (!NoSsh || !Ssh)
     {
@@ -48,35 +50,32 @@ public abstract class WrappedCommand(
     }
   }
 
-  protected override void EndProcessing()
-  {
-    if (!NoSsh || !Ssh)
-    {
-      BeforeEndProcessing();
-    }
-
-    Clean();
-  }
-
   private protected virtual void AnchorBoundPath()
   { }
 
   private protected virtual bool BeforeBeginProcessing() => true;
 
-  private protected virtual void BeforeEndProcessing()
+  private protected virtual void Default()
   { }
 
-  private protected override void Clean()
+  private protected sealed override void AfterEndProcessing()
+  {
+    if (!NoSsh || !Ssh)
+    {
+      Default();
+    }
+  }
+
+  private protected sealed override void Clean()
   {
     if (steppablePipeline != null)
     {
       steppablePipeline.End();
       steppablePipeline.Clean();
       steppablePipeline.Dispose();
+
       steppablePipeline = null;
     }
-
-    base.Clean();
   }
 
   private protected string Reanchor(
