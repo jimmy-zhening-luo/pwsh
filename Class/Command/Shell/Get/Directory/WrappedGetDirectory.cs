@@ -78,16 +78,25 @@ public abstract class WrappedGetDirectory : WrappedCommand
     {
       string[] paths = (string[])BoundParameters["Path"];
 
-      for (int i = 0; i < paths.Length; i++)
+      for (
+        int i = 0;
+        i < paths.Length;
+        i++
+      )
       {
-        paths[i] = Reanchor(paths[i]);
+        paths[i] = Reanchor(
+          paths[i]
+        );
       }
 
       BoundParameters["Path"] = paths;
     }
     else
     {
-      BoundParameters["Path"] = new string[] { Reanchor() };
+      BoundParameters["Path"] = new string[]
+      {
+        Reanchor()
+      };
     }
   }
 }

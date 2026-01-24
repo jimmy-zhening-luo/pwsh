@@ -23,7 +23,10 @@ public abstract class WrappedSetDirectory : WrappedCommand
   private protected override void AnchorBoundPath()
   {
     BoundParameters["Path"] = Reanchor(
-      BoundParameters.TryGetValue("Path", out var path)
+      BoundParameters.TryGetValue(
+        "Path",
+        out var path
+      )
         ? path?.ToString() ?? string.Empty
         : string.Empty
     );

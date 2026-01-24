@@ -32,7 +32,11 @@ public class CopyGuid : CoreCommand
 
   protected override void EndProcessing()
   {
-    string guid = System.Guid.NewGuid().ToString("D");
+    string guid = System.Guid
+      .NewGuid()
+      .ToString(
+        "D"
+      );
 
     if (uppercase)
     {
@@ -41,13 +45,20 @@ public class CopyGuid : CoreCommand
 
     if (!silent)
     {
-      WriteObject(guid);
+      WriteObject(
+        guid
+      );
     }
 
-    AddCommand("Set-Clipboard")
+    AddCommand(
+      "Set-Clipboard"
+    )
       .AddParameter(
         "Value",
-        new string[] { guid }
+        new string[]
+        {
+          guid
+        }
       )
       .Invoke();
   }

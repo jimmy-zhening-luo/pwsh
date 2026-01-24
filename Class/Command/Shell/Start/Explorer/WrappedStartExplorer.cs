@@ -46,7 +46,10 @@ public abstract class WrappedStartExplorer : WrappedCommandShouldProcess
     }
     else
     {
-      BoundParameters["Path"] = new string[] { Reanchor() };
+      BoundParameters["Path"] = new string[]
+      {
+        Reanchor()
+      };
     }
   }
 
@@ -57,7 +60,10 @@ public abstract class WrappedStartExplorer : WrappedCommandShouldProcess
       && !IsPresent("Path")
     )
     {
-      BoundParameters["Path"] = new string[] { Pwd() };
+      BoundParameters["Path"] = new string[]
+      {
+        Pwd()
+      };
     }
 
     return true;
