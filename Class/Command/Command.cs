@@ -8,6 +8,9 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
 
   private protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
 
+
+  private protected bool Initialized => powershell != null;
+
   private protected PowerShell PS => powershell ??= CreatePS();
   private PowerShell? powershell;
 
@@ -69,7 +72,16 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
     )
   );
 
-  [DoesNotReturn]
+  private protected void CleanRunspace()
+  {
+    if (Initialized)
+    {
+      powershell.Dispose();
+      powershell = null;
+    }
+  }
+
+  [CodeAnalysis.DoesNotReturn]
   private protected void Throw(
     string message,
     string id,
@@ -84,7 +96,7 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
     target
   );
 
-  [DoesNotReturn]
+  [CodeAnalysis.DoesNotReturn]
   private protected void Throw(
     System.Exception exception,
     string id,
@@ -197,12 +209,7 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
       if (disposing)
       {
         Clean();
-
-        if (powershell != null)
-        {
-          powershell.Dispose();
-          powershell = null;
-        }
+        CleanRunspace();
       }
 
       disposed = true;

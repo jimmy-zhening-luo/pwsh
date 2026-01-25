@@ -1,4 +1,3 @@
-global using static System.Management.Automation.RunspaceMode;
 global using static Module.Context;
 global using static Module.Input.Escaper;
 global using static Module.Input.PathResolution.Canonicalizer;
@@ -11,6 +10,7 @@ global using Module.Completer;
 global using Module.Completer.PathCompleter;
 
 global using IO = System.IO;
+global using CodeAnalysis = System.Diagnostics.CodeAnalysis;
 global using Language = System.Management.Automation.Language;
 
 global using Enum = System.Enum;
@@ -32,5 +32,3 @@ global using EnumerationOptions = System.IO.EnumerationOptions;
 global using SearchOption = System.IO.SearchOption;
 global using Process = System.Diagnostics.Process;
 global using ProcessStartInfo = System.Diagnostics.ProcessStartInfo;
-global using DoesNotReturn = System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute;
-global using CommandAst = System.Management.Automation.Language.CommandAst;

@@ -11,8 +11,12 @@ internal static class Context
     );
   }
 
-  internal static PowerShell CreatePS() => PowerShell.Create(
-    CurrentRunspace
+  internal static PowerShell CreatePS(
+    bool newRunspace = false
+  ) => PowerShell.Create(
+    newRunspace
+      ? RunspaceMode.NewRunspace
+      : RunspaceMode.CurrentRunspace
   );
 
   internal static string Env(
