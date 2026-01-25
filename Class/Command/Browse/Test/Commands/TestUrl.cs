@@ -171,6 +171,8 @@ public sealed class TestUrl : CoreCommand
       .AddParameter("DisableKeepAlive")
       .AddParameter("PreserveHttpMethodOnRedirect");
 
-    return ps.Invoke<BasicHtmlWebResponseObject>()[0].StatusCode;
+    return ps
+      .Invoke<BasicHtmlWebResponseObject>()[0]
+      .StatusCode;
   }
 }
