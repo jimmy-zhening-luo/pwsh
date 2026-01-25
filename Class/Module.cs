@@ -13,9 +13,9 @@ global using IO = System.IO;
 global using CodeAnalysis = System.Diagnostics.CodeAnalysis;
 global using Language = System.Management.Automation.Language;
 
+global using Environment = System.Environment;
 global using Enum = System.Enum;
 global using Uri = System.Uri;
-global using Environment = System.Environment;
 global using StringComparer = System.StringComparer;
 global using StringComparison = System.StringComparison;
 global using StringSplitOptions = System.StringSplitOptions;

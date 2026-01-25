@@ -114,7 +114,7 @@ public sealed class TestUrl : CoreCommand
     string host
   )
   {
-    using var ps = CreatePS();
+    using var ps = CreatePS(true);
 
     AddCommand(
       ps,
@@ -146,7 +146,7 @@ public sealed class TestUrl : CoreCommand
     Uri fullUrl
   )
   {
-    using var ps = CreatePS();
+    using var ps = CreatePS(true);
 
     AddCommand(
       ps,

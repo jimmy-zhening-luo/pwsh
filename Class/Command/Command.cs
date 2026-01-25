@@ -8,11 +8,14 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
 
   private protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
 
-
-  private protected bool Initialized => powershell != null;
-
   private protected PowerShell PS => powershell ??= CreatePS();
   private PowerShell? powershell;
+
+  [CodeAnalysis.MemberNotNullWhenAttribute(
+    true,
+    "powershell"
+  )]
+  private protected bool Initialized => powershell != null;
 
   public void Dispose()
   {

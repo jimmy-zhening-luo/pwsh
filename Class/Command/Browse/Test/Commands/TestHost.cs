@@ -148,7 +148,7 @@ public sealed class TestHost : CoreCommand
     ushort portNumber = 0
   )
   {
-    using var ps = CreatePS();
+    using var ps = CreatePS(true);
 
     AddCommand(
       ps,
