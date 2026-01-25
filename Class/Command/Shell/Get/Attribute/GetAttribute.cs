@@ -128,7 +128,7 @@ public sealed class GetSize : CoreCommand
       WriteObject(
         number
           ? scaledSize
-          : Round(
+          : System.Math.Round(
               scaledSize,
               3
             )

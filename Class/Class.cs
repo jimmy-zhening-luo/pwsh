@@ -1,4 +1,3 @@
-global using static System.Math;
 global using static System.Management.Automation.RunspaceMode;
 global using static Module.Context;
 global using static Module.Input.Escaper;
