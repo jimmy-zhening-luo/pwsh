@@ -50,7 +50,7 @@ public sealed class GetFile : WrappedGetFile
   SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096490"
 )]
-[Alias("p.", "px")]
+[Alias("px")]
 [OutputType(typeof(string))]
 public sealed class GetFileSibling : WrappedGetFile
 {
@@ -76,7 +76,7 @@ public sealed class GetFileSibling : WrappedGetFile
   SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096490"
 )]
-[Alias("p..", "pxx")]
+[Alias("pxx")]
 [OutputType(typeof(string))]
 public sealed class GetFileRelative : WrappedGetFile
 {

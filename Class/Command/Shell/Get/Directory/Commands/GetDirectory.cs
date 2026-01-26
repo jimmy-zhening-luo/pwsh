@@ -55,7 +55,7 @@ public sealed class GetDirectory : WrappedGetDirectory
   SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096492"
 )]
-[Alias("l.", "lx")]
+[Alias("lx")]
 [OutputType(
   typeof(DirectoryInfo),
   typeof(FileInfo)
@@ -86,7 +86,7 @@ public sealed class GetDirectorySibling : WrappedGetDirectory
   SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096492"
 )]
-[Alias("l..", "lxx")]
+[Alias("lxx")]
 [OutputType(
   typeof(DirectoryInfo),
   typeof(FileInfo)

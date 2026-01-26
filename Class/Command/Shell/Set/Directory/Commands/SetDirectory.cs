@@ -51,7 +51,7 @@ public sealed class SetDirectory : WrappedSetDirectory
   SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
 )]
-[Alias("c.", "cx")]
+[Alias("cx")]
 [OutputType(
   typeof(PathInfo)
 )]
@@ -81,7 +81,7 @@ public sealed class SetDirectorySibling : WrappedSetDirectory
   SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
 )]
-[Alias("c..", "cxx")]
+[Alias("cxx")]
 [OutputType(
   typeof(PathInfo)
 )]

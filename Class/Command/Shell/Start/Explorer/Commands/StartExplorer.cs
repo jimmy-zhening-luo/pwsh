@@ -38,7 +38,7 @@ public sealed class StartExplorer : WrappedStartExplorer
   SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096590"
 )]
-[Alias("e.", "ex")]
+[Alias("ex")]
 [OutputType(typeof(void))]
 public sealed class StartExplorerSibling : WrappedStartExplorer
 {
@@ -65,7 +65,7 @@ public sealed class StartExplorerSibling : WrappedStartExplorer
   SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096590"
 )]
-[Alias("e..", "exx")]
+[Alias("exx")]
 [OutputType(typeof(void))]
 public sealed class StartExplorerRelative : WrappedStartExplorer
 {

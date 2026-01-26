@@ -30,7 +30,7 @@ public sealed class StartWorkspace : VirtualStartWorkspace
   SupportsTransactions = true,
   HelpUri = "https://code.visualstudio.com/docs/configure/command-line#_core-cli-options"
 )]
-[Alias("i.", "ix")]
+[Alias("ix")]
 [OutputType(typeof(void))]
 public sealed class StartWorkspaceSibling : VirtualStartWorkspace
 {
@@ -57,7 +57,7 @@ public sealed class StartWorkspaceSibling : VirtualStartWorkspace
   SupportsTransactions = true,
   HelpUri = "https://code.visualstudio.com/docs/configure/command-line#_core-cli-options"
 )]
-[Alias("i..", "ixx")]
+[Alias("ixx")]
 [OutputType(typeof(void))]
 public sealed class StartWorkspaceRelative : VirtualStartWorkspace
 {
