@@ -59,14 +59,6 @@ public sealed class TestHost : CoreCommand
   }
   private bool detailed;
 
-  protected sealed override void BeginProcessing()
-  {
-    if (detailed)
-    {
-      InformationLevel = TestHostVerbosity.Detailed;
-    }
-  }
-
   protected sealed override void ProcessRecord()
   {
     foreach (string name in names)
@@ -127,6 +119,14 @@ public sealed class TestHost : CoreCommand
           name
         );
       }
+    }
+  }
+
+  private protected sealed override void TransformParameters()
+  {
+    if (detailed)
+    {
+      InformationLevel = TestHostVerbosity.Detailed;
     }
   }
 

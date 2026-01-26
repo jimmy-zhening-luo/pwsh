@@ -78,19 +78,6 @@ public sealed class GetSize : CoreCommand
 
   private long factor = DiskSize.Factor[DiskSizeUnit.KB];
 
-  protected sealed override void BeginProcessing()
-  {
-    if (paths.Length == 0)
-    {
-      paths = [Pwd()];
-    }
-
-    if (DiskSize.Factor.TryGetValue(unit, out long value))
-    {
-      factor = value;
-    }
-  }
-
   protected sealed override void ProcessRecord()
   {
     foreach (string path in paths)
@@ -136,6 +123,19 @@ public sealed class GetSize : CoreCommand
             + " "
             + unit.ToString()
       );
+    }
+  }
+
+  private protected sealed override void TransformParameters()
+  {
+    if (paths.Length == 0)
+    {
+      paths = [Pwd()];
+    }
+
+    if (DiskSize.Factor.TryGetValue(unit, out long value))
+    {
+      factor = value;
     }
   }
 }
