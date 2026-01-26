@@ -73,29 +73,32 @@ public abstract class WrappedGetFile : WrappedCommand
 
   private protected sealed override void TransformParameters()
   {
-    if (IsPresent("Path"))
+    if (!Here)
     {
-      string[] paths = (string[])BoundParameters["Path"];
-
-      for (
-        int i = 0;
-        i < paths.Length;
-        i++
-      )
+      if (IsPresent("Path"))
       {
-        paths[i] = Reanchor(
-          paths[i]
-        );
+        string[] paths = (string[])BoundParameters["Path"];
+
+        for (
+          int i = 0;
+          i < paths.Length;
+          i++
+        )
+        {
+          paths[i] = Reanchor(
+            paths[i]
+          );
+        }
+
+        BoundParameters["Path"] = paths;
       }
-
-      BoundParameters["Path"] = paths;
-    }
-    else
-    {
-      BoundParameters["Path"] = new string[]
+      else
       {
-        Reanchor()
-      };
+        BoundParameters["Path"] = new string[]
+        {
+          Reanchor()
+        };
+      }
     }
   }
 }

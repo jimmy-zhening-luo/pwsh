@@ -35,27 +35,25 @@ public abstract class WrappedStartExplorer : WrappedCommandShouldProcess
   {
     if (IsPresent("Path"))
     {
-      string[] paths = (string[])BoundParameters["Path"];
-
-      for (int i = 0; i < paths.Length; i++)
+      if (!Here)
       {
-        paths[i] = Reanchor(paths[i]);
+        string[] paths = (string[])BoundParameters["Path"];
+
+        for (int i = 0; i < paths.Length; i++)
+        {
+          paths[i] = Reanchor(paths[i]);
+        }
+
+        BoundParameters["Path"] = paths;
       }
-
-      BoundParameters["Path"] = paths;
-    }
-    else if (Here)
-    {
-      BoundParameters["Path"] = new string[]
-      {
-        Pwd()
-      };
     }
     else
     {
       BoundParameters["Path"] = new string[]
       {
-        Reanchor()
+        Here
+          ? Pwd()
+          : Reanchor()
       };
     }
   }
