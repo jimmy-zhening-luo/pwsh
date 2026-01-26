@@ -20,19 +20,7 @@ public abstract class WrappedSetDirectory : WrappedCommand
   [Parameter]
   public SwitchParameter? PassThru;
 
-  private protected sealed override void AnchorBoundPath()
-  {
-    BoundParameters["Path"] = Reanchor(
-      BoundParameters.TryGetValue(
-        "Path",
-        out var path
-      )
-        ? path?.ToString() ?? string.Empty
-        : string.Empty
-    );
-  }
-
-  private protected sealed override bool BeforeBeginProcessing()
+  private protected sealed override bool ValidateParameters()
   {
     if (
       Here
@@ -52,5 +40,17 @@ public abstract class WrappedSetDirectory : WrappedCommand
     }
 
     return true;
+  }
+
+  private protected sealed override void TransformParameters()
+  {
+    BoundParameters["Path"] = Reanchor(
+      BoundParameters.TryGetValue(
+        "Path",
+        out var path
+      )
+        ? path?.ToString() ?? string.Empty
+        : string.Empty
+    );
   }
 }

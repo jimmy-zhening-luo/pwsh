@@ -72,7 +72,7 @@ public abstract class WrappedGetDirectory : WrappedCommand
   [Parameter]
   public FlagsExpression<FileAttributes>? Attributes;
 
-  private protected sealed override void AnchorBoundPath()
+  private protected sealed override void TransformParameters()
   {
     if (IsPresent("Path"))
     {

@@ -31,7 +31,23 @@ public abstract class WrappedStartExplorer : WrappedCommandShouldProcess
 
   private protected sealed override bool NoSsh => true;
 
-  private protected sealed override void AnchorBoundPath()
+  private protected sealed override bool ValidateParameters()
+  {
+    if (
+      Here
+      && !IsPresent("Path")
+    )
+    {
+      BoundParameters["Path"] = new string[]
+      {
+        Pwd()
+      };
+    }
+
+    return true;
+  }
+
+  private protected sealed override void TransformParameters()
   {
     if (IsPresent("Path"))
     {
@@ -51,21 +67,5 @@ public abstract class WrappedStartExplorer : WrappedCommandShouldProcess
         Reanchor()
       };
     }
-  }
-
-  private protected sealed override bool BeforeBeginProcessing()
-  {
-    if (
-      Here
-      && !IsPresent("Path")
-    )
-    {
-      BoundParameters["Path"] = new string[]
-      {
-        Pwd()
-      };
-    }
-
-    return true;
   }
 }

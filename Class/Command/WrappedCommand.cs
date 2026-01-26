@@ -6,68 +6,33 @@ public abstract class WrappedCommand(
 {
   private SteppablePipeline? steppablePipeline = null;
 
-  private protected virtual string Location => string.Empty;
-
-  private protected virtual string LocationSubpath => string.Empty;
-
-  private protected virtual bool NoSsh => false;
-
-  private protected bool Here => string.IsNullOrEmpty(
-    Location
-  )
-    && string.IsNullOrEmpty(
-      LocationSubpath
-    );
-
-  protected sealed override void BeginProcessing()
+  private protected sealed override void BeforeBeginProcessing()
   {
-    if (
-      (
-        !NoSsh
-        || !Ssh
-      )
-      && BeforeBeginProcessing()
+    AddCommand(
+      WrappedCommandName
     )
-    {
-      AnchorBoundPath();
-
-      AddCommand(
-        WrappedCommandName
-      )
-        .AddParameters(
-          BoundParameters
-        );
-
-      steppablePipeline = PS.GetSteppablePipeline();
-
-      steppablePipeline.Begin(
-        this
+      .AddParameters(
+        BoundParameters
       );
-    }
+
+    steppablePipeline = PS.GetSteppablePipeline();
+
+    steppablePipeline.Begin(
+      this
+    );
   }
 
   protected sealed override void ProcessRecord()
   {
-    if (!NoSsh || !Ssh)
-    {
-      steppablePipeline?.Process();
-    }
+    steppablePipeline?.Process();
   }
-
-  private protected virtual void AnchorBoundPath()
-  { }
-
-  private protected virtual bool BeforeBeginProcessing() => true;
 
   private protected virtual void Default()
   { }
 
   private protected sealed override void AfterEndProcessing()
   {
-    if (!NoSsh || !Ssh)
-    {
-      Default();
-    }
+    Default();
   }
 
   private protected sealed override void Clean()
@@ -81,18 +46,4 @@ public abstract class WrappedCommand(
       steppablePipeline = null;
     }
   }
-
-  private protected string Reanchor(
-    string typedPath = ""
-  ) => Path.GetFullPath(
-    typedPath,
-    Path.GetFullPath(
-      LocationSubpath,
-      string.IsNullOrEmpty(
-        Location
-      )
-        ? Pwd()
-        : Location
-    )
-  );
 }

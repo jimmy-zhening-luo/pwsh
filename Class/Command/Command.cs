@@ -6,6 +6,22 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
 
   ~CoreCommand() => Dispose(false);
 
+  private protected virtual string Location => string.Empty;
+
+  private protected virtual string LocationSubpath => string.Empty;
+
+  private protected virtual bool NoSsh => false;
+
+  private protected bool Here => string.IsNullOrEmpty(
+    Location
+  )
+    && string.IsNullOrEmpty(
+      LocationSubpath
+    );
+
+  private protected bool Interactive => !NoSsh
+    || !Ssh;
+
   private protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
 
   private protected PowerShell PS => powershell ??= CreatePS();
@@ -24,14 +40,42 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
     System.GC.SuppressFinalize(this);
   }
 
+  protected sealed override void BeginProcessing()
+  {
+    if (
+      Interactive
+      && ValidateParameters()
+    )
+    {
+      TransformParameters();
+
+      BeforeBeginProcessing();
+    }
+    else
+    {
+      CleanRunspace();
+    }
+  }
+
   protected sealed override void EndProcessing()
   {
-    AfterEndProcessing();
+    if (Interactive)
+    {
+      AfterEndProcessing();
+    }
 
     Dispose();
   }
 
   protected sealed override void StopProcessing() => Dispose();
+
+  private protected virtual bool ValidateParameters() => true;
+
+  private protected virtual void BeforeBeginProcessing()
+  { }
+
+  private protected virtual void TransformParameters()
+  { }
 
   private protected virtual void AfterEndProcessing()
   { }
@@ -151,6 +195,20 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
 
     return ps.Invoke();
   }
+
+  private protected string Reanchor(
+    string typedPath = ""
+  ) => Path.GetFullPath(
+    typedPath,
+    Path.GetFullPath(
+      LocationSubpath,
+      string.IsNullOrEmpty(
+        Location
+      )
+        ? Pwd()
+        : Location
+    )
+  );
 
   private protected bool TestPath(
     string path,
