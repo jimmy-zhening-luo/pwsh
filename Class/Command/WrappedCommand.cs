@@ -6,6 +6,14 @@ public abstract class WrappedCommand(
 {
   private SteppablePipeline? steppablePipeline = null;
 
+  protected sealed override void ProcessRecord()
+  {
+    steppablePipeline?.Process();
+  }
+
+  private protected virtual void Default()
+  { }
+
   private protected sealed override void BeforeBeginProcessing()
   {
     AddCommand(
@@ -21,14 +29,6 @@ public abstract class WrappedCommand(
       this
     );
   }
-
-  protected sealed override void ProcessRecord()
-  {
-    steppablePipeline?.Process();
-  }
-
-  private protected virtual void Default()
-  { }
 
   private protected sealed override void AfterEndProcessing()
   {
