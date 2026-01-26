@@ -35,11 +35,9 @@ public sealed class NewJunction : WrappedCommandShouldProcess
   [PathCompletions]
   public object? Value;
 
-  private protected sealed override bool ValidateParameters()
+  private protected sealed override void TransformParameters()
   {
     BoundParameters["ItemType"] = "Junction";
     BoundParameters["Force"] = SwitchParameter.Present;
-
-    return true;
   }
 }

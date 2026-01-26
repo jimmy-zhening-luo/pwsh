@@ -32,11 +32,9 @@ public abstract class WrappedRemoveDirectory : WrappedCommandShouldProcess
   [SupportsWildcards]
   public string[]? Exclude;
 
-  private protected sealed override bool ValidateParameters()
+  private protected sealed override void TransformParameters()
   {
     BoundParameters["Recurse"] = SwitchParameter.Present;
     BoundParameters["Force"] = SwitchParameter.Present;
-
-    return true;
   }
 }

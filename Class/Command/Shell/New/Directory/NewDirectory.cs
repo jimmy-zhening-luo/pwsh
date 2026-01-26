@@ -49,10 +49,5 @@ public sealed class NewDirectory : WrappedCommandShouldProcess
   [Alias("f")]
   public SwitchParameter? Force;
 
-  private protected sealed override bool ValidateParameters()
-  {
-    BoundParameters["ItemType"] = "Directory";
-
-    return true;
-  }
+  private protected sealed override void TransformParameters() => BoundParameters["ItemType"] = "Directory";
 }

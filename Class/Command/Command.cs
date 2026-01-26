@@ -71,10 +71,10 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
 
   private protected virtual bool ValidateParameters() => true;
 
-  private protected virtual void BeforeBeginProcessing()
+  private protected virtual void TransformParameters()
   { }
 
-  private protected virtual void TransformParameters()
+  private protected virtual void BeforeBeginProcessing()
   { }
 
   private protected virtual void AfterEndProcessing()
