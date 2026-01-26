@@ -34,7 +34,7 @@ public abstract class WrappedSetDirectory : WrappedCommand
           "..",
           pwd
         );
-  
+
         BoundParameters["Path"] = parent == pwd
           ? Home()
           : parent;
