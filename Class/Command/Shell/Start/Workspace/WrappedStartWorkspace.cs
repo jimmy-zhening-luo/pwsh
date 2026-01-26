@@ -1,12 +1,7 @@
 namespace Module.Command.Shell.Start.Workspace;
 
-public abstract class WrappedStartWorkspace : WrappedCommandShouldProcess
+public abstract class WrappedStartWorkspace : CoreCommand
 {
-  private protected WrappedStartWorkspace() : base(
-    "Start-Process"
-  )
-  { }
-
   [Parameter(
     Position = 0
   )]
