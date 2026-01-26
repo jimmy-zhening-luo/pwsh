@@ -2,7 +2,12 @@ namespace Module.Command.Shell.Start.Workspace;
 
 public abstract class VirtualStartWorkspace : CoreCommand
 {
-  public abstract string? Path;
+  public abstract string Path
+  {
+    get;
+    set;
+  }
+  private string path = "";
 
   [Parameter(
     Position = 1
@@ -48,15 +53,15 @@ public abstract class VirtualStartWorkspace : CoreCommand
 
   private protected sealed override void TransformParameters()
   {
-    if (string.IsNullOrEmpty(Path))
+    if (string.IsNullOrEmpty(path))
     {
-      Path = Here
+      path = Here
         ? Pwd()
         : Reanchor();
     }
     else if (!Here)
     {
-      Path = Reanchor(Path);
+      path = Reanchor(path);
     }
   }
 
@@ -68,7 +73,7 @@ public abstract class VirtualStartWorkspace : CoreCommand
 
     argumentList.Insert(
       0,
-      Path!
+      path
     );
 
     if (!string.IsNullOrEmpty(profileName))

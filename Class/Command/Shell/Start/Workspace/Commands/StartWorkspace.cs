@@ -16,7 +16,11 @@ public sealed class StartWorkspace : VirtualStartWorkspace
   )]
   [AllowEmptyString]
   [PathCompletions]
-  public override string? Path;
+  public string Path
+  {
+    get => path;
+    set => path = value;
+  }
 }
 
 [Cmdlet(
@@ -37,7 +41,11 @@ public sealed class StartWorkspaceSibling : VirtualStartWorkspace
   [PathCompletions(
     ".."
   )]
-  public override string? Path;
+  public string Path
+  {
+    get => path;
+    set => path = value;
+  }
 
   private protected sealed override string LocationSubpath => "..";
 }
@@ -60,7 +68,11 @@ public sealed class StartWorkspaceRelative : VirtualStartWorkspace
   [PathCompletions(
     @"..\.."
   )]
-  public override string? Path;
+  public string Path
+  {
+    get => path;
+    set => path = value;
+  }
 
   private protected sealed override string LocationSubpath => @"..\..";
 }
@@ -83,7 +95,11 @@ public sealed class StartWorkspaceHome : VirtualStartWorkspace
   [PathCompletions(
     "~"
   )]
-  public override string? Path;
+  public string Path
+  {
+    get => path;
+    set => path = value;
+  }
 
   private protected sealed override string Location => Home();
 }
@@ -106,7 +122,11 @@ public sealed class StartWorkspaceCode : VirtualStartWorkspace
   [PathCompletions(
     @"~\code"
   )]
-  public override string? Path;
+  public string Path
+  {
+    get => path;
+    set => path = value;
+  }
 
   private protected sealed override string Location => Home();
 
@@ -131,7 +151,11 @@ public sealed class StartWorkspaceDrive : VirtualStartWorkspace
   [PathCompletions(
     @"\"
   )]
-  public override string? Path;
+  public string Path
+  {
+    get => path;
+    set => path = value;
+  }
 
   private protected sealed override string Location => Drive();
 }
