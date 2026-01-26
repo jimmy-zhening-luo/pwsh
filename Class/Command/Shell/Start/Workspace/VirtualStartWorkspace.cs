@@ -116,7 +116,7 @@ public abstract class VirtualStartWorkspace : CoreCommand
     }
 
     CreateProcess(
-      global::Path.GetFullPath(
+      IO.Path.GetFullPath(
         @"Programs\Microsoft VS Code\bin\code.cmd",
         Env(
           "LOCALAPPDATA"
