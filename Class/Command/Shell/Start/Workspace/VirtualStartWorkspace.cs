@@ -66,10 +66,9 @@ public abstract class VirtualStartWorkspace : CoreCommand
 
   private protected sealed override void AfterEndProcessing()
   {
-    var argumentList = new List<string>()
-    {
-      .. arguments
-    };
+    var argumentList = new List<string>(
+      arguments
+    );
 
     argumentList.Insert(
       0,
