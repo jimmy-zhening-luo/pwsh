@@ -53,7 +53,7 @@ internal static class Environmental
     subpath
   );
 
-  internal static string Windir(
+  internal static string WinDir(
     string subpath = ""
   ) => EnvPath(
     SpecialFolder.Windows,
