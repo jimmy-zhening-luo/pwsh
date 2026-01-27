@@ -4,8 +4,7 @@ internal static partial class Canonicalizer
 {
   internal static string Canonicalize(
     string path,
-    bool preserveTrailingSeparator = false,
-    bool anchorRelative = false
+    bool preserveTrailingSeparator = false
   )
   {
     string normalPath = AnchorHome(
