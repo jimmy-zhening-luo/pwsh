@@ -198,9 +198,9 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
 
   private protected string Reanchor(
     string typedPath = ""
-  ) => Path.GetFullPath(
+  ) => GetFullPath(
     typedPath,
-    Path.GetFullPath(
+    GetFullPath(
       LocationSubpath,
       string.IsNullOrEmpty(
         Location
@@ -227,7 +227,7 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
       FileSystemItemType.Directory => Directory.Exists(
         psPath
       ),
-      _ => Path.Exists(
+      _ => Exists(
         psPath
       )
     };
@@ -249,14 +249,14 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
 
   private protected string Pwd(
     string subpath = ""
-  ) => Path.GetFullPath(
+  ) => GetFullPath(
     subpath,
     SessionState.Path.CurrentLocation.Path
   );
 
   private protected string Drive(
     string subpath = ""
-  ) => Path.GetFullPath(
+  ) => GetFullPath(
     subpath,
     SessionState.Drive.Current.Root
   );

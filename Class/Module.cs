@@ -1,3 +1,4 @@
+global using static System.IO.Path;
 global using static Module.Context;
 global using static Module.Input.Escaper;
 global using static Module.Input.PathResolution.Canonicalizer;
@@ -22,7 +23,6 @@ global using StringSplitOptions = System.StringSplitOptions;
 global using AttributeUsage = System.AttributeUsageAttribute;
 global using AttributeTargets = System.AttributeTargets;
 global using IDictionary = System.Collections.IDictionary;
-global using Path = System.IO.Path;
 global using Directory = System.IO.Directory;
 global using File = System.IO.File;
 global using DirectoryInfo = System.IO.DirectoryInfo;

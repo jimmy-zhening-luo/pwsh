@@ -25,7 +25,7 @@ internal static partial class Canonicalizer
 
     return preserveTrailingSeparator
       ? normalPath
-      : Path.TrimEndingDirectorySeparator(
+      : TrimEndingDirectorySeparator(
           normalPath
         );
   }
@@ -34,12 +34,11 @@ internal static partial class Canonicalizer
     string path,
     string location = "",
     string subpath = ""
-  ) => Path
-    .Join(
-      location,
-      path,
-      subpath
-    )
+  ) => Join(
+    location,
+    path,
+    subpath
+  )
     .Replace(
       '\\',
       '/'

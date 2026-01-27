@@ -30,7 +30,7 @@ public abstract class WrappedSetDirectory : WrappedCommand
       )
       {
         string pwd = Pwd();
-        string parent = IO.Path.GetFullPath(
+        string parent = GetFullPath(
           "..",
           pwd
         );

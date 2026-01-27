@@ -68,21 +68,21 @@ public sealed class OpenUrl : CoreCommand
 
       if (!string.IsNullOrEmpty(cleanPath))
       {
-        string relativePath = IO.Path.GetRelativePath(
+        string relativePath = GetRelativePath(
           SessionState.Path.CurrentLocation.Path,
           cleanPath
         );
-        string testPath = IO.Path.IsPathRooted(
+        string testPath = IsPathRooted(
           relativePath
         )
           ? relativePath
-          : IO.Path.Combine(
+          : Combine(
               SessionState.Path.CurrentLocation.Path,
               relativePath
             );
 
-        target = IO.Path.Exists(testPath)
-          ? IO.Path.GetFullPath(
+        target = Exists(testPath)
+          ? GetFullPath(
               testPath
             )
           : cleanPath;

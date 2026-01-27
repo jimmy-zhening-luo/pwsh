@@ -62,7 +62,7 @@ public sealed class PathCompletionsAttribute : BaseCompletionsAttribute<PathComp
     using var ps = CreatePS();
 
     return new(
-      Path.GetFullPath(
+      GetFullPath(
         nullPath
           ? string.Empty
           : Location,

@@ -23,7 +23,7 @@ public sealed class StartProfile : CoreCommand
         LocalAppData(
           @"Programs\Microsoft VS Code\bin\code.cmd"
         ),
-        Path.GetFullPath(
+        GetFullPath(
           "pwsh",
           repoRoot
         )

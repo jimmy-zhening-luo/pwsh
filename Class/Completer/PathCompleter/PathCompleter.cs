@@ -81,7 +81,7 @@ public sealed class PathCompleter : BaseCompleter
         }
         else
         {
-          string anchoredPath = Path.GetFullPath(
+          string anchoredPath = GetFullPath(
             subpathPart,
             Root
           );
@@ -92,7 +92,7 @@ public sealed class PathCompleter : BaseCompleter
             )
           )
           {
-            accumulatedSubpath = Path.GetRelativePath(
+            accumulatedSubpath = GetRelativePath(
               Root,
               anchoredPath
             );
@@ -106,7 +106,7 @@ public sealed class PathCompleter : BaseCompleter
             )
           )
           {
-            accumulatedSubpath = Path.GetFullPath(
+            accumulatedSubpath = GetFullPath(
               subpathPart
             );
             location = accumulatedSubpath;
@@ -155,7 +155,7 @@ FileFirstMatch:
       {
         ++count;
         yield return Denormalize(
-          Path.GetFileName(
+          GetFileName(
             file
           ),
           accumulatedSubpath
@@ -190,7 +190,7 @@ Match:
     {
       ++count;
       yield return Denormalize(
-        Path.GetFileName(
+        GetFileName(
           directory
         ),
         accumulatedSubpath,
@@ -223,7 +223,7 @@ Match:
       {
         ++count;
         yield return Denormalize(
-          Path.GetFileName(
+          GetFileName(
             file
           ),
           accumulatedSubpath

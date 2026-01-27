@@ -28,7 +28,7 @@ internal static class Context
 
   internal static string Home(
     string subpath = ""
-  ) => Path.GetFullPath(
+  ) => GetFullPath(
     subpath,
     Environment.GetFolderPath(
       Environment
@@ -39,14 +39,14 @@ internal static class Context
 
   internal static string AppData(
     string subpath = ""
-  ) => Path.GetFullPath(
+  ) => GetFullPath(
     subpath,
     Env("APPDATA")
   );
 
   internal static string LocalAppData(
     string subpath = ""
-  ) => Path.GetFullPath(
+  ) => GetFullPath(
     subpath,
     Env("LOCALAPPDATA")
   );
