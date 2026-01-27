@@ -158,44 +158,6 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
     )
   );
 
-  private protected Collection<PSObject> Call(
-    string nativeCommand,
-    string verb,
-    string[] arguments,
-    CommandTypes commandType = CommandTypes.Application
-  ) => Call(
-    nativeCommand,
-    [
-      verb,
-      .. arguments
-    ],
-    commandType
-  );
-
-  private protected Collection<PSObject> Call(
-    string nativeCommand,
-    string[] arguments,
-    CommandTypes commandType = CommandTypes.Application
-  )
-  {
-    using var ps = CreatePS();
-
-    AddCommand(
-      ps,
-      nativeCommand,
-      commandType
-    );
-
-    foreach (string argument in arguments)
-    {
-      ps.AddArgument(
-        argument
-      );
-    }
-
-    return ps.Invoke();
-  }
-
   private protected string Reanchor(
     string typedPath = ""
   ) => GetFullPath(
