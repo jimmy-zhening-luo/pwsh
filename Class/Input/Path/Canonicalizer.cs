@@ -7,7 +7,7 @@ internal static partial class Canonicalizer
     bool preserveTrailingSeparator = false
   )
   {
-    string canonicalPath = AnchorHome(
+    string normalPath = AnchorHome(
       Normalize(
         path,
         preserveTrailingSeparator
@@ -15,11 +15,11 @@ internal static partial class Canonicalizer
     );
 
     return IsPathFullyQualified(
-      canonicalPath
+      normalPath
     )
-      ? canonicalPath
+      ? normalPath
       : PSLocation(
-          canonicalPath
+          normalPath
         );
   }
 
