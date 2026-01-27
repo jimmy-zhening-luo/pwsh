@@ -51,28 +51,46 @@ internal static class Context
 
   internal static void ShellExecute(
     string fileName,
-    string arguments = "",
+    string arguments,
+    bool administrator = false,
+    bool noNewWindow = false
+  ) => ShellExecute(
+    fileName,
+    [arguments],
+    administrator,
+    noNewWindow
+  );
+
+  internal static void ShellExecute(
+    string fileName,
+    IEnumerable<string>? arguments = null,
     bool administrator = false,
     bool noNewWindow = false
   )
   {
     if (!Ssh)
     {
-      var startInfo = new ProcessStartInfo(
-        fileName
-      )
-      {
-        UseShellExecute = true,
-        CreateNoWindow = noNewWindow
-      };
+      var argumentList = arguments == null
+        ? null
+        : new List<string>(
+            arguments
+          );
 
-      if (
-        !string.IsNullOrEmpty(
-          arguments
-        )
-      )
+      var startInfo = argumentList == null
+        || argumentList.Count == 0
+        ? new ProcessStartInfo(
+            fileName
+          )
+        : new ProcessStartInfo(
+            fileName,
+            argumentList
+          );
+
+      startInfo.UseShellExecute = true;
+
+      if (noNewWindow)
       {
-        startInfo.Arguments = arguments;
+        startInfo.CreateNoWindow = true;
       }
 
       if (administrator)
