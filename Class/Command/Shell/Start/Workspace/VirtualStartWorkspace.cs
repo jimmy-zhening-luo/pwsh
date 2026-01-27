@@ -58,6 +58,10 @@ public abstract class VirtualStartWorkspace : CoreCommand
     {
       path = Reanchor(path);
     }
+
+    path = Escape(
+      path
+    );
   }
 
   private protected sealed override void AfterEndProcessing()
