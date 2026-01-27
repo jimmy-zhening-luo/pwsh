@@ -32,6 +32,17 @@ internal static class Environmental
     )
   );
 
+  internal static string Code(
+    string subpath = ""
+  ) => GetFullPath(
+    Normalize(
+      subpath
+    ),
+    Home(
+      "code"
+    )
+  );
+
   internal static string Home(
     string subpath = ""
   ) => EnvPath(
