@@ -28,7 +28,7 @@ internal static partial class Canonicalizer
     bool preserveTrailingSeparator = false
   )
   {
-    string normalPath = RemoveRelativeRoot(
+    string normalPath = TrimRelativePrefix(
       DuplicateSeparatorRegex().Replace(
         ExpandEnvironmentVariables(
           path.Trim()
@@ -48,7 +48,7 @@ internal static partial class Canonicalizer
         );
   }
 
-  private static string RemoveRelativeRoot(
+  private static string TrimRelativePrefix(
     string path
   ) => path.StartsWith(
     '.'
