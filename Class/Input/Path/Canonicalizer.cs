@@ -2,13 +2,13 @@ namespace Module.Input.Path;
 
 internal static partial class Canonicalizer
 {
-  internal static string CanonicalizeRootedPath(
+  internal static string Canonicalize(
     string path,
     bool preserveTrailingSeparator = false
   )
   {
     string canonicalPath = AnchorHome(
-      CanonicalizeAbsolutePath(
+      Normalize(
         path,
         preserveTrailingSeparator
       )
@@ -23,7 +23,7 @@ internal static partial class Canonicalizer
         );
   }
 
-  internal static string CanonicalizeAbsolutePath(
+  internal static string Normalize(
     string path,
     bool preserveTrailingSeparator = false
   )

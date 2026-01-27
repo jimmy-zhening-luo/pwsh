@@ -52,7 +52,7 @@ public sealed class PathCompletionsAttribute : BaseCompletionsAttribute<PathComp
   public sealed override PathCompleter Create()
   {
     return new(
-      CanonicalizeRootedPath(
+      Canonicalize(
         Location
       ),
       ItemType,
