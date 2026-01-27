@@ -79,7 +79,8 @@ internal static partial class Canonicalizer
   ) => IsHomeRooted(
     path
   )
-    ? Home()
-      + path[1..]
+    ? Home(
+        path[1..]
+      )
     : path;
 }
