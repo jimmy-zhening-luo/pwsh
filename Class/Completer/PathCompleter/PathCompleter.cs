@@ -155,7 +155,7 @@ FileFirstMatch:
       )
       {
         ++count;
-        yield return Denormalize(
+        yield return Decanonicalize(
           GetFileName(
             file
           ),
@@ -190,7 +190,7 @@ Match:
     )
     {
       ++count;
-      yield return Denormalize(
+      yield return Decanonicalize(
         GetFileName(
           directory
         ),
@@ -223,7 +223,7 @@ Match:
       )
       {
         ++count;
-        yield return Denormalize(
+        yield return Decanonicalize(
           GetFileName(
             file
           ),
@@ -249,7 +249,7 @@ Match:
       )
     )
     {
-      yield return Denormalize(
+      yield return Decanonicalize(
         @"\",
         accumulatedSubpath
       );
@@ -262,7 +262,7 @@ Match:
       || count != 0
     )
     {
-      yield return Denormalize(
+      yield return Decanonicalize(
         @"..\",
         accumulatedSubpath
       );

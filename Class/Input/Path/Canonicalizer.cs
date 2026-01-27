@@ -12,6 +12,20 @@ internal static partial class Canonicalizer
     )
   );
 
+  internal static string Decanonicalize(
+    string path,
+    string location = "",
+    string subpath = ""
+  ) => Join(
+    location,
+    path,
+    subpath
+  )
+    .Replace(
+      '\\',
+      '/'
+    );
+
   private static string Normalize(
     string path,
     bool preserveTrailingSeparator = false
@@ -36,20 +50,6 @@ internal static partial class Canonicalizer
           normalPath
         );
   }
-
-  internal static string Denormalize(
-    string path,
-    string location = "",
-    string subpath = ""
-  ) => Join(
-    location,
-    path,
-    subpath
-  )
-    .Replace(
-      '\\',
-      '/'
-    );
 
   private static string RemoveRelativeRoot(
     string path
