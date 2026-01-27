@@ -50,4 +50,11 @@ internal static class Environmental
     SpecialFolder.LocalApplicationData,
     subpath
   );
+
+  internal static string Windir(
+    string subpath = ""
+  ) => EnvPath(
+    SpecialFolder.Windows,
+    subpath
+  );
 }
