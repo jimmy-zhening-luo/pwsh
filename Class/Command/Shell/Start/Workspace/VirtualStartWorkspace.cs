@@ -67,14 +67,6 @@ public abstract class VirtualStartWorkspace : CoreCommand
       path
     };
 
-    if (path != "--")
-    {
-      argumentList.Insert(
-        0,
-        "--"
-      );
-    }
-
     if (!string.IsNullOrEmpty(profileName))
     {
       if (
