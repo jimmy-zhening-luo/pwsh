@@ -48,20 +48,6 @@ internal static partial class Canonicalizer
         );
   }
 
-  private static string TrimRelativePrefix(
-    string path
-  ) => path.StartsWith(
-    '.'
-  )
-    && (
-      path.Length == 1
-      || path[1] == '\\'
-    )
-    ? path.Length == 1
-      ? string.Empty
-      : path[2..]
-    : path;
-
   private static string AnchorHome(
     string path
   ) => path.StartsWith(
