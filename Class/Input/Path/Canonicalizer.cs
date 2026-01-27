@@ -8,18 +8,16 @@ internal static partial class Canonicalizer
   )
   {
     string normalPath = RemoveRelativeRoot(
-      DuplicateSeparatorRegex()
-        .Replace(
-          Environment
-            .ExpandEnvironmentVariables(
-              path
-            )
-            .Replace(
-              '/',
-              '\\'
-            ),
-          @"\"
+      DuplicateSeparatorRegex().Replace(
+        ExpandEnvironmentVariables(
+          path
         )
+          .Replace(
+            '/',
+            '\\'
+          ),
+        @"\"
+      )
     );
 
     return preserveTrailingSeparator

@@ -22,20 +22,28 @@ internal static class Context
   internal static string Env(
     string variable,
     EnvironmentVariableTarget target = EnvironmentVariableTarget.Process
-  ) => Environment.GetEnvironmentVariable(
+  ) => GetEnvironmentVariable(
     variable,
     target
   )
     ?? string.Empty;
 
+  internal static string EnvironmentPath(
+    SpecialFolder folder,
+    string subpath = ""
+  ) => GetFullPath(
+    subpath,
+    GetFolderPath(
+      folder
+    )
+  );
+
   internal static string Home(
     string subpath = ""
   ) => GetFullPath(
     subpath,
-    Environment.GetFolderPath(
-      Environment
-        .SpecialFolder
-        .UserProfile
+    GetFolderPath(
+      SpecialFolder.UserProfile
     )
   );
 
@@ -43,14 +51,18 @@ internal static class Context
     string subpath = ""
   ) => GetFullPath(
     subpath,
-    Env("APPDATA")
+    GetFolderPath(
+      SpecialFolder.ApplicationData
+    )
   );
 
   internal static string LocalAppData(
     string subpath = ""
   ) => GetFullPath(
     subpath,
-    Env("LOCALAPPDATA")
+    GetFolderPath(
+      SpecialFolder.LocalApplicationData
+    )
   );
 
   internal static void CreateProcess(
