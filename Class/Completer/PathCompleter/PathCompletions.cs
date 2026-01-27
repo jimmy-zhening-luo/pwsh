@@ -53,7 +53,7 @@ public sealed class PathCompletionsAttribute : BaseCompletionsAttribute<PathComp
 
   public sealed override PathCompleter Create()
   {
-    bool nullPath = string.IsNullOrEmpty(
+    bool nullLocation = string.IsNullOrEmpty(
       Location
     );
 
@@ -61,7 +61,7 @@ public sealed class PathCompletionsAttribute : BaseCompletionsAttribute<PathComp
 
     return new(
       GetFullPath(
-        nullPath
+        nullLocation
           ? string.Empty
           : Location,
         ps
@@ -76,7 +76,7 @@ public sealed class PathCompletionsAttribute : BaseCompletionsAttribute<PathComp
       ItemType,
       Flat,
       Hidden,
-      nullPath
+      nullLocation
     );
   }
 }
