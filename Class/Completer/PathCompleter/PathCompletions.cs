@@ -20,9 +20,7 @@ public sealed class PathCompletionsAttribute : BaseCompletionsAttribute<PathComp
 
   public PathCompletionsAttribute(
     string location
-  ) : this() => Location = CanonicalizeAbsolutePath(
-    location
-  );
+  ) : this() => Location = location;
 
   public PathCompletionsAttribute(
     string location,
@@ -53,30 +51,16 @@ public sealed class PathCompletionsAttribute : BaseCompletionsAttribute<PathComp
 
   public sealed override PathCompleter Create()
   {
-    bool nullLocation = string.IsNullOrEmpty(
-      Location
-    );
-
-    using var ps = CreatePS();
-
     return new(
-      GetFullPath(
-        nullLocation
-          ? string.Empty
-          : Location,
-        ps
-          .AddCommand(
-            "Get-Location"
-          )
-          .Invoke()[0]
-          .BaseObject
-          .ToString()
-          ?? string.Empty
+      CanonicalizeRootedPath(
+        Location
       ),
       ItemType,
       Flat,
       Hidden,
-      nullLocation
+      string.IsNullOrEmpty(
+        Location
+      )
     );
   }
 }

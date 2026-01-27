@@ -2,23 +2,42 @@ namespace Module.Input.Path;
 
 internal static partial class Canonicalizer
 {
+  internal static string CanonicalizeRootedPath(
+    string path,
+    bool preserveTrailingSeparator = false
+  )
+  {
+    string canonicalPath = AnchorHome(
+      CanonicalizeAbsolutePath(
+        path,
+        preserveTrailingSeparator
+      )
+    );
+
+    return IsPathFullyQualified(
+      canonicalPath
+    )
+      ? canonicalPath
+      : PSLocation(
+          canonicalPath
+        );
+  }
+
   internal static string CanonicalizeAbsolutePath(
     string path,
     bool preserveTrailingSeparator = false
   )
   {
-    string normalPath = AnchorHome(
-      RemoveRelativeRoot(
-        DuplicateSeparatorRegex().Replace(
-          ExpandEnvironmentVariables(
-            path.Trim()
-          )
-            .Replace(
-              '/',
-              '\\'
-            ),
-          @"\"
+    string normalPath = RemoveRelativeRoot(
+      DuplicateSeparatorRegex().Replace(
+        ExpandEnvironmentVariables(
+          path.Trim()
         )
+          .Replace(
+            '/',
+            '\\'
+          ),
+        @"\"
       )
     );
 
@@ -48,12 +67,12 @@ internal static partial class Canonicalizer
   ) => path.StartsWith(
     '~'
   )
-    && (
-      path.Length == 1
-      || path[1] == '\\'
-    )
-    ? Home(
-        path[1..]
-      )
-    : path;
+    ? path.Length == 1
+      ? Home()
+      : path[1] == '\\'
+        ? Home(
+            path[2..]
+          )
+        : path
+      : path;
 }
