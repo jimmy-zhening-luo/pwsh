@@ -32,28 +32,22 @@ internal static class Environmental
 
   internal static string Home(
     string subpath = ""
-  ) => GetFullPath(
-    subpath,
-    GetFolderPath(
-      SpecialFolder.UserProfile
-    )
+  ) => EnvPath(
+    SpecialFolder.UserProfile,
+    subpath
   );
 
   internal static string AppData(
     string subpath = ""
-  ) => GetFullPath(
-    subpath,
-    GetFolderPath(
-      SpecialFolder.ApplicationData
-    )
+  ) => EnvPath(
+    SpecialFolder.ApplicationData,
+    subpath
   );
 
   internal static string LocalAppData(
     string subpath = ""
-  ) => GetFullPath(
-    subpath,
-    GetFolderPath(
-      SpecialFolder.LocalApplicationData
-    )
+  ) => EnvPath(
+    SpecialFolder.LocalApplicationData,
+    subpath
   );
 }
