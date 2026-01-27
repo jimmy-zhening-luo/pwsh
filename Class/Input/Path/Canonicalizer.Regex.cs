@@ -1,4 +1,4 @@
-namespace Module.Input.PathResolution;
+namespace Module.Input.Path;
 
 internal static partial class Canonicalizer
 {
