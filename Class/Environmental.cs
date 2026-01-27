@@ -24,7 +24,9 @@ internal static class Environmental
     SpecialFolder folder,
     string subpath = ""
   ) => GetFullPath(
-    subpath,
+    Normalize(
+      subpath
+    ),
     GetFolderPath(
       folder
     )
