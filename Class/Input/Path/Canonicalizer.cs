@@ -3,14 +3,16 @@ namespace Module.Input.Path;
 internal static partial class Canonicalizer
 {
   internal static string Canonicalize(
-    string path
+    string path,
+    bool preserveTrailingSeparator = false
   ) => AnchorHome(
     Normalize(
-      path
+      path,
+      preserveTrailingSeparator
     )
   );
 
-  internal static string Normalize(
+  private static string Normalize(
     string path,
     bool preserveTrailingSeparator = false
   )

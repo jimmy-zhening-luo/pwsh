@@ -36,7 +36,7 @@ public sealed class PathCompleter : BaseCompleter
     string wordToComplete
   )
   {
-    string pathToComplete = Normalize(
+    string pathToComplete = Canonicalize(
       wordToComplete,
       true
     );
