@@ -32,6 +32,20 @@ public sealed class PathCompleter : BaseCompleter
     reanchor
   );
 
+  private static string Decanonicalize(
+    string path,
+    string location = "",
+    string subpath = ""
+  ) => Join(
+    location,
+    path,
+    subpath
+  )
+    .Replace(
+      '\\',
+      '/'
+    );
+
   public override IEnumerable<string> FulfillCompletion(
     string wordToComplete
   )
