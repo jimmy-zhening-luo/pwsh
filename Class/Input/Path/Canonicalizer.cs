@@ -10,8 +10,7 @@ internal static partial class Canonicalizer
     string normalPath = RemoveRelativeRoot(
       DuplicateSeparatorRegex()
         .Replace(
-          System
-            .Environment
+          Environment
             .ExpandEnvironmentVariables(
               path
             )
