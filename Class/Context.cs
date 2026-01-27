@@ -1,29 +1,36 @@
+using System.Linq;
+
 namespace Module;
 
 internal static class Context
 {
   internal static void CreateProcess(
     string fileName,
-    string arguments = "",
+    IEnumerable<string>? arguments,
     bool noNewWindow = false
   )
   {
     if (!Ssh)
     {
-      var startInfo = new ProcessStartInfo(
-        fileName
-      )
-      {
-        CreateNoWindow = noNewWindow
-      };
+      var argumentList = arguments == null
+        ? null
+        : new List<string>(
+            arguments
+          );
 
-      if (
-        !string.IsNullOrEmpty(
-          arguments
-        )
-      )
+      var startInfo = argumentList == null
+        || argumentList.Count == 0
+        ? new ProcessStartInfo(
+            fileName
+          )
+        : new ProcessStartInfo(
+            fileName,
+            argumentList
+          );
+
+      if (noNewWindow)
       {
-        startInfo.Arguments = arguments;
+        startInfo.CreateNoWindow = true;
       }
 
       Process.Start(

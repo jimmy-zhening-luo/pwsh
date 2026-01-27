@@ -58,10 +58,6 @@ public abstract class VirtualStartWorkspace : CoreCommand
     {
       path = Reanchor(path);
     }
-
-    path = Escape(
-      path
-    );
   }
 
   private protected sealed override void AfterEndProcessing()
@@ -122,10 +118,7 @@ public abstract class VirtualStartWorkspace : CoreCommand
       LocalAppData(
         @"Programs\Microsoft VS Code\bin\code.cmd"
       ),
-      string.Join(
-        ' ',
-        argumentList
-      ),
+      argumentList,
       true
     );
   }

@@ -12,10 +12,13 @@ public sealed class StartHistory : Cmdlet
     LocalAppData(
       @"Programs\Microsoft VS Code\bin\code.cmd"
     ),
-    AppData(
-      @"Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt"
-    )
-      + " --profile=Setting --new-window",
+    [
+      AppData(
+        @"Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt"
+      ),
+      "--profile=Setting",
+      "--new-window"
+    ],
     true
   );
 }
