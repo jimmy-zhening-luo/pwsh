@@ -20,7 +20,7 @@ public sealed class PathCompletionsAttribute : BaseCompletionsAttribute<PathComp
 
   public PathCompletionsAttribute(
     string location
-  ) : this() => Location = Canonicalize(
+  ) : this() => Location = CanonicalizeAbsolutePath(
     location
   );
 

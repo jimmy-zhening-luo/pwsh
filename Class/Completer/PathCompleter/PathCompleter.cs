@@ -50,7 +50,7 @@ public sealed class PathCompleter : BaseCompleter
     string wordToComplete
   )
   {
-    string pathToComplete = Canonicalize(
+    string pathToComplete = CanonicalizeAbsolutePath(
       wordToComplete,
       true
     );

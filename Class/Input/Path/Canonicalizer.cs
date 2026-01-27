@@ -2,7 +2,7 @@ namespace Module.Input.Path;
 
 internal static partial class Canonicalizer
 {
-  internal static string Canonicalize(
+  internal static string CanonicalizeAbsolutePath(
     string path,
     bool preserveTrailingSeparator = false
   )
