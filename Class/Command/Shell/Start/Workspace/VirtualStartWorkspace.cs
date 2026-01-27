@@ -62,14 +62,18 @@ public abstract class VirtualStartWorkspace : CoreCommand
 
   private protected sealed override void AfterEndProcessing()
   {
-    var argumentList = new List<string>(
-      arguments
-    );
-
-    argumentList.Insert(
-      0,
+    var argumentList = new List<string>()
+    {
       path
-    );
+    };
+
+    if (path != "--")
+    {
+      argumentList.Insert(
+        0,
+        "--"
+      );
+    }
 
     if (!string.IsNullOrEmpty(profileName))
     {
@@ -108,6 +112,13 @@ public abstract class VirtualStartWorkspace : CoreCommand
     {
       argumentList.Add(
         "--reuse-window"
+      );
+    }
+
+    if (arguments.Length != 0)
+    {
+      argumentList.AddRange(
+        arguments
       );
     }
 
