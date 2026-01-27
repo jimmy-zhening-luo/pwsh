@@ -39,9 +39,15 @@ public abstract class WrappedStartExplorer : WrappedCommandShouldProcess
       {
         string[] paths = (string[])BoundParameters["Path"];
 
-        for (int i = 0; i < paths.Length; i++)
+        for (
+          int i = 0;
+          i < paths.Length;
+          i++
+        )
         {
-          paths[i] = Reanchor(paths[i]);
+          paths[i] = Reanchor(
+            paths[i]
+          );
         }
 
         BoundParameters["Path"] = paths;

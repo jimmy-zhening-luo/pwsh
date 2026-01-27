@@ -161,7 +161,9 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
   private protected string Reanchor(
     string typedPath = ""
   ) => GetFullPath(
-    typedPath,
+    Normalize(
+      typedPath
+    ),
     GetFullPath(
       LocationSubpath,
       string.IsNullOrEmpty(
@@ -212,14 +214,18 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
   private protected string Pwd(
     string subpath = ""
   ) => GetFullPath(
-    subpath,
+    Normalize(
+      subpath
+    ),
     SessionState.Path.CurrentLocation.Path
   );
 
   private protected string Drive(
     string subpath = ""
   ) => GetFullPath(
-    subpath,
+    Normalize(
+      subpath
+    ),
     SessionState.Drive.Current.Root
   );
 

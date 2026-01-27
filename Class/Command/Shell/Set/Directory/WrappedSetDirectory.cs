@@ -25,8 +25,12 @@ public abstract class WrappedSetDirectory : WrappedCommand
     if (Here)
     {
       if (
-        !IsPresent("Path")
-        && !IsPresent("LiteralPath")
+        !IsPresent(
+          "Path"
+        )
+        && !IsPresent(
+          "LiteralPath"
+        )
       )
       {
         string pwd = Pwd();
@@ -47,7 +51,8 @@ public abstract class WrappedSetDirectory : WrappedCommand
           "Path",
           out var path
         )
-          ? path?.ToString() ?? string.Empty
+          ? path?.ToString()
+            ?? string.Empty
           : string.Empty
       );
     }

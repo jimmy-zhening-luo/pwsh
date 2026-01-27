@@ -65,7 +65,9 @@ public sealed class OpenUrl : CoreCommand
   {
     if (ParameterSetName == "Path")
     {
-      string cleanPath = path.Trim();
+      string cleanPath = Normalize(
+        path
+      );
       string target = string.Empty;
 
       if (!string.IsNullOrEmpty(cleanPath))
@@ -83,7 +85,9 @@ public sealed class OpenUrl : CoreCommand
               relativePath
             );
 
-        target = Exists(testPath)
+        target = Exists(
+          testPath
+        )
           ? GetFullPath(
               testPath
             )
