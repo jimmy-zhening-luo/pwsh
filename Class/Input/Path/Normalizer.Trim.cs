@@ -1,6 +1,6 @@
 namespace Module.Input.Path;
 
-internal static partial class Canonicalizer
+internal static partial class Normalizer
 {
   [System.Text.RegularExpressions.GeneratedRegex(
     @"(?<!^)(?>\\\\+)"

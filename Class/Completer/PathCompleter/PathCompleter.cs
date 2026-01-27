@@ -32,7 +32,7 @@ public sealed class PathCompleter : BaseCompleter
     reanchor
   );
 
-  private static string Decanonicalize(
+  private static string Denormalize(
     string path,
     string location = "",
     string subpath = ""
@@ -169,7 +169,7 @@ FileFirstMatch:
       )
       {
         ++count;
-        yield return Decanonicalize(
+        yield return Denormalize(
           GetFileName(
             file
           ),
@@ -204,7 +204,7 @@ Match:
     )
     {
       ++count;
-      yield return Decanonicalize(
+      yield return Denormalize(
         GetFileName(
           directory
         ),
@@ -237,7 +237,7 @@ Match:
       )
       {
         ++count;
-        yield return Decanonicalize(
+        yield return Denormalize(
           GetFileName(
             file
           ),
@@ -263,7 +263,7 @@ Match:
       )
     )
     {
-      yield return Decanonicalize(
+      yield return Denormalize(
         @"\",
         accumulatedSubpath
       );
@@ -276,7 +276,7 @@ Match:
       || count != 0
     )
     {
-      yield return Decanonicalize(
+      yield return Denormalize(
         @"..\",
         accumulatedSubpath
       );

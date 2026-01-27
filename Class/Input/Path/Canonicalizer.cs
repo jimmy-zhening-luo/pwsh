@@ -1,6 +1,6 @@
 namespace Module.Input.Path;
 
-internal static partial class Canonicalizer
+internal static class Canonicalizer
 {
   internal static string Canonicalize(
     string path,
@@ -12,55 +12,12 @@ internal static partial class Canonicalizer
       preserveTrailingSeparator
     );
 
-    string homeAnchoredPath = AnchorHome(
-      normalPath
-    );
-
     return IsPathFullyQualified(
-      homeAnchoredPath
+      normalPath
     )
-      ? homeAnchoredPath
-      : PSLocation(
-          homeAnchoredPath
-        );
-  }
-
-  internal static string Normalize(
-    string path,
-    bool preserveTrailingSeparator = false
-  )
-  {
-    string normalPath = TrimRelativePrefix(
-      DuplicateSeparatorRegex().Replace(
-        ExpandEnvironmentVariables(
-          path.Trim()
-        )
-          .Replace(
-            '/',
-            '\\'
-          ),
-        @"\"
-      )
-    );
-
-    return preserveTrailingSeparator
       ? normalPath
-      : TrimEndingDirectorySeparator(
+      : PSLocation(
           normalPath
         );
   }
-
-  private static string AnchorHome(
-    string path
-  ) => path.StartsWith(
-    '~'
-  )
-    ? path.Length == 1
-      ? Home()
-      : path[1] == '\\'
-        ? Home(
-            path[2..]
-          )
-        : path
-      : path;
 }
