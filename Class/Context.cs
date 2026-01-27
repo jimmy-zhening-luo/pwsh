@@ -6,6 +6,16 @@ internal static class Context
 {
   internal static void CreateProcess(
     string fileName,
+    string arguments,
+    bool noNewWindow = false
+  ) => CreateProcess(
+    fileName,
+    [arguments],
+    noNewWindow
+  );
+
+  internal static void CreateProcess(
+    string fileName,
     IEnumerable<string>? arguments = null,
     bool noNewWindow = false
   )
