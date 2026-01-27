@@ -1,4 +1,4 @@
-namespace Module.Completer;
+namespace Module.Input.Completer;
 
 [AttributeUsage(
   AttributeTargets.Parameter

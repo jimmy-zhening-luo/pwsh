@@ -1,4 +1,4 @@
-namespace Module.Completer.PathCompleter;
+namespace Module.Input.Completer.PathCompleter;
 
 [AttributeUsage(
   AttributeTargets.Parameter

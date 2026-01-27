@@ -1,4 +1,4 @@
-namespace Module.Completer;
+namespace Module.Input.Completer;
 
 public enum CompletionCase
 {
