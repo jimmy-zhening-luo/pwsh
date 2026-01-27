@@ -20,9 +20,11 @@ internal static class Context
   );
 
   internal static string Env(
-    string variable
+    string variable,
+    EnvironmentVariableTarget target = EnvironmentVariableTarget.Process
   ) => Environment.GetEnvironmentVariable(
-    variable
+    variable,
+    target
   )
     ?? string.Empty;
 
