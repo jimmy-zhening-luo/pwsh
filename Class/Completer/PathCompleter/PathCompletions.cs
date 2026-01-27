@@ -49,18 +49,15 @@ public sealed class PathCompletionsAttribute : BaseCompletionsAttribute<PathComp
     flat
   ) => Hidden = hidden;
 
-  public sealed override PathCompleter Create()
-  {
-    return new(
-      Canonicalize(
-        Location
-      ),
-      ItemType,
-      Flat,
-      Hidden,
-      string.IsNullOrEmpty(
-        Location
-      )
-    );
-  }
+  public sealed override PathCompleter Create() => new(
+    Canonicalize(
+      Location
+    ),
+    ItemType,
+    Flat,
+    Hidden,
+    string.IsNullOrEmpty(
+      Location
+    )
+  );
 }
