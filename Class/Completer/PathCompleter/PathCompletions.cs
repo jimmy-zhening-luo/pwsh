@@ -50,7 +50,7 @@ public sealed class PathCompletionsAttribute : BaseCompletionsAttribute<PathComp
   ) => Hidden = hidden;
 
   public sealed override PathCompleter Create() => new(
-    Canonicalize(
+    Canonicalizer.Canonicalize(
       Location
     ),
     ItemType,

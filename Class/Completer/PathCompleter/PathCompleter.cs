@@ -32,20 +32,6 @@ public sealed class PathCompleter : BaseCompleter
     reanchor
   );
 
-  private static string Denormalize(
-    string path,
-    string location = "",
-    string subpath = ""
-  ) => Join(
-    location,
-    path,
-    subpath
-  )
-    .Replace(
-      '\\',
-      '/'
-    );
-
   public override IEnumerable<string> FulfillCompletion(
     string wordToComplete
   )
@@ -169,7 +155,7 @@ FileFirstMatch:
       )
       {
         ++count;
-        yield return Denormalize(
+        yield return Canonicalizer.Denormalize(
           GetFileName(
             file
           ),
@@ -204,7 +190,7 @@ Match:
     )
     {
       ++count;
-      yield return Denormalize(
+      yield return Canonicalizer.Denormalize(
         GetFileName(
           directory
         ),
@@ -237,7 +223,7 @@ Match:
       )
       {
         ++count;
-        yield return Denormalize(
+        yield return Canonicalizer.Denormalize(
           GetFileName(
             file
           ),
@@ -263,7 +249,7 @@ Match:
       )
     )
     {
-      yield return Denormalize(
+      yield return Canonicalizer.Denormalize(
         @"\",
         accumulatedSubpath
       );
@@ -276,7 +262,7 @@ Match:
       || count != 0
     )
     {
-      yield return Denormalize(
+      yield return Canonicalizer.Denormalize(
         @"..\",
         accumulatedSubpath
       );

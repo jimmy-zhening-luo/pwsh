@@ -1,4 +1,4 @@
-namespace Module.Input.Path;
+namespace Module.Completer.PathCompleter;
 
 internal static class Canonicalizer
 {
@@ -32,4 +32,19 @@ internal static class Canonicalizer
           homedNormalPath
         );
   }
+
+  internal static string Denormalize(
+    string path,
+    string location = "",
+    string subpath = ""
+  ) => Join(
+    location,
+    path,
+    subpath
+  )
+    .Replace(
+      '\\',
+      '/'
+    );
+
 }
