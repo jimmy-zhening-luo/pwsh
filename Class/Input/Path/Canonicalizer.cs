@@ -2,6 +2,14 @@ namespace Module.Input.Path;
 
 internal static partial class Canonicalizer
 {
+  internal static string Canonicalize(
+    string path
+  ) => AnchorHome(
+    Normalize(
+      path
+    )
+  );
+
   internal static string Normalize(
     string path,
     bool preserveTrailingSeparator = false
@@ -41,7 +49,7 @@ internal static partial class Canonicalizer
       '/'
     );
 
-  internal static string RemoveRelativeRoot(
+  private static string RemoveRelativeRoot(
     string path
   ) => IsRelativelyRooted(
     path
@@ -51,7 +59,7 @@ internal static partial class Canonicalizer
       : path[2..]
     : path;
 
-  internal static string AnchorHome(
+  private static string AnchorHome(
     string path
   ) => IsHomeRooted(
     path

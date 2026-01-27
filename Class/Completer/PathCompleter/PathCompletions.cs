@@ -20,10 +20,8 @@ public sealed class PathCompletionsAttribute : BaseCompletionsAttribute<PathComp
 
   public PathCompletionsAttribute(
     string location
-  ) : this() => Location = AnchorHome(
-    Normalize(
-      location
-    )
+  ) : this() => Location = Canonicalize(
+    location
   );
 
   public PathCompletionsAttribute(
