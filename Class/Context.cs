@@ -5,13 +5,13 @@ internal static class Context
   internal static bool Ssh
   {
     get => !string.IsNullOrEmpty(
-      Env(
+      EnvironmentVariable(
         "SSH_CLIENT"
       )
     );
   }
 
-  internal static string Env(
+  internal static string EnvironmentVariable(
     string variable,
     EnvironmentVariableTarget target = EnvironmentVariableTarget.Process
   ) => GetEnvironmentVariable(
