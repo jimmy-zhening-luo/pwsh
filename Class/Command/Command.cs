@@ -119,36 +119,6 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
     )
   );
 
-  [CodeAnalysis.DoesNotReturn]
-  private protected void Throw(
-    string message,
-    string id,
-    ErrorCategory category = ErrorCategory.InvalidOperation,
-    object? target = null
-  ) => Throw(
-    new System.Exception(
-      message
-    ),
-    id,
-    category,
-    target
-  );
-
-  [CodeAnalysis.DoesNotReturn]
-  private protected void Throw(
-    System.Exception exception,
-    string id,
-    ErrorCategory category = ErrorCategory.InvalidOperation,
-    object? target = null
-  ) => ThrowTerminatingError(
-    new ErrorRecord(
-      exception,
-      id,
-      category,
-      target
-    )
-  );
-
   private protected string Reanchor(
     string typedPath = ""
   ) => GetFullPath(
@@ -218,6 +188,36 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
       subpath
     ),
     SessionState.Drive.Current.Root
+  );
+
+  [CodeAnalysis.DoesNotReturn]
+  private protected void Throw(
+    string message,
+    string id,
+    ErrorCategory category = ErrorCategory.InvalidOperation,
+    object? target = null
+  ) => Throw(
+    new System.Exception(
+      message
+    ),
+    id,
+    category,
+    target
+  );
+
+  [CodeAnalysis.DoesNotReturn]
+  private protected void Throw(
+    System.Exception exception,
+    string id,
+    ErrorCategory category = ErrorCategory.InvalidOperation,
+    object? target = null
+  ) => ThrowTerminatingError(
+    new ErrorRecord(
+      exception,
+      id,
+      category,
+      target
+    )
   );
 
   private void Dispose(
