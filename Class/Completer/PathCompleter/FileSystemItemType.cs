@@ -1,4 +1,4 @@
-namespace Module.Input.Path;
+namespace Module.Completer.PathCompleter;
 
 public enum FileSystemItemType
 {
