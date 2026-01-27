@@ -119,15 +119,6 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
     )
   );
 
-  private protected void CleanRunspace()
-  {
-    if (Initialized)
-    {
-      powershell.Dispose();
-      powershell = null;
-    }
-  }
-
   [CodeAnalysis.DoesNotReturn]
   private protected void Throw(
     string message,
@@ -242,6 +233,15 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
       }
 
       disposed = true;
+    }
+  }
+
+  private void CleanRunspace()
+  {
+    if (Initialized)
+    {
+      powershell.Dispose();
+      powershell = null;
     }
   }
 }
