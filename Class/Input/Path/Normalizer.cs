@@ -7,18 +7,16 @@ internal static partial class Normalizer
     bool preserveTrailingSeparator = false
   )
   {
-    string normalPath = AnchorHome(
-      TrimRelativePrefix(
-        DuplicateSeparatorRegex().Replace(
-          ExpandEnvironmentVariables(
-            path.Trim()
-          )
-            .Replace(
-              '/',
-              '\\'
-            ),
-          @"\"
+    string normalPath = TrimRelativePrefix(
+      DuplicateSeparatorRegex().Replace(
+        ExpandEnvironmentVariables(
+          path.Trim()
         )
+          .Replace(
+            '/',
+            '\\'
+          ),
+        @"\"
       )
     );
 
@@ -28,18 +26,4 @@ internal static partial class Normalizer
           normalPath
         );
   }
-
-  private static string AnchorHome(
-    string path
-  ) => path.StartsWith(
-    '~'
-  )
-    ? path.Length == 1
-      ? Home()
-      : path[1] == '\\'
-        ? Home(
-            path[2..]
-          )
-        : path
-      : path;
 }

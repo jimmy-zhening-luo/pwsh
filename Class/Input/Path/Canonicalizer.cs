@@ -12,12 +12,24 @@ internal static class Canonicalizer
       preserveTrailingSeparator
     );
 
-    return IsPathFullyQualified(
-      normalPath
+    string homedNormalPath = normalPath.StartsWith(
+      '~'
     )
-      ? normalPath
+      ? normalPath.Length == 1
+        ? Home()
+        : normalPath[1] == '\\'
+          ? Home(
+              normalPath[2..]
+            )
+          : normalPath
+        : normalPath;
+
+    return IsPathFullyQualified(
+      homedNormalPath
+    )
+      ? homedNormalPath
       : PSLocation(
-          normalPath
+          homedNormalPath
         );
   }
 }
