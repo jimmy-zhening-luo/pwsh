@@ -41,26 +41,6 @@ internal static partial class Canonicalizer
       '/'
     );
 
-  internal static bool IsRelativelyRooted(
-    string path
-  ) => path.StartsWith(
-    '.'
-  )
-    && (
-      path.Length == 1
-      || path[1] == '\\'
-    );
-
-  internal static bool IsHomeRooted(
-    string path
-  ) => path.StartsWith(
-    '~'
-  )
-    && (
-        path.Length == 1
-      || path[1] == '\\'
-    );
-
   internal static string RemoveRelativeRoot(
     string path
   ) => IsRelativelyRooted(
@@ -80,4 +60,24 @@ internal static partial class Canonicalizer
         path[1..]
       )
     : path;
+
+  private static bool IsRelativelyRooted(
+    string path
+  ) => path.StartsWith(
+    '.'
+  )
+    && (
+      path.Length == 1
+      || path[1] == '\\'
+    );
+
+  private static bool IsHomeRooted(
+    string path
+  ) => path.StartsWith(
+    '~'
+  )
+    && (
+        path.Length == 1
+      || path[1] == '\\'
+    );
 }
