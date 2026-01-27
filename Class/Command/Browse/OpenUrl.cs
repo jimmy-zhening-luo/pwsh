@@ -46,7 +46,9 @@ public sealed class OpenUrl : CoreCommand
     {
       foreach (Uri uri in uris)
       {
-        string url = uri.ToString().Trim();
+        string url = uri
+          .ToString()
+          .Trim();
 
         if (!string.IsNullOrEmpty(url))
         {

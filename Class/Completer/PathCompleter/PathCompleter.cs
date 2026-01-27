@@ -39,8 +39,7 @@ public sealed class PathCompleter : BaseCompleter
     string pathToComplete = Normalize(
       wordToComplete,
       true
-    )
-      .Trim();
+    );
     string accumulatedSubpath = string.Empty;
     string location = string.Empty;
     string filter = string.Empty;
@@ -62,13 +61,15 @@ public sealed class PathCompleter : BaseCompleter
       }
       else
       {
-        string subpathPart = pathToComplete[..pathEnd].Trim();
+        string subpathPart = pathToComplete[..pathEnd]
+          .Trim();
 
         int wordStart = pathEnd + 1;
 
         if (wordStart < pathToComplete.Length)
         {
-          filter = pathToComplete[wordStart..].Trim();
+          filter = pathToComplete[wordStart..]
+            .Trim();
         }
 
         if (
