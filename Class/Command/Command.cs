@@ -179,20 +179,20 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
     FileSystemItemType type = FileSystemItemType.Any
   )
   {
-    string psPath = Pwd(
+    string absolutePath = Pwd(
       path
     );
 
     return type switch
     {
       FileSystemItemType.File => File.Exists(
-        psPath
+        absolutePath
       ),
       FileSystemItemType.Directory => Directory.Exists(
-        psPath
+        absolutePath
       ),
       _ => Exists(
-        psPath
+        absolutePath
       )
     };
   }
