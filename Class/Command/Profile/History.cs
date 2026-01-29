@@ -9,9 +9,7 @@ namespace Module.Command.Profile;
 public sealed class StartHistory : Cmdlet
 {
   protected sealed override void EndProcessing() => CreateProcess(
-    LocalAppData(
-      @"Programs\Microsoft VS Code\bin\code.cmd"
-    ),
+    Application.VSCode,
     [
       AppData(
         @"Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt"

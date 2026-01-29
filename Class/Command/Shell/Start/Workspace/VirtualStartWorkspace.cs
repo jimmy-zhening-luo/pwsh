@@ -113,9 +113,7 @@ public abstract class VirtualStartWorkspace : CoreCommand
     }
 
     CreateProcess(
-      LocalAppData(
-        @"Programs\Microsoft VS Code\bin\code.cmd"
-      ),
+      Application.VSCode,
       argumentList,
       true
     );

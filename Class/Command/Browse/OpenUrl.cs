@@ -3,8 +3,10 @@ namespace Module.Command.Browse;
 [Cmdlet(
   VerbsCommon.Open,
   "Url",
-  DefaultParameterSetName = "Path",
-  HelpUri = "https://www.chromium.org/developers/how-tos/run-chromium-with-flags/"
+  DefaultParameterSetName = "Path"
+)]
+[Cmdlet(
+  
 )]
 [Alias("o", "open")]
 [OutputType(typeof(void))]
