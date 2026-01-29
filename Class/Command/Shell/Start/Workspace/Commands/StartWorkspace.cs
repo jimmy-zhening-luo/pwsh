@@ -12,11 +12,7 @@ namespace Module.Command.Shell.Start.Workspace.Commands;
 public sealed class StartWorkspace : VirtualStartWorkspace
 {
   [PathCompletions]
-  public override string Path
-  {
-    get => path;
-    set => path = value;
-  }
+  public override string Path => base.Path;
 }
 
 [Cmdlet(
