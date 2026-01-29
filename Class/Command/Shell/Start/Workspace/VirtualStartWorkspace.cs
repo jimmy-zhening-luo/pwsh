@@ -2,15 +2,6 @@ namespace Module.Command.Shell.Start.Workspace;
 
 public abstract class VirtualStartWorkspace : CoreCommand
 {
-  [Parameter(
-    Position = 0
-  )]
-  [AllowEmptyString]
-  public virtual string Path
-  {
-    get => path;
-    set => path = value;
-  }
   private protected string path = "";
 
   [Parameter(

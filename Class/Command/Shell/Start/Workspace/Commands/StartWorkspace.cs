@@ -11,8 +11,15 @@ namespace Module.Command.Shell.Start.Workspace.Commands;
 [OutputType(typeof(void))]
 public sealed class StartWorkspace : VirtualStartWorkspace
 {
+  [Parameter(
+    Position = 0
+  )]
   [PathCompletions]
-  public override string Path => base.Path;
+  public string Path
+  {
+    get => path;
+    set => path = value;
+  }
 }
 
 [Cmdlet(
@@ -26,10 +33,13 @@ public sealed class StartWorkspace : VirtualStartWorkspace
 [OutputType(typeof(void))]
 public sealed class StartWorkspaceSibling : VirtualStartWorkspace
 {
+  [Parameter(
+    Position = 0
+  )]
   [PathCompletions(
     ".."
   )]
-  public override string Path
+  public string Path
   {
     get => path;
     set => path = value;
@@ -49,10 +59,13 @@ public sealed class StartWorkspaceSibling : VirtualStartWorkspace
 [OutputType(typeof(void))]
 public sealed class StartWorkspaceRelative : VirtualStartWorkspace
 {
+  [Parameter(
+    Position = 0
+  )]
   [PathCompletions(
     @"..\.."
   )]
-  public override string Path
+  public string Path
   {
     get => path;
     set => path = value;
@@ -72,10 +85,13 @@ public sealed class StartWorkspaceRelative : VirtualStartWorkspace
 [OutputType(typeof(void))]
 public sealed class StartWorkspaceHome : VirtualStartWorkspace
 {
+  [Parameter(
+    Position = 0
+  )]
   [PathCompletions(
     "~"
   )]
-  public override string Path
+  public string Path
   {
     get => path;
     set => path = value;
@@ -95,10 +111,13 @@ public sealed class StartWorkspaceHome : VirtualStartWorkspace
 [OutputType(typeof(void))]
 public sealed class StartWorkspaceCode : VirtualStartWorkspace
 {
+  [Parameter(
+    Position = 0
+  )]
   [PathCompletions(
     @"~\code"
   )]
-  public override string Path
+  public string Path
   {
     get => path;
     set => path = value;
@@ -120,10 +139,13 @@ public sealed class StartWorkspaceCode : VirtualStartWorkspace
 [OutputType(typeof(void))]
 public sealed class StartWorkspaceDrive : VirtualStartWorkspace
 {
+  [Parameter(
+    Position = 0
+  )]
   [PathCompletions(
     @"\"
   )]
-  public override string Path
+  public string Path
   {
     get => path;
     set => path = value;
