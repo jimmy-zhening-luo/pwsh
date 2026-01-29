@@ -20,7 +20,6 @@ public sealed class GetDirectory : WrappedGetDirectory
     ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true
   )]
-  [AllowEmptyCollection]
   [SupportsWildcards]
   [PathCompletions(
     "",
@@ -68,7 +67,6 @@ public sealed class GetDirectorySibling : WrappedGetDirectory
     ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true
   )]
-  [AllowEmptyCollection]
   [SupportsWildcards]
   [PathCompletions(
     "..",
@@ -99,7 +97,6 @@ public sealed class GetDirectoryRelative : WrappedGetDirectory
     ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true
   )]
-  [AllowEmptyCollection]
   [SupportsWildcards]
   [PathCompletions(
     @"..\..",
@@ -130,7 +127,6 @@ public sealed class GetDirectoryHome : WrappedGetDirectory
     ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true
   )]
-  [AllowEmptyCollection]
   [SupportsWildcards]
   [PathCompletions(
     "~",
@@ -161,7 +157,6 @@ public sealed class GetDirectoryCode : WrappedGetDirectory
     ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true
   )]
-  [AllowEmptyCollection]
   [SupportsWildcards]
   [PathCompletions(
     @"~\code",
@@ -194,7 +189,6 @@ public sealed class GetDirectoryDrive : WrappedGetDirectory
     ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true
   )]
-  [AllowEmptyCollection]
   [SupportsWildcards]
   [PathCompletions(
     @"\",

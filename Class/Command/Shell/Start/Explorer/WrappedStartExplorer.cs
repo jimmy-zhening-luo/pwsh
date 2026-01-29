@@ -13,7 +13,6 @@ public abstract class WrappedStartExplorer : WrappedCommandShouldProcess
     ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true
   )]
-  [AllowEmptyCollection]
   [SupportsWildcards]
   public string[]? Path;
 

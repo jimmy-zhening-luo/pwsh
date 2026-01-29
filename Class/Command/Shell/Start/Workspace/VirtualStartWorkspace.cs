@@ -19,7 +19,6 @@ public abstract class VirtualStartWorkspace : CoreCommand
     ValueFromRemainingArguments = true,
     DontShow = true
   )]
-  [AllowEmptyCollection]
   public string[] Argument
   {
     get => arguments;

@@ -17,7 +17,6 @@ public sealed class StartExplorer : WrappedStartExplorer
     ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true
   )]
-  [AllowEmptyCollection]
   [SupportsWildcards]
   [PathCompletions]
   public new string[]? Path;
@@ -48,7 +47,6 @@ public sealed class StartExplorerSibling : WrappedStartExplorer
     ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true
   )]
-  [AllowEmptyCollection]
   [SupportsWildcards]
   [PathCompletions(
     ".."
@@ -75,7 +73,6 @@ public sealed class StartExplorerRelative : WrappedStartExplorer
     ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true
   )]
-  [AllowEmptyCollection]
   [SupportsWildcards]
   [PathCompletions(
     @"..\.."
@@ -102,7 +99,6 @@ public sealed class StartExplorerHome : WrappedStartExplorer
     ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true
   )]
-  [AllowEmptyCollection]
   [SupportsWildcards]
   [PathCompletions(
     "~"
@@ -129,7 +125,6 @@ public sealed class StartExplorerCode : WrappedStartExplorer
     ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true
   )]
-  [AllowEmptyCollection]
   [SupportsWildcards]
   [PathCompletions(
     @"~\code"
@@ -158,7 +153,6 @@ public sealed class StartExplorerDrive : WrappedStartExplorer
     ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true
   )]
-  [AllowEmptyCollection]
   [SupportsWildcards]
   [PathCompletions(
     @"\"

@@ -13,7 +13,6 @@ public abstract class WrappedGetDirectory : WrappedCommand
     ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true
   )]
-  [AllowEmptyCollection]
   [SupportsWildcards]
   public string[]? Path;
 

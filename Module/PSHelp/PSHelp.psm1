@@ -362,7 +362,6 @@ function Get-VerbList {
       ValueFromPipeline,
       ValueFromPipelineByPropertyName
     )]
-    [AllowEmptyCollection()]
     [SupportsWildcards()]
     [Completions('*')]
     # Gets only the specified verbs. Enter the name of a verb or a name pattern. Wildcards are allowed.
