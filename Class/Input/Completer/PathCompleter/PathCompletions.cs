@@ -1,10 +1,5 @@
 namespace Module.Input.Completer.PathCompleter;
 
-[AttributeUsage(
-  AttributeTargets.Parameter
-  | AttributeTargets.Property
-  | AttributeTargets.Field
-)]
 public sealed class PathCompletionsAttribute : BaseCompletionsAttribute<PathCompleter>
 {
   public readonly string Location = string.Empty;
