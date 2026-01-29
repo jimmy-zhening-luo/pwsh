@@ -11,12 +11,8 @@ namespace Module.Command.Shell.Start.Workspace.Commands;
 [OutputType(typeof(void))]
 public sealed class StartWorkspace : VirtualStartWorkspace
 {
-  [Parameter(
-    Position = 0
-  )]
-  [AllowEmptyString]
   [PathCompletions]
-  public string Path
+  public partial string Path
   {
     get => path;
     set => path = value;
@@ -34,14 +30,10 @@ public sealed class StartWorkspace : VirtualStartWorkspace
 [OutputType(typeof(void))]
 public sealed class StartWorkspaceSibling : VirtualStartWorkspace
 {
-  [Parameter(
-    Position = 0
-  )]
-  [AllowEmptyString]
   [PathCompletions(
     ".."
   )]
-  public string Path
+  public partial string Path
   {
     get => path;
     set => path = value;
@@ -61,14 +53,10 @@ public sealed class StartWorkspaceSibling : VirtualStartWorkspace
 [OutputType(typeof(void))]
 public sealed class StartWorkspaceRelative : VirtualStartWorkspace
 {
-  [Parameter(
-    Position = 0
-  )]
-  [AllowEmptyString]
   [PathCompletions(
     @"..\.."
   )]
-  public string Path
+  public partial string Path
   {
     get => path;
     set => path = value;
@@ -88,14 +76,10 @@ public sealed class StartWorkspaceRelative : VirtualStartWorkspace
 [OutputType(typeof(void))]
 public sealed class StartWorkspaceHome : VirtualStartWorkspace
 {
-  [Parameter(
-    Position = 0
-  )]
-  [AllowEmptyString]
   [PathCompletions(
     "~"
   )]
-  public string Path
+  public partial string Path
   {
     get => path;
     set => path = value;
@@ -115,14 +99,10 @@ public sealed class StartWorkspaceHome : VirtualStartWorkspace
 [OutputType(typeof(void))]
 public sealed class StartWorkspaceCode : VirtualStartWorkspace
 {
-  [Parameter(
-    Position = 0
-  )]
-  [AllowEmptyString]
   [PathCompletions(
     @"~\code"
   )]
-  public string Path
+  public partial string Path
   {
     get => path;
     set => path = value;
@@ -144,14 +124,10 @@ public sealed class StartWorkspaceCode : VirtualStartWorkspace
 [OutputType(typeof(void))]
 public sealed class StartWorkspaceDrive : VirtualStartWorkspace
 {
-  [Parameter(
-    Position = 0
-  )]
-  [AllowEmptyString]
   [PathCompletions(
     @"\"
   )]
-  public string Path
+  public partial string Path
   {
     get => path;
     set => path = value;
