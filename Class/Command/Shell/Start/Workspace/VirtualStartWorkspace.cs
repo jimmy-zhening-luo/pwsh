@@ -7,7 +7,6 @@ public abstract class VirtualStartWorkspace : CoreCommand
   [Parameter(
     Position = 1
   )]
-  [AllowEmptyString]
   public string Name
   {
     get => profileName;

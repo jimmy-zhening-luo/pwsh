@@ -20,7 +20,6 @@ public sealed class ClearLine : WrappedCommandShouldProcess
     ParameterSetName = "Path",
     Position = 0
   )]
-  [AllowEmptyString]
   [SupportsWildcards]
   [PathCompletions]
   public string? Path;

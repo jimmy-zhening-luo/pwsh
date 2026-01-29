@@ -13,7 +13,6 @@ public abstract class WrappedSetDirectory : WrappedCommand
     ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true
   )]
-  [AllowEmptyString]
   [SupportsWildcards]
   public string? Path;
 

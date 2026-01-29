@@ -20,7 +20,6 @@ public sealed class SetDirectory : WrappedSetDirectory
     ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true
   )]
-  [AllowEmptyString]
   [SupportsWildcards]
   [PathCompletions(
     "",
@@ -40,7 +39,6 @@ public sealed class SetDirectory : WrappedSetDirectory
     ParameterSetName = "Stack",
     ValueFromPipelineByPropertyName = true
   )]
-  [AllowEmptyString]
   public string? Stack;
 }
 
@@ -63,7 +61,6 @@ public sealed class SetDirectorySibling : WrappedSetDirectory
     ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true
   )]
-  [AllowEmptyString]
   [SupportsWildcards]
   [PathCompletions(
     "..",
@@ -93,7 +90,6 @@ public sealed class SetDirectoryRelative : WrappedSetDirectory
     ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true
   )]
-  [AllowEmptyString]
   [SupportsWildcards]
   [PathCompletions(
     @"..\..",
@@ -123,7 +119,6 @@ public sealed class SetDirectoryHome : WrappedSetDirectory
     ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true
   )]
-  [AllowEmptyString]
   [SupportsWildcards]
   [PathCompletions(
     "~",
@@ -153,7 +148,6 @@ public sealed class SetDirectoryCode : WrappedSetDirectory
     ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true
   )]
-  [AllowEmptyString]
   [SupportsWildcards]
   [PathCompletions(
     @"~\code",
@@ -185,7 +179,6 @@ public sealed class SetDrive : WrappedSetDirectory
     ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true
   )]
-  [AllowEmptyString]
   [SupportsWildcards]
   [PathCompletions(
     @"\",
@@ -215,7 +208,6 @@ public sealed class SetDriveD : WrappedSetDirectory
     ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true
   )]
-  [AllowEmptyString]
   [SupportsWildcards]
   [PathCompletions(
     "D:",
