@@ -2,11 +2,6 @@ namespace Module.Input.Completer;
 
 using System.Linq;
 
-[AttributeUsage(
-  AttributeTargets.Parameter
-  | AttributeTargets.Property
-  | AttributeTargets.Field
-)]
 public sealed class DynamicCompletionsAttribute : BaseCompletionsAttribute<Completer>
 {
   public readonly ScriptBlock DomainGenerator;

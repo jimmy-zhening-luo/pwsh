@@ -1,10 +1,5 @@
 namespace Module.Input.Completer;
 
-[AttributeUsage(
-  AttributeTargets.Parameter
-  | AttributeTargets.Property
-  | AttributeTargets.Field
-)]
 public sealed class CompletionsAttribute : BaseCompletionsAttribute<Completer>
 {
   public readonly string StringifiedDomain;

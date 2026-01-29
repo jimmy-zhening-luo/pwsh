@@ -2,11 +2,6 @@ namespace Module.Input.Completer;
 
 using Type = System.Type;
 
-[AttributeUsage(
-  AttributeTargets.Parameter
-  | AttributeTargets.Property
-  | AttributeTargets.Field
-)]
 public sealed class EnumCompletionsAttribute : BaseCompletionsAttribute<Completer>
 {
   public readonly Type EnumType;
