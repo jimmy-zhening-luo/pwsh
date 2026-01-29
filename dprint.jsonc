@@ -1,6 +1,6 @@
 {
-  "$schema": "https://raw.githubusercontent.com/jimmy-zhening-luo/dprint/main/schema.json",
-  // $help: https://dprint.dev/config/
-  // $version: 0.5101.5
-  "extends": "https://raw.githubusercontent.com/jimmy-zhening-luo/dprint/main/.dprint.jsonc",
+  "extends": "https://raw.githubusercontent.com/jimmy-zhening-luo/dprint/main/plugin/dprint-csharp.jsonc",
+  "plugins": [
+    "https://plugins.dprint.dev/roslyn-0.19.1.json@a5daf2404c57680374f255c78f1956916482aa4b4e90825f1a48eb5a7e343b35",
+  ],
 }
