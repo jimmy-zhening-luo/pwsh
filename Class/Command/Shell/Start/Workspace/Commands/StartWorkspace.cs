@@ -9,10 +9,10 @@ namespace Module.Command.Shell.Start.Workspace.Commands;
 )]
 [Alias("i")]
 [OutputType(typeof(void))]
-public sealed partial class StartWorkspace : VirtualStartWorkspace
+public sealed class StartWorkspace : VirtualStartWorkspace
 {
   [PathCompletions]
-  public partial string Path
+  public override string Path
   {
     get => path;
     set => path = value;
@@ -28,12 +28,12 @@ public sealed partial class StartWorkspace : VirtualStartWorkspace
 )]
 [Alias("ix")]
 [OutputType(typeof(void))]
-public sealed partial class StartWorkspaceSibling : VirtualStartWorkspace
+public sealed class StartWorkspaceSibling : VirtualStartWorkspace
 {
   [PathCompletions(
     ".."
   )]
-  public partial string Path
+  public override string Path
   {
     get => path;
     set => path = value;
@@ -51,12 +51,12 @@ public sealed partial class StartWorkspaceSibling : VirtualStartWorkspace
 )]
 [Alias("ixx")]
 [OutputType(typeof(void))]
-public sealed partial class StartWorkspaceRelative : VirtualStartWorkspace
+public sealed class StartWorkspaceRelative : VirtualStartWorkspace
 {
   [PathCompletions(
     @"..\.."
   )]
-  public partial string Path
+  public override string Path
   {
     get => path;
     set => path = value;
@@ -74,12 +74,12 @@ public sealed partial class StartWorkspaceRelative : VirtualStartWorkspace
 )]
 [Alias("ih")]
 [OutputType(typeof(void))]
-public sealed partial class StartWorkspaceHome : VirtualStartWorkspace
+public sealed class StartWorkspaceHome : VirtualStartWorkspace
 {
   [PathCompletions(
     "~"
   )]
-  public partial string Path
+  public override string Path
   {
     get => path;
     set => path = value;
@@ -97,12 +97,12 @@ public sealed partial class StartWorkspaceHome : VirtualStartWorkspace
 )]
 [Alias("ic")]
 [OutputType(typeof(void))]
-public sealed partial class StartWorkspaceCode : VirtualStartWorkspace
+public sealed class StartWorkspaceCode : VirtualStartWorkspace
 {
   [PathCompletions(
     @"~\code"
   )]
-  public partial string Path
+  public override string Path
   {
     get => path;
     set => path = value;
@@ -122,12 +122,12 @@ public sealed partial class StartWorkspaceCode : VirtualStartWorkspace
 )]
 [Alias("i/")]
 [OutputType(typeof(void))]
-public sealed partial class StartWorkspaceDrive : VirtualStartWorkspace
+public sealed class StartWorkspaceDrive : VirtualStartWorkspace
 {
   [PathCompletions(
     @"\"
   )]
-  public partial string Path
+  public override string Path
   {
     get => path;
     set => path = value;
