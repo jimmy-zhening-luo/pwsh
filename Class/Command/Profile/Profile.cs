@@ -8,6 +8,8 @@ namespace Module.Command.Profile;
 [OutputType(typeof(void))]
 public sealed class StartProfile : CoreCommand
 {
+  private protected sealed override bool NoSsh => false;
+
   private protected sealed override void AfterEndProcessing()
   {
     var repoRootVariable = Var(
