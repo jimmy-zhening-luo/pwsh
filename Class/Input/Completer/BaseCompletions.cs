@@ -3,8 +3,7 @@ namespace Module.Input.Completer;
 [AttributeUsage(
   AttributeTargets.Parameter
   | AttributeTargets.Property
-  | AttributeTargets.Field,
-  AllowMultiple = true
+  | AttributeTargets.Field
 )]
 public abstract class BaseCompletionsAttribute<T> : ArgumentCompleterAttribute, IArgumentCompleterFactory where T : BaseCompleter
 {
