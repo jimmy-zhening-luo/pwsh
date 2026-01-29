@@ -9,7 +9,7 @@ namespace Module.Command.Shell.Start.Workspace.Commands;
 )]
 [Alias("i")]
 [OutputType(typeof(void))]
-public sealed class StartWorkspace : VirtualStartWorkspace
+public sealed partial class StartWorkspace : VirtualStartWorkspace
 {
   [PathCompletions]
   public partial string Path
@@ -28,7 +28,7 @@ public sealed class StartWorkspace : VirtualStartWorkspace
 )]
 [Alias("ix")]
 [OutputType(typeof(void))]
-public sealed class StartWorkspaceSibling : VirtualStartWorkspace
+public sealed partial class StartWorkspaceSibling : VirtualStartWorkspace
 {
   [PathCompletions(
     ".."
@@ -51,7 +51,7 @@ public sealed class StartWorkspaceSibling : VirtualStartWorkspace
 )]
 [Alias("ixx")]
 [OutputType(typeof(void))]
-public sealed class StartWorkspaceRelative : VirtualStartWorkspace
+public sealed partial class StartWorkspaceRelative : VirtualStartWorkspace
 {
   [PathCompletions(
     @"..\.."
@@ -74,7 +74,7 @@ public sealed class StartWorkspaceRelative : VirtualStartWorkspace
 )]
 [Alias("ih")]
 [OutputType(typeof(void))]
-public sealed class StartWorkspaceHome : VirtualStartWorkspace
+public sealed partial class StartWorkspaceHome : VirtualStartWorkspace
 {
   [PathCompletions(
     "~"
@@ -97,7 +97,7 @@ public sealed class StartWorkspaceHome : VirtualStartWorkspace
 )]
 [Alias("ic")]
 [OutputType(typeof(void))]
-public sealed class StartWorkspaceCode : VirtualStartWorkspace
+public sealed partial class StartWorkspaceCode : VirtualStartWorkspace
 {
   [PathCompletions(
     @"~\code"
@@ -122,7 +122,7 @@ public sealed class StartWorkspaceCode : VirtualStartWorkspace
 )]
 [Alias("i/")]
 [OutputType(typeof(void))]
-public sealed class StartWorkspaceDrive : VirtualStartWorkspace
+public sealed partial class StartWorkspaceDrive : VirtualStartWorkspace
 {
   [PathCompletions(
     @"\"
