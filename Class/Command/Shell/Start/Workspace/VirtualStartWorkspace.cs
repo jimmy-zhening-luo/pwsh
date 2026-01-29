@@ -1,6 +1,6 @@
 namespace Module.Command.Shell.Start.Workspace;
 
-public abstract class VirtualStartWorkspace : CoreCommand
+public abstract partial class VirtualStartWorkspace : CoreCommand
 {
   private protected string path = "";
 
