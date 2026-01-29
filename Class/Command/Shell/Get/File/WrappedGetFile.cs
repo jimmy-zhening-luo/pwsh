@@ -13,14 +13,24 @@ public abstract class WrappedGetFile : WrappedCommand
     ValueFromPipelineByPropertyName = true
   )]
   [SupportsWildcards]
-  public string[]? Path;
+  public virtual string[] Path
+  {
+    get => paths;
+    set => paths = value;
+  }
+  private string[] paths = [];
 
   [Parameter(
     ParameterSetName = "Path",
     Position = 1
   )]
   [SupportsWildcards]
-  public string? Filter;
+  public virtual string Filter
+  {
+    get => filter;
+    set => filter = value;
+  }
+  private string filter = "";
 
   [Parameter]
   [SupportsWildcards]
@@ -77,8 +87,6 @@ public abstract class WrappedGetFile : WrappedCommand
     {
       if (IsPresent("Path"))
       {
-        string[] paths = (string[])BoundParameters["Path"];
-
         for (
           int i = 0;
           i < paths.Length;

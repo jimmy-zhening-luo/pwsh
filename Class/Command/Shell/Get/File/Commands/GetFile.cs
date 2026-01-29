@@ -11,17 +11,11 @@ namespace Module.Command.Shell.Get.File.Commands;
 [OutputType(typeof(string))]
 public sealed class GetFile : WrappedGetFile
 {
-  [Parameter(
-    ParameterSetName = "Path",
-    Position = 0,
-    ValueFromPipelineByPropertyName = true
-  )]
-  [SupportsWildcards]
   [PathCompletions(
     "",
     PathItemType.File
   )]
-  public new string[]? Path;
+  public override string[] Path => base.Path;
 
   [Parameter(
     ParameterSetName = "LiteralPath",
@@ -32,15 +26,10 @@ public sealed class GetFile : WrappedGetFile
   public string[]? LiteralPath;
 
   [Parameter(
-    ParameterSetName = "Path",
-    Position = 1
-  )]
-  [Parameter(
     ParameterSetName = "LiteralPath",
     Position = 1
   )]
-  [SupportsWildcards]
-  public new string? Filter;
+  public override string Filter => base.Filter;
 }
 
 [Cmdlet(
@@ -54,17 +43,11 @@ public sealed class GetFile : WrappedGetFile
 [OutputType(typeof(string))]
 public sealed class GetFileSibling : WrappedGetFile
 {
-  [Parameter(
-    ParameterSetName = "Path",
-    Position = 0,
-    ValueFromPipelineByPropertyName = true
-  )]
-  [SupportsWildcards]
   [PathCompletions(
     "..",
     PathItemType.File
   )]
-  public new string[]? Path;
+  public override string[] Path => base.Path;
 
   private protected sealed override string LocationSubpath => "..";
 }
@@ -80,17 +63,11 @@ public sealed class GetFileSibling : WrappedGetFile
 [OutputType(typeof(string))]
 public sealed class GetFileRelative : WrappedGetFile
 {
-  [Parameter(
-    ParameterSetName = "Path",
-    Position = 0,
-    ValueFromPipelineByPropertyName = true
-  )]
-  [SupportsWildcards]
   [PathCompletions(
     @"..\..",
     PathItemType.File
   )]
-  public new string[]? Path;
+  public override string[] Path => base.Path;
 
   private protected sealed override string LocationSubpath => @"..\..";
 }
@@ -106,17 +83,11 @@ public sealed class GetFileRelative : WrappedGetFile
 [OutputType(typeof(string))]
 public sealed class GetFileHome : WrappedGetFile
 {
-  [Parameter(
-    ParameterSetName = "Path",
-    Position = 0,
-    ValueFromPipelineByPropertyName = true
-  )]
-  [SupportsWildcards]
   [PathCompletions(
     "~",
     PathItemType.File
   )]
-  public new string[]? Path;
+  public override string[] Path => base.Path;
 
   private protected sealed override string Location => Home();
 }
@@ -132,17 +103,11 @@ public sealed class GetFileHome : WrappedGetFile
 [OutputType(typeof(string))]
 public sealed class GetFileCode : WrappedGetFile
 {
-  [Parameter(
-    ParameterSetName = "Path",
-    Position = 0,
-    ValueFromPipelineByPropertyName = true
-  )]
-  [SupportsWildcards]
   [PathCompletions(
     @"~\code",
     PathItemType.File
   )]
-  public new string[]? Path;
+  public override string[] Path => base.Path;
 
   private protected sealed override string Location => Home();
 
@@ -160,17 +125,11 @@ public sealed class GetFileCode : WrappedGetFile
 [OutputType(typeof(string))]
 public sealed class GetFileDrive : WrappedGetFile
 {
-  [Parameter(
-    ParameterSetName = "Path",
-    Position = 0,
-    ValueFromPipelineByPropertyName = true
-  )]
-  [SupportsWildcards]
   [PathCompletions(
     @"\",
     PathItemType.File
   )]
-  public new string[]? Path;
+  public override string[] Path => base.Path;
 
   private protected sealed override string Location => Drive();
 }
