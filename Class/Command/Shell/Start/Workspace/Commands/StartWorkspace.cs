@@ -15,6 +15,9 @@ public sealed class StartWorkspace : VirtualStartWorkspace
     Position = 0
   )]
   [AllowEmptyString]
+  [PathCompletions(
+    ".."
+  )]
   [PathCompletions]
   public string Path
   {
