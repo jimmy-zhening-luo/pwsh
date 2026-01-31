@@ -11,7 +11,7 @@ public abstract class WrappedCommand(
     steppablePipeline?.Process();
   }
 
-  private protected virtual void Default()
+  private protected virtual void DefaultBehavior()
   { }
 
   private protected sealed override void BeforeBeginProcessing()
@@ -32,7 +32,7 @@ public abstract class WrappedCommand(
 
   private protected sealed override void AfterEndProcessing()
   {
-    Default();
+    DefaultBehavior();
   }
 
   private protected sealed override void Clean()
