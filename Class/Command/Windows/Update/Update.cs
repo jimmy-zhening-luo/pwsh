@@ -10,7 +10,7 @@ public sealed class UpdateWindows : Cmdlet
 {
   protected sealed override void EndProcessing()
   {
-    ShellExecute(
+    Terminal.ShellExecute(
       "ms-settings:windowsupdate"
     );
   }
@@ -26,7 +26,7 @@ public sealed class UpdateStoreApp : Cmdlet
 {
   protected sealed override void EndProcessing()
   {
-    ShellExecute(
+    Terminal.ShellExecute(
       "ms-windows-store://downloadsandupdates"
     );
   }

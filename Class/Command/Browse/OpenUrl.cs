@@ -53,7 +53,7 @@ public sealed class OpenUrl : CoreCommand
 
         if (!string.IsNullOrEmpty(url))
         {
-          ShellExecute(
+          Terminal.ShellExecute(
             @"C:\Program Files\Google\Chrome\Application\chrome.exe",
             url
           );
@@ -95,7 +95,7 @@ public sealed class OpenUrl : CoreCommand
           : cleanPath;
       }
 
-      ShellExecute(
+      Terminal.ShellExecute(
         @"C:\Program Files\Google\Chrome\Application\chrome.exe",
         target
       );
