@@ -35,7 +35,7 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
 
   private protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
 
-  private protected PowerShell PS => powershell ??= Terminal.CreatePS();
+  private protected PowerShell PS => powershell ??= PSConsole.Create();
   private PowerShell? powershell;
 
   public void Dispose()

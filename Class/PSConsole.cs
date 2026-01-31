@@ -2,9 +2,9 @@ namespace Module;
 
 using System.Linq;
 
-internal static class Terminal
+internal static class PSConsole
 {
-  internal static PowerShell CreatePS(
+  internal static PowerShell Create(
     bool newRunspace = false
   ) => PowerShell.Create(
     newRunspace
@@ -12,11 +12,11 @@ internal static class Terminal
       : RunspaceMode.CurrentRunspace
   );
 
-  internal static string PSLocation(
+  internal static string CurrentDirectory(
     string path = ""
   )
   {
-    using var ps = CreatePS();
+    using var ps = Create();
 
     return GetFullPath(
       path,
