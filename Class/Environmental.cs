@@ -2,14 +2,12 @@ namespace Module;
 
 internal static class Environmental
 {
-  internal static bool Ssh
-  {
-    get => !string.IsNullOrEmpty(
-      Env(
-        "SSH_CLIENT"
-      )
-    );
-  }
+  internal static bool Ssh => ssh ??= !string.IsNullOrEmpty(
+    Env(
+      "SSH_CLIENT"
+    )
+  );
+  private static string? ssh;
 
   internal static string Env(
     string variable,
