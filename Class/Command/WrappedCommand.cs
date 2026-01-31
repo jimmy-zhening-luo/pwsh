@@ -35,7 +35,7 @@ public abstract class WrappedCommand(
     DefaultBehavior();
   }
 
-  private protected sealed override void Clean()
+  private protected sealed override void CleanResources()
   {
     if (steppablePipeline != null)
     {

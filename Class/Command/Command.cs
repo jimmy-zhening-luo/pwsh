@@ -80,7 +80,7 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
   private protected virtual void AfterEndProcessing()
   { }
 
-  private protected virtual void Clean()
+  private protected virtual void CleanResources()
   { }
 
   private protected bool IsPresent(
@@ -228,15 +228,15 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
     {
       if (disposing)
       {
+        CleanResources();
         Clean();
-        CleanRunspace();
       }
 
       disposed = true;
     }
   }
 
-  private void CleanRunspace()
+  private void Clean()
   {
     if (Initialized)
     {
