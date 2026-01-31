@@ -44,7 +44,7 @@ public sealed class GetSize : CoreCommand
     P = PB
   }
 
-  public static readonly Dictionary<DiskSizeUnit, long> DiskSizeFactor = new() {
+  internal static readonly Dictionary<DiskSizeUnit, long> DiskSizeFactor = new() {
     { DiskSizeUnit.B, 1L },
     { DiskSizeUnit.KB, 1L << 10 },
     { DiskSizeUnit.MB, 1L << 20 },
