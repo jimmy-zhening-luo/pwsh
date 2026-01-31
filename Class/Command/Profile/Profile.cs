@@ -8,7 +8,7 @@ namespace Module.Command.Profile;
 [OutputType(typeof(void))]
 public sealed class StartProfile : CoreCommand
 {
-  private protected sealed override bool NoSsh => true;
+  private protected sealed override bool SkipSsh => true;
 
   private protected sealed override void AfterEndProcessing()
   {

@@ -39,7 +39,7 @@ public sealed class OpenUrl : CoreCommand
   }
   private Uri[] uris = [];
 
-  private protected sealed override bool NoSsh => true;
+  private protected sealed override bool SkipSsh => true;
 
   private protected sealed override void ProcessRecordAction()
   {

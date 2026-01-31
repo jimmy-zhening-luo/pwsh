@@ -28,7 +28,7 @@ public abstract class WrappedStartExplorer : WrappedCommandShouldProcess
   [SupportsWildcards]
   public string[]? Exclude;
 
-  private protected sealed override bool NoSsh => true;
+  private protected sealed override bool SkipSsh => true;
 
   private protected sealed override void TransformParameters()
   {

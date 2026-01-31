@@ -12,14 +12,14 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
 
   private protected virtual string LocationSubpath => string.Empty;
 
-  private protected virtual bool NoSsh => false;
+  private protected virtual bool SkipSsh => false;
 
   private bool ContinueProcessing
   {
     get => !disposed
       && continueProcessing
       && (
-        !NoSsh
+        !SkipSsh
         || !Ssh
       );
     set => continueProcessing = value;

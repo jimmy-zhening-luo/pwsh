@@ -8,7 +8,7 @@ namespace Module.Command.Windows.Update;
 [OutputType(typeof(void))]
 public sealed class UpdateWindows : CoreCommand
 {
-  private protected sealed override bool NoSsh => true;
+  private protected sealed override bool SkipSsh => true;
 
   private protected sealed override void AfterEndProcessing()
   {
@@ -26,7 +26,7 @@ public sealed class UpdateWindows : CoreCommand
 [OutputType(typeof(void))]
 public sealed class UpdateStoreApp : CoreCommand
 {
-  private protected sealed override bool NoSsh => true;
+  private protected sealed override bool SkipSsh => true;
 
   private protected sealed override void AfterEndProcessing()
   {
