@@ -1,4 +1,4 @@
-namespace Module;
+namespace Module.Environment;
 
 internal static class Application
 {
