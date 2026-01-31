@@ -33,11 +33,11 @@ internal static class Context
 
   internal static void CreateProcess(
     string fileName,
-    string arguments,
+    string argument,
     bool noNewWindow = false
   ) => CreateProcess(
     fileName,
-    [arguments],
+    [argument],
     noNewWindow
   );
 
@@ -78,12 +78,12 @@ internal static class Context
 
   internal static void ShellExecute(
     string fileName,
-    string arguments,
+    string argument,
     bool administrator = false,
     bool noNewWindow = false
   ) => ShellExecute(
     fileName,
-    [arguments],
+    [argument],
     administrator,
     noNewWindow
   );
