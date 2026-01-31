@@ -1,6 +1,6 @@
-using System.Linq;
-
 namespace Module;
+
+using System.Linq;
 
 internal static class Terminal
 {
