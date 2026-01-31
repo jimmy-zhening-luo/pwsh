@@ -27,7 +27,7 @@ public sealed class TestUrl : CoreCommand
   }
   private Uri[] uris = [];
 
-  protected sealed override void ProcessRecordAction()
+  private protected sealed override void ProcessRecordAction()
   {
     foreach (Uri uri in uris)
     {
