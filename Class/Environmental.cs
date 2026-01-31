@@ -7,7 +7,7 @@ internal static class Environmental
       "SSH_CLIENT"
     )
   );
-  private static string? ssh;
+  private static bool? ssh = null;
 
   internal static string Env(
     string variable,
