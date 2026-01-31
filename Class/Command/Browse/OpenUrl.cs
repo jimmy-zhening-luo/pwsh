@@ -41,7 +41,7 @@ public sealed class OpenUrl : CoreCommand
 
   private protected sealed override bool NoSsh => true;
 
-  protected sealed override void ProcessRecord()
+  protected sealed override void ProcessRecordAction()
   {
     if (ParameterSetName == "Uri")
     {

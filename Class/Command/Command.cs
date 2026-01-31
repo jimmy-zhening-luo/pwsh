@@ -2,6 +2,7 @@ namespace Module.Command;
 
 public abstract class CoreCommand : PSCmdlet, System.IDisposable
 {
+  private bool doProcess;
   private bool disposed;
 
   ~CoreCommand() => Dispose(false);
@@ -27,12 +28,6 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
   private protected PowerShell PS => powershell ??= CreatePS();
   private PowerShell? powershell;
 
-  [CodeAnalysis.MemberNotNullWhenAttribute(
-    true,
-    "powershell"
-  )]
-  private protected bool Initialized => powershell != null;
-
   public void Dispose()
   {
     Dispose(true);
@@ -50,10 +45,16 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
       TransformParameters();
 
       BeforeBeginProcessing();
+
+      doProcess = true;
     }
-    else
+  }
+
+  protected sealed override void ProcessRecord()
+  {
+    if (doProcess)
     {
-      CleanRunspace();
+      ProcessRecordAction();
     }
   }
 
@@ -75,6 +76,9 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
   { }
 
   private protected virtual void BeforeBeginProcessing()
+  { }
+
+  private protected virtual void ProcessRecordAction()
   { }
 
   private protected virtual void AfterEndProcessing()
@@ -238,7 +242,7 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
 
   private void Clean()
   {
-    if (Initialized)
+    if (powershell != null)
     {
       powershell.Dispose();
       powershell = null;

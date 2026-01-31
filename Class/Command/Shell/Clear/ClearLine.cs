@@ -56,7 +56,7 @@ public sealed class ClearLine : WrappedCommandShouldProcess
   private protected sealed override bool ValidateParameters() => Path != null
     || ParameterSetName == "LiteralPath";
 
-  private protected sealed override void DefaultBehavior()
+  private protected sealed override void DefaultAction()
   {
     if (
       !IsPresent("Path")

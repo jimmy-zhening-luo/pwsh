@@ -59,7 +59,7 @@ public sealed class TestHost : CoreCommand
   }
   private bool detailed;
 
-  protected sealed override void ProcessRecord()
+  protected sealed override void ProcessRecordAction()
   {
     foreach (string name in names)
     {

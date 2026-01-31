@@ -78,7 +78,7 @@ public sealed class GetSize : CoreCommand
 
   private long factor = DiskSize.Factor[DiskSizeUnit.KB];
 
-  protected sealed override void ProcessRecord()
+  protected sealed override void ProcessRecordAction()
   {
     foreach (string path in paths)
     {
