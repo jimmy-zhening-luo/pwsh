@@ -112,7 +112,7 @@ public abstract class VirtualStartWorkspace : CoreCommand
       );
     }
 
-    Terminal.CreateProcess(
+    Invocation.CreateProcess(
       Application.VSCode,
       argumentList,
       true

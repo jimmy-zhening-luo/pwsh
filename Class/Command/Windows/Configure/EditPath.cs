@@ -20,7 +20,7 @@ public sealed class EditSystemPath : Cmdlet
 
   protected sealed override void EndProcessing()
   {
-    Terminal.ShellExecute(
+    Invocation.ShellExecute(
       "rundll32.exe",
       "sysdm.cpl,EditEnvironmentVariables",
       administrator

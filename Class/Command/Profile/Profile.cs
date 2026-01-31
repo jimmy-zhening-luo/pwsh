@@ -21,7 +21,7 @@ public sealed class StartProfile : CoreCommand
       && repoRootObject.BaseObject is string repoRoot
     )
     {
-      Terminal.CreateProcess(
+      Invocation.CreateProcess(
         Application.VSCode,
         GetFullPath(
           "pwsh",

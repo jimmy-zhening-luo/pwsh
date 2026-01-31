@@ -8,7 +8,7 @@ namespace Module.Command.Profile;
 [OutputType(typeof(void))]
 public sealed class StartHistory : Cmdlet
 {
-  protected sealed override void EndProcessing() => Terminal.CreateProcess(
+  protected sealed override void EndProcessing() => Invocation.CreateProcess(
     Application.VSCode,
     [
       AppData(
