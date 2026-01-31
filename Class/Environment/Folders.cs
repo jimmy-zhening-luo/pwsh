@@ -9,6 +9,13 @@ internal static partial class Environmental
     subpath
   );
 
+  internal static string ProgramFiles(
+    string subpath = ""
+  ) => EnvPath(
+    SpecialFolder.ProgramFiles,
+    subpath
+  );
+
   internal static string AppData(
     string subpath = ""
   ) => EnvPath(
