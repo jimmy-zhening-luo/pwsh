@@ -8,5 +8,5 @@ internal static class Application
       @"Programs\Microsoft VS Code\bin\code.cmd"
     );
   }
-  private static string vscode;
+  private static string? vscode;
 }
