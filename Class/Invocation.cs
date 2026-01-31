@@ -20,16 +20,13 @@ internal static class Invocation
     bool noNewWindow = false
   )
   {
-    if (!Ssh)
-    {
-      Process.Start(
-        ArgumentList(
-          fileName,
-          arguments,
-          noNewWindow
-        )
-      );
-    }
+    Process.Start(
+      ArgumentList(
+        fileName,
+        arguments,
+        noNewWindow
+      )
+    );
   }
 
   internal static void ShellExecute(
@@ -51,25 +48,22 @@ internal static class Invocation
     bool noNewWindow = false
   )
   {
-    if (!Ssh)
+    var startInfo = ArgumentList(
+      fileName,
+      arguments,
+      noNewWindow
+    );
+
+    startInfo.UseShellExecute = true;
+
+    if (administrator)
     {
-      var startInfo = ArgumentList(
-        fileName,
-        arguments,
-        noNewWindow
-      );
-
-      startInfo.UseShellExecute = true;
-
-      if (administrator)
-      {
-        startInfo.Verb = "RunAs";
-      }
-
-      Process.Start(
-        startInfo
-      );
+      startInfo.Verb = "RunAs";
     }
+
+    Process.Start(
+      startInfo
+    );
   }
 
   private static ProcessStartInfo ArgumentList(
