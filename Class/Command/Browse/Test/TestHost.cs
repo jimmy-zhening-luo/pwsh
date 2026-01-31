@@ -15,7 +15,7 @@ public sealed class TestHost : CoreCommand
     Quiet,
     Detailed
   }
-  
+
   public enum TestHostWellKnownPort
   {
     HTTP = -4,

@@ -19,6 +19,40 @@ using System.Linq;
 )]
 public sealed class GetSize : CoreCommand
 {
+  public enum DiskSizeUnit
+  {
+    B,
+    KB,
+    MB,
+    GB,
+    TB,
+    PB
+  }
+
+  public enum DiskSizeAlias
+  {
+    B,
+    KB,
+    K = KB,
+    MB,
+    M = MB,
+    GB,
+    G = GB,
+    TB,
+    T = TB,
+    PB,
+    P = PB
+  }
+
+  public static readonly Dictionary<DiskSizeUnit, long> DiskSizeFactor = new() {
+    { DiskSizeUnit.B, 1L },
+    { DiskSizeUnit.KB, 1L << 10 },
+    { DiskSizeUnit.MB, 1L << 20 },
+    { DiskSizeUnit.GB, 1L << 30 },
+    { DiskSizeUnit.TB, 1L << 40 },
+    { DiskSizeUnit.PB, 1L << 50 }
+  };
+
   [Parameter(
     ParameterSetName = "String",
     Position = 0,
@@ -76,7 +110,7 @@ public sealed class GetSize : CoreCommand
   }
   private bool number;
 
-  private long factor = DiskSize.Factor[DiskSizeUnit.KB];
+  private long factor = DiskSizeFactor[DiskSizeUnit.KB];
 
   private protected sealed override void TransformParameters()
   {
@@ -85,7 +119,7 @@ public sealed class GetSize : CoreCommand
       paths = [Pwd()];
     }
 
-    if (DiskSize.Factor.TryGetValue(unit, out long value))
+    if (DiskSizeFactor.TryGetValue(unit, out long value))
     {
       factor = value;
     }
