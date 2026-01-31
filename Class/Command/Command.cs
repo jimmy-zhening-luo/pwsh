@@ -2,7 +2,7 @@ namespace Module.Command;
 
 public abstract class CoreCommand : PSCmdlet, System.IDisposable
 {
-  private bool doProcess;
+  private bool continueProcessing;
   private bool disposed;
 
   ~CoreCommand() => Dispose(
@@ -22,13 +22,17 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
       LocationSubpath
     );
 
-  private protected bool Interactive => !NoSsh
-    || !Ssh;
-
   private protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
 
   private protected PowerShell PS => powershell ??= Terminal.CreatePS();
   private PowerShell? powershell;
+
+  private bool ContinueProcessing => !disposed
+    && continueProcessing
+    && (
+      !NoSsh
+      || !Ssh
+    );
 
   public void Dispose()
   {
@@ -43,22 +47,26 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
 
   protected sealed override void BeginProcessing()
   {
+    continueProcessing = true;
+
     if (
-      Interactive
+      ContinueProcessing
       && ValidateParameters()
     )
     {
       TransformParameters();
 
       BeforeBeginProcessing();
-
-      doProcess = true;
+    }
+    else
+    {
+      continueProcessing = false;
     }
   }
 
   protected sealed override void ProcessRecord()
   {
-    if (doProcess)
+    if (ContinueProcessing)
     {
       ProcessRecordAction();
     }
@@ -66,7 +74,7 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
 
   protected sealed override void EndProcessing()
   {
-    if (Interactive)
+    if (ContinueProcessing)
     {
       AfterEndProcessing();
     }
@@ -74,7 +82,12 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
     StopProcessing();
   }
 
-  protected sealed override void StopProcessing() => Dispose();
+  protected sealed override void StopProcessing()
+  {
+    continueProcessing = false;
+
+    Dispose();
+  }
 
   private protected virtual bool ValidateParameters() => true;
 

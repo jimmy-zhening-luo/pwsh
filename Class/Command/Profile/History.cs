@@ -6,9 +6,11 @@ namespace Module.Command.Profile;
 )]
 [Alias("oc")]
 [OutputType(typeof(void))]
-public sealed class StartHistory : Cmdlet
+public sealed class StartHistory : CoreCommand
 {
-  protected sealed override void EndProcessing() => Invocation.CreateProcess(
+  private protected sealed override bool NoSsh => true;
+
+  private protected sealed override void AfterEndProcessing() => Invocation.CreateProcess(
     Application.VSCode,
     [
       AppData(

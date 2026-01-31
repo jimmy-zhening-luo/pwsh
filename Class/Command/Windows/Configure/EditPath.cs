@@ -6,8 +6,10 @@ namespace Module.Command.Windows.Configure;
 )]
 [Alias("path")]
 [OutputType(typeof(void))]
-public sealed class EditSystemPath : Cmdlet
+public sealed class EditSystemPath : CoreCommand
 {
+  private protected sealed override bool NoSsh => true;
+
   [Parameter(
     HelpMessage = "Launch Environment Variables control panel as administrator to edit system variables, triggering a UAC prompt if needed."
   )]
@@ -18,7 +20,7 @@ public sealed class EditSystemPath : Cmdlet
   }
   private bool administrator;
 
-  protected sealed override void EndProcessing()
+  private protected sealed override void AfterEndProcessing()
   {
     Invocation.ShellExecute(
       "rundll32.exe",

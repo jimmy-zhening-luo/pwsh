@@ -6,9 +6,11 @@ namespace Module.Command.Windows.Update;
 )]
 [Alias("wu")]
 [OutputType(typeof(void))]
-public sealed class UpdateWindows : Cmdlet
+public sealed class UpdateWindows : CoreCommand
 {
-  protected sealed override void EndProcessing()
+  private protected sealed override bool NoSsh => true;
+
+  private protected sealed override void AfterEndProcessing()
   {
     Invocation.ShellExecute(
       "ms-settings:windowsupdate"
@@ -22,9 +24,11 @@ public sealed class UpdateWindows : Cmdlet
 )]
 [Alias("su")]
 [OutputType(typeof(void))]
-public sealed class UpdateStoreApp : Cmdlet
+public sealed class UpdateStoreApp : CoreCommand
 {
-  protected sealed override void EndProcessing()
+  private protected sealed override bool NoSsh => true;
+
+  private protected sealed override void AfterEndProcessing()
   {
     Invocation.ShellExecute(
       "ms-windows-store://downloadsandupdates"
