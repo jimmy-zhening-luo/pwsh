@@ -2,7 +2,7 @@ using System.Linq;
 
 namespace Module;
 
-internal static class Context
+internal static class Terminal
 {
   internal static PowerShell CreatePS(
     bool newRunspace = false
