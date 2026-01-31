@@ -54,7 +54,7 @@ public sealed class OpenUrl : CoreCommand
         if (!string.IsNullOrEmpty(url))
         {
           Invocation.ShellExecute(
-            @"C:\Program Files\Google\Chrome\Application\chrome.exe",
+            Application.Chrome,
             url
           );
         }
@@ -96,7 +96,7 @@ public sealed class OpenUrl : CoreCommand
       }
 
       Invocation.ShellExecute(
-        @"C:\Program Files\Google\Chrome\Application\chrome.exe",
+        Application.Chrome,
         target
       );
     }
