@@ -2,7 +2,6 @@ namespace Module.Command;
 
 public abstract class CoreCommand : PSCmdlet, System.IDisposable
 {
-  private bool continueProcessing;
   private bool disposed;
 
   ~CoreCommand() => Dispose(
@@ -15,6 +14,18 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
 
   private protected virtual bool NoSsh => false;
 
+  private bool ContinueProcessing
+  {
+    get => !disposed
+      && continueProcessing
+      && (
+        !NoSsh
+        || !Ssh
+      );
+    set => continueProcessing = value;
+  }
+  private bool continueProcessing;
+
   private protected bool Here => string.IsNullOrEmpty(
     Location
   )
@@ -26,13 +37,6 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
 
   private protected PowerShell PS => powershell ??= Terminal.CreatePS();
   private PowerShell? powershell;
-
-  private bool ContinueProcessing => !disposed
-    && continueProcessing
-    && (
-      !NoSsh
-      || !Ssh
-    );
 
   public void Dispose()
   {
