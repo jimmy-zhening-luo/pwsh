@@ -5,7 +5,9 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
   private bool doProcess;
   private bool disposed;
 
-  ~CoreCommand() => Dispose(false);
+  ~CoreCommand() => Dispose(
+    false
+  );
 
   private protected virtual string Location => string.Empty;
 
@@ -30,9 +32,13 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
 
   public void Dispose()
   {
-    Dispose(true);
+    Dispose(
+      true
+    );
 
-    System.GC.SuppressFinalize(this);
+    System.GC.SuppressFinalize(
+      this
+    );
   }
 
   protected sealed override void BeginProcessing()
