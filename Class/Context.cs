@@ -49,29 +49,12 @@ internal static class Context
   {
     if (!Ssh)
     {
-      var argumentList = arguments == null
-        ? null
-        : new List<string>(
-            arguments
-          );
-
-      var startInfo = argumentList == null
-        || argumentList.Count == 0
-        ? new ProcessStartInfo(
-            fileName
-          )
-        : new ProcessStartInfo(
-            fileName,
-            argumentList
-          );
-
-      if (noNewWindow)
-      {
-        startInfo.CreateNoWindow = true;
-      }
-
       Process.Start(
-        startInfo
+        ArgumentList(
+          fileName,
+          arguments,
+          noNewWindow
+        )
       );
     }
   }
@@ -97,28 +80,13 @@ internal static class Context
   {
     if (!Ssh)
     {
-      var argumentList = arguments == null
-        ? null
-        : new List<string>(
-            arguments
-          );
-
-      var startInfo = argumentList == null
-        || argumentList.Count == 0
-        ? new ProcessStartInfo(
-            fileName
-          )
-        : new ProcessStartInfo(
-            fileName,
-            argumentList
-          );
+      var startInfo = ArgumentList(
+        fileName,
+        arguments,
+        noNewWindow
+      );
 
       startInfo.UseShellExecute = true;
-
-      if (noNewWindow)
-      {
-        startInfo.CreateNoWindow = true;
-      }
 
       if (administrator)
       {
@@ -129,5 +97,35 @@ internal static class Context
         startInfo
       );
     }
+  }
+
+  private static ProcessStartInfo ArgumentList(
+    string fileName,
+    IEnumerable<string>? arguments,
+    bool noNewWindow
+  )
+  {
+    var argumentList = arguments == null
+      ? null
+      : new List<string>(
+          arguments
+        );
+
+    var startInfo = argumentList == null
+      || argumentList.Count == 0
+      ? new ProcessStartInfo(
+          fileName
+        )
+      : new ProcessStartInfo(
+          fileName,
+          argumentList
+        );
+
+    if (noNewWindow)
+    {
+      startInfo.CreateNoWindow = true;
+    }
+
+    return startInfo;
   }
 }
