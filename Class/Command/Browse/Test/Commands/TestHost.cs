@@ -10,6 +10,20 @@ namespace Module.Command.Browse.Test.Commands;
 [OutputType(typeof(object))]
 public sealed class TestHost : CoreCommand
 {
+  public enum TestHostVerbosity
+  {
+    Quiet,
+    Detailed
+  }
+  
+  public enum TestHostWellKnownPort
+  {
+    HTTP = -4,
+    RDP,
+    SMB,
+    WINRM
+  }
+
   [Parameter(
     Position = 0,
     ValueFromPipeline = true,
