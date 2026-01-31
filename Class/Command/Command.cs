@@ -64,7 +64,7 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
       AfterEndProcessing();
     }
 
-    Dispose();
+    StopProcessing();
   }
 
   protected sealed override void StopProcessing() => Dispose();
