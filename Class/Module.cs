@@ -1,4 +1,4 @@
-global using static Module.Internal.Environment.Environmental;
+global using static Module.Environment.Environmental;
 global using static Module.Input.Escaper;
 global using static Module.Input.Path.Normalizer;
 
