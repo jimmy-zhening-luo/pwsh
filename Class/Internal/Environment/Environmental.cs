@@ -1,0 +1,25 @@
+namespace Module.Internal.Environment;
+
+internal static partial class Environmental
+{
+  internal static string Env(
+    string variable,
+    EnvironmentVariableTarget target = EnvironmentVariableTarget.Process
+  ) => GetEnvironmentVariable(
+    variable,
+    target
+  )
+    ?? string.Empty;
+
+  internal static string EnvPath(
+    SpecialFolder folder,
+    string subpath = ""
+  ) => GetFullPath(
+    Normalize(
+      subpath
+    ),
+    GetFolderPath(
+      folder
+    )
+  );
+}
