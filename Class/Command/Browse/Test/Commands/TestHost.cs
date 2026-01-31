@@ -67,18 +67,7 @@ public sealed class TestHost : CoreCommand
     }
   }
 
-  private protected sealed override void TransformParameters()
-  {
-    if (paths.Length == 0)
-    {
-      paths = [Pwd()];
-    }
-
-    if (DiskSize.Factor.TryGetValue(unit, out long value))
-    {
-      factor = value;
-    }
-  }
+  private protected sealed override void ProcessRecordAction()
   {
     foreach (string name in names)
     {
