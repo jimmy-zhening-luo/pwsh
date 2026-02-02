@@ -16,8 +16,7 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
 
   private bool ContinueProcessing
   {
-    get => !disposed
-      && continueProcessing
+    get => continueProcessing
       && (
         !SkipSsh
         || !Ssh
@@ -82,6 +81,10 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
     {
       AfterEndProcessing();
     }
+    else
+    {
+      DefaultAction();
+    }
 
     StopProcessing();
   }
@@ -105,6 +108,9 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
   { }
 
   private protected virtual void AfterEndProcessing()
+  { }
+
+  private protected virtual void DefaultAction()
   { }
 
   private protected virtual void CleanResources()

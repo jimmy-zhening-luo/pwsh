@@ -6,9 +6,6 @@ public abstract class WrappedCommand(
 {
   private SteppablePipeline? steppablePipeline = null;
 
-  private protected virtual void DefaultAction()
-  { }
-
   private protected sealed override void BeforeBeginProcessing()
   {
     AddCommand(
@@ -31,9 +28,7 @@ public abstract class WrappedCommand(
   }
 
   private protected sealed override void AfterEndProcessing()
-  {
-    DefaultAction();
-  }
+  { }
 
   private protected sealed override void CleanResources()
   {
