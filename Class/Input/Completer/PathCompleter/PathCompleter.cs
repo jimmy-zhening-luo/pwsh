@@ -1,6 +1,7 @@
 namespace Module.Input.Completer.PathCompleter;
 
 using static System.IO.Path;
+using static Module.Input.Path.Normalizer;
 
 public sealed class PathCompleter : BaseCompleter
 {

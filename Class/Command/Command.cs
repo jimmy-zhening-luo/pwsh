@@ -1,5 +1,7 @@
 namespace Module.Command;
 
+using static Module.Input.Path.Normalizer;
+
 public abstract class CoreCommand : PSCmdlet, System.IDisposable
 {
   private bool disposed;
