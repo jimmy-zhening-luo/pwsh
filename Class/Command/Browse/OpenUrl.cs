@@ -71,7 +71,7 @@ public sealed class OpenUrl : CoreCommand
       return;
     }
 
-    string cleanPath = Normalize(
+    string cleanPath = Module.Input.Path.Normalizer.Normalize(
       path
     );
     string target = string.Empty;

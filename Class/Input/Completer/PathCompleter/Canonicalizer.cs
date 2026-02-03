@@ -7,7 +7,7 @@ internal static class Canonicalizer
     bool preserveTrailingSeparator = false
   )
   {
-    string normalPath = Module.Input.Path.Normalize(
+    string normalPath = Module.Input.Path.Normalizer.Normalize(
       path,
       preserveTrailingSeparator
     );
