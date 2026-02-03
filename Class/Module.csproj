@@ -23,9 +23,6 @@
     <Using Include="Module.Input.Completer.PathCompleter"/>
   </ItemGroup>
   <ItemGroup>
-    <Using Include="System.IO.Path" Static="True"/>
-  </ItemGroup>
-  <ItemGroup>
     <Using Include="System.Management.Automation"/>
     <Using Include="System.Collections.Generic"/>
     <Using Include="System.Collections.ObjectModel"/>
