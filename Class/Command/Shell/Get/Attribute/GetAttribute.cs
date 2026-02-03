@@ -29,7 +29,7 @@ public sealed class GetSize : CoreCommand
     PB
   }
 
-  public enum DiskSizeAlias
+  private enum DiskSizeAlias
   {
     B,
     KB,
