@@ -24,6 +24,7 @@
   </ItemGroup>
   <ItemGroup>
     <Using Include="System.Management.Automation"/>
+    <Using Include="System.Collections"/>
     <Using Include="System.Collections.Generic"/>
     <Using Include="System.Collections.ObjectModel"/>
   </ItemGroup>
@@ -35,7 +36,6 @@
   <ItemGroup>
     <Using Include="System.Enum" Alias="Enum"/>
     <Using Include="System.Uri" Alias="Uri"/>
-    <Using Include="System.Collections.IDictionary" Alias="IDictionary"/>
     <Using Include="System.StringComparer" Alias="StringComparer"/>
   </ItemGroup>
   <ItemGroup>
