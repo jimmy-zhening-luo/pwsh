@@ -4,7 +4,7 @@ using static Module.FileSystem.Path.Normalizer;
 
 public abstract class CoreCommand : PSCmdlet, System.IDisposable
 {
-  public enum FileSystemItemType
+  private protected enum FileSystemItemType
   {
     Any,
     File,
