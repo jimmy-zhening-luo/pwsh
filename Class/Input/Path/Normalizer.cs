@@ -9,9 +9,11 @@ internal static partial class Normalizer
   {
     string normalPath = TrimRelativePrefix(
       DuplicateSeparatorRegex().Replace(
-        ExpandEnvironmentVariables(
-          path.Trim()
-        )
+        System
+          .Environment
+          .ExpandEnvironmentVariables(
+            path.Trim()
+          )
           .Replace(
             '/',
             '\\'
