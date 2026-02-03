@@ -1,4 +1,4 @@
-namespace Module.Input.Completer;
+namespace Module.Completer;
 
 public abstract class BaseCompleter : IArgumentCompleter
 {

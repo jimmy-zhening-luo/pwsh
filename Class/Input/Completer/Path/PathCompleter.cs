@@ -1,4 +1,4 @@
-namespace Module.Input.Completer.Path;
+namespace Module.Completer.Path;
 
 using static System.IO.Path;
 

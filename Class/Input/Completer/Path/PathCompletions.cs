@@ -1,4 +1,4 @@
-namespace Module.Input.Completer.Path;
+namespace Module.Completer.Path;
 
 public sealed class PathCompletionsAttribute : BaseCompletionsAttribute<PathCompleter>
 {
