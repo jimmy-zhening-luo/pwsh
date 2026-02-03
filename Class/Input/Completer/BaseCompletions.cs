@@ -1,6 +1,8 @@
 namespace Module.Input.Completer;
 
-[AttributeUsage(
+using AttributeTargets = System.AttributeTargets;
+
+[System.AttributeUsage(
   AttributeTargets.Parameter
   | AttributeTargets.Property
   | AttributeTargets.Field

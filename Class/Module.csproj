@@ -36,11 +36,9 @@
     <Using Include="System.Enum" Alias="Enum"/>
     <Using Include="System.Uri" Alias="Uri"/>
     <Using Include="System.Collections.IDictionary" Alias="IDictionary"/>
-    <Using Include="System.AttributeUsageAttribute" Alias="AttributeUsage"/>
     <Using Include="System.StringComparer" Alias="StringComparer"/>
   </ItemGroup>
   <ItemGroup>
-    <Using Include="System.AttributeTargets" Alias="AttributeTargets"/>
     <Using Include="System.EnvironmentVariableTarget" Alias="EnvironmentVariableTarget"/>
     <Using Include="System.StringComparison" Alias="StringComparison"/>
     <Using Include="System.StringSplitOptions" Alias="StringSplitOptions"/>
