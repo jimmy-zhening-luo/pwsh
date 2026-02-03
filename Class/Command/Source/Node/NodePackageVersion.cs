@@ -1,4 +1,4 @@
-namespace Module.Command.Code.Node;
+namespace Module.Command.Source.Node;
 
 public enum NodePackageNamedVersion
 {
