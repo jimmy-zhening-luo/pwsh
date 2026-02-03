@@ -12,15 +12,15 @@
     <PackageReference Include="Microsoft.PowerShell.Commands.Utility" Version="7.5.4" PrivateAssets="All"/>
   </ItemGroup>
   <ItemGroup>
-    <Using Include="Module.Environment.Environmental.Environmental" Static="True"/>
-    <Using Include="Module.Input.Escaper" Static="True"/>
-    <Using Include="Module.Input.Path.Normalizer" Static="True"/>
-  </ItemGroup>
-  <ItemGroup>
     <Using Include="Module.Environment"/>
     <Using Include="Module.Input.Path"/>
     <Using Include="Module.Input.Completer"/>
     <Using Include="Module.Input.Completer.PathCompleter"/>
+  </ItemGroup>
+  <ItemGroup>
+    <Using Include="Module.Environment.Environmental.Environmental" Static="True"/>
+    <Using Include="Module.Input.Escaper" Static="True"/>
+    <Using Include="Module.Input.Path.Normalizer" Static="True"/>
   </ItemGroup>
   <ItemGroup>
     <Using Include="System.Management.Automation"/>
