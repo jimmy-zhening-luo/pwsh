@@ -8,7 +8,7 @@ namespace Module.Command.Shell.New.Directory;
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096592"
 )]
 [Alias("mk")]
-[OutputType(typeof(DirectoryInfo))]
+[OutputType(typeof(IO.DirectoryInfo))]
 public sealed class NewDirectory : WrappedCommandShouldProcess
 {
   public NewDirectory() : base(

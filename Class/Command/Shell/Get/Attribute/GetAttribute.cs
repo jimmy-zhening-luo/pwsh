@@ -141,18 +141,21 @@ public sealed class GetSize : CoreCommand
         );
       }
 
-      long bytes = TestPath(path, FileSystemItemType.Directory)
-        ? new DirectoryInfo(
+      long bytes = TestPath(
+        path,
+        FileSystemItemType.Directory
+      )
+        ? new IO.DirectoryInfo(
             Pwd(path)
           )
           .EnumerateFiles(
             "*",
-            SearchOption.AllDirectories
+            IO.SearchOption.AllDirectories
           )
           .Sum(
             file => file.Length
           )
-        : new FileInfo(
+        : new IO.FileInfo(
             Pwd(path)
           )
           .Length;

@@ -8,7 +8,7 @@ namespace Module.Command.Shell.New.Junction;
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096592"
 )]
 [Alias("mj")]
-[OutputType(typeof(DirectoryInfo))]
+[OutputType(typeof(IO.DirectoryInfo))]
 public sealed class NewJunction : WrappedCommandShouldProcess
 {
   public NewJunction() : base(

@@ -1,6 +1,7 @@
 namespace Module;
 
 using System.Linq;
+using ProcessStartInfo = System.Diagnostics.ProcessStartInfo;
 
 internal static class Invocation
 {
@@ -20,7 +21,7 @@ internal static class Invocation
     bool noNewWindow = false
   )
   {
-    Process.Start(
+    System.Diagnostics.Process.Start(
       ArgumentList(
         fileName,
         arguments,
@@ -61,7 +62,7 @@ internal static class Invocation
       startInfo.Verb = "RunAs";
     }
 
-    Process.Start(
+    System.Diagnostics.Process.Start(
       startInfo
     );
   }

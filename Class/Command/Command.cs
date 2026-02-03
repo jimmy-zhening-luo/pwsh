@@ -179,10 +179,10 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
 
     return type switch
     {
-      FileSystemItemType.File => File.Exists(
+      FileSystemItemType.File => IO.File.Exists(
         absolutePath
       ),
-      FileSystemItemType.Directory => Directory.Exists(
+      FileSystemItemType.Directory => IO.Directory.Exists(
         absolutePath
       ),
       _ => IO.Path.Exists(

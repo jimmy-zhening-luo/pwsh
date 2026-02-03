@@ -90,7 +90,7 @@ public sealed class PathCompleter : BaseCompleter
           );
 
           if (
-            Directory.Exists(
+            IO.Directory.Exists(
               anchoredPath
             )
           )
@@ -104,7 +104,7 @@ public sealed class PathCompleter : BaseCompleter
           }
           else if (
             Reanchor
-            && Directory.Exists(
+            && IO.Directory.Exists(
               subpathPart
             )
           )
@@ -135,21 +135,21 @@ public sealed class PathCompleter : BaseCompleter
 
     int count = 0;
     filter += "*";
-    EnumerationOptions attributes = new()
+    var attributes = new IO.EnumerationOptions()
     {
       IgnoreInaccessible = false
     };
 
     if (Hidden)
     {
-      attributes.AttributesToSkip = FileAttributes.System;
+      attributes.AttributesToSkip = IO.FileAttributes.System;
     }
 
     if (Type == PathItemType.File)
     {
 FileFirstMatch:
       foreach (
-        string file in Directory.EnumerateFiles(
+        string file in IO.Directory.EnumerateFiles(
           location,
           filter,
           attributes
@@ -168,10 +168,10 @@ FileFirstMatch:
       if (
         count == 0
         && filter.Length > 1
-        && attributes.AttributesToSkip != FileAttributes.System
+        && attributes.AttributesToSkip != IO.FileAttributes.System
       )
       {
-        attributes.AttributesToSkip = FileAttributes.System;
+        attributes.AttributesToSkip = IO.FileAttributes.System;
 
         goto FileFirstMatch;
       }
@@ -184,7 +184,7 @@ FileFirstMatch:
 
 Match:
     foreach (
-      string directory in Directory.EnumerateDirectories(
+      string directory in IO.Directory.EnumerateDirectories(
         location,
         filter,
         attributes
@@ -204,10 +204,10 @@ Match:
     if (
       count == checkpoint
       && filter.Length > 1
-      && attributes.AttributesToSkip != FileAttributes.System
+      && attributes.AttributesToSkip != IO.FileAttributes.System
     )
     {
-      attributes.AttributesToSkip = FileAttributes.System;
+      attributes.AttributesToSkip = IO.FileAttributes.System;
 
       goto Match;
     }
@@ -217,7 +217,7 @@ Match:
     if (Type == PathItemType.Any)
     {
       foreach (
-        string file in Directory.EnumerateFiles(
+        string file in IO.Directory.EnumerateFiles(
           location,
           filter,
           attributes
@@ -236,10 +236,10 @@ Match:
       if (
         count == checkpoint
         && filter.Length > 1
-        && attributes.AttributesToSkip != FileAttributes.System
+        && attributes.AttributesToSkip != IO.FileAttributes.System
       )
       {
-        attributes.AttributesToSkip = FileAttributes.System;
+        attributes.AttributesToSkip = IO.FileAttributes.System;
 
         goto Match;
       }

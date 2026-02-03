@@ -1,5 +1,7 @@
 namespace Module.Command.Windows.Manage;
 
+using Process = System.Diagnostics.Process;
+
 [Cmdlet(
   VerbsLifecycle.Stop,
   "Task",
