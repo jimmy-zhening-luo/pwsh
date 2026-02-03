@@ -185,7 +185,7 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
       FileSystemItemType.Directory => Directory.Exists(
         absolutePath
       ),
-      _ => Exists(
+      _ => IO.Path.Exists(
         absolutePath
       )
     };

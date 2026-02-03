@@ -24,7 +24,7 @@ internal static partial class Normalizer
 
     return preserveTrailingSeparator
       ? normalPath
-      : TrimEndingDirectorySeparator(
+      : IO.Path.TrimEndingDirectorySeparator(
           normalPath
         );
   }
