@@ -69,7 +69,7 @@ public abstract class WrappedGetDirectory : WrappedCommand
   public SwitchParameter? FollowSymlink;
 
   [Parameter]
-  public FlagsExpression<FileAttributes>? Attributes;
+  public FlagsExpression<IO.FileAttributes>? Attributes;
 
   private protected sealed override void TransformParameters()
   {
