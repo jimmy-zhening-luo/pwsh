@@ -1,41 +1,41 @@
 namespace Module.Environment.Environmental;
 
-using static System.Environment.SpecialFolder;
+using static System.Environment;
 
 internal static partial class Environmental
 {
   internal static string WinDir(
     string subpath = ""
   ) => EnvPath(
-    Windows,
+    SpecialFolder.Windows,
     subpath
   );
 
   internal static string ProgramFiles(
     string subpath = ""
   ) => EnvPath(
-    using::ProgramFiles,
+    SpecialFolder.ProgramFiles,
     subpath
   );
 
   internal static string AppData(
     string subpath = ""
   ) => EnvPath(
-    ApplicationData,
+    SpecialFolder.ApplicationData,
     subpath
   );
 
   internal static string LocalAppData(
     string subpath = ""
   ) => EnvPath(
-    LocalApplicationData,
+    SpecialFolder.LocalApplicationData,
     subpath
   );
 
   internal static string Home(
     string subpath = ""
   ) => EnvPath(
-    UserProfile,
+    SpecialFolder.UserProfile,
     subpath
   );
 
