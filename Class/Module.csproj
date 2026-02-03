@@ -36,7 +36,7 @@
     <Using Include="Module.Environment"/>
     <Using Include="Module.Input.Path"/>
     <Using Include="Module.Input.Completer"/>
-    <Using Include="Module.Input.Completer.PathCompleter"/>
+    <Using Include="Module.Input.Completer.Path"/>
     <Using Include="Module.Environment.Environmental.Environmental" Static="True"/>
   </ItemGroup>
 </Project>

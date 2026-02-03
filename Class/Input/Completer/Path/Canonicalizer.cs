@@ -1,4 +1,4 @@
-namespace Module.Input.Completer.PathCompleter;
+namespace Module.Input.Completer.Path;
 
 internal static class Canonicalizer
 {
