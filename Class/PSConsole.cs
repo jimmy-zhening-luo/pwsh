@@ -1,7 +1,5 @@
 namespace Module;
 
-using System.Linq;
-
 internal static class PSConsole
 {
   internal static PowerShell Create(
