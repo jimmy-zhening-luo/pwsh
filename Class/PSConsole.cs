@@ -16,7 +16,7 @@ internal static class PSConsole
   {
     using var ps = Create();
 
-    return GetFullPath(
+    return IO.Path.GetFullPath(
       path,
       ps
         .AddCommand(

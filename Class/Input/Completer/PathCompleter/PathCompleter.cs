@@ -1,5 +1,7 @@
 namespace Module.Input.Completer.PathCompleter;
 
+using static System.IO.Path;
+
 public sealed class PathCompleter : BaseCompleter
 {
   public readonly string Root;

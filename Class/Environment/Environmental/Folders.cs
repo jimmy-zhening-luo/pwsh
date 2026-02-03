@@ -41,7 +41,7 @@ internal static partial class Environmental
 
   internal static string Code(
     string subpath = ""
-  ) => GetFullPath(
+  ) => IO.Path.GetFullPath(
     Normalize(
       subpath
     ),
