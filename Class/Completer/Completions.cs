@@ -2,9 +2,9 @@ namespace Module.Completer;
 
 public sealed class CompletionsAttribute : BaseCompletionsAttribute<Completer>
 {
-  private protected readonly string StringifiedDomain;
+  private readonly string StringifiedDomain;
 
-  private protected readonly bool Strict;
+  private readonly bool Strict;
 
   public CompletionsAttribute(
     string stringifiedDomain

@@ -4,15 +4,15 @@ using static System.IO.Path;
 
 public sealed class PathCompleter : BaseCompleter
 {
-  private protected readonly string Root;
+  private readonly string Root;
 
-  private protected readonly PathItemType Type;
+  private readonly PathItemType Type;
 
-  private protected readonly bool Flat;
+  private readonly bool Flat;
 
-  private protected readonly bool Hidden;
+  private readonly bool Hidden;
 
-  private protected readonly bool Reanchor;
+  private readonly bool Reanchor;
 
   public PathCompleter(
     string root,

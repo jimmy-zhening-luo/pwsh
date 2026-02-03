@@ -2,13 +2,13 @@ namespace Module.Completer.Path;
 
 public sealed class PathCompletionsAttribute : BaseCompletionsAttribute<PathCompleter>
 {
-  private protected readonly string Location = string.Empty;
+  private readonly string Location = string.Empty;
 
-  private protected readonly PathItemType ItemType;
+  private readonly PathItemType ItemType;
 
-  private protected readonly bool Flat;
+  private readonly bool Flat;
 
-  private protected readonly bool Hidden;
+  private readonly bool Hidden;
 
   public PathCompletionsAttribute() : base()
   { }
