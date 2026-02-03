@@ -43,62 +43,66 @@ public sealed class OpenUrl : CoreCommand
 
   private protected sealed override void ProcessRecordAction()
   {
-    if (ParameterSetName == "Uri")
+    if (ParameterSetName != "Uri")
     {
-      foreach (Uri uri in uris)
-      {
-        string url = uri
-          .ToString()
-          .Trim();
+      return;
+    }
 
-        if (!string.IsNullOrEmpty(url))
-        {
-          Invocation.ShellExecute(
-            Application.Chrome,
-            url
-          );
-        }
+    foreach (Uri uri in uris)
+    {
+      string url = uri
+        .ToString()
+        .Trim();
+
+      if (!string.IsNullOrEmpty(url))
+      {
+        Invocation.ShellExecute(
+          Application.Chrome,
+          url
+        );
       }
     }
   }
 
   private protected sealed override void AfterEndProcessing()
   {
-    if (ParameterSetName == "Path")
+    if (ParameterSetName != "Path")
     {
-      string cleanPath = Normalize(
-        path
-      );
-      string target = string.Empty;
-
-      if (!string.IsNullOrEmpty(cleanPath))
-      {
-        string relativePath = GetRelativePath(
-          SessionState.Path.CurrentLocation.Path,
-          cleanPath
-        );
-        string testPath = IsPathRooted(
-          relativePath
-        )
-          ? relativePath
-          : Combine(
-              SessionState.Path.CurrentLocation.Path,
-              relativePath
-            );
-
-        target = Exists(
-          testPath
-        )
-          ? GetFullPath(
-              testPath
-            )
-          : cleanPath;
-      }
-
-      Invocation.ShellExecute(
-        Application.Chrome,
-        target
-      );
+      return;
     }
+
+    string cleanPath = Normalize(
+      path
+    );
+    string target = string.Empty;
+
+    if (!string.IsNullOrEmpty(cleanPath))
+    {
+      string relativePath = GetRelativePath(
+        SessionState.Path.CurrentLocation.Path,
+        cleanPath
+      );
+      string testPath = IsPathRooted(
+        relativePath
+      )
+        ? relativePath
+        : Combine(
+            SessionState.Path.CurrentLocation.Path,
+            relativePath
+          );
+
+      target = Exists(
+        testPath
+      )
+        ? GetFullPath(
+            testPath
+          )
+        : cleanPath;
+    }
+
+    Invocation.ShellExecute(
+      Application.Chrome,
+      target
+    );
   }
 }
