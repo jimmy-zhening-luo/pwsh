@@ -14,7 +14,7 @@ internal static partial class Environmental
   internal static string ProgramFiles(
     string subpath = ""
   ) => EnvPath(
-    ProgramFiles,
+    global::ProgramFiles,
     subpath
   );
 
