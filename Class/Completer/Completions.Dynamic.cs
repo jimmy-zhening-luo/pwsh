@@ -4,9 +4,9 @@ using System.Linq;
 
 public sealed class DynamicCompletionsAttribute : BaseCompletionsAttribute<Completer>
 {
-  public readonly ScriptBlock DomainGenerator;
+  private protected readonly ScriptBlock DomainGenerator;
 
-  public readonly bool Strict;
+  private protected readonly bool Strict;
 
   public DynamicCompletionsAttribute(
     ScriptBlock domainGenerator

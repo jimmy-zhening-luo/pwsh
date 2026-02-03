@@ -9,7 +9,7 @@ using AttributeTargets = System.AttributeTargets;
 )]
 public abstract class BaseCompletionsAttribute<T> : ArgumentCompleterAttribute, IArgumentCompleterFactory where T : BaseCompleter
 {
-  public readonly CompletionCase Casing;
+  private protected readonly CompletionCase Casing;
 
   private protected BaseCompletionsAttribute() : base()
   { }

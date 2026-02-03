@@ -2,9 +2,9 @@ namespace Module.Completer;
 
 public sealed class Completer : BaseCompleter
 {
-  public readonly IEnumerable<string> Domain;
+  private protected readonly IEnumerable<string> Domain;
 
-  public readonly bool Strict;
+  private protected readonly bool Strict;
 
   public Completer(
     IEnumerable<string> domain,

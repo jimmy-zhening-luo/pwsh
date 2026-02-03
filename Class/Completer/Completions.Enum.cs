@@ -4,9 +4,9 @@ using Type = System.Type;
 
 public sealed class EnumCompletionsAttribute : BaseCompletionsAttribute<Completer>
 {
-  public readonly Type EnumType;
+  private protected readonly Type EnumType;
 
-  public readonly bool Strict;
+  private protected readonly bool Strict;
 
   public EnumCompletionsAttribute(
     Type enumType

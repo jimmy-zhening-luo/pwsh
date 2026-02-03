@@ -2,7 +2,7 @@ namespace Module.Completer;
 
 public abstract class BaseCompleter : IArgumentCompleter
 {
-  public readonly CompletionCase Casing;
+  private protected readonly CompletionCase Casing;
 
   private protected BaseCompleter()
   { }
