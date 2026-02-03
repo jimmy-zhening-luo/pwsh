@@ -30,4 +30,31 @@
     <Using Include="System.Collections.Generic"/>
     <Using Include="System.Collections.ObjectModel"/>
   </ItemGroup>
+  <ItemGroup>
+    <Using Include="System.IO" Alias="IO"/>
+    <Using Include="System.Diagnostics.CodeAnalysis" Alias="CodeAnalysis"/>
+    <Using Include="System.Management.Automation.Language" Alias="Language"/>
+  </ItemGroup>
+  <ItemGroup>
+    <Using Include="System.Enum" Alias="Enum"/>
+    <Using Include="System.Uri" Alias="Uri"/>
+    <Using Include="System.StringComparer" Alias="StringComparer"/>
+    <Using Include="System.AttributeUsageAttribute" Alias="AttributeUsage"/>
+    <Using Include="System.Collections.IDictionary" Alias="IDictionary"/>
+    <Using Include="System.Diagnostics.Process" Alias="Process"/>
+    <Using Include="System.Diagnostics.ProcessStartInfo" Alias="ProcessStartInfo"/>
+    <Using Include="System.IO.Directory" Alias="Directory"/>
+    <Using Include="System.IO.File" Alias="File"/>
+    <Using Include="System.IO.DirectoryInfo" Alias="DirectoryInfo"/>
+    <Using Include="System.IO.FileInfo" Alias="FileInfo"/>
+    <Using Include="System.IO.EnumerationOptions" Alias="EnumerationOptions"/>
+  </ItemGroup>
+  <ItemGroup>
+    <Using Include="System.StringComparison" Alias="StringComparison"/>
+    <Using Include="System.StringSplitOptions" Alias="StringSplitOptions"/>
+    <Using Include="System.AttributeTargets" Alias="AttributeTargets"/>
+    <Using Include="System.EnvironmentVariableTarget" Alias="EnvironmentVariableTarget"/>
+    <Using Include="System.IO.FileAttributes" Alias="FileAttributes"/>
+    <Using Include="System.IO.SearchOption" Alias="SearchOption"/>
+  </ItemGroup>
 </Project>
