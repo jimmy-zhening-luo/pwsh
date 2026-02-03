@@ -4,6 +4,13 @@ using static Module.FileSystem.Path.Normalizer;
 
 public abstract class CoreCommand : PSCmdlet, System.IDisposable
 {
+  public enum FileSystemItemType
+  {
+    Any,
+    File,
+    Directory
+  }
+
   private bool disposed;
 
   ~CoreCommand() => Dispose(
