@@ -28,9 +28,9 @@
     <Using Include="System.Collections.ObjectModel"/>
   </ItemGroup>
   <ItemGroup>
+    <Using Include="System.Management.Automation.Language" Alias="Language"/>
     <Using Include="System.IO" Alias="IO"/>
     <Using Include="System.Diagnostics.CodeAnalysis" Alias="CodeAnalysis"/>
-    <Using Include="System.Management.Automation.Language" Alias="Language"/>
   </ItemGroup>
   <ItemGroup>
     <Using Include="System.Enum" Alias="Enum"/>
