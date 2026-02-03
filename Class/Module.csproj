@@ -12,13 +12,6 @@
     <PackageReference Include="Microsoft.PowerShell.Commands.Utility" Version="7.5.4" PrivateAssets="All"/>
   </ItemGroup>
   <ItemGroup>
-    <Using Include="Module.Environment"/>
-    <Using Include="Module.Input.Path"/>
-    <Using Include="Module.Input.Completer"/>
-    <Using Include="Module.Input.Completer.PathCompleter"/>
-    <Using Include="Module.Environment.Environmental.Environmental" Static="True"/>
-  </ItemGroup>
-  <ItemGroup>
     <Using Include="System.Management.Automation"/>
     <Using Include="System.Collections"/>
     <Using Include="System.Collections.Generic"/>
@@ -38,5 +31,12 @@
     <Using Include="System.EnvironmentVariableTarget" Alias="EnvironmentVariableTarget"/>
     <Using Include="System.StringComparison" Alias="StringComparison"/>
     <Using Include="System.StringSplitOptions" Alias="StringSplitOptions"/>
+  </ItemGroup>
+  <ItemGroup>
+    <Using Include="Module.Environment"/>
+    <Using Include="Module.Input.Path"/>
+    <Using Include="Module.Input.Completer"/>
+    <Using Include="Module.Input.Completer.PathCompleter"/>
+    <Using Include="Module.Environment.Environmental.Environmental" Static="True"/>
   </ItemGroup>
 </Project>
