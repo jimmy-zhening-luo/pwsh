@@ -1,7 +1,7 @@
 namespace Module.Environment.Environmental;
 
 using static System.Environment;
-using static Module.Input.Path.Normalizer;
+using static Module.FileSystem.Path.Normalizer;
 
 internal static partial class Environmental
 {

@@ -1,4 +1,4 @@
-namespace Module.Input.Path;
+namespace Module.FileSystem.Path;
 
 internal static partial class Normalizer
 {

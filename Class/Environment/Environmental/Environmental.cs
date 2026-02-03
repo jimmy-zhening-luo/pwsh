@@ -17,7 +17,7 @@ internal static partial class Environmental
     SpecialFolder folder,
     string subpath = ""
   ) => IO.Path.GetFullPath(
-    Module.Input.Path.Normalizer.Normalize(
+    Module.FileSystem.Path.Normalizer.Normalize(
       subpath
     ),
     GetFolderPath(

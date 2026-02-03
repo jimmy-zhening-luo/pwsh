@@ -1,6 +1,6 @@
 namespace Module.Command;
 
-using static Module.Input.Path.Normalizer;
+using static Module.FileSystem.Path.Normalizer;
 
 public abstract class CoreCommand : PSCmdlet, System.IDisposable
 {
