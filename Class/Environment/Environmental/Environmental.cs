@@ -1,5 +1,7 @@
 namespace Module.Environment.Environmental;
 
+using static System.Environment;
+
 internal static partial class Environmental
 {
   internal static string Env(
