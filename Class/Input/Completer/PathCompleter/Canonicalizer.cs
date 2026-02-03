@@ -28,7 +28,7 @@ internal static class Canonicalizer
       homedNormalPath
     )
       ? homedNormalPath
-      : PSConsole.CurrentDirectory(
+      : CommandLine.CurrentDirectory(
           homedNormalPath
         );
   }

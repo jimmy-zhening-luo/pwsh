@@ -19,7 +19,7 @@ public abstract class BaseCompleter : IArgumentCompleter
     IDictionary fakeBoundParameters
   ) => WrapArgumentCompletionResult(
     FulfillCompletion(
-      Unescape(
+      Escaper.Unescape(
         wordToComplete
       )
         .Trim()
@@ -39,7 +39,7 @@ public abstract class BaseCompleter : IArgumentCompleter
     )
     {
       yield return new CompletionResult(
-        Escape(
+        Escaper.Escape(
           Casing switch
           {
             CompletionCase.Upper => completedString.ToUpper(),

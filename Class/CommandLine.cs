@@ -1,6 +1,6 @@
 namespace Module;
 
-internal static class PSConsole
+internal static class CommandLine
 {
   internal static PowerShell Create(
     bool newRunspace = false

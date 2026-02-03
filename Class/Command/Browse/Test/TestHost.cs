@@ -162,7 +162,7 @@ public sealed class TestHost : CoreCommand
     ushort portNumber = 0
   )
   {
-    using var ps = PSConsole.Create(true);
+    using var ps = CommandLine.Create(true);
 
     AddCommand(
       ps,

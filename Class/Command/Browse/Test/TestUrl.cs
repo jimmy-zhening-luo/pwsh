@@ -114,7 +114,7 @@ public sealed class TestUrl : CoreCommand
     string host
   )
   {
-    using var ps = PSConsole.Create(true);
+    using var ps = CommandLine.Create(true);
 
     AddCommand(
       ps,
@@ -146,7 +146,7 @@ public sealed class TestUrl : CoreCommand
     Uri fullUrl
   )
   {
-    using var ps = PSConsole.Create(true);
+    using var ps = CommandLine.Create(true);
 
     AddCommand(
       ps,

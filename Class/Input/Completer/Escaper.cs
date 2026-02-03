@@ -1,4 +1,4 @@
-namespace Module.Input;
+namespace Module.Input.Completer;
 
 internal static class Escaper
 {
