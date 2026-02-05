@@ -253,14 +253,19 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
     string id,
     ErrorCategory category = ErrorCategory.InvalidOperation,
     object? target = null
-  ) => ThrowTerminatingError(
-    new ErrorRecord(
-      exception,
-      id,
-      category,
-      target
-    )
-  );
+  )
+  {
+    Dispose();
+
+    ThrowTerminatingError(
+      new ErrorRecord(
+        exception,
+        id,
+        category,
+        target
+      )
+    );
+  }
 
   private void Dispose(
     bool disposing
