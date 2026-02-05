@@ -56,6 +56,7 @@
     'ConvertTo-Hex'
     'Start-Profile'
     'Start-History'
+    'Get-VerbList'
     'Get-Type'
   )
   VariablesToExport    = @()

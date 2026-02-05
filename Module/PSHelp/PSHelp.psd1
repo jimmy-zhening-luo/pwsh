@@ -17,7 +17,6 @@
   FunctionsToExport    = @(
     'Get-HelpOnline'
     'Get-CommandAlias'
-    'Get-VerbList'
   )
   CmdletsToExport      = @()
   VariablesToExport    = @()
