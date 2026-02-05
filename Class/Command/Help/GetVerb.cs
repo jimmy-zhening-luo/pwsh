@@ -10,7 +10,6 @@ namespace Module.Command.Help;
 [OutputType(typeof(string))]
 public class GetVerb : CoreCommand
 {
-  // communications,data,diagnostic,lifecycle,security,service,settings,support,system,utility
   public enum VerbGroup
   {
     Common,
