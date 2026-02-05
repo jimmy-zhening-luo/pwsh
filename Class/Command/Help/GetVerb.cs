@@ -39,10 +39,7 @@ public class GetVerb : CoreCommand
   public string[] Verb
   {
     get => verbs;
-    set
-    {
-      verbs = value;
-    }
+    set => verbs = value;
   }
   private string[] verbs = [];
 
@@ -63,7 +60,6 @@ public class GetVerb : CoreCommand
 
   private protected sealed override void TransformParameters()
   {
-    HashSet<string> uniqueTerms = [];
     HashSet<string> uniqueWildcardTerms = [];
     HashSet<string> uniqueGroups = [];
 
@@ -71,24 +67,19 @@ public class GetVerb : CoreCommand
     {
       if (!string.IsNullOrEmpty(verb))
       {
-        uniqueTerms.Add(verb);
+        uniqueWildcardTerms.Add(
+          verb.Contains(
+            '*'
+          )
+            ? verb
+            : verb.Length > 2
+              ? "*"
+                + verb
+                + "*"
+              : verb
+                + "*"
+        );
       }
-    }
-
-    foreach (var verb in uniqueTerms)
-    {
-      uniqueWildcardTerms.Add(
-        verb.Contains(
-          '*'
-        )
-          ? verb
-          : verb.Length > 2
-            ? "*"
-              + verb
-              + "*"
-            : verb
-              + "*"
-      );
     }
 
     foreach (var group in groups)
