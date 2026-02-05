@@ -39,7 +39,10 @@ public class GetVerb : CoreCommand
   public string[] Verb
   {
     get => verbs;
-    set => verbs = value;
+    set
+    {
+      verbs = value;
+    }
   }
   private string[] verbs = [];
 
