@@ -4,7 +4,6 @@ namespace Module.Command.Shell.New.Junction;
   VerbsCommon.New,
   "Junction",
   DefaultParameterSetName = "pathSet",
-  SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096592"
 )]
 [Alias("mj")]

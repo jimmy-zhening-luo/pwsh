@@ -4,7 +4,6 @@ namespace Module.Command.Shell.Remove.Directory.Commands;
   VerbsCommon.Remove,
   "Directory",
   DefaultParameterSetName = "Path",
-  SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097103"
 )]
 [Alias("rd")]

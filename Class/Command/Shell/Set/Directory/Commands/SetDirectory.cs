@@ -4,7 +4,6 @@ namespace Module.Command.Shell.Set.Directory.Commands;
   VerbsCommon.Set,
   "Directory",
   DefaultParameterSetName = "Path",
-  SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
 )]
 [Alias("c")]
@@ -46,7 +45,6 @@ public sealed class SetDirectory : WrappedSetDirectory
   VerbsCommon.Set,
   "DirectorySibling",
   DefaultParameterSetName = "Path",
-  SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
 )]
 [Alias("cx")]
@@ -75,7 +73,6 @@ public sealed class SetDirectorySibling : WrappedSetDirectory
   VerbsCommon.Set,
   "DirectoryRelative",
   DefaultParameterSetName = "Path",
-  SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
 )]
 [Alias("cxx")]
@@ -104,7 +101,6 @@ public sealed class SetDirectoryRelative : WrappedSetDirectory
   VerbsCommon.Set,
   "DirectoryHome",
   DefaultParameterSetName = "Path",
-  SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
 )]
 [Alias("ch")]
@@ -133,7 +129,6 @@ public sealed class SetDirectoryHome : WrappedSetDirectory
   VerbsCommon.Set,
   "DirectoryCode",
   DefaultParameterSetName = "Path",
-  SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
 )]
 [Alias("cc")]
@@ -164,7 +159,6 @@ public sealed class SetDirectoryCode : WrappedSetDirectory
   VerbsCommon.Set,
   "Drive",
   DefaultParameterSetName = "Path",
-  SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
 )]
 [Alias("c/")]
@@ -193,7 +187,6 @@ public sealed class SetDrive : WrappedSetDirectory
   VerbsCommon.Set,
   "DriveD",
   DefaultParameterSetName = "Path",
-  SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
 )]
 [Alias("d/")]

@@ -4,7 +4,6 @@ namespace Module.Command.Shell.Get.File.Commands;
   VerbsCommon.Get,
   "File",
   DefaultParameterSetName = "Path",
-  SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096490"
 )]
 [Alias("p")]
@@ -47,7 +46,6 @@ public sealed class GetFile : WrappedGetFile
   VerbsCommon.Get,
   "FileSibling",
   DefaultParameterSetName = "Path",
-  SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096490"
 )]
 [Alias("px")]
@@ -73,7 +71,6 @@ public sealed class GetFileSibling : WrappedGetFile
   VerbsCommon.Get,
   "FileRelative",
   DefaultParameterSetName = "Path",
-  SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096490"
 )]
 [Alias("pxx")]
@@ -99,7 +96,6 @@ public sealed class GetFileRelative : WrappedGetFile
   VerbsCommon.Get,
   "FileHome",
   DefaultParameterSetName = "Path",
-  SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096490"
 )]
 [Alias("ph")]
@@ -125,7 +121,6 @@ public sealed class GetFileHome : WrappedGetFile
   VerbsCommon.Get,
   "FileCode",
   DefaultParameterSetName = "Path",
-  SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096490"
 )]
 [Alias("pc")]
@@ -153,7 +148,6 @@ public sealed class GetFileCode : WrappedGetFile
   VerbsCommon.Get,
   "FileDrive",
   DefaultParameterSetName = "Path",
-  SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096490"
 )]
 [Alias("p/")]

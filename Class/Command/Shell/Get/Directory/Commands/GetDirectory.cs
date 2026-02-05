@@ -4,7 +4,6 @@ namespace Module.Command.Shell.Get.Directory.Commands;
   VerbsCommon.Get,
   "Directory",
   DefaultParameterSetName = "Items",
-  SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096492"
 )]
 [Alias("l")]
@@ -51,7 +50,6 @@ public sealed class GetDirectory : WrappedGetDirectory
   VerbsCommon.Get,
   "DirectorySibling",
   DefaultParameterSetName = "Items",
-  SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096492"
 )]
 [Alias("lx")]
@@ -81,7 +79,6 @@ public sealed class GetDirectorySibling : WrappedGetDirectory
   VerbsCommon.Get,
   "DirectoryRelative",
   DefaultParameterSetName = "Items",
-  SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096492"
 )]
 [Alias("lxx")]
@@ -111,7 +108,6 @@ public sealed class GetDirectoryRelative : WrappedGetDirectory
   VerbsCommon.Get,
   "DirectoryHome",
   DefaultParameterSetName = "Items",
-  SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096492"
 )]
 [Alias("lh")]
@@ -141,7 +137,6 @@ public sealed class GetDirectoryHome : WrappedGetDirectory
   VerbsCommon.Get,
   "DirectoryCode",
   DefaultParameterSetName = "Items",
-  SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096492"
 )]
 [Alias("lc")]
@@ -173,7 +168,6 @@ public sealed class GetDirectoryCode : WrappedGetDirectory
   VerbsCommon.Get,
   "DirectoryDrive",
   DefaultParameterSetName = "Items",
-  SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096492"
 )]
 [Alias("l/")]

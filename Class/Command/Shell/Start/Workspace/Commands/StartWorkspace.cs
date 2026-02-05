@@ -4,7 +4,6 @@ namespace Module.Command.Shell.Start.Workspace.Commands;
   VerbsLifecycle.Start,
   "Workspace",
   DefaultParameterSetName = "Path",
-  SupportsTransactions = true,
   HelpUri = "https://code.visualstudio.com/docs/configure/command-line#_core-cli-options"
 )]
 [Alias("i")]
@@ -26,7 +25,6 @@ public sealed class StartWorkspace : VirtualStartWorkspace
   VerbsLifecycle.Start,
   "WorkspaceSibling",
   DefaultParameterSetName = "Path",
-  SupportsTransactions = true,
   HelpUri = "https://code.visualstudio.com/docs/configure/command-line#_core-cli-options"
 )]
 [Alias("ix")]
@@ -52,7 +50,6 @@ public sealed class StartWorkspaceSibling : VirtualStartWorkspace
   VerbsLifecycle.Start,
   "WorkspaceRelative",
   DefaultParameterSetName = "Path",
-  SupportsTransactions = true,
   HelpUri = "https://code.visualstudio.com/docs/configure/command-line#_core-cli-options"
 )]
 [Alias("ixx")]
@@ -78,7 +75,6 @@ public sealed class StartWorkspaceRelative : VirtualStartWorkspace
   VerbsLifecycle.Start,
   "WorkspaceHome",
   DefaultParameterSetName = "Path",
-  SupportsTransactions = true,
   HelpUri = "https://code.visualstudio.com/docs/configure/command-line#_core-cli-options"
 )]
 [Alias("ih")]
@@ -104,7 +100,6 @@ public sealed class StartWorkspaceHome : VirtualStartWorkspace
   VerbsLifecycle.Start,
   "WorkspaceCode",
   DefaultParameterSetName = "Path",
-  SupportsTransactions = true,
   HelpUri = "https://code.visualstudio.com/docs/configure/command-line#_core-cli-options"
 )]
 [Alias("ic")]
@@ -132,7 +127,6 @@ public sealed class StartWorkspaceCode : VirtualStartWorkspace
   VerbsLifecycle.Start,
   "WorkspaceDrive",
   DefaultParameterSetName = "Path",
-  SupportsTransactions = true,
   HelpUri = "https://code.visualstudio.com/docs/configure/command-line#_core-cli-options"
 )]
 [Alias("i/")]

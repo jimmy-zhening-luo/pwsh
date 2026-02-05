@@ -4,7 +4,6 @@ namespace Module.Command.Shell.Start.Explorer.Commands;
   VerbsLifecycle.Start,
   "Explorer",
   DefaultParameterSetName = "Path",
-  SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096590"
 )]
 [Alias("e")]
@@ -34,7 +33,6 @@ public sealed class StartExplorer : WrappedStartExplorer
   VerbsLifecycle.Start,
   "ExplorerSibling",
   DefaultParameterSetName = "Path",
-  SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096590"
 )]
 [Alias("ex")]
@@ -60,7 +58,6 @@ public sealed class StartExplorerSibling : WrappedStartExplorer
   VerbsLifecycle.Start,
   "ExplorerRelative",
   DefaultParameterSetName = "Path",
-  SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096590"
 )]
 [Alias("exx")]
@@ -86,7 +83,6 @@ public sealed class StartExplorerRelative : WrappedStartExplorer
   VerbsLifecycle.Start,
   "ExplorerHome",
   DefaultParameterSetName = "Path",
-  SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096590"
 )]
 [Alias("eh")]
@@ -112,7 +108,6 @@ public sealed class StartExplorerHome : WrappedStartExplorer
   VerbsLifecycle.Start,
   "ExplorerCode",
   DefaultParameterSetName = "Path",
-  SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096590"
 )]
 [Alias("ec")]
@@ -140,7 +135,6 @@ public sealed class StartExplorerCode : WrappedStartExplorer
   VerbsLifecycle.Start,
   "ExplorerDrive",
   DefaultParameterSetName = "Path",
-  SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096590"
 )]
 [Alias("e/")]

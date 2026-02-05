@@ -3,7 +3,6 @@ namespace Module.Command.Help;
 [Cmdlet(
   VerbsCommon.Get,
   "VerbList",
-  SupportsTransactions = true,
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097026"
 )]
 [OutputType(typeof(VerbInfo))]
