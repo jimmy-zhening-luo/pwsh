@@ -74,6 +74,13 @@ public class GetCommandAlias : CoreCommand
       }
     }
 
+    if (uniqueWildcardTerms.Count == 0)
+    {
+      uniqueWildcardTerms.Add(
+        "*"
+      );
+    }
+
     foreach (var exclusion in exclusions)
     {
       uniqueExclusions.Add(
