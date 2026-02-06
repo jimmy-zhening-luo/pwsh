@@ -124,10 +124,6 @@ public sealed class TestUrl : CoreCommand
         "Name",
         host
       )
-      .AddParameter(
-        "Server",
-        "1.1.1.1"
-      )
       .AddParameter("DnsOnly")
       .AddParameter("NoHostsFile")
       .AddParameter("QuickTimeout");
