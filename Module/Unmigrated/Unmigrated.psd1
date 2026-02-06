@@ -1,13 +1,14 @@
 @{
-  RootModule           = 'Code.psm1'
+  RootModule           = 'Unmigrated.psm1'
   ModuleVersion        = '3.0.0.0'
   CompatiblePSEditions = @('Desktop', 'Core')
-  GUID                 = '5aa4e6fd-3c16-4ee5-9019-8445bddd890c'
+  GUID                 = '8a90b6f0-c5c0-47c5-80d9-24f6be88df99'
   Author               = 'Jimmy Zhening Luo'
   CompanyName          = 'Jimmy Zhening Luo'
   Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
   PowerShellVersion    = '7.5'
   FunctionsToExport    = @(
+    'Get-HelpOnline'
     'Invoke-Git'
     'Measure-GitRepository'
     'Import-GitRepository'
@@ -31,6 +32,8 @@
   CmdletsToExport      = @()
   VariablesToExport    = @()
   AliasesToExport      = @(
+    'm'
+    'man'
     'g'
     'gg'
     'gitcl'

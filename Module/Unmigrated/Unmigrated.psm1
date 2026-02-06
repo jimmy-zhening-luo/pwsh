@@ -3,6 +3,207 @@ using namespace System.Collections.Generic
 using namespace Module.Completer
 using namespace Module.Completer.Path
 
+$CUSTOM_HELP = Import-PowerShellDataFile -Path $PSScriptRoot\PSHelpTopic.psd1
+$ABOUT_BASE_URL = 'https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about'
+
+function Get-HelpOnline {
+  [CmdletBinding()]
+  [OutputType([System.Object])]
+  [Alias('m', 'man')]
+  param(
+
+    [Parameter(
+      Position = 0,
+      ValueFromRemainingArguments
+    )]
+    [DynamicCompletions(
+      {
+        return (
+          Import-PowerShellDataFile -Path $PSScriptRoot\PSHelpTopic.Local.psd1
+        ).About + (
+          (
+            Get-ChildItem -Path Function:
+          ).Name.ToLower() -notmatch '[^\w-]'
+        ).ToLower()
+      }
+    )]
+    [string[]]$Name,
+
+    [string[]]$Parameter
+  )
+
+  if (!$Name) {
+    return Get-Help -Name Get-Help
+  }
+
+  [string]$Topic = $Name -join '_'
+
+  $HelpContent = ''
+  $ArticleUrl = [List[uri]]::new()
+  $Silent = @{
+    ErrorAction    = 'SilentlyContinue'
+    ProgressAction = 'SilentlyContinue'
+  }
+
+  if ($CUSTOM_HELP.ContainsKey($Topic)) {
+    $CustomHelp = $CUSTOM_HELP[$Topic]
+
+    if ($CustomHelp -and $CustomHelp -as [string] -and $CustomHelp -notmatch ':') {
+      $CustomHelp = $CUSTOM_HELP[[string]$CustomHelp]
+    }
+
+    if ($CustomHelp) {
+      $CustomHelp |
+        Where-Object {
+          $PSItem -as [uri] -and (
+            [uri]$PSItem
+          ).IsAbsoluteUri
+        } |
+        ForEach-Object {
+          $ArticleUrl.Add($PSItem)
+        }
+    }
+  }
+  else {
+    $HelpArticleUrl = [List[uri]]::new()
+    $HelpContent = Get-Help -Name $Topic @Silent
+
+    if ($HelpContent -and $HelpContent.Count -ne 1) {
+      $HelpContent = ''
+    }
+
+    if ($HelpContent) {
+      $HelpContent.relatedLinks.navigationLink.Uri |
+        Where-Object {
+          ![string]::IsNullOrEmpty($PSItem)
+        } |
+        Where-Object {
+          $PSItem -match '^(?=https?://\S|[-\w]+(?>\.[-\w]+)+/)'
+        } |
+        ForEach-Object {
+          $PSItem -match '^(?=https?:)' ? $PSItem : "https://$PSItem"
+        } |
+        Where-Object {
+          $PSItem -as [uri] -and (
+            [uri]$PSItem
+          ).IsAbsoluteUri
+        } |
+        ForEach-Object {
+          $HelpArticleUrl.Add($PSItem)
+        }
+    }
+
+    if ($HelpContent -and $Parameter) {
+      $ParameterHelpContent = Get-Help -Name $Topic -Parameter $Parameter @Silent
+
+      if ($ParameterHelpContent) {
+        $HelpContent = $ParameterHelpContent
+
+        if ($HelpArticleUrl.Count -eq 1 -and $Parameter.Count -eq 1) {
+          $HelpArticleUrl[0] = [uri](
+            [string]$HelpArticleUrl[0] + "#-$Parameter".ToLower()
+          )
+        }
+      }
+    }
+
+    if ($HelpArticleUrl.Count) {
+      $ArticleUrl.AddRange($HelpArticleUrl)
+    }
+    else {
+      if ($HelpContent) {
+        if (
+          $HelpContent.Name -as [string] -and (
+            [string]$HelpContent.Name
+          ).StartsWith(
+            'about_'
+          )
+        ) {
+          $about_Article = [uri]"$ABOUT_BASE_URL/$([string]$HelpContent.Name)"
+        }
+      }
+      else {
+        function Resolve-AboutArticle {
+          [CmdletBinding()]
+          [OutputType([uri])]
+          param(
+            [Parameter()]
+            [string]$Topic
+          )
+
+          $Test_about_Article = [uri]"$ABOUT_BASE_URL/$Topic"
+
+          if (Test-Url -Uri $Test_about_Article) {
+            return $Test_about_Article
+          }
+        }
+
+        $about_Article = ''
+        [string]$about_TopicCandidate = $Topic -replace '(?>[_ :]+)', '_' -replace '^(?>about)?_?', 'about_'
+
+        $about_Article = Resolve-AboutArticle -Topic $about_TopicCandidate
+
+        if (![string]$about_Article) {
+          if ($about_TopicCandidate -notmatch 's$') {
+            $about_TopicCandidate += 's'
+            $about_Article = Resolve-AboutArticle -Topic $about_TopicCandidate
+          }
+        }
+
+        if ([string]$about_Article) {
+          $HelpContent = Get-Help -Name $about_TopicCandidate @Silent
+          $ArticleUrl.Add($about_Article)
+        }
+      }
+    }
+  }
+
+  if ($HelpContent) {
+    Write-Output -InputObject $HelpContent
+  }
+
+  $Article = [List[uri]]::new()
+
+  if ($ArticleUrl.Count) {
+    $ArticleUrl.ToArray() |
+      ForEach-Object {
+        'https://' + $PSItem.GetComponents(
+          [uricomponents]::Host -bor [uricomponents]::Path -bor (
+            $PSItem.Host -eq 'go.microsoft.com' ? [uricomponents]::Query : 0
+          ) -bor [uricomponents]::Fragment,
+          [uriformat]::Unescaped
+        )
+      } |
+      ForEach-Object {
+        $PSItem.StartsWith(
+          'https://learn.microsoft.com/en-us/',
+          [stringcomparison]::OrdinalIgnoreCase
+        ) ? (
+          $PSItem -replace '(?<=^https://learn\.microsoft\.com/)en-us/', ''
+        ) : $PSItem
+      } |
+      Select-Object -Unique -CaseInsensitive |
+      ForEach-Object {
+        $Article.Add($PSItem)
+      }
+  }
+
+  if ($Article.Count) {
+    Write-Information -MessageData "$($Article.ToArray() -join "`n")" -InformationAction Continue
+  }
+
+  if (!$env:SSH_CLIENT) {
+    if ($Article.Count) {
+      $Article.ToArray() | Open-Url
+    }
+    else {
+      if ($HelpContent) {
+        $null = Get-Help -Name $Topic -Online @Silent 2>&1
+      }
+    }
+  }
+}
+
 function Resolve-GitRepository {
   [CmdletBinding()]
   [OutputType([string])]
@@ -165,9 +366,6 @@ This function allows you to run a Git command in a local repository. If no comma
 For every verb except for 'clone', 'config', and 'init', the function will throw an error if there is no Git repository at the specified path.
 
 For every verb, if the Git command returns a non-zero exit code, the function will throw an error by default.
-
-.COMPONENT
-Code
 
 .LINK
 https://git-scm.com/docs
@@ -345,9 +543,6 @@ Use Git to get the status of a local repository.
 .DESCRIPTION
 This function is an alias for 'git status [argument]'.
 
-.COMPONENT
-Code
-
 .LINK
 https://git-scm.com/docs/git-status
 #>
@@ -374,9 +569,6 @@ Use Git to clone a repository.
 
 .DESCRIPTION
 This function is an alias for 'git clone' and allows you to clone a repository into a specified path.
-
-.COMPONENT
-Code
 
 .LINK
 https://git-scm.com/docs/git-clone
@@ -436,9 +628,6 @@ Use Git to pull changes from a repository.
 .DESCRIPTION
 This function is an alias for 'git pull [argument]'.
 
-.COMPONENT
-Code
-
 .LINK
 https://git-scm.com/docs/git-pull
 #>
@@ -465,9 +654,6 @@ Use Git to pull changes for all repositories in the top level of %USERPROFILE%\c
 
 .DESCRIPTION
 This function runs 'git pull [argument]' in each child repository in %USERPROFILE%\code'.
-
-.COMPONENT
-Code
 
 .LINK
 https://git-scm.com/docs/git-pull
@@ -501,9 +687,6 @@ Use Git to diff the current local working tree against the current local index.
 
 .DESCRIPTION
 This function is an alias for 'git diff [path]'.
-
-.COMPONENT
-Code
 
 .LINK
 https://git-scm.com/docs/git-diff
@@ -561,9 +744,6 @@ Use Git to stage all changes in a repository.
 
 .DESCRIPTION
 This function is an alias for 'git add [.]' and stages all changes in the repository.
-
-.COMPONENT
-Code
 
 .LINK
 https://git-scm.com/docs/git-add
@@ -629,9 +809,6 @@ Commit changes to a Git repository.
 
 .DESCRIPTION
 This function commits changes to a Git repository using the 'git commit' command.
-
-.COMPONENT
-Code
 
 .LINK
 https://git-scm.com/docs/git-commit
@@ -737,9 +914,6 @@ Use Git to push changes to a repository.
 .DESCRIPTION
 This function is an alias for 'git push'.
 
-.COMPONENT
-Code
-
 .LINK
 https://git-scm.com/docs/git-push
 #>
@@ -789,9 +963,6 @@ Use Git to undo changes in a repository.
 
 .DESCRIPTION
 This function is an alias for 'git add . && git reset --hard [HEAD]([~]|^)[n]'.
-
-.COMPONENT
-Code
 
 .LINK
 https://git-scm.com/docs/git-reset
@@ -876,9 +1047,6 @@ Use Git to restore a repository to its previous state.
 
 .DESCRIPTION
 This function is an alias for 'git add . && git reset --hard && git pull'.
-
-.COMPONENT
-Code
 
 .LINK
 https://git-scm.com/docs/git-reset
@@ -1026,9 +1194,6 @@ Use Node Package Manager (npm) to run a command in a Node package.
 
 .DESCRIPTION
 This function runs an npm command in a specified Node package directory, or the current directory if no path is specified.
-
-.COMPONENT
-Code
 
 .LINK
 https://docs.npmjs.com/cli/commands
@@ -1190,9 +1355,6 @@ Run Node.
 .DESCRIPTION
 This function is an alias shim for 'node [args]'.
 
-.COMPONENT
-Code
-
 .LINK
 https://nodejs.org/api/cli.html
 #>
@@ -1216,9 +1378,6 @@ Use 'npx' to run a command from a local or remote npm module.
 
 .DESCRIPTION
 This function is an alias shim for 'npx [args]'.
-
-.COMPONENT
-Code
 
 .LINK
 https://docs.npmjs.com/cli/commands/npx
@@ -1244,9 +1403,6 @@ Use Node Package Manager (npm) to clear the global Node module cache.
 .DESCRIPTION
 This function is an alias for 'npm cache clean --force'.
 
-.COMPONENT
-Code
-
 .LINK
 https://docs.npmjs.com/cli/commands/npm-cache
 #>
@@ -1271,9 +1427,6 @@ Use Node Package Manager (npm) to check for outdated packages in a Node package.
 
 .DESCRIPTION
 This function is an alias for 'npm outdated [--prefix $WorkingDirectory]'.
-
-.COMPONENT
-Code
 
 .LINK
 https://docs.npmjs.com/cli/commands/npm-outdated
@@ -1327,9 +1480,6 @@ Use Node Package Manager (npm) to increment the package version of the current N
 
 .DESCRIPTION
 This function is an alias for 'npm version [--prefix $WorkingDirectory] [version=patch]'.
-
-.COMPONENT
-Code
 
 .LINK
 https://docs.npmjs.com/cli/commands/npm-version
@@ -1428,9 +1578,6 @@ Use Node Package Manager (npm) to run a script defined in a Node package's 'pack
 .DESCRIPTION
 This function is an alias for 'npm run [script] [--prefix $WorkingDirectory] [--args]'.
 
-.COMPONENT
-Code
-
 .LINK
 https://docs.npmjs.com/cli/commands/npm-run
 #>
@@ -1482,9 +1629,6 @@ Use Node Package Manager (npm) to run the 'test' script defined in a Node packag
 
 .DESCRIPTION
 This function is an alias for 'npm test [--prefix $WorkingDirectory] [--args]'.
-
-.COMPONENT
-Code
 
 .LINK
 https://docs.npmjs.com/cli/commands/npm-test
