@@ -135,10 +135,13 @@ public class GetVerb : CoreCommand
       {
         foreach (var verbObject in verbObjects)
         {
-          verbDictionary.Add(
-            verbObject.Verb,
-            verbObject
-          );
+          if (!verbDictionary.ContainsKey(verbObject.Verb))
+          {
+            verbDictionary.Add(
+              verbObject.Verb,
+              verbObject
+            );
+          }
         }
       }
 

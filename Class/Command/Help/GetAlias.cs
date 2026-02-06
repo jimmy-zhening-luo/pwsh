@@ -125,12 +125,17 @@ public class GetCommandAlias : CoreCommand
     {
       foreach (var aliasInfo in aliasInfoObjects)
       {
-        commandAliasDictionary.Add(
-          aliasInfo.Definition
-            + ":"
-            + aliasInfo.Name,
-          aliasInfo
-        );
+        var key = aliasInfo.Definition
+          + ":"
+          + aliasInfo.Name;
+
+        if (!commandAliasDictionary.ContainsKey(key))
+        {
+          commandAliasDictionary.Add(
+            key,
+            aliasInfo
+          );
+        }
       }
     }
 
