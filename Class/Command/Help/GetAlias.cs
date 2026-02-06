@@ -83,9 +83,12 @@ public class GetCommandAlias : CoreCommand
 
     foreach (var exclusion in exclusions)
     {
-      uniqueExclusions.Add(
-        exclusion
-      );
+      if (!string.IsNullOrEmpty(exclusion))
+      {
+        uniqueExclusions.Add(
+          exclusion
+        );
+      }
     }
 
     definitions = [.. uniqueWildcardTerms];
