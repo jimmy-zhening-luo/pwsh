@@ -4,47 +4,9 @@ using namespace Module.Completer
 $CUSTOM_HELP = Import-PowerShellDataFile -Path $PSScriptRoot\PSHelpTopic.psd1
 $ABOUT_BASE_URL = 'https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about'
 
-<#
-.SYNOPSIS
-Displays information about PowerShell commands and concepts, opening the relevant online documentation page in Chrome if available.
-
-.DESCRIPTION
-This function retrieves help information for the specified command or topic. If local help is available, it displays that help in the console.
-
-If online documentation is available, it opens the relevant page in the default web browser if not in an SSH session. It also writes the URLs of the documentation pages to the information stream without returning it as output.
-
-Online documentation is determined based on the related links in the local help, by constructing URLs for about_ articles, or by configured custom help links in .\PSHelp.psd1.
-
-.PARAMETER Name
-Gets help about the specified command or concept. Enter the name of a cmdlet, function, provider, script, or workflow, such as Get-Member, a conceptual article name, such as about_Objects, or an alias, such as ls. Wildcard characters are permitted in cmdlet and provider names, but you can't use wildcard characters to find the names of function help and script help articles.
-
-To get help for a script that isn't located in a path that's listed in the $Env:PATH environment variable, type the script's path and file name.
-
-If you enter the exact name of a help article, Get-Help displays the article contents.
-
-The names of conceptual articles, such as about_Objects, must be entered in English, even in non-English versions of PowerShell.
-
-The command or topic name can be provided as a string array, which will be joined with underscores to form the full name.
-
-If you don't specify a name, Get-Help displays local help about the Get-Help cmdlet.
-
-.PARAMETER Parameter
-One or more parameters can also be specified to get help for specific parameters of the command. When parameters are specified, the displayed local help will only include information about those parameters.
-
-If a single parameter is specified and there is exactly one online documentation link available, the parameter name will be appended to the link as a fragment identifier as a best-effort attempt to direct the user to the relevant section of the documentation.
-
-.COMPONENT
-PSHelp
-
-.LINK
-https://learn.microsoft.com/powershell/module/microsoft.powershell.core/get-help
-
-.LINK
-Get-Help
-#>
 function Get-HelpOnline {
   [CmdletBinding()]
-  [OutputType([string], [System.Object])]
+  [OutputType([System.Object])]
   [Alias('m', 'man')]
   param(
 
