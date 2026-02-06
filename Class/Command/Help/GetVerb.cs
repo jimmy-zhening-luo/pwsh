@@ -29,8 +29,6 @@ public class GetVerb : CoreCommand
 
   [Parameter(
     Position = 0,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true,
     HelpMessage = "Gets only the specified verbs. Enter the name of a verb or a name pattern. Wildcards are allowed."
   )]
   [SupportsWildcards]
@@ -44,7 +42,6 @@ public class GetVerb : CoreCommand
 
   [Parameter(
     Position = 1,
-    ValueFromPipelineByPropertyName = true,
     HelpMessage = "Gets only the specified groups. Enter the name of a group. Wildcards aren't allowed."
   )]
   [EnumCompletions(

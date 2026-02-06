@@ -12,9 +12,7 @@ public sealed class StartExplorer : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [SupportsWildcards]
   [PathCompletions]
@@ -22,8 +20,7 @@ public sealed class StartExplorer : WrappedStartExplorer
 
   [Parameter(
     ParameterSetName = "LiteralPath",
-    Mandatory = true,
-    ValueFromPipelineByPropertyName = true
+    Mandatory = true
   )]
   [Alias("PSPath", "LP")]
   public string[]? LiteralPath;
@@ -41,9 +38,7 @@ public sealed class StartExplorerSibling : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -66,9 +61,7 @@ public sealed class StartExplorerRelative : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -91,9 +84,7 @@ public sealed class StartExplorerHome : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -116,9 +107,7 @@ public sealed class StartExplorerCode : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -143,9 +132,7 @@ public sealed class StartExplorerDrive : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [SupportsWildcards]
   [PathCompletions(

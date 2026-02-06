@@ -9,8 +9,7 @@ public abstract class WrappedGetFile : WrappedCommand
 
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [SupportsWildcards]
   public string[]? Path;
@@ -30,21 +29,15 @@ public abstract class WrappedGetFile : WrappedCommand
   [SupportsWildcards]
   public string[]? Exclude;
 
-  [Parameter(
-    ValueFromPipelineByPropertyName = true
-  )]
+  [Parameter]
   public long? ReadCount;
 
-  [Parameter(
-    ValueFromPipelineByPropertyName = true
-  )]
+  [Parameter]
   [Alias("First", "Head")]
   [ValidateRange(0, 9223372036854775807)]
   public long? TotalCount;
 
-  [Parameter(
-    ValueFromPipelineByPropertyName = true
-  )]
+  [Parameter]
   [Alias("Last")]
   [ValidateRange(0, 2147483647)]
   public int? Tail;

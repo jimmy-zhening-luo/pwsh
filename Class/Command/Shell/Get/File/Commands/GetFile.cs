@@ -12,8 +12,7 @@ public sealed class GetFile : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -24,8 +23,7 @@ public sealed class GetFile : WrappedGetFile
 
   [Parameter(
     ParameterSetName = "LiteralPath",
-    Mandatory = true,
-    ValueFromPipelineByPropertyName = true
+    Mandatory = true
   )]
   [Alias("PSPath", "LP")]
   public string[]? LiteralPath;
@@ -54,8 +52,7 @@ public sealed class GetFileSibling : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -79,8 +76,7 @@ public sealed class GetFileRelative : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -104,8 +100,7 @@ public sealed class GetFileHome : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -129,8 +124,7 @@ public sealed class GetFileCode : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -156,8 +150,7 @@ public sealed class GetFileDrive : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [SupportsWildcards]
   [PathCompletions(

@@ -13,9 +13,7 @@ public sealed class RemoveDirectory : WrappedRemoveDirectory
   [Parameter(
     ParameterSetName = "Path",
     Mandatory = true,
-    Position = 0,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [SupportsWildcards]
   [PathCompletions]
@@ -23,8 +21,7 @@ public sealed class RemoveDirectory : WrappedRemoveDirectory
 
   [Parameter(
     ParameterSetName = "LiteralPath",
-    Mandatory = true,
-    ValueFromPipelineByPropertyName = true
+    Mandatory = true
   )]
   [Alias("PSPath", "LP")]
   public string[]? LiteralPath;

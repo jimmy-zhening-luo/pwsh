@@ -10,9 +10,7 @@ public abstract class WrappedRemoveDirectory : WrappedCommandShouldProcess
   [Parameter(
     ParameterSetName = "Path",
     Mandatory = true,
-    Position = 0,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [SupportsWildcards]
   public string[]? Path;

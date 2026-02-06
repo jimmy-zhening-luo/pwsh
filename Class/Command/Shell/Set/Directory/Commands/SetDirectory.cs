@@ -15,9 +15,7 @@ public sealed class SetDirectory : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -28,15 +26,13 @@ public sealed class SetDirectory : WrappedSetDirectory
 
   [Parameter(
     ParameterSetName = "LiteralPath",
-    Mandatory = true,
-    ValueFromPipelineByPropertyName = true
+    Mandatory = true
   )]
   [Alias("PSPath", "LP")]
   public string? LiteralPath;
 
   [Parameter(
-    ParameterSetName = "Stack",
-    ValueFromPipelineByPropertyName = true
+    ParameterSetName = "Stack"
   )]
   public string? Stack;
 }
@@ -55,9 +51,7 @@ public sealed class SetDirectorySibling : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -83,9 +77,7 @@ public sealed class SetDirectoryRelative : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -111,9 +103,7 @@ public sealed class SetDirectoryHome : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -139,9 +129,7 @@ public sealed class SetDirectoryCode : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -169,9 +157,7 @@ public sealed class SetDrive : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -197,9 +183,7 @@ public sealed class SetDriveD : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [SupportsWildcards]
   [PathCompletions(

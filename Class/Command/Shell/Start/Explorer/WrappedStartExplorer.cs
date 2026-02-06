@@ -9,9 +9,7 @@ public abstract class WrappedStartExplorer : WrappedCommandShouldProcess
 
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [SupportsWildcards]
   public string[]? Path;
