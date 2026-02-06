@@ -16,13 +16,11 @@
   )
   FunctionsToExport    = @(
     'Get-HelpOnline'
-    'Get-CommandAlias'
   )
   CmdletsToExport      = @()
   VariablesToExport    = @()
   AliasesToExport      = @(
     'm'
     'man'
-    'galc'
   )
 }

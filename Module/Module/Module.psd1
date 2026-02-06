@@ -56,6 +56,7 @@
     'ConvertTo-Hex'
     'Start-Profile'
     'Start-History'
+    'Get-CommandAlias'
     'Get-VerbList'
     'Get-Type'
   )
@@ -112,6 +113,7 @@
     'hex'
     'op'
     'oc'
+    'galc'
     'ty'
     'types'
   )
