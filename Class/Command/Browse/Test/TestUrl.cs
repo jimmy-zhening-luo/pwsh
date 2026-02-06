@@ -31,7 +31,7 @@ public sealed class TestUrl : CoreCommand
   {
     foreach (Uri uri in uris)
     {
-      Uri fullUrl = new(
+      Uri url = new(
         uri.IsAbsoluteUri
           ? string.IsNullOrEmpty(
               uri.Host.Trim()
@@ -47,7 +47,7 @@ public sealed class TestUrl : CoreCommand
 
       if (
         !string.IsNullOrEmpty(
-          fullUrl.OriginalString
+          url.OriginalString
         )
       )
       {
@@ -57,7 +57,7 @@ public sealed class TestUrl : CoreCommand
         {
           try
           {
-            ResolveDns(fullUrl.Host);
+            ResolveDns(url.Host);
           }
           catch (CmdletInvocationException psException)
           {
@@ -72,7 +72,7 @@ public sealed class TestUrl : CoreCommand
 
           try
           {
-            status = VisitUrlPath(fullUrl);
+            status = VisitUrlPath(url);
           }
           catch (CmdletInvocationException psException)
           {
@@ -104,7 +104,7 @@ public sealed class TestUrl : CoreCommand
 
         if (status >= 200 && status < 300)
         {
-          WriteObject(fullUrl);
+          WriteObject(url);
         }
       }
     }
@@ -143,7 +143,7 @@ public sealed class TestUrl : CoreCommand
   }
 
   private int VisitUrlPath(
-    Uri fullUrl
+    Uri url
   )
   {
     using var ps = CommandLine.Create(true);
@@ -154,7 +154,7 @@ public sealed class TestUrl : CoreCommand
     )
       .AddParameter(
         "Uri",
-        fullUrl
+        url
       )
       .AddParameter(
         "Method",
