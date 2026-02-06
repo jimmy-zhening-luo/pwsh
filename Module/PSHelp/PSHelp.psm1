@@ -1,5 +1,4 @@
 using namespace System.Collections.Generic
-using namespace System.Management.Automation
 using namespace Module.Completer
 
 $CUSTOM_HELP = Import-PowerShellDataFile -Path $PSScriptRoot\PSHelpTopic.psd1
