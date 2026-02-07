@@ -61,7 +61,12 @@ public sealed class NewDirectory : WrappedCommandShouldProcess
 
   [Parameter]
   [Alias("f")]
-  public SwitchParameter Force;
+  public SwitchParameter Force
+  {
+    get => force;
+    set => force = value;
+  }
+  private bool force;
 
   private protected sealed override void TransformParameters() => BoundParameters["ItemType"] = "Directory";
 }

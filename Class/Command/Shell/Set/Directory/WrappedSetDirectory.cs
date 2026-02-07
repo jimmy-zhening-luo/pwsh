@@ -15,7 +15,12 @@ public abstract class WrappedSetDirectory : WrappedCommand
   private protected string path = "";
 
   [Parameter]
-  public SwitchParameter PassThru;
+  public SwitchParameter PassThru
+  {
+    get => passThru;
+    set => passThru = value;
+  }
+  private bool passThru;
 
   private protected sealed override void TransformParameters()
   {

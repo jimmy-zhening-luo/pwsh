@@ -98,16 +98,36 @@ public abstract class WrappedGetFile : WrappedCommand
 
   [Parameter]
   [Alias("f")]
-  public SwitchParameter Force;
+  public SwitchParameter Force
+  {
+    get => force;
+    set => force = value;
+  }
+  private bool force;
 
   [Parameter]
-  public SwitchParameter AsByteStream;
+  public SwitchParameter AsByteStream
+  {
+    get => asByteStream;
+    set => asByteStream = value;
+  }
+  private bool asByteStream;
 
   [Parameter]
-  public SwitchParameter Raw;
+  public SwitchParameter Raw
+  {
+    get => raw;
+    set => raw = value;
+  }
+  private bool raw;
 
   [Parameter]
-  public SwitchParameter Wait;
+  public SwitchParameter Wait
+  {
+    get => wait;
+    set => wait = value;
+  }
+  private bool wait;
 
   private protected sealed override void TransformParameters()
   {

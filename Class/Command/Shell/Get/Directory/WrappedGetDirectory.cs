@@ -46,7 +46,12 @@ public abstract class WrappedGetDirectory : WrappedCommand
 
   [Parameter]
   [Alias("s", "r")]
-  public SwitchParameter Recurse;
+  public SwitchParameter Recurse
+  {
+    get => recurse;
+    set => recurse = value;
+  }
+  private bool recurse;
 
   [Parameter]
   public uint Depth
@@ -58,33 +63,73 @@ public abstract class WrappedGetDirectory : WrappedCommand
 
   [Parameter]
   [Alias("f")]
-  public SwitchParameter Force;
+  public SwitchParameter Force
+  {
+    get => force;
+    set => force = value;
+  }
+  private bool force;
 
   [Parameter]
-  public SwitchParameter Name;
+  public SwitchParameter Name
+  {
+    get => name;
+    set => name = value;
+  }
+  private bool name;
 
   [Parameter]
   [Alias("ad")]
-  public SwitchParameter Directory;
+  public SwitchParameter Directory
+  {
+    get => directory;
+    set => directory = value;
+  }
+  private bool directory;
 
   [Parameter]
   [Alias("af")]
-  public SwitchParameter File;
+  public SwitchParameter File
+  {
+    get => file;
+    set => file = value;
+  }
+  private bool file;
 
   [Parameter]
   [Alias("ah", "h")]
-  public SwitchParameter Hidden;
+  public SwitchParameter Hidden
+  {
+    get => hidden;
+    set => hidden = value;
+  }
+  private bool hidden;
 
   [Parameter]
   [Alias("as")]
-  public SwitchParameter System;
+  public SwitchParameter System
+  {
+    get => system;
+    set => system = value;
+  }
+  private bool system;
 
   [Parameter]
   [Alias("ar")]
-  public SwitchParameter ReadOnly;
+  public SwitchParameter ReadOnly
+  {
+    get => readOnly;
+    set => readOnly = value;
+  }
+  private bool readOnly;
 
   [Parameter]
-  public SwitchParameter FollowSymlink;
+  public SwitchParameter FollowSymlink
+  {
+    get => followSymlink;
+    set => followSymlink = value;
+  }
+  private bool followSymlink;
 
   [Parameter]
   public FlagsExpression<IO.FileAttributes>? Attributes;
