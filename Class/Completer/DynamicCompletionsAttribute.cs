@@ -1,4 +1,4 @@
-namespace Module.Completer.Generic;
+namespace Module.Completer;
 
 using System.Linq;
 
