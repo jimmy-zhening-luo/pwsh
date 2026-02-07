@@ -41,8 +41,7 @@ public sealed class ClearLine : WrappedCommandShouldProcess
 
   [Parameter(
     ParameterSetName = "LiteralPath",
-    Mandatory = true,
-    ValueFromPipelineByPropertyName = true
+    Mandatory = true
   )]
   [Alias("PSPath", "LP")]
   public string[] LiteralPath

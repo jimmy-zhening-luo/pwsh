@@ -15,9 +15,7 @@ public sealed class GetDirectory : WrappedGetDirectory
 {
   [Parameter(
     ParameterSetName = "Items",
-    Position = 0,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -32,8 +30,7 @@ public sealed class GetDirectory : WrappedGetDirectory
 
   [Parameter(
     ParameterSetName = "LiteralItems",
-    Mandatory = true,
-    ValueFromPipelineByPropertyName = true
+    Mandatory = true
   )]
   [Alias("PSPath", "LP")]
   public string[] LiteralPath
@@ -74,9 +71,7 @@ public sealed class GetDirectorySibling : WrappedGetDirectory
 {
   [Parameter(
     ParameterSetName = "Items",
-    Position = 0,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -107,9 +102,7 @@ public sealed class GetDirectoryRelative : WrappedGetDirectory
 {
   [Parameter(
     ParameterSetName = "Items",
-    Position = 0,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -140,9 +133,7 @@ public sealed class GetDirectoryHome : WrappedGetDirectory
 {
   [Parameter(
     ParameterSetName = "Items",
-    Position = 0,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -173,9 +164,7 @@ public sealed class GetDirectoryCode : WrappedGetDirectory
 {
   [Parameter(
     ParameterSetName = "Items",
-    Position = 0,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -208,9 +197,7 @@ public sealed class GetDirectoryDrive : WrappedGetDirectory
 {
   [Parameter(
     ParameterSetName = "Items",
-    Position = 0,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [SupportsWildcards]
   [PathCompletions(
