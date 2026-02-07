@@ -86,6 +86,8 @@ public sealed class TestHost : CoreCommand
     }
   }
 
+  private protected sealed override void ValidateParameters() => names.Length != 0;
+
   private protected sealed override void ProcessRecordAction()
   {
     foreach (string name in names)
@@ -149,17 +151,11 @@ public sealed class TestHost : CoreCommand
     }
   }
 
-  private protected sealed override void AfterEndProcessing()
-  {
-    if (names.Length == 0)
-    {
-      WriteTestNetConnection(
-        "google.com",
-        string.Empty,
-        0
-      );
-    }
-  }
+  private protected sealed override void DefaultAction() => WriteTestNetConnection(
+    "google.com",
+    string.Empty,
+    0
+  );
 
   private void WriteTestNetConnection(
     string computerName,
