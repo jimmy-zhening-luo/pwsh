@@ -7,21 +7,19 @@ public abstract class WrappedGetDirectory : WrappedCommand
   )
   { }
 
-  [Parameter(
-    ParameterSetName = "Items",
-    Position = 0,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true
-  )]
-  [SupportsWildcards]
-  public string[]? Path;
+  private string[] paths = [];
 
   [Parameter(
     ParameterSetName = "Items",
     Position = 1
   )]
   [SupportsWildcards]
-  public string? Filter;
+  public string Filter
+  {
+    get => filter;
+    set => filter = value;
+  }
+  private string filter = "";
 
   [Parameter]
   [SupportsWildcards]

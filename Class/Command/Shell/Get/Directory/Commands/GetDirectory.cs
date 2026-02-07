@@ -24,7 +24,11 @@ public sealed class GetDirectory : WrappedGetDirectory
     "",
     PathItemType.Directory
   )]
-  public new string[]? Path;
+  public string[] Path
+  {
+    get => paths;
+    set => paths = value;
+  }
 
   [Parameter(
     ParameterSetName = "LiteralItems",
@@ -70,7 +74,11 @@ public sealed class GetDirectorySibling : WrappedGetDirectory
     "..",
     PathItemType.Directory
   )]
-  public new string[]? Path;
+  public string[] Path
+  {
+    get => paths;
+    set => paths = value;
+  }
 
   private protected sealed override string LocationSubpath => "..";
 }
@@ -99,7 +107,11 @@ public sealed class GetDirectoryRelative : WrappedGetDirectory
     @"..\..",
     PathItemType.Directory
   )]
-  public new string[]? Path;
+  public string[] Path
+  {
+    get => paths;
+    set => paths = value;
+  }
 
   private protected sealed override string LocationSubpath => @"..\..";
 }
@@ -128,7 +140,11 @@ public sealed class GetDirectoryHome : WrappedGetDirectory
     "~",
     PathItemType.Directory
   )]
-  public new string[]? Path;
+  public string[] Path
+  {
+    get => paths;
+    set => paths = value;
+  }
 
   private protected sealed override string Location => Home();
 }
@@ -157,7 +173,11 @@ public sealed class GetDirectoryCode : WrappedGetDirectory
     @"~\code",
     PathItemType.Directory
   )]
-  public new string[]? Path;
+  public string[] Path
+  {
+    get => paths;
+    set => paths = value;
+  }
 
   private protected sealed override string Location => Home();
 
@@ -188,7 +208,11 @@ public sealed class GetDirectoryDrive : WrappedGetDirectory
     @"\",
     PathItemType.Directory
   )]
-  public new string[]? Path;
+  public string[] Path
+  {
+    get => paths;
+    set => paths = value;
+  }
 
   private protected sealed override string Location => Drive();
 }
