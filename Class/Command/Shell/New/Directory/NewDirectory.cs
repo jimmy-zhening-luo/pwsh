@@ -54,10 +54,10 @@ public sealed class NewDirectory : WrappedCommandShouldProcess
   [PathCompletions]
   public object Value
   {
-    get => value;
-    set => value = value;
+    get => initialValue;
+    set => initialValue = value;
   }
-  private object value = null;
+  private object initialValue = null;
 
   [Parameter]
   [Alias("f")]

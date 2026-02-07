@@ -39,10 +39,10 @@ public sealed class NewJunction : WrappedCommandShouldProcess
   [PathCompletions]
   public object Value
   {
-    get => value;
-    set => value = value;
+    get => initialValue;
+    set => initialValue = value;
   }
-  private object value = null;
+  private object initialValue = null;
 
   private protected sealed override void TransformParameters()
   {
