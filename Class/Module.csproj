@@ -34,7 +34,7 @@
   </ItemGroup>
   <ItemGroup>
     <Using Include="Module.Environment"/>
-    <Using Include="Module.Completer"/>
+    <Using Include="Module.Completer.Generic"/>
     <Using Include="Module.Completer.Path"/>
     <Using Include="Module.Environment.Environmental.Environmental" Static="True"/>
   </ItemGroup>

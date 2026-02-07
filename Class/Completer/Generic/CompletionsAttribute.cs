@@ -1,4 +1,4 @@
-namespace Module.Completer;
+namespace Module.Completer.Generic;
 
 public sealed class CompletionsAttribute : BaseCompletionsAttribute<Completer>
 {

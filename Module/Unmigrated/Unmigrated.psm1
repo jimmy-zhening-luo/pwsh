@@ -1,6 +1,6 @@
 using namespace System.IO
 using namespace System.Collections.Generic
-using namespace Module.Completer
+using namespace Module.Completer.Generic
 using namespace Module.Completer.Path
 
 $CUSTOM_HELP = Import-PowerShellDataFile -Path $PSScriptRoot\PSHelpTopic.psd1
