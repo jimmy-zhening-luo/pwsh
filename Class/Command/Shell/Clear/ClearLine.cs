@@ -63,7 +63,7 @@ public sealed class ClearLine : WrappedCommandShouldProcess
 
   [Parameter]
   [SupportsWildcards]
-  public string[]? Exclude
+  public string[] Exclude
   {
     get => exclusions;
     set => exclusions = value;
@@ -80,12 +80,12 @@ public sealed class ClearLine : WrappedCommandShouldProcess
   private bool force;
 
   [Parameter]
-  public string? Stream
+  public string Stream
   {
     get => stream;
     set => stream = value;
   }
-  private bool stream = "";
+  private string stream = "";
 
   private protected sealed override bool ValidateParameters() => ParameterSetName == "LiteralPath"
     || !string.IsNullOrEmpty(
