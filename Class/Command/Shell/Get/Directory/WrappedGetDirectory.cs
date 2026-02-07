@@ -7,7 +7,7 @@ public abstract class WrappedGetDirectory : WrappedCommand
   )
   { }
 
-  public abstract string Path
+  public abstract string[] Path
   {
     get;
     set;
