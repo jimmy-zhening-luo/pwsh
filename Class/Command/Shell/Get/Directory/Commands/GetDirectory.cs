@@ -24,7 +24,7 @@ public sealed class GetDirectory : WrappedGetDirectory
     "",
     PathItemType.Directory
   )]
-  public string[] Path
+  public override sealed string[] Path
   {
     get => paths;
     set => paths = value;
@@ -36,7 +36,12 @@ public sealed class GetDirectory : WrappedGetDirectory
     ValueFromPipelineByPropertyName = true
   )]
   [Alias("PSPath", "LP")]
-  public string[]? LiteralPath;
+  public string[] LiteralPath
+  {
+    get => literalPaths;
+    set => literalPaths = value;
+  }
+  private string[] literalPaths = [];
 
   [Parameter(
     ParameterSetName = "Items",
@@ -47,7 +52,11 @@ public sealed class GetDirectory : WrappedGetDirectory
     Position = 1
   )]
   [SupportsWildcards]
-  public new string? Filter;
+  public override sealed string Filter
+  {
+    get => filter;
+    set => filter = value;
+  }
 }
 
 [Cmdlet(
@@ -74,7 +83,7 @@ public sealed class GetDirectorySibling : WrappedGetDirectory
     "..",
     PathItemType.Directory
   )]
-  public string[] Path
+  public override sealed string[] Path
   {
     get => paths;
     set => paths = value;
@@ -107,7 +116,7 @@ public sealed class GetDirectoryRelative : WrappedGetDirectory
     @"..\..",
     PathItemType.Directory
   )]
-  public string[] Path
+  public override sealed string[] Path
   {
     get => paths;
     set => paths = value;
@@ -140,7 +149,7 @@ public sealed class GetDirectoryHome : WrappedGetDirectory
     "~",
     PathItemType.Directory
   )]
-  public string[] Path
+  public override sealed string[] Path
   {
     get => paths;
     set => paths = value;
@@ -173,7 +182,7 @@ public sealed class GetDirectoryCode : WrappedGetDirectory
     @"~\code",
     PathItemType.Directory
   )]
-  public string[] Path
+  public override sealed string[] Path
   {
     get => paths;
     set => paths = value;
@@ -208,7 +217,7 @@ public sealed class GetDirectoryDrive : WrappedGetDirectory
     @"\",
     PathItemType.Directory
   )]
-  public string[] Path
+  public override sealed string[] Path
   {
     get => paths;
     set => paths = value;

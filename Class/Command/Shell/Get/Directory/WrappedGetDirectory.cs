@@ -7,19 +7,24 @@ public abstract class WrappedGetDirectory : WrappedCommand
   )
   { }
 
-  private string[] paths = [];
+  public abstract string Path
+  {
+    get;
+    set;
+  }
+  private protected string[] paths = [];
 
   [Parameter(
     ParameterSetName = "Items",
     Position = 1
   )]
   [SupportsWildcards]
-  public string Filter
+  public virtual string Filter
   {
     get => filter;
     set => filter = value;
   }
-  private string filter = "";
+  private protected string filter = "";
 
   [Parameter]
   [SupportsWildcards]
