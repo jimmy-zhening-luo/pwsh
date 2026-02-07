@@ -21,13 +21,13 @@ public sealed class ClearLine : WrappedCommandShouldProcess
   )]
   [SupportsWildcards]
   [PathCompletions]
-  public string? Path;
+  public string Path;
 
   [Parameter(
     Position = 1
   )]
   [SupportsWildcards]
-  public string? Filter;
+  public string Filter;
 
   [Parameter(
     ParameterSetName = "LiteralPath",
@@ -35,22 +35,22 @@ public sealed class ClearLine : WrappedCommandShouldProcess
     ValueFromPipelineByPropertyName = true
   )]
   [Alias("PSPath", "LP")]
-  public string[]? LiteralPath;
+  public string[] LiteralPath;
 
   [Parameter]
   [SupportsWildcards]
-  public string[]? Include;
+  public string[] Include;
 
   [Parameter]
   [SupportsWildcards]
-  public string[]? Exclude;
+  public string[] Exclude;
 
   [Parameter]
   [Alias("f")]
   public SwitchParameter Force;
 
   [Parameter]
-  public string? Stream;
+  public string Stream;
 
   private protected sealed override bool ValidateParameters() => Path != null
     || ParameterSetName == "LiteralPath";
