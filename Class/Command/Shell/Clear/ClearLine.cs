@@ -54,23 +54,43 @@ public sealed class ClearLine : WrappedCommandShouldProcess
 
   [Parameter]
   [SupportsWildcards]
-  public string[]? Include;
+  public string[] Include
+  {
+    get => inclusions;
+    set => inclusions = value;
+  }
+  private string[] inclusions = [];
 
   [Parameter]
   [SupportsWildcards]
-  public string[]? Exclude;
+  public string[]? Exclude
+  {
+    get => exclusions;
+    set => exclusions = value;
+  }
+  private string[] exclusions = [];
 
   [Parameter]
   [Alias("f")]
-  public SwitchParameter Force;
+  public SwitchParameter Force
+  {
+    get => force;
+    set => force = value;
+  }
+  private bool force;
 
   [Parameter]
-  public string? Stream;
+  public string? Stream
+  {
+    get => stream;
+    set => stream = value;
+  }
+  private bool stream = "";
 
-  private protected sealed override bool ValidateParameters() => !string.IsNullOrEmpty(
-    path
-  )
-    || ParameterSetName == "LiteralPath";
+  private protected sealed override bool ValidateParameters() => ParameterSetName == "LiteralPath"
+    || !string.IsNullOrEmpty(
+      path
+    );
 
   private protected sealed override void DefaultAction() => System.Console.Clear();
 }
