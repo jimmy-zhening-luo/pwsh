@@ -67,17 +67,10 @@ public sealed class ClearLine : WrappedCommandShouldProcess
   [Parameter]
   public string? Stream;
 
-  private protected sealed override bool ValidateParameters() => Path != null
+  private protected sealed override bool ValidateParameters() => !string.IsNullOrEmpty(
+    path
+  )
     || ParameterSetName == "LiteralPath";
 
-  private protected sealed override void DefaultAction()
-  {
-    if (
-      !IsPresent("Path")
-      && !IsPresent("LiteralPath")
-    )
-    {
-      System.Console.Clear();
-    }
-  }
+  private protected sealed override void DefaultAction() => System.Console.Clear();
 }
