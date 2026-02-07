@@ -45,7 +45,12 @@ public sealed class TestHost : CoreCommand
   [EnumCompletions(
     typeof(TestHostWellKnownPort)
   )]
-  public string? CommonTCPPort;
+  public string CommonTCPPort
+  {
+    get => commonPort;
+    set => commonPort = value;
+  }
+  private string commonPort = "";
 
   [Parameter(
     ParameterSetName = "RemotePort",
