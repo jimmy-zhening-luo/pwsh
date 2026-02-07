@@ -94,7 +94,7 @@ public abstract class WrappedGetFile : WrappedCommand
     get => encoding;
     set => encoding = value;
   }
-  private System.Text.Encoding encoding;
+  private System.Text.Encoding encoding = new ();
 
   [Parameter]
   [Alias("f")]
