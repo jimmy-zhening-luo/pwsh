@@ -86,7 +86,7 @@ public sealed class TestHost : CoreCommand
     }
   }
 
-  private protected sealed override void ValidateParameters() => names.Length != 0;
+  private protected sealed override bool ValidateParameters() => names.Length != 0;
 
   private protected sealed override void ProcessRecordAction()
   {
