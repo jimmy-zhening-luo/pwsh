@@ -21,8 +21,4 @@
   else {
     Write-Warning -Message "Class '$CLASS' is not built."
   }
-
-  if ($Exists) {
-    Add-Type -Path $ASSEMBLY
-  }
 }
