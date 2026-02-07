@@ -3,12 +3,6 @@ using namespace System.Collections.Generic
 using namespace Module.Completer
 using namespace Module.Completer.Path
 
-Add-Type -Path (
-  Join-Path (
-    Split-Path $PSScriptRoot
-  ) Module\Module.dll
-)
-
 $CUSTOM_HELP = Import-PowerShellDataFile -Path $PSScriptRoot\PSHelpTopic.psd1
 $ABOUT_BASE_URL = 'https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about'
 
