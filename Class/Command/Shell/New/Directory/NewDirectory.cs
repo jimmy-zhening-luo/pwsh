@@ -57,7 +57,7 @@ public sealed class NewDirectory : WrappedCommandShouldProcess
     get => initialValue;
     set => initialValue = value;
   }
-  private object initialValue = null;
+  private object initialValue = new ();
 
   [Parameter]
   [Alias("f")]

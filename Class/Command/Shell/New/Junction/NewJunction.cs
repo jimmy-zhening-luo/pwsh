@@ -42,7 +42,7 @@ public sealed class NewJunction : WrappedCommandShouldProcess
     get => initialValue;
     set => initialValue = value;
   }
-  private object initialValue = null;
+  private object initialValue = "";
 
   private protected sealed override void TransformParameters()
   {
