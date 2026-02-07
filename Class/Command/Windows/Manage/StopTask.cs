@@ -54,6 +54,9 @@ public sealed class StopTask : CoreCommand
   }
   private bool self;
 
+  private protected sealed override bool ValidateParameters() => ParameterSetName != "Name"
+    || names.Length != 0;
+
   private protected sealed override void ProcessRecordAction()
   {
     switch (ParameterSetName)
@@ -101,7 +104,7 @@ public sealed class StopTask : CoreCommand
     }
   }
 
-  private protected sealed override void AfterEndProcessing()
+  private protected sealed override void DefaultAction()
   {
     switch (ParameterSetName)
     {
@@ -112,17 +115,14 @@ public sealed class StopTask : CoreCommand
         }
 
         break;
-      case "Name":
-        if (names.Length == 0)
-        {
-          foreach (
-            var process in Process.GetProcessesByName(
-              "explorer"
-            )
+      default:
+        foreach (
+          var process in Process.GetProcessesByName(
+            "explorer"
           )
-          {
-            process.Kill(true);
-          }
+        )
+        {
+          process.Kill(true);
         }
 
         break;
