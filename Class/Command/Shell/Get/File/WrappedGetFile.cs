@@ -53,16 +53,16 @@ public abstract class WrappedGetFile : WrappedCommand
 
   [Parameter]
   [Alias("f")]
-  public SwitchParameter? Force;
+  public SwitchParameter Force;
 
   [Parameter]
-  public SwitchParameter? AsByteStream;
+  public SwitchParameter AsByteStream;
 
   [Parameter]
-  public SwitchParameter? Raw;
+  public SwitchParameter Raw;
 
   [Parameter]
-  public SwitchParameter? Wait;
+  public SwitchParameter Wait;
 
   private protected sealed override void TransformParameters()
   {

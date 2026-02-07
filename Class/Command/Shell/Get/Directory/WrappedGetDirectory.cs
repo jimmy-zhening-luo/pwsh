@@ -33,40 +33,40 @@ public abstract class WrappedGetDirectory : WrappedCommand
 
   [Parameter]
   [Alias("s", "r")]
-  public SwitchParameter? Recurse;
+  public SwitchParameter Recurse;
 
   [Parameter]
   public uint? Depth;
 
   [Parameter]
   [Alias("f")]
-  public SwitchParameter? Force;
+  public SwitchParameter Force;
 
   [Parameter]
-  public SwitchParameter? Name;
+  public SwitchParameter Name;
 
   [Parameter]
   [Alias("ad")]
-  public SwitchParameter? Directory;
+  public SwitchParameter Directory;
 
   [Parameter]
   [Alias("af")]
-  public SwitchParameter? File;
+  public SwitchParameter File;
 
   [Parameter]
   [Alias("ah", "h")]
-  public SwitchParameter? Hidden;
+  public SwitchParameter Hidden;
 
   [Parameter]
   [Alias("as")]
-  public SwitchParameter? System;
+  public SwitchParameter System;
 
   [Parameter]
   [Alias("ar")]
-  public SwitchParameter? ReadOnly;
+  public SwitchParameter ReadOnly;
 
   [Parameter]
-  public SwitchParameter? FollowSymlink;
+  public SwitchParameter FollowSymlink;
 
   [Parameter]
   public FlagsExpression<IO.FileAttributes>? Attributes;

@@ -47,7 +47,7 @@ public sealed class ClearLine : WrappedCommandShouldProcess
 
   [Parameter]
   [Alias("f")]
-  public SwitchParameter? Force;
+  public SwitchParameter Force;
 
   [Parameter]
   public string? Stream;
