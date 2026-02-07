@@ -30,7 +30,7 @@ public abstract class WrappedGetDirectory : WrappedCommand
   [SupportsWildcards]
   public string[] Include
   {
-    get => inclusion;
+    get => inclusions;
     set => inclusions = value;
   }
   private string[] inclusions = [];

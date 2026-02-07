@@ -30,19 +30,19 @@ public abstract class WrappedGetFile : WrappedCommand
   [SupportsWildcards]
   public string[] Include
   {
-    get => includes;
-    set => includes = value;
+    get => inclusions;
+    set => inclusions = value;
   }
-  private string[] includes = [];
+  private string[] inclusions = [];
 
   [Parameter]
   [SupportsWildcards]
   public string[] Exclude
   {
-    get => excludes;
-    set => excludes = value;
+    get => exclusions;
+    set => exclusions = value;
   }
-  private string[] excludes = [];
+  private string[] exclusions = [];
 
   [Parameter]
   public long ReadCount
