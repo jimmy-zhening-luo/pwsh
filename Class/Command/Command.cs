@@ -11,6 +11,17 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
     Directory
   }
 
+  private enum CommandLifecycle
+  {
+    Empty,
+    Initialized,
+    Processing,
+    Skipped,
+    Stopped
+  }
+
+  private CommandLifecycle stage;
+
   private bool disposed;
 
   ~CoreCommand() => Dispose(
@@ -23,17 +34,6 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
 
   private protected virtual bool SkipSsh => false;
 
-  private bool ContinueProcessing
-  {
-    get => continueProcessing
-      && (
-        !SkipSsh
-        || !Ssh
-      );
-    set => continueProcessing = value;
-  }
-  private bool continueProcessing;
-
   private protected bool Here => string.IsNullOrEmpty(
     Location
   )
@@ -45,6 +45,14 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
 
   private protected PowerShell PS => powershell ??= CommandLine.Create();
   private PowerShell? powershell;
+
+  private bool ContinueProcessing => !disposed
+    && stage != CommandLifecycle.Stopped
+    && stage != CommandLifecycle.Skipped
+    && (
+      !SkipSsh
+      || !Ssh
+    );
 
   public void Dispose()
   {
@@ -59,20 +67,29 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
 
   protected sealed override void BeginProcessing()
   {
-    continueProcessing = true;
+    if (stage == CommandLifecycle.Empty)
+    {
+      stage = CommandLifecycle.Initialized;
+    }
 
-    if (
-      ContinueProcessing
-      && ValidateParameters()
-    )
+    if (ContinueProcessing)
     {
       TransformParameters();
 
-      BeforeBeginProcessing();
+      if (ValidateParameters())
+      {
+        BeforeBeginProcessing();
+
+        stage = CommandLifecycle.Processing;
+      }
+      else
+      {
+        Skip();
+      }
     }
     else
     {
-      continueProcessing = false;
+      Stop();
     }
   }
 
@@ -90,7 +107,9 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
     {
       AfterEndProcessing();
     }
-    else
+    else if (
+      stage == CommandLifecycle.Skipped
+    )
     {
       DefaultAction();
     }
@@ -100,7 +119,7 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
 
   protected sealed override void StopProcessing()
   {
-    continueProcessing = false;
+    Stop();
 
     Dispose();
   }
@@ -266,6 +285,10 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
       )
     );
   }
+
+  private void Skip() => stage = CommandLifecycle.Skipped;
+
+  private void Stop() => stage = CommandLifecycle.Stopped;
 
   private void Dispose(
     bool disposing
