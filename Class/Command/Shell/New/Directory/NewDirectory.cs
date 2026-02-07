@@ -27,14 +27,24 @@ public sealed class NewDirectory : WrappedCommandShouldProcess
     ValueFromPipelineByPropertyName = true
   )]
   [PathCompletions]
-  public string[]? Path;
+  public string[] Path
+  {
+    get => paths;
+    set => paths = value;
+  }
+  private string[] paths = [];
 
   [Parameter(
     ParameterSetName = "nameSet",
     Mandatory = true,
     ValueFromPipelineByPropertyName = true
   )]
-  public string? Name;
+  public string Name
+  {
+    get => name;
+    set => name = value;
+  }
+  private string name = "";
 
   [Parameter(
     ValueFromPipeline = true,
@@ -42,7 +52,12 @@ public sealed class NewDirectory : WrappedCommandShouldProcess
   )]
   [Alias("Target")]
   [PathCompletions]
-  public object? Value;
+  public object Value
+  {
+    get => value;
+    set => value = value;
+  }
+  private object value = null;
 
   [Parameter]
   [Alias("f")]

@@ -28,18 +28,33 @@ public abstract class WrappedGetDirectory : WrappedCommand
 
   [Parameter]
   [SupportsWildcards]
-  public string[]? Include;
+  public string[] Include
+  {
+    get => inclusion;
+    set => inclusions = value;
+  }
+  private string[] inclusions = [];
 
   [Parameter]
   [SupportsWildcards]
-  public string[]? Exclude;
+  public string[] Exclude
+  {
+    get => exclusions;
+    set => exclusions = value;
+  }
+  private string[] exclusions = [];
 
   [Parameter]
   [Alias("s", "r")]
   public SwitchParameter Recurse;
 
   [Parameter]
-  public uint? Depth;
+  public uint Depth
+  {
+    get => depth;
+    set => depth = value;
+  }
+  private uint depth;
 
   [Parameter]
   [Alias("f")]
@@ -76,7 +91,7 @@ public abstract class WrappedGetDirectory : WrappedCommand
 
   private protected sealed override void TransformParameters()
   {
-    if (!Here)
+    if (!UsingCurrentLocation)
     {
       if (IsPresent("Path"))
       {

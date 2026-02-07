@@ -7,24 +7,39 @@ public abstract class WrappedStartExplorer : WrappedCommandShouldProcess
   )
   { }
 
-  [Parameter(
-    ParameterSetName = "Path",
-    Position = 0
-  )]
-  [SupportsWildcards]
-  public string[]? Path;
+  public abstract string[] Path
+  {
+    get;
+    set;
+  }
+  private protected string[] paths = [];
 
   [Parameter]
   [SupportsWildcards]
-  public string? Filter;
+  public string Filter
+  {
+    get => filter;
+    set => filter = value;
+  }
+  private string filter = "";
 
   [Parameter]
   [SupportsWildcards]
-  public string[]? Include;
+  public string[] Include
+  {
+    get => includes;
+    set => includes = value;
+  }
+  private string[] includes = [];
 
   [Parameter]
   [SupportsWildcards]
-  public string[]? Exclude;
+  public string[] Exclude
+  {
+    get => excludes;
+    set => excludes = value;
+  }
+  private string[] excludes = [];
 
   private protected sealed override bool SkipSsh => true;
 
@@ -32,7 +47,7 @@ public abstract class WrappedStartExplorer : WrappedCommandShouldProcess
   {
     if (IsPresent("Path"))
     {
-      if (!Here)
+      if (!UsingCurrentLocation)
       {
         string[] paths = (string[])BoundParameters["Path"];
 
@@ -54,7 +69,7 @@ public abstract class WrappedStartExplorer : WrappedCommandShouldProcess
     {
       BoundParameters["Path"] = new string[]
       {
-        Here
+        UsingCurrentLocation
           ? Pwd()
           : Reanchor()
       };

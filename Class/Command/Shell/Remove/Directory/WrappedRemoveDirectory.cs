@@ -7,28 +7,42 @@ public abstract class WrappedRemoveDirectory : WrappedCommandShouldProcess
   )
   { }
 
-  [Parameter(
-    ParameterSetName = "Path",
-    Mandatory = true,
-    Position = 0
-  )]
-  [SupportsWildcards]
-  public string[]? Path;
+  public abstract string[] Path
+  {
+    get;
+    set;
+  }
+  private protected string[] paths = [];
 
   [Parameter(
     ParameterSetName = "Path",
     Position = 1
   )]
   [SupportsWildcards]
-  public string? Filter;
+  public virtual string Filter
+  {
+    get => filter;
+    set => filter = value;
+  }
+  private protected string filter = "";
 
   [Parameter]
   [SupportsWildcards]
-  public string[]? Include;
+  public string[] Include
+  {
+    get => includes;
+    set => includes = value;
+  }
+  private string[] includes = [];
 
   [Parameter]
   [SupportsWildcards]
-  public string[]? Exclude;
+  public string[] Exclude
+  {
+    get => excludes;
+    set => excludes = value;
+  }
+  private string[] excludes = [];
 
   private protected sealed override void TransformParameters()
   {

@@ -17,14 +17,23 @@ public sealed class RemoveDirectory : WrappedRemoveDirectory
   )]
   [SupportsWildcards]
   [PathCompletions]
-  public new string[]? Path;
+  public override sealed string[] Path
+  {
+    get => paths;
+    set => paths = value;
+  }
 
   [Parameter(
     ParameterSetName = "LiteralPath",
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  public string[]? LiteralPath;
+  public string[] LiteralPath
+  {
+    get => literalPaths;
+    set => literalPaths = value;
+  }
+  private string[] literalPaths = [];
 
   [Parameter(
     ParameterSetName = "Path",
@@ -35,5 +44,9 @@ public sealed class RemoveDirectory : WrappedRemoveDirectory
     Position = 1
   )]
   [SupportsWildcards]
-  public new string? Filter;
+  public override sealed string Filter
+  {
+    get => filter;
+    set => filter = value;
+  }
 }

@@ -19,14 +19,23 @@ public sealed class GetFile : WrappedGetFile
     "",
     PathItemType.File
   )]
-  public new string[]? Path;
+  public override sealed string[] Path
+  {
+    get => paths;
+    set => paths = value;
+  }
 
   [Parameter(
     ParameterSetName = "LiteralPath",
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  public string[]? LiteralPath;
+  public string[] LiteralPath
+  {
+    get => literalPaths;
+    set => literalPaths = value;
+  }
+  private string[] literalPaths = [];
 
   [Parameter(
     ParameterSetName = "Path",
@@ -37,7 +46,11 @@ public sealed class GetFile : WrappedGetFile
     Position = 1
   )]
   [SupportsWildcards]
-  public new string? Filter;
+  public override sealed string Filter
+  {
+    get => filter;
+    set => filter = value;
+  }
 }
 
 [Cmdlet(
@@ -59,7 +72,11 @@ public sealed class GetFileSibling : WrappedGetFile
     "..",
     PathItemType.File
   )]
-  public new string[]? Path;
+  public override sealed string[] Path
+  {
+    get => paths;
+    set => paths = value;
+  }
 
   private protected sealed override string LocationSubpath => "..";
 }
@@ -83,7 +100,11 @@ public sealed class GetFileRelative : WrappedGetFile
     @"..\..",
     PathItemType.File
   )]
-  public new string[]? Path;
+  public override sealed string[] Path
+  {
+    get => paths;
+    set => paths = value;
+  }
 
   private protected sealed override string LocationSubpath => @"..\..";
 }
@@ -107,7 +128,11 @@ public sealed class GetFileHome : WrappedGetFile
     "~",
     PathItemType.File
   )]
-  public new string[]? Path;
+  public override sealed string[] Path
+  {
+    get => paths;
+    set => paths = value;
+  }
 
   private protected sealed override string Location => Home();
 }
@@ -131,7 +156,11 @@ public sealed class GetFileCode : WrappedGetFile
     @"~\code",
     PathItemType.File
   )]
-  public new string[]? Path;
+  public override sealed string[] Path
+  {
+    get => paths;
+    set => paths = value;
+  }
 
   private protected sealed override string Location => Home();
 
@@ -157,7 +186,11 @@ public sealed class GetFileDrive : WrappedGetFile
     @"\",
     PathItemType.File
   )]
-  public new string[]? Path;
+  public override sealed string[] Path
+  {
+    get => paths;
+    set => paths = value;
+  }
 
   private protected sealed override string Location => Drive();
 }

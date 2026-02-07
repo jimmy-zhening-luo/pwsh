@@ -34,7 +34,7 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
 
   private protected virtual bool SkipSsh => false;
 
-  private protected bool Here => string.IsNullOrEmpty(
+  private protected bool UsingCurrentLocation => string.IsNullOrEmpty(
     Location
   )
     && string.IsNullOrEmpty(

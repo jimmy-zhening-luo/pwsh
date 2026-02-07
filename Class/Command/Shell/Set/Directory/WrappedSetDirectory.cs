@@ -7,26 +7,24 @@ public abstract class WrappedSetDirectory : WrappedCommand
   )
   { }
 
-  [Parameter(
-    ParameterSetName = "Path",
-    Position = 0
-  )]
-  [SupportsWildcards]
-  public string? Path;
+  public abstract string Path
+  {
+    get;
+    set;
+  }
+  private protected string path = "";
 
   [Parameter]
   public SwitchParameter PassThru;
 
   private protected sealed override void TransformParameters()
   {
-    if (Here)
+    if (UsingCurrentLocation)
     {
       if (
-        !IsPresent(
-          "Path"
-        )
-        && !IsPresent(
-          "LiteralPath"
+        ParameterSetName != "LiteralPath"
+        && string.IsNullOrEmpty(
+          path
         )
       )
       {
@@ -36,22 +34,24 @@ public abstract class WrappedSetDirectory : WrappedCommand
           pwd
         );
 
-        BoundParameters["Path"] = parent == pwd
+        path = parent == pwd
           ? Home()
           : parent;
+        BoundParameters["Path"] = path;
       }
     }
     else
     {
-      BoundParameters["Path"] = Reanchor(
+      path = Reanchor(
         BoundParameters.TryGetValue(
           "Path",
-          out var path
+          out var pathParameterValue
         )
-          ? path?.ToString()
+          ? pathParameterValue?.ToString()
             ?? string.Empty
           : string.Empty
       );
+      BoundParameters["Path"] = path;
     }
   }
 }

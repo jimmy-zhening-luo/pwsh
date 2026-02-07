@@ -16,14 +16,23 @@ public sealed class StartExplorer : WrappedStartExplorer
   )]
   [SupportsWildcards]
   [PathCompletions]
-  public new string[]? Path;
+  public override sealed string[] Path
+  {
+    get => paths;
+    set => paths = value;
+  }
 
   [Parameter(
     ParameterSetName = "LiteralPath",
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  public string[]? LiteralPath;
+  public string[] LiteralPath
+  {
+    get => literalPaths;
+    set => literalPaths = value;
+  }
+  private string[] literalPaths = [];
 }
 
 [Cmdlet(
@@ -44,7 +53,11 @@ public sealed class StartExplorerSibling : WrappedStartExplorer
   [PathCompletions(
     ".."
   )]
-  public new string[]? Path;
+  public override sealed string[] Path
+  {
+    get => paths;
+    set => paths = value;
+  }
 
   private protected sealed override string LocationSubpath => "..";
 }
@@ -67,7 +80,11 @@ public sealed class StartExplorerRelative : WrappedStartExplorer
   [PathCompletions(
     @"..\.."
   )]
-  public new string[]? Path;
+  public override sealed string[] Path
+  {
+    get => paths;
+    set => paths = value;
+  }
 
   private protected sealed override string LocationSubpath => @"..\..";
 }
@@ -90,7 +107,11 @@ public sealed class StartExplorerHome : WrappedStartExplorer
   [PathCompletions(
     "~"
   )]
-  public new string[]? Path;
+  public override sealed string[] Path
+  {
+    get => paths;
+    set => paths = value;
+  }
 
   private protected sealed override string Location => Home();
 }
@@ -113,7 +134,11 @@ public sealed class StartExplorerCode : WrappedStartExplorer
   [PathCompletions(
     @"~\code"
   )]
-  public new string[]? Path;
+  public override sealed string[] Path
+  {
+    get => paths;
+    set => paths = value;
+  }
 
   private protected sealed override string Location => Home();
 
@@ -138,7 +163,11 @@ public sealed class StartExplorerDrive : WrappedStartExplorer
   [PathCompletions(
     @"\"
   )]
-  public new string[]? Path;
+  public override sealed string[] Path
+  {
+    get => paths;
+    set => paths = value;
+  }
 
   private protected sealed override string Location => Drive();
 }

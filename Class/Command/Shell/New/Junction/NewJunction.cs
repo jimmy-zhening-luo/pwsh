@@ -22,7 +22,12 @@ public sealed class NewJunction : WrappedCommandShouldProcess
     ValueFromPipelineByPropertyName = true
   )]
   [PathCompletions]
-  public string[]? Path;
+  public string[] Path
+  {
+    get => paths;
+    set => paths = value;
+  }
+  private string[] paths = [];
 
   [Parameter(
     Mandatory = true,
@@ -32,7 +37,12 @@ public sealed class NewJunction : WrappedCommandShouldProcess
   )]
   [Alias("Target")]
   [PathCompletions]
-  public object? Value;
+  public object Value
+  {
+    get => value;
+    set => value = value;
+  }
+  private object value = null;
 
   private protected sealed override void TransformParameters()
   {

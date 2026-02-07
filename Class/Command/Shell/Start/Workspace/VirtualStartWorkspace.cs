@@ -48,11 +48,11 @@ public abstract class VirtualStartWorkspace : CoreCommand
   {
     if (string.IsNullOrEmpty(path))
     {
-      path = Here
+      path = UsingCurrentLocation
         ? Pwd()
         : Reanchor();
     }
-    else if (!Here)
+    else if (!UsingCurrentLocation)
     {
       path = Reanchor(path);
     }
