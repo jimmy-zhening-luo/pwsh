@@ -1,6 +1,6 @@
 namespace Module.Command;
 
-using static Module.FileSystem.Path.Normalizer;
+using static FileSystem.Path.Normalizer;
 
 public abstract class CoreCommand(
   bool SkipSsh = false
