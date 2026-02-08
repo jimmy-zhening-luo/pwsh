@@ -106,7 +106,6 @@ public sealed class TestHost : CoreCommand
       {
         WriteTestNetConnection(
           name,
-          string.Empty,
           port
         );
 
@@ -135,7 +134,6 @@ public sealed class TestHost : CoreCommand
       {
         WriteTestNetConnection(
           name,
-          string.Empty,
           parsedPortNumber
         );
       }
@@ -149,7 +147,7 @@ public sealed class TestHost : CoreCommand
       {
         WriteTestNetConnection(
           name,
-          parsedPortEnum.ToString()
+          parsedPortEnum
         );
       }
       else
@@ -163,17 +161,35 @@ public sealed class TestHost : CoreCommand
 
   private protected sealed override void DefaultAction() => WriteTestNetConnection(
     "google.com",
-    string.Empty,
-    0
+    TestHostVerbosity.HTTP
   );
 
   private void WriteTestNetConnection(
+    string computerName,
+    ushort portNumber = 0
+  ) => BuildWriteTestNetConnection(
+    computerName,
+    string.Empty,
+    portNumber
+  );
+
+  private void WriteTestNetConnection(
+    string computerName,
+    TestHostVerbosity wellknownPort
+  ) => BuildWriteTestNetConnection(
+    computerName,
+    wellknownPort.ToString()
+  );
+
+  private void BuildWriteTestNetConnection(
     string computerName,
     string wellknownPortString = "",
     ushort portNumber = 0
   )
   {
-    using var ps = ConsoleHost.Create(true);
+    using var ps = ConsoleHost.Create(
+      true
+    );
 
     AddCommand(
       ps,
