@@ -46,16 +46,9 @@ public abstract class VirtualStartWorkspace : CoreCommand
 
   private protected sealed override void TransformParameters()
   {
-    if (string.IsNullOrEmpty(path))
-    {
-      path = UsingCurrentLocation
-        ? Pwd()
-        : Reanchor();
-    }
-    else if (!UsingCurrentLocation)
-    {
-      path = Reanchor(path);
-    }
+    path = UsingCurrentLocation
+      ? Pwd(path)
+      : Reanchor(path);
   }
 
   private protected sealed override void AfterEndProcessing()
