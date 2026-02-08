@@ -7,7 +7,7 @@ namespace Module.Command.Help;
 )]
 [OutputType(typeof(VerbInfo))]
 [OutputType(typeof(string))]
-public class GetVerb : CoreCommand
+public sealed class GetVerb : CoreCommand
 {
   public enum VerbGroup
   {

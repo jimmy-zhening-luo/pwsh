@@ -7,7 +7,7 @@ namespace Module.Command.Help;
 )]
 [Alias("galc")]
 [OutputType(typeof(AliasInfo))]
-public class GetCommandAlias : CoreCommand
+public sealed class GetCommandAlias : CoreCommand
 {
   [Parameter(
     Position = 0,
