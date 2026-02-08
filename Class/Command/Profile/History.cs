@@ -6,10 +6,10 @@ namespace Module.Command.Profile;
 )]
 [Alias("oc")]
 [OutputType(typeof(void))]
-public sealed class StartHistory : CoreCommand
+public sealed class StartHistory() : CoreCommand(
+  true
+)
 {
-  private protected sealed override bool SkipSsh => true;
-
   private protected sealed override void AfterEndProcessing() => Invocation.CreateProcess(
     Application.VSCode,
     [

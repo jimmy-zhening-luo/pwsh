@@ -3,7 +3,8 @@ namespace Module.Command.Shell.Start.Explorer;
 public abstract class WrappedStartExplorer : WrappedCommandShouldProcess
 {
   private protected WrappedStartExplorer() : base(
-    "Invoke-Item"
+    "Invoke-Item",
+    true
   )
   { }
 
@@ -40,8 +41,6 @@ public abstract class WrappedStartExplorer : WrappedCommandShouldProcess
     set => exclusions = value;
   }
   private string[] exclusions = [];
-
-  private protected sealed override bool SkipSsh => true;
 
   private protected sealed override void TransformParameters()
   {

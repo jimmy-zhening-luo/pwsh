@@ -1,6 +1,8 @@
 namespace Module.Command.Shell.Start.Workspace;
 
-public abstract class VirtualStartWorkspace : CoreCommand
+public abstract class VirtualStartWorkspace() : CoreCommand(
+  true
+)
 {
   private protected string path = "";
 
@@ -41,8 +43,6 @@ public abstract class VirtualStartWorkspace : CoreCommand
     set => reuseWindow = value;
   }
   private bool reuseWindow;
-
-  private protected sealed override bool SkipSsh => true;
 
   private protected sealed override void TransformParameters() => path = UsingCurrentLocation
     ? Pwd(path)

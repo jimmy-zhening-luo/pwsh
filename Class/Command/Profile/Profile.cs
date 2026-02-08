@@ -6,10 +6,10 @@ namespace Module.Command.Profile;
 )]
 [Alias("op")]
 [OutputType(typeof(void))]
-public sealed class StartProfile : CoreCommand
+public sealed class StartProfile() : CoreCommand(
+  true
+)
 {
-  private protected sealed override bool SkipSsh => true;
-
   private protected sealed override void AfterEndProcessing()
   {
     Invocation.CreateProcess(

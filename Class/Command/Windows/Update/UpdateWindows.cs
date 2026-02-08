@@ -6,10 +6,10 @@ namespace Module.Command.Windows.Update;
 )]
 [Alias("wu")]
 [OutputType(typeof(void))]
-public sealed class UpdateWindows : CoreCommand
+public sealed class UpdateWindows() : CoreCommand(
+  true
+)
 {
-  private protected sealed override bool SkipSsh => true;
-
   private protected sealed override void AfterEndProcessing()
   {
     Invocation.ShellExecute(

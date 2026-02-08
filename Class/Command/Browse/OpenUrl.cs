@@ -8,7 +8,9 @@ namespace Module.Command.Browse;
 )]
 [Alias("o", "open")]
 [OutputType(typeof(void))]
-public sealed class OpenUrl : CoreCommand
+public sealed class OpenUrl() : CoreCommand(
+  true
+)
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -38,8 +40,6 @@ public sealed class OpenUrl : CoreCommand
     set => uris = value;
   }
   private Uri[] uris = [];
-
-  private protected sealed override bool SkipSsh => true;
 
   private protected sealed override void ProcessRecordAction()
   {

@@ -1,8 +1,12 @@
 namespace Module.Command;
 
 public abstract class WrappedCommandShouldProcess(
-  string WrappedCommandName
-) : WrappedCommand(WrappedCommandName)
+  string WrappedCommandName,
+  bool SkipSsh = false
+) : WrappedCommand(
+  WrappedCommandName,
+  SkipSsh
+)
 {
   [Parameter]
   [Alias("wi")]

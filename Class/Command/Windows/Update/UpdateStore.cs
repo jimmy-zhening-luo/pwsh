@@ -6,10 +6,10 @@ namespace Module.Command.Windows.Update;
 )]
 [Alias("su")]
 [OutputType(typeof(void))]
-public sealed class UpdateStoreApp : CoreCommand
+public sealed class UpdateStoreApp() : CoreCommand(
+  true
+)
 {
-  private protected sealed override bool SkipSsh => true;
-
   private protected sealed override void AfterEndProcessing()
   {
     Invocation.ShellExecute(

@@ -1,8 +1,11 @@
 namespace Module.Command;
 
 public abstract class WrappedCommand(
-  string WrappedCommandName
-) : CoreCommand
+  string WrappedCommandName,
+  bool SkipSsh = false
+) : CoreCommand(
+  SkipSsh
+)
 {
   private SteppablePipeline? steppablePipeline = null;
 

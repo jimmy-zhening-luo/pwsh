@@ -2,7 +2,9 @@ namespace Module.Command;
 
 using static Module.FileSystem.Path.Normalizer;
 
-public abstract class CoreCommand : PSCmdlet, System.IDisposable
+public abstract class CoreCommand(
+  bool SkipSsh = false
+) : PSCmdlet, System.IDisposable
 {
   private protected enum FileSystemItemType
   {
@@ -31,8 +33,6 @@ public abstract class CoreCommand : PSCmdlet, System.IDisposable
   private protected virtual string Location => string.Empty;
 
   private protected virtual string LocationSubpath => string.Empty;
-
-  private protected virtual bool SkipSsh => false;
 
   private protected bool UsingCurrentLocation => string.IsNullOrEmpty(
     Location

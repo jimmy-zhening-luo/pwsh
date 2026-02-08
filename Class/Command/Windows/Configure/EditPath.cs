@@ -6,10 +6,10 @@ namespace Module.Command.Windows.Configure;
 )]
 [Alias("path")]
 [OutputType(typeof(void))]
-public sealed class EditSystemPath : CoreCommand
+public sealed class EditSystemPath() : CoreCommand(
+  true
+)
 {
-  private protected sealed override bool SkipSsh => true;
-
   [Parameter(
     HelpMessage = "Launch Environment Variables control panel as administrator to edit system variables, triggering a UAC prompt if needed."
   )]
