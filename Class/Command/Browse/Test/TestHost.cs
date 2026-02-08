@@ -60,7 +60,12 @@ public sealed class TestHost : CoreCommand
   )]
   [Alias("RemotePort")]
   [ValidateRange(1, 65535)]
-  public ushort Port;
+  public ushort Port
+  {
+    get => port;
+    set => port = value;
+  }
+  private ushort port;
 
   [Parameter(
     HelpMessage = "The level of information to return, can be Quiet or Detailed. Will not take effect if Detailed switch is set. Defaults to Quiet."
@@ -68,7 +73,12 @@ public sealed class TestHost : CoreCommand
   [EnumCompletions(
     typeof(TestHostVerbosity)
   )]
-  public TestHostVerbosity InformationLevel;
+  public TestHostVerbosity InformationLevel
+  {
+    get => verbosity;
+    set => verbosity = value;
+  }
+  private TestHostVerbosity verbosity;
 
   [Parameter]
   public SwitchParameter Detailed
@@ -82,7 +92,7 @@ public sealed class TestHost : CoreCommand
   {
     if (detailed)
     {
-      InformationLevel = TestHostVerbosity.Detailed;
+      verbosity = TestHostVerbosity.Detailed;
     }
   }
 
@@ -97,7 +107,7 @@ public sealed class TestHost : CoreCommand
         WriteTestNetConnection(
           name,
           string.Empty,
-          Port
+          port
         );
 
         continue;
@@ -159,7 +169,7 @@ public sealed class TestHost : CoreCommand
 
   private void WriteTestNetConnection(
     string computerName,
-    string commonTcpPort = "",
+    string wellknownPortString = "",
     ushort portNumber = 0
   )
   {
@@ -176,7 +186,7 @@ public sealed class TestHost : CoreCommand
       )
       .AddParameter(
         "InformationLevel",
-        InformationLevel
+        verbosity
       );
 
     if (portNumber != 0)
@@ -188,13 +198,13 @@ public sealed class TestHost : CoreCommand
     }
     else if (
       !string.IsNullOrEmpty(
-        commonTcpPort
+        wellknownPortString
       )
     )
     {
       ps.AddParameter(
         "CommonTCPPort",
-        commonTcpPort
+        wellknownPortString
       );
     }
 
