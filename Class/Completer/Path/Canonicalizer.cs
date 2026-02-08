@@ -28,7 +28,7 @@ internal static class Canonicalizer
       homedNormalPath
     )
       ? homedNormalPath
-      : CommandLine.CurrentDirectory(
+      : ConsoleHost.CurrentDirectory(
           homedNormalPath
         );
   }

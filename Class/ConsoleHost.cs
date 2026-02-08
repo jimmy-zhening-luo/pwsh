@@ -1,6 +1,6 @@
 namespace Module;
 
-internal static class CommandLine
+internal static class ConsoleHost
 {
   internal static PowerShell Create(
     bool newRunspace = false
