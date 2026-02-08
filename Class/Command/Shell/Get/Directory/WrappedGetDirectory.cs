@@ -138,10 +138,14 @@ public abstract class WrappedGetDirectory : WrappedCommand
   {
     if (!UsingCurrentLocation)
     {
-      if (IsPresent("Path"))
+      if (paths.Length == 0)
       {
-        string[] paths = (string[])BoundParameters["Path"];
-
+        paths = [
+          Reanchor()
+        ];
+      }
+      else
+      {
         for (
           int i = 0;
           i < paths.Length;
@@ -152,16 +156,9 @@ public abstract class WrappedGetDirectory : WrappedCommand
             paths[i]
           );
         }
+      }
 
-        BoundParameters["Path"] = paths;
-      }
-      else
-      {
-        BoundParameters["Path"] = new string[]
-        {
-          Reanchor()
-        };
-      }
+      BoundParameters["Path"] = paths;
     }
   }
 }

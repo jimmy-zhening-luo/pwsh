@@ -104,8 +104,8 @@ public sealed class TestHost : CoreCommand
       }
 
       if (
-        !IsPresent(
-          "CommonTCPPort"
+        string.IsNullOrEmpty(
+          commonPort
         )
       )
       {

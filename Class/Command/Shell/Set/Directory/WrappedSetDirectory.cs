@@ -48,13 +48,7 @@ public abstract class WrappedSetDirectory : WrappedCommand
     else
     {
       path = Reanchor(
-        BoundParameters.TryGetValue(
-          "Path",
-          out var pathParameterValue
-        )
-          ? pathParameterValue?.ToString()
-            ?? string.Empty
-          : string.Empty
+        path
       );
       BoundParameters["Path"] = path;
     }

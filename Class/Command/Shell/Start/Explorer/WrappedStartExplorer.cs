@@ -45,12 +45,19 @@ public abstract class WrappedStartExplorer : WrappedCommandShouldProcess
 
   private protected sealed override void TransformParameters()
   {
-    if (IsPresent("Path"))
+    if (paths.Length == 0)
+    {
+      paths = [
+        UsingCurrentLocation
+          ? Pwd()
+          : Reanchor()
+      ];
+      BoundParameters["Path"] = paths;
+    }
+    else
     {
       if (!UsingCurrentLocation)
       {
-        string[] paths = (string[])BoundParameters["Path"];
-
         for (
           int i = 0;
           i < paths.Length;
@@ -64,15 +71,6 @@ public abstract class WrappedStartExplorer : WrappedCommandShouldProcess
 
         BoundParameters["Path"] = paths;
       }
-    }
-    else
-    {
-      BoundParameters["Path"] = new string[]
-      {
-        UsingCurrentLocation
-          ? Pwd()
-          : Reanchor()
-      };
     }
   }
 }

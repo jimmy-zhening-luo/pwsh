@@ -133,7 +133,13 @@ public abstract class WrappedGetFile : WrappedCommand
   {
     if (!UsingCurrentLocation)
     {
-      if (paths.Length != 0)
+      if (paths.Length == 0)
+      {
+        paths = [
+          Reanchor()
+        ];
+      }
+      else
       {
         for (
           int i = 0;
@@ -145,13 +151,6 @@ public abstract class WrappedGetFile : WrappedCommand
             paths[i]
           );
         }
-      }
-      else
-      {
-        paths = new string[]
-        {
-          Reanchor()
-        };
       }
 
       BoundParameters["Path"] = paths;
