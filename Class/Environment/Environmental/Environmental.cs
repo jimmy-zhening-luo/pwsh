@@ -5,11 +5,9 @@ using static System.Environment;
 internal static partial class Environmental
 {
   internal static string Env(
-    string variable,
-    EnvironmentVariableTarget target = EnvironmentVariableTarget.Process
+    string variable
   ) => GetEnvironmentVariable(
-    variable,
-    target
+    variable
   )
     ?? string.Empty;
 

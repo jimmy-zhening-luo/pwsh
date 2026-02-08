@@ -28,7 +28,6 @@
     <Using Include="System.StringComparer" Alias="StringComparer"/>
   </ItemGroup>
   <ItemGroup>
-    <Using Include="System.EnvironmentVariableTarget" Alias="EnvironmentVariableTarget"/>
     <Using Include="System.StringComparison" Alias="StringComparison"/>
     <Using Include="System.StringSplitOptions" Alias="StringSplitOptions"/>
   </ItemGroup>
