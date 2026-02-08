@@ -44,12 +44,9 @@ public abstract class VirtualStartWorkspace : CoreCommand
 
   private protected sealed override bool SkipSsh => true;
 
-  private protected sealed override void TransformParameters()
-  {
-    path = UsingCurrentLocation
-      ? Pwd(path)
-      : Reanchor(path);
-  }
+  private protected sealed override void TransformParameters() => path = UsingCurrentLocation
+    ? Pwd(path)
+    : Reanchor(path);
 
   private protected sealed override void AfterEndProcessing()
   {

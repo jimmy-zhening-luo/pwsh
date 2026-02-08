@@ -110,16 +110,25 @@ public sealed class GetSize : CoreCommand
   }
   private bool number;
 
-  private long factor = DiskSizeFactor[DiskSizeUnit.KB];
+  private long factor = DiskSizeFactor[
+    DiskSizeUnit.KB
+  ];
 
   private protected sealed override void TransformParameters()
   {
     if (paths.Length == 0)
     {
-      paths = [Pwd()];
+      paths = [
+        Pwd()
+      ];
     }
 
-    if (DiskSizeFactor.TryGetValue(unit, out long value))
+    if (
+      DiskSizeFactor.TryGetValue(
+        unit,
+        out long value
+      )
+    )
     {
       factor = value;
     }
@@ -129,7 +138,11 @@ public sealed class GetSize : CoreCommand
   {
     foreach (string path in paths)
     {
-      if (!TestPath(path))
+      if (
+        !TestPath(
+          path
+        )
+      )
       {
         Throw(
           new IO.FileNotFoundException(
