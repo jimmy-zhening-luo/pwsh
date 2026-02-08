@@ -161,7 +161,7 @@ public sealed class TestHost : CoreCommand
 
   private protected sealed override void DefaultAction() => WriteTestNetConnection(
     "google.com",
-    TestHostVerbosity.HTTP
+    TestHostWellKnownPort.HTTP
   );
 
   private void WriteTestNetConnection(
@@ -175,7 +175,7 @@ public sealed class TestHost : CoreCommand
 
   private void WriteTestNetConnection(
     string computerName,
-    TestHostVerbosity wellknownPort
+    TestHostWellKnownPort wellknownPort
   ) => BuildWriteTestNetConnection(
     computerName,
     wellknownPort.ToString()
