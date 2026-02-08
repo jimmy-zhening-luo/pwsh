@@ -1,12 +1,9 @@
 namespace Module.Command.Shell.Get.Directory;
 
-public abstract class WrappedGetDirectory : WrappedCommand
+public abstract class WrappedGetDirectory() : WrappedCommand(
+  "Get-ChildItem"
+)
 {
-  private protected WrappedGetDirectory() : base(
-    "Get-ChildItem"
-  )
-  { }
-
   public abstract string[] Path
   {
     get;

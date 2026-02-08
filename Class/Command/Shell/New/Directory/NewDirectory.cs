@@ -8,13 +8,10 @@ namespace Module.Command.Shell.New.Directory;
 )]
 [Alias("mk")]
 [OutputType(typeof(IO.DirectoryInfo))]
-public sealed class NewDirectory : WrappedCommandShouldProcess
+public sealed class NewDirectory() : WrappedCommandShouldProcess(
+  "New-Item"
+)
 {
-  public NewDirectory() : base(
-    "New-Item"
-  )
-  { }
-
   [Parameter(
     ParameterSetName = "pathSet",
     Mandatory = true,

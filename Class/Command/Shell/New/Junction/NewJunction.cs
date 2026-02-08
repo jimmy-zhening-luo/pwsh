@@ -8,13 +8,10 @@ namespace Module.Command.Shell.New.Junction;
 )]
 [Alias("mj")]
 [OutputType(typeof(IO.DirectoryInfo))]
-public sealed class NewJunction : WrappedCommandShouldProcess
+public sealed class NewJunction() : WrappedCommandShouldProcess(
+  "New-Item"
+)
 {
-  public NewJunction() : base(
-    "New-Item"
-  )
-  { }
-
   [Parameter(
     ParameterSetName = "pathSet",
     Mandatory = true,

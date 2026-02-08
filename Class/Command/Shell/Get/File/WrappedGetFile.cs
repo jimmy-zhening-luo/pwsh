@@ -1,12 +1,9 @@
 namespace Module.Command.Shell.Get.File;
 
-public abstract class WrappedGetFile : WrappedCommand
+public abstract class WrappedGetFile() : WrappedCommand(
+  "Get-Content"
+)
 {
-  private protected WrappedGetFile() : base(
-    "Get-Content"
-  )
-  { }
-
   public abstract string[] Path
   {
     get;

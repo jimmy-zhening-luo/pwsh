@@ -1,12 +1,9 @@
 namespace Module.Command.Shell.Set.Directory;
 
-public abstract class WrappedSetDirectory : WrappedCommand
+public abstract class WrappedSetDirectory() : WrappedCommand(
+  "Set-Location"
+)
 {
-  private protected WrappedSetDirectory() : base(
-    "Set-Location"
-  )
-  { }
-
   public abstract string Path
   {
     get;
