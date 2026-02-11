@@ -15,7 +15,6 @@ public sealed class StopTask : CoreCommand
   [Parameter(
     ParameterSetName = "Name",
     Position = 0,
-    ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true,
     HelpMessage = "The name(s) of the process to stop."
   )]
