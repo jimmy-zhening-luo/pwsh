@@ -127,7 +127,7 @@ public sealed class StopTask : CoreCommand
     }
   }
 
-  private KillProcessId(
+  private void KillProcessId(
     int pid,
     bool entireProcessTree = false
   ) => Process
