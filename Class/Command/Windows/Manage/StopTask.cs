@@ -165,7 +165,7 @@ public sealed class StopTask : CoreCommand
         break;
       default:
         break;
-    };
+    }
   }
 
   private void KillProcess(
