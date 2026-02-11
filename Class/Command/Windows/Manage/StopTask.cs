@@ -114,14 +114,19 @@ public sealed class StopTask : CoreCommand
         }
 
         break;
-      default:
+      case "Name":
         foreach (var name in names)
         {
           if (string.IsNullOrEmpty(name))
           {
             continue;
           }
-          else if (int.TryParse(name, out int pid))
+          else if (
+            int.TryParse(
+              name,
+              out int pid
+            )
+          )
           {
             KillProcessId(
               pid,
