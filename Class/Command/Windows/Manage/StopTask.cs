@@ -86,8 +86,12 @@ public sealed class StopTask : CoreCommand
   }
   private bool self;
 
-  private protected sealed override bool ValidateParameters() => ParameterSetName != "Name"
-    || names.Length != 0;
+  private protected sealed override bool ValidateParameters() => !self
+    && ParameterSetName != "Self"
+    && (
+      ParameterSetName != "Name"
+      || names.Length != 0
+    );
 
   private protected sealed override void ProcessRecordAction()
   {
