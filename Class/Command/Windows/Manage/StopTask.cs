@@ -134,7 +134,10 @@ public sealed class StopTask : CoreCommand
           }
           else
           {
-
+            KillProcesses(
+              name,
+              descendant
+            );
           }
         }
 
@@ -154,14 +157,9 @@ public sealed class StopTask : CoreCommand
 
         break;
       default:
-        foreach (
-          var process in Process.GetProcessesByName(
-            "explorer"
-          )
-        )
-        {
-          process.Kill();
-        }
+        KillProcesses(
+          "explorer"
+        );
 
         break;
     }
@@ -177,4 +175,21 @@ public sealed class StopTask : CoreCommand
     .Kill(
       entireProcessTree
     );
+
+  private void KillProcesses(
+    string name,
+    bool entireProcessTree = false
+  )
+  {
+    foreach (
+      var process in Process.GetProcessesByName(
+        name
+      )
+    )
+    {
+      process.Kill(
+        entireProcessTree
+      );
+    }
+  }
 }
