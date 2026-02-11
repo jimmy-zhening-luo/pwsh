@@ -57,6 +57,25 @@ public sealed class StopTask : CoreCommand
   private Process[] inputs = [];
 
   [Parameter(
+    ParameterSetName = "Name",
+    HelpMessage = "Stop the entire process tree (the process and all its descendants)."
+  )]
+  [Parameter(
+    ParameterSetName = "Id",
+    HelpMessage = "Stop the entire process tree (the process and all its descendants)."
+  )]
+  [Parameter(
+    ParameterSetName = "InputObject",
+    HelpMessage = "Stop the entire process tree (the process and all its descendants)."
+  )]
+  public SwitchParameter Descendant
+  {
+    get => descendant;
+    set => descendant = value;
+  }
+  private bool descendant;
+
+  [Parameter(
     ParameterSetName = "Self",
     Mandatory = true,
     HelpMessage = "Stop the current PowerShell host process, its siblings, and its child processes (including the current PowerShell process)."
@@ -80,7 +99,7 @@ public sealed class StopTask : CoreCommand
         {
           KillProcessId(
             (int)pid,
-            true
+            descendant
           );
         }
 
@@ -90,7 +109,7 @@ public sealed class StopTask : CoreCommand
         {
           KillProcessId(
             input.Id,
-            true
+            descendant
           );
         }
 
@@ -106,7 +125,7 @@ public sealed class StopTask : CoreCommand
           {
             KillProcessId(
               pid,
-              true
+              descendant
             );
           }
           else
@@ -117,7 +136,7 @@ public sealed class StopTask : CoreCommand
               )
             )
             {
-              process.Kill(true);
+              process.Kill(descendant);
             }
           }
         }
