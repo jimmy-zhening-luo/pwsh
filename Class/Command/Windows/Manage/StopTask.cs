@@ -96,7 +96,7 @@ public sealed class StopTask : CoreCommand
       case "Id":
         foreach (var pid in pids)
         {
-          KillProcessId(
+          KillProcess(
             (int)pid,
             descendant
           );
@@ -106,7 +106,7 @@ public sealed class StopTask : CoreCommand
       case "InputObject":
         foreach (var input in inputs)
         {
-          KillProcessId(
+          KillProcess(
             input.Id,
             descendant
           );
@@ -127,21 +127,14 @@ public sealed class StopTask : CoreCommand
             )
           )
           {
-            KillProcessId(
+            KillProcess(
               pid,
               descendant
             );
           }
           else
           {
-            foreach (
-              var process in Process.GetProcessesByName(
-                name
-              )
-            )
-            {
-              process.Kill(descendant);
-            }
+
           }
         }
 
@@ -174,7 +167,7 @@ public sealed class StopTask : CoreCommand
     }
   }
 
-  private void KillProcessId(
+  private void KillProcess(
     int pid,
     bool entireProcessTree = false
   ) => Process
