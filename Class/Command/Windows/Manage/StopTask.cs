@@ -43,6 +43,20 @@ public sealed class StopTask : CoreCommand
   private uint[] pids = [];
 
   [Parameter(
+    ParameterSetName = "InputObject",
+    Mandatory = true,
+    Position = 0,
+    ValueFromPipeline = true,
+    HelpMessage = "The Process object(s) to stop."
+  )]
+  public Process[] InputObject
+  {
+    get => inputs;
+    set => inputs = value;
+  }
+  private Process[] inputs = [];
+
+  [Parameter(
     ParameterSetName = "Self",
     Mandatory = true,
     HelpMessage = "Stop the current PowerShell host process, its siblings, and its child processes (including the current PowerShell process)."
@@ -66,6 +80,16 @@ public sealed class StopTask : CoreCommand
         {
           KillProcessId(
             (int)pid,
+            true
+          );
+        }
+
+        break;
+      case "InputObject":
+        foreach (var input in inputs)
+        {
+          KillProcessId(
+            input.Id,
             true
           );
         }
