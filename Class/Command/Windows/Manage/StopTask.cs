@@ -149,25 +149,13 @@ public sealed class StopTask : CoreCommand
     }
   }
 
-  private protected sealed override void DefaultAction()
+  private protected sealed override void DefaultAction() => ParameterSetName switch
   {
-    switch (ParameterSetName)
-    {
-      case "Self":
-        if (self)
-        {
-          WriteWarning("No-op because I'm too lazy to correctly implement this.");
-        }
-
-        break;
-      default:
-        KillProcesses(
-          "explorer"
-        );
-
-        break;
-    }
-  }
+    "Self" => WriteWarning("No-op because I'm too lazy to correctly implement this."),
+    "Name" => KillProcesses(
+      "explorer"
+    )
+  };
 
   private void KillProcess(
     int pid,
