@@ -64,11 +64,10 @@ public sealed class StopTask : CoreCommand
       case "Id":
         foreach (var pid in pids)
         {
-          Process
-            .GetProcessById(
-              (int)pid
-            )
-            .Kill(true);
+          KillProcessId(
+            (int)pid,
+            true
+          );
         }
 
         break;
@@ -81,11 +80,10 @@ public sealed class StopTask : CoreCommand
           }
           else if (uint.TryParse(name, out uint pid))
           {
-            Process
-              .GetProcessById(
-                (int)pid
-              )
-              .Kill(true);
+            KillProcessId(
+              (int)pid,
+              true
+            );
           }
           else
           {
@@ -128,4 +126,13 @@ public sealed class StopTask : CoreCommand
         break;
     }
   }
+
+  private KillProcessId(
+    int pid,
+    bool entireProcessTree = false
+  ) => Process
+    .GetProcessById(
+      pid
+    )
+    .Kill(entireProcessTree);
 }
