@@ -181,5 +181,7 @@ public sealed class StopTask : CoreCommand
     .GetProcessById(
       pid
     )
-    .Kill(entireProcessTree);
+    .Kill(
+      entireProcessTree
+    );
 }
