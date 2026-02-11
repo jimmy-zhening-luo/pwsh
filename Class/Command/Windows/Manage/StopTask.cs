@@ -102,10 +102,10 @@ public sealed class StopTask : CoreCommand
           {
             continue;
           }
-          else if (uint.TryParse(name, out uint pid))
+          else if (int.TryParse(name, out int pid))
           {
             KillProcessId(
-              (int)pid,
+              pid,
               true
             );
           }
