@@ -122,7 +122,7 @@ public sealed class StopTask : CoreCommand
           )
         )
         {
-          process.Kill(true);
+          process.Kill();
         }
 
         break;
