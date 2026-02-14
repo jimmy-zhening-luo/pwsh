@@ -27,7 +27,12 @@ public sealed class TestUrl : CoreCommand
 
   private protected sealed override void ProcessRecordAction()
   {
-    using var client = new System.Net.Http.HttpClient();
+    using var client = new System.Net.Http.HttpClient()
+    {
+      Timeout = System.TimeSpan.FromMilliseconds(
+        3500
+      )
+    };
 
     foreach (Uri uri in uris)
     {
