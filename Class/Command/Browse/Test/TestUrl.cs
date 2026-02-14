@@ -27,6 +27,13 @@ public sealed class TestUrl : CoreCommand
   }
   private Uri[] uris = [];
 
+  private static void ResolveDns(
+    string host
+  ) => System.Net.Dns.GetHostEntry(
+    host,
+    System.Net.Sockets.AddressFamily.InterNetwork
+  );
+
   private protected sealed override void ProcessRecordAction()
   {
     foreach (Uri uri in uris)
@@ -55,20 +62,9 @@ public sealed class TestUrl : CoreCommand
 
         try
         {
-          try
-          {
-            ResolveDns(url.Host);
-          }
-          catch (CmdletInvocationException psException)
-          {
-            throw psException
-              .ErrorRecord
-              .Exception;
-          }
-          catch
-          {
-            throw;
-          }
+          ResolveDns(
+            url.Host
+          );
 
           try
           {
@@ -93,7 +89,7 @@ public sealed class TestUrl : CoreCommand
         {
           status = -1;
         }
-        catch (System.ComponentModel.Win32Exception)
+        catch (System.Net.Sockets.SocketException)
         {
           status = -2;
         }
@@ -107,34 +103,6 @@ public sealed class TestUrl : CoreCommand
           WriteObject(url);
         }
       }
-    }
-  }
-
-  private void ResolveDns(
-    string host
-  )
-  {
-    using var ps = ConsoleHost.Create(true);
-
-    AddCommand(
-      ps,
-      "Resolve-DnsName"
-    )
-      .AddParameter(
-        "Name",
-        host
-      )
-      .AddParameter("DnsOnly")
-      .AddParameter("NoHostsFile")
-      .AddParameter("QuickTimeout");
-    _ = ps.Invoke();
-
-    if (ps.HadErrors)
-    {
-      throw ps
-        .Streams
-        .Error[0]
-        .Exception;
     }
   }
 
