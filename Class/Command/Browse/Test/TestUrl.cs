@@ -1,7 +1,5 @@
 namespace Module.Command.Browse.Test;
 
-using Microsoft.PowerShell.Commands;
-
 [Cmdlet(
   VerbsDiagnostic.Test,
   "Url",
