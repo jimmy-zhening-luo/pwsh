@@ -24,4 +24,35 @@ internal static class Url
 
     return true;
   }
+
+  internal static bool Test(
+    System.Net.Http.HttpClient client,
+    Uri url
+  )
+  {
+    try
+    {
+      using var response = client
+        .GetAsync(
+          url,
+          System.Net.Http.HttpCompletionOption.ResponseHeadersRead
+        )
+        .GetAwaiter()
+        .GetResult();
+
+      return response.IsSuccessStatusCode;
+    }
+    catch (System.Net.Http.HttpRequestException)
+    {
+      return false;
+    }
+    catch (System.InvalidOperationException)
+    {
+      return false;
+    }
+    catch
+    {
+      throw;
+    }
+  }
 }

@@ -29,6 +29,8 @@ public sealed class TestUrl : CoreCommand
 
   private protected sealed override void ProcessRecordAction()
   {
+    using var client = new System.Net.Http.HttpClient();
+
     foreach (Uri uri in uris)
     {
       Uri url = new(
@@ -52,79 +54,16 @@ public sealed class TestUrl : CoreCommand
         && Network.Url.HostExists(
           url.Host
         )
+        && Network.Url.Test(
+          client,
+          url
+        )
       )
       {
-        int status;
-
-        try
-        {
-          try
-          {
-            status = VisitUrlPath(url);
-          }
-          catch (CmdletInvocationException psException)
-          {
-            throw psException
-              .ErrorRecord
-              .Exception;
-          }
-          catch
-          {
-            throw;
-          }
-        }
-        catch (HttpResponseException e)
-        {
-          status = (int)e.Response.StatusCode;
-        }
-        catch (System.Net.Http.HttpRequestException)
-        {
-          status = -1;
-        }
-        catch
-        {
-          throw;
-        }
-
-        if (status >= 200 && status < 300)
-        {
-          WriteObject(url);
-        }
+        WriteObject(
+          url
+        );
       }
     }
-  }
-
-  private int VisitUrlPath(
-    Uri url
-  )
-  {
-    using var ps = ConsoleHost.Create(true);
-
-    AddCommand(
-      ps,
-      "Invoke-WebRequest"
-    )
-      .AddParameter(
-        "Uri",
-        url
-      )
-      .AddParameter(
-        "Method",
-        WebRequestMethod.Head
-      )
-      .AddParameter(
-        "ConnectionTimeoutSeconds",
-        5
-      )
-      .AddParameter(
-        "MaximumRetryCount",
-        0
-      )
-      .AddParameter("DisableKeepAlive")
-      .AddParameter("PreserveHttpMethodOnRedirect");
-
-    return ps
-      .Invoke<BasicHtmlWebResponseObject>()[0]
-      .StatusCode;
   }
 }
