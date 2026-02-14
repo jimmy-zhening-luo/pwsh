@@ -27,13 +27,6 @@ public sealed class TestUrl : CoreCommand
   }
   private Uri[] uris = [];
 
-  private static void ResolveDns(
-    string host
-  ) => System.Net.Dns.GetHostEntry(
-    host,
-    System.Net.Sockets.AddressFamily.InterNetwork
-  );
-
   private protected sealed override void ProcessRecordAction()
   {
     foreach (Uri uri in uris)
@@ -56,16 +49,15 @@ public sealed class TestUrl : CoreCommand
         !string.IsNullOrEmpty(
           url.OriginalString
         )
+        && Network.Url.HostExists(
+          url.Host
+        )
       )
       {
-        int status = 0;
+        int status;
 
         try
         {
-          ResolveDns(
-            url.Host
-          );
-
           try
           {
             status = VisitUrlPath(url);
@@ -88,10 +80,6 @@ public sealed class TestUrl : CoreCommand
         catch (System.Net.Http.HttpRequestException)
         {
           status = -1;
-        }
-        catch (System.Net.Sockets.SocketException)
-        {
-          status = -2;
         }
         catch
         {
