@@ -50,17 +50,9 @@ public sealed class OpenUrl() : CoreCommand(
 
     foreach (Uri uri in uris)
     {
-      string url = uri
-        .ToString()
-        .Trim();
-
-      if (!string.IsNullOrEmpty(url))
-      {
-        Invocation.ShellExecute(
-          Application.Chrome,
-          url
-        );
-      }
+      Network.Url.Open(
+        uri
+      );
     }
   }
 
@@ -76,7 +68,11 @@ public sealed class OpenUrl() : CoreCommand(
     );
     string target = string.Empty;
 
-    if (!string.IsNullOrEmpty(cleanPath))
+    if (
+      !string.IsNullOrEmpty(
+        cleanPath
+      )
+    )
     {
       string relativePath = IO.Path.GetRelativePath(
         SessionState.Path.CurrentLocation.Path,
@@ -100,8 +96,7 @@ public sealed class OpenUrl() : CoreCommand(
         : cleanPath;
     }
 
-    Invocation.ShellExecute(
-      Application.Chrome,
+    Network.Url.Open(
       target
     );
   }

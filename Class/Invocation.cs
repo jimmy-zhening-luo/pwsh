@@ -1,4 +1,4 @@
-namespace Module.Command;
+namespace Module;
 
 using ProcessStartInfo = System.Diagnostics.ProcessStartInfo;
 

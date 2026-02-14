@@ -55,4 +55,37 @@ internal static class Url
       throw;
     }
   }
+
+  internal static void Open(
+    Uri uri
+  )
+  {
+    string url = uri
+      .ToString()
+      .Trim();
+
+    if (
+      !string.IsNullOrEmpty(
+        url
+      )
+    )
+    {
+      Open(
+        url
+      );
+    }
+  }
+
+  internal static void Open(
+    string target
+  )
+  {
+    if (!Ssh)
+    {
+      Invocation.ShellExecute(
+        Application.Chrome,
+        target
+      );
+    }
+  }
 }
