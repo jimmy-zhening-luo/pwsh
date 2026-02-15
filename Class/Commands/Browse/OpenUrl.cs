@@ -63,7 +63,7 @@ public sealed class OpenUrl() : CoreCommand(
       return;
     }
 
-    string cleanPath = FileSystem.Path.Normalizer.Normalize(
+    string cleanPath = PC.FileSystem.Path.Normalizer.Normalize(
       path
     );
     string target = string.Empty;
