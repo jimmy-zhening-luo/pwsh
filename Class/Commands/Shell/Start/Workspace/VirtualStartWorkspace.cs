@@ -103,7 +103,7 @@ public abstract class VirtualStartWorkspace() : CoreCommand(
     }
 
     PC.Invocation.CreateProcess(
-      Application.VSCode,
+      PC.Environment.Application.VSCode,
       argumentList,
       true
     );
