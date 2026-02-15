@@ -1,21 +1,24 @@
-namespace Module.Command.Shell.Start.Explorer.Commands;
+namespace Module.Command.Shell.Get.File;
 
 [Cmdlet(
-  VerbsLifecycle.Start,
-  "Explorer",
+  VerbsCommon.Get,
+  "File",
   DefaultParameterSetName = "Path",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096590"
+  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096490"
 )]
-[Alias("e")]
-[OutputType(typeof(void))]
-public sealed class StartExplorer : WrappedStartExplorer
+[Alias("p")]
+[OutputType(typeof(string))]
+public sealed class GetFile : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
     Position = 0
   )]
   [SupportsWildcards]
-  [PathCompletions]
+  [PathCompletions(
+    "",
+    PathItemType.File
+  )]
   public override sealed string[] Path
   {
     get => paths;
@@ -33,17 +36,32 @@ public sealed class StartExplorer : WrappedStartExplorer
     set => literalPaths = value;
   }
   private string[] literalPaths = [];
+
+  [Parameter(
+    ParameterSetName = "Path",
+    Position = 1
+  )]
+  [Parameter(
+    ParameterSetName = "LiteralPath",
+    Position = 1
+  )]
+  [SupportsWildcards]
+  public override sealed string Filter
+  {
+    get => filter;
+    set => filter = value;
+  }
 }
 
 [Cmdlet(
-  VerbsLifecycle.Start,
-  "ExplorerSibling",
+  VerbsCommon.Get,
+  "FileSibling",
   DefaultParameterSetName = "Path",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096590"
+  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096490"
 )]
-[Alias("ex")]
-[OutputType(typeof(void))]
-public sealed class StartExplorerSibling : WrappedStartExplorer
+[Alias("px")]
+[OutputType(typeof(string))]
+public sealed class GetFileSibling : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -51,7 +69,8 @@ public sealed class StartExplorerSibling : WrappedStartExplorer
   )]
   [SupportsWildcards]
   [PathCompletions(
-    ".."
+    "..",
+    PathItemType.File
   )]
   public override sealed string[] Path
   {
@@ -63,14 +82,14 @@ public sealed class StartExplorerSibling : WrappedStartExplorer
 }
 
 [Cmdlet(
-  VerbsLifecycle.Start,
-  "ExplorerRelative",
+  VerbsCommon.Get,
+  "FileRelative",
   DefaultParameterSetName = "Path",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096590"
+  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096490"
 )]
-[Alias("exx")]
-[OutputType(typeof(void))]
-public sealed class StartExplorerRelative : WrappedStartExplorer
+[Alias("pxx")]
+[OutputType(typeof(string))]
+public sealed class GetFileRelative : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -78,7 +97,8 @@ public sealed class StartExplorerRelative : WrappedStartExplorer
   )]
   [SupportsWildcards]
   [PathCompletions(
-    @"..\.."
+    @"..\..",
+    PathItemType.File
   )]
   public override sealed string[] Path
   {
@@ -90,14 +110,14 @@ public sealed class StartExplorerRelative : WrappedStartExplorer
 }
 
 [Cmdlet(
-  VerbsLifecycle.Start,
-  "ExplorerHome",
+  VerbsCommon.Get,
+  "FileHome",
   DefaultParameterSetName = "Path",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096590"
+  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096490"
 )]
-[Alias("eh")]
-[OutputType(typeof(void))]
-public sealed class StartExplorerHome : WrappedStartExplorer
+[Alias("ph")]
+[OutputType(typeof(string))]
+public sealed class GetFileHome : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -105,7 +125,8 @@ public sealed class StartExplorerHome : WrappedStartExplorer
   )]
   [SupportsWildcards]
   [PathCompletions(
-    "~"
+    "~",
+    PathItemType.File
   )]
   public override sealed string[] Path
   {
@@ -117,14 +138,14 @@ public sealed class StartExplorerHome : WrappedStartExplorer
 }
 
 [Cmdlet(
-  VerbsLifecycle.Start,
-  "ExplorerCode",
+  VerbsCommon.Get,
+  "FileCode",
   DefaultParameterSetName = "Path",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096590"
+  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096490"
 )]
-[Alias("ec")]
-[OutputType(typeof(void))]
-public sealed class StartExplorerCode : WrappedStartExplorer
+[Alias("pc")]
+[OutputType(typeof(string))]
+public sealed class GetFileCode : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -132,7 +153,8 @@ public sealed class StartExplorerCode : WrappedStartExplorer
   )]
   [SupportsWildcards]
   [PathCompletions(
-    @"~\code"
+    @"~\code",
+    PathItemType.File
   )]
   public override sealed string[] Path
   {
@@ -146,14 +168,14 @@ public sealed class StartExplorerCode : WrappedStartExplorer
 }
 
 [Cmdlet(
-  VerbsLifecycle.Start,
-  "ExplorerDrive",
+  VerbsCommon.Get,
+  "FileDrive",
   DefaultParameterSetName = "Path",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096590"
+  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096490"
 )]
-[Alias("e/")]
-[OutputType(typeof(void))]
-public sealed class StartExplorerDrive : WrappedStartExplorer
+[Alias("p/")]
+[OutputType(typeof(string))]
+public sealed class GetFileDrive : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -161,7 +183,8 @@ public sealed class StartExplorerDrive : WrappedStartExplorer
   )]
   [SupportsWildcards]
   [PathCompletions(
-    @"\"
+    @"\",
+    PathItemType.File
   )]
   public override sealed string[] Path
   {

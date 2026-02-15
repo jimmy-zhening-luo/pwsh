@@ -1,4 +1,4 @@
-namespace Module.Command.Shell.Remove.Directory.Commands;
+namespace Module.Command.Shell.Remove.Directory;
 
 [Cmdlet(
   VerbsCommon.Remove,

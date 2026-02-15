@@ -1,4 +1,4 @@
-namespace Module.Command.Shell.Start.Workspace.Commands;
+namespace Module.Command.Shell.Start.Workspace;
 
 [Cmdlet(
   VerbsLifecycle.Start,
