@@ -39,6 +39,7 @@ public sealed class GetHelpOnline : CoreCommand
 
   private protected sealed override void DefaultAction()
   {
+    WriteObject("Hello");
     WriteObject(
       AddCommand(
         "Get-Help"
