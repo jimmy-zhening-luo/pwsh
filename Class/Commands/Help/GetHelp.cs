@@ -5,7 +5,7 @@ namespace Module.Commands.Help;
   "HelpOnline",
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096483"
 )]
-[Alias("man", "m")]
+[Alias("m", "man")]
 [OutputType(typeof(object))]
 public sealed class GetHelpOnline : CoreCommand
 {
