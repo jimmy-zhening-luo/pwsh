@@ -28,7 +28,7 @@ internal static class Canonicalizer
       homedNormalPath
     )
       ? homedNormalPath
-      : ConsoleHost.CurrentDirectory(
+      : PowerShellHost.CurrentDirectory(
           homedNormalPath
         );
   }

@@ -187,7 +187,7 @@ public sealed class TestHost : CoreCommand
     ushort portNumber = 0
   )
   {
-    using var ps = ConsoleHost.Create(
+    using var ps = PowerShellHost.Create(
       true
     );
 

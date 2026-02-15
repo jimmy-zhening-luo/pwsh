@@ -75,7 +75,7 @@ public sealed class GetHelpOnline : CoreCommand
     string topic
   )
   {
-    using var ps = ConsoleHost.Create(
+    using var ps = PowerShellHost.Create(
       true
     );
 

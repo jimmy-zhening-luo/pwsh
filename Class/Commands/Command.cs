@@ -43,7 +43,7 @@ public abstract class CoreCommand(
 
   private protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
 
-  private protected PowerShell PS => powershell ??= ConsoleHost.Create();
+  private protected PowerShell PS => powershell ??= PowerShellHost.Create();
   private PowerShell? powershell;
 
   private bool ContinueProcessing => !disposed
