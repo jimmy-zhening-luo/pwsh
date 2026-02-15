@@ -8,7 +8,7 @@
   <ItemGroup>
     <PackageReference Include="PowerShellStandard.Library" Version="5.1.1.0" PrivateAssets="All"/>
     <PackageReference Include="System.Management.Automation" Version="7.5.4" PrivateAssets="All"/>
-    <PackageReference Include="Microsoft.PowerShell.Commands.Core" Version="7.5.4" PrivateAssets="All"/>
+    <PackageReference Include="Microsoft.PowerShell.Commands.Diagnostics" Version="7.5.4" PrivateAssets="All"/>
     <PackageReference Include="Microsoft.PowerShell.Commands.Management" Version="7.5.4" PrivateAssets="All"/>
     <PackageReference Include="Microsoft.PowerShell.Commands.Utility" Version="7.5.4" PrivateAssets="All"/>
   </ItemGroup>
