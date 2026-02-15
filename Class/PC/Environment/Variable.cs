@@ -1,6 +1,6 @@
-namespace Module.PC.Environment.Environmental;
+namespace Module.PC.Environment;
 
-internal static partial class Environmental
+internal static class Variable
 {
   internal static bool Ssh => ssh ??= !string.IsNullOrEmpty(
     Env(

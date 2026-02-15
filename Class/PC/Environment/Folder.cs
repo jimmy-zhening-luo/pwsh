@@ -1,9 +1,9 @@
-namespace Module.PC.Environment.Environmental;
+namespace Module.PC.Environment;
 
 using static System.Environment;
-using static Module.PC.FileSystem.Path.Normalizer;
+using static FileSystem.Path.Normalizer;
 
-internal static partial class Environmental
+internal static class Folder
 {
   internal static string WinDir(
     string subpath = ""
