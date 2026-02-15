@@ -31,10 +31,12 @@ public sealed class GetHelpOnline : CoreCommand
   }
   private string[] parameters = [];
 
-  private protected sealed override bool ValidateParameters() => names.Length == 0
-    || names.Length == 1
-    && string.IsNullOrEmpty(
-      names[0]
+  private protected sealed override bool ValidateParameters() => names.Length != 0
+    && (
+      names.Length != 1
+      || !string.IsNullOrEmpty(
+        names[0]
+      )
     );
 
   private protected sealed override void DefaultAction()
