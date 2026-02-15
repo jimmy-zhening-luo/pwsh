@@ -33,6 +33,21 @@ public sealed class GetHelpOnline : CoreCommand
   }
   private string[] parameters = [];
 
+  private static Uri? ResolveAboutArticle(
+    System.Net.Http.HttpClient client,
+    string topic
+  )
+  {
+    Uri testUri = new(AboutBaseUrl + "/" + topic);
+
+    return Network.Url.Test(
+      client,
+      testUri
+    )
+      ? testUri
+      : null;
+  }
+
   private protected sealed override bool ValidateParameters() => names.Length != 0
     && (
       names.Length != 1
@@ -52,4 +67,32 @@ public sealed class GetHelpOnline : CoreCommand
       .Invoke(),
     true
   );
+
+  private Collection<PSObject> GetHelpContent(
+    string topic
+  )
+  {
+    using var ps = ConsoleHost.Create(
+      true
+    );
+
+    AddCommand(
+      ps,
+      "Get-Help"
+    )
+      .AddParameter(
+        "Name",
+        topic
+      )
+      .AddParameter(
+        "ErrorAction",
+        ActionPreference.SilentlyContinue
+      )
+      .AddParameter(
+        "ProgressAction",
+        ActionPreference.SilentlyContinue
+      );
+
+    return ps.Invoke();
+  }
 }
