@@ -114,10 +114,7 @@ public abstract class CoreCommand(
     {
       AfterEndProcessing();
     }
-    else if (
-      || stage == CommandLifecycle.Skipped
-      stage == CommandLifecycle.Skipped
-    )
+    else if (stage == CommandLifecycle.Skipped)
     {
       DefaultAction();
     }
