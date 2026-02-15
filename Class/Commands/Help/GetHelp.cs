@@ -9,6 +9,8 @@ namespace Module.Commands.Help;
 [OutputType(typeof(object))]
 public sealed class GetHelpOnline : CoreCommand
 {
+  private static string AboutBaseUrl => "https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about";
+
   [Parameter(
     Position = 0,
     ValueFromRemainingArguments = true
