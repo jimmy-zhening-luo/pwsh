@@ -19,7 +19,7 @@
     }
   }
   else {
-    Write-Warning -Message "Class '$CLASS' is not built."
+    Write-Warning -Message 'Module assembly is not built.'
   }
 
 
