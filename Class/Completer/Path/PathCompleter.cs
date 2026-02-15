@@ -38,7 +38,7 @@ public sealed class PathCompleter : BaseCompleter
     string wordToComplete
   )
   {
-    string pathToComplete = Module.FileSystem.Path.Normalizer.Normalize(
+    string pathToComplete = Module.PC.FileSystem.Path.Normalizer.Normalize(
       wordToComplete,
       true
     );

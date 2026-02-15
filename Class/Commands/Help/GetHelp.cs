@@ -40,7 +40,7 @@ public sealed class GetHelpOnline : CoreCommand
   {
     Uri testUri = new(AboutBaseUrl + "/" + topic);
 
-    return Network.Url.Test(
+    return PC.Network.Url.Test(
       client,
       testUri
     )

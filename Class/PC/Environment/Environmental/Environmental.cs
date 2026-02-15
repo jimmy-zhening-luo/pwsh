@@ -1,4 +1,4 @@
-namespace Module.Environment.Environmental;
+namespace Module.PC.Environment.Environmental;
 
 using static System.Environment;
 

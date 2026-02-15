@@ -50,7 +50,7 @@ public sealed class OpenUrl() : CoreCommand(
 
     foreach (Uri uri in uris)
     {
-      Network.Url.Open(
+      PC.Network.Url.Open(
         uri
       );
     }
@@ -96,7 +96,7 @@ public sealed class OpenUrl() : CoreCommand(
         : cleanPath;
     }
 
-    Network.Url.Open(
+    PC.Network.Url.Open(
       target
     );
   }

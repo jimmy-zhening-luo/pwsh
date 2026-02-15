@@ -1,4 +1,4 @@
-namespace Module.Environment.Environmental;
+namespace Module.PC.Environment.Environmental;
 
 internal static partial class Environmental
 {
