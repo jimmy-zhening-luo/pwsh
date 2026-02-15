@@ -216,13 +216,13 @@ function Resolve-GitRepository {
             $wd
           ) -and (
             Test-Path (
-              Join-Path $REPO_ROOT $wd
+              Join-Path $HOME code $wd
             ) -PathType Container
           )
         ) {
           Write-Output (
             Resolve-Path (
-              Join-Path $REPO_ROOT $wd
+              Join-Path $HOME code $wd
             ) -Force
           ).Path
         }
@@ -247,13 +247,13 @@ function Resolve-GitRepository {
             $wd
           ) -and (
             Test-Path (
-              Join-Path $REPO_ROOT\$wd .git
+              Join-Path $HOME code $wd .git
             ) -PathType Container
           )
         ) {
           Write-Output (
             Resolve-Path (
-              Join-Path $REPO_ROOT $wd
+              Join-Path $HOME code $wd
             ) -Force
           ).Path
         }
@@ -642,7 +642,7 @@ function Get-ChildGitRepository {
   [Alias('gpp')]
   param()
 
-  [string[]]$Repositories = Get-ChildItem -Path $REPO_ROOT -Directory |
+  [string[]]$Repositories = Get-ChildItem -Path $HOME\code -Directory |
     Select-Object -ExpandProperty FullName |
     Resolve-GitRepository
   $Count = $Repositories.Count

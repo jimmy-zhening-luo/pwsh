@@ -34,7 +34,7 @@ function Update-PSProfile {
   )
 
   end {
-    $PROFILE_REPO_ROOT = "$REPO_ROOT\pwsh"
+    $PROFILE_REPO_ROOT = "$HOME\code\pwsh"
     $GitArgument = @(
       '-c'
       'color.ui=always'
