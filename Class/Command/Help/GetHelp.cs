@@ -39,19 +39,15 @@ public sealed class GetHelpOnline : CoreCommand
       )
     );
 
-  private protected sealed override void DefaultAction()
-  {
-    WriteObject("Hello");
-    WriteObject(
-      AddCommand(
+  private protected sealed override void DefaultAction() => WriteObject(
+    AddCommand(
+      "Get-Help"
+    )
+      .AddParameter(
+        "Name",
         "Get-Help"
       )
-        .AddParameter(
-          "Name",
-          "Get-Help"
-        )
-        .Invoke(),
-      true
-    );
-  }
+      .Invoke(),
+    true
+  );
 }
