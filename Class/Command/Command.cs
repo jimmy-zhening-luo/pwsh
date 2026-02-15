@@ -15,7 +15,7 @@ public abstract class CoreCommand(
 
   private enum CommandLifecycle
   {
-    Empty,
+    NotStarted,
     Initialized,
     Processing,
     Skipped,
@@ -47,8 +47,10 @@ public abstract class CoreCommand(
   private PowerShell? powershell;
 
   private bool ContinueProcessing => !disposed
-    && stage != CommandLifecycle.Stopped
-    && stage != CommandLifecycle.Skipped
+    && (
+      stage == CommandLifecycle.Initialized
+      || stage == CommandLifecycle.Processing
+    )
     && (
       !SkipSsh
       || !Ssh
@@ -67,7 +69,7 @@ public abstract class CoreCommand(
 
   protected sealed override void BeginProcessing()
   {
-    if (stage == CommandLifecycle.Empty)
+    if (stage == CommandLifecycle.NotStarted)
     {
       stage = CommandLifecycle.Initialized;
     }
@@ -84,12 +86,12 @@ public abstract class CoreCommand(
       }
       else
       {
-        Skip();
+        stage = CommandLifecycle.Skipped;
       }
     }
     else
     {
-      Stop();
+      stage = CommandLifecycle.Stopped;
     }
   }
 
@@ -103,11 +105,17 @@ public abstract class CoreCommand(
 
   protected sealed override void EndProcessing()
   {
+    if (stage == CommandLifecycle.NotStarted)
+    {
+      stage = CommandLifecycle.Skipped;
+    }
+
     if (ContinueProcessing)
     {
       AfterEndProcessing();
     }
     else if (
+      || stage == CommandLifecycle.Skipped
       stage == CommandLifecycle.Skipped
     )
     {
@@ -119,7 +127,7 @@ public abstract class CoreCommand(
 
   protected sealed override void StopProcessing()
   {
-    Stop();
+    stage = CommandLifecycle.Stopped;
 
     Dispose();
   }
@@ -285,10 +293,6 @@ public abstract class CoreCommand(
       )
     );
   }
-
-  private void Skip() => stage = CommandLifecycle.Skipped;
-
-  private void Stop() => stage = CommandLifecycle.Stopped;
 
   private void Dispose(
     bool disposing
