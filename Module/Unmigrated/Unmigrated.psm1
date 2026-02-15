@@ -135,49 +135,50 @@ function Get-HelpOnline {
       }
     }
   }
-}
 
-if ($HelpContent) {
-  Write-Output -InputObject $HelpContent
-}
 
-$Article = [List[uri]]::new()
-
-if ($ArticleUrl.Count) {
-  $ArticleUrl.ToArray() |
-    ForEach-Object {
-      'https://' + $PSItem.GetComponents(
-        [uricomponents]::Host -bor [uricomponents]::Path -bor (
-          $PSItem.Host -eq 'go.microsoft.com' ? [uricomponents]::Query : 0
-        ) -bor [uricomponents]::Fragment,
-        [uriformat]::Unescaped
-      )
-    } |
-    ForEach-Object {
-      $PSItem.StartsWith(
-        'https://learn.microsoft.com/en-us/',
-        [stringcomparison]::OrdinalIgnoreCase
-      ) ? (
-        $PSItem -replace '(?<=^https://learn\.microsoft\.com/)en-us/', ''
-      ) : $PSItem
-    } |
-    Select-Object -Unique -CaseInsensitive |
-    ForEach-Object {
-      $Article.Add($PSItem)
-    }
-}
-
-if ($Article.Count) {
-  Write-Information -MessageData "$($Article.ToArray() -join "`n")" -InformationAction Continue
-}
-
-if (!$env:SSH_CLIENT) {
-  if ($Article.Count) {
-    $Article.ToArray() | Open-Url
+  if ($HelpContent) {
+    Write-Output -InputObject $HelpContent
   }
-  else {
-    if ($HelpContent) {
-      $null = Get-Help -Name $Topic -Online @Silent 2>&1
+
+  $Article = [List[uri]]::new()
+
+  if ($ArticleUrl.Count) {
+    $ArticleUrl.ToArray() |
+      ForEach-Object {
+        'https://' + $PSItem.GetComponents(
+          [uricomponents]::Host -bor [uricomponents]::Path -bor (
+            $PSItem.Host -eq 'go.microsoft.com' ? [uricomponents]::Query : 0
+          ) -bor [uricomponents]::Fragment,
+          [uriformat]::Unescaped
+        )
+      } |
+      ForEach-Object {
+        $PSItem.StartsWith(
+          'https://learn.microsoft.com/en-us/',
+          [stringcomparison]::OrdinalIgnoreCase
+        ) ? (
+          $PSItem -replace '(?<=^https://learn\.microsoft\.com/)en-us/', ''
+        ) : $PSItem
+      } |
+      Select-Object -Unique -CaseInsensitive |
+      ForEach-Object {
+        $Article.Add($PSItem)
+      }
+  }
+
+  if ($Article.Count) {
+    Write-Information -MessageData "$($Article.ToArray() -join "`n")" -InformationAction Continue
+  }
+
+  if (!$env:SSH_CLIENT) {
+    if ($Article.Count) {
+      $Article.ToArray() | Open-Url
+    }
+    else {
+      if ($HelpContent) {
+        $null = Get-Help -Name $Topic -Online @Silent 2>&1
+      }
     }
   }
 }
