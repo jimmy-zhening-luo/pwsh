@@ -36,4 +36,19 @@ public sealed class GetHelpOnline : CoreCommand
     && string.IsNullOrEmpty(
       names[0]
     );
+
+  private protected sealed override void DefaultAction()
+  {
+    WriteObject(
+      AddCommand(
+        "Get-Help"
+      )
+        .AddParameter(
+          "Name",
+          "Get-Help"
+        )
+        .Invoke(),
+      true
+    );
+  }
 }
