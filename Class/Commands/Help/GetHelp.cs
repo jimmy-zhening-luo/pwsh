@@ -56,6 +56,9 @@ public sealed class GetHelpOnline : CoreCommand
       )
     );
 
+  private protected sealed override void AfterEndProcessing()
+  { }
+
   private protected sealed override void DefaultAction() => WriteObject(
     AddCommand(
       "Get-Help"
