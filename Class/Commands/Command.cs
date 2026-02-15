@@ -53,7 +53,7 @@ public abstract class CoreCommand(
     )
     && (
       !SkipSsh
-      || !Ssh
+      || !PC.Environment.Known.Variable.Ssh
     );
 
   public void Dispose()
