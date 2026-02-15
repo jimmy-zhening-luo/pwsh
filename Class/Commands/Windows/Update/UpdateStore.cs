@@ -12,7 +12,7 @@ public sealed class UpdateStoreApp() : CoreCommand(
 {
   private protected sealed override void AfterEndProcessing()
   {
-    Invocation.ShellExecute(
+    PC.Invocation.ShellExecute(
       "ms-windows-store://downloadsandupdates"
     );
   }

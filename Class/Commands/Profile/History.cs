@@ -10,7 +10,7 @@ public sealed class StartHistory() : CoreCommand(
   true
 )
 {
-  private protected sealed override void AfterEndProcessing() => Invocation.CreateProcess(
+  private protected sealed override void AfterEndProcessing() => PC.Invocation.CreateProcess(
     Application.VSCode,
     [
       AppData(
