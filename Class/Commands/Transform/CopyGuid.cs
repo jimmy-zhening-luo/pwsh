@@ -1,4 +1,4 @@
-namespace Module.Command.Transform;
+namespace Module.Commands.Transform;
 
 [Cmdlet(
   VerbsCommon.Copy,

@@ -1,4 +1,4 @@
-namespace Module.Command.Shell.New.Junction;
+namespace Module.Commands.Shell.New.Junction;
 
 [Cmdlet(
   VerbsCommon.New,

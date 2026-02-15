@@ -1,4 +1,4 @@
-namespace Module.Command.Browse;
+namespace Module.Commands.Browse;
 
 [Cmdlet(
   VerbsCommon.Open,

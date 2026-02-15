@@ -1,4 +1,4 @@
-namespace Module.Command.Shell.Get.Attribute;
+namespace Module.Commands.Shell.Get.Attribute;
 
 using System.Linq;
 

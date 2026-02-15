@@ -1,4 +1,4 @@
-namespace Module.Command;
+namespace Module.Commands;
 
 public abstract class WrappedCommand(
   string WrappedCommandName,

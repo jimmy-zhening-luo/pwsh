@@ -1,4 +1,4 @@
-namespace Module.Command.Shell.New.Directory;
+namespace Module.Commands.Shell.New.Directory;
 
 [Cmdlet(
   VerbsCommon.New,

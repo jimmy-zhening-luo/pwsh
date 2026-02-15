@@ -1,4 +1,4 @@
-namespace Module.Command.Windows.Manage;
+namespace Module.Commands.Windows.Manage;
 
 using Process = System.Diagnostics.Process;
 

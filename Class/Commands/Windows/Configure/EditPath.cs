@@ -1,4 +1,4 @@
-namespace Module.Command.Windows.Configure;
+namespace Module.Commands.Windows.Configure;
 
 [Cmdlet(
   VerbsData.Edit,

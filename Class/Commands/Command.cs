@@ -1,4 +1,4 @@
-namespace Module.Command;
+namespace Module.Commands;
 
 using static FileSystem.Path.Normalizer;
 

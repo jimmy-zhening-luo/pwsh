@@ -1,4 +1,4 @@
-namespace Module.Command.Windows.Update;
+namespace Module.Commands.Windows.Update;
 
 [Cmdlet(
   VerbsData.Update,

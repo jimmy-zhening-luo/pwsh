@@ -1,4 +1,4 @@
-namespace Module.Command.Shell.Start.Workspace;
+namespace Module.Commands.Shell.Start.Workspace;
 
 public abstract class VirtualStartWorkspace() : CoreCommand(
   true

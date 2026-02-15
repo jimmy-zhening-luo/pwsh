@@ -1,4 +1,4 @@
-namespace Module.Command.Shell.Set.Directory;
+namespace Module.Commands.Shell.Set.Directory;
 
 [Cmdlet(
   VerbsCommon.Set,

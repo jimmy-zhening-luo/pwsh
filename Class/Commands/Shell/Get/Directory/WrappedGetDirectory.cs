@@ -1,4 +1,4 @@
-namespace Module.Command.Shell.Get.Directory;
+namespace Module.Commands.Shell.Get.Directory;
 
 public abstract class WrappedGetDirectory() : WrappedCommand(
   "Get-ChildItem"

@@ -1,4 +1,4 @@
-namespace Module.Command.Shell.Get.File;
+namespace Module.Commands.Shell.Get.File;
 
 public abstract class WrappedGetFile() : WrappedCommand(
   "Get-Content"

@@ -1,4 +1,4 @@
-namespace Module.Command.Help;
+namespace Module.Commands.Help;
 
 using BindingFlags = System.Reflection.BindingFlags;
 
