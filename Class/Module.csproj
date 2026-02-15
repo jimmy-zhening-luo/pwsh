@@ -16,22 +16,14 @@
     <Using Include="System.Collections"/>
     <Using Include="System.Collections.Generic"/>
     <Using Include="System.Collections.ObjectModel"/>
-  </ItemGroup>
-  <ItemGroup>
     <Using Include="System.Management.Automation.Language" Alias="Language"/>
     <Using Include="System.IO" Alias="IO"/>
     <Using Include="System.Diagnostics.CodeAnalysis" Alias="CodeAnalysis"/>
-  </ItemGroup>
-  <ItemGroup>
     <Using Include="System.Enum" Alias="Enum"/>
     <Using Include="System.Uri" Alias="Uri"/>
     <Using Include="System.StringComparer" Alias="StringComparer"/>
-  </ItemGroup>
-  <ItemGroup>
     <Using Include="System.StringComparison" Alias="StringComparison"/>
     <Using Include="System.StringSplitOptions" Alias="StringSplitOptions"/>
-  </ItemGroup>
-  <ItemGroup>
     <Using Include="Module.Completer"/>
     <Using Include="Module.Completer.Path"/>
   </ItemGroup>
