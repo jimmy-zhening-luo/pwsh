@@ -16,9 +16,9 @@ internal static class Canonicalizer
       '~'
     )
       ? normalPath.Length == 1
-        ? Home()
+        ? PC.Environment.Known.Folder.Home()
         : normalPath[1] == '\\'
-          ? Home(
+          ? PC.Environment.Known.Folder.Home(
               normalPath[2..]
             )
           : normalPath

@@ -13,8 +13,8 @@ public sealed class StartProfile() : CoreCommand(
   private protected sealed override void AfterEndProcessing()
   {
     PC.Invocation.CreateProcess(
-      PC.Environment.Application.VSCode,
-      Code(
+      PC.Environment.Known.Application.VSCode,
+      PC.Environment.Known.Folder.Code(
         "pwsh"
       ),
       true

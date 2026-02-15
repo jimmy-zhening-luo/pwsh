@@ -83,7 +83,7 @@ internal static class Url
     if (!Ssh)
     {
       Invocation.ShellExecute(
-        Environment.Application.Chrome,
+        Environment.Known.Application.Chrome,
         target
       );
     }

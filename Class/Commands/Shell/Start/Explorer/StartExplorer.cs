@@ -113,7 +113,7 @@ public sealed class StartExplorerHome : WrappedStartExplorer
     set => paths = value;
   }
 
-  private protected sealed override string Location => Home();
+  private protected sealed override string Location => PC.Environment.Known.Folder.Home();
 }
 
 [Cmdlet(
@@ -140,7 +140,7 @@ public sealed class StartExplorerCode : WrappedStartExplorer
     set => paths = value;
   }
 
-  private protected sealed override string Location => Home();
+  private protected sealed override string Location => PC.Environment.Known.Folder.Home();
 
   private protected sealed override string LocationSubpath => "code";
 }

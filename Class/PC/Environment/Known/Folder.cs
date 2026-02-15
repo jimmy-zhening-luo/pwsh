@@ -1,41 +1,40 @@
-namespace Module.PC.Environment;
+namespace Module.PC.Environment.Known;
 
-using static System.Environment;
-using static FileSystem.Path.Normalizer;
+using SpecialFolder = System.Environment.SpecialFolder;
 
 internal static class Folder
 {
   internal static string WinDir(
     string subpath = ""
-  ) => EnvPath(
+  ) => Env.GetFolder(
     SpecialFolder.Windows,
     subpath
   );
 
   internal static string ProgramFiles(
     string subpath = ""
-  ) => EnvPath(
+  ) => Env.GetFolder(
     SpecialFolder.ProgramFiles,
     subpath
   );
 
   internal static string AppData(
     string subpath = ""
-  ) => EnvPath(
+  ) => Env.GetFolder(
     SpecialFolder.ApplicationData,
     subpath
   );
 
   internal static string LocalAppData(
     string subpath = ""
-  ) => EnvPath(
+  ) => Env.GetFolder(
     SpecialFolder.LocalApplicationData,
     subpath
   );
 
   internal static string Home(
     string subpath = ""
-  ) => EnvPath(
+  ) => Env.GetFolder(
     SpecialFolder.UserProfile,
     subpath
   );
@@ -43,7 +42,7 @@ internal static class Folder
   internal static string Code(
     string subpath = ""
   ) => IO.Path.GetFullPath(
-    Normalize(
+    FileSystem.Path.Normalizer.Normalize(
       subpath
     ),
     Home(

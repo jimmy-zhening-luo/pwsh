@@ -11,9 +11,9 @@ public sealed class StartHistory() : CoreCommand(
 )
 {
   private protected sealed override void AfterEndProcessing() => PC.Invocation.CreateProcess(
-    PC.Environment.Application.VSCode,
+    PC.Environment.Known.Application.VSCode,
     [
-      PC.Environment.Folder.AppData(
+      PC.Environment.Known.Folder.AppData(
         @"Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt"
       ),
       "--profile=Setting",
