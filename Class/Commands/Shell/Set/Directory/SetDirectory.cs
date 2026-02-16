@@ -218,33 +218,3 @@ public sealed class SetDrive : WrappedSetDirectory
 
   private protected sealed override string Location => Drive();
 }
-
-[Cmdlet(
-  VerbsCommon.Set,
-  "DriveD",
-  DefaultParameterSetName = "Path",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
-)]
-[Alias("d/")]
-[OutputType(
-  typeof(PathInfo)
-)]
-public sealed class SetDriveD : WrappedSetDirectory
-{
-  [Parameter(
-    ParameterSetName = "Path",
-    Position = 0
-  )]
-  [SupportsWildcards]
-  [PathCompletions(
-    "D:",
-    PathItemType.Directory
-  )]
-  public override sealed string Path
-  {
-    get => path;
-    set => path = value;
-  }
-
-  private protected sealed override string Location => @"D:\";
-}
