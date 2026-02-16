@@ -19,35 +19,11 @@ public abstract class WrappedSetDirectory() : WrappedCommand(
   }
   private bool passThru;
 
-  private protected sealed override void TransformParameters()
+  private protected override void TransformParameters()
   {
-    if (UsingCurrentLocation)
-    {
-      if (
-        ParameterSetName != "LiteralPath"
-        && string.IsNullOrEmpty(
-          path
-        )
-      )
-      {
-        string pwd = Pwd();
-        string parent = IO.Path.GetFullPath(
-          "..",
-          pwd
-        );
-
-        path = parent == pwd
-          ? Client.Environment.Known.Folder.Home()
-          : parent;
-        BoundParameters["Path"] = path;
-      }
-    }
-    else
-    {
-      path = Reanchor(
-        path
-      );
-      BoundParameters["Path"] = path;
-    }
+    path = Reanchor(
+      path
+    );
+    BoundParameters["Path"] = path;
   }
 }

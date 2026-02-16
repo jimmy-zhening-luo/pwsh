@@ -49,6 +49,22 @@ public sealed class SetDirectory : WrappedSetDirectory
     set => stack = value;
   }
   private string stack = "";
+
+  private protected sealed override void TransformParameters()
+  {
+    if (
+      ParameterSetName == "Path"
+      && string.IsNullOrEmpty(
+        path
+      )
+    )
+    {
+      path = Pwd(
+        ".."
+      );
+      BoundParameters["Path"] = path;
+    }
+  }
 }
 
 [Cmdlet(
