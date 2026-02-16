@@ -50,20 +50,75 @@ public sealed class SetDirectory : WrappedSetDirectory
   }
   private string stack = "";
 
+  [Parameter(
+    ParameterSetName = "DriveC"
+  )]
+  public SwitchParameter C
+  {
+    get => driveC;
+    set => driveC = value;
+  }
+  private bool driveC;
+
+  [Parameter(
+    ParameterSetName = "DriveD"
+  )]
+  public SwitchParameter D
+  {
+    get => driveD;
+    set => driveD = value;
+  }
+  private bool driveD;
+
+  [Parameter(
+    ParameterSetName = "DriveE"
+  )]
+  public SwitchParameter E
+  {
+    get => driveE;
+    set => driveE = value;
+  }
+  private bool driveE;
+
   private protected sealed override void TransformParameters()
   {
-    if (
-      ParameterSetName == "Path"
-      && string.IsNullOrEmpty(
-        path
-      )
-    )
+    switch (ParameterSetName)
     {
-      path = Pwd(
-        ".."
-      );
-      BoundParameters["Path"] = path;
+      case "Path":
+        if (
+          !string.IsNullOrEmpty(
+            path
+          )
+        )
+        {
+          return;
+        }
+
+        path = Pwd(
+          ".."
+        );
+
+        break;
+      case "DriveC":
+        BoundParameters.Remove("C");
+        path = "C:";
+
+        break;
+      case "DriveD":
+        BoundParameters.Remove("D");
+        path = "D:";
+
+        break;
+      case "DriveE":
+        BoundParameters.Remove("E");
+        path = "E:";
+
+        break;
+      default:
+        return;
     }
+
+    BoundParameters["Path"] = path;
   }
 }
 
