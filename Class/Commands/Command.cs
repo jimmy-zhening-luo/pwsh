@@ -1,7 +1,5 @@
 namespace Module.Commands;
 
-using static Client.FileSystem.Path.Normalizer;
-
 public abstract class CoreCommand(
   bool SkipSsh = false
 ) : PSCmdlet, System.IDisposable
@@ -188,7 +186,7 @@ public abstract class CoreCommand(
   private protected string Reanchor(
     string typedPath = ""
   ) => IO.Path.GetFullPath(
-    Normalize(
+    Client.FileSystem.PathString.Normalize(
       typedPath
     ),
     IO.Path.GetFullPath(
@@ -241,7 +239,7 @@ public abstract class CoreCommand(
   private protected string Pwd(
     string subpath = ""
   ) => IO.Path.GetFullPath(
-    Normalize(
+    Client.FileSystem.PathString.Normalize(
       subpath
     ),
     SessionState.Path.CurrentLocation.Path
@@ -250,7 +248,7 @@ public abstract class CoreCommand(
   private protected string Drive(
     string subpath = ""
   ) => IO.Path.GetFullPath(
-    Normalize(
+    Client.FileSystem.PathString.Normalize(
       subpath
     ),
     SessionState.Drive.Current.Root

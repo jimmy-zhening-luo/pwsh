@@ -1,6 +1,6 @@
-namespace Module.Client.FileSystem.Path;
+namespace Module.Client.FileSystem;
 
-internal static partial class Normalizer
+internal static partial class PathString
 {
   internal static string Normalize(
     string path,
