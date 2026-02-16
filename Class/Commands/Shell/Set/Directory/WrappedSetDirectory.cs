@@ -37,7 +37,7 @@ public abstract class WrappedSetDirectory() : WrappedCommand(
         );
 
         path = parent == pwd
-          ? PC.Environment.Known.Folder.Home()
+          ? Client.Environment.Known.Folder.Home()
           : parent;
         BoundParameters["Path"] = path;
       }

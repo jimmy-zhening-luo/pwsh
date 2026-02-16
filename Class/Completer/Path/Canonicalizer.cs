@@ -7,7 +7,7 @@ internal static class Canonicalizer
     bool preserveTrailingSeparator = false
   )
   {
-    string normalPath = PC.FileSystem.Path.Normalizer.Normalize(
+    string normalPath = Client.FileSystem.Path.Normalizer.Normalize(
       path,
       preserveTrailingSeparator
     );
@@ -16,9 +16,9 @@ internal static class Canonicalizer
       '~'
     )
       ? normalPath.Length == 1
-        ? PC.Environment.Known.Folder.Home()
+        ? Client.Environment.Known.Folder.Home()
         : normalPath[1] == '\\'
-          ? PC.Environment.Known.Folder.Home(
+          ? Client.Environment.Known.Folder.Home(
               normalPath[2..]
             )
           : normalPath

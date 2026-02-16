@@ -54,10 +54,10 @@ public sealed class TestUrl : CoreCommand
         !string.IsNullOrEmpty(
           url.OriginalString
         )
-        && PC.Network.Url.HostExists(
+        && Client.Network.Url.HostExists(
           url.Host
         )
-        && PC.Network.Url.Test(
+        && Client.Network.Url.Test(
           client,
           url
         )

@@ -93,7 +93,7 @@ public sealed class StartWorkspaceHome : VirtualStartWorkspace
     set => path = value;
   }
 
-  private protected sealed override string Location => PC.Environment.Known.Folder.Home();
+  private protected sealed override string Location => Client.Environment.Known.Folder.Home();
 }
 
 [Cmdlet(
@@ -118,7 +118,7 @@ public sealed class StartWorkspaceCode : VirtualStartWorkspace
     set => path = value;
   }
 
-  private protected sealed override string Location => PC.Environment.Known.Folder.Home();
+  private protected sealed override string Location => Client.Environment.Known.Folder.Home();
 
   private protected sealed override string LocationSubpath => "code";
 }

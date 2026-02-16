@@ -1,4 +1,4 @@
-namespace Module.PC.Environment.Known;
+namespace Module.Client.Environment.Known;
 
 internal static class Application
 {

@@ -1,4 +1,4 @@
-namespace Module.PC.Network;
+namespace Module.Client.Network;
 
 internal static class Url
 {

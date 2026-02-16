@@ -1,6 +1,6 @@
 namespace Module.Commands;
 
-using static PC.FileSystem.Path.Normalizer;
+using static Client.FileSystem.Path.Normalizer;
 
 public abstract class CoreCommand(
   bool SkipSsh = false
@@ -53,7 +53,7 @@ public abstract class CoreCommand(
     )
     && (
       !SkipSsh
-      || !PC.Environment.Known.Variable.Ssh
+      || !Client.Environment.Known.Variable.Ssh
     );
 
   public void Dispose()

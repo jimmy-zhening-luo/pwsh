@@ -50,7 +50,7 @@ public sealed class OpenUrl() : CoreCommand(
 
     foreach (Uri uri in uris)
     {
-      PC.Network.Url.Open(
+      Client.Network.Url.Open(
         uri
       );
     }
@@ -63,7 +63,7 @@ public sealed class OpenUrl() : CoreCommand(
       return;
     }
 
-    string cleanPath = PC.FileSystem.Path.Normalizer.Normalize(
+    string cleanPath = Client.FileSystem.Path.Normalizer.Normalize(
       path
     );
     string target = string.Empty;
@@ -96,7 +96,7 @@ public sealed class OpenUrl() : CoreCommand(
         : cleanPath;
     }
 
-    PC.Network.Url.Open(
+    Client.Network.Url.Open(
       target
     );
   }
