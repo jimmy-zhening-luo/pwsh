@@ -8,11 +8,9 @@ internal static class Escaper
     ' '
   )
     ? "'"
-      + Language
-        .CodeGeneration
-        .EscapeSingleQuotedStringContent(
-          text
-        )
+      + System.Management.Automation.Language.CodeGeneration.EscapeSingleQuotedStringContent(
+        text
+      )
       + "'"
     : text;
 

@@ -254,7 +254,7 @@ public abstract class CoreCommand(
     SessionState.Drive.Current.Root
   );
 
-  [CodeAnalysis.DoesNotReturn]
+  [System.Diagnostics.CodeAnalysis.DoesNotReturn]
   private protected void Throw(
     string message,
     string id,
@@ -269,7 +269,7 @@ public abstract class CoreCommand(
     target
   );
 
-  [CodeAnalysis.DoesNotReturn]
+  [System.Diagnostics.CodeAnalysis.DoesNotReturn]
   private protected void Throw(
     System.Exception exception,
     string id,

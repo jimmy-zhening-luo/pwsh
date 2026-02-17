@@ -19,8 +19,4 @@
     <Using Include="Module.Completer"/>
     <Using Include="Module.Completer.Path"/>
   </ItemGroup>
-  <ItemGroup>
-    <Using Include="System.Management.Automation.Language" Alias="Language"/>
-    <Using Include="System.Diagnostics.CodeAnalysis" Alias="CodeAnalysis"/>
-  </ItemGroup>
 </Project>

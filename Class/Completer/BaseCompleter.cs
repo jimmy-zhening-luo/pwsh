@@ -15,7 +15,7 @@ public abstract class BaseCompleter : IArgumentCompleter
     string commandName,
     string parameterName,
     string wordToComplete,
-    Language.CommandAst commandAst,
+    System.Management.Automation.Language.CommandAst commandAst,
     IDictionary fakeBoundParameters
   ) => WrapArgumentCompletionResult(
     FulfillCompletion(
