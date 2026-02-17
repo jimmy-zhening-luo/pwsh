@@ -28,4 +28,14 @@ internal static partial class PathString
           normalPath
         );
   }
+
+  private static string TrimRelativePrefix(
+    string path
+  ) => path == "."
+    ? string.Empty
+    : path.StartsWith(
+        @".\"
+      )
+      ? path[2..]
+      : path;
 }
