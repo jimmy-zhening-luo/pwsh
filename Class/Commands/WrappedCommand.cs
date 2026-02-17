@@ -2,7 +2,8 @@ namespace Module.Commands;
 
 public abstract class WrappedCommand(
   string WrappedCommandName,
-  bool SkipSsh = false
+  bool SkipSsh = false,
+  CommandTypes CommandType = CommandTypes.Cmdlet
 ) : CoreCommand(
   SkipSsh
 )
@@ -12,7 +13,8 @@ public abstract class WrappedCommand(
   private protected sealed override void BeforeBeginProcessing()
   {
     AddCommand(
-      WrappedCommandName
+      WrappedCommandName,
+      CommandType
     )
       .AddParameters(
         BoundParameters

@@ -3,30 +3,57 @@ namespace Module.Commands.Browse.Test.Host;
 [Cmdlet(
   VerbsDiagnostic.Test,
   "Host",
-  DefaultParameterSetName = "CommonTCPPort",
+  DefaultParameterSetName = "ICMP",
   HelpUri = "https://learn.microsoft.com/powershell/module/nettcpip/test-netconnection"
 )]
 [Alias("tn")]
 [OutputType(typeof(object))]
-public sealed partial class TestHost : CoreCommand
+public sealed partial class TestHost() : WrappedCommand(
+  "Test-NetConnection",
+  false,
+  CommandTypes.Function
+)
 {
   [Parameter(
+    ParameterSetName = "ICMP",
     Position = 0,
     ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true,
-    HelpMessage = "The hostname or IP address of the target host."
+    ValueFromPipelineByPropertyName = true
   )]
-  public string[] Name
+  [Parameter(
+    ParameterSetName = "CommonTCPPort",
+    Position = 0,
+    ValueFromPipeline = true,
+    ValueFromPipelineByPropertyName = true
+  )]
+  [Parameter(
+    ParameterSetName = "RemotePort",
+    Position = 0,
+    ValueFromPipeline = true,
+    ValueFromPipelineByPropertyName = true
+  )]
+  [Parameter(
+    ParameterSetName = "NetRouteDiagnostics",
+    Position = 0,
+    ValueFromPipeline = true,
+    ValueFromPipelineByPropertyName = true
+  )]
+  [Alias(
+    "Name",
+    "RemoteAddress",
+    "cn"
+  )]
+  public string ComputerName
   {
-    get => names;
-    set => names = value;
+    get => name;
+    set => name = value;
   }
-  private string[] names = [];
+  private string name = "";
 
   [Parameter(
     ParameterSetName = "CommonTCPPort",
     Position = 1,
-    HelpMessage = "Specifies the common service TCP port number."
+    Mandatory = true
   )]
   [EnumCompletions(
     typeof(TestHostWellKnownPort)
@@ -41,8 +68,7 @@ public sealed partial class TestHost : CoreCommand
   [Parameter(
     ParameterSetName = "RemotePort",
     Mandatory = true,
-    ValueFromPipelineByPropertyName = true,
-    HelpMessage = "The port number to test on the target host."
+    ValueFromPipelineByPropertyName = true
   )]
   [Alias("RemotePort")]
   [ValidateRange(1, 65535)]
@@ -54,8 +80,58 @@ public sealed partial class TestHost : CoreCommand
   private ushort port;
 
   [Parameter(
-    HelpMessage = "The level of information to return, can be Quiet or Detailed. Will not take effect if Detailed switch is set. Defaults to Quiet."
+    ParameterSetName = "ICMP"
   )]
+  public SwitchParameter TraceRoute
+  {
+    get => traceRoute;
+    set => traceRoute = value;
+  }
+  private bool traceRoute;
+
+  [Parameter(
+    ParameterSetName = "ICMP"
+  )]
+  [ValidateRange(1, 120)]
+  public int Hops
+  {
+    get => hops;
+    set => hops = value;
+  }
+  private int hops;
+
+  [Parameter(
+    ParameterSetName = "NetRouteDiagnostics",
+    Mandatory = true
+  )]
+  public SwitchParameter DiagnoseRouting
+  {
+    get => diagnoseRouting;
+    set => diagnoseRouting = value;
+  }
+  private bool diagnoseRouting;
+
+  [Parameter(
+    ParameterSetName = "NetRouteDiagnostics"
+  )]
+  public string ConstrainSourceAddress
+  {
+    get => constrainSourceAddress;
+    set => constrainSourceAddress = value;
+  }
+  private string constrainSourceAddress = "";
+
+  [Parameter(
+    ParameterSetName = "NetRouteDiagnostics"
+  )]
+  public uint ConstrainInterface
+  {
+    get => constrainInterface;
+    set => constrainInterface = value;
+  }
+  private uint constrainInterface;
+
+  [Parameter]
   [EnumCompletions(
     typeof(TestHostVerbosity)
   )]
@@ -80,139 +156,63 @@ public sealed partial class TestHost : CoreCommand
     {
       verbosity = TestHostVerbosity.Detailed;
     }
-  }
 
-  private protected sealed override bool ValidateParameters() => names.Length != 0;
+    BoundParameters.Remove("Detailed");
+    BoundParameters["InformationLevel"] = verbosity.ToString();
 
-  private protected sealed override void ProcessRecordAction()
-  {
-    foreach (var name in names)
+    switch (ParameterSetName)
     {
-      if (ParameterSetName == "RemotePort")
-      {
-        WriteTestNetConnection(
-          name,
-          port
-        );
-
-        continue;
-      }
-
-      if (
-        string.IsNullOrEmpty(
-          commonPort
+      case "ICMP":
+        if (
+          string.IsNullOrEmpty(
+            name
+          )
         )
-      )
-      {
-        WriteTestNetConnection(
-          name
-        );
+        {
+          BoundParameters["CommonTCPPort"] = TestHostWellKnownPort.HTTP.ToString();
+        }
 
-        continue;
-      }
+        break;
+      case "RemotePort":
+        BoundParameters["Port"] = (int)port;
 
-      if (
-        ushort.TryParse(
-          CommonTCPPort,
-          out var parsedPortNumber
+        break;
+      case "CommonTCPPort":
+        BoundParameters.Remove("CommonTCPPort");
+
+        if (
+          ushort.TryParse(
+            commonPort,
+            out var parsedPortNumber
+          )
         )
-      )
-      {
-        WriteTestNetConnection(
-          name,
-          parsedPortNumber
-        );
-      }
-      else if (
-        System.Enum.TryParse(
-          CommonTCPPort,
-          true,
-          out TestHostWellKnownPort parsedPortEnum
+        {
+          BoundParameters["Port"] = (int)parsedPortNumber;
+        }
+        else if (
+          System.Enum.TryParse(
+            commonPort,
+            true,
+            out TestHostWellKnownPort parsedPortEnum
+          )
         )
-      )
-      {
-        WriteTestNetConnection(
-          name,
-          parsedPortEnum
-        );
-      }
-      else
-      {
-        WriteTestNetConnection(
-          name
-        );
-      }
+        {
+          BoundParameters["CommonTCPPort"] = parsedPortEnum.ToString();
+        }
+
+        break;
+      default:
+        break;
     }
-  }
 
-  private protected sealed override void DefaultAction() => WriteTestNetConnection(
-    "google.com",
-    TestHostWellKnownPort.HTTP
-  );
-
-  private void WriteTestNetConnection(
-    string computerName,
-    ushort portNumber = 0
-  ) => BuildWriteTestNetConnection(
-    computerName,
-    string.Empty,
-    portNumber
-  );
-
-  private void WriteTestNetConnection(
-    string computerName,
-    TestHostWellKnownPort wellknownPort
-  ) => BuildWriteTestNetConnection(
-    computerName,
-    wellknownPort.ToString()
-  );
-
-  private void BuildWriteTestNetConnection(
-    string computerName,
-    string wellknownPortString = "",
-    ushort portNumber = 0
-  )
-  {
-    using var ps = PowerShellHost.Create(
-      true
-    );
-
-    AddCommand(
-      ps,
-      "Test-NetConnection",
-      CommandTypes.Function
-    )
-      .AddParameter(
-        "ComputerName",
-        computerName
-      )
-      .AddParameter(
-        "InformationLevel",
-        verbosity
-      );
-
-    if (portNumber != 0)
-    {
-      ps.AddParameter(
-        "Port",
-        portNumber
-      );
-    }
-    else if (
-      !string.IsNullOrEmpty(
-        wellknownPortString
+    if (
+      string.IsNullOrEmpty(
+        name
       )
     )
     {
-      ps.AddParameter(
-        "CommonTCPPort",
-        wellknownPortString
-      );
+      name = "google.com";
+      BoundParameters["ComputerName"] = name;
     }
-
-    WriteObject(
-      ps.Invoke(),
-      true
-    );
   }
 }
