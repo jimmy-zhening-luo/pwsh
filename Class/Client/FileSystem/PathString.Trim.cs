@@ -9,15 +9,11 @@ internal static partial class PathString
 
   private static string TrimRelativePrefix(
     string path
-  ) => path.StartsWith(
-    '.'
-  )
-    && (
-      path.Length == 1
-      || path[1] == '\\'
-    )
-    ? path.Length == 1
-      ? string.Empty
-      : path[2..]
-    : path;
+  ) => path == "."
+    ? string.Empty
+    : path.StartsWith(
+        @".\"
+      )
+      ? path[2..]
+      : path;
 }
