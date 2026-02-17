@@ -1,7 +1,5 @@
 namespace Module.Completer.Path;
 
-using static System.IO.Path;
-
 public sealed class PathCompleter : BaseCompleter
 {
   private readonly string Root;
@@ -84,7 +82,7 @@ public sealed class PathCompleter : BaseCompleter
         }
         else
         {
-          string anchoredPath = GetFullPath(
+          string anchoredPath = System.IO.Path.GetFullPath(
             subpathPart,
             Root
           );
@@ -95,7 +93,7 @@ public sealed class PathCompleter : BaseCompleter
             )
           )
           {
-            accumulatedSubpath = GetRelativePath(
+            accumulatedSubpath = System.IO.Path.GetRelativePath(
               Root,
               anchoredPath
             );
@@ -109,7 +107,7 @@ public sealed class PathCompleter : BaseCompleter
             )
           )
           {
-            accumulatedSubpath = GetFullPath(
+            accumulatedSubpath = System.IO.Path.GetFullPath(
               subpathPart
             );
             location = accumulatedSubpath;
@@ -158,7 +156,7 @@ FileFirstMatch:
       {
         ++count;
         yield return Canonicalizer.Denormalize(
-          GetFileName(
+          System.IO.Path.GetFileName(
             file
           ),
           accumulatedSubpath
@@ -193,7 +191,7 @@ Match:
     {
       ++count;
       yield return Canonicalizer.Denormalize(
-        GetFileName(
+        System.IO.Path.GetFileName(
           directory
         ),
         accumulatedSubpath,
@@ -226,7 +224,7 @@ Match:
       {
         ++count;
         yield return Canonicalizer.Denormalize(
-          GetFileName(
+          System.IO.Path.GetFileName(
             file
           ),
           accumulatedSubpath
