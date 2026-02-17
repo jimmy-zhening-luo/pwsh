@@ -1,4 +1,4 @@
-namespace Module.Commands.Browse.Test;
+namespace Module.Commands.Browse.Test.Host;
 
 public sealed partial class TestHost
 {
