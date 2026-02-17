@@ -44,7 +44,7 @@ public sealed class Completer : BaseCompleter
       if (
         member.StartsWith(
           wordToComplete,
-          StringComparison.OrdinalIgnoreCase
+          System.StringComparison.OrdinalIgnoreCase
         )
       )
       {
@@ -68,7 +68,7 @@ public sealed class Completer : BaseCompleter
         && member.IndexOf(
           wordToComplete,
           1,
-          StringComparison.OrdinalIgnoreCase
+          System.StringComparison.OrdinalIgnoreCase
         ) > 0
       )
       {

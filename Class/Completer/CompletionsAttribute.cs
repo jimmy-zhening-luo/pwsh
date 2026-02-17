@@ -35,8 +35,8 @@ public sealed class CompletionsAttribute : BaseCompletionsAttribute<Completer>
     StringifiedDomain
       .Split(
         ',',
-        StringSplitOptions.RemoveEmptyEntries
-        | StringSplitOptions.TrimEntries
+        System.StringSplitOptions.RemoveEmptyEntries
+        | System.StringSplitOptions.TrimEntries
       ),
     Strict,
     Casing

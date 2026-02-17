@@ -21,11 +21,6 @@
   </ItemGroup>
   <ItemGroup>
     <Using Include="System.Management.Automation.Language" Alias="Language"/>
-    <Using Include="System.IO" Alias="IO"/>
-    <Using Include="System.Uri" Alias="Uri"/>
-    <Using Include="System.StringComparer" Alias="StringComparer"/>
-    <Using Include="System.StringComparison" Alias="StringComparison"/>
-    <Using Include="System.StringSplitOptions" Alias="StringSplitOptions"/>
     <Using Include="System.Diagnostics.CodeAnalysis" Alias="CodeAnalysis"/>
   </ItemGroup>
 </Project>

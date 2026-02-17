@@ -27,7 +27,7 @@ internal static class Url
 
   internal static bool Test(
     System.Net.Http.HttpClient client,
-    Uri url
+    System.Uri url
   )
   {
     try
@@ -57,7 +57,7 @@ internal static class Url
   }
 
   internal static void Open(
-    Uri uri
+    System.Uri uri
   )
   {
     string url = uri

@@ -145,7 +145,7 @@ public sealed class GetSize : CoreCommand
       )
       {
         Throw(
-          new IO.FileNotFoundException(
+          new System.IO.FileNotFoundException(
             $"The path '{path}' does not exist."
           ),
           "PathNotFound",
@@ -158,17 +158,17 @@ public sealed class GetSize : CoreCommand
         path,
         FileSystemItemType.Directory
       )
-        ? new IO.DirectoryInfo(
+        ? new System.IO.DirectoryInfo(
             Pwd(path)
           )
           .EnumerateFiles(
             "*",
-            IO.SearchOption.AllDirectories
+            System.IO.SearchOption.AllDirectories
           )
           .Sum(
             file => file.Length
           )
-        : new IO.FileInfo(
+        : new System.IO.FileInfo(
             Pwd(path)
           )
           .Length;

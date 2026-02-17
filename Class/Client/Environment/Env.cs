@@ -14,7 +14,7 @@ internal static partial class Env
   internal static string GetFolder(
     SpecialFolder folder,
     string subpath = ""
-  ) => IO.Path.GetFullPath(
+  ) => System.IO.Path.GetFullPath(
     FileSystem.PathString.Normalize(
       subpath
     ),

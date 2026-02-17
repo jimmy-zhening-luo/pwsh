@@ -41,7 +41,7 @@ internal static class Folder
 
   internal static string Code(
     string subpath = ""
-  ) => IO.Path.GetFullPath(
+  ) => System.IO.Path.GetFullPath(
     FileSystem.PathString.Normalize(
       subpath
     ),

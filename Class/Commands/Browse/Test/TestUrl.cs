@@ -6,7 +6,7 @@ namespace Module.Commands.Browse.Test;
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097126"
 )]
 [Alias("tu")]
-[OutputType(typeof(Uri))]
+[OutputType(typeof(System.Uri))]
 public sealed class TestUrl : CoreCommand
 {
   [Parameter(
@@ -18,12 +18,12 @@ public sealed class TestUrl : CoreCommand
     HelpMessage = "The URL to test. If the URL has no scheme, it defaults to 'http'."
   )]
   [AllowEmptyCollection]
-  public Uri[] Uri
+  public System.Uri[] Uri
   {
     get => uris;
     set => uris = value;
   }
-  private Uri[] uris = [];
+  private System.Uri[] uris = [];
 
   private protected sealed override void ProcessRecordAction()
   {
@@ -34,9 +34,9 @@ public sealed class TestUrl : CoreCommand
       )
     };
 
-    foreach (Uri uri in uris)
+    foreach (var uri in uris)
     {
-      Uri url = new(
+      System.Uri url = new(
         uri.IsAbsoluteUri
           ? string.IsNullOrEmpty(
               uri.Host.Trim()

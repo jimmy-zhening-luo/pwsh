@@ -24,7 +24,7 @@ internal static class Canonicalizer
           : normalPath
         : normalPath;
 
-    return IO.Path.IsPathFullyQualified(
+    return System.IO.Path.IsPathFullyQualified(
       homedNormalPath
     )
       ? homedNormalPath
@@ -37,7 +37,7 @@ internal static class Canonicalizer
     string path,
     string location = "",
     string subpath = ""
-  ) => IO
+  ) => System.IO
     .Path
     .Join(
       location,

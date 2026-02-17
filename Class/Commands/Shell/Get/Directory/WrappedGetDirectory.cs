@@ -129,7 +129,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   private bool followSymlink;
 
   [Parameter]
-  public FlagsExpression<IO.FileAttributes>? Attributes;
+  public FlagsExpression<System.IO.FileAttributes>? Attributes;
 
   private protected sealed override void TransformParameters()
   {

@@ -24,7 +24,7 @@ internal static partial class PathString
 
     return preserveTrailingSeparator
       ? normalPath
-      : IO.Path.TrimEndingDirectorySeparator(
+      : System.IO.Path.TrimEndingDirectorySeparator(
           normalPath
         );
   }

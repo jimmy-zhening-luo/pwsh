@@ -185,11 +185,11 @@ public abstract class CoreCommand(
 
   private protected string Reanchor(
     string typedPath = ""
-  ) => IO.Path.GetFullPath(
+  ) => System.IO.Path.GetFullPath(
     Client.FileSystem.PathString.Normalize(
       typedPath
     ),
-    IO.Path.GetFullPath(
+    System.IO.Path.GetFullPath(
       LocationSubpath,
       string.IsNullOrEmpty(
         Location
@@ -210,13 +210,13 @@ public abstract class CoreCommand(
 
     return type switch
     {
-      FileSystemItemType.File => IO.File.Exists(
+      FileSystemItemType.File => System.IO.File.Exists(
         absolutePath
       ),
-      FileSystemItemType.Directory => IO.Directory.Exists(
+      FileSystemItemType.Directory => System.IO.Directory.Exists(
         absolutePath
       ),
-      _ => IO.Path.Exists(
+      _ => System.IO.Path.Exists(
         absolutePath
       )
     };
@@ -238,7 +238,7 @@ public abstract class CoreCommand(
 
   private protected string Pwd(
     string subpath = ""
-  ) => IO.Path.GetFullPath(
+  ) => System.IO.Path.GetFullPath(
     Client.FileSystem.PathString.Normalize(
       subpath
     ),
@@ -247,7 +247,7 @@ public abstract class CoreCommand(
 
   private protected string Drive(
     string subpath = ""
-  ) => IO.Path.GetFullPath(
+  ) => System.IO.Path.GetFullPath(
     Client.FileSystem.PathString.Normalize(
       subpath
     ),

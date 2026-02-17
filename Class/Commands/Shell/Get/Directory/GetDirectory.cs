@@ -8,8 +8,8 @@ namespace Module.Commands.Shell.Get.Directory;
 )]
 [Alias("l")]
 [OutputType(
-  typeof(IO.DirectoryInfo),
-  typeof(IO.FileInfo)
+  typeof(System.IO.DirectoryInfo),
+  typeof(System.IO.FileInfo)
 )]
 public sealed class GetDirectory : WrappedGetDirectory
 {
@@ -64,8 +64,8 @@ public sealed class GetDirectory : WrappedGetDirectory
 )]
 [Alias("lx")]
 [OutputType(
-  typeof(IO.DirectoryInfo),
-  typeof(IO.FileInfo)
+  typeof(System.IO.DirectoryInfo),
+  typeof(System.IO.FileInfo)
 )]
 public sealed class GetDirectorySibling : WrappedGetDirectory
 {
@@ -95,8 +95,8 @@ public sealed class GetDirectorySibling : WrappedGetDirectory
 )]
 [Alias("lxx")]
 [OutputType(
-  typeof(IO.DirectoryInfo),
-  typeof(IO.FileInfo)
+  typeof(System.IO.DirectoryInfo),
+  typeof(System.IO.FileInfo)
 )]
 public sealed class GetDirectoryRelative : WrappedGetDirectory
 {
@@ -126,8 +126,8 @@ public sealed class GetDirectoryRelative : WrappedGetDirectory
 )]
 [Alias("lh")]
 [OutputType(
-  typeof(IO.DirectoryInfo),
-  typeof(IO.FileInfo)
+  typeof(System.IO.DirectoryInfo),
+  typeof(System.IO.FileInfo)
 )]
 public sealed class GetDirectoryHome : WrappedGetDirectory
 {
@@ -157,8 +157,8 @@ public sealed class GetDirectoryHome : WrappedGetDirectory
 )]
 [Alias("lc")]
 [OutputType(
-  typeof(IO.DirectoryInfo),
-  typeof(IO.FileInfo)
+  typeof(System.IO.DirectoryInfo),
+  typeof(System.IO.FileInfo)
 )]
 public sealed class GetDirectoryCode : WrappedGetDirectory
 {
@@ -190,8 +190,8 @@ public sealed class GetDirectoryCode : WrappedGetDirectory
 )]
 [Alias("l/")]
 [OutputType(
-  typeof(IO.DirectoryInfo),
-  typeof(IO.FileInfo)
+  typeof(System.IO.DirectoryInfo),
+  typeof(System.IO.FileInfo)
 )]
 public sealed class GetDirectoryDrive : WrappedGetDirectory
 {

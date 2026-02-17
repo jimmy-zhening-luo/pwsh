@@ -33,12 +33,12 @@ public sealed class GetHelpOnline : CoreCommand
   }
   private string[] parameters = [];
 
-  private static Uri? ResolveAboutArticle(
+  private static System.Uri? ResolveAboutArticle(
     System.Net.Http.HttpClient client,
     string topic
   )
   {
-    Uri testUri = new(AboutBaseUrl + "/" + topic);
+    System.Uri testUri = new(AboutBaseUrl + "/" + topic);
 
     return Client.Network.Url.Test(
       client,

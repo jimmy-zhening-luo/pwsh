@@ -30,7 +30,7 @@ public sealed class GetType : Cmdlet
     )
     {
       var uniqueTypes = new HashSet<string>(
-        StringComparer.OrdinalIgnoreCase
+        System.StringComparer.OrdinalIgnoreCase
       );
 
       foreach (var type in typeAccelerators.Keys)
@@ -41,7 +41,7 @@ public sealed class GetType : Cmdlet
       WriteObject(
         new SortedSet<string>(
           uniqueTypes,
-          StringComparer.OrdinalIgnoreCase
+          System.StringComparer.OrdinalIgnoreCase
         ),
         true
       );

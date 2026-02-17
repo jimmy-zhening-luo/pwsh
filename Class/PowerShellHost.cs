@@ -16,7 +16,7 @@ internal static class PowerShellHost
   {
     using var ps = Create();
 
-    return IO.Path.GetFullPath(
+    return System.IO.Path.GetFullPath(
       path,
       ps
         .AddCommand(

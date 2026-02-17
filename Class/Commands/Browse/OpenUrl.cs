@@ -34,12 +34,12 @@ public sealed class OpenUrl() : CoreCommand(
     HelpMessage = "The URL(s) to open."
   )]
   [AllowEmptyCollection]
-  public Uri[] Uri
+  public System.Uri[] Uri
   {
     get => uris;
     set => uris = value;
   }
-  private Uri[] uris = [];
+  private System.Uri[] uris = [];
 
   private protected sealed override void ProcessRecordAction()
   {
@@ -48,7 +48,7 @@ public sealed class OpenUrl() : CoreCommand(
       return;
     }
 
-    foreach (Uri uri in uris)
+    foreach (var uri in uris)
     {
       Client.Network.Url.Open(
         uri
@@ -74,23 +74,23 @@ public sealed class OpenUrl() : CoreCommand(
       )
     )
     {
-      string relativePath = IO.Path.GetRelativePath(
+      string relativePath = System.IO.Path.GetRelativePath(
         SessionState.Path.CurrentLocation.Path,
         cleanPath
       );
-      string testPath = IO.Path.IsPathRooted(
+      string testPath = System.IO.Path.IsPathRooted(
         relativePath
       )
         ? relativePath
-        : IO.Path.Combine(
+        : System.IO.Path.Combine(
             SessionState.Path.CurrentLocation.Path,
             relativePath
           );
 
-      target = IO.Path.Exists(
+      target = System.IO.Path.Exists(
         testPath
       )
-        ? IO.Path.GetFullPath(
+        ? System.IO.Path.GetFullPath(
             testPath
           )
         : cleanPath;
