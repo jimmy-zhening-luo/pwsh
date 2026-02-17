@@ -1,4 +1,4 @@
-namespace Module.Commands.Shell.Get.Attribute;
+namespace Module.Commands.Shell.Get.Attribute.Size;
 
 using System.Linq;
 
@@ -17,42 +17,8 @@ using System.Linq;
   typeof(double),
   ParameterSetName = ["Number"]
 )]
-public sealed class GetSize : CoreCommand
+public sealed partial class GetSize : CoreCommand
 {
-  public enum DiskSizeUnit
-  {
-    B,
-    KB,
-    MB,
-    GB,
-    TB,
-    PB
-  }
-
-  private enum DiskSizeAlias
-  {
-    B,
-    KB,
-    K = KB,
-    MB,
-    M = MB,
-    GB,
-    G = GB,
-    TB,
-    T = TB,
-    PB,
-    P = PB
-  }
-
-  internal static readonly Dictionary<DiskSizeUnit, long> DiskSizeFactor = new() {
-    { DiskSizeUnit.B, 1L },
-    { DiskSizeUnit.KB, 1L << 10 },
-    { DiskSizeUnit.MB, 1L << 20 },
-    { DiskSizeUnit.GB, 1L << 30 },
-    { DiskSizeUnit.TB, 1L << 40 },
-    { DiskSizeUnit.PB, 1L << 50 }
-  };
-
   [Parameter(
     ParameterSetName = "String",
     Position = 0,
@@ -95,7 +61,13 @@ public sealed class GetSize : CoreCommand
       out DiskSizeUnit parsedUnit
     )
       ? parsedUnit
-      : DiskSizeUnit.KB;
+      : System.Enum.TryParse(
+          value,
+          true,
+          out DiskSizeUnitAlias parsedUnitAlias
+        )
+        ? (DiskSizeUnit)parsedUnitAlias
+        : DiskSizeUnit.KB;
   }
   private DiskSizeUnit unit = DiskSizeUnit.KB;
 
@@ -110,10 +82,6 @@ public sealed class GetSize : CoreCommand
   }
   private bool number;
 
-  private long factor = DiskSizeFactor[
-    DiskSizeUnit.KB
-  ];
-
   private protected sealed override void TransformParameters()
   {
     if (paths.Length == 0)
@@ -122,20 +90,13 @@ public sealed class GetSize : CoreCommand
         Pwd()
       ];
     }
-
-    if (
-      DiskSizeFactor.TryGetValue(
-        unit,
-        out long value
-      )
-    )
-    {
-      factor = value;
-    }
   }
 
   private protected sealed override void ProcessRecordAction()
   {
+    var bits = (int)unit * 10;
+    long factor = 1L << bits;
+
     foreach (var path in paths)
     {
       if (
