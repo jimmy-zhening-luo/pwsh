@@ -36,7 +36,7 @@ public sealed class EnumCompletionsAttribute : BaseCompletionsAttribute<Complete
   );
 
   public sealed override Completer Create() => new(
-    Enum.GetNames(
+    System.Enum.GetNames(
       EnumType
     ),
     Strict,

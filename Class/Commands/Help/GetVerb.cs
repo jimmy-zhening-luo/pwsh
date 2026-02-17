@@ -81,7 +81,7 @@ public sealed class GetVerb : CoreCommand
     foreach (var group in groups)
     {
       if (
-        Enum.TryParse<VerbGroup>(
+        System.Enum.TryParse<VerbGroup>(
           group,
           true,
           out var parsedGroup

@@ -138,7 +138,7 @@ public sealed class TestHost : CoreCommand
         );
       }
       else if (
-        Enum.TryParse(
+        System.Enum.TryParse(
           CommonTCPPort,
           true,
           out TestHostWellKnownPort parsedPortEnum

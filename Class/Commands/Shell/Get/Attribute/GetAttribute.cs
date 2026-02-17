@@ -89,7 +89,7 @@ public sealed class GetSize : CoreCommand
   public string Unit
   {
     get => unit.ToString();
-    set => unit = Enum.TryParse(
+    set => unit = System.Enum.TryParse(
       value,
       true,
       out DiskSizeUnit parsedUnit
