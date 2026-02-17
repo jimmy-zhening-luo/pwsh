@@ -12,17 +12,13 @@ internal static class Url
         host,
         System.Net.Sockets.AddressFamily.InterNetwork
       );
+
+      return true;
     }
     catch (System.Net.Sockets.SocketException)
     {
       return false;
     }
-    catch
-    {
-      throw;
-    }
-
-    return true;
   }
 
   internal static bool Test(
@@ -49,10 +45,6 @@ internal static class Url
     catch (System.InvalidOperationException)
     {
       return false;
-    }
-    catch
-    {
-      throw;
     }
   }
 
