@@ -39,7 +39,7 @@ public sealed class ConvertToHex : Cmdlet
 
   protected sealed override void ProcessRecord()
   {
-    foreach (long number in numbers)
+    foreach (var number in numbers)
     {
       string hex = number.ToString("X");
 

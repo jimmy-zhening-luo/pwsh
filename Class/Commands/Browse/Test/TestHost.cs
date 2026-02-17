@@ -100,7 +100,7 @@ public sealed class TestHost : CoreCommand
 
   private protected sealed override void ProcessRecordAction()
   {
-    foreach (string name in names)
+    foreach (var name in names)
     {
       if (ParameterSetName == "RemotePort")
       {

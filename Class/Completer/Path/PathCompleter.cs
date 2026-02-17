@@ -149,7 +149,7 @@ public sealed class PathCompleter : BaseCompleter
     {
 FileFirstMatch:
       foreach (
-        string file in System.IO.Directory.EnumerateFiles(
+        var file in System.IO.Directory.EnumerateFiles(
           location,
           filter,
           attributes
@@ -184,7 +184,7 @@ FileFirstMatch:
 
 Match:
     foreach (
-      string directory in System.IO.Directory.EnumerateDirectories(
+      var directory in System.IO.Directory.EnumerateDirectories(
         location,
         filter,
         attributes
@@ -217,7 +217,7 @@ Match:
     if (Type == PathItemType.Any)
     {
       foreach (
-        string file in System.IO.Directory.EnumerateFiles(
+        var file in System.IO.Directory.EnumerateFiles(
           location,
           filter,
           attributes

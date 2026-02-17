@@ -136,7 +136,7 @@ public sealed class GetSize : CoreCommand
 
   private protected sealed override void ProcessRecordAction()
   {
-    foreach (string path in paths)
+    foreach (var path in paths)
     {
       if (
         !TestPath(

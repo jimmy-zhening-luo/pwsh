@@ -30,7 +30,7 @@ public sealed class Completer : BaseCompleter
       )
     )
     {
-      foreach (string member in Domain)
+      foreach (var member in Domain)
       {
         yield return member;
       }
@@ -39,7 +39,7 @@ public sealed class Completer : BaseCompleter
     }
 
     int count = 0;
-    foreach (string member in Domain)
+    foreach (var member in Domain)
     {
       if (
         member.StartsWith(
@@ -61,7 +61,7 @@ public sealed class Completer : BaseCompleter
       yield break;
     }
 
-    foreach (string member in Domain)
+    foreach (var member in Domain)
     {
       if (
         member.Length > wordToComplete.Length

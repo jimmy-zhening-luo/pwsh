@@ -35,7 +35,7 @@ public abstract class BaseCompleter : IArgumentCompleter
   )
   {
     foreach (
-      string completedString in completedStrings
+      var completedString in completedStrings
     )
     {
       yield return new CompletionResult(
