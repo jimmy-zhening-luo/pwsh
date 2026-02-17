@@ -1,7 +1,5 @@
 namespace Module.Commands.Windows.Manage;
 
-using Process = System.Diagnostics.Process;
-
 [Cmdlet(
   VerbsLifecycle.Stop,
   "Task",
@@ -48,12 +46,12 @@ public sealed class StopTask : CoreCommand
     ValueFromPipeline = true,
     HelpMessage = "The Process object(s) to stop."
   )]
-  public Process[] InputObject
+  public System.Diagnostics.Process[] InputObject
   {
     get => inputs;
     set => inputs = value;
   }
-  private Process[] inputs = [];
+  private System.Diagnostics.Process[] inputs = [];
 
   [Parameter(
     ParameterSetName = "Name",
@@ -171,7 +169,7 @@ public sealed class StopTask : CoreCommand
   private void KillProcess(
     int pid,
     bool entireProcessTree = false
-  ) => Process
+  ) => System.Diagnostics.Process
     .GetProcessById(
       pid
     )
@@ -185,7 +183,7 @@ public sealed class StopTask : CoreCommand
   )
   {
     foreach (
-      var process in Process.GetProcessesByName(
+      var process in System.Diagnostics.Process.GetProcessesByName(
         name
       )
     )

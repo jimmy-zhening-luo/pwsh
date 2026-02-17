@@ -1,41 +1,39 @@
 namespace Module.Client.Environment.Known;
 
-using SpecialFolder = System.Environment.SpecialFolder;
-
 internal static class Folder
 {
   internal static string WinDir(
     string subpath = ""
   ) => Env.GetFolder(
-    SpecialFolder.Windows,
+    System.Environment.SpecialFolder.Windows,
     subpath
   );
 
   internal static string ProgramFiles(
     string subpath = ""
   ) => Env.GetFolder(
-    SpecialFolder.ProgramFiles,
+    System.Environment.SpecialFolder.ProgramFiles,
     subpath
   );
 
   internal static string AppData(
     string subpath = ""
   ) => Env.GetFolder(
-    SpecialFolder.ApplicationData,
+    System.Environment.SpecialFolder.ApplicationData,
     subpath
   );
 
   internal static string LocalAppData(
     string subpath = ""
   ) => Env.GetFolder(
-    SpecialFolder.LocalApplicationData,
+    System.Environment.SpecialFolder.LocalApplicationData,
     subpath
   );
 
   internal static string Home(
     string subpath = ""
   ) => Env.GetFolder(
-    SpecialFolder.UserProfile,
+    System.Environment.SpecialFolder.UserProfile,
     subpath
   );
 

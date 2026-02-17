@@ -1,28 +1,26 @@
 namespace Module.Completer;
 
-using Type = System.Type;
-
 public sealed class EnumCompletionsAttribute : BaseCompletionsAttribute<Completer>
 {
-  private readonly Type EnumType;
+  private readonly System.Type EnumType;
 
   private readonly bool Strict;
 
   public EnumCompletionsAttribute(
-    Type enumType
+    System.Type enumType
   ) : base(
     CompletionCase.Lower
   ) => EnumType = enumType;
 
   public EnumCompletionsAttribute(
-    Type enumType,
+    System.Type enumType,
     bool strict
   ) : this(
     enumType
   ) => Strict = strict;
 
   public EnumCompletionsAttribute(
-    Type enumType,
+    System.Type enumType,
     bool strict,
     CompletionCase casing
   ) : base(

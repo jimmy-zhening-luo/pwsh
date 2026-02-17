@@ -1,7 +1,5 @@
 namespace Module.Client;
 
-using ProcessStartInfo = System.Diagnostics.ProcessStartInfo;
-
 internal static class Invocation
 {
   internal static void CreateProcess(
@@ -66,7 +64,7 @@ internal static class Invocation
     );
   }
 
-  private static ProcessStartInfo ArgumentList(
+  private static System.Diagnostics.ProcessStartInfo ArgumentList(
     string fileName,
     IEnumerable<string>? arguments,
     bool noNewWindow
@@ -80,10 +78,10 @@ internal static class Invocation
 
     var startInfo = argumentList == null
       || argumentList.Count == 0
-      ? new ProcessStartInfo(
+      ? new System.Diagnostics.ProcessStartInfo(
           fileName
         )
-      : new ProcessStartInfo(
+      : new System.Diagnostics.ProcessStartInfo(
           fileName,
           argumentList
         );

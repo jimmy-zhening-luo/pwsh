@@ -1,10 +1,8 @@
 namespace Module.Completer;
 
-using AttributeTargets = System.AttributeTargets;
-
 [System.AttributeUsage(
-  AttributeTargets.Property
-  | AttributeTargets.Field
+  System.AttributeTargets.Property
+  | System.AttributeTargets.Field
 )]
 public abstract class BaseCompletionsAttribute<T> : ArgumentCompleterAttribute, IArgumentCompleterFactory where T : BaseCompleter
 {

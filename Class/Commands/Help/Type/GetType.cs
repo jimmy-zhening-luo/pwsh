@@ -1,7 +1,5 @@
 namespace Module.Commands.Help.Type;
 
-using BindingFlags = System.Reflection.BindingFlags;
-
 [Cmdlet(
   VerbsCommon.Get,
   "Type",
@@ -23,8 +21,8 @@ public sealed class GetType : Cmdlet
         )
         ?.GetProperty(
           "Get",
-          BindingFlags.Static
-          | BindingFlags.Public
+          System.Reflection.BindingFlags.Static
+          | System.Reflection.BindingFlags.Public
         )
         ?.GetValue(null) is IDictionary typeAccelerators
     )
