@@ -1,4 +1,4 @@
-namespace Module.Commands.Help;
+namespace Module.Commands.Help.Verb;
 
 [Cmdlet(
   VerbsCommon.Get,
@@ -7,24 +7,8 @@ namespace Module.Commands.Help;
 )]
 [OutputType(typeof(VerbInfo))]
 [OutputType(typeof(string))]
-public sealed class GetVerb : CoreCommand
+public sealed partial class GetVerb : CoreCommand
 {
-  public enum VerbGroup
-  {
-    Common,
-    Communications,
-    Data,
-    Diagnostic,
-    Lifecycle,
-    Other,
-    Security,
-    Service,
-    Settings,
-    Support,
-    System,
-    Utility
-  }
-
   private bool performSearch;
 
   [Parameter(
