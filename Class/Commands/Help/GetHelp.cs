@@ -57,7 +57,20 @@ public sealed class GetHelpOnline : CoreCommand
     );
 
   private protected sealed override void AfterEndProcessing()
-  { }
+  {
+    var topic = string.Join(
+      '_',
+      names
+    );
+    var helpContent = GetHelpContent(
+      topic
+    );
+
+    WriteObject(
+      helpContent,
+      true
+    );
+  }
 
   private protected sealed override void DefaultAction() => WriteObject(
     AddCommand(
