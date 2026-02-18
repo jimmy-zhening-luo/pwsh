@@ -8,23 +8,11 @@ $ABOUT_BASE_URL = 'https://learn.microsoft.com/powershell/module/microsoft.power
 function Get-HelpOnline {
   [CmdletBinding()]
   [OutputType([System.Object])]
-  [Alias('m', 'man')]
   param(
 
     [Parameter(
       Position = 0,
       ValueFromRemainingArguments
-    )]
-    [DynamicCompletions(
-      {
-        return (
-          Import-PowerShellDataFile -Path $PSScriptRoot\PSHelpTopic.Local.psd1
-        ).About + (
-          (
-            Get-ChildItem -Path Function:
-          ).Name.ToLower() -notmatch '[^\w-]'
-        ).ToLower()
-      }
     )]
     [string[]]$Name,
 
