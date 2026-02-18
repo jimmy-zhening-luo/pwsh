@@ -24,9 +24,12 @@ public abstract class CoreCommand(
 
   private bool disposed;
 
-  ~CoreCommand() => Dispose(
-    false
-  );
+  ~CoreCommand()
+  {
+    Dispose(
+      false
+    );
+  }
 
   private protected virtual string Location => string.Empty;
 
