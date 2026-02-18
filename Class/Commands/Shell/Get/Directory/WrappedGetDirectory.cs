@@ -51,6 +51,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   private bool recurse;
 
   [Parameter]
+  [Alias("de")]
   public uint Depth
   {
     get => depth;
@@ -76,7 +77,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   private bool name;
 
   [Parameter]
-  [Alias("ad")]
+  [Alias("ad", "d")]
   public SwitchParameter Directory
   {
     get => directory;
@@ -85,7 +86,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   private bool directory;
 
   [Parameter]
-  [Alias("af")]
+  [Alias("af", "fi")]
   public SwitchParameter File
   {
     get => file;
