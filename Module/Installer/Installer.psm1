@@ -56,65 +56,67 @@ function Update-PSProfile {
       throw "Failed to pull pwsh profile repository. Git returned exit code: $LASTEXITCODE"
     }
 
-    if ($Build) {
+    if (-not $Build) {
+      return
+    }
+
+    try {
+      $DotnetExecutable = (
+        Get-Command -Name dotnet.exe -CommandType Application -All
+      ).Source
+      $DotnetArgument = @(
+        "$PROFILE_REPO_ROOT\Class.slnx"
+        '--configuration=Release'
+        '--nologo'
+      )
+
       try {
-        $DotnetExecutable = (
-          Get-Command -Name dotnet.exe -CommandType Application -All
-        ).Source
-        $DotnetArgument = @(
-          "$PROFILE_REPO_ROOT\Class.slnx"
-          '--configuration=Release'
-          '--nologo'
+        $DotnetCleanArgument = @(
+          '--verbosity=quiet'
         )
 
-        try {
-          $DotnetCleanArgument = @(
-            '--verbosity=quiet'
-          )
+        & $DotnetExecutable clean @DotnetArgument @DotnetCleanArgument
 
-          & $DotnetExecutable clean @DotnetArgument @DotnetCleanArgument
-
-          if ($LASTEXITCODE -notin 0, 1) {
-            throw "dotnet.exe returned a non-zero exit code ($LASTEXITCODE) when trying to clean the project."
-          }
-        }
-        catch {
-          throw 'Failed to clean project. ' + $PSItem.Exception
-        }
-
-        try {
-          $DotnetBuildArgument = @()
-
-          if ($Restore) {
-            $DotnetBuildArgument += @(
-              '--force'
-              '--no-incremental'
-              '--disable-build-servers'
-            )
-          }
-
-          & $DotnetExecutable build @DotnetArgument @DotnetBuildArgument
-
-          if ($LASTEXITCODE -notin 0, 1) {
-            throw "dotnet.exe returned a non-zero exit code ($LASTEXITCODE) when trying to build the project."
-          }
-        }
-        catch {
-          throw 'Failed to build project. ' + $PSItem.Exception
+        if ($LASTEXITCODE -notin 0, 1) {
+          throw "dotnet.exe returned a non-zero exit code ($LASTEXITCODE) when trying to clean the project."
         }
       }
       catch {
-        throw $PSItem.Exception
+        throw 'Failed to clean project. ' + $PSItem.Exception
       }
-      finally {
-        $DotnetProcess = Get-Process |
-          Where-Object {
-            $PSItem.ProcessName -eq 'dotnet'
-          }
 
-        if ($null -ne $DotnetProcess) {
-          $DotnetProcess.Kill($True)
+      try {
+        $DotnetBuildArgument = @()
+
+        if ($Restore) {
+          $DotnetBuildArgument += @(
+            '--force'
+            '--no-incremental'
+            '--disable-build-servers'
+          )
         }
+
+        & $DotnetExecutable build @DotnetArgument @DotnetBuildArgument
+
+        if ($LASTEXITCODE -notin 0, 1) {
+          throw "dotnet.exe returned a non-zero exit code ($LASTEXITCODE) when trying to build the project."
+        }
+      }
+      catch {
+        throw 'Failed to build project. ' + $PSItem.Exception
+      }
+    }
+    catch {
+      throw $PSItem.Exception
+    }
+    finally {
+      $DotnetProcess = Get-Process |
+        Where-Object {
+          $PSItem.ProcessName -eq 'dotnet'
+        }
+
+      if ($null -ne $DotnetProcess) {
+        $DotnetProcess.Kill($True)
       }
     }
   }
