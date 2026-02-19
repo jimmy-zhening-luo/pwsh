@@ -56,8 +56,6 @@ function Update-PSProfile {
       throw "Failed to pull pwsh profile repository. Git returned exit code: $LASTEXITCODE"
     }
 
-    Copy-Item -Path $PROFILE_REPO_ROOT\Data\PSScriptAnalyzerSettings.psd1 -Destination $HOME -Force
-
     if ($Build) {
       try {
         $DotnetExecutable = (
