@@ -3,8 +3,6 @@ using namespace System.Collections.Generic
 using namespace Module.Completer
 using namespace Module.Completer.Path
 
-$ABOUT_BASE_URL = 'https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about'
-
 function Get-HelpOnline {
   [CmdletBinding()]
   [OutputType([System.Object])]
@@ -25,6 +23,7 @@ function Get-HelpOnline {
 
   [string]$Topic = $Name -join '_'
 
+  $ABOUT_BASE_URL = 'https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about'
   $HelpContent = ''
   $ArticleUrl = [List[uri]]::new()
   $Silent = @{
