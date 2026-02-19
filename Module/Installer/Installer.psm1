@@ -46,7 +46,7 @@ function Update-PSProfile {
       & $env:ProgramFiles\Git\cmd\git.exe @GitArgument reset
 
       if ($LASTEXITCODE -notin 0, 1) {
-        throw "Failed to pull pwsh profile repository. Git returned exit code: $LASTEXITCODE"
+        throw "Failed to reset pwsh profile repository. Git returned exit code: $LASTEXITCODE"
       }
     }
 
