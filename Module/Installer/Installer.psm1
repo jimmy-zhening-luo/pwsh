@@ -64,50 +64,37 @@ function Update-PSProfile {
       $DotnetExecutable = (
         Get-Command -Name dotnet.exe -CommandType Application -All
       ).Source
+
       $DotnetArgument = @(
         "$PROFILE_REPO_ROOT\Class.slnx"
         '--configuration=Release'
         '--nologo'
       )
 
-      try {
-        $DotnetCleanArgument = @(
-          '--verbosity=quiet'
+      & $DotnetExecutable clean @DotnetArgument --verbosity=quiet
+
+      if ($LASTEXITCODE -notin 0, 1) {
+        throw "dotnet returned a non-zero exit code ($LASTEXITCODE) when trying to clean the project."
+      }
+
+      $DotnetBuildArgument = @()
+
+      if ($Restore) {
+        $DotnetBuildArgument += @(
+          '--force'
+          '--no-incremental'
+          '--disable-build-servers'
         )
-
-        & $DotnetExecutable clean @DotnetArgument @DotnetCleanArgument
-
-        if ($LASTEXITCODE -notin 0, 1) {
-          throw "dotnet.exe returned a non-zero exit code ($LASTEXITCODE) when trying to clean the project."
-        }
-      }
-      catch {
-        throw 'Failed to clean project. ' + $PSItem.Exception
       }
 
-      try {
-        $DotnetBuildArgument = @()
+      & $DotnetExecutable build @DotnetArgument @DotnetBuildArgument
 
-        if ($Restore) {
-          $DotnetBuildArgument += @(
-            '--force'
-            '--no-incremental'
-            '--disable-build-servers'
-          )
-        }
-
-        & $DotnetExecutable build @DotnetArgument @DotnetBuildArgument
-
-        if ($LASTEXITCODE -notin 0, 1) {
-          throw "dotnet.exe returned a non-zero exit code ($LASTEXITCODE) when trying to build the project."
-        }
-      }
-      catch {
-        throw 'Failed to build project. ' + $PSItem.Exception
+      if ($LASTEXITCODE -notin 0, 1) {
+        throw "dotnet returned a non-zero exit code ($LASTEXITCODE) when trying to build the project."
       }
     }
     catch {
-      throw $PSItem.Exception
+      throw 'Failed to clean and build project. ' + $PSItem.Exception
     }
     finally {
       $DotnetProcess = Get-Process |
