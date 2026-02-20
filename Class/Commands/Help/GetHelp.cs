@@ -107,8 +107,11 @@ public sealed class GetHelpOnline : CoreCommand
           helpLink.ToString()
         );
       }
+    }
 
-      if (!Client.Environment.Known.Variable.Ssh)
+    if (!Client.Environment.Known.Variable.Ssh)
+    {
+      if (helpLinks.Count != 0)
       {
         foreach (var helpLink in helpLinks)
         {
@@ -116,6 +119,13 @@ public sealed class GetHelpOnline : CoreCommand
             helpLink
           );
         }
+      }
+      else
+      {
+        _ = GetHelpContent(
+          topic,
+          true
+        );
       }
     }
   }
@@ -133,7 +143,8 @@ public sealed class GetHelpOnline : CoreCommand
   );
 
   private Collection<PSObject> GetHelpContent(
-    string topic
+    string topic,
+    bool online = false
   )
   {
     using var ps = PowerShellHost.Create(
@@ -156,6 +167,13 @@ public sealed class GetHelpOnline : CoreCommand
         "ProgressAction",
         ActionPreference.SilentlyContinue
       );
+
+    if (online)
+    {
+      ps.AddParameter(
+        "Online"
+      );
+    }
 
     return ps.Invoke();
   }
