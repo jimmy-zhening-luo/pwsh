@@ -135,7 +135,7 @@ public sealed class GetHelpOnline : CoreCommand
     {
       dynamic pscustomobject = helpContent[0];
       dynamic relatedLinks = pscustomobject.relatedLinks;
-      dynamic navigationLink = relatedLinks.navigationLink;
+      PSObject[] navigationLink = relatedLinks.navigationLink;
 
       WriteObject(navigationLink.GetType());
 
