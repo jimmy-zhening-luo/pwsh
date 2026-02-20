@@ -139,7 +139,7 @@ public sealed class GetHelpOnline : CoreCommand
 
       foreach (dynamic link in navigationLink)
       {
-        WriteObject(link.Uri);
+        WriteObject(link.Uri.GetType());
       }
 
       return new System.Uri(
