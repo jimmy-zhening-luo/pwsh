@@ -107,6 +107,16 @@ public sealed class GetHelpOnline : CoreCommand
           helpLink.ToString()
         );
       }
+
+      if (!Client.Environment.Known.Variable.Ssh)
+      {
+        foreach (var helpLink in helpLinks)
+        {
+          Client.Network.Url.Open(
+            helpLink
+          );
+        }
+      }
     }
   }
 
