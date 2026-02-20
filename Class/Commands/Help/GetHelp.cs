@@ -134,6 +134,8 @@ public sealed class GetHelpOnline : CoreCommand
     try
     {
       dynamic pscustomobject = helpContent[0];
+      WriteObject("Hi");
+      WriteObject(pscustomobject.relatedLinks);
 
       return new System.Uri(
         pscustomobject.relatedLinks.navigationLink.Uri
