@@ -111,4 +111,20 @@ public sealed class GetHelpOnline : CoreCommand
 
     return ps.Invoke();
   }
+
+  private System.Uri? TryHelpLink(
+    Collection<PSObject> helpContent
+  )
+  {
+    try
+    {
+      return new System.Uri(
+        helpContent[0].relatedLinks.navigationLink.Uri
+      );
+    }
+    catch
+    {
+      return null;
+    }
+  }
 }
