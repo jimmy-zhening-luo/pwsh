@@ -169,16 +169,16 @@ public sealed class GetHelpOnline : CoreCommand
             )
           )
           {
-            links.Add(
+            urls.Add(
               url
             );
           }
         }
       }
 
-      if (links.Count != 0)
+      if (urls.Count != 0)
       {
-        return links;
+        return urls;
       }
 
       return null;
