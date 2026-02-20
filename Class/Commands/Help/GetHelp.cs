@@ -63,7 +63,8 @@ public sealed class GetHelpOnline : CoreCommand
       names
     );
     var helpContent = GetHelpContent(
-      topic
+      topic,
+      []
     );
 
     if (
@@ -89,10 +90,20 @@ public sealed class GetHelpOnline : CoreCommand
           helpLinks.Add(helpLink);
         }
       }
-    }
 
-    if (helpContent is not null)
-    {
+      if (parameters.Length != 0)
+      {
+        var parameterHelpContent = GetHelpContent(
+          helpContent,
+          parameters
+        );
+  
+        if (parameterHelpContent is not null)
+        {
+          var helpContent = parameterHelpContent;
+        }
+      }
+
       WriteObject(
         helpContent,
         true
@@ -120,10 +131,11 @@ public sealed class GetHelpOnline : CoreCommand
           );
         }
       }
-      else
+      else if (helpContent is not null)
       {
         _ = GetHelpContent(
           topic,
+          [],
           true
         );
       }
@@ -144,6 +156,7 @@ public sealed class GetHelpOnline : CoreCommand
 
   private Collection<PSObject> GetHelpContent(
     string topic,
+    string[] parameters,
     bool online = false
   )
   {
@@ -168,7 +181,14 @@ public sealed class GetHelpOnline : CoreCommand
         ActionPreference.SilentlyContinue
       );
 
-    if (online)
+    if (parameters.Length != 0)
+    {
+      ps.AddParameter(
+        "Parameter",
+        parameters
+      );
+    }
+    else if (online)
     {
       ps.AddParameter(
         "Online"
