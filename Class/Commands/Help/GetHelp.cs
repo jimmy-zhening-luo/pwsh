@@ -118,8 +118,10 @@ public sealed class GetHelpOnline : CoreCommand
   {
     try
     {
+      dynamic pscustomobject = helpContent[0];
+
       return new System.Uri(
-        helpContent[0].relatedLinks.navigationLink.Uri
+        pscustomobject.relatedLinks.navigationLink.Uri
       );
     }
     catch
