@@ -101,10 +101,13 @@ public sealed class GetHelpOnline : CoreCommand
 
     if (helpLinks.Count != 0)
     {
-      WriteInformation(
-        helpLinks,
-        []
-      );
+      foreach (var helpLink in helpLinks)
+      {
+        WriteInformation(
+          helpLink.ToString(),
+          []
+        );
+      }
     }
   }
 
