@@ -17,26 +17,26 @@ function Get-HelpOnline {
     [string[]]$Parameter
   )
 
+  $ABOUT_BASE_URL = 'https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about'
+  $SILENT = @{
+    ErrorAction    = 'SilentlyContinue'
+    ProgressAction = 'SilentlyContinue'
+  }
+
   if (!$Name) {
     return Get-Help -Name Get-Help
   }
 
   [string]$Topic = $Name -join '_'
-
-  $ABOUT_BASE_URL = 'https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about'
   $HelpContent = ''
-  $ArticleUrl = [List[uri]]::new()
-  $Silent = @{
-    ErrorAction    = 'SilentlyContinue'
-    ProgressAction = 'SilentlyContinue'
-  }
-
-  $HelpArticleUrl = [List[uri]]::new()
-  $HelpContent = Get-Help -Name $Topic @Silent
+  $HelpContent = Get-Help -Name $Topic @SILENT
 
   if ($HelpContent -and $HelpContent.Count -ne 1) {
     $HelpContent = ''
   }
+
+  $HelpLinks = [List[uri]]::new()
+  $HelpContentLinks = [List[uri]]::new()
 
   if ($HelpContent) {
     $HelpContent.relatedLinks.navigationLink.Uri |
@@ -55,26 +55,26 @@ function Get-HelpOnline {
         ).IsAbsoluteUri
       } |
       ForEach-Object {
-        $HelpArticleUrl.Add($PSItem)
+        $HelpContentLinks.Add($PSItem)
       }
   }
 
   if ($HelpContent -and $Parameter) {
-    $ParameterHelpContent = Get-Help -Name $Topic -Parameter $Parameter @Silent
+    $ParameterHelpContent = Get-Help -Name $Topic -Parameter $Parameter @SILENT
 
     if ($ParameterHelpContent) {
       $HelpContent = $ParameterHelpContent
 
-      if ($HelpArticleUrl.Count -eq 1 -and $Parameter.Count -eq 1) {
-        $HelpArticleUrl[0] = [uri](
-          [string]$HelpArticleUrl[0] + "#-$Parameter".ToLower()
+      if ($HelpContentLinks.Count -eq 1 -and $Parameter.Count -eq 1) {
+        $HelpContentLinks[0] = [uri](
+          [string]$HelpContentLinks[0] + "#-$Parameter".ToLower()
         )
       }
     }
   }
 
-  if ($HelpArticleUrl.Count) {
-    $ArticleUrl.AddRange($HelpArticleUrl)
+  if ($HelpContentLinks.Count) {
+    $HelpLinks.AddRange($HelpContentLinks)
   }
   else {
     if ($HelpContent) {
@@ -117,8 +117,8 @@ function Get-HelpOnline {
       }
 
       if ([string]$about_Article) {
-        $HelpContent = Get-Help -Name $about_TopicCandidate @Silent
-        $ArticleUrl.Add($about_Article)
+        $HelpContent = Get-Help -Name $about_TopicCandidate @SILENT
+        $HelpLinks.Add($about_Article)
       }
     }
   }
@@ -129,8 +129,8 @@ function Get-HelpOnline {
 
   $Article = [List[uri]]::new()
 
-  if ($ArticleUrl.Count) {
-    $ArticleUrl.ToArray() |
+  if ($HelpLinks.Count) {
+    $HelpLinks.ToArray() |
       ForEach-Object {
         'https://' + $PSItem.GetComponents(
           [uricomponents]::Host -bor [uricomponents]::Path -bor (
@@ -163,7 +163,7 @@ function Get-HelpOnline {
     }
     else {
       if ($HelpContent) {
-        $null = Get-Help -Name $Topic -Online @Silent 2>&1
+        $null = Get-Help -Name $Topic -Online @SILENT 2>&1
       }
     }
   }
