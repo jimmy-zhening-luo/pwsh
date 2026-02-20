@@ -142,9 +142,9 @@ public sealed class GetHelpOnline : CoreCommand
 
       foreach (dynamic link in navigationLink)
       {
-        string uri = link.Uri;
+        WriteObject(link.Uri);
 
-        WriteObject(uri);
+        string uri = link.Uri;
 
         if (
           !string.IsNullOrEmpty(
