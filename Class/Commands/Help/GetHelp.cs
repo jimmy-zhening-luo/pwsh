@@ -146,7 +146,7 @@ public sealed class GetHelpOnline : CoreCommand
 
         dynamic uri = link.Uri;
 
-        WriteObject(uri.GetType());
+        WriteObject((string)uri);
 
         if (
           uri is string uriString
