@@ -94,7 +94,7 @@ public sealed class GetHelpOnline : CoreCommand
       if (parameters.Length != 0)
       {
         var parameterHelpContent = GetHelpContent(
-          helpContent,
+          topic,
           parameters
         );
   
