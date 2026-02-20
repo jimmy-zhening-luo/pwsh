@@ -70,6 +70,21 @@ public sealed class GetHelpOnline : CoreCommand
       helpContent,
       true
     );
+
+    var helpLink = TryHelpLink(
+      helpContent
+    );
+
+    if (helpLink == null)
+    {
+      WriteWarning("Failed to parse helplink");
+    }
+    else
+    {
+      WriteObject(
+        helpLink
+      );
+    }
   }
 
   private protected sealed override void DefaultAction() => WriteObject(
