@@ -144,24 +144,25 @@ public sealed class GetHelpOnline : CoreCommand
       {
         WriteObject(link.Uri);
 
-        string uri = link.Uri;
+        dynamic uri = link.Uri;
 
         if (
-          !string.IsNullOrEmpty(
-            uri
+          uri is string uriString
+          && !string.IsNullOrEmpty(
+            uriString
           )
           && (
-            uri.StartsWith(
+            uriString.StartsWith(
               "https://"
             )
-            || uri.StartsWith(
+            || uriString.StartsWith(
               "http://"
             )
           )
         )
         {
           var url = new System.Uri(
-            uri
+            uriString
           );
 
           if (
