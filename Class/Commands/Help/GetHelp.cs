@@ -145,12 +145,10 @@ public sealed class GetHelpOnline : CoreCommand
         WriteObject(link.Uri);
 
         dynamic uri = link.Uri;
-
-        WriteObject(uri.ToString());
+        var uriString = uri.ToString();
 
         if (
-          uri is string uriString
-          && !string.IsNullOrEmpty(
+          !string.IsNullOrEmpty(
             uriString
           )
           && (
