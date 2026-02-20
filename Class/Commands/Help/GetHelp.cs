@@ -101,9 +101,9 @@ public sealed class GetHelpOnline : CoreCommand
 
     if (helpLinks.Count != 0)
     {
-      WriteObject(
+      WriteInformation(
         helpLinks,
-        true
+        []
       );
     }
   }
