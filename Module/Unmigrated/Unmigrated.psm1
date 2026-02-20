@@ -123,7 +123,6 @@ function Get-HelpOnline {
     }
   }
 
-
   if ($HelpContent) {
     Write-Output -InputObject $HelpContent
   }

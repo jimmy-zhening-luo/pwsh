@@ -66,23 +66,43 @@ public sealed class GetHelpOnline : CoreCommand
       topic
     );
 
-    WriteObject(
-      helpContent,
-      true
-    );
-
-    var helpLink = TryHelpLink(
-      helpContent
-    );
-
-    if (helpLink == null)
+    if (
+      helpContent is not null
+      && helpContent.Count != 1
+    )
     {
-      WriteWarning("Failed to parse helplink");
+      helpContent = null;
     }
-    else
+
+    List<System.Uri> helpLinks = [];
+
+    if (helpContent is not null)
+    {
+      var helpContentLinks = TryHelpLink(
+        helpContent
+      );
+  
+      if (helpContentLinks is not null)
+      {
+        foreach (var helpLink in helpContentLinks)
+        {
+          helpLinks.Add(helpLink);
+        }
+      }
+    }
+
+    if (helpContent is not null)
     {
       WriteObject(
-        helpLink,
+        helpContent,
+        true
+      );
+    }
+
+    if (helpLinks.Count != 0)
+    {
+      WriteObject(
+        helpLinks,
         true
       );
     }
@@ -142,8 +162,6 @@ public sealed class GetHelpOnline : CoreCommand
 
       foreach (dynamic link in navigationLink)
       {
-        WriteObject(link.Uri);
-
         dynamic uri = link.Uri;
         var uriString = uri.ToString();
 
@@ -161,7 +179,6 @@ public sealed class GetHelpOnline : CoreCommand
           )
         )
         {
-          WriteObject(uriString);
           var url = new System.Uri(
             uriString
           );
