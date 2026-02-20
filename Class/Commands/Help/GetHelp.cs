@@ -100,7 +100,7 @@ public sealed class GetHelpOnline : CoreCommand
   
         if (parameterHelpContent is not null)
         {
-          var helpContent = parameterHelpContent;
+          helpContent = parameterHelpContent;
         }
       }
 
