@@ -133,7 +133,8 @@ public sealed class GetHelpOnline : CoreCommand
   {
     try
     {
-      using dynamic pscustomobject = helpContent[0];
+      
+      dynamic pscustomobject = helpContent[0];
 
       WriteObject(pscustomobject.relatedLinks);
 
