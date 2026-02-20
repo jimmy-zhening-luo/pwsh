@@ -161,6 +161,7 @@ public sealed class GetHelpOnline : CoreCommand
           )
         )
         {
+          WriteObject(uriString);
           var url = new System.Uri(
             uriString
           );
