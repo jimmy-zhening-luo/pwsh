@@ -137,7 +137,7 @@ public sealed class GetHelpOnline : CoreCommand
       dynamic relatedLinks = pscustomobject.relatedLinks;
       PSObject[] navigationLink = relatedLinks.navigationLink;
 
-      WriteObject(navigationLink.GetType());
+      WriteObject(navigationLink[0].GetType());
 
       return new System.Uri(
         pscustomobject.relatedLinks.navigationLink.Uri
