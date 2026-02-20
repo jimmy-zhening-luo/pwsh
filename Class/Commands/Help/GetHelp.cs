@@ -82,7 +82,8 @@ public sealed class GetHelpOnline : CoreCommand
     else
     {
       WriteObject(
-        helpLink
+        helpLink,
+        true
       );
     }
   }
@@ -127,7 +128,7 @@ public sealed class GetHelpOnline : CoreCommand
     return ps.Invoke();
   }
 
-  private System.Uri? TryHelpLink(
+  private List<System.Uri>? TryHelpLink(
     Collection<PSObject> helpContent
   )
   {
@@ -137,17 +138,50 @@ public sealed class GetHelpOnline : CoreCommand
       dynamic relatedLinks = pscustomobject.relatedLinks;
       PSObject[] navigationLink = relatedLinks.navigationLink;
 
+      List<System.Uri> urls = [];
+
       foreach (dynamic link in navigationLink)
       {
-        WriteObject(link.Uri.GetType());
+        string uri = link.Uri;
+
+        if (
+          !string.IsNullOrEmpty(
+            uri
+          )
+          && (
+            uri.StartsWith(
+              "https://"
+            )
+            || uri.StartsWith(
+              "http://"
+            )
+          )
+        )
+        {
+          var url = new System.Uri(
+            uri
+          );
+
+          if (
+            url.IsAbsoluteUri
+            && !string.IsNullOrEmpty(
+              url.Host
+            )
+          )
+          {
+            links.Add(
+              url
+            );
+          }
+        }
       }
 
-      return new System.Uri(
-        pscustomobject
-          .relatedLinks
-          .navigationLink
-          .Uri
-      );
+      if (links.Count != 0)
+      {
+        return links;
+      }
+
+      return null;
     }
     catch
     {
