@@ -144,6 +144,8 @@ public sealed class GetHelpOnline : CoreCommand
       {
         string uri = link.Uri;
 
+        WriteObject(uri);
+
         if (
           !string.IsNullOrEmpty(
             uri
