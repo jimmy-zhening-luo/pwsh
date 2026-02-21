@@ -2,7 +2,7 @@ namespace Module.Completer;
 
 public abstract class CompletionsAttributePrototype<TDomain> : BaseCompletionsAttribute<Completer>
 {
-  private readonly TDomain Domain;
+  private protected readonly TDomain Domain;
 
   private readonly bool Strict;
 

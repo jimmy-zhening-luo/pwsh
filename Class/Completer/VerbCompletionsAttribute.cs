@@ -1,41 +1,10 @@
 namespace Module.Completer;
 
-public sealed class VerbCompletionsAttribute : BaseCompletionsAttribute<Completer>
+public class VerbCompletionsAttribute : CompletionsAttributePrototype<System.Type>
 {
-  private readonly System.Type VerbType;
-
-  private readonly bool Strict;
-
-  public VerbCompletionsAttribute(
-    System.Type verbType
-  ) : base(
-    CompletionCase.Lower
-  ) => VerbType = verbType;
-
-  public VerbCompletionsAttribute(
-    System.Type verbType,
-    bool strict
-  ) : this(
-    verbType
-  ) => Strict = strict;
-
-  public VerbCompletionsAttribute(
-    System.Type verbType,
-    bool strict,
-    CompletionCase casing
-  ) : base(
-    casing
-  ) => (
-    VerbType,
-    Strict
-  ) = (
-    verbType,
-    strict
-  );
-
-  public sealed override Completer Create()
+  private protected sealed override IEnumerable<string> ResolveDomain()
   {
-    var verbInfo = VerbType.GetProperty(
+    var verbInfo = Domain.GetProperty(
       "Verbs",
       System.Reflection.BindingFlags.Static
       | System.Reflection.BindingFlags.Public
@@ -45,7 +14,7 @@ public sealed class VerbCompletionsAttribute : BaseCompletionsAttribute<Complete
     {
       throw new System.ArgumentException(
         "Provided type has no Verbs property.",
-        "VerbType"
+        "Domain"
       );
     }
 
@@ -57,7 +26,7 @@ public sealed class VerbCompletionsAttribute : BaseCompletionsAttribute<Complete
     {
       throw new System.ArgumentException(
         "Provided Verbs property is null.",
-        "VerbType.Verbs"
+        "Domain.Verbs"
       );
     }
 
@@ -67,14 +36,10 @@ public sealed class VerbCompletionsAttribute : BaseCompletionsAttribute<Complete
     {
       throw new System.ArgumentException(
         "Provided Verbs property value cannot be cast to HashSet<string>.",
-        "VerbType.Verbs"
+        "Domain.Verbs"
       );
     }
 
-    return new(
-      domain,
-      Strict,
-      Casing
-    );
+    return domain;
   }
 }
