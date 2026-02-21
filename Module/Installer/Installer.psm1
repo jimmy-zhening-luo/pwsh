@@ -35,6 +35,7 @@ function Update-PSProfile {
 
   end {
     $PROFILE_REPO_ROOT = "$HOME\code\pwsh"
+    $GIT = "$env:ProgramFiles\Git\cmd\git.exe"
     $GitArgument = @(
       '-c'
       'color.ui=always'
@@ -43,14 +44,16 @@ function Update-PSProfile {
     )
 
     if ($Restore) {
-      & $env:ProgramFiles\Git\cmd\git.exe @GitArgument reset
+      Remove-Item -Path $PROFILE_REPO_ROOT\Class -Recurse -Force
+
+      & $GIT @GitArgument reset
 
       if ($LASTEXITCODE -notin 0, 1) {
         throw "Failed to reset pwsh profile repository. Git returned exit code: $LASTEXITCODE"
       }
     }
 
-    & $env:ProgramFiles\Git\cmd\git.exe @GitArgument pull
+    & $GIT @GitArgument pull
 
     if ($LASTEXITCODE -notin 0, 1) {
       throw "Failed to pull pwsh profile repository. Git returned exit code: $LASTEXITCODE"
