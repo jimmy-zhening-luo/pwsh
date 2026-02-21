@@ -23,7 +23,7 @@ public abstract class BaseCompleter(
     string wordToComplete
   );
 
-  private protected IEnumerable<CompletionResult> WrapArgumentCompletionResult(
+  private IEnumerable<CompletionResult> WrapArgumentCompletionResult(
     IEnumerable<string> completedStrings
   )
   {
