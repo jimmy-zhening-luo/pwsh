@@ -10,12 +10,18 @@
   if (Test-Path $DIST -PathType Leaf) {
     if (
       !$Exists -or (
-        Get-FileHash -Path $ASSEMBLY -Algorithm MD5
-      ).Hash -ne (
-        Get-FileHash -Path $DIST -Algorithm MD5
-      ).Hash
+        (
+          Get-Item -Path $ASSEMBLY
+        ).LastWriteTime -ne (
+          Get-Item -Path $DIST
+        ).LastWriteTime -and (
+          Get-FileHash -Path $ASSEMBLY -Algorithm MD5
+        ).Hash -ne (
+          Get-FileHash -Path $DIST -Algorithm MD5
+        ).Hash
+      )
     ) {
-      Get-Process pwsh* |
+      Get-Process -Name pwsh* |
         Where-Object ProcessName -eq pwsh |
         Where-Object Id -ne $PID |
         Stop-Process -Force
