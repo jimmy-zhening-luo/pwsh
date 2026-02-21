@@ -124,36 +124,6 @@ function Resolve-NodePackageDirectory {
   }
 }
 
-[string[]]$GIT_VERB = @(
-  'switch'
-  'merge'
-  'diff'
-  'stash'
-  'tag'
-  'config'
-  'remote'
-  'submodule'
-  'fetch'
-  'checkout'
-  'branch'
-  'rm'
-  'mv'
-  'ls-files'
-  'ls-tree'
-  'init'
-  'status'
-  'clone'
-  'pull'
-  'add'
-  'commit'
-  'push'
-  'reset'
-)
-[string[]]$NEWABLE_GIT_VERB = @(
-  'clone'
-  'config'
-  'init'
-)
 $GIT_ARGUMENT = '^(?>(?=.*[*=])(?>.+)|-(?>\w|(?>-\w[-\w]*\w)))$'
 
 <#
@@ -232,10 +202,42 @@ function Invoke-Git {
     [switch]$v
   )
 
+  [string[]]$NEWABLE_GIT_VERB = @(
+    'clone'
+    'config'
+    'init'
+  )
+
   $GitArgument = [List[string]]::new()
 
   if ($Verb) {
-    if ($Verb -in $GIT_VERB) {
+    if (
+      $Verb -in @(
+        'switch'
+        'merge'
+        'diff'
+        'stash'
+        'tag'
+        'config'
+        'remote'
+        'submodule'
+        'fetch'
+        'checkout'
+        'branch'
+        'rm'
+        'mv'
+        'ls-files'
+        'ls-tree'
+        'init'
+        'status'
+        'clone'
+        'pull'
+        'add'
+        'commit'
+        'push'
+        'reset'
+      )
+    ) {
       if ($Verb -in $NEWABLE_GIT_VERB) {
         if ($WorkingDirectory -match $GIT_ARGUMENT) {
           $GitArgument.Add($WorkingDirectory)
