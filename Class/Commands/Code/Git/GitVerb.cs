@@ -9,7 +9,7 @@ public static class GitVerb
     init
   }
 
-  public static HashSet<string> Verbs = {
+  public static HashSet<string> Verbs = new () {
     "switch",
     "merge",
     "diff",
