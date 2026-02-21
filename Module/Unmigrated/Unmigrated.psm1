@@ -869,73 +869,6 @@ function Restore-GitRepository {
   Get-GitRepository -WorkingDirectory $WorkingDirectory
 }
 
-[string[]]$NODE_VERB = @(
-  'access'
-  'adduser'
-  'audit'
-  'bugs'
-  'cache'
-  'ci'
-  'completion'
-  'config'
-  'dedupe'
-  'deprecate'
-  'diff'
-  'dist-tag'
-  'docs'
-  'doctor'
-  'edit'
-  'exec'
-  'explain'
-  'explore'
-  'find-dupes'
-  'fund'
-  'help'
-  'help-search'
-  'init'
-  'install'
-  'install-ci-test'
-  'install-test'
-  'link'
-  'login'
-  'logout'
-  'ls'
-  'org'
-  'outdated'
-  'owner'
-  'pack'
-  'ping'
-  'pkg'
-  'prefix'
-  'profile'
-  'prune'
-  'publish'
-  'query'
-  'rebuild'
-  'repo'
-  'restart'
-  'root'
-  'run'
-  'sbom'
-  'search'
-  'shrinkwrap'
-  'star'
-  'stars'
-  'start'
-  'stop'
-  'team'
-  'test'
-  'token'
-  'undeprecate'
-  'uninstall'
-  'unpublish'
-  'unstar'
-  'update'
-  'version'
-  'view'
-  'whoami'
-)
-
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to run a command in a Node package.
@@ -1037,13 +970,17 @@ function Invoke-Npm {
   if (
     $Command.Length -and $Command.StartsWith(
       [char]'-'
-    ) -or $Command -notin $NODE_VERB -and ![Module.Commands.Code.Node.NodeVerb]::Aliases.ContainsKey(
-      $Command
+    ) -or ![Module.Commands.Code.Node.NodeVerb]::Verbs.Contains(
+      $Command.ToLower()
+    ) -and ![Module.Commands.Code.Node.NodeVerb]::Aliases.ContainsKey(
+      $Command.ToLower()
     )
   ) {
     [string]$DeferredVerb = $NodeCommand.Count ? $NodeCommand.Find(
       {
-        $args[0] -in $NODE_VERB
+        [Module.Commands.Code.Node.NodeVerb]::Verbs.Contains(
+          $args[0].ToLower()
+        )
       }
     ) : ''
 
