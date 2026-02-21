@@ -2,7 +2,7 @@ namespace Module.Client.Environment.Known;
 
 internal static class Folder
 {
-  internal static string WinDir(
+  internal static string Windows(
     string subpath = ""
   ) => Env.GetFolder(
     System.Environment.SpecialFolder.Windows,
