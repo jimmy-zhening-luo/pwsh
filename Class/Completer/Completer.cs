@@ -20,7 +20,7 @@ public sealed class Completer : BaseCompleter
     strict
   );
 
-  public sealed override IEnumerable<string> FulfillCompletion(
+  private protected sealed override IEnumerable<string> FulfillCompletion(
     string wordToComplete
   )
   {

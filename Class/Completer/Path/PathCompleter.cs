@@ -32,7 +32,7 @@ public sealed class PathCompleter : BaseCompleter
     reanchor
   );
 
-  public override IEnumerable<string> FulfillCompletion(
+  private protected sealed override IEnumerable<string> FulfillCompletion(
     string wordToComplete
   )
   {

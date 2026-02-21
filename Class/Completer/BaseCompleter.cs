@@ -19,7 +19,7 @@ public abstract class BaseCompleter(
     )
   );
 
-  public abstract IEnumerable<string> FulfillCompletion(
+  private protected abstract IEnumerable<string> FulfillCompletion(
     string wordToComplete
   );
 
