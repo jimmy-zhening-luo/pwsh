@@ -1,6 +1,6 @@
 namespace Module.Completer.Path;
 
-public sealed class PathCompleter : BaseCompleter<string>
+public sealed class PathCompleter : BaseCompleter
 {
   private readonly string Root;
 

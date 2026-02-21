@@ -1,6 +1,6 @@
 namespace Module.Completer;
 
-public sealed class EnumCompletionsAttribute : BaseCompletionsAttribute<Completer, string>
+public sealed class EnumCompletionsAttribute : BaseCompletionsAttribute<Completer>
 {
   private readonly System.Type EnumType;
 

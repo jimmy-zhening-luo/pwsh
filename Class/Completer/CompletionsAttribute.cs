@@ -1,6 +1,6 @@
 namespace Module.Completer;
 
-public sealed class CompletionsAttribute : BaseCompletionsAttribute<Completer, string>
+public sealed class CompletionsAttribute : BaseCompletionsAttribute<Completer>
 {
   private readonly string StringifiedDomain;
 

@@ -2,7 +2,7 @@ namespace Module.Completer;
 
 using System.Linq;
 
-public sealed class DynamicCompletionsAttribute : BaseCompletionsAttribute<Completer, string>
+public sealed class DynamicCompletionsAttribute : BaseCompletionsAttribute<Completer>
 {
   private readonly ScriptBlock DomainGenerator;
 
