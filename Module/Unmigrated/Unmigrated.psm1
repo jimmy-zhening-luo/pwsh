@@ -936,38 +936,6 @@ function Restore-GitRepository {
   'whoami'
 )
 
-$NODE_ALIAS = @{
-  issues  = 'bugs'
-  c       = 'config'
-  ddp     = 'dedupe'
-  home    = 'docs'
-  why     = 'explain'
-  create  = 'init'
-  add     = 'install'
-  i       = 'install'
-  in      = 'install'
-  ln      = 'link'
-  cit     = 'install-ci-test'
-  it      = 'install-test'
-  list    = 'ls'
-  author  = 'owner'
-  rb      = 'rebuild'
-  find    = 'search'
-  s       = 'search'
-  se      = 'search'
-  t       = 'test'
-  unlink  = 'uninstall'
-  remove  = 'uninstall'
-  rm      = 'uninstall'
-  r       = 'uninstall'
-  un      = 'uninstall'
-  up      = 'update'
-  upgrade = 'update'
-  info    = 'view'
-  show    = 'view'
-  v       = 'view'
-}
-
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to run a command in a Node package.
@@ -1066,7 +1034,13 @@ function Invoke-Npm {
     }
   }
 
-  if ($Command.Length -and $Command.StartsWith([char]'-') -or $Command -notin $NODE_VERB -and !$NODE_ALIAS.ContainsKey($Command)) {
+  if (
+    $Command.Length -and $Command.StartsWith(
+      [char]'-'
+    ) -or $Command -notin $NODE_VERB -and ![Module.Commands.Code.Node.NodeVerb]::Aliases.ContainsKey(
+      $Command
+    )
+  ) {
     [string]$DeferredVerb = $NodeCommand.Count ? $NodeCommand.Find(
       {
         $args[0] -in $NODE_VERB
