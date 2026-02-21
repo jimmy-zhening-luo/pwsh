@@ -17,6 +17,7 @@ function Resolve-GitRepository {
     [AllowEmptyCollection()]
     [string[]]$WorkingDirectory,
 
+    [Parameter()]
     [switch]$Newable
   )
 
@@ -202,6 +203,7 @@ function Invoke-Git {
     # Additional arguments to pass to the git command.
     [string[]]$Argument,
 
+    [Parameter()]
     # When git command execution results in a non-zero exit code, write a warning and continue instead of the default behavior of throwing a terminating error.
     [switch]$NoThrow,
 
