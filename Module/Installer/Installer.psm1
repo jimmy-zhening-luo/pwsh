@@ -46,7 +46,8 @@ function Update-PSProfile {
     if ($Restore) {
       Remove-Item -Path $PROFILE_REPO_ROOT\Class -Recurse -Force
 
-      & $GIT @GitArgument reset
+      & $GIT @GitArgument add .
+      & $GIT @GitArgument reset --hard
 
       if ($LASTEXITCODE -notin 0, 1) {
         throw "Failed to reset pwsh profile repository. Git returned exit code: $LASTEXITCODE"
