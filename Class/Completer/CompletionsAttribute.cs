@@ -2,42 +2,37 @@ namespace Module.Completer;
 
 public sealed class CompletionsAttribute : BaseCompletionsAttribute<Completer>
 {
-  private readonly string StringifiedDomain;
+  private readonly string Domain;
 
   private readonly bool Strict;
 
   public CompletionsAttribute(
-    string stringifiedDomain
-  ) : base() => StringifiedDomain = stringifiedDomain;
+    string[] domain
+  ) : base() => Domain = domain;
 
   public CompletionsAttribute(
-    string stringifiedDomain,
+    string domain,
     bool strict
   ) : this(
-    stringifiedDomain
+    domain
   ) => Strict = strict;
 
   public CompletionsAttribute(
-    string stringifiedDomain,
+    string domain,
     bool strict,
     CompletionCase casing
   ) : base(
     casing
   ) => (
-    StringifiedDomain,
+    Domain,
     Strict
   ) = (
-    stringifiedDomain,
+    domain,
     strict
   );
 
   public sealed override Completer Create() => new(
-    StringifiedDomain
-      .Split(
-        ',',
-        System.StringSplitOptions.RemoveEmptyEntries
-        | System.StringSplitOptions.TrimEntries
-      ),
+    Domain,
     Strict,
     Casing
   );
