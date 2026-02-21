@@ -1,3 +1,5 @@
+using System.Reflection.Metadata;
+
 namespace Module.Commands.Windows.Manage;
 
 [Cmdlet(
@@ -72,24 +74,36 @@ public sealed class StopTask : CoreCommand
   }
   private bool descendant;
 
-  [Parameter(
-    ParameterSetName = "Self",
-    Mandatory = true,
-    HelpMessage = "Stop the current PowerShell host process, its siblings, and its child processes (including the current PowerShell process)."
-  )]
-  public SwitchParameter Self
-  {
-    get => self;
-    set => self = value;
-  }
-  private bool self;
+  private protected sealed override bool ValidateParameters() => ParameterSetName != "Name"
+    || names.Length != 0;
 
-  private protected sealed override bool ValidateParameters() => !self
-    && ParameterSetName != "Self"
-    && (
-      ParameterSetName != "Name"
-      || names.Length != 0
+  private static void KillProcess(
+    int pid,
+    bool entireProcessTree = false
+  ) => System.Diagnostics.Process
+    .GetProcessById(
+      pid
+    )
+    .Kill(
+      entireProcessTree
     );
+
+  private static void KillProcesses(
+    string name,
+    bool entireProcessTree = false
+  )
+  {
+    foreach (
+      var process in System.Diagnostics.Process.GetProcessesByName(
+        name
+      )
+    )
+    {
+      process.Kill(
+        entireProcessTree
+      );
+    }
+  }
 
   private protected sealed override void ProcessRecordAction()
   {
@@ -149,47 +163,10 @@ public sealed class StopTask : CoreCommand
 
   private protected sealed override void DefaultAction()
   {
-    switch (ParameterSetName)
+    if (ParameterSetName == "Name")
     {
-      case "Self":
-        WriteWarning("No-op because I'm too lazy to correctly implement this.");
-
-        break;
-      case "Name":
-        KillProcesses(
-          "explorer"
-        );
-
-        break;
-      default:
-        break;
-    }
-  }
-
-  private void KillProcess(
-    int pid,
-    bool entireProcessTree = false
-  ) => System.Diagnostics.Process
-    .GetProcessById(
-      pid
-    )
-    .Kill(
-      entireProcessTree
-    );
-
-  private void KillProcesses(
-    string name,
-    bool entireProcessTree = false
-  )
-  {
-    foreach (
-      var process in System.Diagnostics.Process.GetProcessesByName(
-        name
-      )
-    )
-    {
-      process.Kill(
-        entireProcessTree
+      KillProcesses(
+        "explorer"
       );
     }
   }
