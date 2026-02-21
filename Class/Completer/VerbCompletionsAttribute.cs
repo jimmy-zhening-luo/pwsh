@@ -35,16 +35,25 @@ public sealed class VerbCompletionsAttribute : BaseCompletionsAttribute<Complete
 
   public sealed override Completer Create()
   {
+    var verbInfo = VerbType
+      .GetProperty(
+        "Verbs",
+        System.Reflection.BindingFlags.Static
+        | System.Reflection.BindingFlags.Public
+      );
+
+    if (verbInfo is null)
+    {
+      throw System.ArgumentException(
+        "Provided type has no Verbs property.",
+        "VerbType"
+      );
+    }
+
     return new(
-      VerbType
-        .GetProperty(
-          "Verbs",
-          System.Reflection.BindingFlags.Static
-          | System.Reflection.BindingFlags.Public
-        )
-        .GetValue(
-          null
-        ) as HashSet<string>,
+      verbInfo.GetValue(
+        null
+      ) as HashSet<string>,
       Strict,
       Casing
     );
