@@ -99,9 +99,13 @@ public sealed partial class GetSize : CoreCommand
 
     foreach (var path in paths)
     {
+      var absolutePath = Pwd(
+        path
+      );
+
       if (
-        !TestPath(
-          path
+        !System.IO.Path.Exists(
+          absolutePath
         )
       )
       {
@@ -111,16 +115,15 @@ public sealed partial class GetSize : CoreCommand
           ),
           "PathNotFound",
           ErrorCategory.InvalidOperation,
-          path
+          absolutePath
         );
       }
 
-      long bytes = TestPath(
-        path,
-        FileSystemItemType.Directory
+      long bytes = System.IO.Directory.Exists(
+        absolutePath
       )
         ? new System.IO.DirectoryInfo(
-            Pwd(path)
+            absolutePath
           )
           .EnumerateFiles(
             "*",
@@ -130,7 +133,7 @@ public sealed partial class GetSize : CoreCommand
             file => file.Length
           )
         : new System.IO.FileInfo(
-            Pwd(path)
+            absolutePath
           )
           .Length;
 
