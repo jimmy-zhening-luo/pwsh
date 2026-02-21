@@ -2,7 +2,7 @@ namespace Module.Commands.Code.Node;
 
 public static partial class NodeVerb
 {
-  public static HashSet<string> Verbs = new () {
+  public static HashSet<string> Verbs = new() {
     "access",
     "adduser",
     "audit",

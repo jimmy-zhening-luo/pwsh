@@ -2,7 +2,8 @@ namespace Module.Commands.Code.Node;
 
 public static partial class NodeVerb
 {
-  public static Dictionary<string, string> Aliases = new () {
+  public static Dictionary<string, string> Aliases = new()
+  {
     ["issues"] = "bugs",
     ["c"] = "config",
     ["ddp"] = "dedupe",

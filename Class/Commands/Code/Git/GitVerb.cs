@@ -2,7 +2,7 @@ namespace Module.Commands.Code.Git;
 
 public static partial class GitVerb
 {
-  public static HashSet<string> Verbs = new () {
+  public static HashSet<string> Verbs = new() {
     "switch",
     "merge",
     "diff",

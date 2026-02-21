@@ -82,7 +82,7 @@ public sealed class GetHelpOnline : CoreCommand
       var helpContentLinks = TryHelpLink(
         helpContent
       );
-  
+
       if (helpContentLinks is not null)
       {
         foreach (var helpLink in helpContentLinks)
@@ -97,7 +97,7 @@ public sealed class GetHelpOnline : CoreCommand
           topic,
           parameters
         );
-  
+
         if (parameterHelpContent is not null)
         {
           helpContent = parameterHelpContent;
