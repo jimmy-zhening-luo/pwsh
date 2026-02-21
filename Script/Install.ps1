@@ -22,7 +22,6 @@
     Write-Warning -Message 'Module assembly is not built.'
   }
 
-
   if ($Exists) {
     Add-Type -Path $ASSEMBLY
   }
