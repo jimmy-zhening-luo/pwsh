@@ -49,10 +49,20 @@ public sealed class VerbCompletionsAttribute : BaseCompletionsAttribute<Complete
       );
     }
 
+    var verbs = verbInfo.GetValue(
+      null
+    );
+
+    if (verbs is null)
+    {
+      throw new System.ArgumentException(
+        "Provided Verbs property evaluates to null.",
+        "VerbType.Verbs"
+      );
+    }
+
     return new(
-      verbInfo.GetValue(
-        null
-      ) as HashSet<string>,
+      verbs,
       Strict,
       Casing
     );
