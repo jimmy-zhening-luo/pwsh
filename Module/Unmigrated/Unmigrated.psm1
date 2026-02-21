@@ -148,7 +148,7 @@ function Invoke-Git {
     [Parameter(
       Position = 0
     )]
-    [Completions(
+    [StringifiedCompletions(
       'switch,merge,diff,stash,tag,config,remote,submodule,fetch,checkout,branch,rm,mv,ls-files,ls-tree,init,status,clone,pull,add,commit,push,reset'
     )]
     # Git command to run.
@@ -898,7 +898,7 @@ function Invoke-Npm {
     [Parameter(
       Position = 0
     )]
-    [Completions(
+    [StringifiedCompletions(
       'pkg,i,it,cit,rm,access,adduser,audit,bugs,cache,ci,completion,config,dedupe,deprecate,diff,dist-tag,docs,doctor,edit,exec,explain,explore,find-dupes,fund,help,help-search,init,install,install-ci-test,install-test,link,login,logout,ls,org,outdated,owner,pack,ping,prefix,profile,prune,publish,query,rebuild,repo,restart,root,run,sbom,search,shrinkwrap,star,stars,start,stop,team,test,token,undeprecate,uninstall,unpublish,unstar,update,version,view,whoami'
     )]
     # npm command verb
