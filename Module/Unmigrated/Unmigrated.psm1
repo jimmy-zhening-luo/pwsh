@@ -814,9 +814,17 @@ function Reset-GitRepository {
   if ($Tree) {
     $ResetArgument.Insert(0, $Tree)
   }
-  $ResetArgument.Insert(0, '--hard')
 
-  Add-GitRepository -WorkingDirectory $WorkingDirectory
+  [void]$ResetArgument.RemoveAll(
+    {
+      $args[0] -eq '--hard'
+    }
+  )
+  if (-not $Soft) {
+    $ResetArgument.Insert(0, '--hard')
+
+    Add-GitRepository -WorkingDirectory $WorkingDirectory
+  }
 
   Invoke-Git -Verb reset -WorkingDirectory $WorkingDirectory -Argument $ResetArgument
 }
