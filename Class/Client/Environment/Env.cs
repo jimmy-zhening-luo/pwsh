@@ -2,6 +2,8 @@ namespace Module.Client.Environment;
 
 internal static partial class Env
 {
+  private static readonly Dictionary<System.Environment.SpecialFolder, string> = new ();
+
   internal static string Get(
     string variable
   ) => System.Environment.GetEnvironmentVariable(
