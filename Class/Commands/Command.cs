@@ -257,6 +257,23 @@ public abstract class CoreCommand(
     SessionState.Drive.Current.Root
   );
 
+  private protected void WriteMessage(
+    object message
+  ) => WriteMessage(
+    message,
+    GetType().FullName
+  );
+
+  private protected void WriteMessage(
+    object message,
+    string source
+  ) => WriteInformation(
+    new InformationRecord(
+      message,
+      source
+    )
+  );
+
   [System.Diagnostics.CodeAnalysis.DoesNotReturn]
   private protected void Throw(
     string message,
