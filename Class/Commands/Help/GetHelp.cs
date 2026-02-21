@@ -117,7 +117,7 @@ public sealed class GetHelpOnline : CoreCommand
         WriteInformation(
           new InformationRecord(
             helpLink.ToString(),
-            "Link"
+            "Get-HelpOnline"
           )
         );
       }
