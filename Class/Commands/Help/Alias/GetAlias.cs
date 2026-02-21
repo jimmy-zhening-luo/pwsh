@@ -31,7 +31,15 @@ public sealed class GetCommandAlias : CoreCommand
   )]
   [SupportsWildcards]
   [StringifiedCompletions(
-    "global,local,script,0,1,2,3"
+    [
+      "global",
+      "local",
+      "script",
+      "0",
+      "1",
+      "2",
+      "3"
+    ]
   )]
   public string Scope
   {
