@@ -1,6 +1,6 @@
 using System.Reflection.Metadata;
 
-namespace Module.Commands.Windows.Manage;
+namespace Module.Commands.Windows.Manage.Task;
 
 [Cmdlet(
   VerbsLifecycle.Stop,
