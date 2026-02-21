@@ -1226,7 +1226,7 @@ function Step-NodePackageVersion {
       [string]$SpecificVersion = $Version.StartsWith(
         [char]'v',
         [stringcomparison]::OrdinalIgnoreCase
-      ) ?  $Version.Substring(1) : $Version
+      ) ? $Version.Substring(1) : $Version
 
       [semver]$Semver = $null
 
