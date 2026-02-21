@@ -2,7 +2,7 @@ namespace Module.Completer;
 
 public sealed class CompletionsAttribute : BaseCompletionsAttribute<Completer>
 {
-  private readonly string Domain;
+  private readonly string[] Domain;
 
   private readonly bool Strict;
 
@@ -11,14 +11,14 @@ public sealed class CompletionsAttribute : BaseCompletionsAttribute<Completer>
   ) : base() => Domain = domain;
 
   public CompletionsAttribute(
-    string domain,
+    string[] domain,
     bool strict
   ) : this(
     domain
   ) => Strict = strict;
 
   public CompletionsAttribute(
-    string domain,
+    string[] domain,
     bool strict,
     CompletionCase casing
   ) : base(
