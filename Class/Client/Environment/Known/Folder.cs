@@ -1,6 +1,6 @@
 namespace Module.Client.Environment.Known;
 
-internal static class Folder
+internal static partial class Folder
 {
   internal static string Windows(
     string subpath = ""
@@ -35,16 +35,5 @@ internal static class Folder
   ) => Env.GetFolder(
     System.Environment.SpecialFolder.UserProfile,
     subpath
-  );
-
-  internal static string Code(
-    string subpath = ""
-  ) => System.IO.Path.GetFullPath(
-    FileSystem.PathString.Normalize(
-      subpath
-    ),
-    Home(
-      "code"
-    )
   );
 }
