@@ -8,4 +8,30 @@ public static class GitVerb
     config,
     init
   }
+
+  public static HashSet<string> Verbs = {
+    "switch",
+    "merge",
+    "diff",
+    "stash",
+    "tag",
+    "config",
+    "remote",
+    "submodule",
+    "fetch",
+    "checkout",
+    "branch",
+    "rm",
+    "mv",
+    "ls-files",
+    "ls-tree",
+    "init",
+    "status",
+    "clone",
+    "pull",
+    "add",
+    "commit",
+    "push",
+    "reset"
+  };
 }
