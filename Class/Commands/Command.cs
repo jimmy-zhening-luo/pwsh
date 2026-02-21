@@ -4,22 +4,6 @@ public abstract partial class CoreCommand(
   bool SkipSsh = false
 ) : PSCmdlet, System.IDisposable
 {
-  private protected enum FileSystemItemType
-  {
-    Any,
-    File,
-    Directory
-  }
-
-  private enum CommandLifecycle
-  {
-    NotStarted,
-    Initialized,
-    Processing,
-    Skipped,
-    Stopped
-  }
-
   private CommandLifecycle stage;
 
   private bool disposed;
@@ -201,29 +185,6 @@ public abstract partial class CoreCommand(
         : Location
     )
   );
-
-  private protected bool TestPath(
-    string path,
-    FileSystemItemType type = FileSystemItemType.Any
-  )
-  {
-    string absolutePath = Pwd(
-      path
-    );
-
-    return type switch
-    {
-      FileSystemItemType.File => System.IO.File.Exists(
-        absolutePath
-      ),
-      FileSystemItemType.Directory => System.IO.Directory.Exists(
-        absolutePath
-      ),
-      _ => System.IO.Path.Exists(
-        absolutePath
-      )
-    };
-  }
 
   private protected PSObject Var(
     string variable
