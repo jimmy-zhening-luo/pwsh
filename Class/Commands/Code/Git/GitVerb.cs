@@ -1,4 +1,4 @@
-namespace Module.Commands.Help.Code.Git;
+namespace Module.Commands.Code.Git;
 
 public static class GitVerb
 {

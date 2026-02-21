@@ -233,7 +233,7 @@ function Invoke-Git {
         'reset'
       )
     ) {
-      if ($null -ne [Module.Commands.Help.Code.Git.GitVerb.NewableVerb]::$Verb) {
+      if ($null -ne [Module.Commands.Code.Git.GitVerb+NewableVerb]::$Verb) {
         $Newable = $True
 
         if ($WorkingDirectory -match $GIT_ARGUMENT) {
