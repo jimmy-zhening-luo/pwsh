@@ -56,15 +56,6 @@ public sealed class StopTask : CoreCommand
   private System.Diagnostics.Process[] inputs = [];
 
   [Parameter(
-    ParameterSetName = "Name",
-    HelpMessage = "Stop the entire process tree (the process and all its descendants)."
-  )]
-  [Parameter(
-    ParameterSetName = "Id",
-    HelpMessage = "Stop the entire process tree (the process and all its descendants)."
-  )]
-  [Parameter(
-    ParameterSetName = "InputObject",
     HelpMessage = "Stop the entire process tree (the process and all its descendants)."
   )]
   public SwitchParameter Descendant
