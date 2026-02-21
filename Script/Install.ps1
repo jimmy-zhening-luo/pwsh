@@ -15,6 +15,11 @@
         Get-FileHash -Path $DIST -Algorithm MD5
       ).Hash
     ) {
+      Get-Process pwsh* |
+        Where-Object ProcessName -eq pwsh |
+        Where-Object Id -ne $PID |
+        Stop-Process -Force
+
       Copy-Item -Path $DIST -Destination $MODULE -Force -ErrorAction Continue
     }
   }
