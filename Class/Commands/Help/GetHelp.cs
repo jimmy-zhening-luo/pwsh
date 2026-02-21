@@ -115,7 +115,10 @@ public sealed class GetHelpOnline : CoreCommand
       foreach (var helpLink in helpLinks)
       {
         WriteInformation(
-          helpLink.ToString()
+          new InformationRecord(
+            helpLink.ToString(),
+            "Link"
+          )
         );
       }
     }
