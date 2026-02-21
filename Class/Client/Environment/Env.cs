@@ -14,12 +14,28 @@ internal static partial class Env
   internal static string GetFolder(
     System.Environment.SpecialFolder folder,
     string subpath = ""
-  ) => System.IO.Path.GetFullPath(
-    FileSystem.PathString.Normalize(
-      subpath
-    ),
-    System.Environment.GetFolderPath(
-      folder
+  )
+  {
+    string folderLocation;
+
+    if(
+      !folders.TryGetValue(
+        folder,
+        out folderLocation
+      )
     )
-  );
+    {
+      folderLocation = System.Environment.GetFolderPath(
+        folder
+      );
+      folders[folder] = folderLocation;
+    }
+
+    return System.IO.Path.GetFullPath(
+      FileSystem.PathString.Normalize(
+        subpath
+      ),
+      folderLocation
+    );
+  }
 }
