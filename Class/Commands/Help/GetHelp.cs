@@ -17,7 +17,6 @@ public sealed class GetHelpOnline : CoreCommand
   )]
   [Alias("Command")]
   [SupportsWildcards]
-  [StringifiedCompletions("*")]
   public string[] Name
   {
     get => names;
