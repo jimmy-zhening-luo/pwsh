@@ -1,5 +1,6 @@
 $Env:PSModulePath += "$PSScriptRoot\Module;"
 
+$Global:InformationPreference = [System.Management.Automation.ActionPreference]::Continue
 $Global:PSDefaultParameterValues = Import-PowerShellDataFile -Path $PSScriptRoot\Data\Parameter.psd1
 
 . $PSScriptRoot\Script\Alias.ps1
