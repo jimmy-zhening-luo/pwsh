@@ -202,13 +202,8 @@ function Invoke-Git {
     [switch]$v
   )
 
-  [string[]]$NEWABLE_GIT_VERB = @(
-    'clone'
-    'config'
-    'init'
-  )
-
   $GitArgument = [List[string]]::new()
+  $Newable = $False
 
   if ($Verb) {
     if (
@@ -238,7 +233,9 @@ function Invoke-Git {
         'reset'
       )
     ) {
-      if ($Verb -in $NEWABLE_GIT_VERB) {
+      if ($null -ne [Module.Commands.Help.Code.Git.GitVerb.NewableVerb]::$Verb) {
+        $Newable = $True
+
         if ($WorkingDirectory -match $GIT_ARGUMENT) {
           $GitArgument.Add($WorkingDirectory)
           $WorkingDirectory = ''
@@ -258,6 +255,8 @@ function Invoke-Git {
           $Verb, $WorkingDirectory = 'status', $Verb
         }
       }
+
+      $Verb = $Verb.ToLower()
     }
     else {
       if ($WorkingDirectory -or $Argument) {
@@ -276,7 +275,7 @@ function Invoke-Git {
 
   $Resolve = @{
     WorkingDirectory = $WorkingDirectory
-    Newable          = $Verb -in $NEWABLE_GIT_VERB
+    Newable          = $Newable
   }
   $Repository = Resolve-GitRepository @Resolve
 

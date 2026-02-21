@@ -1,8 +1,11 @@
 namespace Module.Commands.Help.Code.Git;
 
-public enum NewableGitVerb
+public static class GitVerb
 {
-  clone,
-  config,
-  init
+  public enum NewableVerb
+  {
+    clone,
+    config,
+    init
+  }
 }
