@@ -16,7 +16,9 @@ public sealed partial class GetVerb : CoreCommand
     HelpMessage = "Gets only the specified verbs. Enter the name of a verb or a name pattern. Wildcards are allowed."
   )]
   [SupportsWildcards]
-  [StringifiedCompletions("*")]
+  [Completions(
+    ["*"]
+  )]
   public string[] Verb
   {
     get => verbs;
