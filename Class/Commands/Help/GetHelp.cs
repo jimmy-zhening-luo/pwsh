@@ -114,11 +114,8 @@ public sealed class GetHelpOnline : CoreCommand
     {
       foreach (var helpLink in helpLinks)
       {
-        WriteInformation(
-          new InformationRecord(
-            helpLink.ToString(),
-            "Get-HelpOnline"
-          )
+        WriteMessage(
+          helpLink.ToString()
         );
       }
     }
