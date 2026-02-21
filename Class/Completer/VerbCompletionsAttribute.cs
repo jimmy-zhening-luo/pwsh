@@ -56,13 +56,23 @@ public sealed class VerbCompletionsAttribute : BaseCompletionsAttribute<Complete
     if (verbs is null)
     {
       throw new System.ArgumentException(
-        "Provided Verbs property evaluates to null.",
+        "Provided Verbs property is null.",
+        "VerbType.Verbs"
+      );
+    }
+
+    var domain = verbs as HashSet<string>;
+
+    if (domain is null)
+    {
+      throw new System.ArgumentException(
+        "Provided Verbs property value cannot be cast to HashSet<string>.",
         "VerbType.Verbs"
       );
     }
 
     return new(
-      verbs as HashSet<string>,
+      domain,
       Strict,
       Casing
     );
