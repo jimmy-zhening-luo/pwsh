@@ -97,10 +97,8 @@ function Update-PSProfile {
       throw 'Failed to clean and build project. ' + $PSItem.Exception
     }
     finally {
-      $DotnetProcess = Get-Process |
-        Where-Object {
-          $PSItem.ProcessName -eq 'dotnet'
-        }
+      $DotnetProcess = Get-Process -Name dotnet* |
+        Where-Object ProcessName -eq dotnet
 
       if ($null -ne $DotnetProcess) {
         $DotnetProcess.Kill($True)
