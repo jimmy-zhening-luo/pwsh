@@ -10,51 +10,8 @@ namespace Module.Commands.Windows.Manage.Task;
 )]
 [Alias("tkill")]
 [OutputType(typeof(void))]
-public sealed class StopTask : CoreCommand
+public sealed class StopTask : TaskManager
 {
-  [Parameter(
-    ParameterSetName = "Name",
-    Position = 0,
-    ValueFromPipelineByPropertyName = true,
-    HelpMessage = "The name(s) of the process to stop."
-  )]
-  [SupportsWildcards]
-  [Alias("ProcessName")]
-  public string[] Name
-  {
-    get => names;
-    set => names = value;
-  }
-  private string[] names = [];
-
-  [Parameter(
-    ParameterSetName = "Id",
-    Mandatory = true,
-    Position = 0,
-    ValueFromPipelineByPropertyName = true,
-    HelpMessage = "The process ID(s) of the process to stop."
-  )]
-  public uint[] Id
-  {
-    get => pids;
-    set => pids = value;
-  }
-  private uint[] pids = [];
-
-  [Parameter(
-    ParameterSetName = "InputObject",
-    Mandatory = true,
-    Position = 0,
-    ValueFromPipeline = true,
-    HelpMessage = "The Process object(s) to stop."
-  )]
-  public System.Diagnostics.Process[] InputObject
-  {
-    get => inputs;
-    set => inputs = value;
-  }
-  private System.Diagnostics.Process[] inputs = [];
-
   [Parameter(
     HelpMessage = "Stop the entire process tree (the process and all its descendants)."
   )]
@@ -65,43 +22,12 @@ public sealed class StopTask : CoreCommand
   }
   private bool descendant;
 
-  private protected sealed override bool ValidateParameters() => ParameterSetName != "Name"
-    || names.Length != 0;
-
-  private static void KillProcess(
-    int pid,
-    bool entireProcessTree = false
-  ) => System.Diagnostics.Process
-    .GetProcessById(
-      pid
-    )
-    .Kill(
-      entireProcessTree
-    );
-
-  private static void KillProcesses(
-    string name,
-    bool entireProcessTree = false
-  )
-  {
-    foreach (
-      var process in System.Diagnostics.Process.GetProcessesByName(
-        name
-      )
-    )
-    {
-      process.Kill(
-        entireProcessTree
-      );
-    }
-  }
-
   private protected sealed override void ProcessRecordAction()
   {
     switch (ParameterSetName)
     {
       case "Id":
-        foreach (var pid in pids)
+        foreach (var pid in Id)
         {
           KillProcess(
             (int)pid,
@@ -111,7 +37,7 @@ public sealed class StopTask : CoreCommand
 
         break;
       case "InputObject":
-        foreach (var input in inputs)
+        foreach (var input in InputObject)
         {
           KillProcess(
             input.Id,
@@ -121,7 +47,7 @@ public sealed class StopTask : CoreCommand
 
         break;
       case "Name":
-        foreach (var name in names)
+        foreach (var name in Name)
         {
           if (string.IsNullOrEmpty(name))
           {
@@ -149,16 +75,6 @@ public sealed class StopTask : CoreCommand
         }
 
         break;
-    }
-  }
-
-  private protected sealed override void DefaultAction()
-  {
-    if (ParameterSetName == "Name")
-    {
-      KillProcesses(
-        "explorer"
-      );
     }
   }
 }
