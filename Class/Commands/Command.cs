@@ -259,10 +259,15 @@ public abstract class CoreCommand(
 
   private protected void WriteMessage(
     object message
-  ) => WriteMessage(
-    message,
-    GetType().FullName
-  );
+  )
+  {
+    var type = GetType();
+
+    WriteMessage(
+      message,
+      type.FullName ?? type.ToString()
+    );
+  }
 
   private protected void WriteMessage(
     object message,
