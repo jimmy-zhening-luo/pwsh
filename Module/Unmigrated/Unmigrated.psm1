@@ -207,30 +207,8 @@ function Invoke-Git {
 
   if ($Verb) {
     if (
-      $Verb -in @(
-        'switch'
-        'merge'
-        'diff'
-        'stash'
-        'tag'
-        'config'
-        'remote'
-        'submodule'
-        'fetch'
-        'checkout'
-        'branch'
-        'rm'
-        'mv'
-        'ls-files'
-        'ls-tree'
-        'init'
-        'status'
-        'clone'
-        'pull'
-        'add'
-        'commit'
-        'push'
-        'reset'
+      [Module.Commands.Code.Git.GitVerb]::Verbs.Contains(
+        $Verb.ToLower()
       )
     ) {
       if ($null -ne [Module.Commands.Code.Git.GitVerb+NewableVerb]::$Verb) {
