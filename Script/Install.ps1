@@ -22,9 +22,13 @@
       )
     ) {
       Get-Process -Name pwsh* |
-        Where-Object ProcessName -eq pwsh |
-        Where-Object Id -ne $PID |
-        Stop-Process -Force
+        Where-Object ProcessName -EQ pwsh |
+        Where-Object Id -NE $PID |
+        ForEach-Object {
+          $PSItem.Kill(
+            $true
+          )
+        }
 
       Copy-Item -Path $DIST -Destination $MODULE -Force -ErrorAction Continue
     }
