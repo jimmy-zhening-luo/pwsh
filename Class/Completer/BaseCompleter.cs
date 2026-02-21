@@ -1,16 +1,9 @@
 namespace Module.Completer;
 
-public abstract class BaseCompleter : IArgumentCompleter
+public abstract class BaseCompleter(
+  CompletionCase Casing = CompletionCase.Preserve
+) : IArgumentCompleter
 {
-  private protected readonly CompletionCase Casing;
-
-  private protected BaseCompleter()
-  { }
-
-  private protected BaseCompleter(
-    CompletionCase casing
-  ) : this() => Casing = casing;
-
   public IEnumerable<CompletionResult> CompleteArgument(
     string commandName,
     string parameterName,
