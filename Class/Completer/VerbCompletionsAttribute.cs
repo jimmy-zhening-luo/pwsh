@@ -62,7 +62,7 @@ public sealed class VerbCompletionsAttribute : BaseCompletionsAttribute<Complete
     }
 
     return new(
-      verbs,
+      verbs as HashSet<string>,
       Strict,
       Casing
     );
