@@ -1,6 +1,6 @@
 namespace Module.Completer;
 
-public sealed class VerbCompletionsAttribute : BaseCompletionsAttribute<Completer>
+public sealed class VerbCompletionsAttribute : BaseCompletionsAttribute<Completer, string>
 {
   private readonly System.Type VerbType;
 

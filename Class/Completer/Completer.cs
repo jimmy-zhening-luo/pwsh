@@ -1,6 +1,6 @@
 namespace Module.Completer;
 
-public sealed class Completer : BaseCompleter
+public sealed class Completer : BaseCompleter<string>
 {
   private readonly IEnumerable<string> Domain;
 

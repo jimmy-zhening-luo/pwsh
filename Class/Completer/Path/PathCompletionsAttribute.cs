@@ -1,6 +1,6 @@
 namespace Module.Completer.Path;
 
-public sealed class PathCompletionsAttribute : BaseCompletionsAttribute<PathCompleter>
+public sealed class PathCompletionsAttribute : BaseCompletionsAttribute<PathCompleter, string>
 {
   private readonly string Location = string.Empty;
 

@@ -1,6 +1,6 @@
 namespace Module.Completer;
 
-public abstract class BaseCompleter : IArgumentCompleter
+public abstract class BaseCompleter<T> : IArgumentCompleter
 {
   private protected readonly CompletionCase Casing;
 
@@ -26,7 +26,7 @@ public abstract class BaseCompleter : IArgumentCompleter
     )
   );
 
-  public abstract IEnumerable<string> FulfillCompletion(
+  public abstract IEnumerable<T> FulfillCompletion(
     string wordToComplete
   );
 
