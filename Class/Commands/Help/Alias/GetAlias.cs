@@ -15,7 +15,9 @@ public sealed class GetCommandAlias : CoreCommand
   )]
   [Alias("Command")]
   [SupportsWildcards]
-  [StringifiedCompletions("*")]
+  [Completions(
+    ["*"]
+  )]
   public string[] Definition
   {
     get => definitions;
