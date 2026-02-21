@@ -21,7 +21,7 @@
         ).Hash
       )
     ) {
-      Get-Process pwsh* |
+      Get-Process -Name pwsh* |
         Where-Object ProcessName -eq pwsh |
         Where-Object Id -ne $PID |
         Stop-Process -Force
