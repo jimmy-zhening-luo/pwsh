@@ -1,37 +1,13 @@
 namespace Module.Completer.Path;
 
-public sealed class PathCompleter : BaseCompleter
+public sealed class PathCompleter(
+  string Root,
+  PathItemType Type,
+  bool Flat,
+  bool Hidden,
+  bool Reanchor
+) : BaseCompleter()
 {
-  private readonly string Root;
-
-  private readonly PathItemType Type;
-
-  private readonly bool Flat;
-
-  private readonly bool Hidden;
-
-  private readonly bool Reanchor;
-
-  public PathCompleter(
-    string root,
-    PathItemType type,
-    bool flat,
-    bool hidden,
-    bool reanchor
-  ) : base() => (
-    Root,
-    Type,
-    Flat,
-    Hidden,
-    Reanchor
-  ) = (
-    root,
-    type,
-    flat,
-    hidden,
-    reanchor
-  );
-
   private protected sealed override IEnumerable<string> FulfillCompletion(
     string wordToComplete
   )

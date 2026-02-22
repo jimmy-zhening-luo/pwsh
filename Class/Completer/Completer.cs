@@ -1,25 +1,13 @@
 namespace Module.Completer;
 
-public sealed class Completer : BaseCompleter
+public sealed class Completer(
+  IEnumerable<string> Domain,
+  bool Strict,
+  CompletionCase casing
+) : BaseCompleter(
+  casing
+)
 {
-  private readonly IEnumerable<string> Domain;
-
-  private readonly bool Strict;
-
-  public Completer(
-    IEnumerable<string> domain,
-    bool strict,
-    CompletionCase casing
-  ) : base(
-    casing
-  ) => (
-    Domain,
-    Strict
-  ) = (
-    domain,
-    strict
-  );
-
   private protected sealed override IEnumerable<string> FulfillCompletion(
     string wordToComplete
   )
