@@ -127,9 +127,6 @@ function Resolve-NodePackageDirectory {
 $GIT_ARGUMENT = '^(?>(?=.*[*=])(?>.+)|-(?>\w|(?>-\w[-\w]*\w)))$'
 
 <#
-.SYNOPSIS
-Invoke a Git command in a local repository.
-
 .LINK
 https://git-scm.com/docs
 #>
@@ -142,7 +139,7 @@ function Invoke-Git {
       Position = 0
     )]
     [Module.Commands.Code.Git.GitVerbCompletionsAttribute()]
-    # Git command to run.
+    # Git command
     [string]$Verb,
 
     [Parameter(
@@ -153,7 +150,7 @@ function Invoke-Git {
       [PathItemType]::Directory,
       $True
     )]
-    # Path to local repository. If not specified, defaults to the current location. For all verbs except 'clone', 'config', and 'init', the function will throw an error if there is no Git repository at the path.
+    # Repository path. For all verbs except 'clone', 'config', and 'init', the command will throw an error if there is no Git repository at the path.
     [string]$WorkingDirectory,
 
     [Parameter(
@@ -161,35 +158,35 @@ function Invoke-Git {
       ValueFromRemainingArguments,
       DontShow
     )]
-    # Additional arguments to pass to the git command.
+    # Additional git arguments
     [string[]]$Argument,
 
     [Parameter()]
-    # When git command execution results in a non-zero exit code, write a warning and continue instead of the default behavior of throwing a terminating error.
+    # If git returns a non-zero exit code, warn and continue instead of the default behavior of throwing a terminating error.
     [switch]$NoThrow,
 
     [Parameter(DontShow)]
-    # Pass the -d flag as an argument to git
+    # Pass -d flag as git argument
     [switch]$d,
 
     [Parameter(DontShow)]
-    # Pass the -E flag as an argument to git
+    # Pass -E flag as git argument
     [switch]$E,
 
     [Parameter(DontShow)]
-    # Pass the -i flag as an argument to git
+    # Pass -i flag as git argument
     [switch]$I,
 
     [Parameter(DontShow)]
-    # Pass the -o flag as an argument to git
+    # Pass -o flag as git argument
     [switch]$O,
 
     [Parameter(DontShow)]
-    # Pass the -P flag as an argument to git
+    # Pass -P flag as git argument
     [switch]$P,
 
     [Parameter(DontShow)]
-    # Pass the -v flag as an argument to git
+    # Pass -v flag as git argument
     [switch]$v
   )
 
@@ -321,7 +318,7 @@ function Measure-GitRepository {
       [PathItemType]::Directory,
       $True
     )]
-    # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
+    # Repository path
     [string]$WorkingDirectory
   )
 
@@ -329,9 +326,6 @@ function Measure-GitRepository {
 }
 
 <#
-.SYNOPSIS
-Use Git to clone a repository.
-
 .LINK
 https://git-scm.com/docs/git-clone
 #>
@@ -348,7 +342,7 @@ function Import-GitRepository {
       [PathItemType]::Directory,
       $True
     )]
-    # Path to the directory into which the repository will be cloned. If not specified, defaults to the current location. The repository will be cloned into a subdirectory with the same name as the repository. If the path points to a container which does not exist, it will be created. If parent container creation fails, this function will throw an error. If Git encounters an error during cloning, this function will throw an error.
+    # Directory path into which to clone the repository. If the path points to a non-existant container, the container will be created. Throws a terminating error if container creation fails or git returns an error.
     [string]$WorkingDirectory,
 
     [Alias('ssh')]
@@ -384,9 +378,6 @@ function Import-GitRepository {
 }
 
 <#
-.SYNOPSIS
-Use Git to pull changes from a repository.
-
 .LINK
 https://git-scm.com/docs/git-pull
 #>
@@ -400,7 +391,7 @@ function Get-GitRepository {
       [PathItemType]::Directory,
       $True
     )]
-    # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
+    # Repository path
     [string]$WorkingDirectory
   )
 
@@ -408,9 +399,6 @@ function Get-GitRepository {
 }
 
 <#
-.SYNOPSIS
-Use Git to pull changes for all repositories in the top level of %USERPROFILE%\code'.
-
 .LINK
 https://git-scm.com/docs/git-pull
 #>
@@ -438,9 +426,6 @@ function Get-ChildGitRepository {
 }
 
 <#
-.SYNOPSIS
-Use Git to diff the current local working tree against the current local index.
-
 .LINK
 https://git-scm.com/docs/git-diff
 #>
@@ -461,7 +446,7 @@ function Compare-GitRepository {
       [PathItemType]::Directory,
       $True
     )]
-    # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
+    # Repository path
     [string]$WorkingDirectory
   )
 
@@ -492,9 +477,6 @@ function Compare-GitRepository {
 }
 
 <#
-.SYNOPSIS
-Use Git to stage all changes in a repository.
-
 .LINK
 https://git-scm.com/docs/git-add
 #>
@@ -515,7 +497,7 @@ function Add-GitRepository {
       [PathItemType]::Directory,
       $True
     )]
-    # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
+    # Repository path
     [string]$WorkingDirectory,
 
     # Equivalent to git add --renormalize flag
@@ -554,9 +536,6 @@ function Add-GitRepository {
 }
 
 <#
-.SYNOPSIS
-Commit changes to a Git repository.
-
 .LINK
 https://git-scm.com/docs/git-commit
 #>
@@ -570,16 +549,16 @@ function Write-GitRepository {
       [PathItemType]::Directory,
       $True
     )]
-    # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
+    # Repository path
     [string]$WorkingDirectory,
 
     # Commit message. It must be non-empty except on an empty commit, where it defaults to 'No message.'
     [string]$Message,
 
-    # Do not add unstaged nor untracked files: only commit files that are already staged.
+    # Do not add unstaged nor untracked files; only commit files that are already staged
     [switch]$Staged,
 
-    # Allow an empty commit, equivalent to git commit --allow-empty flag.
+    # Allow an empty commit, equivalent to git commit --allow-empty
     [switch]$AllowEmpty
   )
 
@@ -655,9 +634,6 @@ function Write-GitRepository {
 }
 
 <#
-.SYNOPSIS
-Use Git to push changes to a repository.
-
 .LINK
 https://git-scm.com/docs/git-push
 #>
@@ -671,7 +647,7 @@ function Push-GitRepository {
       [PathItemType]::Directory,
       $True
     )]
-    # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
+    # Repository path
     [string]$WorkingDirectory
   )
 
@@ -702,9 +678,6 @@ function Push-GitRepository {
 $TREE_SPEC = '^(?=.)(?>HEAD)?(?<Branching>(?>~|\^)?)(?<Step>(?>\d{0,10}))$'
 
 <#
-.SYNOPSIS
-Use Git to undo changes in a repository.
-
 .LINK
 https://git-scm.com/docs/git-reset
 #>
@@ -718,13 +691,13 @@ function Reset-GitRepository {
       [PathItemType]::Directory,
       $True
     )]
-    # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
+    # Repository path
     [string]$WorkingDirectory,
 
-    # The tree spec to which to revert, specified as '[HEAD]([~]|^)[n]'. If the tree spec is not specified, it defaults to HEAD. If only the number index is given, it defaults to '~' branching. If only the branching is given, the index defaults to 0 = HEAD.
+    # The tree spec to which to revert given as '[HEAD]([~]|^)[n]'. Defaults to HEAD. If only the number index is given, defaults to '~' branching. If only branching is given, defaults to index 0 (HEAD).
     [string]$Tree,
 
-    # Non-destructive reset, equivalent to running git reset without the --hard flag.
+    # Non-destructive reset, equivalent to running git reset without --hard
     [switch]$Soft
   )
 
@@ -791,9 +764,6 @@ function Reset-GitRepository {
 }
 
 <#
-.SYNOPSIS
-Use Git to restore a repository to its previous state.
-
 .LINK
 https://git-scm.com/docs/git-reset
 #>
@@ -807,7 +777,7 @@ function Restore-GitRepository {
       [PathItemType]::Directory,
       $True
     )]
-    # Path to local repository. If not specified, defaults to the current location. The function will throw an error if there is no Git repository at the path.
+    # Repository path
     [string]$WorkingDirectory
   )
 
@@ -836,12 +806,8 @@ function Restore-GitRepository {
 }
 
 <#
-.SYNOPSIS
-Use Node Package Manager (npm) to run a command in a Node package.
-
 .LINK
 https://docs.npmjs.com/cli/commands
-
 .LINK
 https://docs.npmjs.com/cli/commands/npm
 #>
@@ -862,7 +828,7 @@ function Invoke-Npm {
       [PathItemType]::Directory,
       $True
     )]
-    # Node package root at which to run the command
+    # Node package path
     [string]$WorkingDirectory,
 
     [Parameter(
@@ -870,33 +836,33 @@ function Invoke-Npm {
       ValueFromRemainingArguments,
       DontShow
     )]
-    # Additional arguments to pass to npm
+    # Additional npm arguments
     [string[]]$Argument,
 
     # When npm command execution results in a non-zero exit code, write a warning and continue instead of the default behavior of throwing a terminating error.
     [switch]$NoThrow,
 
-    # Show npm version if no command is specified. Otherwise, pass the -v flag.
+    # Show npm version if no command is specified. Otherwise, pass the -v flag as npm argument.
     [switch]$Version,
 
     [Parameter(DontShow)]
-    # Pass the -D flag as an argument to npm
+    # Pass -D flag as npm argument
     [switch]$D,
 
     [Parameter(DontShow)]
-    # Pass the -E flag as an argument to npm
+    # Pass -E flag as npm argument
     [switch]$E,
 
     [Parameter(DontShow)]
-    # Pass the -i flag as an argument to npm
+    # Pass -i flag as npm argument
     [switch]$I,
 
     [Parameter(DontShow)]
-    # Pass the -o flag as an argument to npm
+    # Pass -o flag as npm argument
     [switch]$O,
 
     [Parameter(DontShow)]
-    # Pass the -P flag as an argument to npm
+    # Pass -P flag as npm argument
     [switch]$P
   )
 
@@ -1001,9 +967,6 @@ function Invoke-Npm {
 }
 
 <#
-.SYNOPSIS
-Run Node.
-
 .LINK
 https://nodejs.org/api/cli.html
 #>
@@ -1022,9 +985,6 @@ function Invoke-Node {
 }
 
 <#
-.SYNOPSIS
-Use 'npx' to run a command from a local or remote npm module.
-
 .LINK
 https://docs.npmjs.com/cli/commands/npx
 #>
@@ -1043,9 +1003,6 @@ function Invoke-NodeExecutable {
 }
 
 <#
-.SYNOPSIS
-Use Node Package Manager (npm) to clear the global Node module cache.
-
 .LINK
 https://docs.npmjs.com/cli/commands/npm-cache
 #>
@@ -1065,9 +1022,6 @@ function Clear-NodeModuleCache {
 }
 
 <#
-.SYNOPSIS
-Use Node Package Manager (npm) to check for outdated packages in a Node package.
-
 .LINK
 https://docs.npmjs.com/cli/commands/npm-outdated
 #>
@@ -1081,7 +1035,7 @@ function Compare-NodeModule {
       [PathItemType]::Directory,
       $True
     )]
-    # Node package root at which to run the command
+    # Node package path
     [string]$WorkingDirectory
   )
 
@@ -1106,9 +1060,6 @@ function Compare-NodeModule {
 }
 
 <#
-.SYNOPSIS
-Use Node Package Manager (npm) to increment the package version of the current Node package.
-
 .LINK
 https://docs.npmjs.com/cli/commands/npm-version
 #>
@@ -1137,7 +1088,7 @@ function Step-NodePackageVersion {
       [PathItemType]::Directory,
       $True
     )]
-    # Node package root at which to run the command
+    # Node package path
     [string]$WorkingDirectory,
 
     [Parameter(
@@ -1200,9 +1151,6 @@ function Step-NodePackageVersion {
 }
 
 <#
-.SYNOPSIS
-Use Node Package Manager (npm) to run a script defined in a Node package's 'package.json'.
-
 .LINK
 https://docs.npmjs.com/cli/commands/npm-run
 #>
@@ -1219,7 +1167,7 @@ function Invoke-NodePackageScript {
       [PathItemType]::Directory,
       $True
     )]
-    # Node package root at which to run the command
+    # Node package path
     [string]$WorkingDirectory
   )
 
@@ -1249,9 +1197,6 @@ function Invoke-NodePackageScript {
 }
 
 <#
-.SYNOPSIS
-Use Node Package Manager (npm) to run the 'test' script defined in a Node package's 'package.json'.
-
 .LINK
 https://docs.npmjs.com/cli/commands/npm-test
 #>
@@ -1265,7 +1210,7 @@ function Test-NodePackage {
       [PathItemType]::Directory,
       $True
     )]
-    # Node package root at which to run the command
+    # Node package path
     [string]$WorkingDirectory
   )
 
