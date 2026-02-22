@@ -30,31 +30,6 @@ function Add-WinGetApp {
 
 <#
 .SYNOPSIS
-Use WinGet to check for a package upgrade or to upgrade a package.
-
-.DESCRIPTION
-This function is an alias for 'winget upgrade'.
-
-.COMPONENT
-Native
-
-.LINK
-https://learn.microsoft.com/en-us/windows/package-manager/winget/upgrade
-#>
-function Update-WinGetApp {
-
-  [Alias('wgu')]
-  param()
-
-  & $env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe upgrade @args
-
-  if ($LASTEXITCODE -notin 0, 1) {
-    throw "winget.exe error, execution stopped with exit code: $LASTEXITCODE"
-  }
-}
-
-<#
-.SYNOPSIS
 Use WinGet to search WinGet repositories for a package.
 
 .DESCRIPTION

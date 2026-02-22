@@ -8,7 +8,6 @@
   Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
   PowerShellVersion    = '7.5'
   FunctionsToExport    = @(
-    'Update-WinGetApp'
     'Add-WinGetApp'
     'Find-WinGetApp'
     'Remove-WinGetApp'
@@ -38,7 +37,6 @@
     'remsv'
     'gapx'
     'remapx'
-    'wgu'
     'wg'
     'wga'
     'wgf'
