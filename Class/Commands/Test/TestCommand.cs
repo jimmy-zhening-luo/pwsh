@@ -4,7 +4,7 @@ namespace Module.Commands.Test;
   VerbsDiagnostic.Test,
   "Command"
 )]
-[Alias("tt", "test")]
+[Alias("tt")]
 [OutputType(typeof(object))]
 public sealed class TestCommand : CoreCommand
 {
