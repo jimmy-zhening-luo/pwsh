@@ -9,6 +9,7 @@
   PowerShellVersion    = '7.5'
   FunctionsToExport    = @()
   CmdletsToExport      = @(
+    'Test-Command'
     'Clear-Line'
     'Set-Directory'
     'Set-DirectorySibling'
@@ -63,6 +64,7 @@
   )
   VariablesToExport    = @()
   AliasesToExport      = @(
+    'tc'
     'cl'
     'clear'
     'c'
