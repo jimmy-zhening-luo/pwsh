@@ -148,31 +148,7 @@ function Invoke-Git {
     [Parameter(
       Position = 0
     )]
-    [RestCompletions(
-      'switch',
-      'merge',
-      'diff',
-      'stash',
-      'tag',
-      'config',
-      'remote',
-      'submodule',
-      'fetch',
-      'checkout',
-      'branch',
-      'rm',
-      'mv',
-      'ls-files',
-      'ls-tree',
-      'init',
-      'status',
-      'clone',
-      'pull',
-      'add',
-      'commit',
-      'push',
-      'reset'
-    )]
+    [Module.Commands.Code.Git.GitVerbCompletionsAttribute()]
     # Git command to run.
     [string]$Verb,
 

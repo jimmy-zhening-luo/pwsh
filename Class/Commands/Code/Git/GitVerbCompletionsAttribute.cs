@@ -1,6 +1,6 @@
-namespace Module.Commands.Code.Node;
+namespace Module.Commands.Code.Git;
 
-public sealed class NodeVerbCompletionsAttribute() : CompletionsAttribute(
+public sealed class GitVerbCompletionsAttribute() : CompletionsAttribute(
   [
     "switch",
     "merge",
