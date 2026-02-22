@@ -1,9 +1,9 @@
 <#
 .SYNOPSIS
-Use WinGet to install a new package or upgrade an existing package.
+Use WinGet to install a new package, upgrade an existing package, or list all packages with available updates.
 
 .DESCRIPTION
-This function is an alias for 'winget install', unless no arguments are provided, in which case it calls 'winget upgrade' with no arguments, listing apps with available upgrades.
+This command is an alias for 'winget install' and can be used to install or upgrade a package. When invoked with no arguments, it instead aliases 'winget upgrade' to list all packages with available updates.
 
 .COMPONENT
 Native
