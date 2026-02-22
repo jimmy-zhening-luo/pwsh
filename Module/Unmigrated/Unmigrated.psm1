@@ -308,12 +308,6 @@ function Invoke-Git {
 }
 
 <#
-.SYNOPSIS
-Use Git to get the status of a local repository.
-
-.DESCRIPTION
-TEST.
-
 .LINK
 https://git-scm.com/docs/git-status
 #>
