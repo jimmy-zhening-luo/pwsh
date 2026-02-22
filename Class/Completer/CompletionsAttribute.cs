@@ -1,6 +1,6 @@
 namespace Module.Completer;
 
-public sealed class CompletionsAttribute : CompletionsAttributePrototype<string[]>
+public class CompletionsAttribute : CompletionsAttributePrototype<string[]>
 {
   public CompletionsAttribute(
     string[] domain
