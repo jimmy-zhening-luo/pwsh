@@ -10,6 +10,9 @@ Native
 
 .LINK
 https://learn.microsoft.com/en-us/windows/package-manager/winget/install
+
+.LINK
+https://learn.microsoft.com/en-us/windows/package-manager/winget/upgrade
 #>
 function Add-WinGetApp {
 
@@ -40,6 +43,9 @@ Native
 
 .LINK
 https://learn.microsoft.com/en-us/windows/package-manager/winget/search
+
+.LINK
+https://learn.microsoft.com/en-us/windows/package-manager/winget/list
 #>
 function Find-WinGetApp {
 
