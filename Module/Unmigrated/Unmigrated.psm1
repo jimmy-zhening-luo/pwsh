@@ -1101,13 +1101,13 @@ function Step-NodePackageVersion {
 
   $Version = switch ($Version) {
     '' {
-      [NodePackageNamedVersion]::patch
+      [Module.Commands.Code.Node.NodePackageNamedVersion]::patch
       break
     }
     {
-      $null -ne [NodePackageNamedVersion]::$Version
+      $null -ne [Module.Commands.Code.Node.NodePackageNamedVersion]::$Version
     } {
-      [NodePackageNamedVersion]::$Version
+      [Module.Commands.Code.Node.NodePackageNamedVersion]::$Version
       break
     }
     default {
