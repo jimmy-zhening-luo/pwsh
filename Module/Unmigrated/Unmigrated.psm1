@@ -898,7 +898,9 @@ function Invoke-Npm {
     [Parameter(
       Position = 0
     )]
-    [Module.Commands.Code.Node.NodeVerbCompletions()]
+    [VerbCompletions(
+      [Module.Commands.Code.Node.NodeVerb]
+    )]
     # npm command verb
     [string]$Command,
 
