@@ -1,23 +1,26 @@
 namespace Module.Completer;
 
-public class VerbCompletionsAttribute : CompletionsAttributePrototype
+public class VerbCompletionsAttribute : CompletionsAttributePrototype<System.Type>
 {
-  private readonly System.Type Domain;
+  public VerbCompletionsAttribute(
+    System.Type verbType
+  ) : base(verbType)
+  { }
 
   public VerbCompletionsAttribute(
-    System.Type domain
-  ) : base() => Domain = domain;
-
-  public VerbCompletionsAttribute(
-    System.Type domain,
+    System.Type verbType,
     bool strict
   ) : base(
+    verbType,
     strict
-  ) => Domain = domain;
+  )
+  { }
 
-  private protected sealed override IEnumerable<string> ResolveDomain()
+  private protected sealed override IEnumerable<string> ResolveDomain(
+    System.Type verbType
+  )
   {
-    var verbInfo = Domain.GetProperty(
+    var verbInfo = verbType.GetProperty(
       "Verbs",
       System.Reflection.BindingFlags.Static
       | System.Reflection.BindingFlags.Public

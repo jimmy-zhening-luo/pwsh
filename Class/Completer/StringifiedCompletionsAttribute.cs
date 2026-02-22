@@ -1,30 +1,35 @@
 namespace Module.Completer;
 
-public sealed class StringifiedCompletionsAttribute : CompletionsAttributePrototype
+public sealed class StringifiedCompletionsAttribute : CompletionsAttributePrototype<string>
 {
-  private readonly string Domain;
-
   public StringifiedCompletionsAttribute(
     string domain
-  ) : base() => Domain = domain;
+  ) : base(domain)
+  { }
 
   public StringifiedCompletionsAttribute(
     string domain,
     bool strict
   ) : base(
+    domain,
     strict
-  ) => Domain = domain;
+  )
+  { }
 
   public StringifiedCompletionsAttribute(
     string domain,
     bool strict,
     CompletionCase casing
   ) : base(
+    domain,
     strict,
     casing
-  ) => Domain = domain;
+  )
+  { }
 
-  private protected sealed override IEnumerable<string> ResolveDomain() => Domain.Split(
+  private protected sealed override IEnumerable<string> ResolveDomain(
+    string domain
+  ) => domain.Split(
     ',',
     System.StringSplitOptions.RemoveEmptyEntries
     | System.StringSplitOptions.TrimEntries
