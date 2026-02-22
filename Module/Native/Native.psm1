@@ -33,10 +33,10 @@ function Add-WinGetApp {
 
 <#
 .SYNOPSIS
-Use WinGet to search WinGet repositories for a package.
+Use WinGet to search for a package.
 
 .DESCRIPTION
-This function is an alias for 'winget search', unless no arguments are provided, in which case it calls 'winget list' with no arguments, listing all available packages.
+This command is an alias for 'winget search'. When invoked with no arguments, it instead aliases 'winget list' to list all installed packages.
 
 .COMPONENT
 Native
@@ -69,7 +69,7 @@ function Find-WinGetApp {
 Use WinGet to uninstall a package.
 
 .DESCRIPTION
-This function is an alias for 'winget uninstall'.
+This command is an alias for 'winget uninstall'.
 
 .COMPONENT
 Native
