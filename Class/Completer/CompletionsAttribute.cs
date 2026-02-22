@@ -4,7 +4,9 @@ public sealed class CompletionsAttribute : CompletionsAttributePrototype<string[
 {
   public CompletionsAttribute(
     string[] domain
-  ) : base(domain)
+  ) : base(
+    domain
+  )
   { }
 
   public CompletionsAttribute(

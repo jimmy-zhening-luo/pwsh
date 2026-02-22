@@ -1,7 +1,7 @@
 namespace Module.Completer;
 
-public abstract class CompletionsAttributePrototype<T>(
-  T Domain,
+public abstract class CompletionsAttributePrototype<TDomain>(
+  TDomain Domain,
   bool Strict = false,
   CompletionCase casing = CompletionCase.Preserve
 ) : BaseCompletionsAttribute<Completer>(
@@ -9,11 +9,13 @@ public abstract class CompletionsAttributePrototype<T>(
 )
 {
   private protected abstract IEnumerable<string> ResolveDomain(
-    T domain
+    TDomain domain
   );
 
   public sealed override Completer Create() => new(
-    ResolveDomain(Domain),
+    ResolveDomain(
+      Domain
+    ),
     Strict,
     Casing
   );

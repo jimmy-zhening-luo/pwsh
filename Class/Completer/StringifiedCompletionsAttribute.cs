@@ -4,7 +4,9 @@ public sealed class StringifiedCompletionsAttribute : CompletionsAttributeProtot
 {
   public StringifiedCompletionsAttribute(
     string domain
-  ) : base(domain)
+  ) : base(
+    domain
+  )
   { }
 
   public StringifiedCompletionsAttribute(

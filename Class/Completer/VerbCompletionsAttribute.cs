@@ -4,7 +4,9 @@ public class VerbCompletionsAttribute : CompletionsAttributePrototype<System.Typ
 {
   public VerbCompletionsAttribute(
     System.Type verbType
-  ) : base(verbType)
+  ) : base(
+    verbType
+  )
   { }
 
   public VerbCompletionsAttribute(
@@ -20,39 +22,22 @@ public class VerbCompletionsAttribute : CompletionsAttributePrototype<System.Typ
     System.Type verbType
   )
   {
-    var verbInfo = verbType.GetProperty(
-      "Verbs",
-      System.Reflection.BindingFlags.Static
-      | System.Reflection.BindingFlags.Public
-    );
-
-    if (verbInfo is null)
-    {
-      throw new System.ArgumentException(
-        "Provided type has no Verbs property.",
-        "Domain"
+    var verbs = verbType
+      .GetProperty(
+        "Verbs",
+        System.Reflection.BindingFlags.Static
+        | System.Reflection.BindingFlags.Public
+      )?.GetValue(
+        null
       );
-    }
 
-    var verbs = verbInfo.GetValue(
-      null
-    );
-
-    if (verbs is null)
+    if (
+      verbs is not HashSet<string> domain
+    )
     {
       throw new System.ArgumentException(
-        "Provided Verbs property is null.",
-        "Domain.Verbs"
-      );
-    }
-
-    var domain = verbs as HashSet<string>;
-
-    if (domain is null)
-    {
-      throw new System.ArgumentException(
-        "Provided Verbs property value cannot be cast to HashSet<string>.",
-        "Domain.Verbs"
+        "Provided type has no Verbs property that casts to HashSet<string>.",
+        nameof(verbType)
       );
     }
 
