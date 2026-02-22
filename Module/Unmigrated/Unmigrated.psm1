@@ -130,13 +130,6 @@ $GIT_ARGUMENT = '^(?>(?=.*[*=])(?>.+)|-(?>\w|(?>-\w[-\w]*\w)))$'
 .SYNOPSIS
 Invoke a Git command in a local repository.
 
-.DESCRIPTION
-This function allows you to run a Git command in a local repository. If no command is specified, it defaults to 'git status'. If no path is specified, it defaults to the current location.
-
-For every verb except for 'clone', 'config', and 'init', the function will throw an error if there is no Git repository at the specified path.
-
-For every verb, if the Git command returns a non-zero exit code, the function will throw an error by default.
-
 .LINK
 https://git-scm.com/docs
 #>
@@ -318,9 +311,6 @@ function Invoke-Git {
 .SYNOPSIS
 Use Git to get the status of a local repository.
 
-.DESCRIPTION
-This function is an alias for 'git status [argument]'.
-
 .LINK
 https://git-scm.com/docs/git-status
 #>
@@ -344,9 +334,6 @@ function Measure-GitRepository {
 <#
 .SYNOPSIS
 Use Git to clone a repository.
-
-.DESCRIPTION
-This function is an alias for 'git clone' and allows you to clone a repository into a specified path.
 
 .LINK
 https://git-scm.com/docs/git-clone
@@ -403,9 +390,6 @@ function Import-GitRepository {
 .SYNOPSIS
 Use Git to pull changes from a repository.
 
-.DESCRIPTION
-This function is an alias for 'git pull [argument]'.
-
 .LINK
 https://git-scm.com/docs/git-pull
 #>
@@ -429,9 +413,6 @@ function Get-GitRepository {
 <#
 .SYNOPSIS
 Use Git to pull changes for all repositories in the top level of %USERPROFILE%\code'.
-
-.DESCRIPTION
-This function runs 'git pull [argument]' in each child repository in %USERPROFILE%\code'.
 
 .LINK
 https://git-scm.com/docs/git-pull
@@ -462,9 +443,6 @@ function Get-ChildGitRepository {
 <#
 .SYNOPSIS
 Use Git to diff the current local working tree against the current local index.
-
-.DESCRIPTION
-This function is an alias for 'git diff [path]'.
 
 .LINK
 https://git-scm.com/docs/git-diff
@@ -519,9 +497,6 @@ function Compare-GitRepository {
 <#
 .SYNOPSIS
 Use Git to stage all changes in a repository.
-
-.DESCRIPTION
-This function is an alias for 'git add [.]' and stages all changes in the repository.
 
 .LINK
 https://git-scm.com/docs/git-add
@@ -584,9 +559,6 @@ function Add-GitRepository {
 <#
 .SYNOPSIS
 Commit changes to a Git repository.
-
-.DESCRIPTION
-This function commits changes to a Git repository using the 'git commit' command.
 
 .LINK
 https://git-scm.com/docs/git-commit
@@ -689,9 +661,6 @@ function Write-GitRepository {
 .SYNOPSIS
 Use Git to push changes to a repository.
 
-.DESCRIPTION
-This function is an alias for 'git push'.
-
 .LINK
 https://git-scm.com/docs/git-push
 #>
@@ -738,9 +707,6 @@ $TREE_SPEC = '^(?=.)(?>HEAD)?(?<Branching>(?>~|\^)?)(?<Step>(?>\d{0,10}))$'
 <#
 .SYNOPSIS
 Use Git to undo changes in a repository.
-
-.DESCRIPTION
-This function is an alias for 'git add . && git reset --hard [HEAD]([~]|^)[n]'.
 
 .LINK
 https://git-scm.com/docs/git-reset
@@ -831,9 +797,6 @@ function Reset-GitRepository {
 .SYNOPSIS
 Use Git to restore a repository to its previous state.
 
-.DESCRIPTION
-This function is an alias for 'git add . && git reset --hard && git pull'.
-
 .LINK
 https://git-scm.com/docs/git-reset
 #>
@@ -878,9 +841,6 @@ function Restore-GitRepository {
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to run a command in a Node package.
-
-.DESCRIPTION
-This function runs an npm command in a specified Node package directory, or the current directory if no path is specified.
 
 .LINK
 https://docs.npmjs.com/cli/commands
@@ -1047,9 +1007,6 @@ function Invoke-Npm {
 .SYNOPSIS
 Run Node.
 
-.DESCRIPTION
-This function is an alias shim for 'node [args]'.
-
 .LINK
 https://nodejs.org/api/cli.html
 #>
@@ -1070,9 +1027,6 @@ function Invoke-Node {
 <#
 .SYNOPSIS
 Use 'npx' to run a command from a local or remote npm module.
-
-.DESCRIPTION
-This function is an alias shim for 'npx [args]'.
 
 .LINK
 https://docs.npmjs.com/cli/commands/npx
@@ -1095,9 +1049,6 @@ function Invoke-NodeExecutable {
 .SYNOPSIS
 Use Node Package Manager (npm) to clear the global Node module cache.
 
-.DESCRIPTION
-This function is an alias for 'npm cache clean --force'.
-
 .LINK
 https://docs.npmjs.com/cli/commands/npm-cache
 #>
@@ -1119,9 +1070,6 @@ function Clear-NodeModuleCache {
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to check for outdated packages in a Node package.
-
-.DESCRIPTION
-This function is an alias for 'npm outdated [--prefix $WorkingDirectory]'.
 
 .LINK
 https://docs.npmjs.com/cli/commands/npm-outdated
@@ -1163,9 +1111,6 @@ function Compare-NodeModule {
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to increment the package version of the current Node package.
-
-.DESCRIPTION
-This function is an alias for 'npm version [--prefix $WorkingDirectory] [version=patch]'.
 
 .LINK
 https://docs.npmjs.com/cli/commands/npm-version
@@ -1261,9 +1206,6 @@ function Step-NodePackageVersion {
 .SYNOPSIS
 Use Node Package Manager (npm) to run a script defined in a Node package's 'package.json'.
 
-.DESCRIPTION
-This function is an alias for 'npm run [script] [--prefix $WorkingDirectory] [--args]'.
-
 .LINK
 https://docs.npmjs.com/cli/commands/npm-run
 #>
@@ -1312,9 +1254,6 @@ function Invoke-NodePackageScript {
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to run the 'test' script defined in a Node package's 'package.json'.
-
-.DESCRIPTION
-This function is an alias for 'npm test [--prefix $WorkingDirectory] [--args]'.
 
 .LINK
 https://docs.npmjs.com/cli/commands/npm-test
