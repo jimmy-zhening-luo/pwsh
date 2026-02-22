@@ -1,7 +1,20 @@
 namespace Module.Completer;
 
-public class VerbCompletionsAttribute : CompletionsAttributePrototype<System.Type>
+public class VerbCompletionsAttribute : CompletionsAttributePrototype
 {
+  private readonly System.Type Domain;
+
+  public VerbCompletionsAttribute(
+    System.Type domain
+  ) : base() => Domain = domain;
+
+  public VerbCompletionsAttribute(
+    System.Type domain,
+    bool strict
+  ) : base(
+    strict
+  ) => Domain = domain;
+
   private protected sealed override IEnumerable<string> ResolveDomain()
   {
     var verbInfo = Domain.GetProperty(

@@ -4,16 +4,11 @@ namespace Module.Completer;
   System.AttributeTargets.Property
   | System.AttributeTargets.Field
 )]
-public abstract class BaseCompletionsAttribute<TCompleter> : ArgumentCompleterAttribute, IArgumentCompleterFactory where TCompleter : BaseCompleter
+public abstract class BaseCompletionsAttribute<TCompleter>(
+  CompletionCase casing = CompletionCase.Preserve
+) : ArgumentCompleterAttribute, IArgumentCompleterFactory where TCompleter : BaseCompleter
 {
-  private protected readonly CompletionCase Casing;
-
-  private protected BaseCompletionsAttribute() : base()
-  { }
-
-  private protected BaseCompletionsAttribute(
-    CompletionCase casing
-  ) : this() => Casing = casing;
+  private protected readonly CompletionCase Casing = casing;
 
   public abstract TCompleter Create();
   IArgumentCompleter IArgumentCompleterFactory
