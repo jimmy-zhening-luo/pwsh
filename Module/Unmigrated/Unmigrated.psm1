@@ -1164,15 +1164,6 @@ function Compare-NodeModule {
   Invoke-Npm -Command outdated -WorkingDirectory $WorkingDirectory -NoThrow -Argument $NodeArgument
 }
 
-enum NodePackageNamedVersion {
-  patch
-  minor
-  major
-  prerelease
-  preminor
-  premajor
-}
-
 <#
 .SYNOPSIS
 Use Node Package Manager (npm) to increment the package version of the current Node package.
@@ -1193,7 +1184,7 @@ function Step-NodePackageVersion {
       Position = 0
     )]
     [EnumCompletions(
-      [NodePackageNamedVersion],
+      [Module.Commands.Code.Node.NodePackageNamedVersion],
       $False,
       [CompletionCase]::Preserve
     )]
