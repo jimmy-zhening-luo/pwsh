@@ -898,8 +898,8 @@ function Invoke-Npm {
     [Parameter(
       Position = 0
     )]
-    [VerbCompletions(
-      [Module.Commands.Code.Node.NodeVerb]
+    [StringifiedCompletions(
+      'pkg,i,it,cit,rm,access,adduser,audit,bugs,cache,ci,completion,config,dedupe,deprecate,diff,dist-tag,docs,doctor,edit,exec,explain,explore,find-dupes,fund,help,help-search,init,install,install-ci-test,install-test,link,login,logout,ls,org,outdated,owner,pack,ping,prefix,profile,prune,publish,query,rebuild,repo,restart,root,run,sbom,search,shrinkwrap,star,stars,start,stop,team,test,token,undeprecate,uninstall,unpublish,unstar,update,version,view,whoami'
     )]
     # npm command verb
     [string]$Command,
