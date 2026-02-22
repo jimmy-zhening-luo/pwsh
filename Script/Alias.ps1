@@ -28,4 +28,7 @@ New-Alias verb Get-VerbList -Option ReadOnly
 #region Native
 # was: clip.exe
 New-Alias clip Set-Clipboard -Option ReadOnly
+
+# was: git/test.exe
+New-Alias test Test-Command -Option ReadOnly
 #endregion
