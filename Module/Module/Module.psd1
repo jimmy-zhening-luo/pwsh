@@ -64,7 +64,7 @@
   )
   VariablesToExport    = @()
   AliasesToExport      = @(
-    'tc'
+    'tt'
     'cl'
     'clear'
     'c'
