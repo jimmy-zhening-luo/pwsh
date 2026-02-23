@@ -893,9 +893,11 @@ function Invoke-Npm {
       }
     }
     else {
-      $NodeCommandArgument.Add(
+      $NodeCommandArgument.Insert(
+        0,
         $WorkingDirectory
       )
+
       $WorkingDirectory = ''
     }
   }
@@ -927,6 +929,7 @@ function Invoke-Npm {
       0,
       $Command
     )
+
     $Command = $DeferredVerb
   }
 
