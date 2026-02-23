@@ -1053,10 +1053,17 @@ function Compare-NodeModule {
       ValueFromRemainingArguments,
       DontShow
     )]
+    [PathCompletions(
+      '~\code',
+      [PathItemType]::Directory,
+      $True
+    )]
+    # Additional npm arguments
     [string[]]$Argument,
 
     [Parameter()]
     [Alias('a')]
+    # In addition to direct dependencies, check for outdated meta-dependencies (--all)
     [switch]$All
   )
 
@@ -1118,58 +1125,66 @@ function Step-NodePackageVersion {
       ValueFromRemainingArguments,
       DontShow
     )]
+    [PathCompletions(
+      '~\code',
+      [PathItemType]::Directory,
+      $True
+    )]
+    # Additional npm arguments
     [string[]]$Argument
   )
 
-  $Version = switch ($Version) {
-    '' {
-      [Module.Commands.Code.Node.NodePackageNamedVersion]::patch
-      break
-    }
-    {
-      $null -ne [Module.Commands.Code.Node.NodePackageNamedVersion]::$Version
-    } {
-      [Module.Commands.Code.Node.NodePackageNamedVersion]::$Version
-      break
-    }
-    default {
-      [string]$SpecificVersion = $Version.StartsWith(
-        [char]'v',
-        [stringcomparison]::OrdinalIgnoreCase
-      ) ? $Version.Substring(1) : $Version
-
-      [semver]$Semver = $null
-
-      if ([semver]::TryParse($SpecificVersion, [ref]$Semver)) {
-        $Semver.ToString()
+  end {
+    $Version = switch ($Version) {
+      '' {
+        [Module.Commands.Code.Node.NodePackageNamedVersion]::patch
+        break
       }
-      else {
-        throw 'Provided version was neither a well-known version nor parseable as a semantic version.'
+      {
+        $null -ne [Module.Commands.Code.Node.NodePackageNamedVersion]::$Version
+      } {
+        [Module.Commands.Code.Node.NodePackageNamedVersion]::$Version
+        break
+      }
+      default {
+        [string]$SpecificVersion = $Version.StartsWith(
+          [char]'v',
+          [stringcomparison]::OrdinalIgnoreCase
+        ) ? $Version.Substring(1) : $Version
+
+        [semver]$Semver = $null
+
+        if ([semver]::TryParse($SpecificVersion, [ref]$Semver)) {
+          $Semver.ToString()
+        }
+        else {
+          throw 'Provided version was neither a well-known version nor parseable as a semantic version.'
+        }
       }
     }
-  }
 
-  $NodeArgument = [List[string]]::new()
-  $NodeArgument.Add(
-    $Version.ToLower()
-  )
-
-  if ($WorkingDirectory) {
-    if (
-      !(Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)
-    ) {
-      $NodeArgument.Add($WorkingDirectory)
-      $WorkingDirectory = ''
-    }
-  }
-
-  if ($Argument) {
-    $NodeArgument.AddRange(
-      [List[string]]$Argument
+    $NodeArgument = [List[string]]::new()
+    $NodeArgument.Add(
+      $Version.ToLower()
     )
-  }
 
-  Invoke-Npm -Command version -WorkingDirectory $WorkingDirectory -Argument $NodeArgument
+    if ($WorkingDirectory) {
+      if (
+        !(Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)
+      ) {
+        $NodeArgument.Add($WorkingDirectory)
+        $WorkingDirectory = ''
+      }
+    }
+
+    if ($Argument) {
+      $NodeArgument.AddRange(
+        [List[string]]$Argument
+      )
+    }
+
+    Invoke-Npm -Command version -WorkingDirectory $WorkingDirectory -Argument $NodeArgument
+  }
 }
 
 <#
