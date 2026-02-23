@@ -12,7 +12,6 @@ public sealed class GetType : CoreCommand
     Mandatory = true,
     Position = 0,
     ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true,
     HelpMessage = "The object whose type to check"
   )]
   public object InputObject
