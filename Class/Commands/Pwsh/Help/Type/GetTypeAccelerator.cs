@@ -1,13 +1,13 @@
-namespace Module.Commands.Help.Type;
+namespace Module.Commands.Pwsh.Help.Type;
 
 [Cmdlet(
   VerbsCommon.Get,
-  "Type",
+  "TypeAccelerator",
   HelpUri = "https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about/about_type_accelerators"
 )]
-[Alias("types", "ty")]
+[Alias("types")]
 [OutputType(typeof(string))]
-public sealed class GetType : Cmdlet
+public sealed class GetTypeAccelerator : Cmdlet
 {
   protected sealed override void EndProcessing()
   {

@@ -1,4 +1,4 @@
-namespace Module.Commands.Help;
+namespace Module.Commands.Pwsh.Help;
 
 [Cmdlet(
   VerbsCommon.Get,

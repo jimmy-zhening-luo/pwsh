@@ -60,7 +60,7 @@
     'Get-HelpOnline'
     'Get-CommandAlias'
     'Get-VerbList'
-    'Get-Type'
+    'Get-TypeAccelerator'
   )
   VariablesToExport    = @()
   AliasesToExport      = @(
@@ -119,7 +119,6 @@
     'm'
     'man'
     'galc'
-    'ty'
     'types'
   )
 }

@@ -1,4 +1,4 @@
-namespace Module.Commands.Profile;
+namespace Module.Commands.Pwsh.Profile;
 
 [Cmdlet(
   VerbsLifecycle.Start,
