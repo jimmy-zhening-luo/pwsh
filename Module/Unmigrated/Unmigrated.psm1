@@ -373,7 +373,7 @@ function Import-GitRepository {
   $CloneArgument.Add($Origin)
   if ($args) {
     $CloneArgument.AddRange(
-      [List[string]]$args
+      [string[]]$args
     )
   }
 
@@ -471,7 +471,7 @@ function Compare-GitRepository {
 
   if ($args) {
     $DiffArgument.AddRange(
-      [List[string]]$args
+      [string[]]$args
     )
   }
 
@@ -525,7 +525,7 @@ function Add-GitRepository {
 
   if ($args) {
     $AddArgument.AddRange(
-      [List[string]]$args
+      [string[]]$args
     )
   }
 
@@ -665,7 +665,7 @@ function Push-GitRepository {
 
   if ($args) {
     $PushArgument.AddRange(
-      [List[string]]$args
+      [string[]]$args
     )
   }
 
@@ -702,7 +702,7 @@ function Reset-GitRepository {
   $ResetArgument = [List[string]]::new()
   if ($args) {
     $ResetArgument.AddRange(
-      [List[string]]$args
+      [string[]]$args
     )
   }
 
@@ -793,7 +793,7 @@ function Restore-GitRepository {
 
   if ($args) {
     $ResetArgument.AddRange(
-      [List[string]]$args
+      [string[]]$args
     )
   }
 
@@ -1235,7 +1235,7 @@ function Invoke-NodePackageScript {
 
   if ($args) {
     $NodeArgument.AddRange(
-      [List[string]]$args
+      [string[]]$args
     )
   }
 
