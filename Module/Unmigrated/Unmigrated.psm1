@@ -95,13 +95,15 @@ function Test-NodePackageDirectory {
     [string]$WorkingDirectory
   )
 
-  if (!$WorkingDirectory) {
-    $WorkingDirectory = $PWD.Path
-  }
+  end {
+    if (!$WorkingDirectory) {
+      $WorkingDirectory = $PWD.Path
+    }
 
-  return Test-Path (
-    Join-Path $WorkingDirectory package.json
-  ) -PathType Leaf
+    return Test-Path (
+      Join-Path $WorkingDirectory package.json
+    ) -PathType Leaf
+  }
 }
 
 function Resolve-NodePackageDirectory {
@@ -116,11 +118,13 @@ function Resolve-NodePackageDirectory {
     [string]$WorkingDirectory
   )
 
-  if (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory) {
-    return $WorkingDirectory ? "--prefix=$((Resolve-Path $WorkingDirectory).Path)" : ''
-  }
-  else {
-    throw "Path '$WorkingDirectory' is not a Node package directory."
+  end {
+    if (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory) {
+      return $WorkingDirectory ? "--prefix=$((Resolve-Path $WorkingDirectory).Path)" : ''
+    }
+    else {
+      throw "Path '$WorkingDirectory' is not a Node package directory."
+    }
   }
 }
 
@@ -189,116 +193,118 @@ function Invoke-Git {
     [switch]$v
   )
 
-  $GitArgument = [List[string]]::new()
-  $Newable = $False
+  end {
+    $GitArgument = [List[string]]::new()
+    $Newable = $False
 
-  if ($Verb) {
-    if (
-      [Module.Commands.Code.Git.GitVerb]::Verbs.Contains(
-        $Verb.ToLower()
-      )
-    ) {
-      if ($null -ne [Module.Commands.Code.Git.GitVerb+NewableVerb]::$Verb) {
-        $Newable = $True
+    if ($Verb) {
+      if (
+        [Module.Commands.Code.Git.GitVerb]::Verbs.Contains(
+          $Verb.ToLower()
+        )
+      ) {
+        if ($null -ne [Module.Commands.Code.Git.GitVerb+NewableVerb]::$Verb) {
+          $Newable = $True
 
-        if ($WorkingDirectory -match $GIT_ARGUMENT) {
-          $GitArgument.Add($WorkingDirectory)
-          $WorkingDirectory = ''
+          if ($WorkingDirectory -match $GIT_ARGUMENT) {
+            $GitArgument.Add($WorkingDirectory)
+            $WorkingDirectory = ''
+          }
         }
+        else {
+          if (
+            $WorkingDirectory -and !(
+              Resolve-GitRepository -WorkingDirectory $PWD.Path
+            ) -and !(
+              Resolve-GitRepository -WorkingDirectory $WorkingDirectory
+            ) -and (
+              Resolve-GitRepository -WorkingDirectory $Verb
+            )
+          ) {
+            $GitArgument.Add($WorkingDirectory)
+            $Verb, $WorkingDirectory = 'status', $Verb
+          }
+        }
+
+        $Verb = $Verb.ToLower()
       }
       else {
-        if (
-          $WorkingDirectory -and !(
-            Resolve-GitRepository -WorkingDirectory $PWD.Path
-          ) -and !(
-            Resolve-GitRepository -WorkingDirectory $WorkingDirectory
-          ) -and (
-            Resolve-GitRepository -WorkingDirectory $Verb
-          )
-        ) {
-          $GitArgument.Add($WorkingDirectory)
-          $Verb, $WorkingDirectory = 'status', $Verb
+        if ($WorkingDirectory -or $Argument) {
+          $GitArgument.Add($Verb)
         }
-      }
+        else {
+          $WorkingDirectory = $Verb
+        }
 
-      $Verb = $Verb.ToLower()
+        $Verb = 'status'
+      }
     }
     else {
-      if ($WorkingDirectory -or $Argument) {
-        $GitArgument.Add($Verb)
-      }
-      else {
-        $WorkingDirectory = $Verb
-      }
-
       $Verb = 'status'
     }
-  }
-  else {
-    $Verb = 'status'
-  }
 
-  $Resolve = @{
-    WorkingDirectory = $WorkingDirectory
-    Newable          = $Newable
-  }
-  $Repository = Resolve-GitRepository @Resolve
-
-  if (!$Repository) {
-    if ($WorkingDirectory) {
-      $GitArgument.Insert(0, $WorkingDirectory)
-
-      $Resolve.WorkingDirectory = $PWD.Path
-      $Repository = Resolve-GitRepository @Resolve
+    $Resolve = @{
+      WorkingDirectory = $WorkingDirectory
+      Newable          = $Newable
     }
+    $Repository = Resolve-GitRepository @Resolve
 
     if (!$Repository) {
-      throw "Path '$WorkingDirectory' is not a Git repository"
+      if ($WorkingDirectory) {
+        $GitArgument.Insert(0, $WorkingDirectory)
+
+        $Resolve.WorkingDirectory = $PWD.Path
+        $Repository = Resolve-GitRepository @Resolve
+      }
+
+      if (!$Repository) {
+        throw "Path '$WorkingDirectory' is not a Git repository"
+      }
     }
-  }
 
-  [string[]]$GitCommand = @(
-    '-c'
-    'color.ui=always'
-    '-C'
-    $Repository
-    $Verb
-  )
-
-  if ($D) {
-    $GitArgument.Add('-d')
-  }
-  if ($E) {
-    $GitArgument.Add('-E')
-  }
-  if ($I) {
-    $GitArgument.Add('-i')
-  }
-  if ($O) {
-    $GitArgument.Add('-o')
-  }
-  if ($P) {
-    $GitArgument.Add('-P')
-  }
-  if ($Version) {
-    $GitArgument.Add('-v')
-  }
-  if ($Argument) {
-    $GitArgument.AddRange(
-      [List[string]]$Argument
+    [string[]]$GitCommand = @(
+      '-c'
+      'color.ui=always'
+      '-C'
+      $Repository
+      $Verb
     )
-  }
 
-  & "$env:ProgramFiles\Git\cmd\git.exe" @GitCommand @GitArgument
-
-  if ($LASTEXITCODE -notin 0, 1) {
-    $Exception = "git command error, execution returned exit code: $LASTEXITCODE"
-
-    if ($NoThrow) {
-      Write-Warning -Message "$Exception"
+    if ($D) {
+      $GitArgument.Add('-d')
     }
-    else {
-      throw $Exception
+    if ($E) {
+      $GitArgument.Add('-E')
+    }
+    if ($I) {
+      $GitArgument.Add('-i')
+    }
+    if ($O) {
+      $GitArgument.Add('-o')
+    }
+    if ($P) {
+      $GitArgument.Add('-P')
+    }
+    if ($Version) {
+      $GitArgument.Add('-v')
+    }
+    if ($Argument) {
+      $GitArgument.AddRange(
+        [List[string]]$Argument
+      )
+    }
+
+    & "$env:ProgramFiles\Git\cmd\git.exe" @GitCommand @GitArgument
+
+    if ($LASTEXITCODE -notin 0, 1) {
+      $Exception = "git command error, execution returned exit code: $LASTEXITCODE"
+
+      if ($NoThrow) {
+        Write-Warning -Message "$Exception"
+      }
+      else {
+        throw $Exception
+      }
     }
   }
 }
@@ -402,23 +408,24 @@ function Get-ChildGitRepository {
   [CmdletBinding()]
   [Alias('gpp')]
   param()
+  end {
+    [string[]]$Repositories = Get-ChildItem -Path $HOME\code -Directory |
+      Select-Object -ExpandProperty FullName |
+      Resolve-GitRepository
+    $Count = $Repositories.Count
 
-  [string[]]$Repositories = Get-ChildItem -Path $HOME\code -Directory |
-    Select-Object -ExpandProperty FullName |
-    Resolve-GitRepository
-  $Count = $Repositories.Count
+    Write-Progress -Activity Pull -Status "0/$Count" -PercentComplete 0
 
-  Write-Progress -Activity Pull -Status "0/$Count" -PercentComplete 0
+    $i = 0
+    foreach ($Repository in $Repositories) {
+      Get-GitRepository -WorkingDirectory $Repository
 
-  $i = 0
-  foreach ($Repository in $Repositories) {
-    Get-GitRepository -WorkingDirectory $Repository
+      ++$i
+      Write-Progress -Activity Pull -Status "$i/$Count" -PercentComplete ($i * 100 / $Count)
+    }
 
-    ++$i
-    Write-Progress -Activity Pull -Status "$i/$Count" -PercentComplete ($i * 100 / $Count)
+    return "`nPulled $Count repositor" + ($Count -eq 1 ? 'y' : 'ies')
   }
-
-  return "`nPulled $Count repositor" + ($Count -eq 1 ? 'y' : 'ies')
 }
 
 <#
@@ -858,118 +865,120 @@ function Invoke-Npm {
     [switch]$P
   )
 
-  $NodeArgument = [List[string]]::new(
-    [string[]]@(
-      '--color=always'
+  end {
+    $NodeArgument = [List[string]]::new(
+      [string[]]@(
+        '--color=always'
+      )
     )
-  )
 
-  $NodeCommandArgument = [List[string]]::new()
+    $NodeCommandArgument = [List[string]]::new()
 
-  if ($Argument) {
-    $NodeCommandArgument.AddRange(
-      [string[]]$Argument
-    )
-  }
+    if ($Argument) {
+      $NodeCommandArgument.AddRange(
+        [string[]]$Argument
+      )
+    }
 
-  if ($WorkingDirectory) {
-    if (
-      Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory
-    ) {
-      $PackagePrefix = Resolve-NodePackageDirectory -WorkingDirectory $WorkingDirectory
+    if ($WorkingDirectory) {
+      if (
+        Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory
+      ) {
+        $PackagePrefix = Resolve-NodePackageDirectory -WorkingDirectory $WorkingDirectory
 
-      if ($PackagePrefix) {
-        $NodeArgument.Add(
-          $PackagePrefix
+        if ($PackagePrefix) {
+          $NodeArgument.Add(
+            $PackagePrefix
+          )
+        }
+      }
+      else {
+        $NodeCommandArgument.Insert(
+          0,
+          $WorkingDirectory
         )
+
+        $WorkingDirectory = ''
       }
     }
-    else {
+
+    if (
+      $Command -and $Command.StartsWith(
+        [char]'-'
+      ) -or ![Module.Commands.Code.Node.NodeVerb]::Verbs.Contains(
+        $Command.ToLower()
+      ) -and ![Module.Commands.Code.Node.NodeVerb]::Aliases.ContainsKey(
+        $Command.ToLower()
+      )
+    ) {
+      [string]$DeferredVerb = $NodeCommandArgument.Count ? $NodeCommandArgument.Find(
+        {
+          [Module.Commands.Code.Node.NodeVerb]::Verbs.Contains(
+            $args[0].ToLower()
+          )
+        }
+      ) : ''
+
+      if ($DeferredVerb) {
+        [void]$NodeCommandArgument.Remove(
+          $DeferredVerb
+        )
+      }
+
       $NodeCommandArgument.Insert(
         0,
-        $WorkingDirectory
+        $Command
       )
 
-      $WorkingDirectory = ''
+      $Command = $DeferredVerb
     }
-  }
 
-  if (
-    $Command -and $Command.StartsWith(
-      [char]'-'
-    ) -or ![Module.Commands.Code.Node.NodeVerb]::Verbs.Contains(
-      $Command.ToLower()
-    ) -and ![Module.Commands.Code.Node.NodeVerb]::Aliases.ContainsKey(
-      $Command.ToLower()
-    )
-  ) {
-    [string]$DeferredVerb = $NodeCommandArgument.Count ? $NodeCommandArgument.Find(
-      {
-        [Module.Commands.Code.Node.NodeVerb]::Verbs.Contains(
-          $args[0].ToLower()
-        )
+    if ($Command) {
+      $NodeArgument.Add(
+        $Command.ToLower()
+      )
+      if ($D) {
+        $NodeCommandArgument.Add('-D')
       }
-    ) : ''
-
-    if ($DeferredVerb) {
-      [void]$NodeCommandArgument.Remove(
-        $DeferredVerb
-      )
-    }
-
-    $NodeCommandArgument.Insert(
-      0,
-      $Command
-    )
-
-    $Command = $DeferredVerb
-  }
-
-  if ($Command) {
-    $NodeArgument.Add(
-      $Command.ToLower()
-    )
-    if ($D) {
-      $NodeCommandArgument.Add('-D')
-    }
-    if ($E) {
-      $NodeCommandArgument.Add('-E')
-    }
-    if ($I) {
-      $NodeCommandArgument.Add('-i')
-    }
-    if ($O) {
-      $NodeCommandArgument.Add('-o')
-    }
-    if ($P) {
-      $NodeCommandArgument.Add('-P')
-    }
-    if ($Version) {
-      $NodeCommandArgument.Add('-v')
-    }
-  }
-  else {
-    if ($Version) {
-      $NodeArgument.Add('-v')
-    }
-  }
-
-  if ($NodeCommandArgument.Count) {
-    $NodeArgument.AddRange(
-      $NodeCommandArgument
-    )
-  }
-
-  & npm.ps1 @NodeArgument
-
-  if ($LASTEXITCODE -notin 0, 1) {
-    $Exception = "npm command error, execution returned exit code: $LASTEXITCODE"
-
-    if ($NoThrow) {
-      Write-Warning -Message "$Exception"
+      if ($E) {
+        $NodeCommandArgument.Add('-E')
+      }
+      if ($I) {
+        $NodeCommandArgument.Add('-i')
+      }
+      if ($O) {
+        $NodeCommandArgument.Add('-o')
+      }
+      if ($P) {
+        $NodeCommandArgument.Add('-P')
+      }
+      if ($Version) {
+        $NodeCommandArgument.Add('-v')
+      }
     }
     else {
-      throw $Exception
+      if ($Version) {
+        $NodeArgument.Add('-v')
+      }
+    }
+
+    if ($NodeCommandArgument.Count) {
+      $NodeArgument.AddRange(
+        $NodeCommandArgument
+      )
+    }
+
+    & npm.ps1 @NodeArgument
+
+    if ($LASTEXITCODE -notin 0, 1) {
+      $Exception = "npm command error, execution returned exit code: $LASTEXITCODE"
+
+      if ($NoThrow) {
+        Write-Warning -Message "$Exception"
+      }
+      else {
+        throw $Exception
+      }
     }
   }
 }
@@ -1018,15 +1027,16 @@ function Clear-NodeModuleCache {
   [CmdletBinding()]
   [Alias('ncc')]
   param()
-
-  $NodeArgument = [List[string]]::new(
-    [List[string]]@(
-      'clean'
-      '--force'
+  end {
+    $NodeArgument = [List[string]]::new(
+      [List[string]]@(
+        'clean'
+        '--force'
+      )
     )
-  )
 
-  Invoke-Npm -Command cache -Argument $NodeArgument
+    Invoke-Npm -Command cache -Argument $NodeArgument
+  }
 }
 
 <#
