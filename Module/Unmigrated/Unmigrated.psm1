@@ -184,8 +184,13 @@ function Invoke-Git {
         if ($null -ne [Module.Commands.Code.Git.GitVerb+NewableVerb]::$Verb) {
           $Newable = $True
 
-          if ($WorkingDirectory -match $GIT_ARGUMENT) {
-            $GitArgument.Add($WorkingDirectory)
+          if (
+            $WorkingDirectory -match $GIT_ARGUMENT
+          ) {
+            $GitArgument.Add(
+              $WorkingDirectory
+            )
+
             $WorkingDirectory = ''
           }
         }
@@ -199,7 +204,10 @@ function Invoke-Git {
               Resolve-GitRepository -WorkingDirectory $Verb
             )
           ) {
-            $GitArgument.Add($WorkingDirectory)
+            $GitArgument.Add(
+              $WorkingDirectory
+            )
+
             $Verb, $WorkingDirectory = 'status', $Verb
           }
         }
@@ -574,18 +582,28 @@ function Write-GitRepository {
       Resolve-GitRepository -WorkingDirectory $WorkingDirectory
     )
   ) {
-    if ($WorkingDirectory -match $GIT_ARGUMENT -and !$Messages.Count) {
-      $CommitArgument.Insert(0, $WorkingDirectory)
+    if (
+      $WorkingDirectory -match $GIT_ARGUMENT -and !$Messages.Count
+    ) {
+      $CommitArgument.Insert(
+        0,
+        $WorkingDirectory
+      )
     }
     else {
-      $Messages.Insert(0, $WorkingDirectory)
+      $Messages.Insert(
+        0,
+        $WorkingDirectory
+      )
     }
 
     $WorkingDirectory = ''
   }
 
   if ($AllowEmpty -and '--allow-empty' -notin $CommitArgument) {
-    $CommitArgument.Add('--allow-empty')
+    $CommitArgument.Add(
+      '--allow-empty'
+    )
   }
 
   if (!$Messages.Count) {
