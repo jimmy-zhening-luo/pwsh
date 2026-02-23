@@ -61,6 +61,7 @@
     'Get-CommandAlias'
     'Get-VerbList'
     'Get-TypeAccelerator'
+    'Get-Type'
   )
   VariablesToExport    = @()
   AliasesToExport      = @(
@@ -120,5 +121,6 @@
     'man'
     'galc'
     'types'
+    'ty'
   )
 }
