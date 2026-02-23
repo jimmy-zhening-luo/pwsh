@@ -275,6 +275,14 @@ public abstract partial class CoreCommand(
     );
   }
 
+  private string GetName()
+  {
+    var type = GetType();
+
+    return type.FullName
+      ?? type.ToString();
+  }
+
   private void Dispose(
     bool disposing
   )
