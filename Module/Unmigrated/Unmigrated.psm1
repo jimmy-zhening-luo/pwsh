@@ -562,7 +562,7 @@ function Write-GitRepository {
       [Module.Commands.Code.Git.GitArgument]::GitArgumentRegex.IsMatch(
         $PSItem
       )
-
+    },
     'Split'
   )
 
