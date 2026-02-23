@@ -98,7 +98,7 @@ function Update-PSProfile {
       }
     }
     catch {
-      throw 'Failed to clean and build project. ' + $PSItem.Exception
+      throw $PSItem.Exception
     }
     finally {
       $DotnetProcess = Get-Process -Name dotnet* |
