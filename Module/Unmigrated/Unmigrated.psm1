@@ -1247,25 +1247,48 @@ function Invoke-NodePackageScript {
 https://docs.npmjs.com/cli/commands/npm-test
 #>
 function Test-NodePackage {
-
+  [CmdletBinding()]
   [Alias('nt')]
   param(
+    [Parameter(
+      Position = 0
+    )]
     [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
       $True
     )]
     # Node package path
-    [string]$WorkingDirectory
+    [string]$WorkingDirectory,
+
+    [Parameter(
+      Position = 1,
+      ValueFromRemainingArguments,
+      DontShow
+    )]
+    [PathCompletions(
+      '~\code',
+      [PathItemType]::Directory,
+      $True
+    )]
+    # Additional npm arguments
+    [string[]]$Argument,
+
+    [Parameter()]
+    [Alias('i')]
+    # Do not run scripts (--ignore-scripts). Commands explicitly intended to run a particular script, such as npm start, npm stop, npm restart, npm test, and npm run-script will still run their intended script if ignore-scripts is set, but they will not run any pre- or post-scripts.
+    [switch]$IgnoreScripts,
   )
 
-  $NodeArgument = [List[string]]::new()
+  end {
+    $NodeArgument = [List[string]]::new()
 
-  if ($args) {
-    $NodeArgument.AddRange(
-      [List[string]]$args
-    )
+    if ($Argument) {
+      $NodeArgument.AddRange(
+        [List[string]]$Argument
+      )
+    }
+
+    Invoke-Npm -Command test -WorkingDirectory $WorkingDirectory -Argument $NodeArgument
   }
-
-  Invoke-Npm -Command test -WorkingDirectory $WorkingDirectory -Argument $NodeArgument
 }
