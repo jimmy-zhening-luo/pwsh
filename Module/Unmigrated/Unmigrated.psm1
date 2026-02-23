@@ -1046,14 +1046,14 @@ function Compare-NodeModule {
       $True
     )]
     # Node package path
-    [string]$WorkingDirectory
+    [string]$WorkingDirectory,
 
     [Parameter(
       Position = 1,
       ValueFromRemainingArguments,
       DontShow
     )]
-    [string[]]$Argument
+    [string[]]$Argument,
 
     [Parameter()]
     [switch]$All
