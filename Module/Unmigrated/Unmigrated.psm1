@@ -866,13 +866,17 @@ function Invoke-Npm {
     [switch]$P
   )
 
-  $NodeArgument = [List[string]]::new()
-  $NodeArgument.Add('--color=always')
+  $NodeArgument = [List[string]]::new(
+    [string[]]@(
+      '--color=always'
+    )
+  )
 
-  $NodeCommand = [List[string]]::new()
+  $NodeCommandArgument = [List[string]]::new()
+
   if ($Argument) {
-    $NodeCommand.AddRange(
-      [List[string]]$Argument
+    $NodeCommandArgument.AddRange(
+      [string[]]$Argument
     )
   }
 
@@ -883,11 +887,15 @@ function Invoke-Npm {
       $PackagePrefix = Resolve-NodePackageDirectory -WorkingDirectory $WorkingDirectory
 
       if ($PackagePrefix) {
-        $NodeArgument.Add($PackagePrefix)
+        $NodeArgument.Add(
+          $PackagePrefix
+        )
       }
     }
     else {
-      $NodeCommand.Add($WorkingDirectory)
+      $NodeCommandArgument.Add(
+        $WorkingDirectory
+      )
       $WorkingDirectory = ''
     }
   }
@@ -901,7 +909,7 @@ function Invoke-Npm {
       $Command.ToLower()
     )
   ) {
-    [string]$DeferredVerb = $NodeCommand.Count ? $NodeCommand.Find(
+    [string]$DeferredVerb = $NodeCommandArgument.Count ? $NodeCommandArgument.Find(
       {
         [Module.Commands.Code.Node.NodeVerb]::Verbs.Contains(
           $args[0].ToLower()
@@ -910,32 +918,39 @@ function Invoke-Npm {
     ) : ''
 
     if ($DeferredVerb) {
-      [void]$NodeCommand.Remove($DeferredVerb)
+      [void]$NodeCommandArgument.Remove(
+        $DeferredVerb
+      )
     }
 
-    $NodeCommand.Insert(0, $Command)
+    $NodeCommandArgument.Insert(
+      0,
+      $Command
+    )
     $Command = $DeferredVerb
   }
 
   if ($Command) {
-    $NodeArgument.Add($Command.ToLowerInvariant())
+    $NodeArgument.Add(
+      $Command.ToLower()
+    )
     if ($D) {
-      $NodeCommand.Add('-D')
+      $NodeCommandArgument.Add('-D')
     }
     if ($E) {
-      $NodeCommand.Add('-E')
+      $NodeCommandArgument.Add('-E')
     }
     if ($I) {
-      $NodeCommand.Add('-i')
+      $NodeCommandArgument.Add('-i')
     }
     if ($O) {
-      $NodeCommand.Add('-o')
+      $NodeCommandArgument.Add('-o')
     }
     if ($P) {
-      $NodeCommand.Add('-P')
+      $NodeCommandArgument.Add('-P')
     }
     if ($Version) {
-      $NodeCommand.Add('-v')
+      $NodeCommandArgument.Add('-v')
     }
   }
   else {
@@ -944,9 +959,9 @@ function Invoke-Npm {
     }
   }
 
-  if ($NodeCommand.Count) {
+  if ($NodeCommandArgument.Count) {
     $NodeArgument.AddRange(
-      $NodeCommand
+      $NodeCommandArgument
     )
   }
 
@@ -1118,7 +1133,7 @@ function Step-NodePackageVersion {
 
   $NodeArgument = [List[string]]::new()
   $NodeArgument.Add(
-    $Version.ToLowerInvariant()
+    $Version.ToLower()
   )
 
   if ($WorkingDirectory) {
