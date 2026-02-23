@@ -275,7 +275,7 @@ public abstract partial class CoreCommand(
     );
   }
 
-  private string GetName()
+  private string GetCommandName()
   {
     var type = GetType();
 
