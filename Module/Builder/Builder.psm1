@@ -3,7 +3,6 @@ function Restore-PSProfile {
   [OutputType([void])]
   [Alias('upr')]
   param()
-
   end {
     Update-PSProfile -Build -Restore
   }
@@ -14,7 +13,6 @@ function Build-PSProfile {
   [OutputType([void])]
   [Alias('upp')]
   param()
-
   end {
     Update-PSProfile -Build
   }
@@ -25,7 +23,6 @@ function Update-PSProfile {
   [OutputType([void])]
   [Alias('up')]
   param(
-
     [Parameter()]
     [switch]$Build,
 
