@@ -812,6 +812,7 @@ function Invoke-Npm {
     # npm command verb
     [string]$Command,
 
+    [Parameter()]
     [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
@@ -828,9 +829,11 @@ function Invoke-Npm {
     # Additional npm arguments
     [string[]]$Argument,
 
+    [Parameter()]
     # When npm command execution results in a non-zero exit code, write a warning and continue instead of the default behavior of throwing a terminating error.
     [switch]$NoThrow,
 
+    [Parameter()]
     # Show npm version if no command is specified. Otherwise, pass the -v flag as npm argument.
     [switch]$Version,
 
@@ -1041,6 +1044,8 @@ function Compare-NodeModule {
     )]
     # Node package path
     [string]$WorkingDirectory
+
+    [switch]
   )
 
   $NodeArgument = [List[string]]::new()
