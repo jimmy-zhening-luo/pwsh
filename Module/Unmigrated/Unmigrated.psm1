@@ -106,8 +106,6 @@ function Test-NodePackageDirectory {
   }
 }
 
-$GIT_ARGUMENT = '^(?>(?=.*[*=])(?>.+)|-(?>\w|(?>-\w[-\w]*\w)))$'
-
 <#
 .LINK
 https://git-scm.com/docs
@@ -185,7 +183,9 @@ function Invoke-Git {
           $Newable = $True
 
           if (
-            $WorkingDirectory -match $GIT_ARGUMENT
+            [Module.Commands.Code.Git.GitArgument]::GitArgumentRegex.IsMatch(
+              $WorkingDirectory
+            )
           ) {
             $GitArgument.Add(
               $WorkingDirectory
@@ -559,8 +559,10 @@ function Write-GitRepository {
     }
   ).Where(
     {
-      $PSItem -match $GIT_ARGUMENT
-    },
+      [Module.Commands.Code.Git.GitArgument]::GitArgumentRegex.IsMatch(
+        $PSItem
+      )
+
     'Split'
   )
 
@@ -583,7 +585,9 @@ function Write-GitRepository {
     )
   ) {
     if (
-      $WorkingDirectory -match $GIT_ARGUMENT -and !$Messages.Count
+      [Module.Commands.Code.Git.GitArgument]::GitArgumentRegex.IsMatch(
+        $WorkingDirectory
+      ) -and -not $Messages.Count
     ) {
       $CommitArgument.Insert(
         0,
