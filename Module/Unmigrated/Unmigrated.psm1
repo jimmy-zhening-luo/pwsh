@@ -876,7 +876,7 @@ function Invoke-Npm {
     )
   }
 
-  if ($WorkingDirectory.Length) {
+  if ($WorkingDirectory) {
     if (
       $WorkingDirectory.StartsWith([char]'-') -or !(
         Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory
@@ -895,7 +895,7 @@ function Invoke-Npm {
   }
 
   if (
-    $Command.Length -and $Command.StartsWith(
+    $Command -and $Command.StartsWith(
       [char]'-'
     ) -or ![Module.Commands.Code.Node.NodeVerb]::Verbs.Contains(
       $Command.ToLower()
