@@ -1277,7 +1277,7 @@ function Test-NodePackage {
     [Parameter()]
     [Alias('i')]
     # Do not run scripts (--ignore-scripts). Commands explicitly intended to run a particular script, such as npm start, npm stop, npm restart, npm test, and npm run-script will still run their intended script if ignore-scripts is set, but they will not run any pre- or post-scripts.
-    [switch]$IgnoreScripts
+    [switch]$IgnoreScript
   )
 
   end {
@@ -1290,7 +1290,7 @@ function Test-NodePackage {
     }
 
     if (
-      $IgnoreScripts -and -not $NodeArgument.Contains(
+      $IgnoreScript -and -not $NodeArgument.Contains(
         '--ignore-scripts'
       )
     ) {
