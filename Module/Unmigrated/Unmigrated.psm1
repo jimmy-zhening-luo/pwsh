@@ -183,7 +183,7 @@ function Invoke-Git {
           $Newable = $True
 
           if (
-            [Module.Commands.Code.Git.GitArgument]::GitArgumentRegex.IsMatch(
+            [Module.Commands.Code.Git.GitArgument]::GitArgumentRegex().IsMatch(
               $WorkingDirectory
             )
           ) {
@@ -559,7 +559,7 @@ function Write-GitRepository {
     }
   ).Where(
     {
-      [Module.Commands.Code.Git.GitArgument]::GitArgumentRegex.IsMatch(
+      [Module.Commands.Code.Git.GitArgument]::GitArgumentRegex().IsMatch(
         $PSItem
       )
     },
@@ -585,7 +585,7 @@ function Write-GitRepository {
     )
   ) {
     if (
-      [Module.Commands.Code.Git.GitArgument]::GitArgumentRegex.IsMatch(
+      [Module.Commands.Code.Git.GitArgument]::GitArgumentRegex().IsMatch(
         $WorkingDirectory
       ) -and -not $Messages.Count
     ) {
