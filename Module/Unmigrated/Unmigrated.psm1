@@ -106,28 +106,6 @@ function Test-NodePackageDirectory {
   }
 }
 
-function Resolve-NodePackageDirectory {
-  [CmdletBinding()]
-  [OutputType([string])]
-  param(
-    [Parameter(
-      Mandatory,
-      Position = 0
-    )]
-    [AllowEmptyString()]
-    [string]$WorkingDirectory
-  )
-
-  end {
-    if (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory) {
-      return $WorkingDirectory ? "--prefix=$((Resolve-Path $WorkingDirectory).Path)" : ''
-    }
-    else {
-      throw "Path '$WorkingDirectory' is not a Node package directory."
-    }
-  }
-}
-
 $GIT_ARGUMENT = '^(?>(?=.*[*=])(?>.+)|-(?>\w|(?>-\w[-\w]*\w)))$'
 
 <#
@@ -884,7 +862,7 @@ function Invoke-Npm {
       if (
         Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory
       ) {
-        $PackagePrefix = Resolve-NodePackageDirectory -WorkingDirectory $WorkingDirectory
+        $PackagePrefix = $WorkingDirectory ? "--prefix=$((Resolve-Path $WorkingDirectory).Path)" : ''
 
         if ($PackagePrefix) {
           $NodeArgument.Add(
