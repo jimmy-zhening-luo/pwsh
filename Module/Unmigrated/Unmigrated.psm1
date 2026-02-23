@@ -134,7 +134,6 @@ function Invoke-Git {
   [CmdletBinding()]
   [Alias('g')]
   param(
-
     [Parameter(
       Position = 0
     )]
@@ -312,7 +311,6 @@ function Measure-GitRepository {
 
   [Alias('gg')]
   param(
-
     [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
@@ -333,7 +331,6 @@ function Import-GitRepository {
 
   [Alias('gitcl')]
   param(
-
     # Remote repository URL or 'org/repo'
     [string]$Repository,
 
@@ -385,7 +382,6 @@ function Get-GitRepository {
 
   [Alias('gp')]
   param(
-
     [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
@@ -433,7 +429,6 @@ function Compare-GitRepository {
 
   [Alias('gd')]
   param(
-
     [PathCompletions(
       '',
       [PathItemType]::File
@@ -484,7 +479,6 @@ function Add-GitRepository {
 
   [Alias('ga')]
   param(
-
     [PathCompletions(
       '',
       [PathItemType]::File
@@ -543,7 +537,6 @@ function Write-GitRepository {
 
   [Alias('gm')]
   param(
-
     [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
@@ -641,7 +634,6 @@ function Push-GitRepository {
 
   [Alias('gs')]
   param(
-
     [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
@@ -685,7 +677,6 @@ function Reset-GitRepository {
 
   [Alias('gr')]
   param(
-
     [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
@@ -771,7 +762,6 @@ function Restore-GitRepository {
 
   [Alias('grp')]
   param(
-
     [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
@@ -815,7 +805,6 @@ function Invoke-Npm {
   [CmdletBinding()]
   [Alias('n')]
   param(
-
     [Parameter(
       Position = 0
     )]
@@ -1045,7 +1034,6 @@ function Compare-NodeModule {
 
   [Alias('npo')]
   param(
-
     [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
@@ -1075,7 +1063,6 @@ function Step-NodePackageVersion {
   [CmdletBinding()]
   [Alias('nu')]
   param(
-
     [Parameter(
       Position = 0
     )]
@@ -1165,7 +1152,6 @@ function Invoke-NodePackageScript {
 
   [Alias('nr')]
   param(
-
     # Name of the npm script to run
     [string]$Script,
 
@@ -1211,7 +1197,6 @@ function Test-NodePackage {
 
   [Alias('nt')]
   param(
-
     [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
