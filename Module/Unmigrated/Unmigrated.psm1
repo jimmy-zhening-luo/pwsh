@@ -878,19 +878,17 @@ function Invoke-Npm {
 
   if ($WorkingDirectory) {
     if (
-      $WorkingDirectory.StartsWith([char]'-') -or !(
-        Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory
-      )
+      Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory
     ) {
-      $NodeCommand.Add($WorkingDirectory)
-      $WorkingDirectory = ''
-    }
-    else {
       $PackagePrefix = Resolve-NodePackageDirectory -WorkingDirectory $WorkingDirectory
 
       if ($PackagePrefix) {
         $NodeArgument.Add($PackagePrefix)
       }
+    }
+    else {
+      $NodeCommand.Add($WorkingDirectory)
+      $WorkingDirectory = ''
     }
   }
 
