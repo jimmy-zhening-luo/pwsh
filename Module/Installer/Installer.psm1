@@ -98,7 +98,7 @@ function Update-PSProfile {
       }
     }
     catch {
-      throw $PSItem.Exception
+      throw
     }
     finally {
       $DotnetProcess = Get-Process -Name dotnet* |
