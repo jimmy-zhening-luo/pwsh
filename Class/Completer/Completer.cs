@@ -43,7 +43,7 @@ public sealed class Completer(
 
     if (
       Strict
-      || count > 1
+      || count != 1
     )
     {
       yield break;
