@@ -1281,9 +1281,13 @@ function Test-NodePackage {
   )
 
   end {
-    $NodeArgument = [List[string]]::new(
-      [string[]]$Argument
-    )
+    $NodeArgument = [List[string]]::new()
+
+    if ($Argument) {
+      $NodeArgument.AddRange(
+        [string[]]$Argument
+      )
+    }
 
     if (
       $IgnoreScript -and -not $NodeArgument.Contains(
