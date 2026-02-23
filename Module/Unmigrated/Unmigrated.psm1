@@ -1223,15 +1223,6 @@ function Test-NodePackage {
 
   $NodeArgument = [List[string]]::new()
 
-  if ($WorkingDirectory) {
-    if (
-      !(Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)
-    ) {
-      $NodeArgument.Add($WorkingDirectory)
-      $WorkingDirectory = ''
-    }
-  }
-
   if ($args) {
     $NodeArgument.AddRange(
       [List[string]]$args
