@@ -1037,6 +1037,9 @@ function Compare-NodeModule {
   [CmdletBinding()]
   [Alias('npo')]
   param(
+    [Parameter(
+      Position = 0
+    )]
     [PathCompletions(
       '~\code',
       [PathItemType]::Directory,
@@ -1045,18 +1048,38 @@ function Compare-NodeModule {
     # Node package path
     [string]$WorkingDirectory
 
-    [switch]
+    [Parameter(
+      Position = 1,
+      ValueFromRemainingArguments,
+      DontShow
+    )]
+    [string[]]$Argument
+
+    [Parameter()]
+    [switch]$All
   )
 
-  $NodeArgument = [List[string]]::new()
+  end {
+    $NodeArgument = [List[string]]::new()
 
-  if ($args) {
-    $NodeArgument.AddRange(
-      [List[string]]$args
-    )
+    if ($Argument) {
+      $NodeArgument.AddRange(
+        [List[string]]$Argument
+      )
+    }
+
+    if (
+      $All -and -not $NodeArgument.Contains(
+        '--all'
+      )
+    ) {
+      $NodeArgument.Add(
+        '--all'
+      )
+    }
+
+    Invoke-Npm -Command outdated -WorkingDirectory $WorkingDirectory -NoThrow -Argument $NodeArgument
   }
-
-  Invoke-Npm -Command outdated -WorkingDirectory $WorkingDirectory -NoThrow -Argument $NodeArgument
 }
 
 <#
