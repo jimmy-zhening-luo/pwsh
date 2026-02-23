@@ -20,7 +20,7 @@ public sealed class GetType : CoreCommand
     get => inputObject;
     set => inputObject = value;
   }
-  private object inputObject;
+  private object? inputObject;
 
   private protected sealed override void ProcessRecordAction()
   {
