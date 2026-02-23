@@ -1031,7 +1031,7 @@ function Clear-NodeModuleCache {
 https://docs.npmjs.com/cli/commands/npm-outdated
 #>
 function Compare-NodeModule {
-
+  [CmdletBinding()]
   [Alias('npo')]
   param(
     [PathCompletions(
