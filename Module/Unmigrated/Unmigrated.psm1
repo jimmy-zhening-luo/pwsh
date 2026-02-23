@@ -1056,6 +1056,7 @@ function Compare-NodeModule {
     [string[]]$Argument,
 
     [Parameter()]
+    [Alias('a')]
     [switch]$All
   )
 
