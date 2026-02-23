@@ -61,4 +61,9 @@ node_modules/
 
 
 #region {CONFIGURE}
+Bin/
+Obj/
+bin/
+obj/
+*.dll
 #endregion
