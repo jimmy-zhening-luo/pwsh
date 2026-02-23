@@ -1,5 +1,5 @@
 @{
-  RootModule           = 'Installer.psm1'
+  RootModule           = 'Constructor.psm1'
   ModuleVersion        = '3.0.0.0'
   CompatiblePSEditions = @('Desktop', 'Core')
   GUID                 = 'd5eb2b74-1d98-4a46-9b9f-f2fd41108591'
