@@ -17,7 +17,7 @@ public sealed class GetType : CoreCommand
   )]
   public object InputObject
   {
-    get => inputObject;
+    get => inputObject ?? "";
     set => inputObject = value;
   }
   private object? inputObject;
@@ -32,7 +32,7 @@ public sealed class GetType : CoreCommand
           nameof(InputObject)
         ),
         ErrorCategory.InvalidArgument,
-        InputObject
+        inputObject
       );
     }
 
