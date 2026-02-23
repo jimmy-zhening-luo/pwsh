@@ -238,6 +238,18 @@ public abstract partial class CoreCommand(
   [System.Diagnostics.CodeAnalysis.DoesNotReturn]
   private protected void Throw(
     string message,
+    ErrorCategory category = ErrorCategory.InvalidOperation,
+    object? target = null
+  ) => Throw(
+    message,
+    GetName() + "Exception",
+    category,
+    target
+  );
+
+  [System.Diagnostics.CodeAnalysis.DoesNotReturn]
+  private protected void Throw(
+    string message,
     string id,
     ErrorCategory category = ErrorCategory.InvalidOperation,
     object? target = null
@@ -246,6 +258,18 @@ public abstract partial class CoreCommand(
       message
     ),
     id,
+    category,
+    target
+  );
+
+  [System.Diagnostics.CodeAnalysis.DoesNotReturn]
+  private protected void Throw(
+    System.Exception exception,
+    ErrorCategory category = ErrorCategory.InvalidOperation,
+    object? target = null
+  ) => Throw(
+    exception,
+    GetName() + "Exception",
     category,
     target
   );
