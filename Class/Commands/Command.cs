@@ -220,15 +220,10 @@ public abstract partial class CoreCommand(
 
   private protected void WriteMessage(
     object message
-  )
-  {
-    var type = GetType();
-
-    WriteMessage(
-      message,
-      type.FullName ?? type.ToString()
-    );
-  }
+  ) => WriteMessage(
+    message,
+    GetName()
+  );
 
   private protected void WriteMessage(
     object message,
