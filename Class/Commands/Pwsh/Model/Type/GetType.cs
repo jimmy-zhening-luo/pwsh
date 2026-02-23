@@ -35,8 +35,19 @@ public sealed class GetType : CoreCommand
       );
     }
 
-    WriteObject(
-      inputObject.GetType()
-    );
+    if (inputObject is PSObject)
+    {
+      WriteObject(
+        inputObject
+          .BaseObject
+          .GetType()
+      );
+    }
+    else
+    {
+      WriteObject(
+        inputObject.GetType()
+      );
+    }
   }
 }
