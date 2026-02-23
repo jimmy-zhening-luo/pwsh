@@ -1289,6 +1289,16 @@ function Test-NodePackage {
       )
     }
 
+    if (
+      $IgnoreScripts -and -not $NodeArgument.Contains(
+        '--ignore-scripts'
+      )
+    ) {
+      $NodeArgument.Add(
+        '--ignore-scripts'
+      )
+    }
+
     Invoke-Npm -Command test -WorkingDirectory $WorkingDirectory -Argument $NodeArgument
   }
 }
