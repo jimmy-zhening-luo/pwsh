@@ -290,7 +290,7 @@ function Invoke-Git {
     }
     if ($Argument) {
       $GitArgument.AddRange(
-        [List[string]]$Argument
+        [string[]]$Argument
       )
     }
 
@@ -580,12 +580,12 @@ function Write-GitRepository {
 
   if ($Argument) {
     $CommitArgument.AddRange(
-      [List[string]]$Argument
+      [string[]]$Argument
     )
   }
   if ($MessageWord) {
     $Messages.AddRange(
-      [List[string]]$MessageWord
+      [string[]]$MessageWord
     )
   }
 
@@ -620,7 +620,7 @@ function Write-GitRepository {
   }
   $CommitArgument.InsertRange(
     0,
-    [List[string]]@(
+    [string[]]@(
       '-m'
       $Messages -join ' '
     )
@@ -1029,7 +1029,7 @@ function Clear-NodeModuleCache {
   param()
   end {
     $NodeArgument = [List[string]]::new(
-      [List[string]]@(
+      [string[]]@(
         'clean'
         '--force'
       )
@@ -1082,7 +1082,7 @@ function Compare-NodeModule {
 
     if ($Argument) {
       $NodeArgument.AddRange(
-        [List[string]]$Argument
+        [string[]]$Argument
       )
     }
 
@@ -1189,7 +1189,7 @@ function Step-NodePackageVersion {
 
     if ($Argument) {
       $NodeArgument.AddRange(
-        [List[string]]$Argument
+        [string[]]$Argument
       )
     }
 
