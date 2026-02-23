@@ -1059,7 +1059,6 @@ function Compare-NodeModule {
 https://docs.npmjs.com/cli/commands/npm-version
 #>
 function Step-NodePackageVersion {
-
   [CmdletBinding()]
   [Alias('nu')]
   param(
