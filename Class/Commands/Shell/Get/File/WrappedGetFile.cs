@@ -86,12 +86,23 @@ public abstract class WrappedGetFile() : WrappedCommand(
   private string stream = "";
 
   [Parameter]
-  public System.Text.Encoding Encoding
+  public string Encoding
   {
     get => encoding;
-    set => encoding = value;
+    set => encoding = int.TryParse(
+      value,
+      out _
+    )
+      ? encoding = value
+      : System.Enum.TryParse(
+          value,
+          true,
+          out Client.FileSystem.Encoding parsedEncoding
+        )
+          ? parsedEncoding.ToString()
+          : encoding = value;
   }
-  private System.Text.Encoding encoding = new System.Text.UTF8Encoding(false, true);
+  private string encoding = "";
 
   [Parameter]
   [Alias("f")]
