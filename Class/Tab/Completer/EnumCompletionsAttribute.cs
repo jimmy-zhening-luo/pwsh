@@ -1,33 +1,15 @@
 namespace Module.Tab.Completer;
 
 public class EnumCompletionsAttribute(
-  System.Type enumType,
-  bool strict,
-  CompletionCase casing
+  System.Type EnumType,
+  CompletionCase Casing = CompletionCase.Lower,
+  bool Strict = false
 ) : CompletionsAttributePrototype<System.Type>(
-  enumType,
-  strict,
-  casing
+  EnumType,
+  Casing,
+  Strict
 )
 {
-  public EnumCompletionsAttribute(
-    System.Type enumType
-  ) : this(
-    enumType,
-    false
-  )
-  { }
-
-  public EnumCompletionsAttribute(
-    System.Type enumType,
-    bool strict
-  ) : this(
-    enumType,
-    strict,
-    CompletionCase.Lower
-  )
-  { }
-
   private protected sealed override IEnumerable<string> ResolveDomain(
     System.Type enumType
   ) => System.Enum.GetNames(

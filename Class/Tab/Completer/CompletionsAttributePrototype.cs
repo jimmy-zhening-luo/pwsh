@@ -2,10 +2,10 @@ namespace Module.Tab.Completer;
 
 public abstract class CompletionsAttributePrototype<TDomain>(
   TDomain Domain,
-  bool Strict = false,
-  CompletionCase casing = CompletionCase.Preserve
+  CompletionCase Casing = CompletionCase.Preserve,
+  bool Strict = false
 ) : TabCompletionsAttribute<Completer>(
-  casing
+  Casing
 )
 {
   private protected abstract IEnumerable<string> ResolveDomain(
@@ -16,7 +16,7 @@ public abstract class CompletionsAttributePrototype<TDomain>(
     ResolveDomain(
       Domain
     ),
-    Strict,
-    Casing
+    Casing,
+    Strict
   );
 }

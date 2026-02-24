@@ -1,34 +1,15 @@
 namespace Module.Tab.Completer;
 
-public class CompletionsAttribute : CompletionsAttributePrototype<string[]>
+public class CompletionsAttribute(
+  System.Type Domain,
+  CompletionCase Casing = CompletionCase.Lower,
+  bool Strict = false
+) : CompletionsAttributePrototype<string[]>(
+  Domain,
+  Casing,
+  Strict
+)
 {
-  public CompletionsAttribute(
-    string[] domain
-  ) : base(
-    domain
-  )
-  { }
-
-  public CompletionsAttribute(
-    string[] domain,
-    bool strict
-  ) : base(
-    domain,
-    strict
-  )
-  { }
-
-  public CompletionsAttribute(
-    string[] domain,
-    bool strict,
-    CompletionCase casing
-  ) : base(
-    domain,
-    strict,
-    casing
-  )
-  { }
-
   private protected sealed override IEnumerable<string> ResolveDomain(
     string[] domain
   ) => domain;
