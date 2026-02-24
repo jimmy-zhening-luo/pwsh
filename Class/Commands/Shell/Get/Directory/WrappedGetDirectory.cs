@@ -52,12 +52,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
 
   [Parameter]
   [Alias("de")]
-  public uint Depth
-  {
-    get => depth;
-    set => depth = value;
-  }
-  private uint depth;
+  public uint Depth { get; set; }
 
   [Parameter]
   [Alias("f")]

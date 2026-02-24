@@ -42,32 +42,17 @@ public abstract class WrappedGetFile() : WrappedCommand(
   private string[] exclusions = [];
 
   [Parameter]
-  public long ReadCount
-  {
-    get => readCount;
-    set => readCount = value;
-  }
-  private long readCount;
+  public long ReadCount { get; set; }
 
   [Parameter]
   [Alias("First", "Head")]
   [ValidateRange(0, 9223372036854775807)]
-  public long TotalCount
-  {
-    get => totalCount;
-    set => totalCount = value;
-  }
-  private long totalCount;
+  public long TotalCount { get; set; }
 
   [Parameter]
   [Alias("Last")]
   [ValidateRange(0, 2147483647)]
-  public int Tail
-  {
-    get => tail;
-    set => tail = value;
-  }
-  private int tail;
+  public int Tail { get; set; }
 
   [Parameter]
   public string Delimiter
