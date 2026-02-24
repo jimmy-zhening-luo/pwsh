@@ -21,7 +21,7 @@ public abstract class WrappedRemoveDirectory() : WrappedCommandShouldProcess(
     get => filter;
     set => filter = value;
   }
-  private protected string filter = "";
+  private protected string filter = string.Empty;
 
   [Parameter]
   [SupportsWildcards]

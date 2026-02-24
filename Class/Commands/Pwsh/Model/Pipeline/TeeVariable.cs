@@ -29,7 +29,7 @@ public sealed class TeeVariable() : WrappedCommand(
     get => variable;
     set => variable = value;
   }
-  private string variable = "";
+  private string variable = string.Empty;
 
   [Parameter(
     ParameterSetName = "File",
@@ -41,7 +41,7 @@ public sealed class TeeVariable() : WrappedCommand(
     get => path;
     set => path = value;
   }
-  private string path = "";
+  private string path = string.Empty;
 
   [Parameter(
     ParameterSetName = "LiteralFile",
@@ -53,7 +53,7 @@ public sealed class TeeVariable() : WrappedCommand(
     get => literalPath;
     set => literalPath = value;
   }
-  private string literalPath = "";
+  private string literalPath = string.Empty;
 
   [Parameter(
     ParameterSetName = "File"
@@ -90,5 +90,5 @@ public sealed class TeeVariable() : WrappedCommand(
           ? parsedEncoding.ToString()
           : encoding = value;
   }
-  private string encoding = "";
+  private string encoding = string.Empty;
 }

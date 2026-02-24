@@ -21,7 +21,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
     get => filter;
     set => filter = value;
   }
-  private protected string filter = "";
+  private protected string filter = string.Empty;
 
   [Parameter]
   [SupportsWildcards]

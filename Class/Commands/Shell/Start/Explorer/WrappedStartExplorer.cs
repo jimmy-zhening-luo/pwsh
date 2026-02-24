@@ -19,7 +19,7 @@ public abstract class WrappedStartExplorer() : WrappedCommandShouldProcess(
     get => filter;
     set => filter = value;
   }
-  private string filter = "";
+  private string filter = string.Empty;
 
   [Parameter]
   [SupportsWildcards]

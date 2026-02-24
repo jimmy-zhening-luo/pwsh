@@ -4,7 +4,7 @@ public abstract class VirtualStartWorkspace() : CoreCommand(
   true
 )
 {
-  private protected string path = "";
+  private protected string path = string.Empty;
 
   [Parameter(
     Position = 1
@@ -14,7 +14,7 @@ public abstract class VirtualStartWorkspace() : CoreCommand(
     get => profileName;
     set => profileName = value;
   }
-  private string profileName = "";
+  private string profileName = string.Empty;
 
   [Parameter(
     Position = 2,

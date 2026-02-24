@@ -21,7 +21,7 @@ public abstract class WrappedGetFile() : WrappedCommand(
     get => filter;
     set => filter = value;
   }
-  private protected string filter = "";
+  private protected string filter = string.Empty;
 
   [Parameter]
   [SupportsWildcards]
@@ -75,7 +75,7 @@ public abstract class WrappedGetFile() : WrappedCommand(
     get => delimiter;
     set => delimiter = value;
   }
-  private string delimiter = "";
+  private string delimiter = string.Empty;
 
   [Parameter]
   public string Stream
@@ -83,7 +83,7 @@ public abstract class WrappedGetFile() : WrappedCommand(
     get => stream;
     set => stream = value;
   }
-  private string stream = "";
+  private string stream = string.Empty;
 
   [Parameter]
   [EnumCompletions(
@@ -105,7 +105,7 @@ public abstract class WrappedGetFile() : WrappedCommand(
           ? parsedEncoding.ToString()
           : encoding = value;
   }
-  private string encoding = "";
+  private string encoding = string.Empty;
 
   [Parameter]
   [Alias("f")]

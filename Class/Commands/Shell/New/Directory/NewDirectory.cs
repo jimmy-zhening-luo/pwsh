@@ -38,7 +38,7 @@ public sealed class NewDirectory() : WrappedCommandShouldProcess(
     get => name;
     set => name = value;
   }
-  private string name = "";
+  private string name = string.Empty;
 
   [Parameter]
   [Alias("Target")]

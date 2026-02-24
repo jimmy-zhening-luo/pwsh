@@ -38,7 +38,7 @@ public sealed class SetDirectory : WrappedSetDirectory
     get => literalPath;
     set => literalPath = value;
   }
-  private string literalPath = "";
+  private string literalPath = string.Empty;
 
   [Parameter(
     ParameterSetName = "Stack"
@@ -48,7 +48,7 @@ public sealed class SetDirectory : WrappedSetDirectory
     get => stack;
     set => stack = value;
   }
-  private string stack = "";
+  private string stack = string.Empty;
 
   [Parameter(
     ParameterSetName = "DriveC"

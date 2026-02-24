@@ -36,7 +36,7 @@ public sealed partial class TestHost() : WrappedCommand(
     "RemoteAddress",
     "cn"
   )]
-  public string ComputerName { get; set; } = "";
+  public string ComputerName { get; set; } = string.Empty;
 
   [Parameter(
     ParameterSetName = "CommonTCPPort",
@@ -46,7 +46,7 @@ public sealed partial class TestHost() : WrappedCommand(
   [EnumCompletions(
     typeof(TestHostWellKnownPort)
   )]
-  public string CommonTCPPort { get; set; } = "";
+  public string CommonTCPPort { get; set; } = string.Empty;
 
   [Parameter(
     ParameterSetName = "RemotePort",
@@ -86,7 +86,7 @@ public sealed partial class TestHost() : WrappedCommand(
   [Parameter(
     ParameterSetName = "NetRouteDiagnostics"
   )]
-  public string ConstrainSourceAddress { get; set; } = "";
+  public string ConstrainSourceAddress { get; set; } = string.Empty;
 
   [Parameter(
     ParameterSetName = "NetRouteDiagnostics"

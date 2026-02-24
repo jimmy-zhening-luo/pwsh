@@ -21,7 +21,7 @@ public sealed class ClearLine : CoreCommand
     get => path;
     set => path = value;
   }
-  private string path = "";
+  private string path = string.Empty;
 
   [Parameter(
     Position = 1
@@ -32,7 +32,7 @@ public sealed class ClearLine : CoreCommand
     get => filter;
     set => filter = value;
   }
-  private string filter = "";
+  private string filter = string.Empty;
 
   [Parameter(
     ParameterSetName = "LiteralPath",
@@ -79,7 +79,7 @@ public sealed class ClearLine : CoreCommand
     get => stream;
     set => stream = value;
   }
-  private string stream = "";
+  private string stream = string.Empty;
 
   private protected sealed override void AfterEndProcessing()
   {

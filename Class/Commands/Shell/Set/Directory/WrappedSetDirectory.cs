@@ -9,7 +9,7 @@ public abstract class WrappedSetDirectory() : WrappedCommand(
     get;
     set;
   }
-  private protected string path = "";
+  private protected string path = string.Empty;
 
   [Parameter]
   public SwitchParameter PassThru
