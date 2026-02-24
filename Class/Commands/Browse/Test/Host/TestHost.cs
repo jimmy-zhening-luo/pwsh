@@ -52,8 +52,8 @@ public sealed partial class TestHost() : WrappedCommand(
 
   [Parameter(
     ParameterSetName = "CommonTCPPort",
-    Position = 1,
-    Mandatory = true
+    Mandatory = true,
+    Position = 1
   )]
   [EnumCompletions(
     typeof(TestHostWellKnownPort)
