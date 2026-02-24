@@ -52,9 +52,10 @@ public sealed partial class TestHost() : WrappedCommand(
   )]
   public string CommonTCPPort
   {
-    get;
-    set;
-  } = "";
+    get => commonPort;
+    set => commonPort;
+  }
+  private string commonPort = "";
 
   [Parameter(
     ParameterSetName = "RemotePort",
