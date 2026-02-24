@@ -18,35 +18,22 @@ public sealed class OpenUrl() : CoreCommand(
     HelpMessage = "The file path or URL to open. Defaults to the current directory."
   )]
   [PathCompletions]
-  public string Path
-  {
-    get => path;
-    set => path = value;
-  }
-  private string path = string.Empty;
+  public string Path { get; set; }
 
   [Parameter(
     ParameterSetName = "Uri",
     Mandatory = true,
     Position = 0,
+    ValueFromPipeline = true,
+    ValueFromPipelineByPropertyName = true,
     HelpMessage = "The URL(s) to open."
   )]
   [AllowEmptyCollection]
-  public System.Uri[] Uri
-  {
-    get => uris;
-    set => uris = value;
-  }
-  private System.Uri[] uris = [];
+  public System.Uri[] Uri { get; set; } = []
 
   private protected sealed override void ProcessRecordAction()
   {
-    if (ParameterSetName != "Uri")
-    {
-      return;
-    }
-
-    foreach (var uri in uris)
+    foreach (var uri in Uri)
     {
       Client.Network.Url.Open(
         uri
