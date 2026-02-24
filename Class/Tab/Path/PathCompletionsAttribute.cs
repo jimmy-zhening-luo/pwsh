@@ -3,8 +3,7 @@ namespace Module.Tab.Path;
 public class PathCompletionsAttribute(
   string Location,
   PathItemType ItemType,
-  bool Flat,
-  bool Hidden
+  bool Flat
 ) : TabCompletionsAttribute<PathCompleter>()
 {
   public PathCompletionsAttribute() : this(
@@ -30,17 +29,7 @@ public class PathCompletionsAttribute(
   )
   { }
 
-  public PathCompletionsAttribute(
-    string location,
-    PathItemType itemType,
-    bool flat
-  ) : this(
-    location,
-    itemType,
-    flat,
-    false
-  )
-  { }
+  public bool Hidden { get; init; }
 
   public sealed override PathCompleter Create() => new(
     Canonicalizer.Canonicalize(

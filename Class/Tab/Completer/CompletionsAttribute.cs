@@ -4,7 +4,7 @@ public class CompletionsAttribute(
   string[] Domain,
   CompletionCase Casing = CompletionCase.Preserve,
   bool Strict = false
-) : CompletionsAttributePrototype<string[]>(
+) : CompletionsAttribute<string[]>(
   Domain,
   Casing,
   Strict

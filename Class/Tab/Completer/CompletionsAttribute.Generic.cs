@@ -1,6 +1,6 @@
 namespace Module.Tab.Completer;
 
-public abstract class CompletionsAttributePrototype<TDomain>(
+public abstract class CompletionsAttribute<TDomain>(
   TDomain Domain,
   CompletionCase Casing,
   bool Strict

@@ -4,7 +4,7 @@ public class EnumCompletionsAttribute(
   System.Type EnumType,
   CompletionCase Casing = CompletionCase.Lower,
   bool Strict = false
-) : CompletionsAttributePrototype<System.Type>(
+) : CompletionsAttribute<System.Type>(
   EnumType,
   Casing,
   Strict
