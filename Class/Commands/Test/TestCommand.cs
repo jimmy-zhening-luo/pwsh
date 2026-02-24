@@ -13,6 +13,14 @@ public sealed class TestCommand : CoreCommand
   )]
   public string Name { get; set; } = "Hello, World";
 
+  [Parameter]
+  public SwitchParameter Switch
+  {
+    get => switchParameter;
+    set => switchParameter = value;
+  }
+  private bool switchParameter;
+
   private protected sealed override void AfterEndProcessing()
   {
     WriteObject(
