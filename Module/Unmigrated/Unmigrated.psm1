@@ -1,5 +1,3 @@
-using namespace System.Collections.Generic
-
 function Resolve-GitRepository {
   [CmdletBinding()]
   [OutputType([string])]
@@ -163,7 +161,7 @@ function Invoke-Git {
   )
 
   end {
-    $GitArgument = [List[string]]::new()
+    $GitArgument = [System.Collections.Generic.List[string]]::new()
     $Newable = $False
 
     if ($Verb) {
@@ -340,7 +338,7 @@ function Import-GitRepository {
     $RepositoryPathSegments -join '/'
   )
 
-  $CloneArgument = [List[string]]::new()
+  $CloneArgument = [System.Collections.Generic.List[string]]::new()
   $CloneArgument.Add($Origin)
   if ($args) {
     $CloneArgument.AddRange(
@@ -412,7 +410,7 @@ function Compare-GitRepository {
     [string]$WorkingDirectory
   )
 
-  $DiffArgument = [List[string]]::new()
+  $DiffArgument = [System.Collections.Generic.List[string]]::new()
 
   if ($Name) {
     $DiffArgument.Add($Name)
@@ -462,7 +460,7 @@ function Add-GitRepository {
     $Name = '.'
   }
 
-  $AddArgument = [List[string]]::new()
+  $AddArgument = [System.Collections.Generic.List[string]]::new()
   $AddArgument.Add($Name)
 
   if (
@@ -511,8 +509,8 @@ function Write-GitRepository {
     [switch]$AllowEmpty
   )
 
-  $CommitArgument = [List[string]]::new()
-  $Messages = [List[string]]::new()
+  $CommitArgument = [System.Collections.Generic.List[string]]::new()
+  $Messages = [System.Collections.Generic.List[string]]::new()
 
   [string[]]$Argument, [string[]]$MessageWord = (
     $Message ? (, $Message + $args) : $args
@@ -609,7 +607,7 @@ function Push-GitRepository {
     [string]$WorkingDirectory
   )
 
-  $PushArgument = [List[string]]::new()
+  $PushArgument = [System.Collections.Generic.List[string]]::new()
 
   if (
     $WorkingDirectory -and (
@@ -654,7 +652,7 @@ function Reset-GitRepository {
     [switch]$Soft
   )
 
-  $ResetArgument = [List[string]]::new()
+  $ResetArgument = [System.Collections.Generic.List[string]]::new()
   if ($args) {
     $ResetArgument.AddRange(
       [string[]]$args
@@ -729,7 +727,7 @@ function Restore-GitRepository {
     [string]$WorkingDirectory
   )
 
-  $ResetArgument = [List[string]]::new()
+  $ResetArgument = [System.Collections.Generic.List[string]]::new()
 
   if (
     $WorkingDirectory -and (
@@ -813,13 +811,13 @@ function Invoke-Npm {
   )
 
   end {
-    $NodeArgument = [List[string]]::new(
+    $NodeArgument = [System.Collections.Generic.List[string]]::new(
       [string[]]@(
         '--color=always'
       )
     )
 
-    $NodeCommandArgument = [List[string]]::new()
+    $NodeCommandArgument = [System.Collections.Generic.List[string]]::new()
 
     if ($Argument) {
       $NodeCommandArgument.AddRange(
@@ -1015,7 +1013,7 @@ function Compare-NodeModule {
   )
 
   end {
-    $NodeArgument = [List[string]]::new()
+    $NodeArgument = [System.Collections.Generic.List[string]]::new()
 
     if ($Argument) {
       $NodeArgument.AddRange(
@@ -1098,7 +1096,7 @@ function Step-NodePackageVersion {
       }
     }
 
-    $NodeArgument = [List[string]]::new()
+    $NodeArgument = [System.Collections.Generic.List[string]]::new()
     $NodeArgument.Add(
       $Version.ToLower()
     )
@@ -1142,7 +1140,7 @@ function Invoke-NodePackageScript {
     throw 'Script name is required.'
   }
 
-  $NodeArgument = [List[string]]::new()
+  $NodeArgument = [System.Collections.Generic.List[string]]::new()
   $NodeArgument.Add($Script)
 
   if ($WorkingDirectory) {
@@ -1194,7 +1192,7 @@ function Test-NodePackage {
   )
 
   end {
-    $NodeArgument = [List[string]]::new()
+    $NodeArgument = [System.Collections.Generic.List[string]]::new()
 
     if ($Argument) {
       $NodeArgument.AddRange(
