@@ -1,12 +1,12 @@
-namespace Module.Completer;
+namespace Module.Tab;
 
 [System.AttributeUsage(
   System.AttributeTargets.Property
   | System.AttributeTargets.Field
 )]
-public abstract class BaseCompletionsAttribute<TCompleter>(
+public abstract class TabCompletionsAttribute<TCompleter>(
   CompletionCase casing = CompletionCase.Preserve
-) : ArgumentCompleterAttribute, IArgumentCompleterFactory where TCompleter : BaseCompleter
+) : ArgumentCompleterAttribute, IArgumentCompleterFactory where TCompleter : TabCompleter
 {
   private protected readonly CompletionCase Casing = casing;
 

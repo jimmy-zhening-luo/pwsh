@@ -1,4 +1,4 @@
-namespace Module.Completer;
+namespace Module.Tab;
 
 public enum CompletionCase
 {

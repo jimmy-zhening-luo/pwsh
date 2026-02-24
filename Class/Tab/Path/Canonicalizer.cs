@@ -1,4 +1,4 @@
-namespace Module.Completer.Path;
+namespace Module.Tab.Path;
 
 internal static class Canonicalizer
 {

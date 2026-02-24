@@ -1,10 +1,10 @@
-namespace Module.Completer;
+namespace Module.Tab.Completer;
 
 public abstract class CompletionsAttributePrototype<TDomain>(
   TDomain Domain,
   bool Strict = false,
   CompletionCase casing = CompletionCase.Preserve
-) : BaseCompletionsAttribute<Completer>(
+) : TabCompletionsAttribute<Completer>(
   casing
 )
 {

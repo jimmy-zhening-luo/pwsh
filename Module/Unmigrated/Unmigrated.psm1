@@ -1,7 +1,5 @@
 using namespace System.IO
 using namespace System.Collections.Generic
-using namespace Module.Completer
-using namespace Module.Completer.Path
 
 function Resolve-GitRepository {
   [CmdletBinding()]
@@ -124,11 +122,7 @@ function Invoke-Git {
     [Parameter(
       Position = 1
     )]
-    [PathCompletions(
-      '~\code',
-      [PathItemType]::Directory,
-      $True
-    )]
+    [Module.Commands.Code.WorkingDirectoryCompletions()]
     # Repository path. For all verbs except 'clone', 'config', and 'init', the command will throw an error if there is no Git repository at the path.
     [string]$WorkingDirectory,
 
@@ -303,11 +297,7 @@ function Measure-GitRepository {
 
   [Alias('gg')]
   param(
-    [PathCompletions(
-      '~\code',
-      [PathItemType]::Directory,
-      $True
-    )]
+    [Module.Commands.Code.WorkingDirectoryCompletions()]
     # Repository path
     [string]$WorkingDirectory
   )
@@ -326,11 +316,7 @@ function Import-GitRepository {
     # Remote repository URL or 'org/repo'
     [string]$Repository,
 
-    [PathCompletions(
-      '~\code',
-      [PathItemType]::Directory,
-      $True
-    )]
+    [Module.Commands.Code.WorkingDirectoryCompletions()]
     # Directory path into which to clone the repository. If the path points to a non-existant container, the container will be created. Throws a terminating error if container creation fails or git returns an error.
     [string]$WorkingDirectory,
 
@@ -374,11 +360,7 @@ function Get-GitRepository {
 
   [Alias('gp')]
   param(
-    [PathCompletions(
-      '~\code',
-      [PathItemType]::Directory,
-      $True
-    )]
+    [Module.Commands.Code.WorkingDirectoryCompletions()]
     # Repository path
     [string]$WorkingDirectory
   )
@@ -422,18 +404,11 @@ function Compare-GitRepository {
 
   [Alias('gd')]
   param(
-    [PathCompletions(
-      '',
-      [PathItemType]::File
-    )]
+    [Module.Commands.Code.PathSpecCompletions()]
     # File pattern of files to diff, defaults to '.' (all)
     [string]$Name,
 
-    [PathCompletions(
-      '~\code',
-      [PathItemType]::Directory,
-      $True
-    )]
+    [Module.Commands.Code.WorkingDirectoryCompletions()]
     # Repository path
     [string]$WorkingDirectory
   )
@@ -472,18 +447,11 @@ function Add-GitRepository {
 
   [Alias('ga')]
   param(
-    [PathCompletions(
-      '',
-      [PathItemType]::File
-    )]
+    [Module.Commands.Code.PathSpecCompletions()]
     # File pattern of files to add, defaults to '.' (all)
     [string]$Name,
 
-    [PathCompletions(
-      '~\code',
-      [PathItemType]::Directory,
-      $True
-    )]
+    [Module.Commands.Code.WorkingDirectoryCompletions()]
     # Repository path
     [string]$WorkingDirectory,
 
@@ -530,11 +498,7 @@ function Write-GitRepository {
 
   [Alias('gm')]
   param(
-    [PathCompletions(
-      '~\code',
-      [PathItemType]::Directory,
-      $True
-    )]
+    [Module.Commands.Code.WorkingDirectoryCompletions()]
     # Repository path
     [string]$WorkingDirectory,
 
@@ -641,11 +605,7 @@ function Push-GitRepository {
 
   [Alias('gs')]
   param(
-    [PathCompletions(
-      '~\code',
-      [PathItemType]::Directory,
-      $True
-    )]
+    [Module.Commands.Code.WorkingDirectoryCompletions()]
     # Repository path
     [string]$WorkingDirectory
   )
@@ -684,11 +644,7 @@ function Reset-GitRepository {
 
   [Alias('gr')]
   param(
-    [PathCompletions(
-      '~\code',
-      [PathItemType]::Directory,
-      $True
-    )]
+    [Module.Commands.Code.WorkingDirectoryCompletions()]
     # Repository path
     [string]$WorkingDirectory,
 
@@ -769,11 +725,7 @@ function Restore-GitRepository {
 
   [Alias('grp')]
   param(
-    [PathCompletions(
-      '~\code',
-      [PathItemType]::Directory,
-      $True
-    )]
+    [Module.Commands.Code.WorkingDirectoryCompletions()]
     # Repository path
     [string]$WorkingDirectory
   )
@@ -820,11 +772,7 @@ function Invoke-Npm {
     [string]$Command,
 
     [Parameter()]
-    [PathCompletions(
-      '~\code',
-      [PathItemType]::Directory,
-      $True
-    )]
+    [Module.Commands.Code.WorkingDirectoryCompletions()]
     # Node package path
     [string]$WorkingDirectory,
 
@@ -1050,11 +998,7 @@ function Compare-NodeModule {
     [Parameter(
       Position = 0
     )]
-    [PathCompletions(
-      '~\code',
-      [PathItemType]::Directory,
-      $True
-    )]
+    [Module.Commands.Code.WorkingDirectoryCompletions()]
     # Node package path
     [string]$WorkingDirectory,
 
@@ -1063,11 +1007,7 @@ function Compare-NodeModule {
       ValueFromRemainingArguments,
       DontShow
     )]
-    [PathCompletions(
-      '~\code',
-      [PathItemType]::Directory,
-      $True
-    )]
+    [Module.Commands.Code.WorkingDirectoryCompletions()]
     # Additional npm arguments
     [string[]]$Argument,
 
@@ -1111,22 +1051,14 @@ function Step-NodePackageVersion {
     [Parameter(
       Position = 0
     )]
-    [EnumCompletions(
-      [Module.Commands.Code.Node.NodePackageNamedVersion],
-      $False,
-      [CompletionCase]::Preserve
-    )]
+    [Module.Commands.Code.Node.NodePackageVersionCompletions()]
     # New package version, default 'patch'
     [string]$Version,
 
     [Parameter(
       Position = 1
     )]
-    [PathCompletions(
-      '~\code',
-      [PathItemType]::Directory,
-      $True
-    )]
+    [Module.Commands.Code.WorkingDirectoryCompletions()]
     # Node package path
     [string]$WorkingDirectory,
 
@@ -1135,11 +1067,7 @@ function Step-NodePackageVersion {
       ValueFromRemainingArguments,
       DontShow
     )]
-    [PathCompletions(
-      '~\code',
-      [PathItemType]::Directory,
-      $True
-    )]
+    [Module.Commands.Code.WorkingDirectoryCompletions()]
     # Additional npm arguments
     [string[]]$Argument
   )
@@ -1147,13 +1075,13 @@ function Step-NodePackageVersion {
   end {
     $Version = switch ($Version) {
       '' {
-        [Module.Commands.Code.Node.NodePackageNamedVersion]::patch
+        [Module.Commands.Code.Node.NodePackageVersion]::patch
         break
       }
       {
-        $null -ne [Module.Commands.Code.Node.NodePackageNamedVersion]::$Version
+        $null -ne [Module.Commands.Code.Node.NodePackageVersion]::$Version
       } {
-        [Module.Commands.Code.Node.NodePackageNamedVersion]::$Version
+        [Module.Commands.Code.Node.NodePackageVersion]::$Version
         break
       }
       default {
@@ -1208,11 +1136,7 @@ function Invoke-NodePackageScript {
     # Name of the npm script to run
     [string]$Script,
 
-    [PathCompletions(
-      '~\code',
-      [PathItemType]::Directory,
-      $True
-    )]
+    [Module.Commands.Code.WorkingDirectoryCompletions()]
     # Node package path
     [string]$WorkingDirectory
   )
@@ -1253,11 +1177,7 @@ function Test-NodePackage {
     [Parameter(
       Position = 0
     )]
-    [PathCompletions(
-      '~\code',
-      [PathItemType]::Directory,
-      $True
-    )]
+    [Module.Commands.Code.WorkingDirectoryCompletions()]
     # Node package path
     [string]$WorkingDirectory,
 
@@ -1266,11 +1186,7 @@ function Test-NodePackage {
       ValueFromRemainingArguments,
       DontShow
     )]
-    [PathCompletions(
-      '~\code',
-      [PathItemType]::Directory,
-      $True
-    )]
+    [Module.Commands.Code.WorkingDirectoryCompletions()]
     # Additional npm arguments
     [string[]]$Argument,
 

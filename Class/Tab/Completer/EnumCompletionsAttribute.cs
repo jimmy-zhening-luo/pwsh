@@ -1,6 +1,6 @@
-namespace Module.Completer;
+namespace Module.Tab.Completer;
 
-public sealed class EnumCompletionsAttribute(
+public class EnumCompletionsAttribute(
   System.Type enumType,
   bool strict,
   CompletionCase casing

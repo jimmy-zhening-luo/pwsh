@@ -16,7 +16,7 @@
     <Using Include="System.Collections"/>
     <Using Include="System.Collections.Generic"/>
     <Using Include="System.Collections.ObjectModel"/>
-    <Using Include="Module.Completer"/>
-    <Using Include="Module.Completer.Path"/>
+    <Using Include="Module.Tab.Completer"/>
+    <Using Include="Module.Tab.Path"/>
   </ItemGroup>
 </Project>

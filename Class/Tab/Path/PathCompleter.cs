@@ -1,4 +1,4 @@
-namespace Module.Completer.Path;
+namespace Module.Tab.Path;
 
 public sealed class PathCompleter(
   string Root,
@@ -6,7 +6,7 @@ public sealed class PathCompleter(
   bool Flat,
   bool Hidden,
   bool Reanchor
-) : BaseCompleter()
+) : TabCompleter()
 {
   private protected sealed override IEnumerable<string> FulfillCompletion(
     string wordToComplete

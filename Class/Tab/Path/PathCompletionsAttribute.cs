@@ -1,11 +1,11 @@
-namespace Module.Completer.Path;
+namespace Module.Tab.Path;
 
-public sealed class PathCompletionsAttribute(
+public class PathCompletionsAttribute(
   string Location,
   PathItemType ItemType,
   bool Flat,
   bool Hidden
-) : BaseCompletionsAttribute<PathCompleter>()
+) : TabCompletionsAttribute<PathCompleter>()
 {
   public PathCompletionsAttribute() : this(
     string.Empty

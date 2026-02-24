@@ -1,6 +1,6 @@
 namespace Module.Commands.Code.Node;
 
-public enum NodePackageNamedVersion
+public enum NodePackageVersion
 {
   patch,
   minor,

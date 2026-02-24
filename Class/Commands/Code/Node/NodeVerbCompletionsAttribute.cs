@@ -72,6 +72,6 @@ public sealed class NodeVerbCompletionsAttribute() : CompletionsAttribute(
     "whoami"
   ],
   false,
-  CompletionCase.Preserve
+  Tab.CompletionCase.Preserve
 )
 { }

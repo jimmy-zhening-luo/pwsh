@@ -1,10 +1,10 @@
-namespace Module.Completer;
+namespace Module.Tab.Completer;
 
 public sealed class Completer(
   IEnumerable<string> Domain,
   bool Strict,
   CompletionCase casing
-) : BaseCompleter(
+) : TabCompleter(
   casing
 )
 {

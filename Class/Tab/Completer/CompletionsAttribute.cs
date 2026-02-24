@@ -1,4 +1,4 @@
-namespace Module.Completer;
+namespace Module.Tab.Completer;
 
 public class CompletionsAttribute : CompletionsAttributePrototype<string[]>
 {
