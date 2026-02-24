@@ -43,41 +43,7 @@ public abstract class WrappedGetFile() : WrappedCommand(
   [EnumCompletions(
     typeof(Client.FileSystem.Encoding)
   )]
-  public string Encoding
-  {
-    get => encoding;
-    set
-    {
-      encoding = int.TryParse(
-        value,
-        out var parsedInt
-      )
-        ? parsedInt.ToString()
-        : System.Enum.TryParse<Client.FileSystem.Encoding>(
-            value,
-            true,
-            out var parsedEnum
-          )
-            ? parsedEnum.ToString()
-            : value;
-
-      if (
-        string.IsNullOrEmpty(
-          encoding
-        )
-      )
-      {
-        MyInvocation.BoundParameters.Remove(
-          "Encoding"
-        );
-      }
-      else
-      {
-        MyInvocation.BoundParameters["Encoding"] = encoding;
-      }
-    }
-  }
-  private string encoding = string.Empty;
+  public string Encoding { get; set; } = string.Empty;
 
   [Parameter]
   [Alias("f")]

@@ -128,11 +128,11 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   {
     if (
       !string.IsNullOrEmpty(
-        filter
+        Filter
       )
     )
     {
-      MyInvocation.BoundParameters["Filter"] = filter;
+      MyInvocation.BoundParameters["Filter"] = Filter;
     }
 
     if (!UsingCurrentLocation)
