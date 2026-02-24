@@ -16,7 +16,12 @@ public abstract class WrappedGetFile() : WrappedCommand(
     Position = 1
   )]
   [SupportsWildcards]
-  public virtual string Filter { get; set; } = string.Empty;
+  public virtual string Filter
+  {
+    get => filter;
+    set => filter = value;
+  }
+  private protected string filter = string.Empty;
 
   [Parameter]
   [SupportsWildcards]
