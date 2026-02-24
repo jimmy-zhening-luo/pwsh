@@ -17,20 +17,10 @@ public sealed class GetHelpOnline : CoreCommand
   )]
   [Alias("Command")]
   [SupportsWildcards]
-  public string[] Name
-  {
-    get => names;
-    set => names = value;
-  }
-  private string[] names = [];
+  public string[] Name { get; set; } = [];
 
   [Parameter]
-  public string[] Parameter
-  {
-    get => parameters;
-    set => parameters = value;
-  }
-  private string[] parameters = [];
+  public string[] Parameter { get; set; } = [];
 
   private static System.Uri? ResolveAboutArticle(
     System.Net.Http.HttpClient client,
