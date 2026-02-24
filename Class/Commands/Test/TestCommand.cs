@@ -49,7 +49,7 @@ public sealed class TestCommand : CoreCommand
               : (boundSwitch is bool boundSwitchBool)
                 ? string.Concat(
                     "(bool)",
-                    boundSwitchBool.ToBool().ToString()
+                    boundSwitchBool.ToString()
                   )
                 : boundSwitch.GetType().ToString()
             : "null",
