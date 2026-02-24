@@ -9,7 +9,9 @@ namespace Module.Commands.Pwsh.Model.Pipeline;
 [Alias("t")]
 [OutputType(typeof(object))]
 public sealed class TeeVariable() : WrappedCommand(
-  "Tee-Object"
+  "Tee-Object",
+  false,
+  "InputObject"
 )
 {
   [Parameter(
