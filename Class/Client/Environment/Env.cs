@@ -2,7 +2,7 @@ namespace Module.Client.Environment;
 
 internal static partial class Env
 {
-  private static readonly Dictionary<System.Environment.SpecialFolder, string> folders = default;
+  private static readonly Dictionary<System.Environment.SpecialFolder, string> folders = [];
 
   internal static string Get(
     string variable
