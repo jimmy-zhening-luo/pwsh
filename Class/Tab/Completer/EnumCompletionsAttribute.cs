@@ -2,12 +2,10 @@ namespace Module.Tab.Completer;
 
 public class EnumCompletionsAttribute(
   System.Type EnumType,
-  CompletionCase Casing = CompletionCase.Lower,
-  bool Strict = false
+  CompletionCase Casing = CompletionCase.Lower
 ) : CompletionsAttribute<System.Type>(
   EnumType,
-  Casing,
-  Strict
+  Casing
 )
 {
   private protected sealed override IEnumerable<string> ResolveDomain(

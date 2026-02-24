@@ -2,12 +2,10 @@ namespace Module.Tab.Completer;
 
 public class CompletionsAttribute(
   string[] Domain,
-  CompletionCase Casing = CompletionCase.Preserve,
-  bool Strict = false
+  CompletionCase Casing = CompletionCase.Preserve
 ) : CompletionsAttribute<string[]>(
   Domain,
-  Casing,
-  Strict
+  Casing
 )
 {
   private protected sealed override IEnumerable<string> ResolveDomain(
