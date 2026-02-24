@@ -19,7 +19,7 @@ public abstract class WrappedCommand(
       !string.IsNullOrEmpty(
         PipelineInputParameterName
       )
-      && !MyInvocation.BoundParameters.ContainsKey(
+      && !BoundParameters.ContainsKey(
         PipelineInputParameterName
       )
     )
@@ -32,7 +32,7 @@ public abstract class WrappedCommand(
       CommandType
     )
       .AddParameters(
-        MyInvocation.BoundParameters
+        BoundParameters
       );
 
     steppablePipeline = PS.GetSteppablePipeline();
@@ -48,7 +48,7 @@ public abstract class WrappedCommand(
     {
       if (piped)
       {
-        var input = MyInvocation.BoundParameters.TryGetValue(
+        var input = BoundParameters.TryGetValue(
           PipelineInputParameterName,
           out var value
         )

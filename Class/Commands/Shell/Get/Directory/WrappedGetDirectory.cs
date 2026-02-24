@@ -132,7 +132,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
       )
     )
     {
-      MyInvocation.BoundParameters["Filter"] = Filter;
+      BoundParameters["Filter"] = Filter;
     }
 
     if (!UsingCurrentLocation)
@@ -157,7 +157,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
         }
       }
 
-      MyInvocation.BoundParameters["Path"] = paths;
+      BoundParameters["Path"] = paths;
     }
   }
 }

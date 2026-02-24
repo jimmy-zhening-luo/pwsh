@@ -35,7 +35,7 @@ public sealed class TestCommand : CoreCommand
         "",
         [
           "Switch > Bound:IsPresent:",
-          MyInvocation.BoundParameters.TryGetValue(
+          BoundParameters.TryGetValue(
             "Switch",
             out var bound
           )

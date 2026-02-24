@@ -29,7 +29,7 @@ public abstract class WrappedStartExplorer() : WrappedCommandShouldProcess(
           ? Pwd()
           : Reanchor()
       ];
-      MyInvocation.BoundParameters["Path"] = paths;
+      BoundParameters["Path"] = paths;
     }
     else
     {
@@ -46,7 +46,7 @@ public abstract class WrappedStartExplorer() : WrappedCommandShouldProcess(
           );
         }
 
-        MyInvocation.BoundParameters["Path"] = paths;
+        BoundParameters["Path"] = paths;
       }
     }
   }

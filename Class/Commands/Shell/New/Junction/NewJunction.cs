@@ -30,7 +30,7 @@ public sealed class NewJunction() : WrappedCommandShouldProcess(
 
   private protected sealed override void TransformParameters()
   {
-    MyInvocation.BoundParameters["ItemType"] = "Junction";
-    MyInvocation.BoundParameters["Force"] = SwitchParameter.Present;
+    BoundParameters["ItemType"] = "Junction";
+    BoundParameters["Force"] = SwitchParameter.Present;
   }
 }

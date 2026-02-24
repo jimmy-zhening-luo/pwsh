@@ -21,7 +21,7 @@ public abstract class WrappedRemoveDirectory() : WrappedCommandShouldProcess(
 
   private protected sealed override void TransformParameters()
   {
-    MyInvocation.BoundParameters["Recurse"] = SwitchParameter.Present;
-    MyInvocation.BoundParameters["Force"] = SwitchParameter.Present;
+    BoundParameters["Recurse"] = SwitchParameter.Present;
+    BoundParameters["Force"] = SwitchParameter.Present;
   }
 }

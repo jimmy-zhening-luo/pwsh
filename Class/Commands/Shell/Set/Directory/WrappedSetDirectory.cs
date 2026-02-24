@@ -20,6 +20,6 @@ public abstract class WrappedSetDirectory() : WrappedCommand(
     path = Reanchor(
       path
     );
-    MyInvocation.BoundParameters["Path"] = path;
+    BoundParameters["Path"] = path;
   }
 }

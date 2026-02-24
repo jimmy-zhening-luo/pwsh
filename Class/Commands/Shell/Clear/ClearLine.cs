@@ -66,7 +66,7 @@ public sealed class ClearLine : CoreCommand
         "Clear-Content"
       )
         .AddParameters(
-          MyInvocation.BoundParameters
+          BoundParameters
         );
 
       using var steppablePipeline = PS.GetSteppablePipeline();

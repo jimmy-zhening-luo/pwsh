@@ -44,5 +44,5 @@ public sealed class NewDirectory() : WrappedCommandShouldProcess(
   }
   private bool force;
 
-  private protected sealed override void TransformParameters() => MyInvocation.BoundParameters["ItemType"] = "Directory";
+  private protected sealed override void TransformParameters() => BoundParameters["ItemType"] = "Directory";
 }

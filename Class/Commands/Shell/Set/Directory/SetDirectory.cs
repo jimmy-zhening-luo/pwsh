@@ -91,19 +91,19 @@ public sealed class SetDirectory : WrappedSetDirectory
         break;
       case "DriveC":
         driveC = false;
-        MyInvocation.BoundParameters.Remove("C");
+        BoundParameters.Remove("C");
         path = "C:";
 
         break;
       case "DriveD":
         driveD = false;
-        MyInvocation.BoundParameters.Remove("D");
+        BoundParameters.Remove("D");
         path = "D:";
 
         break;
       case "DriveE":
         driveE = false;
-        MyInvocation.BoundParameters.Remove("E");
+        BoundParameters.Remove("E");
         path = "E:";
 
         break;
@@ -111,7 +111,7 @@ public sealed class SetDirectory : WrappedSetDirectory
         return;
     }
 
-    MyInvocation.BoundParameters["Path"] = path;
+    BoundParameters["Path"] = path;
   }
 }
 
