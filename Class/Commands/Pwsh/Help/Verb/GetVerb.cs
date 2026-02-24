@@ -130,7 +130,7 @@ public sealed partial class GetVerb : CoreCommand
 
       var verbObjects = PS.Invoke<VerbInfo>();
 
-      if (verbObjects != null)
+      if (verbObjects is not null)
       {
         foreach (var verbObject in verbObjects)
         {

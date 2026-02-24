@@ -121,7 +121,7 @@ public sealed class GetCommandAlias : CoreCommand
 
     var aliasInfoObjects = PS.Invoke<AliasInfo>();
 
-    if (aliasInfoObjects != null)
+    if (aliasInfoObjects is not null)
     {
       foreach (var aliasInfo in aliasInfoObjects)
       {
