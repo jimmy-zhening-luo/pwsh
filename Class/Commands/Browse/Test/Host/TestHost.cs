@@ -11,6 +11,7 @@ namespace Module.Commands.Browse.Test.Host;
 public sealed partial class TestHost() : WrappedCommand(
   "Test-NetConnection",
   false,
+  "",
   CommandTypes.Function
 )
 {

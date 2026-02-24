@@ -3,6 +3,7 @@ namespace Module.Commands;
 public abstract class WrappedCommand(
   string WrappedCommandName,
   bool SkipSsh = false,
+  string PipelineInputParameterName = "",
   CommandTypes CommandType = CommandTypes.Cmdlet
 ) : CoreCommand(
   SkipSsh
@@ -10,8 +11,22 @@ public abstract class WrappedCommand(
 {
   private SteppablePipeline? steppablePipeline = null;
 
+  private bool piped;
+
   private protected sealed override void BeforeBeginProcessing()
   {
+    if (
+      !string.IsNullOrEmpty(
+        PipelineInputParameterName
+      )
+      && !MyInvocation.BoundParameters.ContainsKey(
+        PipelineInputParameterName
+      )
+    )
+    {
+      piped = true;
+    }
+
     AddCommand(
       WrappedCommandName,
       CommandType
@@ -29,7 +44,33 @@ public abstract class WrappedCommand(
 
   private protected sealed override void ProcessRecordAction()
   {
-    steppablePipeline?.Process();
+    if (steppablePipeline is not null)
+    {
+      if (piped)
+      {
+        var input = MyInvocation.BoundParameters.TryGetValue(
+          PipelineInputParameterName,
+          out var value
+        )
+          ? value
+          : null;
+
+        if (input is null)
+        {
+          steppablePipeline.Process();
+        }
+        else
+        {
+          steppablePipeline.Process(
+            input
+          );
+        }
+      }
+      else
+      {
+        steppablePipeline.Process();
+      }
+    }
   }
 
   private protected sealed override void AfterEndProcessing()

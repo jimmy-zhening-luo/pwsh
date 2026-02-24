@@ -3,10 +3,12 @@ namespace Module.Commands;
 public abstract class WrappedCommandShouldProcess(
   string WrappedCommandName,
   bool SkipSsh = false,
+  string PipelineInputParameterName = "",
   CommandTypes CommandType = CommandTypes.Cmdlet
 ) : WrappedCommand(
   WrappedCommandName,
   SkipSsh,
+  PipelineInputParameterName,
   CommandType
 )
 {
