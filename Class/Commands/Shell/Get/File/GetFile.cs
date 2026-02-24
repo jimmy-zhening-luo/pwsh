@@ -30,12 +30,7 @@ public sealed class GetFile : WrappedGetFile
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  public string[] LiteralPath
-  {
-    get => literalPaths;
-    set => literalPaths = value;
-  }
-  private string[] literalPaths = [];
+  public string[] LiteralPath { get; set; } = [];
 
   [Parameter(
     ParameterSetName = "Path",

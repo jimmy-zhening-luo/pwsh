@@ -16,30 +16,15 @@ public abstract class WrappedGetFile() : WrappedCommand(
     Position = 1
   )]
   [SupportsWildcards]
-  public virtual string Filter
-  {
-    get => filter;
-    set => filter = value;
-  }
-  private protected string filter = string.Empty;
+  public virtual string Filter { get; set; } = string.Empty;
 
   [Parameter]
   [SupportsWildcards]
-  public string[] Include
-  {
-    get => inclusions;
-    set => inclusions = value;
-  }
-  private string[] inclusions = [];
+  public string[] Include { get; set; } = [];
 
   [Parameter]
   [SupportsWildcards]
-  public string[] Exclude
-  {
-    get => exclusions;
-    set => exclusions = value;
-  }
-  private string[] exclusions = [];
+  public string[] Exclude { get; set; } = [];
 
   [Parameter]
   public long ReadCount { get; set; }
@@ -55,20 +40,10 @@ public abstract class WrappedGetFile() : WrappedCommand(
   public int Tail { get; set; }
 
   [Parameter]
-  public string Delimiter
-  {
-    get => delimiter;
-    set => delimiter = value;
-  }
-  private string delimiter = string.Empty;
+  public string Delimiter { get; set; } = string.Empty;
 
   [Parameter]
-  public string Stream
-  {
-    get => stream;
-    set => stream = value;
-  }
-  private string stream = string.Empty;
+  public string Stream { get; set; } = string.Empty;
 
   [Parameter]
   [EnumCompletions(
