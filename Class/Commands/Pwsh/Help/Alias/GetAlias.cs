@@ -80,7 +80,7 @@ public sealed class GetCommandAlias : CoreCommand
       );
     }
 
-    foreach (var exclusion in Exclusion)
+    foreach (var exclusion in Exclude)
     {
       if (
         !string.IsNullOrEmpty(
@@ -95,7 +95,7 @@ public sealed class GetCommandAlias : CoreCommand
     }
 
     Definition = [.. uniqueWildcardTerms];
-    Exclusion = [.. uniqueExclusions];
+    Exclude = [.. uniqueExclusions];
 
     SortedDictionary<string, AliasInfo> commandAliasDictionary = [];
 
@@ -111,11 +111,11 @@ public sealed class GetCommandAlias : CoreCommand
         Scope
       );
 
-    if (exclusions.Length != 0)
+    if (Exclude.Length != 0)
     {
       PS.AddParameter(
         "Exclude",
-        Exclusion
+        Exclude
       );
     }
 
