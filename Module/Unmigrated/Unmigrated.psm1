@@ -1,4 +1,3 @@
-using namespace System.IO
 using namespace System.Collections.Generic
 
 function Resolve-GitRepository {
@@ -31,7 +30,7 @@ function Resolve-GitRepository {
           ).Path
         }
         elseif (
-          ![Path]::IsPathRooted(
+          ![System.IO.Path]::IsPathRooted(
             $wd
           ) -and (
             Test-Path (
@@ -62,7 +61,7 @@ function Resolve-GitRepository {
           ).Path
         }
         elseif (
-          ![Path]::IsPathRooted(
+          ![System.IO.Path]::IsPathRooted(
             $wd
           ) -and (
             Test-Path (
@@ -976,11 +975,9 @@ function Clear-NodeModuleCache {
   [Alias('ncc')]
   param()
   end {
-    $NodeArgument = [List[string]]::new(
-      [string[]]@(
-        'clean'
-        '--force'
-      )
+    $NodeArgument = [string[]]@(
+      'clean'
+      '--force'
     )
 
     Invoke-Npm -Command cache -Argument $NodeArgument
