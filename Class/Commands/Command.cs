@@ -64,7 +64,7 @@ public abstract partial class CoreCommand(
 
     if (ContinueProcessing)
     {
-      BeforeBeginProcessing();
+      Preprocess();
 
       stage = CommandLifecycle.Processing;
     }
@@ -108,7 +108,7 @@ public abstract partial class CoreCommand(
 
     if (ContinueProcessing)
     {
-      AfterEndProcessing();
+      Postprocess();
     }
 
     WriteDebug(
@@ -125,13 +125,13 @@ public abstract partial class CoreCommand(
     Dispose();
   }
 
-  private protected virtual void BeforeBeginProcessing()
+  private protected virtual void Preprocess()
   { }
 
   private protected virtual void Processor()
   { }
 
-  private protected virtual void AfterEndProcessing()
+  private protected virtual void Postprocess()
   { }
 
   private protected virtual void CleanResources()

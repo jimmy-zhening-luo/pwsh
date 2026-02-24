@@ -10,7 +10,7 @@ public sealed class UpdateStoreApp() : CoreCommand(
   true
 )
 {
-  private protected sealed override void AfterEndProcessing()
+  private protected sealed override void Postprocess()
   {
     Client.Invocation.ShellExecute(
       "ms-windows-store://downloadsandupdates"

@@ -49,7 +49,7 @@ public sealed class ClearLine : CoreCommand
   [Parameter]
   public string Stream { get; set; } = string.Empty;
 
-  private protected sealed override void AfterEndProcessing()
+  private protected sealed override void Postprocess()
   {
     if (
       ParameterSetName == "Path"

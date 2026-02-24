@@ -20,7 +20,7 @@ public sealed class EditSystemPath() : CoreCommand(
   }
   private bool administrator;
 
-  private protected sealed override void AfterEndProcessing()
+  private protected sealed override void Postprocess()
   {
     Client.Invocation.ShellExecute(
       "rundll32.exe",

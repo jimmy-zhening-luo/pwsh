@@ -28,7 +28,7 @@ public sealed class TestCommand : CoreCommand
   }
   private bool switchParameter;
 
-  private protected sealed override void BeforeBeginProcessing()
+  private protected sealed override void Preprocess()
   {
     WriteObject(
       string.Join(
@@ -76,7 +76,7 @@ public sealed class TestCommand : CoreCommand
     }
   }
 
-  private protected sealed override void AfterEndProcessing()
+  private protected sealed override void Postprocess()
   {
     WriteObject(
       string.Concat(

@@ -103,7 +103,7 @@ public sealed class GetHelpOnline : CoreCommand
     }
   }
 
-  private protected sealed override void AfterEndProcessing()
+  private protected sealed override void Postprocess()
   {
     if (
       Name.Length > 1

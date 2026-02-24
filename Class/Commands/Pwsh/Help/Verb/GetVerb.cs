@@ -28,7 +28,7 @@ public sealed partial class GetVerb : CoreCommand
   )]
   public string[] Group { get; set; } = [];
 
-  private protected sealed override void AfterEndProcessing()
+  private protected sealed override void Postprocess()
   {
     HashSet<string> uniqueWildcardTerms = [];
     HashSet<string> uniqueGroups = [];

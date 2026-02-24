@@ -41,7 +41,7 @@ public sealed class OpenUrl() : CoreCommand(
     }
   }
 
-  private protected sealed override void AfterEndProcessing()
+  private protected sealed override void Postprocess()
   {
     if (ParameterSetName != "Path")
     {

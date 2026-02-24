@@ -10,7 +10,7 @@ public sealed class StartProfile() : CoreCommand(
   true
 )
 {
-  private protected sealed override void AfterEndProcessing()
+  private protected sealed override void Postprocess()
   {
     Client.Invocation.CreateProcess(
       Client.Environment.Known.Application.VSCode,

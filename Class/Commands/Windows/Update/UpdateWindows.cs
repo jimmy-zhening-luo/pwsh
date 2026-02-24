@@ -10,7 +10,7 @@ public sealed class UpdateWindows() : CoreCommand(
   true
 )
 {
-  private protected sealed override void AfterEndProcessing()
+  private protected sealed override void Postprocess()
   {
     Client.Invocation.ShellExecute(
       "ms-settings:windowsupdate"

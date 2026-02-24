@@ -45,7 +45,7 @@ public sealed class GetCommandAlias : CoreCommand
   [SupportsWildcards]
   public string[] Exclude { get; set; } = [];
 
-  private protected sealed override void AfterEndProcessing()
+  private protected sealed override void Postprocess()
   {
     HashSet<string> uniqueWildcardTerms = [];
     HashSet<string> uniqueExclusions = [];

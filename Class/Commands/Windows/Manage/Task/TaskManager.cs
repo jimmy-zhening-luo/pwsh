@@ -59,7 +59,7 @@ public abstract class TaskManager : CoreCommand
     }
   }
 
-  private protected sealed override void AfterEndProcessing()
+  private protected sealed override void Postprocess()
   {
     switch (ParameterSetName)
     {

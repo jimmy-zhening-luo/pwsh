@@ -34,7 +34,7 @@ public abstract class VirtualStartWorkspace() : CoreCommand(
   }
   private bool reuseWindow;
 
-  private protected sealed override void AfterEndProcessing()
+  private protected sealed override void Postprocess()
   {
     path = UsingCurrentLocation
       ? Pwd(

@@ -19,7 +19,7 @@ public abstract class WrappedCommand(
   private protected virtual void TransformPipelineInput()
   { }
 
-  private protected sealed override void BeforeBeginProcessing()
+  private protected sealed override void Preprocess()
   {
     TransformArguments();
 
@@ -91,7 +91,7 @@ public abstract class WrappedCommand(
     }
   }
 
-  private protected sealed override void AfterEndProcessing()
+  private protected sealed override void Postprocess()
   { }
 
   private protected sealed override void CleanResources()
