@@ -56,6 +56,7 @@ public sealed class TeeVariable() : WrappedCommand(
   [Parameter(
     ParameterSetName = "LiteralFile"
   )]
+  [ValidateNotNullOrEmpty]
   [EnumCompletions(
     typeof(Client.FileSystem.Encoding)
   )]
@@ -64,16 +65,16 @@ public sealed class TeeVariable() : WrappedCommand(
     get => encoding;
     set => encoding = int.TryParse(
       value,
-      out _
+      out var parsedInt
     )
-      ? encoding = value
-      : System.Enum.TryParse(
+      ? parsedInt.ToString()
+      : System.Enum.TryParse<Client.FileSystem.Encoding>(
           value,
           true,
-          out Client.FileSystem.Encoding parsedEncoding
+          out var parsedEnum
         )
-          ? parsedEncoding.ToString()
-          : encoding = value;
+          ? parsedEnum.ToString()
+          : value;
   }
   private string encoding = string.Empty;
 }
