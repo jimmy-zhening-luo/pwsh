@@ -157,8 +157,8 @@ public sealed partial class TestHost() : WrappedCommand(
       verbosity = TestHostVerbosity.Detailed;
     }
 
-    BoundParameters.Remove("Detailed");
-    BoundParameters["InformationLevel"] = verbosity.ToString();
+    MyInvocation.BoundParameters.Remove("Detailed");
+    MyInvocation.BoundParameters["InformationLevel"] = verbosity.ToString();
 
     switch (ParameterSetName)
     {
@@ -169,16 +169,16 @@ public sealed partial class TestHost() : WrappedCommand(
           )
         )
         {
-          BoundParameters["CommonTCPPort"] = TestHostWellKnownPort.HTTP.ToString();
+          MyInvocation.BoundParameters["CommonTCPPort"] = TestHostWellKnownPort.HTTP.ToString();
         }
 
         break;
       case "RemotePort":
-        BoundParameters["Port"] = (int)port;
+        MyInvocation.BoundParameters["Port"] = (int)port;
 
         break;
       case "CommonTCPPort":
-        BoundParameters.Remove("CommonTCPPort");
+        MyInvocation.BoundParameters.Remove("CommonTCPPort");
 
         if (
           ushort.TryParse(
@@ -187,7 +187,7 @@ public sealed partial class TestHost() : WrappedCommand(
           )
         )
         {
-          BoundParameters["Port"] = (int)parsedPortNumber;
+          MyInvocation.BoundParameters["Port"] = (int)parsedPortNumber;
         }
         else if (
           System.Enum.TryParse(
@@ -197,7 +197,7 @@ public sealed partial class TestHost() : WrappedCommand(
           )
         )
         {
-          BoundParameters["CommonTCPPort"] = parsedPortEnum.ToString();
+          MyInvocation.BoundParameters["CommonTCPPort"] = parsedPortEnum.ToString();
         }
 
         break;
@@ -212,7 +212,7 @@ public sealed partial class TestHost() : WrappedCommand(
     )
     {
       name = "google.com";
-      BoundParameters["ComputerName"] = name;
+      MyInvocation.BoundParameters["ComputerName"] = name;
     }
   }
 }

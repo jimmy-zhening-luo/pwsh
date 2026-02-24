@@ -17,7 +17,7 @@ public abstract class WrappedCommand(
       CommandType
     )
       .AddParameters(
-        BoundParameters
+        MyInvocation.BoundParameters
       );
 
     steppablePipeline = PS.GetSteppablePipeline();

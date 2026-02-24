@@ -156,7 +156,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
         }
       }
 
-      BoundParameters["Path"] = paths;
+      MyInvocation.BoundParameters["Path"] = paths;
     }
   }
 }
