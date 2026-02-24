@@ -16,7 +16,7 @@ public sealed class TestCommand : CoreCommand
   private protected sealed override void AfterEndProcessing()
   {
     WriteObject(
-      name
+      Name
     );
   }
 }
