@@ -22,33 +22,18 @@ public sealed class NewDirectory() : WrappedCommandShouldProcess(
     Position = 0
   )]
   [PathCompletions]
-  public string[] Path
-  {
-    get => paths;
-    set => paths = value;
-  }
-  private string[] paths = [];
+  public string[] Path { get; set; } = [];
 
   [Parameter(
     ParameterSetName = "nameSet",
     Mandatory = true
   )]
-  public string Name
-  {
-    get => name;
-    set => name = value;
-  }
-  private string name = string.Empty;
+  public string Name { get; set; } = string.Empty;
 
   [Parameter]
   [Alias("Target")]
   [PathCompletions]
-  public object Value
-  {
-    get => initialValue;
-    set => initialValue = value;
-  }
-  private object initialValue = new();
+  public object Value { get; set; } = new();
 
   [Parameter]
   [Alias("f")]

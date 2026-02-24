@@ -18,12 +18,7 @@ public sealed class NewJunction() : WrappedCommandShouldProcess(
     Position = 0
   )]
   [PathCompletions]
-  public string[] Path
-  {
-    get => paths;
-    set => paths = value;
-  }
-  private string[] paths = [];
+  public string[] Path { get; set; } = [];
 
   [Parameter(
     Mandatory = true,
@@ -31,12 +26,7 @@ public sealed class NewJunction() : WrappedCommandShouldProcess(
   )]
   [Alias("Target")]
   [PathCompletions]
-  public object Value
-  {
-    get => initialValue;
-    set => initialValue = value;
-  }
-  private object initialValue = string.Empty;
+  public object Value { get; set; } = string.Empty;
 
   private protected sealed override void TransformParameters()
   {
