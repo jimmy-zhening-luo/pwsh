@@ -18,12 +18,7 @@ public sealed class GetCommandAlias : CoreCommand
   [Completions(
     ["*"]
   )]
-  public string[] Definition
-  {
-    get => definitions;
-    set => definitions = value;
-  }
-  private string[] definitions = [];
+  public string[] Definition { get; set; } = [];
 
   [Parameter(
     Position = 1,
@@ -41,33 +36,27 @@ public sealed class GetCommandAlias : CoreCommand
       "3"
     ]
   )]
-  public string Scope
-  {
-    get => scope;
-    set => scope = value;
-  }
-  private string scope = "Global";
+  public string Scope { get; set; } = "Global";
 
   [Parameter(
     Position = 2,
     HelpMessage = "Omits the specified items. The value of this parameter qualifies the Definition parameter. Enter a name, a definition, or a pattern, such as 's*'. Wildcards are permitted."
   )]
   [SupportsWildcards]
-  public string[] Exclude
-  {
-    get => exclusions;
-    set => exclusions = value;
-  }
-  private string[] exclusions = [];
+  public string[] Exclude { get; set; } = [];
 
   private protected sealed override void AfterEndProcessing()
   {
     HashSet<string> uniqueWildcardTerms = [];
     HashSet<string> uniqueExclusions = [];
 
-    foreach (var definition in definitions)
+    foreach (var definition in Definition)
     {
-      if (!string.IsNullOrEmpty(definition))
+      if (
+        !string.IsNullOrEmpty(
+          definition
+        )
+      )
       {
         uniqueWildcardTerms.Add(
           definition.Contains(
@@ -91,9 +80,13 @@ public sealed class GetCommandAlias : CoreCommand
       );
     }
 
-    foreach (var exclusion in exclusions)
+    foreach (var exclusion in Exclusion)
     {
-      if (!string.IsNullOrEmpty(exclusion))
+      if (
+        !string.IsNullOrEmpty(
+          exclusion
+        )
+      )
       {
         uniqueExclusions.Add(
           exclusion
@@ -101,8 +94,8 @@ public sealed class GetCommandAlias : CoreCommand
       }
     }
 
-    definitions = [.. uniqueWildcardTerms];
-    exclusions = [.. uniqueExclusions];
+    Definition = [.. uniqueWildcardTerms];
+    Exclusion = [.. uniqueExclusions];
 
     SortedDictionary<string, AliasInfo> commandAliasDictionary = [];
 
@@ -111,18 +104,18 @@ public sealed class GetCommandAlias : CoreCommand
     )
       .AddParameter(
         "Definition",
-        definitions
+        Definition
       )
       .AddParameter(
         "Scope",
-        scope
+        Scope
       );
 
     if (exclusions.Length != 0)
     {
       PS.AddParameter(
         "Exclude",
-        exclusions
+        Exclusion
       );
     }
 
@@ -136,7 +129,11 @@ public sealed class GetCommandAlias : CoreCommand
           + ":"
           + aliasInfo.Name;
 
-        if (!commandAliasDictionary.ContainsKey(key))
+        if (
+          !commandAliasDictionary.ContainsKey(
+            key
+          )
+        )
         {
           commandAliasDictionary.Add(
             key,
