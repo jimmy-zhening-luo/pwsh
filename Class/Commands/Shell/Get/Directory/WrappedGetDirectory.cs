@@ -112,7 +112,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
 
   [Parameter]
   public FlagsExpression<System.IO.FileAttributes> Attributes { get; set; } = new FlagsExpression<System.IO.FileAttributes>(
-    System.IO.FileAttributes.None.ToString()
+    global::System.IO.FileAttributes.None.ToString()
   );
 
   private protected sealed override void TransformParameters()
