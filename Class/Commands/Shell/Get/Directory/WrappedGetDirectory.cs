@@ -111,7 +111,9 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   private bool followSymlink;
 
   [Parameter]
-  public FlagsExpression<System.IO.FileAttributes> Attributes { get; set; }
+  public FlagsExpression<System.IO.FileAttributes> Attributes { get; set; } = new FlagsExpression<System.IO.FileAttributes>(
+    System.IO.FileAttributes.None.ToString()
+  );
 
   private protected sealed override void TransformParameters()
   {
