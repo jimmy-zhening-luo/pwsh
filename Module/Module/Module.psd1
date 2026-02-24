@@ -62,6 +62,7 @@
     'Get-VerbList'
     'Get-TypeAccelerator'
     'Get-Type'
+    'Tee-Variable'
   )
   VariablesToExport    = @()
   AliasesToExport      = @(
@@ -123,5 +124,6 @@
     'types'
     'ty'
     'typeof'
+    't'
   )
 }
