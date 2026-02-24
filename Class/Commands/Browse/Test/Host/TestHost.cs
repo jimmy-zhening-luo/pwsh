@@ -38,9 +38,10 @@ public sealed partial class TestHost() : WrappedCommand(
   )]
   public string ComputerName
   {
-    get;
-    set;
-  } = "";
+    get => name;
+    set => name = value;
+  }
+  private string name = "";
 
   [Parameter(
     ParameterSetName = "CommonTCPPort",
@@ -65,9 +66,10 @@ public sealed partial class TestHost() : WrappedCommand(
   [ValidateRange(1, 65535)]
   public ushort Port
   {
-    get;
-    set;
+    get => port;
+    set => port = value;
   }
+  private ushort port;
 
   [Parameter(
     ParameterSetName = "ICMP"
@@ -85,9 +87,10 @@ public sealed partial class TestHost() : WrappedCommand(
   [ValidateRange(1, 120)]
   public int Hops
   {
-    get;
-    set;
+    get => hops;
+    set => hops = value;
   }
+  private int hops;
 
   [Parameter(
     ParameterSetName = "NetRouteDiagnostics",
@@ -105,18 +108,20 @@ public sealed partial class TestHost() : WrappedCommand(
   )]
   public string ConstrainSourceAddress
   {
-    get;
-    set;
-  } = "";
+    get => constrainSourceAddress;
+    set => constrainSourceAddress = value;
+  }
+  private string constrainSourceAddress = "";
 
   [Parameter(
     ParameterSetName = "NetRouteDiagnostics"
   )]
   public uint ConstrainInterface
   {
-    get;
-    set;
+    get => constrainInterface;
+    set => constrainInterface = value;
   }
+  private uint constrainInterface;
 
   [Parameter]
   [EnumCompletions(
@@ -124,9 +129,10 @@ public sealed partial class TestHost() : WrappedCommand(
   )]
   public TestHostVerbosity InformationLevel
   {
-    get;
-    set;
+    get => verbosity;
+    set => verbosity = value;
   }
+  private TestHostVerbosity verbosity;
 
   [Parameter]
   public SwitchParameter Detailed
@@ -140,54 +146,55 @@ public sealed partial class TestHost() : WrappedCommand(
   {
     if (detailed)
     {
-      InformationLevel = TestHostVerbosity.Detailed;
+      verbosity = TestHostVerbosity.Detailed;
     }
 
     MyInvocation.BoundParameters.Remove("Detailed");
-    MyInvocation.BoundParameters["InformationLevel"] = InformationLevel.ToString();
+    MyInvocation.BoundParameters["InformationLevel"] = verbosity.ToString();
 
     switch (ParameterSetName)
     {
       case "ICMP":
         if (
           string.IsNullOrEmpty(
-            ComputerName
+            name
           )
         )
         {
-          CommonTCPPort = TestHostWellKnownPort.HTTP.ToString();
-          MyInvocation.BoundParameters["CommonTCPPort"] = CommonTCPPort;
+          commonPort = TestHostWellKnownPort.HTTP.ToString();
+          MyInvocation.BoundParameters["CommonTCPPort"] = commonPort;
         }
 
         break;
       case "RemotePort":
-        MyInvocation.BoundParameters["Port"] = (int)Port;
+        MyInvocation.BoundParameters["Port"] = (int)port;
 
         break;
       case "CommonTCPPort":
         if (
           ushort.TryParse(
-            CommonTCPPort,
+            commonPort,
             out var parsedPortNumber
           )
         )
         {
-          CommonTCPPort = string.Empty;
+          commonPort = string.Empty;
           MyInvocation.BoundParameters.Remove("CommonTCPPort");
 
-          Port = parsedPortNumber;
-          MyInvocation.BoundParameters["Port"] = (int)Port;
+
+          port = parsedPortNumber;
+          MyInvocation.BoundParameters["Port"] = (int)port;
         }
         else if (
           System.Enum.TryParse(
-            CommonTCPPort,
+            commonPort,
             true,
             out TestHostWellKnownPort parsedPortEnum
           )
         )
         {
-          CommonTCPPort = parsedPortEnum.ToString();
-          MyInvocation.BoundParameters["CommonTCPPort"] = CommonTCPPort;
+          commonPort = parsedPortEnum.ToString();
+          MyInvocation.BoundParameters["CommonTCPPort"] = commonPort;
         }
 
         break;
@@ -197,12 +204,12 @@ public sealed partial class TestHost() : WrappedCommand(
 
     if (
       string.IsNullOrEmpty(
-        ComputerName
+        name
       )
     )
     {
-      ComputerName = "google.com";
-      MyInvocation.BoundParameters["ComputerName"] = ComputerName;
+      name = "google.com";
+      MyInvocation.BoundParameters["ComputerName"] = name;
     }
   }
 }
