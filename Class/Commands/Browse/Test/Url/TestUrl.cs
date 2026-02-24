@@ -21,7 +21,7 @@ public sealed class TestUrl : CoreCommand
   public System.Uri[] Uri
   { get; set; } = [];
 
-  private protected sealed override void ProcessRecordAction()
+  private protected sealed override void Processor()
   {
     using var client = new System.Net.Http.HttpClient()
     {

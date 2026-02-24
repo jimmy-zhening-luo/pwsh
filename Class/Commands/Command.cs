@@ -60,12 +60,7 @@ public abstract partial class CoreCommand(
       "<BEGIN>"
     );
 
-    if (stage == CommandLifecycle.NotStarted)
-    {
-      stage = CommandLifecycle.Initialized;
-    }
-
-    steps = default;
+    stage = CommandLifecycle.Initialized;
 
     if (ContinueProcessing)
     {
@@ -95,7 +90,7 @@ public abstract partial class CoreCommand(
           + ">"
       );
 
-      ProcessRecordAction();
+      Processor();
 
       WriteDebug(
         "</PROCESS:"
@@ -119,6 +114,7 @@ public abstract partial class CoreCommand(
     WriteDebug(
       "</END>"
     );
+
     StopProcessing();
   }
 
@@ -132,7 +128,7 @@ public abstract partial class CoreCommand(
   private protected virtual void BeforeBeginProcessing()
   { }
 
-  private protected virtual void ProcessRecordAction()
+  private protected virtual void Processor()
   { }
 
   private protected virtual void AfterEndProcessing()

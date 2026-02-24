@@ -54,7 +54,7 @@ public abstract class WrappedCommand(
     );
   }
 
-  private protected sealed override void ProcessRecordAction()
+  private protected sealed override void Processor()
   {
     if (steppablePipeline is not null)
     {

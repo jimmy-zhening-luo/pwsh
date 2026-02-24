@@ -77,7 +77,7 @@ public sealed partial class GetSize : CoreCommand
   }
   private bool number;
 
-  private protected sealed override void ProcessRecordAction()
+  private protected sealed override void Processor()
   {
     if (Path.Length == 0)
     {
