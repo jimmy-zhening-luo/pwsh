@@ -19,12 +19,7 @@ public sealed class ConvertToHex : Cmdlet
   )]
   [AllowEmptyCollection]
   [ValidateRange(ValidateRangeKind.NonNegative)]
-  public long[] Number
-  {
-    get => numbers;
-    set => numbers = value;
-  }
-  private long[] numbers = [];
+  public long[] Number { get; set; } = [];
 
   [Parameter(
     HelpMessage = "Output hexadecimal letters in lowercase"
@@ -39,7 +34,7 @@ public sealed class ConvertToHex : Cmdlet
 
   protected sealed override void ProcessRecord()
   {
-    foreach (var number in numbers)
+    foreach (var number in Number)
     {
       string hex = number.ToString("X");
 

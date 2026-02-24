@@ -37,7 +37,11 @@ public sealed class GetHelpOnline : CoreCommand
     string topic
   )
   {
-    System.Uri testUri = new(AboutBaseUrl + "/" + topic);
+    System.Uri testUri = new(
+      AboutBaseUrl
+        + "/"
+        + topic
+    );
 
     return Client.Network.Url.Test(
       client,
@@ -112,16 +116,16 @@ public sealed class GetHelpOnline : CoreCommand
   private protected sealed override void AfterEndProcessing()
   {
     if (
-      names.Length > 1
-      || names.Length == 1
+      Name.Length > 1
+      || Name.Length == 1
       && !string.IsNullOrEmpty(
-        names[0]
+        Name[0]
       )
     )
     {
       var topic = string.Join(
         '_',
-        names
+        Name
       );
       var helpContent = GetHelpContent(
         topic,
@@ -148,15 +152,17 @@ public sealed class GetHelpOnline : CoreCommand
         {
           foreach (var helpLink in helpContentLinks)
           {
-            helpLinks.Add(helpLink);
+            helpLinks.Add(
+              helpLink
+            );
           }
         }
 
-        if (parameters.Length != 0)
+        if (Parameter.Length != 0)
         {
           var parameterHelpContent = GetHelpContent(
             topic,
-            parameters
+            Parameter
           );
 
           if (parameterHelpContent is not null)
