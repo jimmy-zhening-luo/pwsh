@@ -4,8 +4,6 @@ public abstract partial class CoreCommand(
   bool SkipSsh = false
 ) : PSCmdlet, System.IDisposable
 {
-  private protected uint Steps;
-
   private CommandLifecycle stage;
 
   private bool disposed;
@@ -54,8 +52,6 @@ public abstract partial class CoreCommand(
 
   protected sealed override void BeginProcessing()
   {
-    Steps = 0;
-
     if (stage == CommandLifecycle.NotStarted)
     {
       stage = CommandLifecycle.Initialized;
@@ -86,8 +82,6 @@ public abstract partial class CoreCommand(
   {
     if (ContinueProcessing)
     {
-      Steps++;
-
       ProcessRecordAction();
     }
   }
@@ -114,7 +108,6 @@ public abstract partial class CoreCommand(
   protected sealed override void StopProcessing()
   {
     stage = CommandLifecycle.Stopped;
-    Steps = 0;
 
     Dispose();
   }
