@@ -11,12 +11,7 @@ public abstract class TaskManager : CoreCommand
   )]
   [SupportsWildcards]
   [Alias("ProcessName")]
-  public string[] Name
-  {
-    get => names;
-    set => names = value;
-  }
-  private string[] names = [];
+  public string[] Name { get; set; } = [];
 
   [Parameter(
     ParameterSetName = "Id",
@@ -24,12 +19,7 @@ public abstract class TaskManager : CoreCommand
     Position = 0,
     HelpMessage = "The process ID(s) of the process to stop."
   )]
-  public uint[] Id
-  {
-    get => pids;
-    set => pids = value;
-  }
-  private uint[] pids = [];
+  public uint[] Id { get; set; } = [];
 
   [Parameter(
     ParameterSetName = "InputObject",
@@ -37,12 +27,7 @@ public abstract class TaskManager : CoreCommand
     Position = 0,
     HelpMessage = "The Process object(s) to stop."
   )]
-  public System.Diagnostics.Process[] InputObject
-  {
-    get => inputs;
-    set => inputs = value;
-  }
-  private System.Diagnostics.Process[] inputs = [];
+  public System.Diagnostics.Process[] InputObject { get; set; } = [];
 
   private protected bool descendant;
 
@@ -99,7 +84,7 @@ public abstract class TaskManager : CoreCommand
 
         break;
       case "Name":
-        if (names.Length == 0)
+        if (Name.Length == 0)
         {
           KillProcesses(
             "explorer"

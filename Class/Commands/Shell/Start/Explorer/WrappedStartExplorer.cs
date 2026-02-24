@@ -5,11 +5,7 @@ public abstract class WrappedStartExplorer() : WrappedCommandShouldProcess(
   true
 )
 {
-  public abstract string[] Path
-  {
-    get;
-    set;
-  }
+  public abstract string[] Path { get; set; }
   private protected string[] paths = [];
 
   [Parameter]

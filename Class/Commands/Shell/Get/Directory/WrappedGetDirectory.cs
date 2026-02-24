@@ -4,11 +4,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   "Get-ChildItem"
 )
 {
-  public abstract string[] Path
-  {
-    get;
-    set;
-  }
+  public abstract string[] Path { get; set; }
   private protected string[] paths = [];
 
   [Parameter(

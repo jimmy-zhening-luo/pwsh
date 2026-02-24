@@ -4,11 +4,7 @@ public abstract class WrappedGetFile() : WrappedCommand(
   "Get-Content"
 )
 {
-  public abstract string[] Path
-  {
-    get;
-    set;
-  }
+  public abstract string[] Path { get; set; }
   private protected string[] paths = [];
 
   [Parameter(
