@@ -111,6 +111,9 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   private bool followSymlink;
 
   [Parameter]
+  [EnumCompletions(
+    typeof(System.IO.FileAttributes)
+  )]
   public FlagsExpression<System.IO.FileAttributes> Attributes { get; set; } = new FlagsExpression<System.IO.FileAttributes>(
     global::System.IO.FileAttributes.None.ToString()
   );
