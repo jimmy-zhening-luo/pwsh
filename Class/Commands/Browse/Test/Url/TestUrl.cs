@@ -20,10 +20,9 @@ public sealed class TestUrl : CoreCommand
   [AllowEmptyCollection]
   public System.Uri[] Uri
   {
-    get => uris;
-    set => uris = value;
-  }
-  private System.Uri[] uris = [];
+    get;
+    set;
+  } = [];
 
   private protected sealed override void ProcessRecordAction()
   {
@@ -34,7 +33,7 @@ public sealed class TestUrl : CoreCommand
       )
     };
 
-    foreach (var uri in uris)
+    foreach (var uri in Uri)
     {
       System.Uri url = new(
         uri.IsAbsoluteUri

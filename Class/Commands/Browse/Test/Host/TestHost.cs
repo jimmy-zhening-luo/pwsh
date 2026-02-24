@@ -38,10 +38,9 @@ public sealed partial class TestHost() : WrappedCommand(
   )]
   public string ComputerName
   {
-    get => name;
-    set => name = value;
-  }
-  private string name = "";
+    get;
+    set;
+  } = "";
 
   [Parameter(
     ParameterSetName = "CommonTCPPort",
@@ -53,10 +52,9 @@ public sealed partial class TestHost() : WrappedCommand(
   )]
   public string CommonTCPPort
   {
-    get => commonPort;
-    set => commonPort = value;
-  }
-  private string commonPort = "";
+    get;
+    set;
+  } = "";
 
   [Parameter(
     ParameterSetName = "RemotePort",
@@ -66,10 +64,9 @@ public sealed partial class TestHost() : WrappedCommand(
   [ValidateRange(1, 65535)]
   public ushort Port
   {
-    get => port;
-    set => port = value;
+    get;
+    set;
   }
-  private ushort port;
 
   [Parameter(
     ParameterSetName = "ICMP"
@@ -87,10 +84,9 @@ public sealed partial class TestHost() : WrappedCommand(
   [ValidateRange(1, 120)]
   public int Hops
   {
-    get => hops;
-    set => hops = value;
+    get;
+    set;
   }
-  private int hops;
 
   [Parameter(
     ParameterSetName = "NetRouteDiagnostics",
@@ -108,20 +104,18 @@ public sealed partial class TestHost() : WrappedCommand(
   )]
   public string ConstrainSourceAddress
   {
-    get => constrainSourceAddress;
-    set => constrainSourceAddress = value;
-  }
-  private string constrainSourceAddress = "";
+    get;
+    set;
+  } = "";
 
   [Parameter(
     ParameterSetName = "NetRouteDiagnostics"
   )]
   public uint ConstrainInterface
   {
-    get => constrainInterface;
-    set => constrainInterface = value;
+    get;
+    set;
   }
-  private uint constrainInterface;
 
   [Parameter]
   [EnumCompletions(
@@ -129,10 +123,9 @@ public sealed partial class TestHost() : WrappedCommand(
   )]
   public TestHostVerbosity InformationLevel
   {
-    get => verbosity;
-    set => verbosity = value;
+    get;
+    set;
   }
-  private TestHostVerbosity verbosity;
 
   [Parameter]
   public SwitchParameter Detailed
@@ -146,50 +139,54 @@ public sealed partial class TestHost() : WrappedCommand(
   {
     if (detailed)
     {
-      verbosity = TestHostVerbosity.Detailed;
+      InformationLevel = TestHostVerbosity.Detailed;
     }
 
     MyInvocation.BoundParameters.Remove("Detailed");
-    MyInvocation.BoundParameters["InformationLevel"] = verbosity.ToString();
+    MyInvocation.BoundParameters["InformationLevel"] = InformationLevel.ToString();
 
     switch (ParameterSetName)
     {
       case "ICMP":
         if (
           string.IsNullOrEmpty(
-            name
+            ComputerName
           )
         )
         {
-          MyInvocation.BoundParameters["CommonTCPPort"] = TestHostWellKnownPort.HTTP.ToString();
+          CommonTCPPort = TestHostWellKnownPort.HTTP.ToString();
+          MyInvocation.BoundParameters["CommonTCPPort"] = CommonTCPPort;
         }
 
         break;
       case "RemotePort":
-        MyInvocation.BoundParameters["Port"] = (int)port;
+        MyInvocation.BoundParameters["Port"] = (int)Port;
 
         break;
       case "CommonTCPPort":
-        MyInvocation.BoundParameters.Remove("CommonTCPPort");
-
         if (
           ushort.TryParse(
-            commonPort,
+            CommonTCPPort,
             out var parsedPortNumber
           )
         )
         {
-          MyInvocation.BoundParameters["Port"] = (int)parsedPortNumber;
+          CommonTCPPort = string.Empty;
+          MyInvocation.BoundParameters.Remove("CommonTCPPort");
+
+          Port = parsedPortNumber;
+          MyInvocation.BoundParameters["Port"] = (int)Port;
         }
         else if (
           System.Enum.TryParse(
-            commonPort,
+            CommonTCPPort,
             true,
             out TestHostWellKnownPort parsedPortEnum
           )
         )
         {
-          MyInvocation.BoundParameters["CommonTCPPort"] = parsedPortEnum.ToString();
+          CommonTCPPort = parsedPortEnum.ToString();
+          MyInvocation.BoundParameters["CommonTCPPort"] = CommonTCPPort;
         }
 
         break;
@@ -199,12 +196,12 @@ public sealed partial class TestHost() : WrappedCommand(
 
     if (
       string.IsNullOrEmpty(
-        name
+        ComputerName
       )
     )
     {
-      name = "google.com";
-      MyInvocation.BoundParameters["ComputerName"] = name;
+      ComputerName = "google.com";
+      MyInvocation.BoundParameters["ComputerName"] = ComputerName;
     }
   }
 }
