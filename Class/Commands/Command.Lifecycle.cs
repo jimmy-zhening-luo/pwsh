@@ -7,7 +7,6 @@ public abstract partial class CoreCommand
     NotStarted,
     Initialized,
     Processing,
-    Skipped,
     Stopped
   }
 }

@@ -47,157 +47,7 @@ public sealed class GetHelpOnline : CoreCommand
       : null;
   }
 
-  private protected sealed override bool ValidateParameters() => names.Length != 0
-    && (
-      names.Length != 1
-      || !string.IsNullOrEmpty(
-        names[0]
-      )
-    );
-
-  private protected sealed override void AfterEndProcessing()
-  {
-    var topic = string.Join(
-      '_',
-      names
-    );
-    var helpContent = GetHelpContent(
-      topic,
-      []
-    );
-
-    if (
-      helpContent is not null
-      && helpContent.Count != 1
-    )
-    {
-      helpContent = null;
-    }
-
-    List<System.Uri> helpLinks = [];
-
-    if (helpContent is not null)
-    {
-      var helpContentLinks = TryHelpLink(
-        helpContent
-      );
-
-      if (helpContentLinks is not null)
-      {
-        foreach (var helpLink in helpContentLinks)
-        {
-          helpLinks.Add(helpLink);
-        }
-      }
-
-      if (parameters.Length != 0)
-      {
-        var parameterHelpContent = GetHelpContent(
-          topic,
-          parameters
-        );
-
-        if (parameterHelpContent is not null)
-        {
-          helpContent = parameterHelpContent;
-        }
-      }
-
-      WriteObject(
-        helpContent,
-        true
-      );
-    }
-
-    if (helpLinks.Count != 0)
-    {
-      foreach (var helpLink in helpLinks)
-      {
-        WriteMessage(
-          helpLink.ToString()
-        );
-      }
-    }
-
-    if (!Client.Environment.Known.Variable.Ssh)
-    {
-      if (helpLinks.Count != 0)
-      {
-        foreach (var helpLink in helpLinks)
-        {
-          Client.Network.Url.Open(
-            helpLink
-          );
-        }
-      }
-      else if (helpContent is not null)
-      {
-        _ = GetHelpContent(
-          topic,
-          [],
-          true
-        );
-      }
-    }
-  }
-
-  private protected sealed override void DefaultAction() => WriteObject(
-    AddCommand(
-      "Get-Help"
-    )
-      .AddParameter(
-        "Name",
-        "Get-Help"
-      )
-      .Invoke(),
-    true
-  );
-
-  private Collection<PSObject> GetHelpContent(
-    string topic,
-    string[] parameters,
-    bool online = false
-  )
-  {
-    using var ps = PowerShellHost.Create(
-      true
-    );
-
-    AddCommand(
-      ps,
-      "Get-Help"
-    )
-      .AddParameter(
-        "Name",
-        topic
-      )
-      .AddParameter(
-        "ErrorAction",
-        ActionPreference.SilentlyContinue
-      )
-      .AddParameter(
-        "ProgressAction",
-        ActionPreference.SilentlyContinue
-      );
-
-    if (parameters.Length != 0)
-    {
-      ps.AddParameter(
-        "Parameter",
-        parameters
-      );
-    }
-    else if (online)
-    {
-      ps.AddParameter(
-        "Online"
-      );
-    }
-
-    return ps.Invoke();
-  }
-
-  private List<System.Uri>? TryHelpLink(
+  private static List<System.Uri>? TryHelpLink(
     Collection<PSObject> helpContent
   )
   {
@@ -257,5 +107,158 @@ public sealed class GetHelpOnline : CoreCommand
     {
       return null;
     }
+  }
+
+  private protected sealed override void AfterEndProcessing()
+  {
+    if (
+      names.Length > 1
+      || names.Length == 1
+      && !string.IsNullOrEmpty(
+        names[0]
+      )
+    )
+    {
+      var topic = string.Join(
+        '_',
+        names
+      );
+      var helpContent = GetHelpContent(
+        topic,
+        []
+      );
+
+      if (
+        helpContent is not null
+        && helpContent.Count != 1
+      )
+      {
+        helpContent = null;
+      }
+
+      List<System.Uri> helpLinks = [];
+
+      if (helpContent is not null)
+      {
+        var helpContentLinks = TryHelpLink(
+          helpContent
+        );
+
+        if (helpContentLinks is not null)
+        {
+          foreach (var helpLink in helpContentLinks)
+          {
+            helpLinks.Add(helpLink);
+          }
+        }
+
+        if (parameters.Length != 0)
+        {
+          var parameterHelpContent = GetHelpContent(
+            topic,
+            parameters
+          );
+
+          if (parameterHelpContent is not null)
+          {
+            helpContent = parameterHelpContent;
+          }
+        }
+
+        WriteObject(
+          helpContent,
+          true
+        );
+      }
+
+      if (helpLinks.Count != 0)
+      {
+        foreach (var helpLink in helpLinks)
+        {
+          WriteMessage(
+            helpLink.ToString()
+          );
+        }
+      }
+
+      if (!Client.Environment.Known.Variable.Ssh)
+      {
+        if (helpLinks.Count != 0)
+        {
+          foreach (var helpLink in helpLinks)
+          {
+            Client.Network.Url.Open(
+              helpLink
+            );
+          }
+        }
+        else if (helpContent is not null)
+        {
+          _ = GetHelpContent(
+            topic,
+            [],
+            true
+          );
+        }
+      }
+    }
+    else
+    {
+      WriteObject(
+        AddCommand(
+          "Get-Help"
+        )
+          .AddParameter(
+            "Name",
+            "Get-Help"
+          )
+          .Invoke(),
+        true
+      );
+    }
+  }
+
+  private Collection<PSObject> GetHelpContent(
+    string topic,
+    string[] parameters,
+    bool online = false
+  )
+  {
+    using var ps = PowerShellHost.Create(
+      true
+    );
+
+    AddCommand(
+      ps,
+      "Get-Help"
+    )
+      .AddParameter(
+        "Name",
+        topic
+      )
+      .AddParameter(
+        "ErrorAction",
+        ActionPreference.SilentlyContinue
+      )
+      .AddParameter(
+        "ProgressAction",
+        ActionPreference.SilentlyContinue
+      );
+
+    if (parameters.Length != 0)
+    {
+      ps.AddParameter(
+        "Parameter",
+        parameters
+      );
+    }
+    else if (online)
+    {
+      ps.AddParameter(
+        "Online"
+      );
+    }
+
+    return ps.Invoke();
   }
 }

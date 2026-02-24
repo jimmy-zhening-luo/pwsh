@@ -44,8 +44,7 @@ public abstract class TaskManager : CoreCommand
   }
   private System.Diagnostics.Process[] inputs = [];
 
-  private protected sealed override bool ValidateParameters() => ParameterSetName != "Name"
-    || names.Length != 0;
+  private protected bool descendant;
 
   private protected static void KillProcess(
     int pid,
@@ -75,13 +74,68 @@ public abstract class TaskManager : CoreCommand
     }
   }
 
-  private protected sealed override void DefaultAction()
+  private protected sealed override void AfterEndProcessing()
   {
-    if (ParameterSetName == "Name")
+    switch (ParameterSetName)
     {
-      KillProcesses(
-        "explorer"
-      );
+      case "Id":
+        foreach (var pid in Id)
+        {
+          KillProcess(
+            (int)pid,
+            descendant
+          );
+        }
+
+        break;
+      case "InputObject":
+        foreach (var input in InputObject)
+        {
+          KillProcess(
+            input.Id,
+            descendant
+          );
+        }
+
+        break;
+      case "Name":
+        if (names.Length == 0)
+        {
+          KillProcesses(
+            "explorer"
+          );
+        }
+        else
+        {
+          foreach (var name in Name)
+          {
+            if (string.IsNullOrEmpty(name))
+            {
+              continue;
+            }
+            else if (
+              int.TryParse(
+                name,
+                out int pid
+              )
+            )
+            {
+              KillProcess(
+                pid,
+                descendant
+              );
+            }
+            else
+            {
+              KillProcesses(
+                name,
+                descendant
+              );
+            }
+          }
+        }
+
+        break;
     }
   }
 }

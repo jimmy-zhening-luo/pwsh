@@ -61,20 +61,13 @@ public abstract partial class CoreCommand(
     {
       TransformParameters();
 
-      if (ValidateParameters())
-      {
-        BeforeBeginProcessing();
+      BeforeBeginProcessing();
 
-        stage = CommandLifecycle.Processing;
-      }
-      else
-      {
-        stage = CommandLifecycle.Skipped;
-      }
+      stage = CommandLifecycle.Processing;
     }
     else
     {
-      stage = CommandLifecycle.Stopped;
+      Stop();
     }
   }
 
@@ -88,18 +81,9 @@ public abstract partial class CoreCommand(
 
   protected sealed override void EndProcessing()
   {
-    if (stage == CommandLifecycle.NotStarted)
-    {
-      stage = CommandLifecycle.Skipped;
-    }
-
     if (ContinueProcessing)
     {
       AfterEndProcessing();
-    }
-    else if (stage == CommandLifecycle.Skipped)
-    {
-      DefaultAction();
     }
 
     StopProcessing();
@@ -107,12 +91,10 @@ public abstract partial class CoreCommand(
 
   protected sealed override void StopProcessing()
   {
-    stage = CommandLifecycle.Stopped;
+    Stop();
 
     Dispose();
   }
-
-  private protected virtual bool ValidateParameters() => true;
 
   private protected virtual void TransformParameters()
   { }
@@ -124,9 +106,6 @@ public abstract partial class CoreCommand(
   { }
 
   private protected virtual void AfterEndProcessing()
-  { }
-
-  private protected virtual void DefaultAction()
   { }
 
   private protected virtual void CleanResources()
@@ -293,6 +272,8 @@ public abstract partial class CoreCommand(
     return type.FullName
       ?? type.ToString();
   }
+
+  private void Stop() => stage = CommandLifecycle.Stopped;
 
   private void Dispose(
     bool disposing

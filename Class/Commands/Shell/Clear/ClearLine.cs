@@ -8,9 +8,7 @@ namespace Module.Commands.Shell.Clear;
 )]
 [Alias("cl", "clear")]
 [OutputType(typeof(void))]
-public sealed class ClearLine() : WrappedCommandShouldProcess(
-  "Clear-Content"
-)
+public sealed class ClearLine : CoreCommand
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -83,10 +81,37 @@ public sealed class ClearLine() : WrappedCommandShouldProcess(
   }
   private string stream = "";
 
-  private protected sealed override bool ValidateParameters() => ParameterSetName == "LiteralPath"
-    || !string.IsNullOrEmpty(
-      path
-    );
+  private protected sealed override void AfterEndProcessing()
+  {
+    if (
+      ParameterSetName == "Path"
+      && string.IsNullOrEmpty(
+        path
+      )
+    )
+    {
+      System.Console.Clear();
+    }
+    else
+    {
+      AddCommand(
+        "Clear-Content"
+      )
+        .AddParameters(
+          MyInvocation.BoundParameters
+        );
 
-  private protected sealed override void DefaultAction() => System.Console.Clear();
+      using var steppablePipeline = PS.GetSteppablePipeline();
+
+      steppablePipeline.Begin(
+        this
+      );
+
+      steppablePipeline.Process();
+
+      steppablePipeline.End();
+      steppablePipeline.Clean();
+      steppablePipeline.Dispose();
+    }
+  }
 }
