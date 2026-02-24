@@ -3,7 +3,7 @@ namespace Module.Tab.Completer;
 public sealed class Completer(
   IEnumerable<string> Domain,
   CompletionCase Casing,
-  bool Strict,
+  bool Strict
 ) : TabCompleter(
   Casing
 )
