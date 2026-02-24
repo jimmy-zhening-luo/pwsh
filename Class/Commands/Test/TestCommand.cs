@@ -46,14 +46,19 @@ public sealed class TestCommand : CoreCommand
   private protected sealed override void AfterEndProcessing()
   {
     WriteObject(
-      "The greeting was: "
-        + Greeting
+      string.Concat(
+        "The greeting was: ",
+        Greeting
+      )
     );
   }
 
   private string Greet(
     string name
-  ) => Greeting
-    + ", "
-    + name;
+  ) => string.Concat(
+    Greeting,
+    ", ",
+    name,
+    "!"
+  );
 }
