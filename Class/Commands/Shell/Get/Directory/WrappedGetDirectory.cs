@@ -4,7 +4,12 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   "Get-ChildItem"
 )
 {
-  public abstract string[] Path { get; set; } = [];
+  public abstract string[] Path
+  {
+    get;
+    set;
+  }
+  private protected string[] paths = [];
 
   [Parameter(
     ParameterSetName = "Items",
@@ -111,9 +116,9 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   {
     if (!UsingCurrentLocation)
     {
-      if (Path.Length == 0)
+      if (paths.Length == 0)
       {
-        Path = [
+        paths = [
           Reanchor()
         ];
       }
@@ -121,17 +126,17 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
       {
         for (
           int i = 0;
-          i < Path.Length;
+          i < paths.Length;
           i++
         )
         {
-          Path[i] = Reanchor(
-            Path[i]
+          paths[i] = Reanchor(
+            paths[i]
           );
         }
       }
 
-      MyInvocation.BoundParameters["Path"] = Path;
+      MyInvocation.BoundParameters["Path"] = paths;
     }
   }
 }
