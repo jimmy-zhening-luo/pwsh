@@ -60,7 +60,7 @@ public sealed class GetCommandAlias : CoreCommand
   }
   private string[] exclusions = [];
 
-  private protected sealed override void TransformParameters()
+  private protected sealed override void AfterEndProcessing()
   {
     HashSet<string> uniqueWildcardTerms = [];
     HashSet<string> uniqueExclusions = [];
@@ -103,10 +103,7 @@ public sealed class GetCommandAlias : CoreCommand
 
     definitions = [.. uniqueWildcardTerms];
     exclusions = [.. uniqueExclusions];
-  }
 
-  private protected sealed override void AfterEndProcessing()
-  {
     SortedDictionary<string, AliasInfo> commandAliasDictionary = [];
 
     AddCommand(
