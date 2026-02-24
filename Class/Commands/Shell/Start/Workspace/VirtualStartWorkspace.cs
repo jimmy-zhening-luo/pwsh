@@ -44,12 +44,12 @@ public abstract class VirtualStartWorkspace() : CoreCommand(
   }
   private bool reuseWindow;
 
-  private protected sealed override void TransformParameters() => path = UsingCurrentLocation
-    ? Pwd(path)
-    : Reanchor(path);
-
   private protected sealed override void AfterEndProcessing()
   {
+    path = UsingCurrentLocation
+      ? Pwd(path)
+      : Reanchor(path);
+
     var argumentList = new List<string>()
     {
       path
