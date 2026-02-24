@@ -89,7 +89,7 @@ public abstract partial class CoreCommand(
   {
     if (ContinueProcessing)
     {
-      steps++;
+      ++steps;
 
       WriteDebug(
         "<PROCESS:"
