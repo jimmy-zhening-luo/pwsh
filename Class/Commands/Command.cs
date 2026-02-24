@@ -52,6 +52,10 @@ public abstract partial class CoreCommand(
 
   protected sealed override void BeginProcessing()
   {
+    WriteDebug(
+      "<BEGIN>"
+    );
+
     if (stage == CommandLifecycle.NotStarted)
     {
       stage = CommandLifecycle.Initialized;
@@ -69,23 +73,42 @@ public abstract partial class CoreCommand(
     {
       Stop();
     }
+
+    WriteDebug(
+      "</BEGIN>"
+    );
   }
 
   protected sealed override void ProcessRecord()
   {
+    WriteDebug(
+      "<PROCESS>"
+    );
+
     if (ContinueProcessing)
     {
       ProcessRecordAction();
     }
+
+    WriteDebug(
+      "</PROCESS>"
+    );
   }
 
   protected sealed override void EndProcessing()
   {
+    WriteDebug(
+      "<END>"
+    );
+
     if (ContinueProcessing)
     {
       AfterEndProcessing();
     }
 
+    WriteDebug(
+      "</END>"
+    );
     StopProcessing();
   }
 
