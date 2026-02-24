@@ -18,9 +18,7 @@ public sealed class ClearLine : CoreCommand
   [PathCompletions]
   public string Path { get; set; } = string.Empty;
 
-  [Parameter(
-    Position = 1
-  )]
+  [Parameter]
   [SupportsWildcards]
   public string Filter { get; set; } = string.Empty;
 

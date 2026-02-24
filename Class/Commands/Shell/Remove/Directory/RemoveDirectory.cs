@@ -29,19 +29,4 @@ public sealed class RemoveDirectory : WrappedRemoveDirectory
   )]
   [Alias("PSPath", "LP")]
   public string[] LiteralPath { get; set; } = [];
-
-  [Parameter(
-    ParameterSetName = "Path",
-    Position = 1
-  )]
-  [Parameter(
-    ParameterSetName = "LiteralPath",
-    Position = 1
-  )]
-  [SupportsWildcards]
-  public override sealed string Filter
-  {
-    get => filter;
-    set => filter = value;
-  }
 }

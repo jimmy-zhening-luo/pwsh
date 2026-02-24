@@ -7,17 +7,9 @@ public abstract class WrappedGetFile() : WrappedCommand(
   public abstract string[] Path { get; set; }
   private protected string[] paths = [];
 
-  [Parameter(
-    ParameterSetName = "Path",
-    Position = 1
-  )]
+  [Parameter]
   [SupportsWildcards]
-  public virtual string Filter
-  {
-    get => filter;
-    set => filter = value;
-  }
-  private protected string filter = string.Empty;
+  public string Filter { get; set; } = string.Empty;
 
   [Parameter]
   [SupportsWildcards]

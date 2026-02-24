@@ -34,21 +34,6 @@ public sealed class GetDirectory : WrappedGetDirectory
   )]
   [Alias("PSPath", "LP")]
   public string[] LiteralPath { get; set; } = [];
-
-  [Parameter(
-    ParameterSetName = "Items",
-    Position = 1
-  )]
-  [Parameter(
-    ParameterSetName = "LiteralItems",
-    Position = 1
-  )]
-  [SupportsWildcards]
-  public override sealed string Filter
-  {
-    get => filter;
-    set => filter = value;
-  }
 }
 
 [Cmdlet(

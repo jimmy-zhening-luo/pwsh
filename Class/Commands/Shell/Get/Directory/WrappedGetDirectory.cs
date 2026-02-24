@@ -8,16 +8,10 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   private protected string[] paths = [];
 
   [Parameter(
-    ParameterSetName = "Items",
     Position = 1
   )]
   [SupportsWildcards]
-  public virtual string Filter
-  {
-    get => filter;
-    set => filter = value;
-  }
-  private protected string filter = string.Empty;
+  public string Filter { get; set; } = string.Empty;
 
   [Parameter]
   [SupportsWildcards]
