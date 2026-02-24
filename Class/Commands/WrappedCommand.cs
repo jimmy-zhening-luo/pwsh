@@ -2,7 +2,7 @@ namespace Module.Commands;
 
 public abstract class WrappedCommand(
   string WrappedCommandName,
-  bool SkipSsh = false,
+  bool SkipSsh = default,
   string PipelineInputParameterName = "",
   CommandTypes CommandType = CommandTypes.Cmdlet
 ) : CoreCommand(

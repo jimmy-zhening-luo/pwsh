@@ -1,7 +1,7 @@
 namespace Module.Commands;
 
 public abstract partial class CoreCommand(
-  bool SkipSsh = false
+  bool SkipSsh = default
 ) : PSCmdlet, System.IDisposable
 {
   private CommandLifecycle stage;

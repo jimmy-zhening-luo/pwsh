@@ -217,7 +217,7 @@ public sealed class GetHelpOnline : CoreCommand
   private Collection<PSObject> GetHelpContent(
     string topic,
     string[] parameters,
-    bool online = false
+    bool online = default
   )
   {
     using var ps = PowerShellHost.Create(

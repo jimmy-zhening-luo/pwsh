@@ -4,7 +4,7 @@ internal static class Canonicalizer
 {
   internal static string Canonicalize(
     string path,
-    bool preserveTrailingSeparator = false
+    bool preserveTrailingSeparator = default
   )
   {
     string normalPath = Client.FileSystem.PathString.Normalize(

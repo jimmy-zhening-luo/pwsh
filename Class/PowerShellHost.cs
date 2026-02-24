@@ -3,7 +3,7 @@ namespace Module;
 internal static class PowerShellHost
 {
   internal static PowerShell Create(
-    bool newRunspace = false
+    bool newRunspace = default
   ) => PowerShell.Create(
     newRunspace
       ? RunspaceMode.NewRunspace

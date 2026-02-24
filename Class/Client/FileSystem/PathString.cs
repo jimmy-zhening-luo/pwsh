@@ -4,7 +4,7 @@ internal static partial class PathString
 {
   internal static string Normalize(
     string path,
-    bool preserveTrailingSeparator = false
+    bool preserveTrailingSeparator = default
   )
   {
     string normalPath = TrimRelativePrefix(

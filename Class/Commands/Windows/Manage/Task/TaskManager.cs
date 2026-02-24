@@ -33,7 +33,7 @@ public abstract class TaskManager : CoreCommand
 
   private protected static void KillProcess(
     int pid,
-    bool entireProcessTree = false
+    bool entireProcessTree = default
   ) => System.Diagnostics.Process
     .GetProcessById(
       pid
@@ -44,7 +44,7 @@ public abstract class TaskManager : CoreCommand
 
   private protected static void KillProcesses(
     string name,
-    bool entireProcessTree = false
+    bool entireProcessTree = default
   )
   {
     foreach (
