@@ -37,21 +37,21 @@ public sealed class TestCommand : CoreCommand
           "Switch > Bound:IsPresent:",
           MyInvocation.BoundParameters.TryGetValue(
             "Switch",
-            out var boundSwitch
+            out var bound
           )
-            && (boundSwitch is not null)
-            ? (boundSwitch is SwitchParameter boundSwitchObject)
+            && bound is not null
+            ? (bound is SwitchParameter boundObject)
               ? string.Concat(
-                  boundSwitchObject.IsPresent.ToString(),
+                  boundObject.IsPresent.ToString(),
                   " | Bound:ToBool:",
-                  boundSwitchObject.ToBool().ToString()
+                  boundObject.ToBool().ToString()
                 )
-              : (boundSwitch is bool boundSwitchBool)
+              : (bound is bool boundBool)
                 ? string.Concat(
                     "(bool)",
-                    boundSwitchBool.ToString()
+                    boundBool.ToString()
                   )
-                : boundSwitch.GetType().ToString()
+                : bound.GetType().ToString()
             : "null",
           " | Local:IsPresent:",
           Switch.IsPresent.ToString(),
