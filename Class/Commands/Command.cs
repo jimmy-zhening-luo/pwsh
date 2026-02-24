@@ -65,7 +65,7 @@ public abstract partial class CoreCommand(
       stage = CommandLifecycle.Initialized;
     }
 
-    steps = 0;
+    steps = default;
 
     if (ContinueProcessing)
     {
