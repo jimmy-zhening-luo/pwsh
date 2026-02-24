@@ -29,7 +29,32 @@ public sealed class TestCommand : CoreCommand
   private bool switchParameter;
 
   private protected sealed override void BeforeBeginProcessing()
-  { }
+  {
+    WriteObject(
+      string.Join(
+        "",
+        [
+          "Switch > Bound:IsPresent:",
+          MyInvocation.BoundParameters.TryGetValue(
+            "Switch",
+            out SwitchParameter boundSwitch
+          )
+            ? string.Concat(
+                boundSwitch.IsPresent.ToString(),
+                " | Bound:ToBool:",
+                boundSwitch.ToBool().ToString()
+              )
+            : "null",
+          " | Local:IsPresent:",
+          Switch.IsPresent.ToString(),
+          " | Local:ToBool:",
+          Switch.ToBool().ToString(),
+          " | private:bool:",
+          switchParameter.ToString()
+        ]
+      )
+    );
+  }
 
   private protected sealed override void ProcessRecordAction()
   {
