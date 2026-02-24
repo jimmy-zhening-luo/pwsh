@@ -86,6 +86,9 @@ public abstract class WrappedGetFile() : WrappedCommand(
   private string stream = "";
 
   [Parameter]
+  [EnumCompletions(
+    typeof(Client.FileSystem.Encoding)
+  )]
   public string Encoding
   {
     get => encoding;
