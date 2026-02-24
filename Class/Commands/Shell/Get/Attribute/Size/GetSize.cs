@@ -82,7 +82,7 @@ public sealed partial class GetSize : CoreCommand
   }
   private bool number;
 
-  private protected sealed override void TransformParameters()
+  private protected sealed override void ProcessRecordAction()
   {
     if (paths.Length == 0)
     {
@@ -90,10 +90,7 @@ public sealed partial class GetSize : CoreCommand
         Pwd()
       ];
     }
-  }
 
-  private protected sealed override void ProcessRecordAction()
-  {
     var bits = (int)unit * 10;
     long factor = 1L << bits;
 
