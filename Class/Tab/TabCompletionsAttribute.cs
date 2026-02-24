@@ -11,6 +11,5 @@ public abstract class TabCompletionsAttribute<TCompleter>(
   private protected readonly CompletionCase Casing = casing;
 
   public abstract TCompleter Create();
-  IArgumentCompleter IArgumentCompleterFactory
-    .Create() => Create();
+  IArgumentCompleter IArgumentCompleterFactory.Create() => Create();
 }
