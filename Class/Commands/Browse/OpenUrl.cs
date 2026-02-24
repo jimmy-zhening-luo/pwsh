@@ -18,7 +18,7 @@ public sealed class OpenUrl() : CoreCommand(
     HelpMessage = "The file path or URL to open. Defaults to the current directory."
   )]
   [PathCompletions]
-  public string Path { get; set; }
+  public string Path { get; set; } = string.Empty;
 
   [Parameter(
     ParameterSetName = "Uri",
@@ -49,7 +49,7 @@ public sealed class OpenUrl() : CoreCommand(
     }
 
     string cleanPath = Client.FileSystem.PathString.Normalize(
-      path
+      Path
     );
     string target = string.Empty;
 
