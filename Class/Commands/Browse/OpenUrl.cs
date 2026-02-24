@@ -29,7 +29,7 @@ public sealed class OpenUrl() : CoreCommand(
     HelpMessage = "The URL(s) to open."
   )]
   [AllowEmptyCollection]
-  public System.Uri[] Uri { get; set; } = []
+  public System.Uri[] Uri { get; set; } = [];
 
   private protected sealed override void ProcessRecordAction()
   {
