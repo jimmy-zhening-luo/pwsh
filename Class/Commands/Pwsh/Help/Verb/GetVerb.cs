@@ -9,8 +9,6 @@ namespace Module.Commands.Pwsh.Help.Verb;
 [OutputType(typeof(string))]
 public sealed partial class GetVerb : CoreCommand
 {
-  private bool performSearch;
-
   [Parameter(
     Position = 0,
     HelpMessage = "Gets only the specified verbs. Enter the name of a verb or a name pattern. Wildcards are allowed."
@@ -19,12 +17,7 @@ public sealed partial class GetVerb : CoreCommand
   [Completions(
     ["*"]
   )]
-  public string[] Verb
-  {
-    get => verbs;
-    set => verbs = value;
-  }
-  private string[] verbs = [];
+  public string[] Verb { get; set; } = [];
 
   [Parameter(
     Position = 1,
@@ -33,19 +26,14 @@ public sealed partial class GetVerb : CoreCommand
   [EnumCompletions(
     typeof(VerbGroup)
   )]
-  public string[] Group
-  {
-    get => groups;
-    set => groups = value;
-  }
-  private string[] groups = [];
+  public string[] Group { get; set; } = [];
 
   private protected sealed override void AfterEndProcessing()
   {
     HashSet<string> uniqueWildcardTerms = [];
     HashSet<string> uniqueGroups = [];
 
-    foreach (var verb in verbs)
+    foreach (var verb in Verb)
     {
       if (!string.IsNullOrEmpty(verb))
       {
@@ -64,7 +52,7 @@ public sealed partial class GetVerb : CoreCommand
       }
     }
 
-    foreach (var group in groups)
+    foreach (var group in Group)
     {
       if (
         System.Enum.TryParse<VerbGroup>(
@@ -80,63 +68,14 @@ public sealed partial class GetVerb : CoreCommand
       }
     }
 
-    verbs = [.. uniqueWildcardTerms];
-    groups = [.. uniqueGroups];
+    Verb = [.. uniqueWildcardTerms];
+    Group = [.. uniqueGroups];
 
     if (
-      verbs.Length > 1
-      || verbs.Length == 1
-      && verbs[0] != "*"
+      Verb.Length == 0
+      || Verb.Length == 1
+      && Verb[0] == "*"
     )
-    {
-      performSearch = true;
-    }
-
-    if (performSearch)
-    {
-      SortedDictionary<string, VerbInfo> verbDictionary = [];
-
-      AddCommand(
-        "Get-Verb"
-      )
-        .AddParameter(
-          "Verb",
-          verbs
-        );
-
-      if (groups.Length != 0)
-      {
-        PS.AddParameter(
-          "Group",
-          groups
-        );
-      }
-
-      var verbObjects = PS.Invoke<VerbInfo>();
-
-      if (verbObjects != null)
-      {
-        foreach (var verbObject in verbObjects)
-        {
-          if (!verbDictionary.ContainsKey(verbObject.Verb))
-          {
-            verbDictionary.Add(
-              verbObject.Verb,
-              verbObject
-            );
-          }
-        }
-      }
-
-      if (verbDictionary.Count != 0)
-      {
-        WriteObject(
-          verbDictionary.Values,
-          true
-        );
-      }
-    }
-    else
     {
       AddCommand(
         "Get-Verb"
@@ -146,11 +85,11 @@ public sealed partial class GetVerb : CoreCommand
           "*"
         );
 
-      if (groups.Length != 0)
+      if (Group.Length != 0)
       {
         PS.AddParameter(
           "Group",
-          groups
+          Group
         );
       }
 
@@ -168,6 +107,54 @@ public sealed partial class GetVerb : CoreCommand
           .Invoke(),
         true
       );
+    }
+    else
+    {
+      SortedDictionary<string, VerbInfo> verbDictionary = [];
+
+      AddCommand(
+        "Get-Verb"
+      )
+        .AddParameter(
+          "Verb",
+          Verb
+        );
+
+      if (Group.Length != 0)
+      {
+        PS.AddParameter(
+          "Group",
+          Group
+        );
+      }
+
+      var verbObjects = PS.Invoke<VerbInfo>();
+
+      if (verbObjects != null)
+      {
+        foreach (var verbObject in verbObjects)
+        {
+          if (
+            !verbDictionary.ContainsKey(
+              verbObject.Verb
+            )
+          )
+          {
+            verbDictionary.Add(
+              verbObject.Verb,
+              verbObject
+            );
+          }
+        }
+      }
+
+      if (verbDictionary.Count != 0)
+      {
+        WriteObject(
+          verbDictionary.Values,
+          true
+        );
+      }
     }
   }
 }
