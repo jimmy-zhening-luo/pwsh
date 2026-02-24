@@ -19,10 +19,7 @@ public sealed class TestUrl : CoreCommand
   )]
   [AllowEmptyCollection]
   public System.Uri[] Uri
-  {
-    get;
-    set;
-  } = [];
+  { get; set; } = [];
 
   private protected sealed override void ProcessRecordAction()
   {

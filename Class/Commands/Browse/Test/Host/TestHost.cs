@@ -36,11 +36,7 @@ public sealed partial class TestHost() : WrappedCommand(
     "RemoteAddress",
     "cn"
   )]
-  public string ComputerName
-  {
-    get;
-    set;
-  } = "";
+  public string ComputerName { get; set; } = "";
 
   [Parameter(
     ParameterSetName = "CommonTCPPort",
@@ -50,11 +46,7 @@ public sealed partial class TestHost() : WrappedCommand(
   [EnumCompletions(
     typeof(TestHostWellKnownPort)
   )]
-  public string CommonTCPPort
-  {
-    get;
-    set;
-  } = "";
+  public string CommonTCPPort { get; set; } = "";
 
   [Parameter(
     ParameterSetName = "RemotePort",
@@ -62,11 +54,7 @@ public sealed partial class TestHost() : WrappedCommand(
   )]
   [Alias("RemotePort")]
   [ValidateRange(1, 65535)]
-  public ushort Port
-  {
-    get;
-    set;
-  }
+  public ushort Port { get; set; }
 
   [Parameter(
     ParameterSetName = "ICMP"
@@ -82,11 +70,7 @@ public sealed partial class TestHost() : WrappedCommand(
     ParameterSetName = "ICMP"
   )]
   [ValidateRange(1, 120)]
-  public int Hops
-  {
-    get;
-    set;
-  }
+  public int Hops { get; set; }
 
   [Parameter(
     ParameterSetName = "NetRouteDiagnostics",
@@ -102,30 +86,18 @@ public sealed partial class TestHost() : WrappedCommand(
   [Parameter(
     ParameterSetName = "NetRouteDiagnostics"
   )]
-  public string ConstrainSourceAddress
-  {
-    get;
-    set;
-  } = "";
+  public string ConstrainSourceAddress { get; set; } = "";
 
   [Parameter(
     ParameterSetName = "NetRouteDiagnostics"
   )]
-  public uint ConstrainInterface
-  {
-    get;
-    set;
-  }
+  public uint ConstrainInterface { get; set; }
 
   [Parameter]
   [EnumCompletions(
     typeof(TestHostVerbosity)
   )]
-  public TestHostVerbosity InformationLevel
-  {
-    get;
-    set;
-  }
+  public TestHostVerbosity InformationLevel { get; set; }
 
   [Parameter]
   public SwitchParameter Detailed
