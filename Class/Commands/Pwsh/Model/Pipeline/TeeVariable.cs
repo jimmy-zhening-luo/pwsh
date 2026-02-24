@@ -1,7 +1,7 @@
 namespace Module.Commands.Pwsh.Model.Pipeline;
 
 [Cmdlet(
-  VerbsCommon.Set,
+  "Tee",
   "Variable",
   DefaultParameterSetName = "Variable",
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097034"
