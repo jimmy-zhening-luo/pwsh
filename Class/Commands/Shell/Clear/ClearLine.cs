@@ -16,53 +16,28 @@ public sealed class ClearLine : CoreCommand
   )]
   [SupportsWildcards]
   [PathCompletions]
-  public string Path
-  {
-    get => path;
-    set => path = value;
-  }
-  private string path = string.Empty;
+  public string Path { get; set; } = string.Empty;
 
   [Parameter(
     Position = 1
   )]
   [SupportsWildcards]
-  public string Filter
-  {
-    get => filter;
-    set => filter = value;
-  }
-  private string filter = string.Empty;
+  public string Filter { get; set; } = string.Empty;
 
   [Parameter(
     ParameterSetName = "LiteralPath",
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  public string[] LiteralPath
-  {
-    get => literalPaths;
-    set => literalPaths = value;
-  }
-  private string[] literalPaths = [];
+  public string[] LiteralPath { get; set; } = [];
 
   [Parameter]
   [SupportsWildcards]
-  public string[] Include
-  {
-    get => inclusions;
-    set => inclusions = value;
-  }
-  private string[] inclusions = [];
+  public string[] Include { get; set; } = [];
 
   [Parameter]
   [SupportsWildcards]
-  public string[] Exclude
-  {
-    get => exclusions;
-    set => exclusions = value;
-  }
-  private string[] exclusions = [];
+  public string[] Exclude { get; set; } = [];
 
   [Parameter]
   [Alias("f")]
@@ -74,19 +49,14 @@ public sealed class ClearLine : CoreCommand
   private bool force;
 
   [Parameter]
-  public string Stream
-  {
-    get => stream;
-    set => stream = value;
-  }
-  private string stream = string.Empty;
+  public string Stream { get; set; } = string.Empty;
 
   private protected sealed override void AfterEndProcessing()
   {
     if (
       ParameterSetName == "Path"
       && string.IsNullOrEmpty(
-        path
+        Path
       )
     )
     {
