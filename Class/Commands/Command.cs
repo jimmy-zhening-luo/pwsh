@@ -134,12 +134,6 @@ public abstract partial class CoreCommand(
   private protected virtual void CleanResources()
   { }
 
-  private protected bool IsPresent(
-    string parameterName
-  ) => BoundParameters.ContainsKey(
-    parameterName
-  );
-
   private protected CommandInfo GetCommand(
     string command,
     CommandTypes commandType = CommandTypes.Cmdlet
