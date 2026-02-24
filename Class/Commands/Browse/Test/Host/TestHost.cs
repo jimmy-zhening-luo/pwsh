@@ -53,7 +53,7 @@ public sealed partial class TestHost() : WrappedCommand(
   public string CommonTCPPort
   {
     get => commonPort;
-    set => commonPort;
+    set => commonPort = value;
   }
   private string commonPort = "";
 
