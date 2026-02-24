@@ -15,10 +15,10 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   public string Filter {
     get => filter;
     set => filter = value.Contains(
-        '*'
-      )
+      '*'
+    )
       ? value
-      : value
+      : value + "*";
   }
   private string filter = string.Empty;
 
