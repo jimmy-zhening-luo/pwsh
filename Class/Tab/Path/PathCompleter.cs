@@ -107,11 +107,11 @@ public sealed class PathCompleter(
       location = Root;
     }
 
-    int count = 0;
+    int count = default;
     filter += "*";
     var attributes = new System.IO.EnumerationOptions()
     {
-      IgnoreInaccessible = false
+      IgnoreInaccessible = default
     };
 
     if (Hidden)

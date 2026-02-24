@@ -36,9 +36,9 @@ public abstract class WrappedStartExplorer() : WrappedCommandShouldProcess(
       if (!UsingCurrentLocation)
       {
         for (
-          int i = 0;
+          int i = default;
           i < paths.Length;
-          i++
+          ++i
         )
         {
           paths[i] = Reanchor(

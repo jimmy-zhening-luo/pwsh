@@ -2,7 +2,7 @@ namespace Module.Tab.Completer;
 
 public class CompletionsAttribute(
   string[] Domain,
-  CompletionCase Casing = CompletionCase.Preserve
+  CompletionCase Casing = default
 ) : CompletionsAttribute<string[]>(
   Domain,
   Casing

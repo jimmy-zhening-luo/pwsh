@@ -33,7 +33,9 @@ public sealed class GetTypeAccelerator : Cmdlet
 
       foreach (var type in typeAccelerators.Keys)
       {
-        _ = uniqueTypes.Add(type.ToString()!);
+        _ = uniqueTypes.Add(
+          type.ToString()!
+        );
       }
 
       WriteObject(

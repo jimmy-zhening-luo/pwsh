@@ -91,9 +91,9 @@ public abstract class WrappedGetFile() : WrappedCommand(
       else
       {
         for (
-          int i = 0;
+          int i = default;
           i < paths.Length;
-          i++
+          ++i
         )
         {
           paths[i] = Reanchor(

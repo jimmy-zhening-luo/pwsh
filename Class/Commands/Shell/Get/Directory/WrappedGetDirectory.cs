@@ -146,9 +146,9 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
       else
       {
         for (
-          int i = 0;
+          int i = default;
           i < paths.Length;
-          i++
+          ++i
         )
         {
           paths[i] = Reanchor(
