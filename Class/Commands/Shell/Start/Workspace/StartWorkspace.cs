@@ -145,5 +145,5 @@ public sealed class StartWorkspaceDrive : VirtualStartWorkspace
     set => path = value;
   }
 
-  private protected sealed override string Location => Drive();
+  private protected sealed override string Location => CurrentDrive();
 }

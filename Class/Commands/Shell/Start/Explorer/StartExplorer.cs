@@ -164,5 +164,5 @@ public sealed class StartExplorerDrive : WrappedStartExplorer
     set => paths = value;
   }
 
-  private protected sealed override string Location => Drive();
+  private protected sealed override string Location => CurrentDrive();
 }

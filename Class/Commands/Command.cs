@@ -180,7 +180,7 @@ public abstract partial class CoreCommand(
     SessionState.Path.CurrentLocation.Path
   );
 
-  private protected string Drive(
+  private protected string CurrentDrive(
     string subpath = ""
   ) => System.IO.Path.GetFullPath(
     Client.FileSystem.PathString.Normalize(

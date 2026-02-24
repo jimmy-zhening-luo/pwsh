@@ -264,5 +264,5 @@ public sealed class SetDrive : WrappedSetDirectory
     set => path = value;
   }
 
-  private protected sealed override string Location => Drive();
+  private protected sealed override string Location => CurrentDrive();
 }
