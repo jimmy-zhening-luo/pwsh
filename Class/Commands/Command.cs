@@ -6,6 +6,8 @@ public abstract partial class CoreCommand(
 {
   private CommandLifecycle stage;
 
+  private uint steps;
+
   private bool disposed;
 
   ~CoreCommand()
@@ -61,6 +63,8 @@ public abstract partial class CoreCommand(
       stage = CommandLifecycle.Initialized;
     }
 
+    steps = 0;
+
     if (ContinueProcessing)
     {
       TransformParameters();
@@ -81,18 +85,24 @@ public abstract partial class CoreCommand(
 
   protected sealed override void ProcessRecord()
   {
-    WriteDebug(
-      "<PROCESS>"
-    );
-
     if (ContinueProcessing)
     {
-      ProcessRecordAction();
-    }
+      steps++;
 
-    WriteDebug(
-      "</PROCESS>"
-    );
+      WriteDebug(
+        "<PROCESS:"
+          + steps.ToString()
+          + ">"
+      );
+
+      ProcessRecordAction();
+
+      WriteDebug(
+        "</PROCESS:"
+          + steps.ToString()
+          + ">"
+      );
+    }
   }
 
   protected sealed override void EndProcessing()
