@@ -6,7 +6,7 @@ public sealed class PathCompleter(
   bool Flat,
   bool Hidden,
   bool Reanchor
-) : TabCompleter()
+) : TabCompleter
 {
   private protected sealed override IEnumerable<string> FulfillCompletion(
     string wordToComplete

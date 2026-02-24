@@ -4,7 +4,7 @@ public class PathCompletionsAttribute(
   string Location,
   PathItemType ItemType,
   bool Flat
-) : TabCompletionsAttribute<PathCompleter>()
+) : TabCompletionsAttribute<PathCompleter>
 {
   public PathCompletionsAttribute() : this(
     string.Empty
