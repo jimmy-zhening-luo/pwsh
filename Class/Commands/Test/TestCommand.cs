@@ -9,9 +9,16 @@ namespace Module.Commands.Test;
 public sealed class TestCommand : CoreCommand
 {
   [Parameter(
-    Position = 0
+    Position = 0,
+    AllowValueFromPipeline = true
   )]
-  public string Name { get; set; } = "Hello, World";
+  public string[] Name { get; set; } = [];
+
+  [Parameter(
+    Position = 1
+  )]
+  [ValidateNotNullOrWhiteSpace]
+  public string Greeting { get; set; } = "Hello";
 
   [Parameter]
   public SwitchParameter Switch
@@ -25,12 +32,28 @@ public sealed class TestCommand : CoreCommand
   { }
 
   private protected sealed override void ProcessRecordAction()
-  { }
+  {
+    foreach (var name in Name)
+    {
+      WriteObject(
+        Greet(
+          name
+        )
+      );
+    }
+  }
 
   private protected sealed override void AfterEndProcessing()
   {
     WriteObject(
-      Name
+      "The greeting was: "
+        + Greeting
     );
   }
+
+  private string Greet(
+    string name
+  ) => Greeting
+    + ", "
+    + name;
 }
