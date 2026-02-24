@@ -21,6 +21,12 @@ public sealed class TestCommand : CoreCommand
   }
   private bool switchParameter;
 
+  private protected sealed override void BeforeBeginProcessing()
+  { }
+
+  private protected sealed override void ProcessRecordAction()
+  { }
+
   private protected sealed override void AfterEndProcessing()
   {
     WriteObject(
