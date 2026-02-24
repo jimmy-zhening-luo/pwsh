@@ -4,42 +4,22 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   "Get-ChildItem"
 )
 {
-  public abstract string[] Path
-  {
-    get;
-    set;
-  }
-  private protected string[] paths = [];
+  public abstract string[] Path { get; set; } = [];
 
   [Parameter(
     ParameterSetName = "Items",
     Position = 1
   )]
   [SupportsWildcards]
-  public virtual string Filter
-  {
-    get => filter;
-    set => filter = value;
-  }
-  private protected string filter = string.Empty;
+  public virtual string Filter { get; set; } = string.Empty;
 
   [Parameter]
   [SupportsWildcards]
-  public string[] Include
-  {
-    get => inclusions;
-    set => inclusions = value;
-  }
-  private string[] inclusions = [];
+  public string[] Include { get; set; } = [];
 
   [Parameter]
   [SupportsWildcards]
-  public string[] Exclude
-  {
-    get => exclusions;
-    set => exclusions = value;
-  }
-  private string[] exclusions = [];
+  public string[] Exclude { get; set; } = [];
 
   [Parameter]
   [Alias("s", "r")]
@@ -131,9 +111,9 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   {
     if (!UsingCurrentLocation)
     {
-      if (paths.Length == 0)
+      if (Path.Length == 0)
       {
-        paths = [
+        Path = [
           Reanchor()
         ];
       }
@@ -141,17 +121,17 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
       {
         for (
           int i = 0;
-          i < paths.Length;
+          i < Path.Length;
           i++
         )
         {
-          paths[i] = Reanchor(
-            paths[i]
+          Path[i] = Reanchor(
+            Path[i]
           );
         }
       }
 
-      MyInvocation.BoundParameters["Path"] = paths;
+      MyInvocation.BoundParameters["Path"] = Path;
     }
   }
 }
