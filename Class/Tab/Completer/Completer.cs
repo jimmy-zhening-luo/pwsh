@@ -26,7 +26,8 @@ public sealed class Completer(
       yield break;
     }
 
-    int count;
+    int count = default;
+
     foreach (var member in Domain)
     {
       if (
