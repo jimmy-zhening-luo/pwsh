@@ -15,13 +15,11 @@ public sealed class NewDirectory() : WrappedCommandShouldProcess(
   [Parameter(
     ParameterSetName = "pathSet",
     Mandatory = true,
-    Position = 0,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [Parameter(
     ParameterSetName = "nameSet",
-    Position = 0,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [PathCompletions]
   public string[] Path
@@ -33,8 +31,7 @@ public sealed class NewDirectory() : WrappedCommandShouldProcess(
 
   [Parameter(
     ParameterSetName = "nameSet",
-    Mandatory = true,
-    ValueFromPipelineByPropertyName = true
+    Mandatory = true
   )]
   public string Name
   {
@@ -43,10 +40,7 @@ public sealed class NewDirectory() : WrappedCommandShouldProcess(
   }
   private string name = "";
 
-  [Parameter(
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true
-  )]
+  [Parameter]
   [Alias("Target")]
   [PathCompletions]
   public object Value

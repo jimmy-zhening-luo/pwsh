@@ -15,8 +15,7 @@ public sealed class NewJunction() : WrappedCommandShouldProcess(
   [Parameter(
     ParameterSetName = "pathSet",
     Mandatory = true,
-    Position = 0,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [PathCompletions]
   public string[] Path
@@ -28,9 +27,7 @@ public sealed class NewJunction() : WrappedCommandShouldProcess(
 
   [Parameter(
     Mandatory = true,
-    Position = 1,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true
+    Position = 1
   )]
   [Alias("Target")]
   [PathCompletions]

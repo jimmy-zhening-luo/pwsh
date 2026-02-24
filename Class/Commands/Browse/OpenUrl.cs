@@ -29,8 +29,6 @@ public sealed class OpenUrl() : CoreCommand(
     ParameterSetName = "Uri",
     Mandatory = true,
     Position = 0,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true,
     HelpMessage = "The URL(s) to open."
   )]
   [AllowEmptyCollection]

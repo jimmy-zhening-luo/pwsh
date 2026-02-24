@@ -17,27 +17,19 @@ public sealed partial class TestHost() : WrappedCommand(
 {
   [Parameter(
     ParameterSetName = "ICMP",
-    Position = 0,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [Parameter(
     ParameterSetName = "CommonTCPPort",
-    Position = 0,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [Parameter(
     ParameterSetName = "RemotePort",
-    Position = 0,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [Parameter(
     ParameterSetName = "NetRouteDiagnostics",
-    Position = 0,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true
+    Position = 0
   )]
   [Alias(
     "Name",
@@ -68,8 +60,7 @@ public sealed partial class TestHost() : WrappedCommand(
 
   [Parameter(
     ParameterSetName = "RemotePort",
-    Mandatory = true,
-    ValueFromPipelineByPropertyName = true
+    Mandatory = true
   )]
   [Alias("RemotePort")]
   [ValidateRange(1, 65535)]

@@ -7,7 +7,6 @@ public abstract class TaskManager : CoreCommand
   [Parameter(
     ParameterSetName = "Name",
     Position = 0,
-    ValueFromPipelineByPropertyName = true,
     HelpMessage = "The name(s) of the process to stop."
   )]
   [SupportsWildcards]
@@ -23,7 +22,6 @@ public abstract class TaskManager : CoreCommand
     ParameterSetName = "Id",
     Mandatory = true,
     Position = 0,
-    ValueFromPipelineByPropertyName = true,
     HelpMessage = "The process ID(s) of the process to stop."
   )]
   public uint[] Id
@@ -37,7 +35,6 @@ public abstract class TaskManager : CoreCommand
     ParameterSetName = "InputObject",
     Mandatory = true,
     Position = 0,
-    ValueFromPipeline = true,
     HelpMessage = "The Process object(s) to stop."
   )]
   public System.Diagnostics.Process[] InputObject
