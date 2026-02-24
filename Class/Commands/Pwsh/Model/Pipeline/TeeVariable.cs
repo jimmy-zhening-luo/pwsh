@@ -25,8 +25,7 @@ public sealed class TeeVariable() : WrappedCommand(
   [Parameter(
     ParameterSetName = "Variable",
     Mandatory = true,
-    Position = 0,
-    ValueFromPipeline = true
+    Position = 0
   )]
   public string Variable
   {
