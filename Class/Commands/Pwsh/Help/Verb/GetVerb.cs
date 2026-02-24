@@ -40,7 +40,7 @@ public sealed partial class GetVerb : CoreCommand
   }
   private string[] groups = [];
 
-  private protected sealed override void TransformParameters()
+  private protected sealed override void AfterEndProcessing()
   {
     HashSet<string> uniqueWildcardTerms = [];
     HashSet<string> uniqueGroups = [];
@@ -91,10 +91,7 @@ public sealed partial class GetVerb : CoreCommand
     {
       performSearch = true;
     }
-  }
 
-  private protected sealed override void AfterEndProcessing()
-  {
     if (performSearch)
     {
       SortedDictionary<string, VerbInfo> verbDictionary = [];
