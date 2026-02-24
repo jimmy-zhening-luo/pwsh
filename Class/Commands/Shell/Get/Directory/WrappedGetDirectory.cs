@@ -11,7 +11,16 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
     Position = 1
   )]
   [SupportsWildcards]
-  public string Filter { get; set; } = string.Empty;
+  [ValidateNotNullOrEmpty]
+  public string Filter {
+    get => filter;
+    set => filter = value.Contains(
+        '*'
+      )
+      ? value
+      : value
+  }
+  private string filter = string.Empty;
 
   [Parameter]
   [SupportsWildcards]
