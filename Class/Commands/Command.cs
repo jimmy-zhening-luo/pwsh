@@ -28,6 +28,8 @@ public abstract partial class CoreCommand(
       LocationSubpath
     );
 
+  private protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
+
   private protected PowerShell PS => powershell ??= PowerShellHost.Create();
   private PowerShell? powershell;
 

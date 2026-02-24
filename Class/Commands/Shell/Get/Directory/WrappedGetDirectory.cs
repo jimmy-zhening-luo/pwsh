@@ -14,11 +14,29 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   [ValidateNotNullOrEmpty]
   public string Filter {
     get => filter;
-    set => filter = value.Contains(
-      '*'
-    )
-      ? value
-      : value + "*";
+    set
+    {
+      filter = value.Contains(
+        '*'
+      )
+        ? value
+        : value + "*";
+
+      if (
+        string.IsNullOrEmpty(
+          filter
+        )
+      )
+      {
+        MyInvocation.BoundParameters.Remove(
+          "Filter"
+        );
+      }
+      else
+      {
+        MyInvocation.BoundParameters["Filter"] = filter;
+      }
+    }
   }
   private string filter = string.Empty;
 

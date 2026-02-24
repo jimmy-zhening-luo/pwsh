@@ -46,18 +46,36 @@ public abstract class WrappedGetFile() : WrappedCommand(
   public string Encoding
   {
     get => encoding;
-    set => encoding = int.TryParse(
-      value,
-      out var parsedInt
-    )
-      ? parsedInt.ToString()
-      : System.Enum.TryParse<Client.FileSystem.Encoding>(
-          value,
-          true,
-          out var parsedEnum
+    set
+    {
+      encoding = int.TryParse(
+        value,
+        out var parsedInt
+      )
+        ? parsedInt.ToString()
+        : System.Enum.TryParse<Client.FileSystem.Encoding>(
+            value,
+            true,
+            out var parsedEnum
+          )
+            ? parsedEnum.ToString()
+            : value;
+
+      if (
+        string.IsNullOrEmpty(
+          encoding
         )
-          ? parsedEnum.ToString()
-          : value;
+      )
+      {
+        MyInvocation.BoundParameters.Remove(
+          "Encoding"
+        );
+      }
+      else
+      {
+        MyInvocation.BoundParameters["Encoding"] = encoding;
+      }
+    }
   }
   private string encoding = string.Empty;
 
