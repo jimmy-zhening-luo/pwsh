@@ -1,7 +1,7 @@
 namespace Module.Tab.Completer;
 
 public class CompletionsAttribute(
-  System.Type Domain,
+  string[] Domain,
   CompletionCase Casing = CompletionCase.Lower,
   bool Strict = false
 ) : CompletionsAttributePrototype<string[]>(
