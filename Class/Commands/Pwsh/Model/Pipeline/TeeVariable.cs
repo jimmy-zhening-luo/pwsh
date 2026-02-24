@@ -24,36 +24,21 @@ public sealed class TeeVariable() : WrappedCommand(
     Mandatory = true,
     Position = 0
   )]
-  public string Variable
-  {
-    get => variable;
-    set => variable = value;
-  }
-  private string variable = string.Empty;
+  public string Variable { get; set; } = string.Empty;
 
   [Parameter(
     ParameterSetName = "File",
     Mandatory = true
   )]
   [Alias("Path")]
-  public string FilePath
-  {
-    get => path;
-    set => path = value;
-  }
-  private string path = string.Empty;
+  public string FilePath { get; set; } = string.Empty;
 
   [Parameter(
     ParameterSetName = "LiteralFile",
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  public string LiteralPath
-  {
-    get => literalPath;
-    set => literalPath = value;
-  }
-  private string literalPath = string.Empty;
+  public string LiteralPath { get; set; } = string.Empty;
 
   [Parameter(
     ParameterSetName = "File"
