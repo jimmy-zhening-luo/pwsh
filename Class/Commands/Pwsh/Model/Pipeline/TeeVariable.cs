@@ -15,12 +15,7 @@ public sealed class TeeVariable() : WrappedCommand(
   [Parameter(
     ValueFromPipeline = true
   )]
-  public object InputObject
-  {
-    get => inputObject ?? "";
-    set => inputObject = value;
-  }
-  private object? inputObject;
+  public required object InputObject;
 
   [Parameter(
     ParameterSetName = "Variable",
