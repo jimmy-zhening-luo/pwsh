@@ -4,11 +4,7 @@ public abstract class WrappedRemoveDirectory() : WrappedCommandShouldProcess(
   "Remove-Item"
 )
 {
-  public abstract string[] Path
-  {
-    get;
-    set;
-  }
+  public abstract string[] Path { get; set; }
   private protected string[] paths = [];
 
   [Parameter(
@@ -25,21 +21,11 @@ public abstract class WrappedRemoveDirectory() : WrappedCommandShouldProcess(
 
   [Parameter]
   [SupportsWildcards]
-  public string[] Include
-  {
-    get => inclusions;
-    set => inclusions = value;
-  }
-  private string[] inclusions = [];
+  public string[] Include { get; set; } = [];
 
   [Parameter]
   [SupportsWildcards]
-  public string[] Exclude
-  {
-    get => exclusions;
-    set => exclusions = value;
-  }
-  private string[] exclusions = [];
+  public string[] Exclude { get; set; } = [];
 
   private protected sealed override void TransformParameters()
   {

@@ -14,30 +14,15 @@ public abstract class WrappedStartExplorer() : WrappedCommandShouldProcess(
 
   [Parameter]
   [SupportsWildcards]
-  public string Filter
-  {
-    get => filter;
-    set => filter = value;
-  }
-  private string filter = string.Empty;
+  public string Filter { get; set; } = string.Empty;
 
   [Parameter]
   [SupportsWildcards]
-  public string[] Include
-  {
-    get => inclusions;
-    set => inclusions = value;
-  }
-  private string[] inclusions = [];
+  public string[] Include { get; set; } = [];
 
   [Parameter]
   [SupportsWildcards]
-  public string[] Exclude
-  {
-    get => exclusions;
-    set => exclusions = value;
-  }
-  private string[] exclusions = [];
+  public string[] Exclude { get; set; } = [];
 
   private protected sealed override void TransformParameters()
   {

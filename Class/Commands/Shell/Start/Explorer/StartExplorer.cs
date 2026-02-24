@@ -27,12 +27,7 @@ public sealed class StartExplorer : WrappedStartExplorer
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  public string[] LiteralPath
-  {
-    get => literalPaths;
-    set => literalPaths = value;
-  }
-  private string[] literalPaths = [];
+  public string[] LiteralPath { get; set; } = [];
 }
 
 [Cmdlet(

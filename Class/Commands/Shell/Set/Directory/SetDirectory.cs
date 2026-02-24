@@ -33,22 +33,12 @@ public sealed class SetDirectory : WrappedSetDirectory
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  public string LiteralPath
-  {
-    get => literalPath;
-    set => literalPath = value;
-  }
-  private string literalPath = string.Empty;
+  public string LiteralPath { get; set; } = string.Empty;
 
   [Parameter(
     ParameterSetName = "Stack"
   )]
-  public string Stack
-  {
-    get => stack;
-    set => stack = value;
-  }
-  private string stack = string.Empty;
+  public string Stack { get; set; } = string.Empty;
 
   [Parameter(
     ParameterSetName = "DriveC"
@@ -100,16 +90,19 @@ public sealed class SetDirectory : WrappedSetDirectory
 
         break;
       case "DriveC":
+        driveC = false;
         MyInvocation.BoundParameters.Remove("C");
         path = "C:";
 
         break;
       case "DriveD":
+        driveD = false;
         MyInvocation.BoundParameters.Remove("D");
         path = "D:";
 
         break;
       case "DriveE":
+        driveE = false;
         MyInvocation.BoundParameters.Remove("E");
         path = "E:";
 

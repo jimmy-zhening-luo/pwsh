@@ -9,24 +9,14 @@ public abstract class VirtualStartWorkspace() : CoreCommand(
   [Parameter(
     Position = 1
   )]
-  public string Name
-  {
-    get => profileName;
-    set => profileName = value;
-  }
-  private string profileName = string.Empty;
+  public string Name { get; set; } = string.Empty;
 
   [Parameter(
     Position = 2,
     ValueFromRemainingArguments = true,
     DontShow = true
   )]
-  public string[] Argument
-  {
-    get => arguments;
-    set => arguments = value;
-  }
-  private string[] arguments = [];
+  public string[] Argument { get; set; } = [];
 
   [Parameter]
   public SwitchParameter Window
@@ -47,27 +37,37 @@ public abstract class VirtualStartWorkspace() : CoreCommand(
   private protected sealed override void AfterEndProcessing()
   {
     path = UsingCurrentLocation
-      ? Pwd(path)
-      : Reanchor(path);
+      ? Pwd(
+          path
+        )
+      : Reanchor(
+          path
+        );
 
     var argumentList = new List<string>()
     {
       path
     };
 
-    if (!string.IsNullOrEmpty(profileName))
+    if (
+      !string.IsNullOrEmpty(
+        Name
+      )
+    )
     {
       if (
-        profileName.StartsWith("--")
+        Name.StartsWith(
+          "--"
+        )
       )
       {
         argumentList.Add(
-          profileName
+          Name
         );
       }
       else
       {
-        if (profileName == "se")
+        if (Name == "se")
         {
           argumentList.Add(
             "--profile=Setting"
@@ -95,10 +95,10 @@ public abstract class VirtualStartWorkspace() : CoreCommand(
       );
     }
 
-    if (arguments.Length != 0)
+    if (Argument.Length != 0)
     {
       argumentList.AddRange(
-        arguments
+        Argument
       );
     }
 
