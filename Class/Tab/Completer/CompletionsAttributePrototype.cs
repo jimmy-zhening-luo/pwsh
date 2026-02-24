@@ -2,8 +2,8 @@ namespace Module.Tab.Completer;
 
 public abstract class CompletionsAttributePrototype<TDomain>(
   TDomain Domain,
-  CompletionCase Casing = CompletionCase.Preserve,
-  bool Strict = false
+  CompletionCase Casing,
+  bool Strict
 ) : TabCompletionsAttribute<Completer>(
   Casing
 )
