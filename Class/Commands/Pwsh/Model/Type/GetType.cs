@@ -14,16 +14,11 @@ public sealed class GetType : CoreCommand
     ValueFromPipeline = true,
     HelpMessage = "The object whose type to check"
   )]
-  public object InputObject
-  {
-    get => inputObject ?? "";
-    set => inputObject = value;
-  }
-  private object? inputObject;
+  public required object InputObject;
 
   private protected sealed override void ProcessRecordAction()
   {
-    if (inputObject is null)
+    if (InputObject is null)
     {
       Throw(
         new System.ArgumentException(
@@ -31,11 +26,11 @@ public sealed class GetType : CoreCommand
           nameof(InputObject)
         ),
         ErrorCategory.InvalidArgument,
-        inputObject
+        InputObject
       );
     }
 
-    if (inputObject is PSObject inputPsObject)
+    if (InputObject is PSObject inputPsObject)
     {
       WriteObject(
         inputPsObject
@@ -46,7 +41,7 @@ public sealed class GetType : CoreCommand
     else
     {
       WriteObject(
-        inputObject.GetType()
+        InputObject.GetType()
       );
     }
   }
