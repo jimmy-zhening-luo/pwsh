@@ -122,5 +122,6 @@
     'galc'
     'types'
     'ty'
+    'typeof'
   )
 }

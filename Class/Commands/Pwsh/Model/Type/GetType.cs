@@ -4,7 +4,7 @@ namespace Module.Commands.Pwsh.Model.Type;
   VerbsCommon.Get,
   "Type"
 )]
-[Alias("ty")]
+[Alias("ty", "typeof")]
 [OutputType(typeof(System.Reflection.TypeInfo))]
 public sealed class GetType : CoreCommand
 {
