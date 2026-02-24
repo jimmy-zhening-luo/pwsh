@@ -69,8 +69,6 @@ public abstract partial class CoreCommand(
 
     if (ContinueProcessing)
     {
-      TransformParameters();
-
       BeforeBeginProcessing();
 
       stage = CommandLifecycle.Processing;
@@ -130,9 +128,6 @@ public abstract partial class CoreCommand(
 
     Dispose();
   }
-
-  private protected virtual void TransformParameters()
-  { }
 
   private protected virtual void BeforeBeginProcessing()
   { }

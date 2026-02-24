@@ -78,7 +78,7 @@ public abstract class WrappedGetFile() : WrappedCommand(
   }
   private bool wait;
 
-  private protected sealed override void TransformParameters()
+  private protected sealed override void TransformPipelineInput()
   {
     if (!UsingCurrentLocation)
     {

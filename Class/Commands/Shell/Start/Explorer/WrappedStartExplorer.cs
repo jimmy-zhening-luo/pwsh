@@ -20,7 +20,7 @@ public abstract class WrappedStartExplorer() : WrappedCommandShouldProcess(
   [SupportsWildcards]
   public string[] Exclude { get; set; } = [];
 
-  private protected sealed override void TransformParameters()
+  private protected sealed override void TransformPipelineInput()
   {
     if (paths.Length == 0)
     {

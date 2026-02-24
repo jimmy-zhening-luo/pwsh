@@ -9,22 +9,34 @@ public abstract class WrappedCommand(
   SkipSsh
 )
 {
+  private protected bool Piped;
+
   private SteppablePipeline? steppablePipeline = null;
 
-  private bool piped;
+  private protected virtual void TransformArguments()
+  { }
+
+  private protected virtual void TransformPipelineInput()
+  { }
 
   private protected sealed override void BeforeBeginProcessing()
   {
+    TransformArguments();
+
     if (
-      !string.IsNullOrEmpty(
+      string.IsNullOrEmpty(
         PipelineInputParameterName
       )
-      && !BoundParameters.ContainsKey(
+      || BoundParameters.ContainsKey(
         PipelineInputParameterName
       )
     )
     {
-      piped = true;
+      TransformPipelineInput();
+    }
+    else
+    {
+      Piped = true;
     }
 
     AddCommand(
@@ -46,24 +58,30 @@ public abstract class WrappedCommand(
   {
     if (steppablePipeline is not null)
     {
-      if (piped)
-      {
-        var input = BoundParameters.TryGetValue(
-          PipelineInputParameterName,
-          out var value
+      if (
+        Piped
+        && BoundParameters.ContainsKey(
+          PipelineInputParameterName
         )
-          ? value
-          : null;
+      )
+      {
+        TransformPipelineInput();
 
-        if (input is null)
+        if (
+          BoundParameters.TryGetValue(
+            PipelineInputParameterName,
+            out var pipelineInput
+          )
+          && pipelineInput is not null
+        )
         {
-          steppablePipeline.Process();
+          steppablePipeline.Process(
+            pipelineInput
+          );
         }
         else
         {
-          steppablePipeline.Process(
-            input
-          );
+          steppablePipeline.Process();
         }
       }
       else
@@ -78,7 +96,7 @@ public abstract class WrappedCommand(
 
   private protected sealed override void CleanResources()
   {
-    if (steppablePipeline != null)
+    if (steppablePipeline is not null)
     {
       steppablePipeline.End();
       steppablePipeline.Clean();

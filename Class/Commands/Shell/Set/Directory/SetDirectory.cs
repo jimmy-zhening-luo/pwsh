@@ -70,7 +70,7 @@ public sealed class SetDirectory : WrappedSetDirectory
   }
   private bool driveE;
 
-  private protected sealed override void TransformParameters()
+  private protected sealed override void TransformArguments()
   {
     switch (ParameterSetName)
     {

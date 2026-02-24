@@ -107,7 +107,7 @@ public sealed partial class TestHost() : WrappedCommand(
   }
   private bool detailed;
 
-  private protected sealed override void TransformParameters()
+  private protected sealed override void TransformArguments()
   {
     if (detailed)
     {
@@ -144,7 +144,9 @@ public sealed partial class TestHost() : WrappedCommand(
         )
         {
           CommonTCPPort = string.Empty;
-          BoundParameters.Remove("CommonTCPPort");
+          BoundParameters.Remove(
+            "CommonTCPPort"
+          );
 
           Port = parsedPortNumber;
           BoundParameters["Port"] = (int)Port;
@@ -165,7 +167,10 @@ public sealed partial class TestHost() : WrappedCommand(
       default:
         break;
     }
+  }
 
+  private protected sealed override void TransformPipelineInput()
+  {
     if (
       string.IsNullOrEmpty(
         ComputerName

@@ -124,7 +124,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
     global::System.IO.FileAttributes.None.ToString()
   );
 
-  private protected sealed override void TransformParameters()
+  private protected sealed override void TransformArguments()
   {
     if (
       !string.IsNullOrEmpty(
@@ -134,7 +134,10 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
     {
       BoundParameters["Filter"] = Filter;
     }
+  }
 
+  private protected sealed override void TransformPipelineInput()
+  {
     if (!UsingCurrentLocation)
     {
       if (paths.Length == 0)
