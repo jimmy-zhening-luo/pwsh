@@ -21,21 +21,6 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
       )
         ? value
         : value + "*";
-
-      if (
-        string.IsNullOrEmpty(
-          filter
-        )
-      )
-      {
-        MyInvocation.BoundParameters.Remove(
-          "Filter"
-        );
-      }
-      else
-      {
-        MyInvocation.BoundParameters["Filter"] = filter;
-      }
     }
   }
   private string filter = string.Empty;
@@ -141,6 +126,15 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
 
   private protected sealed override void TransformParameters()
   {
+    if (
+      !string.IsNullOrEmpty(
+        filter
+      )
+    )
+    {
+      MyInvocation.BoundParameters["Filter"] = filter;
+    }
+
     if (!UsingCurrentLocation)
     {
       if (paths.Length == 0)
