@@ -34,16 +34,15 @@ public sealed class TestCommand : CoreCommand
       string.Join(
         "",
         [
-          "Switch > Bound:IsPresent:",
+          "Switch > Bound:Type:",
           MyInvocation.BoundParameters.TryGetValue(
             "Switch",
-            out SwitchParameter boundSwitch
+            out var boundSwitch
           )
-            ? string.Concat(
-                boundSwitch.IsPresent.ToString(),
-                " | Bound:ToBool:",
-                boundSwitch.ToBool().ToString()
-              )
+            ? boundSwitch
+              ?.GetType()
+              .ToString()
+              ?? "null"
             : "null",
           " | Local:IsPresent:",
           Switch.IsPresent.ToString(),
