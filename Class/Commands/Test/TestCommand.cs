@@ -10,7 +10,7 @@ public sealed class TestCommand : CoreCommand
 {
   [Parameter(
     Position = 0,
-    AllowValueFromPipeline = true
+    ValueFromPipeline = true
   )]
   public string[] Name { get; set; } = [];
 
