@@ -312,10 +312,7 @@ public abstract partial class CoreCommand(
 
   private void Clean()
   {
-    if (powershell != null)
-    {
-      powershell.Dispose();
-      powershell = null;
-    }
+    powershell?.Dispose();
+    powershell = null;
   }
 }
