@@ -189,19 +189,19 @@ public abstract partial class CoreCommand(
     SessionState.Drive.Current.Root
   );
 
-  private protected void WriteMessage(
-    object message
-  ) => WriteMessage(
-    message,
+  private protected void WriteLog(
+    object log
+  ) => WriteLog(
+    log,
     GetName()
   );
 
-  private protected void WriteMessage(
-    object message,
+  private protected void WriteLog(
+    object log,
     string source
   ) => WriteInformation(
     new InformationRecord(
-      message,
+      log,
       source
     )
   );
