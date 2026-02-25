@@ -1,7 +1,7 @@
 namespace Module.Tab;
 
 public abstract class TabCompleter(
-  CompletionCase Casing = CompletionCase.Preserve
+  CompletionCase Casing = default
 ) : IArgumentCompleter
 {
   public IEnumerable<CompletionResult> CompleteArgument(

@@ -44,10 +44,9 @@ public abstract class VirtualStartWorkspace() : CoreCommand(
           path
         );
 
-    var argumentList = new List<string>()
-    {
+    List<string> argumentList = [
       path
-    };
+    ];
 
     if (
       !string.IsNullOrEmpty(

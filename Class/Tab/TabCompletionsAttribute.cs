@@ -5,7 +5,7 @@ namespace Module.Tab;
   | System.AttributeTargets.Field
 )]
 public abstract class TabCompletionsAttribute<TCompleter>(
-  CompletionCase casing = CompletionCase.Preserve
+  CompletionCase casing = default
 ) : ArgumentCompleterAttribute, IArgumentCompleterFactory where TCompleter : TabCompleter
 {
   private protected readonly CompletionCase Casing = casing;
