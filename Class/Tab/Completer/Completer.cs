@@ -1,6 +1,6 @@
 namespace Module.Tab.Completer;
 
-public sealed class Completer(
+public class Completer(
   IEnumerable<string> Domain,
   CompletionCase Casing,
   bool Strict
@@ -8,7 +8,7 @@ public sealed class Completer(
   Casing
 )
 {
-  private protected sealed override IEnumerable<string> FulfillCompletion(
+  private protected override IEnumerable<string> FulfillCompletion(
     string wordToComplete
   )
   {
