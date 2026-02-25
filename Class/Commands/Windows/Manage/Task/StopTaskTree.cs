@@ -12,5 +12,5 @@ namespace Module.Commands.Windows.Manage.Task;
 [OutputType(typeof(void))]
 public sealed class StopTaskTree : TaskManager
 {
-  private protected sealed override void Preprocess() => descendant = true;
+  public StopTaskTree() => descendant = true;
 }
