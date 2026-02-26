@@ -18,5 +18,5 @@ public abstract class WrappedCommandShouldProcess(
 
   [Parameter]
   [Alias("cf")]
-  public required SwitchParameter Confirm { get; set; }
+  public SwitchParameter Confirm { get; set; }
 }
