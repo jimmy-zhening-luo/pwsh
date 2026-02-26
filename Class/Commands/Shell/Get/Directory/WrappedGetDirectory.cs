@@ -123,13 +123,12 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   )]
     public required FlagsExpression<System.IO.FileAttributes> Attributes { get; set; }
 
-  private protected sealed override void TransformArguments()
+  private protected sealed override Dictionary<string, object> CoercedParameters => new()
   {
-    if (Filter is not "")
-    {
-      BoundParameters["Filter"] = Filter;
-    }
-  }
+    ["Filter"] = Filter is null
+      ? null
+      : Filter,
+  };
 
   private protected sealed override void TransformPipelineInput()
   {
