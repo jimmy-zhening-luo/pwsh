@@ -54,7 +54,7 @@ public sealed class StartExplorerSibling : WrappedStartExplorer
     set => paths = value;
   }
 
-  private protected sealed override Locator LocationRecord => new(
+  private protected sealed override Locator Location => new(
     Subpath: @".."
   );
 }
@@ -83,7 +83,7 @@ public sealed class StartExplorerRelative : WrappedStartExplorer
     set => paths = value;
   }
 
-  private protected sealed override Locator LocationRecord => new(
+  private protected sealed override Locator Location => new(
     Subpath: @"..\.."
   );
 }
@@ -112,7 +112,7 @@ public sealed class StartExplorerHome : WrappedStartExplorer
     set => paths = value;
   }
 
-  private protected sealed override Locator LocationRecord => new(
+  private protected sealed override Locator Location => new(
     Client.Environment.Known.Folder.Home()
   );
 }
@@ -141,7 +141,7 @@ public sealed class StartExplorerCode : WrappedStartExplorer
     set => paths = value;
   }
 
-  private protected sealed override Locator LocationRecord => new(
+  private protected sealed override Locator Location => new(
     Client.Environment.Known.Folder.Home(),
     "code"
   );
@@ -171,7 +171,7 @@ public sealed class StartExplorerDrive : WrappedStartExplorer
     set => paths = value;
   }
 
-  private protected sealed override Locator LocationRecord => new(
+  private protected sealed override Locator Location => new(
     CurrentDrive()
   );
 }

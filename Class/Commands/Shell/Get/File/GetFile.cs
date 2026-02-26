@@ -58,7 +58,7 @@ public sealed class GetFileSibling : WrappedGetFile
     set => paths = value;
   }
 
-  private protected sealed override Locator LocationRecord => new(
+  private protected sealed override Locator Location => new(
     Subpath: @".."
   );
 }
@@ -88,7 +88,7 @@ public sealed class GetFileRelative : WrappedGetFile
     set => paths = value;
   }
 
-  private protected sealed override Locator LocationRecord => new(
+  private protected sealed override Locator Location => new(
     Subpath: @"..\.."
   );
 }
@@ -118,7 +118,7 @@ public sealed class GetFileHome : WrappedGetFile
     set => paths = value;
   }
 
-  private protected sealed override Locator LocationRecord => new(
+  private protected sealed override Locator Location => new(
     Client.Environment.Known.Folder.Home()
   );
 }
@@ -148,7 +148,7 @@ public sealed class GetFileCode : WrappedGetFile
     set => paths = value;
   }
 
-  private protected sealed override Locator LocationRecord => new(
+  private protected sealed override Locator Location => new(
     Client.Environment.Known.Folder.Home(),
     "code"
   );
@@ -179,7 +179,7 @@ public sealed class GetFileDrive : WrappedGetFile
     set => paths = value;
   }
 
-  private protected sealed override Locator LocationRecord => new(
+  private protected sealed override Locator Location => new(
     CurrentDrive()
   );
 }

@@ -29,9 +29,9 @@ public abstract partial class CoreCommand(
     );
   }
 
-  private protected virtual Locator LocationRecord => new();
+  private protected virtual Locator Location => new();
 
-  private protected bool UsingCurrentLocation => LocationRecord is
+  private protected bool UsingCurrentLocation => Location is
   {
     Root: "",
     Subpath: ""
@@ -174,13 +174,13 @@ public abstract partial class CoreCommand(
       typedPath
     ),
     System.IO.Path.GetFullPath(
-      LocationRecord.Subpath,
-      LocationRecord is
+      Location.Subpath,
+      Location is
       {
         Root: ""
       }
         ? Pwd()
-        : LocationRecord.Root
+        : Location.Root
     )
   );
 
