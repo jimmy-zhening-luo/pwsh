@@ -35,7 +35,7 @@ public abstract class TabCompleter(
       )
     : escapedText;
 
-  IEnumerable<CompletionResult> IArgumentCompleter.CompleteArgument(
+  public IEnumerable<CompletionResult> CompleteArgument(
     string commandName,
     string parameterName,
     string wordToComplete,
