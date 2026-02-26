@@ -27,7 +27,7 @@ public sealed partial class GetVerb : CoreCommand
       {
         if (verb is not "")
         {
-          verbs.Add(
+          _ = verbs.Add(
             verb.Contains(
               '*'
             )
@@ -64,7 +64,7 @@ public sealed partial class GetVerb : CoreCommand
           )
         )
         {
-          groups.Add(
+          _ = groups.Add(
             parsedGroup.ToString()
           );
         }
@@ -77,7 +77,7 @@ public sealed partial class GetVerb : CoreCommand
   {
     if (Verb is [] or ["*"])
     {
-      AddCommand(
+      _ = AddCommand(
         "Get-Verb"
       )
         .AddParameter(
@@ -87,7 +87,7 @@ public sealed partial class GetVerb : CoreCommand
 
       if (Group is not [])
       {
-        PS.AddParameter(
+        _ = PS.AddParameter(
           "Group",
           Group
         );
@@ -112,7 +112,7 @@ public sealed partial class GetVerb : CoreCommand
     {
       SortedDictionary<string, VerbInfo> verbDictionary = [];
 
-      AddCommand(
+      _ = AddCommand(
         "Get-Verb"
       )
         .AddParameter(
@@ -122,7 +122,7 @@ public sealed partial class GetVerb : CoreCommand
 
       if (Group is not [])
       {
-        PS.AddParameter(
+        _ = PS.AddParameter(
           "Group",
           Group
         );

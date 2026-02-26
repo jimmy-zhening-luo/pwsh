@@ -60,7 +60,7 @@ public sealed class ClearLine : CoreCommand
     }
     else
     {
-      AddCommand(
+      _ = AddCommand(
         "Clear-Content"
       )
         .AddParameters(
@@ -73,9 +73,10 @@ public sealed class ClearLine : CoreCommand
         this
       );
 
-      steppablePipeline.Process();
+      _ = steppablePipeline.Process();
 
-      steppablePipeline.End();
+      _ = steppablePipeline.End();
+
       steppablePipeline.Clean();
       steppablePipeline.Dispose();
     }

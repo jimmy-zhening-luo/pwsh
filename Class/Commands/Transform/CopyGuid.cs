@@ -50,7 +50,7 @@ public sealed class CopyGuid : CoreCommand
       );
     }
 
-    AddCommand(
+    _ = AddCommand(
       "Set-Clipboard"
     )
       .AddParameter(

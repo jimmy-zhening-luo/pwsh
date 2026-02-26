@@ -223,7 +223,7 @@ public sealed class GetHelpOnline : CoreCommand
       true
     );
 
-    AddCommand(
+    _ = AddCommand(
       ps,
       "Get-Help"
     )
@@ -242,7 +242,7 @@ public sealed class GetHelpOnline : CoreCommand
 
     if (parameters is not [])
     {
-      ps.AddParameter(
+      _ = ps.AddParameter(
         "Parameter",
         parameters
       );
@@ -255,11 +255,11 @@ public sealed class GetHelpOnline : CoreCommand
     {
       try
       {
-        ps.AddParameter(
+        _ = ps.AddParameter(
           "Online"
         );
 
-        return ps.Invoke();
+        return [];
       }
       catch
       {

@@ -10,15 +10,33 @@ namespace Module.Commands.Pwsh.Help.Alias;
 public sealed class GetCommandAlias : CoreCommand
 {
   [Parameter(
-    Position = 0,
-    HelpMessage = "Gets the aliases for the specified item. Enter the name of a cmdlet, function, script, file, or executable file. This parameter is called Definition, because it searches for the item name in the Definition property of the alias object."
+    Position = 0
   )]
   [Alias("Command")]
   [SupportsWildcards]
   [Completions(
     ["*"]
   )]
-  public string[] Definition { get; set; } = [];
+  public string[] Definition
+  {
+    get => [.. definitions];
+    set
+    {
+      foreach (var definition in value)
+      {
+        _ = definitions.Add(
+          definition.Contains(
+            '*'
+          )
+            ? definition
+            : definition.Length > 2
+              ? $"*{definition}*"
+              : $"{definition}*"
+        );
+      }
+    }
+  }
+  private readonly HashSet<string> definitions = [];
 
   [Parameter(
     Position = 1,
@@ -39,56 +57,39 @@ public sealed class GetCommandAlias : CoreCommand
   public string Scope { get; set; } = "Global";
 
   [Parameter(
-    Position = 2,
-    HelpMessage = "Omits the specified items. The value of this parameter qualifies the Definition parameter. Enter a name, a definition, or a pattern, such as 's*'. Wildcards are permitted."
+    Position = 2
   )]
   [SupportsWildcards]
-  public string[] Exclude { get; set; } = [];
+  public string[] Exclude
+  {
+    get => [.. exclusions];
+    set
+    {
+      foreach (var exclusion in value)
+      {
+        if (exclusion is not "")
+        {
+          _ = exclusions.Add(
+            exclusion
+          );
+        }
+      }
+    }
+  }
+  private readonly HashSet<string> exclusions = [];
 
   private protected sealed override void Postprocess()
   {
-    HashSet<string> uniqueWildcardTerms = [];
-    HashSet<string> uniqueExclusions = [];
-
-    foreach (var definition in Definition)
+    if (Definition is [])
     {
-      if (definition is not "")
-      {
-        uniqueWildcardTerms.Add(
-          definition.Contains(
-            '*'
-          )
-            ? definition
-            : definition.Length > 2
-              ? $"*{definition}*"
-              : $"{definition}*"
-        );
-      }
-    }
-
-    if (uniqueWildcardTerms.Count is 0)
-    {
-      uniqueWildcardTerms.Add(
+      _ = definitions.Add(
         "*"
       );
     }
 
-    foreach (var exclusion in Exclude)
-    {
-      if (exclusion is not "")
-      {
-        uniqueExclusions.Add(
-          exclusion
-        );
-      }
-    }
-
-    Definition = [.. uniqueWildcardTerms];
-    Exclude = [.. uniqueExclusions];
-
     SortedDictionary<string, AliasInfo> commandAliasDictionary = [];
 
-    AddCommand(
+    _ = AddCommand(
       "Get-Alias"
     )
       .AddParameter(
@@ -102,7 +103,7 @@ public sealed class GetCommandAlias : CoreCommand
 
     if (Exclude is not [])
     {
-      PS.AddParameter(
+      _ = PS.AddParameter(
         "Exclude",
         Exclude
       );

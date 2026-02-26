@@ -37,7 +37,7 @@ public abstract class WrappedCommand(
       Piped = true;
     }
 
-    AddCommand(
+    _ = AddCommand(
       WrappedCommandName,
       CommandType
     )
@@ -73,18 +73,18 @@ public abstract class WrappedCommand(
           && pipelineInput is not null
         )
         {
-          steppablePipeline.Process(
+          _ = steppablePipeline.Process(
             pipelineInput
           );
         }
         else
         {
-          steppablePipeline.Process();
+          _ = steppablePipeline.Process();
         }
       }
       else
       {
-        steppablePipeline.Process();
+        _ = steppablePipeline.Process();
       }
     }
   }
@@ -96,7 +96,8 @@ public abstract class WrappedCommand(
   {
     if (steppablePipeline is not null)
     {
-      steppablePipeline.End();
+      _ = steppablePipeline.End();
+
       steppablePipeline.Clean();
       steppablePipeline.Dispose();
 
