@@ -74,29 +74,6 @@ function Resolve-GitRepository {
   }
 }
 
-function Test-NodePackageDirectory {
-  [CmdletBinding()]
-  [OutputType([bool])]
-  param(
-    [Parameter(
-      Mandatory,
-      Position = 0
-    )]
-    [AllowEmptyString()]
-    [string]$WorkingDirectory
-  )
-
-  end {
-    if (!$WorkingDirectory) {
-      $WorkingDirectory = $PWD.Path
-    }
-
-    return Test-Path (
-      Join-Path $WorkingDirectory package.json
-    ) -PathType Leaf
-  }
-}
-
 <#
 .LINK
 https://git-scm.com/docs
@@ -804,7 +781,7 @@ function Invoke-Npm {
     }
 
     if ($WorkingDirectory) {
-      if (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory) {
+      if ([Module.Commands.Code.Node.NodeWorkingDirectory]::Test($WorkingDirectory)) {
         $PackagePrefix = $WorkingDirectory ? "--prefix=$((Resolve-Path $WorkingDirectory).Path)" : ''
 
         if ($PackagePrefix) {
@@ -1066,8 +1043,8 @@ function Step-NodePackageVersion {
     )
 
     if (
-      $WorkingDirectory -and !(
-        Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory
+      $WorkingDirectory -and ![Module.Commands.Code.Node.NodeWorkingDirectory]::Test(
+        $WorkingDirectory
       )
     ) {
       $NodeArgument.Add($WorkingDirectory)
@@ -1105,11 +1082,11 @@ function Invoke-NodePackageScript {
   $NodeArgument = [System.Collections.Generic.List[string]]::new()
   $NodeArgument.Add($Script)
 
-  if (
-    $WorkingDirectory -and !(
-      Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory
-    )
-  ) {
+    if (
+      $WorkingDirectory -and ![Module.Commands.Code.Node.NodeWorkingDirectory]::Test(
+        $WorkingDirectory
+      )
+    ) {
     $NodeArgument.Add($WorkingDirectory)
     $WorkingDirectory = ''
   }
