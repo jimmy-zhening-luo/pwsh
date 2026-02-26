@@ -43,59 +43,73 @@ public sealed class GetHelpOnline : CoreCommand
     Collection<PSObject> helpContent
   )
   {
-    try
+    if (
+      helpContent is null
+      || helpContent.Count is 0
+    )
     {
-      dynamic pscustomobject = helpContent[0];
-      dynamic relatedLinks = pscustomobject.relatedLinks;
-      PSObject[] navigationLink = relatedLinks.navigationLink;
+      return null;
+    }
 
+    dynamic pscustomobject = helpContent[0];
+
+    if (
+      pscustomobject is not null
+      && pscustomobject.relatedLinks is not null
+      && pscustomobject.relatedLinks.navigationLink is not null
+      && pscustomobject.relatedLinks.navigationLink is IEnumerable<object> links
+    )
+    {
       List<System.Uri> urls = [];
 
-      foreach (dynamic link in navigationLink)
+      foreach (dynamic link in links)
       {
-        dynamic uri = link.Uri;
-        var uriString = uri.ToString();
-
         if (
-          !string.IsNullOrEmpty(
-            uriString
-          )
-          && (
-            uriString.StartsWith(
-              "https://"
-            )
-            || uriString.StartsWith(
-              "http://"
-            )
-          )
+          link is not null
+          && link.Uri is not null
+          && link.Uri is object noteProperty
         )
         {
-          var url = new System.Uri(
-            uriString
-          );
+          var uriString = noteProperty.ToString();
 
           if (
-            url.IsAbsoluteUri
-            && !string.IsNullOrEmpty(
-              url.Host
+              !string.IsNullOrEmpty(
+                uriString
+              )
+              && (
+                uriString.StartsWith(
+                  "https://"
+                )
+                || uriString.StartsWith(
+                  "http://"
+                )
+              )
             )
-          )
           {
-            urls.Add(
-              url
+            var url = new System.Uri(
+              uriString
             );
+
+            if (
+              url.IsAbsoluteUri
+              && !string.IsNullOrEmpty(
+                url.Host
+              )
+            )
+            {
+              urls.Add(
+                url
+              );
+            }
           }
         }
       }
 
-      if (urls.Count != 0)
-      {
-        return urls;
-      }
-
-      return null;
+      return urls.Count is 0
+        ? null
+        : urls;
     }
-    catch
+    else
     {
       return null;
     }
@@ -239,20 +253,36 @@ public sealed class GetHelpOnline : CoreCommand
         ActionPreference.SilentlyContinue
       );
 
-    if (parameters.Length != 0)
+    if (parameters.Length is not 0)
     {
       ps.AddParameter(
         "Parameter",
         parameters
       );
     }
-    else if (online)
-    {
-      ps.AddParameter(
-        "Online"
-      );
-    }
 
-    return ps.Invoke();
+    if (
+      online
+      && parameters.Length is 0
+    )
+    {
+      try
+      {
+        ps
+          .AddParameter(
+            "Online"
+          );
+
+        return ps.Invoke();
+      }
+      catch
+      {
+        return [];
+      }
+    }
+    else
+    {
+      return ps.Invoke();
+    }
   }
 }
