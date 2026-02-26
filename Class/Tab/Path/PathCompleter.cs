@@ -247,7 +247,7 @@ Match:
     bool trailingSeparator = default
   ) => Canonicalizer.Denormalize(
     System.IO.Path.GetFileName(
-      file
+      path
     ),
     accumulatedSubpath,
     trailingSeparator
