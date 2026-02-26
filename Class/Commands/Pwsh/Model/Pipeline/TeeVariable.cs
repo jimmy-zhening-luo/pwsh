@@ -10,7 +10,6 @@ namespace Module.Commands.Pwsh.Model.Pipeline;
 [OutputType(typeof(object))]
 public sealed class TeeVariable() : WrappedCommand(
   @"Microsoft.PowerShell.Utility\Tee-Object",
-  default,
   "InputObject"
 )
 {

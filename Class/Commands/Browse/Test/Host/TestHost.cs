@@ -10,9 +10,7 @@ namespace Module.Commands.Browse.Test.Host;
 [OutputType(typeof(object))]
 public sealed partial class TestHost() : WrappedCommand(
   @"NetTCPIP\Test-NetConnection",
-  default,
-  "",
-  CommandTypes.Function
+  CommandType: CommandTypes.Function
 )
 {
   public enum TestHostWellKnownPort

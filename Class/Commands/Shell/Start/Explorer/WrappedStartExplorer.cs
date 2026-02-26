@@ -2,7 +2,7 @@ namespace Module.Commands.Shell.Start.Explorer;
 
 public abstract class WrappedStartExplorer() : WrappedCommandShouldProcess(
   @"Microsoft.PowerShell.Management\Invoke-Item",
-  true
+  SkipSsh: true
 )
 {
   public abstract string[] Path { get; set; }
