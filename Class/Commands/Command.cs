@@ -22,8 +22,6 @@ public abstract partial class CoreCommand(
     );
   }
 
-  public 
-
   private protected virtual string Location => string.Empty;
 
   private protected virtual string LocationSubpath => string.Empty;
