@@ -125,7 +125,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
 
   private protected sealed override Dictionary<string, object> CoercedParameters => new()
   {
-    ["Filter"] = filter is ""
+    ["Filter"] = filter is null or ""
       ? null
       : filter,
   };
