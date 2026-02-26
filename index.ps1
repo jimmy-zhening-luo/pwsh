@@ -24,8 +24,6 @@ $Global:PSDefaultParameterValues = @{
   'gu'
 ) | Remove-Alias -Force
 
-New-Alias verb Get-VerbList -Option ReadOnly
-
 & {
   Import-Module PSReadLine
 

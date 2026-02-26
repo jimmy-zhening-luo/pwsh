@@ -121,6 +121,7 @@
     'm'
     'man'
     'galc'
+    'vb'
     'types'
     'ty'
     'typeof'

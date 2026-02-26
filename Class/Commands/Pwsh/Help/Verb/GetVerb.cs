@@ -5,6 +5,7 @@ namespace Module.Commands.Pwsh.Help.Verb;
   "VerbList",
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097026"
 )]
+[Alias("vb")]
 [OutputType(typeof(VerbInfo))]
 [OutputType(typeof(string))]
 public sealed partial class GetVerb : CoreCommand
