@@ -1,8 +1,8 @@
 namespace Module.Tab.Path;
 
-internal static class Canonicalizer
+public partial class PathCompletionsAttribute
 {
-  internal static string Canonicalize(
+  private static string Canonicalize(
     string path,
     bool preserveTrailingSeparator = default
   )

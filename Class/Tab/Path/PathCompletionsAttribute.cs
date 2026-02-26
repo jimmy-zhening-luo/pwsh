@@ -1,6 +1,6 @@
 namespace Module.Tab.Path;
 
-public class PathCompletionsAttribute(
+public partial class PathCompletionsAttribute(
   string Location,
   PathItemType ItemType,
   bool Flat

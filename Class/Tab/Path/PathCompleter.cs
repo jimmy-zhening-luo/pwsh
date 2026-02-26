@@ -1,6 +1,6 @@
 namespace Module.Tab.Path;
 
-public sealed class PathCompleter(
+public sealed partial class PathCompleter(
   string Root,
   PathItemType Type,
   bool Flat,
@@ -216,7 +216,7 @@ Match:
       )
     )
     {
-      yield return CompletionString(
+      yield return Denormalize(
         @"\",
         accumulatedSubpath
       );
@@ -229,7 +229,7 @@ Match:
       || count != 0
     )
     {
-      yield return CompletionString(
+      yield return Denormalize(
         @"..\",
         accumulatedSubpath
       );
@@ -237,18 +237,4 @@ Match:
 
     yield break;
   }
-
-  private string CompletionString(
-    string path,
-    string accumulatedSubpath,
-    bool trailingSeparator = default
-  ) => Canonicalizer.Denormalize(
-    System.IO.Path.GetFileName(
-      path
-    ),
-    accumulatedSubpath,
-    trailingSeparator
-      ? @"\"
-      : string.Empty
-  );
 }
