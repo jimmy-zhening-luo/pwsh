@@ -18,7 +18,14 @@ public sealed class OpenUrl() : CoreCommand(
     HelpMessage = "The file path or URL to open. Defaults to the current directory."
   )]
   [PathCompletions]
-  public string Path { get; set; } = string.Empty;
+  public string Path
+  {
+    get => path;
+    set => path = Client.FileSystem.PathString.Normalize(
+      Path
+    );
+  }
+  private string path = string.Empty;
 
   [Parameter(
     ParameterSetName = "Uri",
@@ -43,42 +50,37 @@ public sealed class OpenUrl() : CoreCommand(
 
   private protected sealed override void Postprocess()
   {
-    if (ParameterSetName is not "Path")
+    if (ParameterSetName is "Path")
     {
-      return;
-    }
+      string target = string.Empty;
 
-    string cleanPath = Client.FileSystem.PathString.Normalize(
-      Path
-    );
-    string target = string.Empty;
+      if (Path is not "")
+      {
+        string relativePath = System.IO.Path.GetRelativePath(
+          SessionState.Path.CurrentLocation.Path,
+          Path
+        );
+        string testPath = System.IO.Path.IsPathRooted(
+          relativePath
+        )
+          ? relativePath
+          : System.IO.Path.Combine(
+              SessionState.Path.CurrentLocation.Path,
+              relativePath
+            );
 
-    if (cleanPath is not "")
-    {
-      string relativePath = System.IO.Path.GetRelativePath(
-        SessionState.Path.CurrentLocation.Path,
-        cleanPath
+        target = System.IO.Path.Exists(
+          testPath
+        )
+          ? System.IO.Path.GetFullPath(
+              testPath
+            )
+          : Path;
+      }
+
+      Client.Network.Url.Open(
+        target
       );
-      string testPath = System.IO.Path.IsPathRooted(
-        relativePath
-      )
-        ? relativePath
-        : System.IO.Path.Combine(
-            SessionState.Path.CurrentLocation.Path,
-            relativePath
-          );
-
-      target = System.IO.Path.Exists(
-        testPath
-      )
-        ? System.IO.Path.GetFullPath(
-            testPath
-          )
-        : cleanPath;
     }
-
-    Client.Network.Url.Open(
-      target
-    );
   }
 }
