@@ -63,9 +63,7 @@ public partial class PathCompletionsAttribute(
   }
 
   public sealed override PathCompleter Create() => new(
-    Canonicalize(
-      Location
-    ),
+    Location,
     ItemType,
     Flat,
     Hidden,

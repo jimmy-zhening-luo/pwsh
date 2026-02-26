@@ -1,13 +1,29 @@
 namespace Module.Tab.Path;
 
-public sealed partial class PathCompleter(
-  string Root,
-  PathItemType Type,
-  bool Flat,
-  bool Hidden,
-  bool Reanchor
-) : TabCompleter
+public sealed partial class PathCompleter : TabCompleter
 {
+  public PathCompleter(
+    string root,
+    PathItemType type,
+    bool flat,
+    bool hidden,
+    bool reanchor
+  ) => (
+    Root,
+    Type,
+    Flat,
+    Hidden,
+    Reanchor
+  ) = (
+    Canonicalize(
+      root
+    ),
+    type,
+    flat,
+    hidden,
+    reanchor
+  );
+
   private protected sealed override IEnumerable<string> FulfillCompletion(
     string wordToComplete
   )
