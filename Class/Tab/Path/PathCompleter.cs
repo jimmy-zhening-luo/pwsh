@@ -150,9 +150,6 @@ FileFirstMatch:
     }
 
     int checkpoint = count;
-    string directoryCap = Flat
-      ? string.Empty
-      : @"\";
 
 Match:
     foreach (
