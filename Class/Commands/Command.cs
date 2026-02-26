@@ -4,6 +4,11 @@ public abstract partial class CoreCommand(
   bool SkipSsh = default
 ) : PSCmdlet, System.IDisposable
 {
+  public record Root(
+    string Location,
+    string Subpath
+  );
+
   private CommandLifecycle stage;
 
   private uint steps;
@@ -16,6 +21,8 @@ public abstract partial class CoreCommand(
       default
     );
   }
+
+  public 
 
   private protected virtual string Location => string.Empty;
 
