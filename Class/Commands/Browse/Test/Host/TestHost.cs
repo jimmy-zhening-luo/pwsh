@@ -119,16 +119,16 @@ public sealed class TestHost() : WrappedCommand(
   }
   private bool detailed;
 
+  private protected sealed override Dictionary<string, object?> CoercedParameters => new()
+  {
+    ["Detailed"] = null,
+    ["InformationLevel"] = detailed
+      ? TestHostVerbosity.Detailed
+      : InformationLevel,
+  };
+
   private protected sealed override void TransformArguments()
   {
-    if (detailed)
-    {
-      InformationLevel = TestHostVerbosity.Detailed;
-    }
-
-    _ = BoundParameters.Remove("Detailed");
-    BoundParameters["InformationLevel"] = InformationLevel;
-
     switch (ParameterSetName)
     {
       case "ICMP":
