@@ -2,7 +2,7 @@ namespace Module.Tab.Path;
 
 public partial class PathCompletionsAttribute(
   string Location = "",
-  PathItemType Type = default
+  PathItemType ItemType = default
 ) : TabCompletionsAttribute<PathCompleter>
 {
   public bool Flat { get; init; }
@@ -11,7 +11,7 @@ public partial class PathCompletionsAttribute(
 
   public sealed override PathCompleter Create() => new(
     Location,
-    Type,
+    ItemType,
     Flat,
     Hidden,
     string.IsNullOrEmpty(
