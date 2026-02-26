@@ -115,7 +115,7 @@ public sealed partial class TestHost() : WrappedCommand(
     }
 
     BoundParameters.Remove("Detailed");
-    BoundParameters["InformationLevel"] = InformationLevel.ToString();
+    BoundParameters["InformationLevel"] = InformationLevel;
 
     switch (ParameterSetName)
     {
