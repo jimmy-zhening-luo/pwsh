@@ -8,7 +8,7 @@ public class Completer(
   Casing
 )
 {
-  private protected override IEnumerable<string> FulfillCompletion(
+  private protected override IEnumerable<string> GenerateCompletions(
     string wordToComplete
   )
   {

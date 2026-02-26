@@ -94,7 +94,7 @@ public sealed class PathCompleter : TabCompleter
       : string.Empty
   );
 
-  private protected sealed override IEnumerable<string> FulfillCompletion(
+  private protected sealed override IEnumerable<string> GenerateCompletions(
     string wordToComplete
   )
   {

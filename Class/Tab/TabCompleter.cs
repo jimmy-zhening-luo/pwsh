@@ -42,7 +42,7 @@ public abstract class TabCompleter(
     System.Management.Automation.Language.CommandAst commandAst,
     IDictionary fakeBoundParameters
   ) => WrapArgumentCompletionResult(
-    FulfillCompletion(
+    GenerateCompletions(
       Unescape(
         wordToComplete
       )
@@ -50,7 +50,7 @@ public abstract class TabCompleter(
     )
   );
 
-  private protected abstract IEnumerable<string> FulfillCompletion(
+  private protected abstract IEnumerable<string> GenerateCompletions(
     string wordToComplete
   );
 
