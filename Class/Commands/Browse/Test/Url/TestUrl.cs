@@ -18,7 +18,46 @@ public sealed class TestUrl : CoreCommand
     HelpMessage = "The URL to test. If the URL has no scheme, it defaults to 'http'."
   )]
   [AllowEmptyCollection]
-  public System.Uri[] Uri { get; set; } = [];
+  public System.Uri[] Uri
+  {
+    get => [.. urls];
+    set
+    {
+      urls.Clear();
+
+      foreach (var uri in value)
+      {
+        System.Uri url = new(
+          uri.IsAbsoluteUri
+            ? string.IsNullOrWhiteSpace(
+                uri.Host
+              )
+              ? string.Empty
+              : uri.AbsoluteUri.Trim()
+            : string.IsNullOrWhiteSpace(
+                uri.OriginalString
+              )
+              ? string.Empty
+              : string.Concat(
+                  "http://",
+                  uri.OriginalString.Trim()
+                )
+        );
+        if (
+          url is not
+          {
+            OriginalString: ""
+          }
+        )
+        {
+          urls.Add(
+            url
+          );
+        }
+      }
+    }
+  }
+  private readonly List<System.Uri> urls = [];
 
   private protected sealed override void Processor()
   {
@@ -29,31 +68,10 @@ public sealed class TestUrl : CoreCommand
       )
     };
 
-    foreach (var uri in Uri)
+    foreach (var url in Uri)
     {
-      System.Uri url = new(
-        uri.IsAbsoluteUri
-          ? string.IsNullOrWhiteSpace(
-              uri.Host
-            )
-            ? string.Empty
-            : uri.AbsoluteUri.Trim()
-          : string.IsNullOrWhiteSpace(
-              uri.OriginalString
-            )
-            ? string.Empty
-            : string.Concat(
-                "http://",
-                uri.OriginalString.Trim()
-              )
-      );
-
       if (
-        url is not
-        {
-          OriginalString: ""
-        }
-        && Client.Network.Url.HostExists(
+        Client.Network.Url.HostExists(
           url.Host
         )
         && Client.Network.Url.Test(
