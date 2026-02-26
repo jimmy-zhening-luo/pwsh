@@ -7,7 +7,7 @@ internal static partial class PathString
     bool preserveTrailingSeparator = default
   )
   {
-    string normalPath = TrimRelativePrefix(
+    var normalPath = TrimRelativePrefix(
       DuplicateSeparatorRegex().Replace(
         System
           .Environment

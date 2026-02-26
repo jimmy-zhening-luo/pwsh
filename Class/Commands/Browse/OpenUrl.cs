@@ -52,15 +52,15 @@ public sealed class OpenUrl() : CoreCommand(
   {
     if (ParameterSetName is "Path")
     {
-      string target = string.Empty;
+      var target = string.Empty;
 
       if (Path is not "")
       {
-        string relativePath = System.IO.Path.GetRelativePath(
+        var relativePath = System.IO.Path.GetRelativePath(
           SessionState.Path.CurrentLocation.Path,
           Path
         );
-        string testPath = System.IO.Path.IsPathRooted(
+        var testPath = System.IO.Path.IsPathRooted(
           relativePath
         )
           ? relativePath

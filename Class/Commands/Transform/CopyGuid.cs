@@ -32,7 +32,7 @@ public sealed class CopyGuid : CoreCommand
 
   private protected sealed override void Postprocess()
   {
-    string guid = System.Guid
+    var guid = System.Guid
       .NewGuid()
       .ToString(
         "D"

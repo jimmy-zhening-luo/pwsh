@@ -57,7 +57,7 @@ internal static class Url
     System.Uri uri
   )
   {
-    string url = uri
+    var url = uri
       .ToString()
       .Trim();
 

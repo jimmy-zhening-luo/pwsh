@@ -36,7 +36,7 @@ public sealed class ConvertToHex : Cmdlet
   {
     foreach (var number in Number)
     {
-      string hex = number.ToString("X");
+      var hex = number.ToString("X");
 
       WriteObject(
         lowercase

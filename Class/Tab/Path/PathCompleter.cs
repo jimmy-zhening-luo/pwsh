@@ -38,12 +38,12 @@ public sealed class PathCompleter : TabCompleter
     bool preserveTrailingSeparator = default
   )
   {
-    string normalPath = Client.FileSystem.PathString.Normalize(
+    var normalPath = Client.FileSystem.PathString.Normalize(
       path,
       preserveTrailingSeparator
     );
 
-    string homedNormalPath = normalPath.StartsWith(
+    var homedNormalPath = normalPath.StartsWith(
       '~'
     )
       ? normalPath.Length is 1
@@ -98,17 +98,17 @@ public sealed class PathCompleter : TabCompleter
     string wordToComplete
   )
   {
-    string pathToComplete = Client.FileSystem.PathString.Normalize(
+    var pathToComplete = Client.FileSystem.PathString.Normalize(
       wordToComplete,
       true
     );
-    string accumulatedSubpath = string.Empty;
-    string fullAccumulatedPath = string.Empty;
-    string filter = string.Empty;
+    var accumulatedSubpath = string.Empty;
+    var fullAccumulatedPath = string.Empty;
+    var filter = string.Empty;
 
     while (pathToComplete is not "")
     {
-      int pathEnd = pathToComplete.LastIndexOf(
+      var pathEnd = pathToComplete.LastIndexOf(
         '\\'
       );
 
@@ -119,10 +119,10 @@ public sealed class PathCompleter : TabCompleter
       }
       else
       {
-        string subpathPart = pathToComplete[..pathEnd]
+        var subpathPart = pathToComplete[..pathEnd]
           .Trim();
 
-        int wordStart = pathEnd + 1;
+        var wordStart = pathEnd + 1;
 
         if (wordStart < pathToComplete.Length)
         {
@@ -136,7 +136,7 @@ public sealed class PathCompleter : TabCompleter
         }
         else
         {
-          string anchoredPath = System.IO.Path.GetFullPath(
+          var anchoredPath = System.IO.Path.GetFullPath(
             subpathPart,
             Location
           );
@@ -226,7 +226,7 @@ FileFirstMatch:
       }
     }
 
-    int checkpoint = count;
+    var checkpoint = count;
 
 Match:
     foreach (
