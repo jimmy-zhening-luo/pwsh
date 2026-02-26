@@ -53,36 +53,16 @@ public abstract class WrappedGetFile() : WrappedCommand(
 
   [Parameter]
   [Alias("f")]
-  public SwitchParameter Force
-  {
-    get => force;
-    set => force = value;
-  }
-  private bool force;
+  public SwitchParameter Force { get; set; }
 
   [Parameter]
-  public SwitchParameter AsByteStream
-  {
-    get => asByteStream;
-    set => asByteStream = value;
-  }
-  private bool asByteStream;
+  public SwitchParameter AsByteStream { get; set; }
 
   [Parameter]
-  public SwitchParameter Raw
-  {
-    get => raw;
-    set => raw = value;
-  }
-  private bool raw;
+  public SwitchParameter Raw { get; set; }
 
   [Parameter]
-  public SwitchParameter Wait
-  {
-    get => wait;
-    set => wait = value;
-  }
-  private bool wait;
+  public SwitchParameter Wait { get; set; }
 
   private protected sealed override void TransformPipelineInput()
   {

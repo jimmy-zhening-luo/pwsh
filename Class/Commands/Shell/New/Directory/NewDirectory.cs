@@ -37,12 +37,7 @@ public sealed class NewDirectory() : WrappedCommandShouldProcess(
 
   [Parameter]
   [Alias("f")]
-  public SwitchParameter Force
-  {
-    get => force;
-    set => force = value;
-  }
-  private bool force;
+  public SwitchParameter Force { get; set; }
 
   private protected sealed override Dictionary<string, object?> CoercedParameters => new()
   {

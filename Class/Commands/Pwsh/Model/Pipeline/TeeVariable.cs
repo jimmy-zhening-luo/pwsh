@@ -42,12 +42,7 @@ public sealed class TeeVariable() : WrappedCommand(
   [Parameter(
     ParameterSetName = "File"
   )]
-  public SwitchParameter Append
-  {
-    get => append;
-    set => append = value;
-  }
-  private bool append;
+  public SwitchParameter Append { get; set; }
 
   [Parameter(
     ParameterSetName = "File"

@@ -71,12 +71,7 @@ public sealed class TestHost() : WrappedCommand(
   [Parameter(
     ParameterSetName = "ICMP"
   )]
-  public SwitchParameter TraceRoute
-  {
-    get => traceRoute;
-    set => traceRoute = value;
-  }
-  private bool traceRoute;
+  public SwitchParameter TraceRoute { get; set; }
 
   [Parameter(
     ParameterSetName = "ICMP"
@@ -88,12 +83,7 @@ public sealed class TestHost() : WrappedCommand(
     ParameterSetName = "NetRouteDiagnostics",
     Mandatory = true
   )]
-  public SwitchParameter DiagnoseRouting
-  {
-    get => diagnoseRouting;
-    set => diagnoseRouting = value;
-  }
-  private bool diagnoseRouting;
+  public SwitchParameter DiagnoseRouting { get; set; }
 
   [Parameter(
     ParameterSetName = "NetRouteDiagnostics"

@@ -36,12 +36,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
 
   [Parameter]
   [Alias("s", "r")]
-  public SwitchParameter Recurse
-  {
-    get => recurse;
-    set => recurse = value;
-  }
-  private bool recurse;
+  public SwitchParameter Recurse { get; set; }
 
   [Parameter]
   [Alias("de")]
@@ -49,73 +44,33 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
 
   [Parameter]
   [Alias("f")]
-  public SwitchParameter Force
-  {
-    get => force;
-    set => force = value;
-  }
-  private bool force;
+  public SwitchParameter Force { get; set; }
 
   [Parameter]
-  public SwitchParameter Name
-  {
-    get => name;
-    set => name = value;
-  }
-  private bool name;
+  public SwitchParameter Name { get; set; }
 
   [Parameter]
   [Alias("ad", "d")]
-  public SwitchParameter Directory
-  {
-    get => directory;
-    set => directory = value;
-  }
-  private bool directory;
+  public SwitchParameter Directory { get; set; }
 
   [Parameter]
   [Alias("af", "fi")]
-  public SwitchParameter File
-  {
-    get => file;
-    set => file = value;
-  }
-  private bool file;
+  public SwitchParameter File { get; set; }
 
   [Parameter]
   [Alias("ah", "h")]
-  public SwitchParameter Hidden
-  {
-    get => hidden;
-    set => hidden = value;
-  }
-  private bool hidden;
+  public SwitchParameter Hidden { get; set; }
 
   [Parameter]
   [Alias("as")]
-  public SwitchParameter System
-  {
-    get => system;
-    set => system = value;
-  }
-  private bool system;
+  public SwitchParameter System { get; set; }
 
   [Parameter]
   [Alias("ar")]
-  public SwitchParameter ReadOnly
-  {
-    get => readOnly;
-    set => readOnly = value;
-  }
-  private bool readOnly;
+  public SwitchParameter ReadOnly { get; set; }
 
   [Parameter]
-  public SwitchParameter FollowSymlink
-  {
-    get => followSymlink;
-    set => followSymlink = value;
-  }
-  private bool followSymlink;
+  public SwitchParameter FollowSymlink { get; set; }
 
   [Parameter]
   [EnumCompletions(

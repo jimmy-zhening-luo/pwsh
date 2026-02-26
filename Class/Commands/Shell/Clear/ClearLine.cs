@@ -39,12 +39,7 @@ public sealed class ClearLine : CoreCommand
 
   [Parameter]
   [Alias("f")]
-  public SwitchParameter Force
-  {
-    get => force;
-    set => force = value;
-  }
-  private bool force;
+  public SwitchParameter Force { get; set; }
 
   [Parameter]
   public required string Stream { get; set; }

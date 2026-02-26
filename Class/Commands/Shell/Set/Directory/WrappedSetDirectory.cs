@@ -8,12 +8,7 @@ public abstract class WrappedSetDirectory() : WrappedCommand(
   private protected string path = string.Empty;
 
   [Parameter]
-  public SwitchParameter PassThru
-  {
-    get => passThru;
-    set => passThru = value;
-  }
-  private bool passThru;
+  public SwitchParameter PassThru { get; set; }
 
   private protected sealed override void TransformPipelineInput()
   {
