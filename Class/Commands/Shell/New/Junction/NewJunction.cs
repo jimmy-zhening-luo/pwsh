@@ -26,7 +26,7 @@ public sealed class NewJunction() : WrappedCommandShouldProcess(
   )]
   [Alias("Target")]
   [PathCompletions]
-  public object Value { get; set; } = string.Empty;
+  public required object Value { get; set; }
 
   private protected sealed override Dictionary<string, object> CoercedParameters => new()
   {

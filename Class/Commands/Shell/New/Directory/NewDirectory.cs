@@ -33,7 +33,7 @@ public sealed class NewDirectory() : WrappedCommandShouldProcess(
   [Parameter]
   [Alias("Target")]
   [PathCompletions]
-  public object Value { get; set; } = new();
+  public required object Value { get; set; }
 
   [Parameter]
   [Alias("f")]
