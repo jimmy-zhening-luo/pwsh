@@ -31,6 +31,37 @@ public partial class PathCompletionsAttribute(
 
   public bool Hidden { get; init; }
 
+  private static string Canonicalize(
+    string path,
+    bool preserveTrailingSeparator = default
+  )
+  {
+    string normalPath = Client.FileSystem.PathString.Normalize(
+      path,
+      preserveTrailingSeparator
+    );
+
+    string homedNormalPath = normalPath.StartsWith(
+      '~'
+    )
+      ? normalPath.Length == 1
+        ? Client.Environment.Known.Folder.Home()
+        : normalPath[1] == '\\'
+          ? Client.Environment.Known.Folder.Home(
+              normalPath[2..]
+            )
+          : normalPath
+        : normalPath;
+
+    return System.IO.Path.IsPathFullyQualified(
+      homedNormalPath
+    )
+      ? homedNormalPath
+      : PowerShellHost.CurrentDirectory(
+          homedNormalPath
+        );
+  }
+
   public sealed override PathCompleter Create() => new(
     Canonicalize(
       Location
