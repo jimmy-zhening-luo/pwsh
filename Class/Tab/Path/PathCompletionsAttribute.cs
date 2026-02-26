@@ -32,7 +32,7 @@ public partial class PathCompletionsAttribute(
   public bool Hidden { get; init; }
 
   public sealed override PathCompleter Create() => new(
-    Canonicalizer.Canonicalize(
+    Canonicalize(
       Location
     ),
     ItemType,
