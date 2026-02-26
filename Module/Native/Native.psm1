@@ -1,3 +1,70 @@
+@(
+  @{
+    Name = 'clb'
+    Value = 'Clear-RecycleBin'
+  }
+  @{
+    Name = 'k'
+    Value = 'Get-Member'
+  }
+  @{
+    Name = 'key'
+    Value = 'Get-Member'
+  }
+  @{
+    Name = 'psk'
+    Value = 'Get-PSReadLineKeyHandler'
+  }
+  @{
+    Name = 'verb'
+    Value = 'Get-VerbList'
+  }
+  @{
+    Name = 'ct'
+    Value = 'Measure-Object'
+  }
+  @{
+    Name = 'count'
+    Value = 'Measure-Object'
+  }
+  @{
+    Name = 'touch'
+    Value = 'New-Item'
+  }
+  @{
+    Name = 'remsv'
+    Value = 'Remove-Service'
+  }
+  @{
+    Name = 'restart'
+    Value = 'Restart-Computer'
+  }
+  @{
+    Name = '^'
+    Value = 'Select-Object'
+  }
+  @{
+    Name = 's'
+    Value = 'Select-Object'
+  }
+  @{
+    Name = 'sesv'
+    Value = 'Set-Service'
+  }
+  @{
+    Name = 'z'
+    Value = 'Sort-Object'
+  }
+  @{
+    Name = 'upman'
+    Value = 'Update-Help'
+  }
+  @{
+    Name = 'wg'
+    Value = "$env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe"
+  }
+) | New-Alias
+
 <#
 .SYNOPSIS
 Use WinGet to install a new package, upgrade an existing package, or list all packages with available updates.
@@ -88,29 +155,3 @@ function Remove-WinGetApp {
     throw "winget.exe error, execution stopped with exit code: $LASTEXITCODE"
   }
 }
-
-New-Alias ^ Select-Object
-New-Alias s Select-Object
-New-Alias k Get-Member
-New-Alias key Get-Member
-New-Alias ct Measure-Object
-New-Alias count Measure-Object
-New-Alias z Sort-Object
-New-Alias tab Format-Table
-New-Alias table Format-Table
-New-Alias format Format-Table
-
-New-Alias split Split-Path
-New-Alias hash Get-FileHash
-New-Alias touch New-Item
-
-New-Alias upman Update-Help
-New-Alias psk Get-PSReadLineKeyHandler
-
-New-Alias restart Restart-Computer
-New-Alias clb Clear-RecycleBin
-New-Alias sesv Set-Service
-New-Alias remsv Remove-Service
-New-Alias gapx Get-AppxPackage
-New-Alias remapx Remove-AppxPackage
-New-Alias wg $env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe

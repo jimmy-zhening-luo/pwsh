@@ -1,3 +1,4 @@
+$Env:PSModulePath += "$PSScriptRoot\Module;"
 $Global:InformationPreference = 'Continue'
 $Global:PSDefaultParameterValues = @{
   'Clear-RecycleBin:Force'        = $True
@@ -13,7 +14,6 @@ $Global:PSDefaultParameterValues = @{
   'Stop-Service:Force'            = $True
   'Update-Help:Scope'             = 'AllUsers'
 }
-$Env:PSModulePath += "$PSScriptRoot\Module;"
 
 @(
   'clear'
@@ -33,6 +33,7 @@ $Env:PSModulePath += "$PSScriptRoot\Module;"
 
 & {
   Import-Module PSReadLine
+
   @(
     @{
       Chord    = 'Shift+DownArrow'
@@ -46,12 +47,6 @@ $Env:PSModulePath += "$PSScriptRoot\Module;"
     ForEach-Object {
       Set-PSReadLineKeyHandler @PSItem
     }
-}
-
-if ($null -ne $Env:SSH_CLIENT) {
-  if ($PWD.Path -eq $HOME) {
-    Set-Location -LiteralPath code
-  }
 }
 
 & {
@@ -88,5 +83,11 @@ if ($null -ne $Env:SSH_CLIENT) {
 
   if ($Exists) {
     Add-Type -LiteralPath $ASSEMBLY
+  }
+}
+
+if ($null -ne $Env:SSH_CLIENT) {
+  if ($PWD.Path -eq $HOME) {
+    Set-Location -LiteralPath code
   }
 }
