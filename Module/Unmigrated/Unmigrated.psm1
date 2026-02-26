@@ -659,7 +659,7 @@ function Reset-GitRepository {
       $ResetArgument.Insert(0, $WorkingDirectory)
     }
     else {
-      $TreeMatch = [Module.Commands.Code.Git.GitArgument]::TreeRegex().Match($Tree)
+      $TreeMatch = [Module.Commands.Code.Git.GitArgument]::TreeRegex().Match($WorkingDirectory)
 
       if (
         $TreeMatch.Success -and (
