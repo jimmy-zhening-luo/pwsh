@@ -2,6 +2,16 @@ namespace Module.Tab.Path;
 
 public sealed partial class PathCompleter : TabCompleter
 {
+  private readonly required string Root;
+
+  private readonly PathItemType Type;
+
+  private readonly bool Flat;
+
+  private readonly bool Hidden;
+
+  private readonly bool Reanchor;
+
   public PathCompleter(
     string root,
     PathItemType type,
