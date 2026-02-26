@@ -15,6 +15,20 @@ public sealed partial class TestHost() : WrappedCommand(
   CommandTypes.Function
 )
 {
+  public enum TestHostWellKnownPort
+  {
+    HTTP = -4,
+    RDP,
+    SMB,
+    WINRM
+  }
+
+  public enum TestHostVerbosity
+  {
+    Quiet,
+    Detailed
+  }
+
   [Parameter(
     ParameterSetName = "ICMP",
     Position = default
