@@ -11,9 +11,9 @@ public abstract partial class CoreCommand(
     Stopped
   }
 
-  private protected record Root(
-    string Location,
-    string Subpath
+  private protected record Locator(
+    string Root = "",
+    string Subpath = ""
   );
 
   private CommandLifecycle stage;
@@ -29,12 +29,13 @@ public abstract partial class CoreCommand(
     );
   }
 
-  private protected virtual string Location => string.Empty;
+  private protected virtual Locator LocationRecord => new();
 
-  private protected virtual string LocationSubpath => string.Empty;
-
-  private protected bool UsingCurrentLocation => Location is ""
-    && LocationSubpath is "";
+  private protected bool UsingCurrentLocation => LocationRecord is
+  {
+    Root: "",
+    Subpath: ""
+  };
 
   private protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
 
@@ -173,10 +174,13 @@ public abstract partial class CoreCommand(
       typedPath
     ),
     System.IO.Path.GetFullPath(
-      LocationSubpath,
-      Location is ""
+      LocationRecord.Subpath,
+      LocationRecord is
+      {
+        Root: ""
+      }
         ? Pwd()
-        : Location
+        : LocationRecord.Root
     )
   );
 
