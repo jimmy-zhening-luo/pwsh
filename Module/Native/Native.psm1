@@ -91,10 +91,9 @@ function Remove-WinGetApp {
 
 New-Alias ^ Select-Object
 New-Alias s Select-Object
-New-Alias sel Select-Object
 New-Alias k Get-Member
 New-Alias key Get-Member
-New-Alias keys Get-Member
+New-Alias ct Measure-Object
 New-Alias count Measure-Object
 New-Alias z Sort-Object
 New-Alias tab Format-Table

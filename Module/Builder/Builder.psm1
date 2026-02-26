@@ -63,7 +63,7 @@ function Update-PSProfile {
 
     try {
       $DotnetExecutable = Get-Command -Name dotnet.exe -CommandType Application -All |
-        ForEach-Object Source
+        ForEach-Object -MemberName Source
 
       $DotnetArgument = @(
         "$PROFILE_REPO_ROOT\Class.slnx"

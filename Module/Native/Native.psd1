@@ -17,10 +17,9 @@
   AliasesToExport      = @(
     '^'
     's'
-    'sel'
     'k'
     'key'
-    'keys'
+    'ct'
     'count'
     'z'
     'tab'
