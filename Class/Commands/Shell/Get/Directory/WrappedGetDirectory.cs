@@ -122,7 +122,6 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
     typeof(System.IO.FileAttributes)
   )]
     public required FlagsExpression<System.IO.FileAttributes> Attributes { get; set; }
-  );
 
   private protected sealed override void TransformArguments()
   {
