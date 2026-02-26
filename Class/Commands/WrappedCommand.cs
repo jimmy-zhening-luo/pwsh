@@ -13,7 +13,7 @@ public abstract class WrappedCommand(
 
   private SteppablePipeline? steppablePipeline = default;
 
-  private protected virtual Dictionary<string, object> CoercedParameters => [];
+  private protected virtual Dictionary<string, object?> CoercedParameters => [];
 
   private protected virtual void TransformArguments()
   { }

@@ -123,9 +123,9 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   )]
     public required FlagsExpression<System.IO.FileAttributes> Attributes { get; set; }
 
-  private protected sealed override Dictionary<string, object> CoercedParameters => new()
+  private protected sealed override Dictionary<string, object?> CoercedParameters => new()
   {
-    ["Filter"] = filter is null or ""
+    ["Filter"] = filter is ""
       ? null
       : filter,
   };
