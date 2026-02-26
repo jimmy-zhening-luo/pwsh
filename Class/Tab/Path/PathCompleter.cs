@@ -109,14 +109,14 @@ public sealed class PathCompleter(
 
     int count = default;
     filter += "*";
-    var attributes = new System.IO.EnumerationOptions()
+    var options = new System.IO.EnumerationOptions()
     {
       IgnoreInaccessible = default
     };
 
     if (Hidden)
     {
-      attributes.AttributesToSkip = System.IO.FileAttributes.System;
+      options.AttributesToSkip = System.IO.FileAttributes.System;
     }
 
     if (Type == PathItemType.File)
@@ -126,15 +126,13 @@ FileFirstMatch:
         var file in System.IO.Directory.EnumerateFiles(
           location,
           filter,
-          attributes
+          options
         )
       )
       {
         ++count;
-        yield return Canonicalizer.Denormalize(
-          System.IO.Path.GetFileName(
-            file
-          ),
+        yield return CompletionString(
+          file,
           accumulatedSubpath
         );
       }
@@ -142,10 +140,10 @@ FileFirstMatch:
       if (
         count == 0
         && filter.Length > 1
-        && attributes.AttributesToSkip != System.IO.FileAttributes.System
+        && options.AttributesToSkip != System.IO.FileAttributes.System
       )
       {
-        attributes.AttributesToSkip = System.IO.FileAttributes.System;
+        options.AttributesToSkip = System.IO.FileAttributes.System;
 
         goto FileFirstMatch;
       }
@@ -161,27 +159,25 @@ Match:
       var directory in System.IO.Directory.EnumerateDirectories(
         location,
         filter,
-        attributes
+        options
       )
     )
     {
       ++count;
-      yield return Canonicalizer.Denormalize(
-        System.IO.Path.GetFileName(
-          directory
-        ),
+      yield return CompletionString(
+        directory,
         accumulatedSubpath,
-        directoryCap
+        !Flat
       );
     }
 
     if (
       count == checkpoint
       && filter.Length > 1
-      && attributes.AttributesToSkip != System.IO.FileAttributes.System
+      && options.AttributesToSkip != System.IO.FileAttributes.System
     )
     {
-      attributes.AttributesToSkip = System.IO.FileAttributes.System;
+      options.AttributesToSkip = System.IO.FileAttributes.System;
 
       goto Match;
     }
@@ -194,15 +190,13 @@ Match:
         var file in System.IO.Directory.EnumerateFiles(
           location,
           filter,
-          attributes
+          options
         )
       )
       {
         ++count;
-        yield return Canonicalizer.Denormalize(
-          System.IO.Path.GetFileName(
-            file
-          ),
+        yield return CompletionString(
+          file,
           accumulatedSubpath
         );
       }
@@ -210,10 +204,10 @@ Match:
       if (
         count == checkpoint
         && filter.Length > 1
-        && attributes.AttributesToSkip != System.IO.FileAttributes.System
+        && options.AttributesToSkip != System.IO.FileAttributes.System
       )
       {
-        attributes.AttributesToSkip = System.IO.FileAttributes.System;
+        options.AttributesToSkip = System.IO.FileAttributes.System;
 
         goto Match;
       }
@@ -225,7 +219,7 @@ Match:
       )
     )
     {
-      yield return Canonicalizer.Denormalize(
+      yield return CompletionString(
         @"\",
         accumulatedSubpath
       );
@@ -238,7 +232,7 @@ Match:
       || count != 0
     )
     {
-      yield return Canonicalizer.Denormalize(
+      yield return CompletionString(
         @"..\",
         accumulatedSubpath
       );
@@ -246,4 +240,18 @@ Match:
 
     yield break;
   }
+
+  private string CompletionString(
+    string path,
+    string accumulatedSubpath,
+    bool trailingSeparator = default
+  ) => Canonicalizer.Denormalize(
+    System.IO.Path.GetFileName(
+      file
+    ),
+    accumulatedSubpath,
+    trailingSeparator
+      ? @"\"
+      : string.Empty
+  );
 }
