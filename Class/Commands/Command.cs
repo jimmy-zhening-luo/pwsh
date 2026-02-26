@@ -4,7 +4,7 @@ public abstract partial class CoreCommand(
   bool SkipSsh = default
 ) : PSCmdlet, System.IDisposable
 {
-  public record Root(
+  private protected record Root(
     string Location,
     string Subpath
   );
