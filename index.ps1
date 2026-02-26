@@ -25,24 +25,6 @@ $Global:PSDefaultParameterValues = @{
 ) | Remove-Alias -Force
 
 & {
-  Import-Module PSReadLine
-
-  @(
-    @{
-      Chord    = 'Shift+DownArrow'
-      Function = 'NextHistory'
-    }
-    @{
-      Chord    = 'Shift+UpArrow'
-      Function = 'PreviousHistory'
-    }
-  ) |
-    ForEach-Object {
-      Set-PSReadLineKeyHandler @PSItem
-    }
-}
-
-& {
   $DIST = "$PSScriptRoot\Class\bin\Release\net9.0-windows\Module.dll"
   $MODULE = "$PSScriptRoot\Module\Module"
   $ASSEMBLY = "$MODULE\Module.dll"
@@ -80,6 +62,40 @@ $Global:PSDefaultParameterValues = @{
 }
 
 if ($null -ne $Env:SSH_CLIENT) {
+  & {
+    Import-Module PSReadLine
+
+    @(
+      @{
+        Chord    = 'Shift+DownArrow'
+        Function = 'NextHistory'
+      }
+      @{
+        Chord    = 'Shift+UpArrow'
+        Function = 'PreviousHistory'
+      }
+      @{
+        Chord    = 'Ctrl+RightArrow'
+        Function = 'ForwardWord'
+      }
+      @{
+        Chord    = 'Shift+Ctrl+RightArrow'
+        Function = 'SelectForwardWord'
+      }
+      @{
+        Chord    = 'Ctrl+d'
+        Function = 'SwitchPredictionView'
+      }
+      @{
+        Chord    = 'Ctrl+D'
+        Function = 'SwitchPredictionView'
+      }
+    ) |
+      ForEach-Object {
+        Set-PSReadLineKeyHandler @PSItem
+      }
+  }
+
   if ($PWD.Path -eq $HOME) {
     Set-Location -LiteralPath code
   }
