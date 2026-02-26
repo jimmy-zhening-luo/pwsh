@@ -4,6 +4,13 @@ public abstract partial class CoreCommand(
   bool SkipSsh = default
 ) : PSCmdlet, System.IDisposable
 {
+  private enum CommandLifecycle
+  {
+    NotStarted,
+    Processing,
+    Stopped
+  }
+
   private protected record Root(
     string Location,
     string Subpath
