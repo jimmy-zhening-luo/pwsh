@@ -16,7 +16,7 @@ internal static class PowerShellHost
   {
     using var ps = Create();
 
-    var currentLocation =  ps
+    var currentLocation = ps
       .AddCommand(
         CommandInvocationIntrinsics.GetCommand(
           @"Microsoft.PowerShell.Management\Get-Location",
@@ -27,7 +27,7 @@ internal static class PowerShellHost
       .BaseObject
       .ToString();
 
-    if (pwd is null or "")
+    if (currentLocation is null or "")
     {
       throw new System.InvalidOperationException(
         "Failed to get current location of PowerShell host."

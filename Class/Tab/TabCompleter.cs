@@ -7,7 +7,9 @@ public abstract class TabCompleter(
   private static string Escape(string text) => text.Contains(' ')
     ? string.Concat(
         "'",
-        System.Management.Automation.Language.CodeGeneration.EscapeSingleQuotedStringContent(text),
+        System.Management.Automation.Language.CodeGeneration.EscapeSingleQuotedStringContent(
+          text
+        ),
         "'"
       )
     : text;
@@ -30,8 +32,10 @@ public abstract class TabCompleter(
     System.Management.Automation.Language.CommandAst commandAst,
     IDictionary fakeBoundParameters
   ) => WrapArgumentCompletionResult(
-    GenerateCompletions(
-      Unescape(wordToComplete)
+    GenerateCompletion(
+      Unescape(
+        wordToComplete
+      )
         .Trim()
     )
   );
