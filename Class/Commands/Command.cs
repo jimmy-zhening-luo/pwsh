@@ -42,7 +42,7 @@ public abstract class CoreCommand(
     && !stopped
     && !BlockedBySsh;
 
-  public void Dispose()
+  public void System.IDisposable.Dispose()
   {
     Dispose(
       true
