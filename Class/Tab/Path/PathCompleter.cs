@@ -2,7 +2,7 @@ namespace Module.Tab.Path;
 
 public sealed partial class PathCompleter : TabCompleter
 {
-  private readonly required string Root;
+  private readonly string Root;
 
   private readonly PathItemType Type;
 
