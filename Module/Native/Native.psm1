@@ -1,69 +1,18 @@
-@(
-  @{
-    Name = 'clb'
-    Value = 'Clear-RecycleBin'
-  }
-  @{
-    Name = 'k'
-    Value = 'Get-Member'
-  }
-  @{
-    Name = 'key'
-    Value = 'Get-Member'
-  }
-  @{
-    Name = 'psk'
-    Value = 'Get-PSReadLineKeyHandler'
-  }
-  @{
-    Name = 'verb'
-    Value = 'Get-VerbList'
-  }
-  @{
-    Name = 'ct'
-    Value = 'Measure-Object'
-  }
-  @{
-    Name = 'count'
-    Value = 'Measure-Object'
-  }
-  @{
-    Name = 'touch'
-    Value = 'New-Item'
-  }
-  @{
-    Name = 'remsv'
-    Value = 'Remove-Service'
-  }
-  @{
-    Name = 'restart'
-    Value = 'Restart-Computer'
-  }
-  @{
-    Name = '^'
-    Value = 'Select-Object'
-  }
-  @{
-    Name = 's'
-    Value = 'Select-Object'
-  }
-  @{
-    Name = 'sesv'
-    Value = 'Set-Service'
-  }
-  @{
-    Name = 'z'
-    Value = 'Sort-Object'
-  }
-  @{
-    Name = 'upman'
-    Value = 'Update-Help'
-  }
-  @{
-    Name = 'wg'
-    Value = "$env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe"
-  }
-) | New-Alias
+New-Alias clb Clear-RecycleBin
+New-Alias k Get-Member
+New-Alias key Get-Member
+New-Alias psk Get-PSReadLineKeyHandler
+New-Alias ct Measure-Object
+New-Alias count Measure-Object
+New-Alias touch New-Item
+New-Alias remsv Remove-Service
+New-Alias restart Restart-Computer
+New-Alias ^ Select-Object
+New-Alias s Select-Object
+New-Alias sesv Set-Service
+New-Alias z Sort-Object
+New-Alias upman Update-Help
+New-Alias wg $env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe
 
 <#
 .SYNOPSIS

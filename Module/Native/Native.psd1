@@ -19,7 +19,6 @@
     'k'
     'key'
     'psk'
-    'verb'
     'ct'
     'count'
     'touch'
