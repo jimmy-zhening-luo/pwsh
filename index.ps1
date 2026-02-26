@@ -1,18 +1,18 @@
 $Env:PSModulePath += "$PSScriptRoot\Module;"
 $Global:InformationPreference = 'Continue'
 $Global:PSDefaultParameterValues = @{
-  'Clear-RecycleBin:Force'        = $True
-  'Format-Table:Wrap'             = $True
-  'Get-AppxPackage:AllUsers'      = $True
-  'Get-Process:ErrorAction'       = 'SilentlyContinue'
-  'Get-WindowsDriver:All'         = $True
-  'Get-WindowsDriver:Online'      = $True
-  'Install-Module:Force'          = $True
-  'Install-Module:Scope'          = 'AllUsers'
-  'Invoke-WebRequest:Method'      = 'GET'
-  'Remove-Item:Force'             = $True
-  'Stop-Service:Force'            = $True
-  'Update-Help:Scope'             = 'AllUsers'
+  'Clear-RecycleBin:Force'   = $True
+  'Format-Table:Wrap'        = $True
+  'Get-AppxPackage:AllUsers' = $True
+  'Get-Process:ErrorAction'  = 'SilentlyContinue'
+  'Get-WindowsDriver:All'    = $True
+  'Get-WindowsDriver:Online' = $True
+  'Install-Module:Force'     = $True
+  'Install-Module:Scope'     = 'AllUsers'
+  'Invoke-WebRequest:Method' = 'GET'
+  'Remove-Item:Force'        = $True
+  'Stop-Service:Force'       = $True
+  'Update-Help:Scope'        = 'AllUsers'
 }
 
 @(
@@ -31,7 +31,7 @@ $Global:PSDefaultParameterValues = @{
     @{
       Chord    = 'Shift+DownArrow'
       Function = 'NextHistory'
-    }  
+    }
     @{
       Chord    = 'Shift+UpArrow'
       Function = 'PreviousHistory'
