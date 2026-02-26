@@ -1088,12 +1088,12 @@ function Invoke-NodePackageScript {
   $NodeArgument = [System.Collections.Generic.List[string]]::new()
   $NodeArgument.Add($Script)
 
-    if (
-      $WorkingDirectory -and ![Module.Commands.Code.Node.NodeWorkingDirectory]::Test(
-        $WorkingDirectory,
-        $PWD.Path
-      )
-    ) {
+  if (
+    $WorkingDirectory -and ![Module.Commands.Code.Node.NodeWorkingDirectory]::Test(
+      $WorkingDirectory,
+      $PWD.Path
+    )
+  ) {
     $NodeArgument.Add($WorkingDirectory)
     $WorkingDirectory = ''
   }
