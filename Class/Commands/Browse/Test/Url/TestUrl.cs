@@ -33,10 +33,14 @@ public sealed class TestUrl : CoreCommand
     {
       System.Uri url = new(
         uri.IsAbsoluteUri
-          ? uri.Host.Trim() is ""
+          ? string.IsNullOrWhiteSpace(
+              uri.Host
+            )
             ? string.Empty
             : uri.AbsoluteUri.Trim()
-          : uri.OriginalString.Trim() is ""
+          : string.IsNullOrWhiteSpace(
+              uri.OriginalString
+            )
             ? string.Empty
             : string.Concat(
                 "http://",
