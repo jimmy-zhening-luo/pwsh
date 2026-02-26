@@ -14,7 +14,7 @@ public abstract class WrappedCommandShouldProcess(
 {
   [Parameter]
   [Alias("wi")]
-  public required SwitchParameter WhatIf { get; set; }
+  public SwitchParameter WhatIf { get; set; }
 
   [Parameter]
   [Alias("cf")]
