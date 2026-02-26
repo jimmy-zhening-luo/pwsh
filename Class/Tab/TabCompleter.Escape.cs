@@ -1,8 +1,8 @@
 namespace Module.Tab;
 
-internal static class Escaper
+public partial class TabCompleter
 {
-  internal static string Escape(
+  private protected static string Escape(
     string text
   ) => text.Contains(
     ' '
@@ -14,7 +14,7 @@ internal static class Escaper
       + "'"
     : text;
 
-  internal static string Unescape(
+  private protected static string Unescape(
     string escapedText
   ) => (
     escapedText.Length > 1

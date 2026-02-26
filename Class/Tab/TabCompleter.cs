@@ -1,6 +1,6 @@
 namespace Module.Tab;
 
-public abstract class TabCompleter(
+public abstract partial class TabCompleter(
   CompletionCase Casing = default
 ) : IArgumentCompleter
 {
@@ -12,7 +12,7 @@ public abstract class TabCompleter(
     IDictionary fakeBoundParameters
   ) => WrapArgumentCompletionResult(
     FulfillCompletion(
-      Escaper.Unescape(
+      Unescape(
         wordToComplete
       )
         .Trim()
@@ -32,7 +32,7 @@ public abstract class TabCompleter(
     )
     {
       yield return new CompletionResult(
-        Escaper.Escape(
+        Escape(
           Casing switch
           {
             CompletionCase.Upper => completedString.ToUpper(),
