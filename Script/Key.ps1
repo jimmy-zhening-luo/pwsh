@@ -10,6 +10,22 @@
       Chord = 'Shift+UpArrow'
       Function = 'PreviousHistory'
     }
+    @{
+      Chord = 'Shift+UpArrow'
+      Function = 'PreviousHistory'
+    }
+    @{
+      Chord = 'Shift+UpArrow'
+      Function = 'PreviousHistory'
+    }
+    @{
+      Chord = 'Shift+UpArrow'
+      Function = 'PreviousHistory'
+    }
+    @{
+      Chord = 'Shift+UpArrow'
+      Function = 'PreviousHistory'
+    }
   ) |
     ForEach-Object {
       Set-PSReadLineKeyHandler @PSItem
