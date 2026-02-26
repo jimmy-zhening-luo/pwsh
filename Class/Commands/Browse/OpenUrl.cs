@@ -8,9 +8,7 @@ namespace Module.Commands.Browse;
 )]
 [Alias("o", "open")]
 [OutputType(typeof(void))]
-public sealed class OpenUrl() : CoreCommand(
-  true
-)
+public sealed class OpenUrl() : CoreCommand(true)
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -21,9 +19,7 @@ public sealed class OpenUrl() : CoreCommand(
   public string Path
   {
     get => path;
-    set => path = Client.File.PathString.Normalize(
-      value
-    );
+    set => path = Client.File.PathString.Normalize(value);
   }
   private string path = string.Empty;
 
@@ -42,9 +38,7 @@ public sealed class OpenUrl() : CoreCommand(
   {
     foreach (var uri in Uri)
     {
-      Client.Network.Url.Open(
-        uri
-      );
+      Client.Network.Url.Open(uri);
     }
   }
 
@@ -60,27 +54,19 @@ public sealed class OpenUrl() : CoreCommand(
           SessionState.Path.CurrentLocation.Path,
           Path
         );
-        var testPath = System.IO.Path.IsPathRooted(
-          relativePath
-        )
+        var testPath = System.IO.Path.IsPathRooted(relativePath)
           ? relativePath
           : System.IO.Path.Combine(
               SessionState.Path.CurrentLocation.Path,
               relativePath
             );
 
-        target = System.IO.Path.Exists(
-          testPath
-        )
-          ? System.IO.Path.GetFullPath(
-              testPath
-            )
+        target = System.IO.Path.Exists(testPath)
+          ? System.IO.Path.GetFullPath(testPath)
           : Path;
       }
 
-      Client.Network.Url.Open(
-        target
-      );
+      Client.Network.Url.Open(target);
     }
   }
 }

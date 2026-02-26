@@ -34,18 +34,14 @@ public sealed class StartWorkspaceSibling : VirtualStartWorkspace
   [Parameter(
     Position = default
   )]
-  [PathCompletions(
-    ".."
-  )]
+  [PathCompletions("..")]
   public sealed override string Path
   {
     get => path;
     set => path = value;
   }
 
-  private protected sealed override Locator Location => new(
-    Subpath: @".."
-  );
+  private protected sealed override Locator Location => new(Subpath: @"..");
 }
 
 [Cmdlet(
@@ -61,18 +57,14 @@ public sealed class StartWorkspaceRelative : VirtualStartWorkspace
   [Parameter(
     Position = default
   )]
-  [PathCompletions(
-    @"..\.."
-  )]
+  [PathCompletions(@"..\..")]
   public sealed override string Path
   {
     get => path;
     set => path = value;
   }
 
-  private protected sealed override Locator Location => new(
-    Subpath: @"..\.."
-  );
+  private protected sealed override Locator Location => new(Subpath: @"..\..");
 }
 
 [Cmdlet(
@@ -88,18 +80,14 @@ public sealed class StartWorkspaceHome : VirtualStartWorkspace
   [Parameter(
     Position = default
   )]
-  [PathCompletions(
-    "~"
-  )]
+  [PathCompletions("~")]
   public sealed override string Path
   {
     get => path;
     set => path = value;
   }
 
-  private protected sealed override Locator Location => new(
-    Client.Environment.Known.Folder.Home()
-  );
+  private protected sealed override Locator Location => new(Client.Environment.Known.Folder.Home());
 }
 
 [Cmdlet(
@@ -115,9 +103,7 @@ public sealed class StartWorkspaceCode : VirtualStartWorkspace
   [Parameter(
     Position = default
   )]
-  [PathCompletions(
-    @"~\code"
-  )]
+  [PathCompletions(@"~\code")]
   public sealed override string Path
   {
     get => path;
@@ -143,16 +129,12 @@ public sealed class StartWorkspaceDrive : VirtualStartWorkspace
   [Parameter(
     Position = default
   )]
-  [PathCompletions(
-    @"\"
-  )]
+  [PathCompletions(@"\")]
   public sealed override string Path
   {
     get => path;
     set => path = value;
   }
 
-  private protected sealed override Locator Location => new(
-    CurrentDrive()
-  );
+  private protected sealed override Locator Location => new(CurrentDrive());
 }

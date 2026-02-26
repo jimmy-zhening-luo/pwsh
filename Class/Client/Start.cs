@@ -59,9 +59,7 @@ internal static class Start
       startInfo.Verb = "RunAs";
     }
 
-    _ = System.Diagnostics.Process.Start(
-      startInfo
-    );
+    _ = System.Diagnostics.Process.Start(startInfo);
   }
 
   private static System.Diagnostics.ProcessStartInfo ArgumentList(
@@ -72,14 +70,10 @@ internal static class Start
   {
     List<string>? argumentList = arguments is null
       ? default
-      : new(
-          arguments
-        );
+      : new(arguments);
 
     System.Diagnostics.ProcessStartInfo startInfo = argumentList is null or []
-      ? new(
-          fileName
-        )
+      ? new(fileName)
       : new(
           fileName,
           argumentList

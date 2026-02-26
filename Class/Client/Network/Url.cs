@@ -37,9 +37,7 @@ internal static class Url
 
     if (url is not "")
     {
-      Open(
-        url
-      );
+      Open(url);
     }
   }
 

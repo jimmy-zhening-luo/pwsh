@@ -4,30 +4,18 @@ public abstract class TabCompleter(
   CompletionCase Casing = default
 ) : IArgumentCompleter
 {
-  private static string Escape(
-    string text
-  ) => text.Contains(
-    ' '
-  )
+  private static string Escape(string text) => text.Contains(' ')
     ? string.Concat(
         "'",
-        System.Management.Automation.Language.CodeGeneration.EscapeSingleQuotedStringContent(
-          text
-        ),
+        System.Management.Automation.Language.CodeGeneration.EscapeSingleQuotedStringContent(text),
         "'"
       )
     : text;
 
-  private static string Unescape(
-    string escapedText
-  ) => (
+  private static string Unescape(string escapedText) => (
     escapedText.Length > 1
-    && escapedText.StartsWith(
-      '\''
-    )
-    && escapedText.EndsWith(
-      '\''
-    )
+    && escapedText.StartsWith('\'')
+    && escapedText.EndsWith('\'')
   )
     ? escapedText[1..^1].Replace(
         "''",
@@ -43,24 +31,16 @@ public abstract class TabCompleter(
     IDictionary fakeBoundParameters
   ) => WrapArgumentCompletionResult(
     GenerateCompletions(
-      Unescape(
-        wordToComplete
-      )
+      Unescape(wordToComplete)
         .Trim()
     )
   );
 
-  private protected abstract IEnumerable<string> GenerateCompletions(
-    string wordToComplete
-  );
+  private protected abstract IEnumerable<string> GenerateCompletion(string wordToComplete);
 
-  private IEnumerable<CompletionResult> WrapArgumentCompletionResult(
-    IEnumerable<string> completedStrings
-  )
+  private IEnumerable<CompletionResult> WrapArgumentCompletionResult(IEnumerable<string> completedStrings)
   {
-    foreach (
-      var completedString in completedStrings
-    )
+    foreach (var completedString in completedStrings)
     {
       yield return new(
         Escape(

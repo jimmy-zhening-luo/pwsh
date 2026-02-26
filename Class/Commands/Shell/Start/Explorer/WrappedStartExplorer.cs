@@ -41,9 +41,7 @@ public abstract class WrappedStartExplorer() : WrappedCommandShouldProcess(
           ++i
         )
         {
-          Path[i] = Reanchor(
-            Path[i]
-          );
+          Path[i] = Reanchor(Path[i]);
         }
 
         BoundParameters["Path"] = Path;

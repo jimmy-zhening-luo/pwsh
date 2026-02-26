@@ -35,12 +35,8 @@ public abstract class TaskManager : CoreCommand
     int pid,
     bool entireProcessTree = default
   ) => System.Diagnostics.Process
-    .GetProcessById(
-      pid
-    )
-    .Kill(
-      entireProcessTree
-    );
+    .GetProcessById(pid)
+    .Kill(entireProcessTree);
 
   private protected static void KillProcesses(
     string name,
@@ -53,9 +49,7 @@ public abstract class TaskManager : CoreCommand
       )
     )
     {
-      process.Kill(
-        entireProcessTree
-      );
+      process.Kill(entireProcessTree);
     }
   }
 
@@ -86,9 +80,7 @@ public abstract class TaskManager : CoreCommand
       case "Name":
         if (Name is [])
         {
-          KillProcesses(
-            "explorer"
-          );
+          KillProcesses("explorer");
         }
         else
         {

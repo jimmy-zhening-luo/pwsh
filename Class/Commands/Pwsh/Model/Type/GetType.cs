@@ -23,9 +23,7 @@ public sealed class GetType : CoreCommand
       Throw(
         new System.ArgumentException(
           "Cannot get type of null InputObject.",
-          nameof(
-            InputObject
-          )
+          nameof(InputObject)
         ),
         ErrorCategory.InvalidArgument,
         InputObject
@@ -42,9 +40,7 @@ public sealed class GetType : CoreCommand
     }
     else
     {
-      WriteObject(
-        InputObject.GetType()
-      );
+      WriteObject(InputObject.GetType());
     }
   }
 }

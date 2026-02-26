@@ -55,9 +55,7 @@ public sealed class TestHost() : WrappedCommand(
     Mandatory = true,
     Position = 1
   )]
-  [EnumCompletions(
-    typeof(TestHostWellKnownPort)
-  )]
+  [EnumCompletions(typeof(TestHostWellKnownPort))]
   public string CommonTCPPort { get; set; } = string.Empty;
 
   [Parameter(
@@ -96,9 +94,7 @@ public sealed class TestHost() : WrappedCommand(
   public uint ConstrainInterface { get; set; }
 
   [Parameter]
-  [EnumCompletions(
-    typeof(TestHostVerbosity)
-  )]
+  [EnumCompletions(typeof(TestHostVerbosity))]
   public TestHostVerbosity InformationLevel { get; set; }
 
   [Parameter]
@@ -124,9 +120,7 @@ public sealed class TestHost() : WrappedCommand(
       case "ICMP":
         if (ComputerName is "")
         {
-          CommonTCPPort = nameof(
-            TestHostWellKnownPort.HTTP
-          );
+          CommonTCPPort = nameof(TestHostWellKnownPort.HTTP);
           BoundParameters["CommonTCPPort"] = CommonTCPPort;
         }
 
@@ -144,9 +138,7 @@ public sealed class TestHost() : WrappedCommand(
         )
         {
           CommonTCPPort = string.Empty;
-          _ = BoundParameters.Remove(
-            "CommonTCPPort"
-          );
+          _ = BoundParameters.Remove("CommonTCPPort");
 
           Port = parsedPortNumber;
           BoundParameters["Port"] = (int)Port;

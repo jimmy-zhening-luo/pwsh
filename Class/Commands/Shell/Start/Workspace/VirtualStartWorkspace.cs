@@ -1,8 +1,6 @@
 namespace Module.Commands.Shell.Start.Workspace;
 
-public abstract class VirtualStartWorkspace() : CoreCommand(
-  true
-)
+public abstract class VirtualStartWorkspace() : CoreCommand(true)
 {
   public abstract string Path { get; set; }
   private protected string path = string.Empty;
@@ -39,25 +37,15 @@ public abstract class VirtualStartWorkspace() : CoreCommand(
   {
     List<string> argumentList = [
       UsingDefaultLocation
-        ? Pwd(
-            Path
-          )
-        : Reanchor(
-            Path
-          ),
+        ? Pwd(Path)
+        : Reanchor(Path),
     ];
 
     if (Name is not "")
     {
-      if (
-        Name.StartsWith(
-          "--"
-        )
-      )
+      if (Name.StartsWith("--"))
       {
-        argumentList.Add(
-          Name
-        );
+        argumentList.Add(Name);
       }
       else
       {
@@ -78,22 +66,16 @@ public abstract class VirtualStartWorkspace() : CoreCommand(
 
     if (window)
     {
-      argumentList.Add(
-        "--new-window"
-      );
+      argumentList.Add("--new-window");
     }
     else if (reuseWindow)
     {
-      argumentList.Add(
-        "--reuse-window"
-      );
+      argumentList.Add("--reuse-window");
     }
 
     if (Argument is not [])
     {
-      argumentList.AddRange(
-        Argument
-      );
+      argumentList.AddRange(Argument);
     }
 
     Client.Start.CreateProcess(

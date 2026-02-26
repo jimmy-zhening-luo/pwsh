@@ -34,9 +34,7 @@ public sealed class CopyGuid : CoreCommand
   {
     var guid = System.Guid
       .NewGuid()
-      .ToString(
-        "D"
-      );
+      .ToString("D");
 
     if (uppercase)
     {
@@ -45,14 +43,10 @@ public sealed class CopyGuid : CoreCommand
 
     if (!silent)
     {
-      WriteObject(
-        guid
-      );
+      WriteObject(guid);
     }
 
-    _ = AddCommand(
-      "Set-Clipboard"
-    )
+    _ = AddCommand("Set-Clipboard")
       .AddParameter(
         "Value",
         new string[]

@@ -24,9 +24,7 @@ public sealed class PathCompleter : TabCompleter
     Hidden,
     AllowReanchor
   ) = (
-    Canonicalize(
-      location
-    ),
+    Canonicalize(location),
     itemType,
     flat,
     hidden,
@@ -43,9 +41,7 @@ public sealed class PathCompleter : TabCompleter
       preserveTrailingSeparator
     );
 
-    var homedNormalPath = normalPath.StartsWith(
-      '~'
-    )
+    var homedNormalPath = normalPath.StartsWith('~')
       ? normalPath.Length is 1
         ? Client.Environment.Known.Folder.Home()
         : normalPath[1] is '\\'
@@ -55,13 +51,9 @@ public sealed class PathCompleter : TabCompleter
           : normalPath
         : normalPath;
 
-    return System.IO.Path.IsPathFullyQualified(
-      homedNormalPath
-    )
+    return System.IO.Path.IsPathFullyQualified(homedNormalPath)
       ? homedNormalPath
-      : PowerShellHost.CurrentDirectory(
-          homedNormalPath
-        );
+      : PowerShellHost.CurrentDirectory(homedNormalPath);
   }
 
   private static string Denormalize(
@@ -85,18 +77,14 @@ public sealed class PathCompleter : TabCompleter
     string accumulatedSubpath,
     bool trailingSeparator = default
   ) => Denormalize(
-    System.IO.Path.GetFileName(
-      path
-    ),
+    System.IO.Path.GetFileName(path),
     accumulatedSubpath,
     trailingSeparator
       ? @"\"
       : string.Empty
   );
 
-  private protected sealed override IEnumerable<string> GenerateCompletions(
-    string wordToComplete
-  )
+  private protected sealed override IEnumerable<string> GenerateCompletion(string wordToComplete)
   {
     var pathToComplete = Client.File.PathString.Normalize(
       wordToComplete,
@@ -108,9 +96,7 @@ public sealed class PathCompleter : TabCompleter
 
     while (pathToComplete is not "")
     {
-      var pathEnd = pathToComplete.LastIndexOf(
-        '\\'
-      );
+      var pathEnd = pathToComplete.LastIndexOf('\\');
 
       if (pathEnd < 0)
       {
@@ -156,14 +142,10 @@ public sealed class PathCompleter : TabCompleter
           }
           else if (
             AllowReanchor
-            && System.IO.Directory.Exists(
-              subpathPart
-            )
+            && System.IO.Directory.Exists(subpathPart)
           )
           {
-            accumulatedSubpath = System.IO.Path.GetFullPath(
-              subpathPart
-            );
+            accumulatedSubpath = System.IO.Path.GetFullPath(subpathPart);
             fullAccumulatedPath = accumulatedSubpath;
             pathToComplete = string.Empty;
           }

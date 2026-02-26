@@ -45,18 +45,14 @@ public sealed class StartExplorerSibling : WrappedStartExplorer
     Position = default
   )]
   [SupportsWildcards]
-  [PathCompletions(
-    ".."
-  )]
+  [PathCompletions("..")]
   public sealed override string[] Path
   {
     get => paths;
     set => paths = value;
   }
 
-  private protected sealed override Locator Location => new(
-    Subpath: @".."
-  );
+  private protected sealed override Locator Location => new(Subpath: @"..");
 }
 
 [Cmdlet(
@@ -74,18 +70,14 @@ public sealed class StartExplorerRelative : WrappedStartExplorer
     Position = default
   )]
   [SupportsWildcards]
-  [PathCompletions(
-    @"..\.."
-  )]
+  [PathCompletions(@"..\..")]
   public sealed override string[] Path
   {
     get => paths;
     set => paths = value;
   }
 
-  private protected sealed override Locator Location => new(
-    Subpath: @"..\.."
-  );
+  private protected sealed override Locator Location => new(Subpath: @"..\..");
 }
 
 [Cmdlet(
@@ -103,9 +95,7 @@ public sealed class StartExplorerHome : WrappedStartExplorer
     Position = default
   )]
   [SupportsWildcards]
-  [PathCompletions(
-    "~"
-  )]
+  [PathCompletions("~")]
   public sealed override string[] Path
   {
     get => paths;
@@ -132,9 +122,7 @@ public sealed class StartExplorerCode : WrappedStartExplorer
     Position = default
   )]
   [SupportsWildcards]
-  [PathCompletions(
-    @"~\code"
-  )]
+  [PathCompletions(@"~\code")]
   public sealed override string[] Path
   {
     get => paths;
@@ -162,16 +150,12 @@ public sealed class StartExplorerDrive : WrappedStartExplorer
     Position = default
   )]
   [SupportsWildcards]
-  [PathCompletions(
-    @"\"
-  )]
+  [PathCompletions(@"\")]
   public sealed override string[] Path
   {
     get => paths;
     set => paths = value;
   }
 
-  private protected sealed override Locator Location => new(
-    CurrentDrive()
-  );
+  private protected sealed override Locator Location => new(CurrentDrive());
 }

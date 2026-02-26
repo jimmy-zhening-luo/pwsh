@@ -8,9 +8,5 @@ public class EnumCompletionsAttribute(
   Casing
 )
 {
-  private protected sealed override IEnumerable<string> ResolveDomain(
-    System.Type enumType
-  ) => System.Enum.GetNames(
-    enumType
-  );
+  private protected sealed override IEnumerable<string> ResolveDomain(System.Type enumType) => System.Enum.GetNames(enumType);
 }

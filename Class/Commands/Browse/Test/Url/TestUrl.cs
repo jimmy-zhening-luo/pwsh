@@ -29,14 +29,10 @@ public sealed class TestUrl : CoreCommand
       {
         System.Uri url = new(
           uri.IsAbsoluteUri
-            ? string.IsNullOrWhiteSpace(
-                uri.Host
-              )
+            ? string.IsNullOrWhiteSpace(uri.Host)
               ? string.Empty
               : uri.AbsoluteUri.Trim()
-            : string.IsNullOrWhiteSpace(
-                uri.OriginalString
-              )
+            : string.IsNullOrWhiteSpace(uri.OriginalString)
               ? string.Empty
               : string.Concat(
                   "http://",
@@ -50,9 +46,7 @@ public sealed class TestUrl : CoreCommand
           }
         )
         {
-          urls.Add(
-            url
-          );
+          urls.Add(url);
         }
       }
     }
@@ -63,9 +57,7 @@ public sealed class TestUrl : CoreCommand
   {
     using System.Net.Http.HttpClient client = new()
     {
-      Timeout = System.TimeSpan.FromMilliseconds(
-        3500
-      )
+      Timeout = System.TimeSpan.FromMilliseconds(3500)
     };
 
     foreach (var url in Uri)

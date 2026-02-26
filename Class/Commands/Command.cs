@@ -39,13 +39,9 @@ public abstract class CoreCommand(
 
   public void Dispose()
   {
-    Dispose(
-      true
-    );
+    Dispose(true);
 
-    System.GC.SuppressFinalize(
-      this
-    );
+    System.GC.SuppressFinalize(this);
   }
 
   protected sealed override void BeginProcessing()
@@ -58,7 +54,7 @@ public abstract class CoreCommand(
     }
     else
     {
-      Stop();
+      stopped = true;
     }
 
     WriteDebug("</BEGIN>");
@@ -70,15 +66,11 @@ public abstract class CoreCommand(
     {
       ++steps;
 
-      WriteDebug(
-        $"<PROCESS:{steps}>"
-      );
+      WriteDebug($"<PROCESS:{steps}>");
 
       Process();
 
-      WriteDebug(
-        $"</PROCESS:{steps}>"
-      );
+      WriteDebug($"</PROCESS:{steps}>");
     }
   }
 
@@ -98,7 +90,7 @@ public abstract class CoreCommand(
 
   protected sealed override void StopProcessing()
   {
-    Stop();
+    stopped = true;
 
     Dispose();
   }
@@ -158,27 +150,19 @@ public abstract class CoreCommand(
     )
   );
 
-  private protected PSObject PSVariable(string variable) => PSVariable<PSObject>(
-    variable
-  );
+  private protected PSObject PSVariable(string variable) => PSVariable<PSObject>(variable);
 
   private protected T PSVariable<T>(string variable) => (T)SessionState
     .PSVariable
-    .GetValue(
-      variable
-    );
+    .GetValue(variable);
 
   private protected string Pwd(string subpath = "") => System.IO.Path.GetFullPath(
-    Client.File.PathString.Normalize(
-      subpath
-    ),
+    Client.File.PathString.Normalize(subpath),
     SessionState.Path.CurrentLocation.Path
   );
 
   private protected string CurrentDrive(string subpath = "") => System.IO.Path.GetFullPath(
-    Client.File.PathString.Normalize(
-      subpath
-    ),
+    Client.File.PathString.Normalize(subpath),
     SessionState.Drive.Current.Root
   );
 
@@ -216,9 +200,7 @@ public abstract class CoreCommand(
     ErrorCategory category = ErrorCategory.InvalidOperation,
     object? target = default
   ) => Throw(
-    new System.Exception(
-      message
-    ),
+    new System.Exception(message),
     id,
     category,
     target
@@ -264,17 +246,12 @@ public abstract class CoreCommand(
       ?? type.ToString();
   }
 
-  private void Stop() => stopped = true;
-
-  private void Dispose(
-    bool disposing
-  )
+  private void Dispose(bool disposing)
   {
     if (!disposed)
     {
       if (disposing)
       {
-        CleanResources();
         Clean();
       }
 
@@ -284,6 +261,8 @@ public abstract class CoreCommand(
 
   private void Clean()
   {
+    CleanResources();
+
     powershell?.Dispose();
     powershell = default;
   }

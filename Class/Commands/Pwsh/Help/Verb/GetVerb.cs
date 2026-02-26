@@ -31,9 +31,7 @@ public sealed class GetVerb : CoreCommand
     HelpMessage = "Gets only the specified verbs. Enter the name of a verb or a name pattern. Wildcards are allowed."
   )]
   [SupportsWildcards]
-  [Completions(
-    ["*"]
-  )]
+  [Completions(["*"])]
   public string[] Verb
   {
     get => [.. verbs];
@@ -46,9 +44,7 @@ public sealed class GetVerb : CoreCommand
         if (verb is not "")
         {
           _ = verbs.Add(
-            verb.Contains(
-              '*'
-            )
+            verb.Contains('*')
               ? verb
               : verb.Length > 2
                 ? $"*{verb}*"
@@ -64,9 +60,7 @@ public sealed class GetVerb : CoreCommand
     Position = 1,
     HelpMessage = "Gets only the specified groups. Enter the name of a group. Wildcards aren't allowed."
   )]
-  [EnumCompletions(
-    typeof(VerbGroup)
-  )]
+  [EnumCompletions(typeof(VerbGroup))]
   public string[] Group
   {
     get => [.. groups];
@@ -84,9 +78,7 @@ public sealed class GetVerb : CoreCommand
           )
         )
         {
-          _ = groups.Add(
-            parsedGroup.ToString()
-          );
+          _ = groups.Add(parsedGroup.ToString());
         }
       }
     }
@@ -97,9 +89,7 @@ public sealed class GetVerb : CoreCommand
   {
     if (Verb is [] or ["*"])
     {
-      _ = AddCommand(
-        "Get-Verb"
-      )
+      _ = AddCommand("Get-Verb")
         .AddParameter(
           "Verb",
           "*"
@@ -114,16 +104,12 @@ public sealed class GetVerb : CoreCommand
       }
 
       WriteObject(
-        AddCommand(
-          "Select-Object"
-        )
+        AddCommand("Select-Object")
           .AddParameter(
             "ExpandProperty",
             "Verb"
           )
-          .AddCommand(
-            "Sort-Object"
-          )
+          .AddCommand("Sort-Object")
           .Invoke(),
         true
       );
@@ -132,9 +118,7 @@ public sealed class GetVerb : CoreCommand
     {
       SortedDictionary<string, VerbInfo> verbDictionary = [];
 
-      _ = AddCommand(
-        "Get-Verb"
-      )
+      _ = AddCommand("Get-Verb")
         .AddParameter(
           "Verb",
           Verb

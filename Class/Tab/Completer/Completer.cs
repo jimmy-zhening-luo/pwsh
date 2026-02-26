@@ -4,13 +4,9 @@ public class Completer(
   IEnumerable<string> Domain,
   CompletionCase Casing,
   bool Strict
-) : TabCompleter(
-  Casing
-)
+) : TabCompleter(Casing)
 {
-  private protected override IEnumerable<string> GenerateCompletions(
-    string wordToComplete
-  )
+  private protected override IEnumerable<string> GenerateCompletion(string wordToComplete)
   {
     if (wordToComplete is "")
     {

@@ -28,9 +28,7 @@ function Resolve-GitRepository {
           ).Path
         }
         elseif (
-          ![System.IO.Path]::IsPathRooted(
-            $wd
-          ) -and (
+          ![System.IO.Path]::IsPathRooted($wd) -and (
             Test-Path (
               Join-Path $HOME code $wd
             ) -PathType Container
@@ -59,9 +57,7 @@ function Resolve-GitRepository {
           ).Path
         }
         elseif (
-          ![System.IO.Path]::IsPathRooted(
-            $wd
-          ) -and (
+          ![System.IO.Path]::IsPathRooted($wd) -and (
             Test-Path (
               Join-Path $HOME code $wd .git
             ) -PathType Container
@@ -178,9 +174,7 @@ function Invoke-Git {
               $WorkingDirectory
             )
           ) {
-            $GitArgument.Add(
-              $WorkingDirectory
-            )
+            $GitArgument.Add($WorkingDirectory)
 
             $WorkingDirectory = ''
           }
@@ -195,9 +189,7 @@ function Invoke-Git {
               Resolve-GitRepository -WorkingDirectory $Verb
             )
           ) {
-            $GitArgument.Add(
-              $WorkingDirectory
-            )
+            $GitArgument.Add($WorkingDirectory)
 
             $Verb, $WorkingDirectory = 'status', $Verb
           }
@@ -266,9 +258,7 @@ function Invoke-Git {
       $GitArgument.Add('-v')
     }
     if ($Argument) {
-      $GitArgument.AddRange(
-        [string[]]$Argument
-      )
+      $GitArgument.AddRange([string[]]$Argument)
     }
 
     & "$env:ProgramFiles\Git\cmd\git.exe" @GitCommand @GitArgument
@@ -334,16 +324,12 @@ function Import-GitRepository {
 
   $Origin = (
     $ForceSsh ? 'git@github.com:' : 'https://github.com/'
-  ) + (
-    $RepositoryPathSegments -join '/'
-  )
+  ) + ($RepositoryPathSegments -join '/')
 
   $CloneArgument = [System.Collections.Generic.List[string]]::new()
   $CloneArgument.Add($Origin)
   if ($args) {
-    $CloneArgument.AddRange(
-      [string[]]$args
-    )
+    $CloneArgument.AddRange([string[]]$args)
   }
 
   Invoke-Git -Verb clone -WorkingDirectory $WorkingDirectory -Argument $CloneArgument
@@ -428,9 +414,7 @@ function Compare-GitRepository {
   }
 
   if ($args) {
-    $DiffArgument.AddRange(
-      [string[]]$args
-    )
+    $DiffArgument.AddRange([string[]]$args)
   }
 
   Invoke-Git -Verb diff -WorkingDirectory $WorkingDirectory -Argument $DiffArgument
@@ -475,9 +459,7 @@ function Add-GitRepository {
   }
 
   if ($args) {
-    $AddArgument.AddRange(
-      [string[]]$args
-    )
+    $AddArgument.AddRange([string[]]$args)
   }
 
   if ($Renormalize -and '--renormalize' -notin $AddArgument) {
@@ -520,22 +502,16 @@ function Write-GitRepository {
     }
   ).Where(
     {
-      [Module.Commands.Code.Git.GitArgument]::GitArgumentRegex().IsMatch(
-        $PSItem
-      )
+      [Module.Commands.Code.Git.GitArgument]::GitArgumentRegex().IsMatch($PSItem)
     },
     'Split'
   )
 
   if ($Argument) {
-    $CommitArgument.AddRange(
-      [string[]]$Argument
-    )
+    $CommitArgument.AddRange([string[]]$Argument)
   }
   if ($MessageWord) {
-    $Messages.AddRange(
-      [string[]]$MessageWord
-    )
+    $Messages.AddRange([string[]]$MessageWord)
   }
 
   if (
@@ -621,9 +597,7 @@ function Push-GitRepository {
   }
 
   if ($args) {
-    $PushArgument.AddRange(
-      [string[]]$args
-    )
+    $PushArgument.AddRange([string[]]$args)
   }
 
   Get-GitRepository -WorkingDirectory $WorkingDirectory
@@ -654,9 +628,7 @@ function Reset-GitRepository {
 
   $ResetArgument = [System.Collections.Generic.List[string]]::new()
   if ($args) {
-    $ResetArgument.AddRange(
-      [string[]]$args
-    )
+    $ResetArgument.AddRange([string[]]$args)
   }
 
   if ($Tree) {
@@ -741,9 +713,7 @@ function Restore-GitRepository {
   }
 
   if ($args) {
-    $ResetArgument.AddRange(
-      [string[]]$args
-    )
+    $ResetArgument.AddRange([string[]]$args)
   }
 
   Reset-GitRepository -WorkingDirectory $WorkingDirectory @ResetArgument
@@ -820,21 +790,15 @@ function Invoke-Npm {
     $NodeCommandArgument = [System.Collections.Generic.List[string]]::new()
 
     if ($Argument) {
-      $NodeCommandArgument.AddRange(
-        [string[]]$Argument
-      )
+      $NodeCommandArgument.AddRange([string[]]$Argument)
     }
 
     if ($WorkingDirectory) {
-      if (
-        Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory
-      ) {
+      if (Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory) {
         $PackagePrefix = $WorkingDirectory ? "--prefix=$((Resolve-Path $WorkingDirectory).Path)" : ''
 
         if ($PackagePrefix) {
-          $NodeArgument.Add(
-            $PackagePrefix
-          )
+          $NodeArgument.Add($PackagePrefix)
         }
       }
       else {
@@ -865,9 +829,7 @@ function Invoke-Npm {
       ) : ''
 
       if ($DeferredVerb) {
-        [void]$NodeCommandArgument.Remove(
-          $DeferredVerb
-        )
+        [void]$NodeCommandArgument.Remove($DeferredVerb)
       }
 
       $NodeCommandArgument.Insert(
@@ -908,9 +870,7 @@ function Invoke-Npm {
     }
 
     if ($NodeCommandArgument.Count) {
-      $NodeArgument.AddRange(
-        $NodeCommandArgument
-      )
+      $NodeArgument.AddRange($NodeCommandArgument)
     }
 
     & npm.ps1 @NodeArgument
@@ -973,12 +933,10 @@ function Clear-NodeModuleCache {
   [Alias('ncc')]
   param()
   end {
-    $NodeArgument = [string[]]@(
+    Invoke-Npm -Command cache -Argument @(
       'clean'
       '--force'
     )
-
-    Invoke-Npm -Command cache -Argument $NodeArgument
   }
 }
 
@@ -1016,9 +974,7 @@ function Compare-NodeModule {
     $NodeArgument = [System.Collections.Generic.List[string]]::new()
 
     if ($Argument) {
-      $NodeArgument.AddRange(
-        [string[]]$Argument
-      )
+      $NodeArgument.AddRange([string[]]$Argument)
     }
 
     if (
@@ -1026,9 +982,7 @@ function Compare-NodeModule {
         '--all'
       )
     ) {
-      $NodeArgument.Add(
-        '--all'
-      )
+      $NodeArgument.Add('--all')
     }
 
     Invoke-Npm -Command outdated -WorkingDirectory $WorkingDirectory -NoThrow -Argument $NodeArgument
@@ -1101,19 +1055,17 @@ function Step-NodePackageVersion {
       $Version.ToLower()
     )
 
-    if ($WorkingDirectory) {
-      if (
-        !(Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)
-      ) {
-        $NodeArgument.Add($WorkingDirectory)
-        $WorkingDirectory = ''
-      }
+    if (
+      $WorkingDirectory -and !(
+        Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory
+      )
+    ) {
+      $NodeArgument.Add($WorkingDirectory)
+      $WorkingDirectory = ''
     }
 
     if ($Argument) {
-      $NodeArgument.AddRange(
-        [string[]]$Argument
-      )
+      $NodeArgument.AddRange([string[]]$Argument)
     }
 
     Invoke-Npm -Command version -WorkingDirectory $WorkingDirectory -Argument $NodeArgument
@@ -1143,19 +1095,17 @@ function Invoke-NodePackageScript {
   $NodeArgument = [System.Collections.Generic.List[string]]::new()
   $NodeArgument.Add($Script)
 
-  if ($WorkingDirectory) {
-    if (
-      !(Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory)
-    ) {
-      $NodeArgument.Add($WorkingDirectory)
-      $WorkingDirectory = ''
-    }
+  if (
+    $WorkingDirectory -and !(
+      Test-NodePackageDirectory -WorkingDirectory $WorkingDirectory
+    )
+  ) {
+    $NodeArgument.Add($WorkingDirectory)
+    $WorkingDirectory = ''
   }
 
   if ($args) {
-    $NodeArgument.AddRange(
-      [string[]]$args
-    )
+    $NodeArgument.AddRange([string[]]$args)
   }
 
   Invoke-Npm -Command run -WorkingDirectory $WorkingDirectory -Argument $NodeArgument
@@ -1195,9 +1145,7 @@ function Test-NodePackage {
     $NodeArgument = [System.Collections.Generic.List[string]]::new()
 
     if ($Argument) {
-      $NodeArgument.AddRange(
-        [string[]]$Argument
-      )
+      $NodeArgument.AddRange([string[]]$Argument)
     }
 
     if (
@@ -1205,9 +1153,7 @@ function Test-NodePackage {
         '--ignore-scripts'
       )
     ) {
-      $NodeArgument.Add(
-        '--ignore-scripts'
-      )
+      $NodeArgument.Add('--ignore-scripts')
     }
 
     Invoke-Npm -Command test -WorkingDirectory $WorkingDirectory -Argument $NodeArgument

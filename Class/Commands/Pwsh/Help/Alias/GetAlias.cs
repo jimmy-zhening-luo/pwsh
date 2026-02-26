@@ -14,9 +14,7 @@ public sealed class GetCommandAlias : CoreCommand
   )]
   [Alias("Command")]
   [SupportsWildcards]
-  [Completions(
-    ["*"]
-  )]
+  [Completions(["*"])]
   public string[] Definition
   {
     get => [.. definitions];
@@ -27,9 +25,7 @@ public sealed class GetCommandAlias : CoreCommand
       foreach (var definition in value)
       {
         _ = definitions.Add(
-          definition.Contains(
-            '*'
-          )
+          definition.Contains('*')
             ? definition
             : definition.Length > 2
               ? $"*{definition}*"
@@ -73,9 +69,7 @@ public sealed class GetCommandAlias : CoreCommand
       {
         if (exclusion is not "")
         {
-          _ = exclusions.Add(
-            exclusion
-          );
+          _ = exclusions.Add(exclusion);
         }
       }
     }
@@ -86,16 +80,12 @@ public sealed class GetCommandAlias : CoreCommand
   {
     if (Definition is [])
     {
-      _ = definitions.Add(
-        "*"
-      );
+      _ = definitions.Add("*");
     }
 
     SortedDictionary<string, AliasInfo> commandAliasDictionary = [];
 
-    _ = AddCommand(
-      "Get-Alias"
-    )
+    _ = AddCommand("Get-Alias")
       .AddParameter(
         "Definition",
         Definition

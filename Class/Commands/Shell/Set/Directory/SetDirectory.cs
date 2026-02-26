@@ -87,9 +87,7 @@ public sealed class SetDirectory : WrappedSetDirectory
           return;
         }
 
-        Path = Pwd(
-          ".."
-        );
+        Path = Pwd("..");
 
         break;
       case "DriveC":
@@ -119,9 +117,7 @@ public sealed class SetDirectory : WrappedSetDirectory
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
 )]
 [Alias("cx")]
-[OutputType(
-  typeof(PathInfo)
-)]
+[OutputType(typeof(PathInfo))]
 public sealed class SetDirectorySibling : WrappedSetDirectory
 {
   [Parameter(
@@ -139,9 +135,7 @@ public sealed class SetDirectorySibling : WrappedSetDirectory
     set => path = value;
   }
 
-  private protected sealed override Locator Location => new(
-    Subpath: @".."
-  );
+  private protected sealed override Locator Location => new(Subpath: @"..");
 }
 
 [Cmdlet(
@@ -151,9 +145,7 @@ public sealed class SetDirectorySibling : WrappedSetDirectory
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
 )]
 [Alias("cxx")]
-[OutputType(
-  typeof(PathInfo)
-)]
+[OutputType(typeof(PathInfo))]
 public sealed class SetDirectoryRelative : WrappedSetDirectory
 {
   [Parameter(
@@ -171,9 +163,7 @@ public sealed class SetDirectoryRelative : WrappedSetDirectory
     set => path = value;
   }
 
-  private protected sealed override Locator Location => new(
-    Subpath: @"..\.."
-  );
+  private protected sealed override Locator Location => new(Subpath: @"..\..");
 }
 
 [Cmdlet(
@@ -183,9 +173,7 @@ public sealed class SetDirectoryRelative : WrappedSetDirectory
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
 )]
 [Alias("ch")]
-[OutputType(
-  typeof(PathInfo)
-)]
+[OutputType(typeof(PathInfo))]
 public sealed class SetDirectoryHome : WrappedSetDirectory
 {
   [Parameter(
@@ -203,9 +191,7 @@ public sealed class SetDirectoryHome : WrappedSetDirectory
     set => path = value;
   }
 
-  private protected sealed override Locator Location => new(
-    Client.Environment.Known.Folder.Home()
-  );
+  private protected sealed override Locator Location => new(Client.Environment.Known.Folder.Home());
 }
 
 [Cmdlet(
@@ -215,9 +201,7 @@ public sealed class SetDirectoryHome : WrappedSetDirectory
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
 )]
 [Alias("cc")]
-[OutputType(
-  typeof(PathInfo)
-)]
+[OutputType(typeof(PathInfo))]
 public sealed class SetDirectoryCode : WrappedSetDirectory
 {
   [Parameter(
@@ -248,9 +232,7 @@ public sealed class SetDirectoryCode : WrappedSetDirectory
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
 )]
 [Alias("c/")]
-[OutputType(
-  typeof(PathInfo)
-)]
+[OutputType(typeof(PathInfo))]
 public sealed class SetDrive : WrappedSetDirectory
 {
   [Parameter(
@@ -268,7 +250,5 @@ public sealed class SetDrive : WrappedSetDirectory
     set => path = value;
   }
 
-  private protected sealed override Locator Location => new(
-    CurrentDrive()
-  );
+  private protected sealed override Locator Location => new(CurrentDrive());
 }

@@ -16,16 +16,27 @@ internal static class PowerShellHost
   {
     using var ps = Create();
 
+    var currentLocation =  ps
+      .AddCommand(
+        CommandInvocationIntrinsics.GetCommand(
+          @"Microsoft.PowerShell.Management\Get-Location",
+          CommandTypes.Cmdlet
+        )
+      )
+      .Invoke()[0]
+      .BaseObject
+      .ToString();
+
+    if (pwd is null or "")
+    {
+      throw new System.InvalidOperationException(
+        "Failed to get current location of PowerShell host."
+      );
+    }
+
     return System.IO.Path.GetFullPath(
       path,
-      ps
-        .AddCommand(
-          "Get-Location"
-        )
-        .Invoke()[0]
-        .BaseObject
-        .ToString()
-        ?? string.Empty
+      currentLocation
     );
   }
 }

@@ -5,9 +5,7 @@ public abstract class WrappedCommand(
   string PipelineInputParameterName = "",
   CommandTypes CommandType = CommandTypes.Cmdlet,
   bool SkipSsh = default
-) : CoreCommand(
-  SkipSsh
-)
+) : CoreCommand(SkipSsh)
 {
   private protected bool Piped;
 
@@ -29,9 +27,7 @@ public abstract class WrappedCommand(
 
     if (
       PipelineInputParameterName is ""
-      || BoundParameters.ContainsKey(
-        PipelineInputParameterName
-      )
+      || BoundParameters.ContainsKey(PipelineInputParameterName)
     )
     {
       TransformPipelineInput();
@@ -45,15 +41,11 @@ public abstract class WrappedCommand(
       WrappedCommandName,
       CommandType
     )
-      .AddParameters(
-        BoundParameters
-      );
+      .AddParameters(BoundParameters);
 
     steppablePipeline = PS.GetSteppablePipeline();
 
-    steppablePipeline.Begin(
-      this
-    );
+    steppablePipeline.Begin(this);
   }
 
   private protected sealed override void Process()
@@ -62,9 +54,7 @@ public abstract class WrappedCommand(
     {
       if (
         Piped
-        && BoundParameters.ContainsKey(
-          PipelineInputParameterName
-        )
+        && BoundParameters.ContainsKey(PipelineInputParameterName)
       )
       {
         TransformPipelineInput();
@@ -77,9 +67,7 @@ public abstract class WrappedCommand(
           && pipelineInput is not null
         )
         {
-          _ = steppablePipeline.Process(
-            pipelineInput
-          );
+          _ = steppablePipeline.Process(pipelineInput);
         }
         else
         {
@@ -120,9 +108,7 @@ public abstract class WrappedCommand(
     {
       if (value is null)
       {
-        _ = BoundParameters.Remove(
-          key
-        );
+        _ = BoundParameters.Remove(key);
       }
       else
       {

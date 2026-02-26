@@ -6,9 +6,7 @@ namespace Module.Commands.Windows.Update;
 )]
 [Alias("su")]
 [OutputType(typeof(void))]
-public sealed class UpdateStoreApp() : CoreCommand(
-  true
-)
+public sealed class UpdateStoreApp() : CoreCommand(true)
 {
   private protected sealed override void Postprocess()
   {

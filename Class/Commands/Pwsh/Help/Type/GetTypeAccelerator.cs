@@ -12,9 +12,7 @@ public sealed class GetTypeAccelerator : Cmdlet
   protected sealed override void EndProcessing()
   {
     if (
-      typeof(
-        PSObject
-      )
+      typeof(PSObject)
         .Assembly
         .GetType(
           "System.Management.Automation.TypeAccelerators"
@@ -24,20 +22,14 @@ public sealed class GetTypeAccelerator : Cmdlet
           System.Reflection.BindingFlags.Static
           | System.Reflection.BindingFlags.Public
         )
-        ?.GetValue(
-          default
-        ) is IDictionary typeAccelerators
+        ?.GetValue(default) is IDictionary typeAccelerators
     )
     {
-      HashSet<string> uniqueTypes = new(
-        System.StringComparer.OrdinalIgnoreCase
-      );
+      HashSet<string> uniqueTypes = new(System.StringComparer.OrdinalIgnoreCase);
 
       foreach (string type in typeAccelerators.Keys)
       {
-        _ = uniqueTypes.Add(
-          type
-        );
+        _ = uniqueTypes.Add(type);
       }
 
       WriteObject(

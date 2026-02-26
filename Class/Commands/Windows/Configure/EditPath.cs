@@ -6,9 +6,7 @@ namespace Module.Commands.Windows.Configure;
 )]
 [Alias("path")]
 [OutputType(typeof(void))]
-public sealed class EditSystemPath() : CoreCommand(
-  true
-)
+public sealed class EditSystemPath() : CoreCommand(true)
 {
   [Parameter(
     HelpMessage = "Launch Environment Variables control panel as administrator to edit system variables, triggering a UAC prompt if needed."

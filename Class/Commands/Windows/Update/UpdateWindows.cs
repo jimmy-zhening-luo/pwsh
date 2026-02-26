@@ -6,9 +6,7 @@ namespace Module.Commands.Windows.Update;
 )]
 [Alias("wu")]
 [OutputType(typeof(void))]
-public sealed class UpdateWindows() : CoreCommand(
-  true
-)
+public sealed class UpdateWindows() : CoreCommand(true)
 {
   private protected sealed override void Postprocess()
   {

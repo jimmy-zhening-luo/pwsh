@@ -36,9 +36,7 @@ public sealed class TestCommand : CoreCommand
     foreach (var name in Name)
     {
       WriteObject(
-        Greet(
-          name
-        )
+        Greet(name)
       );
     }
   }
@@ -53,9 +51,7 @@ public sealed class TestCommand : CoreCommand
     );
   }
 
-  private string Greet(
-    string name
-  ) => string.Concat(
+  private string Greet(string name) => string.Concat(
     Greeting,
     ", ",
     name,

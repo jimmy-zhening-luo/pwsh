@@ -8,28 +8,20 @@ public class CompletionsAttribute(
   Casing
 )
 {
-  private protected sealed override IEnumerable<string> ResolveDomain(
-    string[] domain
-  ) => domain;
+  private protected sealed override IEnumerable<string> ResolveDomain(string[] domain) => domain;
 }
 
 public abstract class CompletionsAttribute<TDomain>(
   TDomain Domain,
   CompletionCase Casing
-) : TabCompletionsAttribute<Completer>(
-  Casing
-)
+) : TabCompletionsAttribute<Completer>(Casing)
 {
   public bool Strict { get; init; }
 
-  private protected abstract IEnumerable<string> ResolveDomain(
-    TDomain domain
-  );
+  private protected abstract IEnumerable<string> ResolveDomain(TDomain domain);
 
   public sealed override Completer Create() => new(
-    ResolveDomain(
-      Domain
-    ),
+    ResolveDomain(Domain),
     Casing,
     Strict
   );

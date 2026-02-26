@@ -24,18 +24,12 @@ internal static partial class PathString
 
     return preserveTrailingSeparator
       ? normalPath
-      : System.IO.Path.TrimEndingDirectorySeparator(
-          normalPath
-        );
+      : System.IO.Path.TrimEndingDirectorySeparator(normalPath);
   }
 
-  private static string TrimRelativePrefix(
-    string path
-  ) => path is "."
+  private static string TrimRelativePrefix(string path) => path is "."
     ? string.Empty
-    : path.StartsWith(
-        @".\"
-      )
+    : path.StartsWith(@".\")
       ? path[2..]
       : path;
 

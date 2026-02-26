@@ -76,9 +76,7 @@ public sealed class GetSize : CoreCommand
     Position = 1,
     HelpMessage = "The unit in which to return the size."
   )]
-  [EnumCompletions(
-    typeof(DiskSizeUnit)
-  )]
+  [EnumCompletions(typeof(DiskSizeUnit))]
   public string Unit
   {
     get => unit.ToString();
@@ -113,9 +111,7 @@ public sealed class GetSize : CoreCommand
   {
     foreach (var path in Path)
     {
-      var absolutePath = Pwd(
-        path
-      );
+      var absolutePath = Pwd(path);
 
       if (
         !System.IO.Path.Exists(
@@ -133,12 +129,8 @@ public sealed class GetSize : CoreCommand
         );
       }
 
-      long bytes = System.IO.Directory.Exists(
-        absolutePath
-      )
-        ? new System.IO.DirectoryInfo(
-            absolutePath
-          )
+      long bytes = System.IO.Directory.Exists(absolutePath)
+        ? new System.IO.DirectoryInfo(absolutePath)
           .EnumerateFiles(
             "*",
             System.IO.SearchOption.AllDirectories
@@ -146,15 +138,11 @@ public sealed class GetSize : CoreCommand
           .Sum(
             file => file.Length
           )
-        : new System.IO.FileInfo(
-            absolutePath
-          )
+        : new System.IO.FileInfo(absolutePath)
           .Length;
 
       double scaledSize = (double)bytes / (
-        1L << (
-          (int)unit * 10
-        )
+        1L << ((int)unit * 10)
       );
 
       WriteObject(

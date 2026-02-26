@@ -17,9 +17,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
     get => filter;
     set
     {
-      filter = value.Contains(
-        '*'
-      )
+      filter = value.Contains('*')
         ? value
         : $"{value}*";
     }
@@ -73,9 +71,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   public SwitchParameter FollowSymlink { get; set; }
 
   [Parameter]
-  [EnumCompletions(
-    typeof(System.IO.FileAttributes)
-  )]
+  [EnumCompletions(typeof(System.IO.FileAttributes))]
   public required FlagsExpression<System.IO.FileAttributes> Attributes { get; set; }
 
   private protected sealed override Dictionary<string, object?> CoercedParameters => new()
@@ -103,9 +99,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
           ++i
         )
         {
-          Path[i] = Reanchor(
-            Path[i]
-          );
+          Path[i] = Reanchor(Path[i]);
         }
       }
 

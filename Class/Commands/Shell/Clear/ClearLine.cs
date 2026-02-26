@@ -55,18 +55,12 @@ public sealed class ClearLine : CoreCommand
     }
     else
     {
-      _ = AddCommand(
-        "Clear-Content"
-      )
-        .AddParameters(
-          BoundParameters
-        );
+      _ = AddCommand("Clear-Content")
+        .AddParameters(BoundParameters);
 
       using var steppablePipeline = PS.GetSteppablePipeline();
 
-      steppablePipeline.Begin(
-        this
-      );
+      steppablePipeline.Begin(this);
 
       _ = steppablePipeline.Process();
 

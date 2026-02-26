@@ -35,9 +35,7 @@ public sealed class GetHelpOnline : CoreCommand
     System.Net.Http.HttpClient client
   )
   {
-    System.Uri testUri = new(
-      $"{AboutBaseUrl}/{topic}"
-    );
+    System.Uri testUri = new($"{AboutBaseUrl}/{topic}");
 
     return Client.Network.Url.Test(
       testUri,
@@ -47,9 +45,7 @@ public sealed class GetHelpOnline : CoreCommand
       : default;
   }
 
-  private static List<System.Uri>? TryHelpLink(
-    Collection<PSObject> helpContent
-  )
+  private static List<System.Uri>? TryHelpLink(Collection<PSObject> helpContent)
   {
     if (helpContent is null or [])
     {
@@ -79,18 +75,12 @@ public sealed class GetHelpOnline : CoreCommand
           if (
             uriString is not (null or "")
             && (
-              uriString.StartsWith(
-                "https://"
-              )
-              || uriString.StartsWith(
-                "http://"
-              )
+              uriString.StartsWith("https://")
+              || uriString.StartsWith("http://")
             )
           )
           {
-            System.Uri url = new(
-              uriString
-            );
+            System.Uri url = new(uriString);
 
             if (
               url is
@@ -100,9 +90,7 @@ public sealed class GetHelpOnline : CoreCommand
               }
             )
             {
-              urls.Add(
-                url
-              );
+              urls.Add(url);
             }
           }
         }
@@ -136,17 +124,13 @@ public sealed class GetHelpOnline : CoreCommand
 
       if (helpContent is not null)
       {
-        var helpContentLinks = TryHelpLink(
-          helpContent
-        );
+        var helpContentLinks = TryHelpLink(helpContent);
 
         if (helpContentLinks is not null)
         {
           foreach (var helpLink in helpContentLinks)
           {
-            helpLinks.Add(
-              helpLink
-            );
+            helpLinks.Add(helpLink);
           }
         }
 
@@ -173,9 +157,7 @@ public sealed class GetHelpOnline : CoreCommand
       {
         foreach (var helpLink in helpLinks)
         {
-          WriteLog(
-            helpLink.ToString()
-          );
+          WriteLog(helpLink.ToString());
         }
       }
 
@@ -185,9 +167,7 @@ public sealed class GetHelpOnline : CoreCommand
         {
           foreach (var helpLink in helpLinks)
           {
-            Client.Network.Url.Open(
-              helpLink
-            );
+            Client.Network.Url.Open(helpLink);
           }
         }
         else if (helpContent is not null)
@@ -203,9 +183,7 @@ public sealed class GetHelpOnline : CoreCommand
     else
     {
       WriteObject(
-        AddCommand(
-          "Get-Help"
-        )
+        AddCommand("Get-Help")
           .AddParameter(
             "Name",
             "Get-Help"
@@ -222,9 +200,7 @@ public sealed class GetHelpOnline : CoreCommand
     bool online = default
   )
   {
-    using var ps = PowerShellHost.Create(
-      true
-    );
+    using var ps = PowerShellHost.Create(true);
 
     _ = AddCommand(
       ps,
@@ -258,9 +234,7 @@ public sealed class GetHelpOnline : CoreCommand
     {
       try
       {
-        _ = ps.AddParameter(
-          "Online"
-        );
+        _ = ps.AddParameter("Online");
 
         return [];
       }

@@ -46,9 +46,7 @@ public abstract class WrappedGetFile() : WrappedCommand(
 
   [Parameter]
   [ValidateNotNullOrEmpty]
-  [EnumCompletions(
-    typeof(Client.File.Encoding)
-  )]
+  [EnumCompletions(typeof(Client.File.Encoding))]
   public required string Encoding { get; set; }
 
   [Parameter]
@@ -82,9 +80,7 @@ public abstract class WrappedGetFile() : WrappedCommand(
           ++i
         )
         {
-          Path[i] = Reanchor(
-            Path[i]
-          );
+          Path[i] = Reanchor(Path[i]);
         }
       }
 
