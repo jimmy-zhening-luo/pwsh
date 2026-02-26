@@ -53,7 +53,7 @@ public sealed class OpenUrl() : CoreCommand(true)
         var fullPath = Pwd(path);
 
         target = System.IO.Path.Exists(fullPath)
-          ? fullpath
+          ? fullPath
           : Path;
       }
 
