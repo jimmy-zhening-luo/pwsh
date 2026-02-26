@@ -64,11 +64,8 @@ public sealed class GetCommandAlias : CoreCommand
           )
             ? definition
             : definition.Length > 2
-              ? "*"
-                + definition
-                + "*"
-              : definition
-                + "*"
+              ? $"*{definition}*"
+              : $"{definition}*"
         );
       }
     }
@@ -125,9 +122,11 @@ public sealed class GetCommandAlias : CoreCommand
     {
       foreach (var aliasInfo in aliasInfoObjects)
       {
-        var key = aliasInfo.Definition
-          + ":"
-          + aliasInfo.Name;
+        var key = string.Concat(
+          aliasInfo.Definition,
+          ':',
+          aliasInfo.Name
+        );
 
         if (
           !commandAliasDictionary.ContainsKey(

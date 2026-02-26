@@ -85,17 +85,13 @@ public abstract partial class CoreCommand(
       ++steps;
 
       WriteDebug(
-        "<PROCESS:"
-          + steps.ToString()
-          + ">"
+        $"<PROCESS:{steps}>"
       );
 
       Processor();
 
       WriteDebug(
-        "</PROCESS:"
-          + steps.ToString()
-          + ">"
+        $"</PROCESS:{steps}>"
       );
     }
   }
@@ -239,7 +235,7 @@ public abstract partial class CoreCommand(
     object? target = null
   ) => Throw(
     message,
-    GetName() + "Exception",
+    $"{GetName()}Exception",
     category,
     target
   );
@@ -266,7 +262,7 @@ public abstract partial class CoreCommand(
     object? target = null
   ) => Throw(
     exception,
-    GetName() + "Exception",
+    $"{GetName()}Exception",
     category,
     target
   );

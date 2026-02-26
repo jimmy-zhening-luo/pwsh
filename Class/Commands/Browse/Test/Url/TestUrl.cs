@@ -43,7 +43,8 @@ public sealed class TestUrl : CoreCommand
               uri.OriginalString.Trim()
             )
             ? string.Empty
-            : "http://" + uri.OriginalString.Trim()
+            : "http://"
+              + uri.OriginalString.Trim()
       );
 
       if (

@@ -134,13 +134,15 @@ public sealed partial class GetSize : CoreCommand
       WriteObject(
         number
           ? scaledSize
-          : System.Math.Round(
-              scaledSize,
-              3
+          : string.Concat(
+              System.Math.Round(
+                scaledSize,
+                3
+              )
+                .ToString(),
+              ' ',
+              unit.ToString()
             )
-            .ToString()
-            + " "
-            + unit.ToString()
       );
     }
   }

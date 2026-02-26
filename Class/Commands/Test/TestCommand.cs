@@ -29,40 +29,7 @@ public sealed class TestCommand : CoreCommand
   private bool switchParameter;
 
   private protected sealed override void Preprocess()
-  {
-    WriteObject(
-      string.Join(
-        "",
-        [
-          "Switch > Bound:IsPresent:",
-          BoundParameters.TryGetValue(
-            "Switch",
-            out var bound
-          )
-            && bound is not null
-            ? (bound is SwitchParameter boundObject)
-              ? string.Concat(
-                  boundObject.IsPresent.ToString(),
-                  " | Bound:ToBool:",
-                  boundObject.ToBool().ToString()
-                )
-              : (bound is bool boundBool)
-                ? string.Concat(
-                    "(bool)",
-                    boundBool.ToString()
-                  )
-                : bound.GetType().ToString()
-            : "null",
-          " | Local:IsPresent:",
-          Switch.IsPresent.ToString(),
-          " | Local:ToBool:",
-          Switch.ToBool().ToString(),
-          " | private:bool:",
-          switchParameter.ToString()
-        ]
-      )
-    );
-  }
+  { }
 
   private protected sealed override void Processor()
   {

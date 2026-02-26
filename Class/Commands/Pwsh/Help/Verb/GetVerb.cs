@@ -36,7 +36,11 @@ public sealed partial class GetVerb : CoreCommand
 
     foreach (var verb in Verb)
     {
-      if (!string.IsNullOrEmpty(verb))
+      if (
+        !string.IsNullOrEmpty(
+          verb
+        )
+      )
       {
         uniqueWildcardTerms.Add(
           verb.Contains(
@@ -44,11 +48,8 @@ public sealed partial class GetVerb : CoreCommand
           )
             ? verb
             : verb.Length > 2
-              ? "*"
-                + verb
-                + "*"
-              : verb
-                + "*"
+              ? $"*{verb}*"
+              : $"{verb}*"
         );
       }
     }

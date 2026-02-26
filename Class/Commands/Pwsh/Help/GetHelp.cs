@@ -28,9 +28,7 @@ public sealed class GetHelpOnline : CoreCommand
   )
   {
     System.Uri testUri = new(
-      AboutBaseUrl
-        + "/"
-        + topic
+      $"{AboutBaseUrl}/{topic}"
     );
 
     return Client.Network.Url.Test(

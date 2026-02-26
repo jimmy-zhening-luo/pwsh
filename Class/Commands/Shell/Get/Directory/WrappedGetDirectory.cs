@@ -12,7 +12,8 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   )]
   [SupportsWildcards]
   [ValidateNotNullOrEmpty]
-  public string Filter {
+  public string Filter
+  {
     get => filter;
     set
     {
@@ -20,7 +21,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
         '*'
       )
         ? value
-        : value + "*";
+        : $"{value}*";
     }
   }
   private string filter = string.Empty;
