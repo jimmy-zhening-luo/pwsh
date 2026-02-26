@@ -6,35 +6,35 @@ internal static partial class Folder
 {
   internal static string Windows(
     string subpath = ""
-  ) => Environment.GetFolder(
+  ) => Local.GetFolder(
     FolderName.Windows,
     subpath
   );
 
   internal static string ProgramFiles(
     string subpath = ""
-  ) => Environment.GetFolder(
+  ) => Local.GetFolder(
     FolderName.ProgramFiles,
     subpath
   );
 
   internal static string AppData(
     string subpath = ""
-  ) => Environment.GetFolder(
+  ) => Local.GetFolder(
     FolderName.ApplicationData,
     subpath
   );
 
   internal static string LocalAppData(
     string subpath = ""
-  ) => Environment.GetFolder(
+  ) => Local.GetFolder(
     FolderName.LocalApplicationData,
     subpath
   );
 
   internal static string Home(
     string subpath = ""
-  ) => Environment.GetFolder(
+  ) => Local.GetFolder(
     FolderName.UserProfile,
     subpath
   );

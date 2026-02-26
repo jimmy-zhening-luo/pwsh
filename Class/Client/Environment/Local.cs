@@ -1,6 +1,6 @@
-namespace Module.Client;
+namespace Module.Client.Environment;
 
-internal static class Environment
+internal static class Local
 {
   private static readonly Dictionary<System.Environment.SpecialFolder, string> folders = [];
 
