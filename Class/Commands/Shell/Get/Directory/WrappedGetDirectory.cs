@@ -137,7 +137,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
 
   private protected sealed override void TransformPipelineInput()
   {
-    if (!UsingCurrentLocation)
+    if (!UsingDefaultLocation)
     {
       if (Path is [])
       {

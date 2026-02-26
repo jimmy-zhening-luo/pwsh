@@ -31,7 +31,7 @@ public abstract partial class CoreCommand(
 
   private protected virtual Locator Location => new();
 
-  private protected bool UsingCurrentLocation => Location is
+  private protected bool UsingDefaultLocation => Location is
   {
     Root: "",
     Subpath: ""

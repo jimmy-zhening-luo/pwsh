@@ -25,7 +25,7 @@ public abstract class WrappedStartExplorer() : WrappedCommandShouldProcess(
     if (Path is [])
     {
       Path = [
-        UsingCurrentLocation
+        UsingDefaultLocation
           ? Pwd()
           : Reanchor()
       ];
@@ -33,7 +33,7 @@ public abstract class WrappedStartExplorer() : WrappedCommandShouldProcess(
     }
     else
     {
-      if (!UsingCurrentLocation)
+      if (!UsingDefaultLocation)
       {
         for (
           int i = default;
