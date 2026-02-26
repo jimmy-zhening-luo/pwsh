@@ -10,7 +10,7 @@ public sealed class StartHistory() : CoreCommand(
   true
 )
 {
-  private protected sealed override void Postprocess() => Client.Invocation.CreateProcess(
+  private protected sealed override void Postprocess() => Client.Start.CreateProcess(
     Client.Environment.Known.Application.VSCode,
     [
       Client.Environment.Known.Folder.AppData(

@@ -15,12 +15,7 @@ public abstract class CoreCommand(
 
   private bool disposed;
 
-  ~CoreCommand()
-  {
-    Dispose(
-      default
-    );
-  }
+  ~CoreCommand() => Dispose(default);
 
   private protected virtual Locator Location => new();
 
@@ -55,9 +50,7 @@ public abstract class CoreCommand(
 
   protected sealed override void BeginProcessing()
   {
-    WriteDebug(
-      "<BEGIN>"
-    );
+    WriteDebug("<BEGIN>");
 
     if (ContinueProcessing)
     {
@@ -68,9 +61,7 @@ public abstract class CoreCommand(
       Stop();
     }
 
-    WriteDebug(
-      "</BEGIN>"
-    );
+    WriteDebug("</BEGIN>");
   }
 
   protected sealed override void ProcessRecord()
@@ -93,18 +84,14 @@ public abstract class CoreCommand(
 
   protected sealed override void EndProcessing()
   {
-    WriteDebug(
-      "<END>"
-    );
+    WriteDebug("<END>");
 
     if (ContinueProcessing)
     {
       Postprocess();
     }
 
-    WriteDebug(
-      "</END>"
-    );
+    WriteDebug("</END>");
 
     StopProcessing();
   }
@@ -158,12 +145,8 @@ public abstract class CoreCommand(
     )
   );
 
-  private protected string Reanchor(
-    string typedPath = ""
-  ) => System.IO.Path.GetFullPath(
-    Client.FileSystem.PathString.Normalize(
-      typedPath
-    ),
+  private protected string Reanchor(string path = "") => System.IO.Path.GetFullPath(
+    Client.File.PathString.Normalize(path),
     System.IO.Path.GetFullPath(
       Location.Subpath,
       Location is
@@ -175,41 +158,31 @@ public abstract class CoreCommand(
     )
   );
 
-  private protected PSObject PSVariable(
-    string variable
-  ) => PSVariable<PSObject>(
+  private protected PSObject PSVariable(string variable) => PSVariable<PSObject>(
     variable
   );
 
-  private protected T PSVariable<T>(
-    string variable
-  ) => (T)SessionState
+  private protected T PSVariable<T>(string variable) => (T)SessionState
     .PSVariable
     .GetValue(
       variable
     );
 
-  private protected string Pwd(
-    string subpath = ""
-  ) => System.IO.Path.GetFullPath(
-    Client.FileSystem.PathString.Normalize(
+  private protected string Pwd(string subpath = "") => System.IO.Path.GetFullPath(
+    Client.File.PathString.Normalize(
       subpath
     ),
     SessionState.Path.CurrentLocation.Path
   );
 
-  private protected string CurrentDrive(
-    string subpath = ""
-  ) => System.IO.Path.GetFullPath(
-    Client.FileSystem.PathString.Normalize(
+  private protected string CurrentDrive(string subpath = "") => System.IO.Path.GetFullPath(
+    Client.File.PathString.Normalize(
       subpath
     ),
     SessionState.Drive.Current.Root
   );
 
-  private protected void WriteLog(
-    object log
-  ) => WriteLog(
+  private protected void WriteLog(object log) => WriteLog(
     log,
     GetName()
   );

@@ -22,7 +22,7 @@ public sealed class EditSystemPath() : CoreCommand(
 
   private protected sealed override void Postprocess()
   {
-    Client.Invocation.ShellExecute(
+    Client.Start.ShellExecute(
       "rundll32.exe",
       "sysdm.cpl,EditEnvironmentVariables",
       administrator

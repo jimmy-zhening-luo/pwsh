@@ -21,7 +21,7 @@ public sealed class OpenUrl() : CoreCommand(
   public string Path
   {
     get => path;
-    set => path = Client.FileSystem.PathString.Normalize(
+    set => path = Client.File.PathString.Normalize(
       value
     );
   }

@@ -77,8 +77,7 @@ public sealed class GetHelpOnline : CoreCommand
           var uriString = noteProperty.ToString();
 
           if (
-            uriString is not null
-            and not ""
+            uriString is not (null or "")
             && (
               uriString.StartsWith(
                 "https://"

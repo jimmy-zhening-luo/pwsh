@@ -1,6 +1,6 @@
 namespace Module.Client;
 
-internal static class Invocation
+internal static class Start
 {
   internal static void CreateProcess(
     string fileName,

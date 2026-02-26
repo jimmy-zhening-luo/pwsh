@@ -38,7 +38,7 @@ public sealed class PathCompleter : TabCompleter
     bool preserveTrailingSeparator = default
   )
   {
-    var normalPath = Client.FileSystem.PathString.Normalize(
+    var normalPath = Client.File.PathString.Normalize(
       path,
       preserveTrailingSeparator
     );
@@ -98,7 +98,7 @@ public sealed class PathCompleter : TabCompleter
     string wordToComplete
   )
   {
-    var pathToComplete = Client.FileSystem.PathString.Normalize(
+    var pathToComplete = Client.File.PathString.Normalize(
       wordToComplete,
       true
     );

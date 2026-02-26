@@ -75,7 +75,7 @@ internal static class Url
   {
     if (!Environment.Known.Variable.InSsh)
     {
-      Invocation.ShellExecute(
+      Start.ShellExecute(
         Environment.Known.Application.Chrome,
         target
       );

@@ -52,7 +52,7 @@ public sealed class TeeVariable() : WrappedCommand(
   )]
   [ValidateNotNullOrEmpty]
   [EnumCompletions(
-    typeof(Client.FileSystem.Encoding)
+    typeof(Client.File.Encoding)
   )]
   public required string Encoding { get; set; }
 }

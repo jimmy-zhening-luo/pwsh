@@ -12,7 +12,7 @@ public sealed class UpdateStoreApp() : CoreCommand(
 {
   private protected sealed override void Postprocess()
   {
-    Client.Invocation.ShellExecute(
+    Client.Start.ShellExecute(
       "ms-windows-store://downloadsandupdates"
     );
   }
