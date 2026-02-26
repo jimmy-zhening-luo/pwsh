@@ -22,6 +22,8 @@ public sealed class GetCommandAlias : CoreCommand
     get => [.. definitions];
     set
     {
+      definitions.Clear();
+
       foreach (var definition in value)
       {
         _ = definitions.Add(
@@ -65,6 +67,8 @@ public sealed class GetCommandAlias : CoreCommand
     get => [.. exclusions];
     set
     {
+      exclusions.Clear();
+
       foreach (var exclusion in value)
       {
         if (exclusion is not "")

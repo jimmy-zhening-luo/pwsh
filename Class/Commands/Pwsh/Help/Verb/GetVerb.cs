@@ -23,6 +23,8 @@ public sealed partial class GetVerb : CoreCommand
     get => [.. verbs];
     set
     {
+      verbs.Clear();
+
       foreach (var verb in value)
       {
         if (verb is not "")
@@ -54,6 +56,8 @@ public sealed partial class GetVerb : CoreCommand
     get => [.. groups];
     set
     {
+      groups.Clear();
+
       foreach (var group in value)
       {
         if (
