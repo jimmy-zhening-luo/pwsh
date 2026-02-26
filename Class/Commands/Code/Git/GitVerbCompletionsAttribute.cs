@@ -26,5 +26,4 @@ public sealed class GitVerbCompletionsAttribute() : CompletionsAttribute(
     "push",
     "reset",
   ]
-)
-{ }
+);

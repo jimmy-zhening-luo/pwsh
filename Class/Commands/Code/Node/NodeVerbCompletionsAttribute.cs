@@ -71,5 +71,4 @@ public sealed class NodeVerbCompletionsAttribute() : CompletionsAttribute(
     "view",
     "whoami",
   ]
-)
-{ }
+);
