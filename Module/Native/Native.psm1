@@ -2,6 +2,7 @@ New-Alias clb Clear-RecycleBin
 New-Alias k Get-Member
 New-Alias key Get-Member
 New-Alias psk Get-PSReadLineKeyHandler
+New-Alias mc Measure-Command
 New-Alias ct Measure-Object
 New-Alias count Measure-Object
 New-Alias touch New-Item
