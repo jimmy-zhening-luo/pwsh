@@ -13,9 +13,6 @@ public partial class PathCompletionsAttribute(
     Location,
     ItemType,
     Flat,
-    Hidden,
-    string.IsNullOrEmpty(
-      Location
-    )
+    Hidden
   );
 }

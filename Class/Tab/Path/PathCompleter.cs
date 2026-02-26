@@ -2,36 +2,37 @@ namespace Module.Tab.Path;
 
 public sealed partial class PathCompleter : TabCompleter
 {
-  private readonly string Root;
+  private readonly string Location;
 
-  private readonly PathItemType Type;
+  private readonly PathItemType ItemType;
 
   private readonly bool Flat;
 
   private readonly bool Hidden;
 
-  private readonly bool Reanchor;
+  private readonly bool AllowReanchor;
 
   public PathCompleter(
-    string root,
-    PathItemType type,
+    string location,
+    PathItemType itemType,
     bool flat,
-    bool hidden,
-    bool reanchor
+    bool hidden
   ) => (
-    Root,
-    Type,
+    Location,
+    ItemType,
     Flat,
     Hidden,
-    Reanchor
+    AllowReanchor
   ) = (
     Canonicalize(
-      root
+      location
     ),
-    type,
+    itemType,
     flat,
     hidden,
-    reanchor
+    string.isNullOrEmpty(
+      location
+    )
   );
 
   private protected sealed override IEnumerable<string> FulfillCompletion(
@@ -43,7 +44,7 @@ public sealed partial class PathCompleter : TabCompleter
       true
     );
     string accumulatedSubpath = string.Empty;
-    string location = string.Empty;
+    string fullAccumulatedPath = string.Empty;
     string filter = string.Empty;
 
     while (
@@ -86,7 +87,7 @@ public sealed partial class PathCompleter : TabCompleter
         {
           string anchoredPath = System.IO.Path.GetFullPath(
             subpathPart,
-            Root
+            Location
           );
 
           if (
@@ -96,14 +97,14 @@ public sealed partial class PathCompleter : TabCompleter
           )
           {
             accumulatedSubpath = System.IO.Path.GetRelativePath(
-              Root,
+              Location,
               anchoredPath
             );
-            location = anchoredPath;
+            fullAccumulatedPath = anchoredPath;
             pathToComplete = string.Empty;
           }
           else if (
-            Reanchor
+            AllowReanchor
             && System.IO.Directory.Exists(
               subpathPart
             )
@@ -112,7 +113,7 @@ public sealed partial class PathCompleter : TabCompleter
             accumulatedSubpath = System.IO.Path.GetFullPath(
               subpathPart
             );
-            location = accumulatedSubpath;
+            fullAccumulatedPath = accumulatedSubpath;
             pathToComplete = string.Empty;
           }
           else
@@ -126,11 +127,11 @@ public sealed partial class PathCompleter : TabCompleter
 
     if (
       string.IsNullOrEmpty(
-        location
+        fullAccumulatedPath
       )
     )
     {
-      location = Root;
+      fullAccumulatedPath = Location;
     }
 
     int count = default;
@@ -145,12 +146,12 @@ public sealed partial class PathCompleter : TabCompleter
       options.AttributesToSkip = System.IO.FileAttributes.System;
     }
 
-    if (Type == PathItemType.File)
+    if (ItemType == PathItemType.File)
     {
 FileFirstMatch:
       foreach (
         var file in System.IO.Directory.EnumerateFiles(
-          location,
+          fullAccumulatedPath,
           filter,
           options
         )
@@ -180,7 +181,7 @@ FileFirstMatch:
 Match:
     foreach (
       var directory in System.IO.Directory.EnumerateDirectories(
-        location,
+        fullAccumulatedPath,
         filter,
         options
       )
@@ -207,11 +208,11 @@ Match:
 
     checkpoint = count;
 
-    if (Type == PathItemType.Any)
+    if (ItemType == PathItemType.Any)
     {
       foreach (
         var file in System.IO.Directory.EnumerateFiles(
-          location,
+          fullAccumulatedPath,
           filter,
           options
         )
