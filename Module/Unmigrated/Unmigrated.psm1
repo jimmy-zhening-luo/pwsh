@@ -170,7 +170,7 @@ function Invoke-Git {
           $Newable = $True
 
           if (
-            [Module.Commands.Code.Git.GitArgument]::GitArgumentRegex().IsMatch(
+            [Module.Commands.Code.Git.GitArgument]::Regex().IsMatch(
               $WorkingDirectory
             )
           ) {
@@ -502,7 +502,7 @@ function Write-GitRepository {
     }
   ).Where(
     {
-      [Module.Commands.Code.Git.GitArgument]::GitArgumentRegex().IsMatch($PSItem)
+      [Module.Commands.Code.Git.GitArgument]::Regex().IsMatch($PSItem)
     },
     'Split'
   )
@@ -522,7 +522,7 @@ function Write-GitRepository {
     )
   ) {
     if (
-      [Module.Commands.Code.Git.GitArgument]::GitArgumentRegex().IsMatch(
+      [Module.Commands.Code.Git.GitArgument]::Regex().IsMatch(
         $WorkingDirectory
       ) -and -not $Messages.Count
     ) {
@@ -605,8 +605,6 @@ function Push-GitRepository {
   Invoke-Git -Verb push -WorkingDirectory $WorkingDirectory -Argument $PushArgument
 }
 
-$TREE_SPEC = '^(?=.)(?>HEAD)?(?<Branching>(?>~|\^)?)(?<Step>(?>\d{0,10}))$'
-
 <#
 .LINK
 https://git-scm.com/docs/git-reset
@@ -632,16 +630,20 @@ function Reset-GitRepository {
   }
 
   if ($Tree) {
+    $TreeMatch = [Module.Commands.Code.Git.GitArgument]::TreeRegex().Match($Tree)
+
     if (
-      $Tree -match $TREE_SPEC -and (
-        !$Matches.Step -or $Matches.Step -as [int]
+      $TreeMatch.Success -and (
+        $TreeMatch.Groups["step"].Value -eq '' -or $TreeMatch.Groups["step"].Value -as [int]
       )
     ) {
-      [string]$Branching = $Matches.Branching ? $Matches.Branching : '~'
-      $Tree = 'HEAD' + $Branching + $Matches.Step
+      [string]$Branching = $TreeMatch.Groups["branching"].Value -ne '' ? $TreeMatch.Groups["branching"].Value : '~'
+
+      $Tree = 'HEAD' + $Branching + $TreeMatch.Groups["step"].Value
     }
     else {
       $ResetArgument.Insert(0, $Tree)
+
       $Tree = ''
     }
   }
@@ -653,16 +655,24 @@ function Reset-GitRepository {
       Resolve-GitRepository -WorkingDirectory $WorkingDirectory
     )
   ) {
-    if (
-      !$Tree -and $WorkingDirectory -match $TREE_SPEC -and (
-        !$Matches.Step -or $Matches.Step -as [int]
-      )
-    ) {
-      [string]$Branching = $Matches.Branching ? $Matches.Branching : '~'
-      $Tree = "HEAD$Branching$($Matches.Step)"
+    if ($Tree) {
+      $ResetArgument.Insert(0, $WorkingDirectory)
     }
     else {
-      $ResetArgument.Insert(0, $WorkingDirectory)
+      $TreeMatch = [Module.Commands.Code.Git.GitArgument]::TreeRegex().Match($Tree)
+
+      if (
+        $TreeMatch.Success -and (
+          $TreeMatch.Groups["step"].Value -eq '' -or $TreeMatch.Groups["step"].Value -as [int]
+        )
+      ) {
+        [string]$Branching = $TreeMatch.Groups["branching"].Value -ne '' ? $TreeMatch.Groups["branching"].Value : '~'
+
+        $Tree = 'HEAD' + $Branching + $TreeMatch.Groups["step"].Value
+      }
+      else {
+        $ResetArgument.Insert(0, $WorkingDirectory)
+      }
     }
 
     $WorkingDirectory = ''
