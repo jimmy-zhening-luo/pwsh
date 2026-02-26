@@ -76,7 +76,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   [EnumCompletions(
     typeof(System.IO.FileAttributes)
   )]
-    public required FlagsExpression<System.IO.FileAttributes> Attributes { get; set; }
+  public required FlagsExpression<System.IO.FileAttributes> Attributes { get; set; }
 
   private protected sealed override Dictionary<string, object?> CoercedParameters => new()
   {
