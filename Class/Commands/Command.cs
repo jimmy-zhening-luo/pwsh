@@ -175,13 +175,13 @@ public abstract class CoreCommand(
     )
   );
 
-  private protected PSObject Variable(
+  private protected PSObject PSVariable(
     string variable
-  ) => Variable<PSObject>(
+  ) => PSVariable<PSObject>(
     variable
   );
 
-  private protected T Variable<T>(
+  private protected T PSVariable<T>(
     string variable
   ) => (T)SessionState
     .PSVariable
