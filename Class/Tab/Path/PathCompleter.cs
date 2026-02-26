@@ -153,7 +153,10 @@ FileFirstMatch:
       if (
         count is 0
         && filter.Length > 1
-        && options.AttributesToSkip is not System.IO.FileAttributes.System
+        && options is not
+        {
+          AttributesToSkip: System.IO.FileAttributes.System
+        }
       )
       {
         options.AttributesToSkip = System.IO.FileAttributes.System;
@@ -184,7 +187,10 @@ Match:
     if (
       count == checkpoint
       && filter.Length > 1
-      && options.AttributesToSkip is not System.IO.FileAttributes.System
+      && options is not
+      {
+        AttributesToSkip: System.IO.FileAttributes.System
+      }
     )
     {
       options.AttributesToSkip = System.IO.FileAttributes.System;
@@ -214,7 +220,10 @@ Match:
       if (
         count == checkpoint
         && filter.Length > 1
-        && options.AttributesToSkip is not System.IO.FileAttributes.System
+        && options is not
+        {
+          AttributesToSkip: System.IO.FileAttributes.System
+        }
       )
       {
         options.AttributesToSkip = System.IO.FileAttributes.System;

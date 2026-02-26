@@ -86,8 +86,11 @@ public sealed class GetHelpOnline : CoreCommand
             );
 
             if (
-              url.IsAbsoluteUri
-              && url.Host is not ""
+              url is
+              {
+                IsAbsoluteUri: true,
+                Host: not ""
+              }
             )
             {
               urls.Add(
@@ -110,10 +113,7 @@ public sealed class GetHelpOnline : CoreCommand
 
   private protected sealed override void Postprocess()
   {
-    if (
-      Name is not []
-      and not [""]
-    )
+    if (Name is not [] and not [""])
     {
       var topic = string.Join(
         '_',

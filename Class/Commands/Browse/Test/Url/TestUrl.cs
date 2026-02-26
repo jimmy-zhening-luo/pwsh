@@ -46,7 +46,10 @@ public sealed class TestUrl : CoreCommand
       );
 
       if (
-        url.OriginalString is not ""
+        url is not
+        {
+          OriginalString: ""
+        }
         && Client.Network.Url.HostExists(
           url.Host
         )
