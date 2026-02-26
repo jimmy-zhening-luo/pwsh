@@ -9,15 +9,15 @@ public abstract class WrappedGetFile() : WrappedCommand(
 
   [Parameter]
   [SupportsWildcards]
-  public string Filter { get; set; } = string.Empty;
+  public required string Filter { get; set; }
 
   [Parameter]
   [SupportsWildcards]
-  public string[] Include { get; set; } = [];
+  public required string[] Include { get; set; }
 
   [Parameter]
   [SupportsWildcards]
-  public string[] Exclude { get; set; } = [];
+  public required string[] Exclude { get; set; }
 
   [Parameter]
   public long ReadCount { get; set; }
@@ -39,17 +39,17 @@ public abstract class WrappedGetFile() : WrappedCommand(
   public int Tail { get; set; }
 
   [Parameter]
-  public string Delimiter { get; set; } = string.Empty;
+  public required string Delimiter { get; set; }
 
   [Parameter]
-  public string Stream { get; set; } = string.Empty;
+  public required string Stream { get; set; }
 
   [Parameter]
   [ValidateNotNullOrEmpty]
   [EnumCompletions(
     typeof(Client.FileSystem.Encoding)
   )]
-  public string Encoding { get; set; } = string.Empty;
+  public required string Encoding { get; set; }
 
   [Parameter]
   [Alias("f")]

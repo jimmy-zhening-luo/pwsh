@@ -98,7 +98,7 @@ public sealed class TestHost() : WrappedCommand(
   [Parameter(
     ParameterSetName = "NetRouteDiagnostics"
   )]
-  public string ConstrainSourceAddress { get; set; } = string.Empty;
+  public required string ConstrainSourceAddress { get; set; }
 
   [Parameter(
     ParameterSetName = "NetRouteDiagnostics"

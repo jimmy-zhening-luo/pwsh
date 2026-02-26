@@ -20,22 +20,22 @@ public sealed class ClearLine : CoreCommand
 
   [Parameter]
   [SupportsWildcards]
-  public string Filter { get; set; } = string.Empty;
+  public required string Filter { get; set; }
 
   [Parameter(
     ParameterSetName = "LiteralPath",
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  public string[] LiteralPath { get; set; } = [];
+  public required string[] LiteralPath { get; set; }
 
   [Parameter]
   [SupportsWildcards]
-  public string[] Include { get; set; } = [];
+  public required string[] Include { get; set; }
 
   [Parameter]
   [SupportsWildcards]
-  public string[] Exclude { get; set; } = [];
+  public required string[] Exclude { get; set; }
 
   [Parameter]
   [Alias("f")]
@@ -47,7 +47,7 @@ public sealed class ClearLine : CoreCommand
   private bool force;
 
   [Parameter]
-  public string Stream { get; set; } = string.Empty;
+  public required string Stream { get; set; }
 
   private protected sealed override void Postprocess()
   {

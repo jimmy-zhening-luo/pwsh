@@ -22,13 +22,13 @@ public sealed class NewDirectory() : WrappedCommandShouldProcess(
     Position = default
   )]
   [PathCompletions]
-  public string[] Path { get; set; } = [];
+  public required string[] Path { get; set; }
 
   [Parameter(
     ParameterSetName = "nameSet",
     Mandatory = true
   )]
-  public string Name { get; set; } = string.Empty;
+  public required string Name { get; set; }
 
   [Parameter]
   [Alias("Target")]

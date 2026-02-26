@@ -33,7 +33,7 @@ public sealed class GetDirectory : WrappedGetDirectory
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  public string[] LiteralPath { get; set; } = [];
+  public required string[] LiteralPath { get; set; }
 }
 
 [Cmdlet(

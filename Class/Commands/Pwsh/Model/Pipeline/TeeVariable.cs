@@ -23,21 +23,21 @@ public sealed class TeeVariable() : WrappedCommand(
     Mandatory = true,
     Position = default
   )]
-  public string Variable { get; set; } = string.Empty;
+  public required string Variable { get; set; }
 
   [Parameter(
     ParameterSetName = "File",
     Mandatory = true
   )]
   [Alias("Path")]
-  public string FilePath { get; set; } = string.Empty;
+  public required string FilePath { get; set; }
 
   [Parameter(
     ParameterSetName = "LiteralFile",
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  public string LiteralPath { get; set; } = string.Empty;
+  public required string LiteralPath { get; set; }
 
   [Parameter(
     ParameterSetName = "File"
@@ -59,5 +59,5 @@ public sealed class TeeVariable() : WrappedCommand(
   [EnumCompletions(
     typeof(Client.FileSystem.Encoding)
   )]
-  public string Encoding { get; set; } = string.Empty;
+  public required string Encoding { get; set; }
 }

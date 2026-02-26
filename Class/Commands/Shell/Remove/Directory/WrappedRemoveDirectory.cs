@@ -9,15 +9,15 @@ public abstract class WrappedRemoveDirectory() : WrappedCommandShouldProcess(
 
   [Parameter]
   [SupportsWildcards]
-  public string Filter { get; set; } = string.Empty;
+  public required string Filter { get; set; }
 
   [Parameter]
   [SupportsWildcards]
-  public string[] Include { get; set; } = [];
+  public required string[] Include { get; set; }
 
   [Parameter]
   [SupportsWildcards]
-  public string[] Exclude { get; set; } = [];
+  public required string[] Exclude { get; set; }
 
   private protected sealed override Dictionary<string, object> CoercedParameters => new()
   {

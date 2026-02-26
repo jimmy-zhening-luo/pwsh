@@ -28,11 +28,11 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
 
   [Parameter]
   [SupportsWildcards]
-  public string[] Include { get; set; } = [];
+  public required string[] Include { get; set; }
 
   [Parameter]
   [SupportsWildcards]
-  public string[] Exclude { get; set; } = [];
+  public required string[] Exclude { get; set; }
 
   [Parameter]
   [Alias("s", "r")]
@@ -121,10 +121,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   [EnumCompletions(
     typeof(System.IO.FileAttributes)
   )]
-  public FlagsExpression<System.IO.FileAttributes> Attributes { get; set; } = new(
-    nameof(
-      global::System.IO.FileAttributes.None
-    )
+    public required FlagsExpression<System.IO.FileAttributes> Attributes { get; set; }
   );
 
   private protected sealed override void TransformArguments()

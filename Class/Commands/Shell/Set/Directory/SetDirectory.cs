@@ -33,12 +33,12 @@ public sealed class SetDirectory : WrappedSetDirectory
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  public string LiteralPath { get; set; } = string.Empty;
+  public required string LiteralPath { get; set; }
 
   [Parameter(
     ParameterSetName = "Stack"
   )]
-  public string Stack { get; set; } = string.Empty;
+  public required string Stack { get; set; }
 
   [Parameter(
     ParameterSetName = "DriveC"

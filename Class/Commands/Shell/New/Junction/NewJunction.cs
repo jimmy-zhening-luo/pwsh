@@ -18,7 +18,7 @@ public sealed class NewJunction() : WrappedCommandShouldProcess(
     Position = default
   )]
   [PathCompletions]
-  public string[] Path { get; set; } = [];
+  public required string[] Path { get; set; }
 
   [Parameter(
     Mandatory = true,
