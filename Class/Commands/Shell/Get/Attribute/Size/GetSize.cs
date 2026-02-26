@@ -17,7 +17,7 @@ using System.Linq;
   typeof(double),
   ParameterSetName = ["Number"]
 )]
-public sealed partial class GetSize : CoreCommand
+public sealed class GetSize : CoreCommand
 {
   public enum DiskSizeUnit
   {

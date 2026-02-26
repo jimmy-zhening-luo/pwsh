@@ -1,6 +1,6 @@
 namespace Module.Commands;
 
-public abstract partial class CoreCommand(
+public abstract class CoreCommand(
   bool SkipSsh = default
 ) : PSCmdlet, System.IDisposable
 {

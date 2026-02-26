@@ -1,7 +1,14 @@
 namespace Module.Commands.Code.Git;
 
-public static partial class GitVerb
+public static class GitVerb
 {
+  public enum NewableVerb
+  {
+    clone,
+    config,
+    init
+  }
+
   public static readonly HashSet<string> Verbs = [
     "switch",
     "merge",

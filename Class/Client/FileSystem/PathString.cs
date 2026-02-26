@@ -38,4 +38,9 @@ internal static partial class PathString
       )
       ? path[2..]
       : path;
+
+  [System.Text.RegularExpressions.GeneratedRegex(
+    @"(?<!^)(?>\\\\+)"
+  )]
+  private static partial System.Text.RegularExpressions.Regex DuplicateSeparatorRegex();
 }

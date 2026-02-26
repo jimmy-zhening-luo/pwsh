@@ -8,7 +8,7 @@ namespace Module.Commands.Pwsh.Help.Verb;
 [Alias("vb")]
 [OutputType(typeof(VerbInfo))]
 [OutputType(typeof(string))]
-public sealed partial class GetVerb : CoreCommand
+public sealed class GetVerb : CoreCommand
 {
   public enum VerbGroup
   {
