@@ -72,11 +72,11 @@ public sealed class TestUrl : CoreCommand
     {
       if (
         Client.Network.Url.HostExists(
-          url.Host
+          url
         )
         && Client.Network.Url.Test(
-          client,
-          url
+          url,
+          client
         )
       )
       {

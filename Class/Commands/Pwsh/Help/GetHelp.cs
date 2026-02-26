@@ -31,8 +31,8 @@ public sealed class GetHelpOnline : CoreCommand
   public string[] Parameter { get; set; } = [];
 
   private static System.Uri? ResolveAboutArticle(
-    System.Net.Http.HttpClient client,
-    string topic
+    string topic,
+    System.Net.Http.HttpClient client
   )
   {
     System.Uri testUri = new(
@@ -40,8 +40,8 @@ public sealed class GetHelpOnline : CoreCommand
     );
 
     return Client.Network.Url.Test(
-      client,
-      testUri
+      testUri,
+      client
     )
       ? testUri
       : default;

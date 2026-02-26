@@ -3,6 +3,11 @@ namespace Module.Client.Network;
 internal static class Url
 {
   internal static bool HostExists(
+    System.Uri uri
+  ) => HostExists(
+    uri.Host
+  );
+  internal static bool HostExists(
     string host
   )
   {
@@ -22,8 +27,8 @@ internal static class Url
   }
 
   internal static bool Test(
-    System.Net.Http.HttpClient client,
-    System.Uri url
+    System.Uri url,
+    System.Net.Http.HttpClient client
   )
   {
     try
