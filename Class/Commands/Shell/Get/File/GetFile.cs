@@ -173,5 +173,5 @@ public sealed class GetFileDrive : WrappedGetFile
     set => paths = value;
   }
 
-  private protected sealed override Locator Location => new(CurrentDrive());
+  private protected sealed override Locator Location => new(Drive());
 }

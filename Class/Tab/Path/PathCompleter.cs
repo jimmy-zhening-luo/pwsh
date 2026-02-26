@@ -41,22 +41,12 @@ public sealed class PathCompleter : TabCompleter
       preserveTrailingSeparator
     );
 
-    var homedNormalPath = normalPath.StartsWith('~')
-      ? normalPath.Length is 1
-        ? Client.Environment.Known.Folder.Home()
-        : normalPath[1] is '\\'
-          ? Client.Environment.Known.Folder.Home(
-              normalPath[2..]
-            )
-          : normalPath
-        : normalPath;
-
-    return System.IO.Path.IsPathFullyQualified(homedNormalPath)
-      ? homedNormalPath
-      : PowerShellHost.CurrentDirectory(homedNormalPath);
+    return System.IO.Path.IsPathFullyQualified(normalPath)
+      ? normalPath
+      : PowerShellHost.FullPathCurrentLocationRelative(normalPath);
   }
 
-  private static string Denormalize(
+  private static string FormatPathCompletion(
     string path,
     string location = "",
     string subpath = ""
@@ -76,7 +66,7 @@ public sealed class PathCompleter : TabCompleter
     string path,
     string accumulatedSubpath,
     bool trailingSeparator = default
-  ) => Denormalize(
+  ) => FormatPathCompletion(
     System.IO.Path.GetFileName(path),
     accumulatedSubpath,
     trailingSeparator
@@ -277,7 +267,7 @@ Match:
 
     if (accumulatedSubpath is not "")
     {
-      yield return Denormalize(
+      yield return FormatPathCompletion(
         @"\",
         accumulatedSubpath
       );
@@ -288,7 +278,7 @@ Match:
       || count is not 0
     )
     {
-      yield return Denormalize(
+      yield return FormatPathCompletion(
         @"..\",
         accumulatedSubpath
       );

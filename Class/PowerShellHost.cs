@@ -10,7 +10,7 @@ internal static class PowerShellHost
       : RunspaceMode.CurrentRunspace
   );
 
-  internal static string CurrentDirectory(
+  internal static string FullPathCurrentLocationRelative(
     string path = ""
   )
   {
@@ -31,9 +31,9 @@ internal static class PowerShellHost
       );
     }
 
-    return System.IO.Path.GetFullPath(
-      path,
-      currentLocation
+    return Client.File.PathString.FullPathLocationRelative(
+      currentLocation,
+      path
     );
   }
 }

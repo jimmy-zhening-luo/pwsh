@@ -2,23 +2,37 @@ namespace Module.Client.File;
 
 internal static partial class PathString
 {
+  internal static string FullPathLocationRelative(
+    string location,
+    string path,
+    bool preserveTrailingSeparator = default
+  ) => System.IO.Path.GetFullPath(
+    Normalize(
+      path,
+      preserveTrailingSeparator
+    ),
+    location
+  );
+
   internal static string Normalize(
     string path,
     bool preserveTrailingSeparator = default
   )
   {
     var normalPath = TrimRelativePrefix(
-      DuplicateSeparatorRegex().Replace(
-        System
-          .Environment
-          .ExpandEnvironmentVariables(
-            path.Trim()
-          )
-          .Replace(
-            '/',
-            '\\'
-          ),
-        @"\"
+      ExpandHomePrefix(
+        DuplicateSeparatorRegex().Replace(
+          System
+            .Environment
+            .ExpandEnvironmentVariables(
+              path.Trim()
+            )
+            .Replace(
+              '/',
+              '\\'
+            ),
+          @"\"
+        )
       )
     );
 
@@ -26,6 +40,16 @@ internal static partial class PathString
       ? normalPath
       : System.IO.Path.TrimEndingDirectorySeparator(normalPath);
   }
+
+  private static string ExpandHomePrefix(string path) => path.StartsWith('~')
+    ? path.Length is 1
+      ? Environment.Known.Folder.Home()
+      : path[1] is '\\'
+        ? Environment.Known.Folder.Home(
+            path[2..]
+          )
+        : path
+      : path;
 
   private static string TrimRelativePrefix(string path) => path is "."
     ? string.Empty

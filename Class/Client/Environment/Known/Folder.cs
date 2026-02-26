@@ -5,37 +5,37 @@ using FolderName = System.Environment.SpecialFolder;
 internal static partial class Folder
 {
   internal static string Windows(
-    string subpath = ""
+    string path = ""
   ) => Local.GetFolder(
     FolderName.Windows,
-    subpath
+    path
   );
 
   internal static string ProgramFiles(
-    string subpath = ""
+    string path = ""
   ) => Local.GetFolder(
     FolderName.ProgramFiles,
-    subpath
+    path
   );
 
   internal static string AppData(
-    string subpath = ""
+    string path = ""
   ) => Local.GetFolder(
     FolderName.ApplicationData,
-    subpath
+    path
   );
 
   internal static string LocalAppData(
-    string subpath = ""
+    string path = ""
   ) => Local.GetFolder(
     FolderName.LocalApplicationData,
-    subpath
+    path
   );
 
   internal static string Home(
-    string subpath = ""
+    string path = ""
   ) => Local.GetFolder(
     FolderName.UserProfile,
-    subpath
+    path
   );
 }

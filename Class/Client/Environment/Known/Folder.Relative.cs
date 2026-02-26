@@ -3,16 +3,16 @@ namespace Module.Client.Environment.Known;
 internal static partial class Folder
 {
   internal static string SystemDrive(
-    string subpath = ""
-  ) => System.IO.Path.GetFullPath(
-    File.PathString.Normalize(subpath),
-    Windows("..")
+    string path = ""
+  ) => File.FullPathLocationRelative(
+    Windows(".."),
+    path
   );
 
   internal static string Code(
-    string subpath = ""
-  ) => System.IO.Path.GetFullPath(
-    File.PathString.Normalize(subpath),
-    Home("code")
+    string path = ""
+  ) => File.FullPathLocationRelative(
+    Home("code"),
+    path
   );
 }

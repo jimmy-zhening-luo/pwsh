@@ -9,14 +9,14 @@ internal static class Local
 
   internal static string GetFolder(
     System.Environment.SpecialFolder folder,
-    string subpath = ""
-  ) => System.IO.Path.GetFullPath(
-    File.PathString.Normalize(subpath),
+    string path = ""
+  ) => File.FullPathLocationRelative(
     folders.TryGetValue(
       folder,
       out string? folderLocation
     )
       ? folderLocation
-      : folders[folder] = System.Environment.GetFolderPath(folder)
+      : folders[folder] = System.Environment.GetFolderPath(folder),
+    path
   );
 }

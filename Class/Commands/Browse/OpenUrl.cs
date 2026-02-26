@@ -50,19 +50,10 @@ public sealed class OpenUrl() : CoreCommand(true)
 
       if (Path is not "")
       {
-        var relativePath = System.IO.Path.GetRelativePath(
-          SessionState.Path.CurrentLocation.Path,
-          Path
-        );
-        var testPath = System.IO.Path.IsPathRooted(relativePath)
-          ? relativePath
-          : System.IO.Path.Combine(
-              SessionState.Path.CurrentLocation.Path,
-              relativePath
-            );
+        var fullPath = Pwd(path);
 
-        target = System.IO.Path.Exists(testPath)
-          ? System.IO.Path.GetFullPath(testPath)
+        target = System.IO.Path.Exists(fullPath)
+          ? fullpath
           : Path;
       }
 

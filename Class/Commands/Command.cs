@@ -137,17 +137,17 @@ public abstract class CoreCommand(
     )
   );
 
-  private protected string Reanchor(string path = "") => System.IO.Path.GetFullPath(
-    Client.File.PathString.Normalize(path),
-    System.IO.Path.GetFullPath(
-      Location.Subpath,
-      Location is
-      {
-        Root: ""
-      }
-        ? Pwd()
-        : Location.Root
-    )
+  private protected string Reanchor(string path = "") => Client.File.PathString.FullPathLocationRelative(
+    Location is
+    {
+      Root: ""
+    }
+      ? Pwd(Location.Subpath)
+      : Client.File.PathString.FullPathLocationRelative(
+          Location.Root,
+          Location.Subpath
+        ),
+    path
   );
 
   private protected PSObject PSVariable(string variable) => PSVariable<PSObject>(variable);
@@ -156,14 +156,14 @@ public abstract class CoreCommand(
     .PSVariable
     .GetValue(variable);
 
-  private protected string Pwd(string subpath = "") => System.IO.Path.GetFullPath(
-    Client.File.PathString.Normalize(subpath),
-    SessionState.Path.CurrentLocation.Path
+  private protected string Pwd(string path = "") => Client.File.PathString.FullPathLocationRelative(
+    SessionState.Path.CurrentLocation.Path,
+    path
   );
 
-  private protected string CurrentDrive(string subpath = "") => System.IO.Path.GetFullPath(
-    Client.File.PathString.Normalize(subpath),
-    SessionState.Drive.Current.Root
+  private protected string Drive(string path = "") => Client.File.PathString.FullPathLocationRelative(
+    SessionState.Drive.Current.Root,
+    path
   );
 
   private protected void WriteLog(object log) => WriteLog(
