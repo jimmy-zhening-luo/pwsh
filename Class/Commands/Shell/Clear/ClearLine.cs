@@ -53,9 +53,7 @@ public sealed class ClearLine : CoreCommand
   {
     if (
       ParameterSetName is "Path"
-      && string.IsNullOrEmpty(
-        Path
-      )
+      && Path is ""
     )
     {
       System.Console.Clear();

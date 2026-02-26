@@ -52,11 +52,7 @@ public sealed class GetCommandAlias : CoreCommand
 
     foreach (var definition in Definition)
     {
-      if (
-        !string.IsNullOrEmpty(
-          definition
-        )
-      )
+      if (definition is not "")
       {
         uniqueWildcardTerms.Add(
           definition.Contains(
@@ -79,11 +75,7 @@ public sealed class GetCommandAlias : CoreCommand
 
     foreach (var exclusion in Exclude)
     {
-      if (
-        !string.IsNullOrEmpty(
-          exclusion
-        )
-      )
+      if (exclusion is not "")
       {
         uniqueExclusions.Add(
           exclusion
@@ -108,7 +100,7 @@ public sealed class GetCommandAlias : CoreCommand
         Scope
       );
 
-    if (Exclude.Length is not 0)
+    if (Exclude is not [])
     {
       PS.AddParameter(
         "Exclude",

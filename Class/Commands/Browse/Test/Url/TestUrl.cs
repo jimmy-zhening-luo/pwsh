@@ -34,23 +34,19 @@ public sealed class TestUrl : CoreCommand
     {
       System.Uri url = new(
         uri.IsAbsoluteUri
-          ? string.IsNullOrEmpty(
-              uri.Host.Trim()
-            )
+          ? uri.Host.Trim() is ""
             ? string.Empty
             : uri.AbsoluteUri.Trim()
-          : string.IsNullOrEmpty(
-              uri.OriginalString.Trim()
-            )
+          : uri.OriginalString.Trim() is ""
             ? string.Empty
-            : "http://"
-              + uri.OriginalString.Trim()
+            : string.Concat(
+                "http://",
+                uri.OriginalString.Trim()
+              )
       );
 
       if (
-        !string.IsNullOrEmpty(
-          url.OriginalString
-        )
+        url.OriginalString is not ""
         && Client.Network.Url.HostExists(
           url.Host
         )

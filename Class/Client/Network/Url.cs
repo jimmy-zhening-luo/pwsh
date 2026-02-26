@@ -56,11 +56,7 @@ internal static class Url
       .ToString()
       .Trim();
 
-    if (
-      !string.IsNullOrEmpty(
-        url
-      )
-    )
+    if (url is not "")
     {
       Open(
         url

@@ -16,12 +16,10 @@ internal static partial class Env
     string subpath = ""
   )
   {
-    string? folderLocation;
-
-    if(
+    if (
       !folders.TryGetValue(
         folder,
-        out folderLocation
+        out string? folderLocation
       )
     )
     {

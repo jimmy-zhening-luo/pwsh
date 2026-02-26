@@ -84,7 +84,7 @@ public abstract class TaskManager : CoreCommand
 
         break;
       case "Name":
-        if (Name.Length is 0)
+        if (Name is [])
         {
           KillProcesses(
             "explorer"
@@ -94,7 +94,7 @@ public abstract class TaskManager : CoreCommand
         {
           foreach (var name in Name)
           {
-            if (string.IsNullOrEmpty(name))
+            if (name is "")
             {
               continue;
             }

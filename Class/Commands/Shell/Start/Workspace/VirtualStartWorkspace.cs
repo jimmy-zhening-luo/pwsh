@@ -48,11 +48,7 @@ public abstract class VirtualStartWorkspace() : CoreCommand(
       path
     ];
 
-    if (
-      !string.IsNullOrEmpty(
-        Name
-      )
-    )
+    if (Name is not "")
     {
       if (
         Name.StartsWith(
@@ -94,7 +90,7 @@ public abstract class VirtualStartWorkspace() : CoreCommand(
       );
     }
 
-    if (Argument.Length is not 0)
+    if (Argument is not [])
     {
       argumentList.AddRange(
         Argument

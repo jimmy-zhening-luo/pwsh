@@ -53,11 +53,7 @@ public sealed class OpenUrl() : CoreCommand(
     );
     string target = string.Empty;
 
-    if (
-      !string.IsNullOrEmpty(
-        cleanPath
-      )
-    )
+    if (cleanPath is not "")
     {
       string relativePath = System.IO.Path.GetRelativePath(
         SessionState.Path.CurrentLocation.Path,

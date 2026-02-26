@@ -24,9 +24,7 @@ public abstract class WrappedCommand(
     TransformArguments();
 
     if (
-      string.IsNullOrEmpty(
-        PipelineInputParameterName
-      )
+      PipelineInputParameterName is ""
       || BoundParameters.ContainsKey(
         PipelineInputParameterName
       )

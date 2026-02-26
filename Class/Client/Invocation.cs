@@ -76,7 +76,7 @@ internal static class Invocation
           arguments
         );
 
-    System.Diagnostics.ProcessStartInfo startInfo = argumentList?.Count is null or 0
+    System.Diagnostics.ProcessStartInfo startInfo = argumentList is null or []
       ? new(
           fileName
         )

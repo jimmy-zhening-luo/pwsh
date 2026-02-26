@@ -30,9 +30,7 @@ public sealed partial class PathCompleter : TabCompleter
     itemType,
     flat,
     hidden,
-    string.IsNullOrEmpty(
-      location
-    )
+    location is ""
   );
 
   private protected sealed override IEnumerable<string> FulfillCompletion(
@@ -47,11 +45,7 @@ public sealed partial class PathCompleter : TabCompleter
     string fullAccumulatedPath = string.Empty;
     string filter = string.Empty;
 
-    while (
-      !string.IsNullOrEmpty(
-        pathToComplete
-      )
-    )
+    while (pathToComplete is not "")
     {
       int pathEnd = pathToComplete.LastIndexOf(
         '\\'
@@ -75,11 +69,7 @@ public sealed partial class PathCompleter : TabCompleter
             .Trim();
         }
 
-        if (
-          string.IsNullOrEmpty(
-            subpathPart
-          )
-        )
+        if (subpathPart is "")
         {
           pathToComplete = string.Empty;
         }
@@ -125,11 +115,7 @@ public sealed partial class PathCompleter : TabCompleter
       }
     }
 
-    if (
-      string.IsNullOrEmpty(
-        fullAccumulatedPath
-      )
-    )
+    if (fullAccumulatedPath is "")
     {
       fullAccumulatedPath = Location;
     }
@@ -237,11 +223,7 @@ Match:
       }
     }
 
-    if (
-      !string.IsNullOrEmpty(
-        accumulatedSubpath
-      )
-    )
+    if (accumulatedSubpath is not "")
     {
       yield return Denormalize(
         @"\",
@@ -250,9 +232,7 @@ Match:
     }
 
     if (
-      !string.IsNullOrEmpty(
-        accumulatedSubpath
-      )
+      accumulatedSubpath is not ""
       || count is not 0
     )
     {

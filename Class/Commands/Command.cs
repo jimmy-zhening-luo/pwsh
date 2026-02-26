@@ -21,12 +21,8 @@ public abstract partial class CoreCommand(
 
   private protected virtual string LocationSubpath => string.Empty;
 
-  private protected bool UsingCurrentLocation => string.IsNullOrEmpty(
-    Location
-  )
-    && string.IsNullOrEmpty(
-      LocationSubpath
-    );
+  private protected bool UsingCurrentLocation => Location is ""
+    && LocationSubpath is "";
 
   private protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
 
@@ -171,9 +167,7 @@ public abstract partial class CoreCommand(
     ),
     System.IO.Path.GetFullPath(
       LocationSubpath,
-      string.IsNullOrEmpty(
-        Location
-      )
+      Location is ""
         ? Pwd()
         : Location
     )

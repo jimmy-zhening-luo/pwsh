@@ -43,7 +43,7 @@ public sealed class GetHelpOnline : CoreCommand
     Collection<PSObject> helpContent
   )
   {
-    if (helpContent?.Count is null or 0)
+    if (helpContent is null or [])
     {
       return null;
     }
@@ -69,18 +69,17 @@ public sealed class GetHelpOnline : CoreCommand
           var uriString = noteProperty.ToString();
 
           if (
-              !string.IsNullOrEmpty(
-                uriString
+            uriString is not null
+            and not ""
+            && (
+              uriString.StartsWith(
+                "https://"
               )
-              && (
-                uriString.StartsWith(
-                  "https://"
-                )
-                || uriString.StartsWith(
-                  "http://"
-                )
+              || uriString.StartsWith(
+                "http://"
               )
             )
+          )
           {
             System.Uri url = new(
               uriString
@@ -88,9 +87,7 @@ public sealed class GetHelpOnline : CoreCommand
 
             if (
               url.IsAbsoluteUri
-              && !string.IsNullOrEmpty(
-                url.Host
-              )
+              && url.Host is not ""
             )
             {
               urls.Add(
@@ -101,7 +98,7 @@ public sealed class GetHelpOnline : CoreCommand
         }
       }
 
-      return urls.Count is 0
+      return urls is []
         ? null
         : urls;
     }
@@ -114,10 +111,8 @@ public sealed class GetHelpOnline : CoreCommand
   private protected sealed override void Postprocess()
   {
     if (
-      Name.Length > 1
-      || !string.IsNullOrEmpty(
-        Name[0]
-      )
+      Name is not []
+      and not [""]
     )
     {
       var topic = string.Join(
@@ -129,7 +124,7 @@ public sealed class GetHelpOnline : CoreCommand
         []
       );
 
-      if (helpContent?.Count is not 1)
+      if (helpContent is not [_])
       {
         helpContent = default;
       }
@@ -152,7 +147,7 @@ public sealed class GetHelpOnline : CoreCommand
           }
         }
 
-        if (Parameter.Length is not 0)
+        if (Parameter is not [])
         {
           var parameterHelpContent = GetHelpContent(
             topic,
@@ -171,7 +166,7 @@ public sealed class GetHelpOnline : CoreCommand
         );
       }
 
-      if (helpLinks.Count is not 0)
+      if (helpLinks is not [])
       {
         foreach (var helpLink in helpLinks)
         {
@@ -183,7 +178,7 @@ public sealed class GetHelpOnline : CoreCommand
 
       if (!Client.Environment.Known.Variable.Ssh)
       {
-        if (helpLinks.Count is not 0)
+        if (helpLinks is not [])
         {
           foreach (var helpLink in helpLinks)
           {
@@ -245,7 +240,7 @@ public sealed class GetHelpOnline : CoreCommand
         ActionPreference.SilentlyContinue
       );
 
-    if (parameters.Length is not 0)
+    if (parameters is not [])
     {
       ps.AddParameter(
         "Parameter",
@@ -255,15 +250,14 @@ public sealed class GetHelpOnline : CoreCommand
 
     if (
       online
-      && parameters.Length is 0
+      && parameters is []
     )
     {
       try
       {
-        ps
-          .AddParameter(
-            "Online"
-          );
+        ps.AddParameter(
+          "Online"
+        );
 
         return ps.Invoke();
       }

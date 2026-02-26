@@ -75,11 +75,7 @@ public sealed class SetDirectory : WrappedSetDirectory
     switch (ParameterSetName)
     {
       case "Path":
-        if (
-          !string.IsNullOrEmpty(
-            path
-          )
-        )
+        if (path is not "")
         {
           return;
         }

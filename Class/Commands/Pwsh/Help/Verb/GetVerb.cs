@@ -25,11 +25,7 @@ public sealed partial class GetVerb : CoreCommand
     {
       foreach (var verb in value)
       {
-        if (
-          !string.IsNullOrEmpty(
-            verb
-          )
-        )
+        if (verb is not "")
         {
           verbs.Add(
             verb.Contains(
@@ -79,11 +75,7 @@ public sealed partial class GetVerb : CoreCommand
 
   private protected sealed override void Postprocess()
   {
-    if (
-      Verb.Length is 0
-      || Verb.Length is 1
-      && Verb[0] is "*"
-    )
+    if (Verb is [] or ["*"])
     {
       AddCommand(
         "Get-Verb"
@@ -93,7 +85,7 @@ public sealed partial class GetVerb : CoreCommand
           "*"
         );
 
-      if (Group.Length is not 0)
+      if (Group is not [])
       {
         PS.AddParameter(
           "Group",
@@ -128,7 +120,7 @@ public sealed partial class GetVerb : CoreCommand
           Verb
         );
 
-      if (Group.Length is not 0)
+      if (Group is not [])
       {
         PS.AddParameter(
           "Group",

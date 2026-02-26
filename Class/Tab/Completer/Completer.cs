@@ -12,11 +12,7 @@ public class Completer(
     string wordToComplete
   )
   {
-    if (
-      string.IsNullOrEmpty(
-        wordToComplete
-      )
-    )
+    if (wordToComplete is "")
     {
       foreach (var member in Domain)
       {

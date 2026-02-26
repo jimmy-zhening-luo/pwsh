@@ -120,11 +120,7 @@ public sealed partial class TestHost() : WrappedCommand(
     switch (ParameterSetName)
     {
       case "ICMP":
-        if (
-          string.IsNullOrEmpty(
-            ComputerName
-          )
-        )
+        if (ComputerName is "")
         {
           CommonTCPPort = nameof(
             TestHostWellKnownPort.HTTP
@@ -173,11 +169,7 @@ public sealed partial class TestHost() : WrappedCommand(
 
   private protected sealed override void TransformPipelineInput()
   {
-    if (
-      string.IsNullOrEmpty(
-        ComputerName
-      )
-    )
+    if (ComputerName is "")
     {
       ComputerName = "google.com";
       BoundParameters["ComputerName"] = ComputerName;

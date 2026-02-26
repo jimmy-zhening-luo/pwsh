@@ -79,7 +79,7 @@ public sealed partial class GetSize : CoreCommand
 
   private protected sealed override void Processor()
   {
-    if (Path.Length is 0)
+    if (Path is [])
     {
       Path = [
         Pwd()

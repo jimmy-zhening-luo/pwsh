@@ -129,11 +129,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
 
   private protected sealed override void TransformArguments()
   {
-    if (
-      !string.IsNullOrEmpty(
-        Filter
-      )
-    )
+    if (Filter is not "")
     {
       BoundParameters["Filter"] = Filter;
     }
@@ -143,9 +139,9 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   {
     if (!UsingCurrentLocation)
     {
-      if (paths.Length is 0)
+      if (Path is [])
       {
-        paths = [
+        Path = [
           Reanchor()
         ];
       }
@@ -153,17 +149,17 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
       {
         for (
           int i = default;
-          i < paths.Length;
+          i < Path.Length;
           ++i
         )
         {
-          paths[i] = Reanchor(
-            paths[i]
+          Path[i] = Reanchor(
+            Path[i]
           );
         }
       }
 
-      BoundParameters["Path"] = paths;
+      BoundParameters["Path"] = Path;
     }
   }
 }
