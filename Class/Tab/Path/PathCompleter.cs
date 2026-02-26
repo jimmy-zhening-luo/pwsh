@@ -30,7 +30,7 @@ public sealed partial class PathCompleter : TabCompleter
     itemType,
     flat,
     hidden,
-    string.isNullOrEmpty(
+    string.IsNullOrEmpty(
       location
     )
   );
