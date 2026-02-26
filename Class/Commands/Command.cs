@@ -30,10 +30,7 @@ public abstract partial class CoreCommand(
   private PowerShell? powershell;
 
   private bool ContinueProcessing => !disposed
-    && (
-      stage is CommandLifecycle.Initialized
-      or CommandLifecycle.Processing
-    )
+    && stage is not CommandLifecycle.Stopped
     && (
       !SkipSsh
       || !Client.Environment.Known.Variable.Ssh
@@ -55,8 +52,6 @@ public abstract partial class CoreCommand(
     WriteDebug(
       "<BEGIN>"
     );
-
-    stage = CommandLifecycle.Initialized;
 
     if (ContinueProcessing)
     {
