@@ -17,7 +17,15 @@ public sealed class GetHelpOnline : CoreCommand
   )]
   [Alias("Command")]
   [SupportsWildcards]
-  public string[] Name { get; set; } = [];
+  public string[] Name
+  {
+    get => [topic];
+    set => topic = string.Join(
+      '_',
+      value
+    );
+  }
+  private string topic = string.Empty;
 
   [Parameter]
   public string[] Parameter { get; set; } = [];
@@ -113,12 +121,8 @@ public sealed class GetHelpOnline : CoreCommand
 
   private protected sealed override void Postprocess()
   {
-    if (Name is not [] and not [""])
+    if (topic is not "")
     {
-      var topic = string.Join(
-        '_',
-        Name
-      );
       var helpContent = GetHelpContent(
         topic,
         []

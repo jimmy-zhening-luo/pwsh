@@ -14,7 +14,7 @@ public sealed class GetType : CoreCommand
     ValueFromPipeline = true,
     HelpMessage = "The object whose type to check"
   )]
-  public required object InputObject;
+  public required object InputObject { get; set; }
 
   private protected sealed override void Processor()
   {

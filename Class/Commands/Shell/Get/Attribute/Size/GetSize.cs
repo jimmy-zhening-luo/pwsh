@@ -33,7 +33,14 @@ public sealed partial class GetSize : CoreCommand
     HelpMessage = "The path of the file or directory to be measured."
   )]
   [PathCompletions]
-  public string[] Path { get; set; } = [];
+  public string[] Path
+  {
+    get => path is []
+      ? [""]
+      : path;
+    set => path = value;
+  }
+  private string[] path = [];
 
   [Parameter(
     ParameterSetName = "String",
@@ -79,16 +86,6 @@ public sealed partial class GetSize : CoreCommand
 
   private protected sealed override void Processor()
   {
-    if (Path is [])
-    {
-      Path = [
-        Pwd()
-      ];
-    }
-
-    var bits = (int)unit * 10;
-    long factor = 1L << bits;
-
     foreach (var path in Path)
     {
       var absolutePath = Pwd(
@@ -129,7 +126,11 @@ public sealed partial class GetSize : CoreCommand
           )
           .Length;
 
-      double scaledSize = (double)bytes / factor;
+      double scaledSize = (double)bytes / (
+        1L << (
+          (int)unit * 10
+        )
+      );
 
       WriteObject(
         number
