@@ -9,7 +9,7 @@ namespace Module.Commands.Browse.Test.Host;
 [Alias("tn")]
 [OutputType(typeof(object))]
 public sealed partial class TestHost() : WrappedCommand(
-  "Test-NetConnection",
+  @"NetTCPIP\Test-NetConnection",
   false,
   "",
   CommandTypes.Function

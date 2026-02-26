@@ -1,7 +1,7 @@
 namespace Module.Commands.Shell.Start.Explorer;
 
 public abstract class WrappedStartExplorer() : WrappedCommandShouldProcess(
-  "Invoke-Item",
+  @"Microsoft.PowerShell.Management\Invoke-Item",
   true
 )
 {

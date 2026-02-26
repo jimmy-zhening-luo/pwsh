@@ -1,7 +1,7 @@
 namespace Module.Commands.Shell.Get.File;
 
 public abstract class WrappedGetFile() : WrappedCommand(
-  "Get-Content"
+  @"Microsoft.PowerShell.Management\Get-Content"
 )
 {
   public abstract string[] Path { get; set; }

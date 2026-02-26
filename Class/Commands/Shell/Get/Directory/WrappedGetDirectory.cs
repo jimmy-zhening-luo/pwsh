@@ -1,7 +1,7 @@
 namespace Module.Commands.Shell.Get.Directory;
 
 public abstract class WrappedGetDirectory() : WrappedCommand(
-  "Get-ChildItem"
+  @"Microsoft.PowerShell.Management\Get-ChildItem"
 )
 {
   public abstract string[] Path { get; set; }
