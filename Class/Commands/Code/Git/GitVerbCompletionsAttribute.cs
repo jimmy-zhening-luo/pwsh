@@ -25,7 +25,6 @@ public sealed class GitVerbCompletionsAttribute() : CompletionsAttribute(
     "commit",
     "push",
     "reset"
-  ],
-  Tab.CompletionCase.Preserve
+  ]
 )
 { }

@@ -21,13 +21,13 @@ public sealed partial class GetSize : CoreCommand
 {
   [Parameter(
     ParameterSetName = "String",
-    Position = 0,
+    Position = default,
     ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true
   )]
   [Parameter(
     ParameterSetName = "Number",
-    Position = 0,
+    Position = default,
     ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true,
     HelpMessage = "The path of the file or directory to be measured."

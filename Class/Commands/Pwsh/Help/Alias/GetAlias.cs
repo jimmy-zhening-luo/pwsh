@@ -10,7 +10,7 @@ namespace Module.Commands.Pwsh.Help.Alias;
 public sealed class GetCommandAlias : CoreCommand
 {
   [Parameter(
-    Position = 0
+    Position = default
   )]
   [Alias("Command")]
   [SupportsWildcards]

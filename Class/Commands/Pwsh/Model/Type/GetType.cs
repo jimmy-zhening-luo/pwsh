@@ -10,7 +10,7 @@ public sealed class GetType : CoreCommand
 {
   [Parameter(
     Mandatory = true,
-    Position = 0,
+    Position = default,
     ValueFromPipeline = true,
     HelpMessage = "The object whose type to check"
   )]

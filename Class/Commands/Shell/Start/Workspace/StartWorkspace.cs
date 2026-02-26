@@ -11,7 +11,7 @@ namespace Module.Commands.Shell.Start.Workspace;
 public sealed class StartWorkspace : VirtualStartWorkspace
 {
   [Parameter(
-    Position = 0
+    Position = default
   )]
   [PathCompletions]
   public sealed override string Path
@@ -32,7 +32,7 @@ public sealed class StartWorkspace : VirtualStartWorkspace
 public sealed class StartWorkspaceSibling : VirtualStartWorkspace
 {
   [Parameter(
-    Position = 0
+    Position = default
   )]
   [PathCompletions(
     ".."
@@ -57,7 +57,7 @@ public sealed class StartWorkspaceSibling : VirtualStartWorkspace
 public sealed class StartWorkspaceRelative : VirtualStartWorkspace
 {
   [Parameter(
-    Position = 0
+    Position = default
   )]
   [PathCompletions(
     @"..\.."
@@ -82,7 +82,7 @@ public sealed class StartWorkspaceRelative : VirtualStartWorkspace
 public sealed class StartWorkspaceHome : VirtualStartWorkspace
 {
   [Parameter(
-    Position = 0
+    Position = default
   )]
   [PathCompletions(
     "~"
@@ -107,7 +107,7 @@ public sealed class StartWorkspaceHome : VirtualStartWorkspace
 public sealed class StartWorkspaceCode : VirtualStartWorkspace
 {
   [Parameter(
-    Position = 0
+    Position = default
   )]
   [PathCompletions(
     @"~\code"
@@ -134,7 +134,7 @@ public sealed class StartWorkspaceCode : VirtualStartWorkspace
 public sealed class StartWorkspaceDrive : VirtualStartWorkspace
 {
   [Parameter(
-    Position = 0
+    Position = default
   )]
   [PathCompletions(
     @"\"

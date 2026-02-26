@@ -9,7 +9,7 @@ namespace Module.Commands.Test;
 public sealed class TestCommand : CoreCommand
 {
   [Parameter(
-    Position = 0,
+    Position = default,
     ValueFromPipeline = true
   )]
   public string[] Name { get; set; } = [];

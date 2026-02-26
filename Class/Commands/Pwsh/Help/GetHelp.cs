@@ -12,7 +12,7 @@ public sealed class GetHelpOnline : CoreCommand
   private static readonly string AboutBaseUrl = "https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about";
 
   [Parameter(
-    Position = 0,
+    Position = default,
     ValueFromRemainingArguments = true
   )]
   [Alias("Command")]
@@ -44,7 +44,7 @@ public sealed class GetHelpOnline : CoreCommand
       testUri
     )
       ? testUri
-      : null;
+      : default;
   }
 
   private static List<System.Uri>? TryHelpLink(
@@ -53,7 +53,7 @@ public sealed class GetHelpOnline : CoreCommand
   {
     if (helpContent is null or [])
     {
-      return null;
+      return default;
     }
 
     dynamic pscustomobject = helpContent[0];
@@ -110,12 +110,12 @@ public sealed class GetHelpOnline : CoreCommand
       }
 
       return urls is []
-        ? null
+        ? default
         : urls;
     }
     else
     {
-      return null;
+      return default;
     }
   }
 

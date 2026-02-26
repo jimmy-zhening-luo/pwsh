@@ -15,7 +15,7 @@ public sealed class GetDirectory : WrappedGetDirectory
 {
   [Parameter(
     ParameterSetName = "Items",
-    Position = 0
+    Position = default
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -51,7 +51,7 @@ public sealed class GetDirectorySibling : WrappedGetDirectory
 {
   [Parameter(
     ParameterSetName = "Items",
-    Position = 0
+    Position = default
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -82,7 +82,7 @@ public sealed class GetDirectoryRelative : WrappedGetDirectory
 {
   [Parameter(
     ParameterSetName = "Items",
-    Position = 0
+    Position = default
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -113,7 +113,7 @@ public sealed class GetDirectoryHome : WrappedGetDirectory
 {
   [Parameter(
     ParameterSetName = "Items",
-    Position = 0
+    Position = default
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -144,7 +144,7 @@ public sealed class GetDirectoryCode : WrappedGetDirectory
 {
   [Parameter(
     ParameterSetName = "Items",
-    Position = 0
+    Position = default
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -177,7 +177,7 @@ public sealed class GetDirectoryDrive : WrappedGetDirectory
 {
   [Parameter(
     ParameterSetName = "Items",
-    Position = 0
+    Position = default
   )]
   [SupportsWildcards]
   [PathCompletions(

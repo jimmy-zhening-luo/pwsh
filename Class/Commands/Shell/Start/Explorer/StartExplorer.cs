@@ -12,7 +12,7 @@ public sealed class StartExplorer : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0
+    Position = default
   )]
   [SupportsWildcards]
   [PathCompletions]
@@ -42,7 +42,7 @@ public sealed class StartExplorerSibling : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0
+    Position = default
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -69,7 +69,7 @@ public sealed class StartExplorerRelative : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0
+    Position = default
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -96,7 +96,7 @@ public sealed class StartExplorerHome : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0
+    Position = default
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -123,7 +123,7 @@ public sealed class StartExplorerCode : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0
+    Position = default
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -152,7 +152,7 @@ public sealed class StartExplorerDrive : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0
+    Position = default
   )]
   [SupportsWildcards]
   [PathCompletions(

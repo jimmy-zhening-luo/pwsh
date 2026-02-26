@@ -18,7 +18,7 @@ internal static class Invocation
     bool noNewWindow = default
   )
   {
-    System.Diagnostics.Process.Start(
+    _ = System.Diagnostics.Process.Start(
       ArgumentList(
         fileName,
         arguments,
@@ -59,7 +59,7 @@ internal static class Invocation
       startInfo.Verb = "RunAs";
     }
 
-    System.Diagnostics.Process.Start(
+    _ = System.Diagnostics.Process.Start(
       startInfo
     );
   }
@@ -71,7 +71,7 @@ internal static class Invocation
   )
   {
     List<string>? argumentList = arguments is null
-      ? null
+      ? default
       : new(
           arguments
         );

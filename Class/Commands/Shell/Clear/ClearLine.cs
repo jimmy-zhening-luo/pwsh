@@ -12,7 +12,7 @@ public sealed class ClearLine : CoreCommand
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0
+    Position = default
   )]
   [SupportsWildcards]
   [PathCompletions]

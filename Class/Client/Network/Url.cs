@@ -17,7 +17,7 @@ internal static class Url
     }
     catch (System.Net.Sockets.SocketException)
     {
-      return false;
+      return default;
     }
   }
 
@@ -40,11 +40,11 @@ internal static class Url
     }
     catch (System.Net.Http.HttpRequestException)
     {
-      return false;
+      return default;
     }
     catch (System.InvalidOperationException)
     {
-      return false;
+      return default;
     }
   }
 

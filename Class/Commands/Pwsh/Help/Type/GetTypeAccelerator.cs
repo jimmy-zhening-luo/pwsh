@@ -24,7 +24,9 @@ public sealed class GetTypeAccelerator : Cmdlet
           System.Reflection.BindingFlags.Static
           | System.Reflection.BindingFlags.Public
         )
-        ?.GetValue(null) is IDictionary typeAccelerators
+        ?.GetValue(
+          default
+        ) is IDictionary typeAccelerators
     )
     {
       HashSet<string> uniqueTypes = new(

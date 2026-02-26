@@ -14,7 +14,7 @@ public sealed class OpenUrl() : CoreCommand(
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0,
+    Position = default,
     HelpMessage = "The file path or URL to open. Defaults to the current directory."
   )]
   [PathCompletions]
@@ -30,7 +30,7 @@ public sealed class OpenUrl() : CoreCommand(
   [Parameter(
     ParameterSetName = "Uri",
     Mandatory = true,
-    Position = 0,
+    Position = default,
     ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true,
     HelpMessage = "The URL(s) to open."

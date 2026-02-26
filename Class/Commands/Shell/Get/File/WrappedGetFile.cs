@@ -24,12 +24,18 @@ public abstract class WrappedGetFile() : WrappedCommand(
 
   [Parameter]
   [Alias("First", "Head")]
-  [ValidateRange(0, 9223372036854775807)]
+  [ValidateRange(
+    0,
+    9223372036854775807
+  )]
   public long TotalCount { get; set; }
 
   [Parameter]
   [Alias("Last")]
-  [ValidateRange(0, 2147483647)]
+  [ValidateRange(
+    0,
+    2147483647
+  )]
   public int Tail { get; set; }
 
   [Parameter]

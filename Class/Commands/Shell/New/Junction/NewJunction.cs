@@ -15,7 +15,7 @@ public sealed class NewJunction() : WrappedCommandShouldProcess(
   [Parameter(
     ParameterSetName = "pathSet",
     Mandatory = true,
-    Position = 0
+    Position = default
   )]
   [PathCompletions]
   public string[] Path { get; set; } = [];

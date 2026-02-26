@@ -11,7 +11,7 @@ public sealed class ConvertToHex : Cmdlet
 {
   [Parameter(
     Mandatory = true,
-    Position = 0,
+    Position = default,
     ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true,
     ValueFromRemainingArguments = true,

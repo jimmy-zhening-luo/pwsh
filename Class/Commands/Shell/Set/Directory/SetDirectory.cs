@@ -15,7 +15,7 @@ public sealed class SetDirectory : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0
+    Position = default
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -122,7 +122,7 @@ public sealed class SetDirectorySibling : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0
+    Position = default
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -152,7 +152,7 @@ public sealed class SetDirectoryRelative : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0
+    Position = default
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -182,7 +182,7 @@ public sealed class SetDirectoryHome : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0
+    Position = default
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -212,7 +212,7 @@ public sealed class SetDirectoryCode : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0
+    Position = default
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -244,7 +244,7 @@ public sealed class SetDrive : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0
+    Position = default
   )]
   [SupportsWildcards]
   [PathCompletions(

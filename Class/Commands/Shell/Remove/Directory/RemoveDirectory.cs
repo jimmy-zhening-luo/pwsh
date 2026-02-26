@@ -13,7 +13,7 @@ public sealed class RemoveDirectory : WrappedRemoveDirectory
   [Parameter(
     ParameterSetName = "Path",
     Mandatory = true,
-    Position = 0
+    Position = default
   )]
   [SupportsWildcards]
   [PathCompletions]

@@ -15,11 +15,11 @@ public sealed class NewDirectory() : WrappedCommandShouldProcess(
   [Parameter(
     ParameterSetName = "pathSet",
     Mandatory = true,
-    Position = 0
+    Position = default
   )]
   [Parameter(
     ParameterSetName = "nameSet",
-    Position = 0
+    Position = default
   )]
   [PathCompletions]
   public string[] Path { get; set; } = [];

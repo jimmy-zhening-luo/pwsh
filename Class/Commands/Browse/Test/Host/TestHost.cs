@@ -10,26 +10,26 @@ namespace Module.Commands.Browse.Test.Host;
 [OutputType(typeof(object))]
 public sealed partial class TestHost() : WrappedCommand(
   @"NetTCPIP\Test-NetConnection",
-  false,
+  default,
   "",
   CommandTypes.Function
 )
 {
   [Parameter(
     ParameterSetName = "ICMP",
-    Position = 0
+    Position = default
   )]
   [Parameter(
     ParameterSetName = "CommonTCPPort",
-    Position = 0
+    Position = default
   )]
   [Parameter(
     ParameterSetName = "RemotePort",
-    Position = 0
+    Position = default
   )]
   [Parameter(
     ParameterSetName = "NetRouteDiagnostics",
-    Position = 0
+    Position = default
   )]
   [Alias(
     "Name",

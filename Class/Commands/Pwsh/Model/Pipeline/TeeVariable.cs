@@ -10,7 +10,7 @@ namespace Module.Commands.Pwsh.Model.Pipeline;
 [OutputType(typeof(object))]
 public sealed class TeeVariable() : WrappedCommand(
   @"Microsoft.PowerShell.Utility\Tee-Object",
-  false,
+  default,
   "InputObject"
 )
 {
@@ -22,7 +22,7 @@ public sealed class TeeVariable() : WrappedCommand(
   [Parameter(
     ParameterSetName = "Variable",
     Mandatory = true,
-    Position = 0
+    Position = default
   )]
   public string Variable { get; set; } = string.Empty;
 

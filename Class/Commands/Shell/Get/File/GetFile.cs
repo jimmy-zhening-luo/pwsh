@@ -12,7 +12,7 @@ public sealed class GetFile : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0
+    Position = default
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -45,7 +45,7 @@ public sealed class GetFileSibling : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0
+    Position = default
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -73,7 +73,7 @@ public sealed class GetFileRelative : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0
+    Position = default
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -101,7 +101,7 @@ public sealed class GetFileHome : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0
+    Position = default
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -129,7 +129,7 @@ public sealed class GetFileCode : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0
+    Position = default
   )]
   [SupportsWildcards]
   [PathCompletions(
@@ -159,7 +159,7 @@ public sealed class GetFileDrive : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = 0
+    Position = default
   )]
   [SupportsWildcards]
   [PathCompletions(

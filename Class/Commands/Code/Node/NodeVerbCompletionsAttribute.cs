@@ -70,7 +70,6 @@ public sealed class NodeVerbCompletionsAttribute() : CompletionsAttribute(
     "version",
     "view",
     "whoami"
-  ],
-  Tab.CompletionCase.Preserve
+  ]
 )
 { }
