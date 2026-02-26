@@ -27,7 +27,7 @@ public abstract class WrappedStartExplorer() : WrappedCommandShouldProcess(
       Path = [
         UsingDefaultLocation
           ? Pwd()
-          : Reanchor()
+          : Reanchor(),
       ];
       BoundParameters["Path"] = Path;
     }

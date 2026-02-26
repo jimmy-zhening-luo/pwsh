@@ -24,7 +24,7 @@ public sealed class GitVerbCompletionsAttribute() : CompletionsAttribute(
     "add",
     "commit",
     "push",
-    "reset"
+    "reset",
   ]
 )
 { }

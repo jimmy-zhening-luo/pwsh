@@ -32,6 +32,6 @@ public static class GitVerb
     "add",
     "commit",
     "push",
-    "reset"
+    "reset",
   ];
 }

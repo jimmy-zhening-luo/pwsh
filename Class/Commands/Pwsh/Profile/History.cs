@@ -17,7 +17,7 @@ public sealed class StartHistory() : CoreCommand(
         @"Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt"
       ),
       "--profile=Setting",
-      "--new-window"
+      "--new-window",
     ],
     true
   );

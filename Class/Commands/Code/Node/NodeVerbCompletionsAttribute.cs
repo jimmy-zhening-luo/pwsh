@@ -69,7 +69,7 @@ public sealed class NodeVerbCompletionsAttribute() : CompletionsAttribute(
     "update",
     "version",
     "view",
-    "whoami"
+    "whoami",
   ]
 )
 { }

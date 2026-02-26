@@ -66,6 +66,6 @@ public static partial class NodeVerb
     "update",
     "version",
     "view",
-    "whoami"
+    "whoami",
   ];
 }

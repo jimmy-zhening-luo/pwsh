@@ -53,7 +53,7 @@ public sealed class GetCommandAlias : CoreCommand
       "0",
       "1",
       "2",
-      "3"
+      "3",
     ]
   )]
   public string Scope { get; set; } = "Global";

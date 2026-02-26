@@ -44,7 +44,7 @@ public abstract class VirtualStartWorkspace() : CoreCommand(
           )
         : Reanchor(
             Path
-          )
+          ),
     ];
 
     if (Name is not "")
