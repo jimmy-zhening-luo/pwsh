@@ -24,6 +24,7 @@ public abstract class WrappedCommand(
   private protected sealed override void Preprocess()
   {
     CoerceParameters();
+
     TransformArguments();
 
     if (
