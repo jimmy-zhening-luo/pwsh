@@ -18,10 +18,7 @@ internal static class PowerShellHost
 
     var currentLocation = ps
       .AddCommand(
-        CommandInvocationIntrinsics.GetCommand(
-          @"Microsoft.PowerShell.Management\Get-Location",
-          CommandTypes.Cmdlet
-        )
+        @"Microsoft.PowerShell.Management\Get-Location"
       )
       .Invoke()[0]
       .BaseObject
