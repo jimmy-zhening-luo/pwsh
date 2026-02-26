@@ -2,30 +2,6 @@ namespace Module.Client.Network;
 
 internal static class Url
 {
-  internal static bool HostExists(
-    System.Uri uri
-  ) => HostExists(
-    uri.Host
-  );
-  internal static bool HostExists(
-    string host
-  )
-  {
-    try
-    {
-      _ = System.Net.Dns.GetHostEntry(
-        host,
-        System.Net.Sockets.AddressFamily.InterNetwork
-      );
-
-      return true;
-    }
-    catch (System.Net.Sockets.SocketException)
-    {
-      return default;
-    }
-  }
-
   internal static bool Test(
     System.Uri url,
     System.Net.Http.HttpClient client
@@ -53,9 +29,7 @@ internal static class Url
     }
   }
 
-  internal static void Open(
-    System.Uri uri
-  )
+  internal static void Open(System.Uri uri)
   {
     var url = uri
       .ToString()
@@ -69,9 +43,7 @@ internal static class Url
     }
   }
 
-  internal static void Open(
-    string target
-  )
+  internal static void Open(string target)
   {
     if (!Environment.Known.Variable.InSsh)
     {

@@ -71,18 +71,14 @@ public sealed class TestUrl : CoreCommand
     foreach (var url in Uri)
     {
       if (
-        Client.Network.Url.HostExists(
-          url
-        )
+        Client.Network.Dns.Resolve(url)
         && Client.Network.Url.Test(
           url,
           client
         )
       )
       {
-        WriteObject(
-          url
-        );
+        WriteObject(url);
       }
     }
   }
