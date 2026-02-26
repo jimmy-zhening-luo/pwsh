@@ -44,5 +44,8 @@ public sealed class NewDirectory() : WrappedCommandShouldProcess(
   }
   private bool force;
 
-  private protected sealed override void TransformArguments() => BoundParameters["ItemType"] = "Directory";
+  private protected sealed override Dictionary<string, object> CoercedParameters => new()
+  {
+    ["ItemType"] = "Directory",
+  };
 }

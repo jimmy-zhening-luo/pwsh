@@ -19,9 +19,9 @@ public abstract class WrappedRemoveDirectory() : WrappedCommandShouldProcess(
   [SupportsWildcards]
   public string[] Exclude { get; set; } = [];
 
-  private protected sealed override void TransformArguments()
+  private protected sealed override Dictionary<string, object> CoercedParameters => new()
   {
-    BoundParameters["Recurse"] = SwitchParameter.Present;
-    BoundParameters["Force"] = SwitchParameter.Present;
-  }
+    ["Recurse"] = SwitchParameter.Present,
+    ["Force"] = SwitchParameter.Present,
+  };
 }

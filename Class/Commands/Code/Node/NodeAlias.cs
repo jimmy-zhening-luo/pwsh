@@ -32,6 +32,6 @@ public static partial class NodeVerb
     ["upgrade"] = "update",
     ["info"] = "view",
     ["show"] = "view",
-    ["v"] = "view"
+    ["v"] = "view",
   };
 }

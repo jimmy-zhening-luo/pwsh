@@ -13,6 +13,8 @@ public abstract class WrappedCommand(
 
   private SteppablePipeline? steppablePipeline = default;
 
+  private protected virtual Dictionary<string, object> CoercedParameters => [];
+
   private protected virtual void TransformArguments()
   { }
 
@@ -21,6 +23,7 @@ public abstract class WrappedCommand(
 
   private protected sealed override void Preprocess()
   {
+    CoerceParameters();
     TransformArguments();
 
     if (
@@ -102,6 +105,28 @@ public abstract class WrappedCommand(
       steppablePipeline.Dispose();
 
       steppablePipeline = default;
+    }
+  }
+
+  private void CoerceParameters()
+  {
+    foreach (
+      (
+        var key,
+        var value
+      ) in CoercedParameters
+    )
+    {
+      if (value is null)
+      {
+        _ = BoundParameters.Remove(
+          key
+        );
+      }
+      else
+      {
+        BoundParameters[key] = value;
+      }
     }
   }
 }
