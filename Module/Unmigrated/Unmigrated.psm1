@@ -781,7 +781,12 @@ function Invoke-Npm {
     }
 
     if ($WorkingDirectory) {
-      if ([Module.Commands.Code.Node.NodeWorkingDirectory]::Test($WorkingDirectory)) {
+      if (
+        [Module.Commands.Code.Node.NodeWorkingDirectory]::Test(
+          $WorkingDirectory,
+          $PWD.Path
+        )
+      ) {
         $PackagePrefix = $WorkingDirectory ? "--prefix=$((Resolve-Path $WorkingDirectory).Path)" : ''
 
         if ($PackagePrefix) {
@@ -1044,7 +1049,8 @@ function Step-NodePackageVersion {
 
     if (
       $WorkingDirectory -and ![Module.Commands.Code.Node.NodeWorkingDirectory]::Test(
-        $WorkingDirectory
+        $WorkingDirectory,
+        $PWD.Path
       )
     ) {
       $NodeArgument.Add($WorkingDirectory)
@@ -1084,7 +1090,8 @@ function Invoke-NodePackageScript {
 
     if (
       $WorkingDirectory -and ![Module.Commands.Code.Node.NodeWorkingDirectory]::Test(
-        $WorkingDirectory
+        $WorkingDirectory,
+        $PWD.Path
       )
     ) {
     $NodeArgument.Add($WorkingDirectory)
