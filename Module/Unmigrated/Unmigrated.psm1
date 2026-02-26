@@ -374,7 +374,7 @@ function Get-ChildGitRepository {
   [Alias('gpp')]
   param()
   end {
-    [string[]]$Repositories = Get-ChildItem -Path $HOME\code -Directory |
+    [string[]]$Repositories = Get-ChildItem -LiteralPath $HOME\code -Directory |
       Select-Object -ExpandProperty FullName |
       Resolve-GitRepository
     $Count = $Repositories.Count
