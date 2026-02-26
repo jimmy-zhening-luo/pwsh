@@ -18,8 +18,7 @@ public sealed class TestUrl : CoreCommand
     HelpMessage = "The URL to test. If the URL has no scheme, it defaults to 'http'."
   )]
   [AllowEmptyCollection]
-  public System.Uri[] Uri
-  { get; set; } = [];
+  public System.Uri[] Uri { get; set; } = [];
 
   private protected sealed override void Processor()
   {
