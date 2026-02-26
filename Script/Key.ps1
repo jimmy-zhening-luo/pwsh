@@ -1,4 +1,17 @@
-Import-Module PSReadLine
+& {
+  Import-Module PSReadLine
 
-Set-PSReadLineKeyHandler -Chord Shift+DownArrow -Function NextHistory
-Set-PSReadLineKeyHandler -Chord Shift+UpArrow -Function PreviousHistory
+  @(
+    @{
+      Chord = 'Shift+DownArrow'
+      Function = 'NextHistory'
+    }  
+    @{
+      Chord = 'Shift+UpArrow'
+      Function = 'PreviousHistory'
+    }
+  ) |
+    ForEach-Object {
+      Set-PSReadLineKeyHandler @PSItem
+    }
+}
