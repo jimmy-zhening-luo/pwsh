@@ -70,6 +70,13 @@ public sealed class SetDirectory : WrappedSetDirectory
   }
   private bool driveE;
 
+  private protected sealed override Dictionary<string, object?> CoercedParameters => new()
+  {
+    ["C"] = null,
+    ["D"] = null,
+    ["E"] = null,
+  };
+
   private protected sealed override void TransformArguments()
   {
     switch (ParameterSetName)
@@ -86,17 +93,14 @@ public sealed class SetDirectory : WrappedSetDirectory
 
         break;
       case "DriveC":
-        _ = BoundParameters.Remove("C");
         Path = "C:";
 
         break;
       case "DriveD":
-        _ = BoundParameters.Remove("D");
         Path = "D:";
 
         break;
       case "DriveE":
-        _ = BoundParameters.Remove("E");
         Path = "E:";
 
         break;
