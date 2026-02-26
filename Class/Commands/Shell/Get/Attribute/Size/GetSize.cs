@@ -109,7 +109,7 @@ public sealed class GetSize : CoreCommand
   }
   private bool number;
 
-  private protected sealed override void Processor()
+  private protected sealed override void Process()
   {
     foreach (var path in Path)
     {

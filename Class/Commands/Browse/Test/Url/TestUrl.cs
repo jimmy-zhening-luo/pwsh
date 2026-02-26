@@ -59,7 +59,7 @@ public sealed class TestUrl : CoreCommand
   }
   private readonly List<System.Uri> urls = [];
 
-  private protected sealed override void Processor()
+  private protected sealed override void Process()
   {
     using System.Net.Http.HttpClient client = new()
     {

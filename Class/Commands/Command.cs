@@ -4,21 +4,14 @@ public abstract class CoreCommand(
   bool SkipSsh = default
 ) : PSCmdlet, System.IDisposable
 {
-  private enum CommandLifecycle
-  {
-    NotStarted,
-    Processing,
-    Stopped
-  }
-
   private protected record Locator(
     string Root = "",
     string Subpath = ""
   );
 
-  private CommandLifecycle stage;
-
   private uint steps;
+
+  private bool stopped;
 
   private bool disposed;
 
@@ -42,12 +35,12 @@ public abstract class CoreCommand(
   private protected PowerShell PS => powershell ??= PowerShellHost.Create();
   private PowerShell? powershell;
 
+  private bool BlockedBySsh => SkipSsh
+    && Client.Environment.Known.Variable.InSsh;
+
   private bool ContinueProcessing => !disposed
-    && stage is not CommandLifecycle.Stopped
-    && (
-      !SkipSsh
-      || !Client.Environment.Known.Variable.Ssh
-    );
+    && !stopped
+    && !BlockedBySsh;
 
   public void Dispose()
   {
@@ -69,8 +62,6 @@ public abstract class CoreCommand(
     if (ContinueProcessing)
     {
       Preprocess();
-
-      stage = CommandLifecycle.Processing;
     }
     else
     {
@@ -92,7 +83,7 @@ public abstract class CoreCommand(
         $"<PROCESS:{steps}>"
       );
 
-      Processor();
+      Process();
 
       WriteDebug(
         $"</PROCESS:{steps}>"
@@ -128,7 +119,7 @@ public abstract class CoreCommand(
   private protected virtual void Preprocess()
   { }
 
-  private protected virtual void Processor()
+  private protected virtual void Process()
   { }
 
   private protected virtual void Postprocess()
@@ -300,7 +291,7 @@ public abstract class CoreCommand(
       ?? type.ToString();
   }
 
-  private void Stop() => stage = CommandLifecycle.Stopped;
+  private void Stop() => stopped = true;
 
   private void Dispose(
     bool disposing

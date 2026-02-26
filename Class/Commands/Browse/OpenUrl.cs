@@ -38,7 +38,7 @@ public sealed class OpenUrl() : CoreCommand(
   [AllowEmptyCollection]
   public System.Uri[] Uri { get; set; } = [];
 
-  private protected sealed override void Processor()
+  private protected sealed override void Process()
   {
     foreach (var uri in Uri)
     {

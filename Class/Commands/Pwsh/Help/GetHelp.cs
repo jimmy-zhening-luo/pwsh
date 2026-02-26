@@ -180,7 +180,7 @@ public sealed class GetHelpOnline : CoreCommand
         }
       }
 
-      if (!Client.Environment.Known.Variable.Ssh)
+      if (!Client.Environment.Known.Variable.InSsh)
       {
         if (helpLinks is not [])
         {

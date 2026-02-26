@@ -16,7 +16,7 @@ public sealed class GetType : CoreCommand
   )]
   public required object InputObject { get; set; }
 
-  private protected sealed override void Processor()
+  private protected sealed override void Process()
   {
     if (InputObject is null)
     {

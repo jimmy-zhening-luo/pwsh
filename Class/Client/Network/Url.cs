@@ -73,7 +73,7 @@ internal static class Url
     string target
   )
   {
-    if (!Environment.Known.Variable.Ssh)
+    if (!Environment.Known.Variable.InSsh)
     {
       Invocation.ShellExecute(
         Environment.Known.Application.Chrome,

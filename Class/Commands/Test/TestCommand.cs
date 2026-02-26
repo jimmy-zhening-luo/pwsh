@@ -31,7 +31,7 @@ public sealed class TestCommand : CoreCommand
   private protected sealed override void Preprocess()
   { }
 
-  private protected sealed override void Processor()
+  private protected sealed override void Process()
   {
     foreach (var name in Name)
     {
