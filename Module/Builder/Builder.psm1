@@ -98,12 +98,8 @@ function Update-PSProfile {
       throw
     }
     finally {
-      $DotnetProcess = Get-Process -Name dotnet* |
-        Where-Object ProcessName -eq dotnet
-
-      if ($null -ne $DotnetProcess) {
-        $DotnetProcess.Kill($True)
-      }
+      Get-Process -Name dotnet -ErrorAction SilentlyContinue |
+        ForEach-Object -MemberName Kill -ArgumentList $true
     }
   }
 }
