@@ -7,11 +7,13 @@ public partial class TabCompleter
   ) => text.Contains(
     ' '
   )
-    ? "'"
-      + System.Management.Automation.Language.CodeGeneration.EscapeSingleQuotedStringContent(
-        text
+    ? string.Concat(
+        "'",
+        System.Management.Automation.Language.CodeGeneration.EscapeSingleQuotedStringContent(
+          text
+        ),
+        "'"
       )
-      + "'"
     : text;
 
   private protected static string Unescape(
