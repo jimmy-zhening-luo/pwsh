@@ -1,4 +1,4 @@
-namespace Module.Client.FileSystem;
+namespace Module.Client.File;
 
 internal static partial class PathString
 {

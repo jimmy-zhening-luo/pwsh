@@ -1,4 +1,4 @@
-namespace Module.Client.FileSystem;
+namespace Module.Client.File;
 
 public enum Encoding
 {
