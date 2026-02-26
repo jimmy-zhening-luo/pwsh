@@ -22,7 +22,7 @@ public sealed class GetDirectory : WrappedGetDirectory
     "",
     PathItemType.Directory
   )]
-  public override sealed string[] Path
+  public sealed override string[] Path
   {
     get => paths;
     set => paths = value;
@@ -58,7 +58,7 @@ public sealed class GetDirectorySibling : WrappedGetDirectory
     "..",
     PathItemType.Directory
   )]
-  public override sealed string[] Path
+  public sealed override string[] Path
   {
     get => paths;
     set => paths = value;
@@ -89,7 +89,7 @@ public sealed class GetDirectoryRelative : WrappedGetDirectory
     @"..\..",
     PathItemType.Directory
   )]
-  public override sealed string[] Path
+  public sealed override string[] Path
   {
     get => paths;
     set => paths = value;
@@ -120,7 +120,7 @@ public sealed class GetDirectoryHome : WrappedGetDirectory
     "~",
     PathItemType.Directory
   )]
-  public override sealed string[] Path
+  public sealed override string[] Path
   {
     get => paths;
     set => paths = value;
@@ -151,7 +151,7 @@ public sealed class GetDirectoryCode : WrappedGetDirectory
     @"~\code",
     PathItemType.Directory
   )]
-  public override sealed string[] Path
+  public sealed override string[] Path
   {
     get => paths;
     set => paths = value;
@@ -184,7 +184,7 @@ public sealed class GetDirectoryDrive : WrappedGetDirectory
     @"\",
     PathItemType.Directory
   )]
-  public override sealed string[] Path
+  public sealed override string[] Path
   {
     get => paths;
     set => paths = value;

@@ -17,9 +17,9 @@ public abstract class WrappedSetDirectory() : WrappedCommand(
 
   private protected sealed override void TransformPipelineInput()
   {
-    path = Reanchor(
-      path
+    Path = Reanchor(
+      Path
     );
-    BoundParameters["Path"] = path;
+    BoundParameters["Path"] = Path;
   }
 }

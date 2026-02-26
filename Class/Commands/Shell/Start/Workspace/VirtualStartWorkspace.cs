@@ -4,6 +4,7 @@ public abstract class VirtualStartWorkspace() : CoreCommand(
   true
 )
 {
+  public abstract string Path { get; set; }
   private protected string path = string.Empty;
 
   [Parameter(
@@ -39,10 +40,10 @@ public abstract class VirtualStartWorkspace() : CoreCommand(
     List<string> argumentList = [
       UsingCurrentLocation
         ? Pwd(
-            path
+            Path
           )
         : Reanchor(
-            path
+            Path
           )
     ];
 

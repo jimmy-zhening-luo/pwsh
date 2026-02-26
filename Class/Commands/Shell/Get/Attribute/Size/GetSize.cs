@@ -35,12 +35,12 @@ public sealed partial class GetSize : CoreCommand
   [PathCompletions]
   public string[] Path
   {
-    get => path is []
+    get => paths is []
       ? [""]
-      : path;
-    set => path = value;
+      : paths;
+    set => paths = value;
   }
-  private string[] path = [];
+  private string[] paths = [];
 
   [Parameter(
     ParameterSetName = "String",

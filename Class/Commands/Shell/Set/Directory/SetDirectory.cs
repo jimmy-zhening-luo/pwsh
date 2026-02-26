@@ -22,7 +22,7 @@ public sealed class SetDirectory : WrappedSetDirectory
     "",
     PathItemType.Directory
   )]
-  public override sealed string Path
+  public sealed override string Path
   {
     get => path;
     set => path = value;
@@ -75,39 +75,36 @@ public sealed class SetDirectory : WrappedSetDirectory
     switch (ParameterSetName)
     {
       case "Path":
-        if (path is not "")
+        if (Path is not "")
         {
           return;
         }
 
-        path = Pwd(
+        Path = Pwd(
           ".."
         );
 
         break;
       case "DriveC":
-        driveC = false;
-        BoundParameters.Remove("C");
-        path = "C:";
+        _ = BoundParameters.Remove("C");
+        Path = "C:";
 
         break;
       case "DriveD":
-        driveD = false;
-        BoundParameters.Remove("D");
-        path = "D:";
+        _ = BoundParameters.Remove("D");
+        Path = "D:";
 
         break;
       case "DriveE":
-        driveE = false;
-        BoundParameters.Remove("E");
-        path = "E:";
+        _ = BoundParameters.Remove("E");
+        Path = "E:";
 
         break;
       default:
         return;
     }
 
-    BoundParameters["Path"] = path;
+    BoundParameters["Path"] = Path;
   }
 }
 
@@ -132,7 +129,7 @@ public sealed class SetDirectorySibling : WrappedSetDirectory
     "..",
     PathItemType.Directory
   )]
-  public override sealed string Path
+  public sealed override string Path
   {
     get => path;
     set => path = value;
@@ -162,7 +159,7 @@ public sealed class SetDirectoryRelative : WrappedSetDirectory
     @"..\..",
     PathItemType.Directory
   )]
-  public override sealed string Path
+  public sealed override string Path
   {
     get => path;
     set => path = value;
@@ -192,7 +189,7 @@ public sealed class SetDirectoryHome : WrappedSetDirectory
     "~",
     PathItemType.Directory
   )]
-  public override sealed string Path
+  public sealed override string Path
   {
     get => path;
     set => path = value;
@@ -222,7 +219,7 @@ public sealed class SetDirectoryCode : WrappedSetDirectory
     @"~\code",
     PathItemType.Directory
   )]
-  public override sealed string Path
+  public sealed override string Path
   {
     get => path;
     set => path = value;
@@ -254,7 +251,7 @@ public sealed class SetDrive : WrappedSetDirectory
     @"\",
     PathItemType.Directory
   )]
-  public override sealed string Path
+  public sealed override string Path
   {
     get => path;
     set => path = value;

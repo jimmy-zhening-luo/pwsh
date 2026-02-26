@@ -17,7 +17,7 @@ public sealed class RemoveDirectory : WrappedRemoveDirectory
   )]
   [SupportsWildcards]
   [PathCompletions]
-  public override sealed string[] Path
+  public sealed override string[] Path
   {
     get => paths;
     set => paths = value;

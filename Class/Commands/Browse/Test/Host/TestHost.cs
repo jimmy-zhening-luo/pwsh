@@ -114,7 +114,7 @@ public sealed partial class TestHost() : WrappedCommand(
       InformationLevel = TestHostVerbosity.Detailed;
     }
 
-    BoundParameters.Remove("Detailed");
+    _ = BoundParameters.Remove("Detailed");
     BoundParameters["InformationLevel"] = InformationLevel;
 
     switch (ParameterSetName)
@@ -142,7 +142,7 @@ public sealed partial class TestHost() : WrappedCommand(
         )
         {
           CommonTCPPort = string.Empty;
-          BoundParameters.Remove(
+          _ = BoundParameters.Remove(
             "CommonTCPPort"
           );
 

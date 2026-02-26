@@ -8,7 +8,7 @@ internal static class Url
   {
     try
     {
-      System.Net.Dns.GetHostEntry(
+      _ = System.Net.Dns.GetHostEntry(
         host,
         System.Net.Sockets.AddressFamily.InterNetwork
       );

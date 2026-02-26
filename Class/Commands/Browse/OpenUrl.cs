@@ -22,7 +22,7 @@ public sealed class OpenUrl() : CoreCommand(
   {
     get => path;
     set => path = Client.FileSystem.PathString.Normalize(
-      Path
+      value
     );
   }
   private string path = string.Empty;
