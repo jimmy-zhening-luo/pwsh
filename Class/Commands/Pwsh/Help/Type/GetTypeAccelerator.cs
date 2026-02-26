@@ -31,10 +31,10 @@ public sealed class GetTypeAccelerator : Cmdlet
         System.StringComparer.OrdinalIgnoreCase
       );
 
-      foreach (var type in typeAccelerators.Keys)
+      foreach (string type in typeAccelerators.Keys)
       {
         _ = uniqueTypes.Add(
-          type.ToString()!
+          type
         );
       }
 
