@@ -10,6 +10,22 @@ namespace Module.Commands.Pwsh.Help.Verb;
 [OutputType(typeof(string))]
 public sealed partial class GetVerb : CoreCommand
 {
+  public enum VerbGroup
+  {
+    Common,
+    Communications,
+    Data,
+    Diagnostic,
+    Lifecycle,
+    Other,
+    Security,
+    Service,
+    Settings,
+    Support,
+    System,
+    Utility
+  }
+
   [Parameter(
     Position = default,
     HelpMessage = "Gets only the specified verbs. Enter the name of a verb or a name pattern. Wildcards are allowed."
