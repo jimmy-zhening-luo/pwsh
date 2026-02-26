@@ -31,7 +31,7 @@ public abstract partial class TabCompleter(
       var completedString in completedStrings
     )
     {
-      yield return new CompletionResult(
+      yield return new(
         Escape(
           Casing switch
           {

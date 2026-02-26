@@ -79,7 +79,7 @@ public sealed partial class GetSize : CoreCommand
 
   private protected sealed override void Processor()
   {
-    if (Path.Length == 0)
+    if (Path.Length is 0)
     {
       Path = [
         Pwd()
@@ -138,10 +138,9 @@ public sealed partial class GetSize : CoreCommand
               System.Math.Round(
                 scaledSize,
                 3
-              )
-                .ToString(),
+              ),
               ' ',
-              unit.ToString()
+              unit
             )
       );
     }

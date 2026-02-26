@@ -15,9 +15,9 @@ public sealed partial class PathCompleter
     string homedNormalPath = normalPath.StartsWith(
       '~'
     )
-      ? normalPath.Length == 1
+      ? normalPath.Length is 1
         ? Client.Environment.Known.Folder.Home()
-        : normalPath[1] == '\\'
+        : normalPath[1] is '\\'
           ? Client.Environment.Known.Folder.Home(
               normalPath[2..]
             )

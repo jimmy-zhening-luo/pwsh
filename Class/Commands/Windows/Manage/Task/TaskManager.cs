@@ -84,7 +84,7 @@ public abstract class TaskManager : CoreCommand
 
         break;
       case "Name":
-        if (Name.Length == 0)
+        if (Name.Length is 0)
         {
           KillProcesses(
             "explorer"

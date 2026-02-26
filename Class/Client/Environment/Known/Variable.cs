@@ -7,5 +7,5 @@ internal static class Variable
       "SSH_CLIENT"
     )
   );
-  private static bool? ssh = null;
+  private static bool? ssh = default;
 }

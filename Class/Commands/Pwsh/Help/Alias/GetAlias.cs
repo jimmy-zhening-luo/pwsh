@@ -70,7 +70,7 @@ public sealed class GetCommandAlias : CoreCommand
       }
     }
 
-    if (uniqueWildcardTerms.Count == 0)
+    if (uniqueWildcardTerms.Count is 0)
     {
       uniqueWildcardTerms.Add(
         "*"
@@ -108,7 +108,7 @@ public sealed class GetCommandAlias : CoreCommand
         Scope
       );
 
-    if (Exclude.Length != 0)
+    if (Exclude.Length is not 0)
     {
       PS.AddParameter(
         "Exclude",
@@ -142,7 +142,7 @@ public sealed class GetCommandAlias : CoreCommand
       }
     }
 
-    if (commandAliasDictionary.Count != 0)
+    if (commandAliasDictionary.Count is not 0)
     {
       WriteObject(
         commandAliasDictionary.Values,

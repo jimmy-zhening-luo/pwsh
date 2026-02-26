@@ -43,10 +43,7 @@ public sealed class GetHelpOnline : CoreCommand
     Collection<PSObject> helpContent
   )
   {
-    if (
-      helpContent is null
-      || helpContent.Count is 0
-    )
+    if (helpContent?.Count is null or 0)
     {
       return null;
     }
@@ -54,10 +51,10 @@ public sealed class GetHelpOnline : CoreCommand
     dynamic pscustomobject = helpContent[0];
 
     if (
-      pscustomobject is not null
-      && pscustomobject.relatedLinks is not null
-      && pscustomobject.relatedLinks.navigationLink is not null
-      && pscustomobject.relatedLinks.navigationLink is IEnumerable<object> links
+      pscustomobject
+        ?.relatedLinks
+        ?.navigationLink is not null
+        and IEnumerable<object> links
     )
     {
       List<System.Uri> urls = [];
@@ -65,9 +62,8 @@ public sealed class GetHelpOnline : CoreCommand
       foreach (dynamic link in links)
       {
         if (
-          link is not null
-          && link.Uri is not null
-          && link.Uri is object noteProperty
+          link?.Uri is not null
+          and object noteProperty
         )
         {
           var uriString = noteProperty.ToString();
@@ -86,7 +82,7 @@ public sealed class GetHelpOnline : CoreCommand
               )
             )
           {
-            var url = new System.Uri(
+            System.Uri url = new(
               uriString
             );
 
@@ -119,8 +115,7 @@ public sealed class GetHelpOnline : CoreCommand
   {
     if (
       Name.Length > 1
-      || Name.Length == 1
-      && !string.IsNullOrEmpty(
+      || !string.IsNullOrEmpty(
         Name[0]
       )
     )
@@ -134,12 +129,9 @@ public sealed class GetHelpOnline : CoreCommand
         []
       );
 
-      if (
-        helpContent is not null
-        && helpContent.Count != 1
-      )
+      if (helpContent?.Count is not 1)
       {
-        helpContent = null;
+        helpContent = default;
       }
 
       List<System.Uri> helpLinks = [];
@@ -160,7 +152,7 @@ public sealed class GetHelpOnline : CoreCommand
           }
         }
 
-        if (Parameter.Length != 0)
+        if (Parameter.Length is not 0)
         {
           var parameterHelpContent = GetHelpContent(
             topic,
@@ -179,7 +171,7 @@ public sealed class GetHelpOnline : CoreCommand
         );
       }
 
-      if (helpLinks.Count != 0)
+      if (helpLinks.Count is not 0)
       {
         foreach (var helpLink in helpLinks)
         {
@@ -191,7 +183,7 @@ public sealed class GetHelpOnline : CoreCommand
 
       if (!Client.Environment.Known.Variable.Ssh)
       {
-        if (helpLinks.Count != 0)
+        if (helpLinks.Count is not 0)
         {
           foreach (var helpLink in helpLinks)
           {

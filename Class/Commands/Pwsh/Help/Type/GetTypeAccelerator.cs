@@ -27,7 +27,7 @@ public sealed class GetTypeAccelerator : Cmdlet
         ?.GetValue(null) is IDictionary typeAccelerators
     )
     {
-      var uniqueTypes = new HashSet<string>(
+      HashSet<string> uniqueTypes = new(
         System.StringComparer.OrdinalIgnoreCase
       );
 

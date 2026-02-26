@@ -43,7 +43,7 @@ public sealed class OpenUrl() : CoreCommand(
 
   private protected sealed override void Postprocess()
   {
-    if (ParameterSetName != "Path")
+    if (ParameterSetName is not "Path")
     {
       return;
     }

@@ -23,7 +23,7 @@ public sealed class TestUrl : CoreCommand
 
   private protected sealed override void Processor()
   {
-    using var client = new System.Net.Http.HttpClient()
+    using System.Net.Http.HttpClient client = new()
     {
       Timeout = System.TimeSpan.FromMilliseconds(
         3500

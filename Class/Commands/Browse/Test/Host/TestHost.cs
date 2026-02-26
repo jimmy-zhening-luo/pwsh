@@ -126,7 +126,9 @@ public sealed partial class TestHost() : WrappedCommand(
           )
         )
         {
-          CommonTCPPort = TestHostWellKnownPort.HTTP.ToString();
+          CommonTCPPort = nameof(
+            TestHostWellKnownPort.HTTP
+          );
           BoundParameters["CommonTCPPort"] = CommonTCPPort;
         }
 

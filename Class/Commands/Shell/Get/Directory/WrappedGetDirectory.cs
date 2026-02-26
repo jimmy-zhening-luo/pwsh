@@ -121,8 +121,10 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   [EnumCompletions(
     typeof(System.IO.FileAttributes)
   )]
-  public FlagsExpression<System.IO.FileAttributes> Attributes { get; set; } = new FlagsExpression<System.IO.FileAttributes>(
-    global::System.IO.FileAttributes.None.ToString()
+  public FlagsExpression<System.IO.FileAttributes> Attributes { get; set; } = new(
+    nameof(
+      global::System.IO.FileAttributes.None
+    )
   );
 
   private protected sealed override void TransformArguments()
@@ -141,7 +143,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   {
     if (!UsingCurrentLocation)
     {
-      if (paths.Length == 0)
+      if (paths.Length is 0)
       {
         paths = [
           Reanchor()

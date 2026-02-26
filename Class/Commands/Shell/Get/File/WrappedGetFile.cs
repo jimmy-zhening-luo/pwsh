@@ -82,7 +82,7 @@ public abstract class WrappedGetFile() : WrappedCommand(
   {
     if (!UsingCurrentLocation)
     {
-      if (paths.Length == 0)
+      if (paths.Length is 0)
       {
         paths = [
           Reanchor()

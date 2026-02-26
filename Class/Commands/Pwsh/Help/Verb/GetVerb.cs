@@ -80,9 +80,9 @@ public sealed partial class GetVerb : CoreCommand
   private protected sealed override void Postprocess()
   {
     if (
-      Verb.Length == 0
-      || Verb.Length == 1
-      && Verb[0] == "*"
+      Verb.Length is 0
+      || Verb.Length is 1
+      && Verb[0] is "*"
     )
     {
       AddCommand(
@@ -93,7 +93,7 @@ public sealed partial class GetVerb : CoreCommand
           "*"
         );
 
-      if (Group.Length != 0)
+      if (Group.Length is not 0)
       {
         PS.AddParameter(
           "Group",
@@ -128,7 +128,7 @@ public sealed partial class GetVerb : CoreCommand
           Verb
         );
 
-      if (Group.Length != 0)
+      if (Group.Length is not 0)
       {
         PS.AddParameter(
           "Group",
@@ -156,7 +156,7 @@ public sealed partial class GetVerb : CoreCommand
         }
       }
 
-      if (verbDictionary.Count != 0)
+      if (verbDictionary.Count is not 0)
       {
         WriteObject(
           verbDictionary.Values,

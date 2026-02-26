@@ -31,7 +31,7 @@ internal static partial class PathString
 
   private static string TrimRelativePrefix(
     string path
-  ) => path == "."
+  ) => path is "."
     ? string.Empty
     : path.StartsWith(
         @".\"

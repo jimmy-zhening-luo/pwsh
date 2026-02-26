@@ -44,7 +44,7 @@ public class Completer(
 
     if (
       Strict
-      || count != 1
+      || count is not 1
     )
     {
       yield break;

@@ -35,8 +35,8 @@ public abstract partial class CoreCommand(
 
   private bool ContinueProcessing => !disposed
     && (
-      stage == CommandLifecycle.Initialized
-      || stage == CommandLifecycle.Processing
+      stage is CommandLifecycle.Initialized
+      or CommandLifecycle.Processing
     )
     && (
       !SkipSsh
@@ -222,7 +222,7 @@ public abstract partial class CoreCommand(
     object log,
     string source
   ) => WriteInformation(
-    new InformationRecord(
+    new(
       log,
       source
     )
@@ -232,7 +232,7 @@ public abstract partial class CoreCommand(
   private protected void Throw(
     string message,
     ErrorCategory category = ErrorCategory.InvalidOperation,
-    object? target = null
+    object? target = default
   ) => Throw(
     message,
     $"{GetName()}Exception",
@@ -245,7 +245,7 @@ public abstract partial class CoreCommand(
     string message,
     string id,
     ErrorCategory category = ErrorCategory.InvalidOperation,
-    object? target = null
+    object? target = default
   ) => Throw(
     new System.Exception(
       message
@@ -259,7 +259,7 @@ public abstract partial class CoreCommand(
   private protected void Throw(
     System.Exception exception,
     ErrorCategory category = ErrorCategory.InvalidOperation,
-    object? target = null
+    object? target = default
   ) => Throw(
     exception,
     $"{GetName()}Exception",
@@ -272,13 +272,13 @@ public abstract partial class CoreCommand(
     System.Exception exception,
     string id,
     ErrorCategory category = ErrorCategory.InvalidOperation,
-    object? target = null
+    object? target = default
   )
   {
     Dispose();
 
     ThrowTerminatingError(
-      new ErrorRecord(
+      new(
         exception,
         id,
         category,
@@ -316,6 +316,6 @@ public abstract partial class CoreCommand(
   private void Clean()
   {
     powershell?.Dispose();
-    powershell = null;
+    powershell = default;
   }
 }

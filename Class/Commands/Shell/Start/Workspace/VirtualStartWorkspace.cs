@@ -66,7 +66,7 @@ public abstract class VirtualStartWorkspace() : CoreCommand(
       }
       else
       {
-        if (Name == "se")
+        if (Name is "se")
         {
           argumentList.Add(
             "--profile=Setting"
@@ -75,7 +75,7 @@ public abstract class VirtualStartWorkspace() : CoreCommand(
         else
         {
           WriteWarning(
-            "Profiles not supported except for se == Setting lmaoo."
+            "Profiles not supported except for se (Setting) lmaoo."
           );
         }
       }
@@ -94,7 +94,7 @@ public abstract class VirtualStartWorkspace() : CoreCommand(
       );
     }
 
-    if (Argument.Length != 0)
+    if (Argument.Length is not 0)
     {
       argumentList.AddRange(
         Argument

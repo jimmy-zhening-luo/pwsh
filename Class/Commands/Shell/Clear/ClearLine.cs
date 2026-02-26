@@ -52,7 +52,7 @@ public sealed class ClearLine : CoreCommand
   private protected sealed override void Postprocess()
   {
     if (
-      ParameterSetName == "Path"
+      ParameterSetName is "Path"
       && string.IsNullOrEmpty(
         Path
       )

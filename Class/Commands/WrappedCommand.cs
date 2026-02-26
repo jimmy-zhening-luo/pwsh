@@ -11,7 +11,7 @@ public abstract class WrappedCommand(
 {
   private protected bool Piped;
 
-  private SteppablePipeline? steppablePipeline = null;
+  private SteppablePipeline? steppablePipeline = default;
 
   private protected virtual void TransformArguments()
   { }
@@ -102,7 +102,7 @@ public abstract class WrappedCommand(
       steppablePipeline.Clean();
       steppablePipeline.Dispose();
 
-      steppablePipeline = null;
+      steppablePipeline = default;
     }
   }
 }

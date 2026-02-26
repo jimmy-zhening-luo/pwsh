@@ -136,7 +136,7 @@ public sealed partial class PathCompleter : TabCompleter
 
     int count = default;
     filter += "*";
-    var options = new System.IO.EnumerationOptions()
+    System.IO.EnumerationOptions options = new()
     {
       IgnoreInaccessible = default
     };
@@ -146,7 +146,7 @@ public sealed partial class PathCompleter : TabCompleter
       options.AttributesToSkip = System.IO.FileAttributes.System;
     }
 
-    if (ItemType == PathItemType.File)
+    if (ItemType is PathItemType.File)
     {
 FileFirstMatch:
       foreach (
@@ -165,9 +165,9 @@ FileFirstMatch:
       }
 
       if (
-        count == 0
+        count is 0
         && filter.Length > 1
-        && options.AttributesToSkip != System.IO.FileAttributes.System
+        && options.AttributesToSkip is not System.IO.FileAttributes.System
       )
       {
         options.AttributesToSkip = System.IO.FileAttributes.System;
@@ -198,7 +198,7 @@ Match:
     if (
       count == checkpoint
       && filter.Length > 1
-      && options.AttributesToSkip != System.IO.FileAttributes.System
+      && options.AttributesToSkip is not System.IO.FileAttributes.System
     )
     {
       options.AttributesToSkip = System.IO.FileAttributes.System;
@@ -208,7 +208,7 @@ Match:
 
     checkpoint = count;
 
-    if (ItemType == PathItemType.Any)
+    if (ItemType is PathItemType.Any)
     {
       foreach (
         var file in System.IO.Directory.EnumerateFiles(
@@ -228,7 +228,7 @@ Match:
       if (
         count == checkpoint
         && filter.Length > 1
-        && options.AttributesToSkip != System.IO.FileAttributes.System
+        && options.AttributesToSkip is not System.IO.FileAttributes.System
       )
       {
         options.AttributesToSkip = System.IO.FileAttributes.System;
@@ -253,7 +253,7 @@ Match:
       !string.IsNullOrEmpty(
         accumulatedSubpath
       )
-      || count != 0
+      || count is not 0
     )
     {
       yield return Denormalize(

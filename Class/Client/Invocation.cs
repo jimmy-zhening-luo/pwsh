@@ -14,7 +14,7 @@ internal static class Invocation
 
   internal static void CreateProcess(
     string fileName,
-    IEnumerable<string>? arguments = null,
+    IEnumerable<string>? arguments = default,
     bool noNewWindow = default
   )
   {
@@ -41,7 +41,7 @@ internal static class Invocation
 
   internal static void ShellExecute(
     string fileName,
-    IEnumerable<string>? arguments = null,
+    IEnumerable<string>? arguments = default,
     bool administrator = default,
     bool noNewWindow = default
   )
@@ -70,18 +70,17 @@ internal static class Invocation
     bool noNewWindow
   )
   {
-    var argumentList = arguments == null
+    List<string>? argumentList = arguments is null
       ? null
-      : new List<string>(
+      : new(
           arguments
         );
 
-    var startInfo = argumentList == null
-      || argumentList.Count == 0
-      ? new System.Diagnostics.ProcessStartInfo(
+    System.Diagnostics.ProcessStartInfo startInfo = argumentList?.Count is null or 0
+      ? new(
           fileName
         )
-      : new System.Diagnostics.ProcessStartInfo(
+      : new(
           fileName,
           argumentList
         );

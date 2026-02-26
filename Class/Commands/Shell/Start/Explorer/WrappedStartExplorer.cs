@@ -22,7 +22,7 @@ public abstract class WrappedStartExplorer() : WrappedCommandShouldProcess(
 
   private protected sealed override void TransformPipelineInput()
   {
-    if (paths.Length == 0)
+    if (paths.Length is 0)
     {
       paths = [
         UsingCurrentLocation
