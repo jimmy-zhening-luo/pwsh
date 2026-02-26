@@ -18,7 +18,33 @@ public sealed partial class GetVerb : CoreCommand
   [Completions(
     ["*"]
   )]
-  public string[] Verb { get; set; } = [];
+  public string[] Verb
+  {
+    get => [.. verbs];
+    set
+    {
+      foreach (var verb in value)
+      {
+        if (
+          !string.IsNullOrEmpty(
+            verb
+          )
+        )
+        {
+          verbs.Add(
+            verb.Contains(
+              '*'
+            )
+              ? verb
+              : verb.Length > 2
+                ? $"*{verb}*"
+                : $"{verb}*"
+          );
+        }
+      }
+    }
+  }
+  private readonly HashSet<string> verbs = [];
 
   [Parameter(
     Position = 1,
@@ -27,52 +53,32 @@ public sealed partial class GetVerb : CoreCommand
   [EnumCompletions(
     typeof(VerbGroup)
   )]
-  public string[] Group { get; set; } = [];
+  public string[] Group
+  {
+    get => [.. groups];
+    set
+    {
+      foreach (var group in value)
+      {
+        if (
+          System.Enum.TryParse<VerbGroup>(
+            group,
+            true,
+            out var parsedGroup
+          )
+        )
+        {
+          groups.Add(
+            parsedGroup.ToString()
+          );
+        }
+      }
+    }
+  }
+  private readonly HashSet<string> groups = [];
 
   private protected sealed override void Postprocess()
   {
-    HashSet<string> uniqueWildcardTerms = [];
-    HashSet<string> uniqueGroups = [];
-
-    foreach (var verb in Verb)
-    {
-      if (
-        !string.IsNullOrEmpty(
-          verb
-        )
-      )
-      {
-        uniqueWildcardTerms.Add(
-          verb.Contains(
-            '*'
-          )
-            ? verb
-            : verb.Length > 2
-              ? $"*{verb}*"
-              : $"{verb}*"
-        );
-      }
-    }
-
-    foreach (var group in Group)
-    {
-      if (
-        System.Enum.TryParse<VerbGroup>(
-          group,
-          true,
-          out var parsedGroup
-        )
-      )
-      {
-        uniqueGroups.Add(
-          parsedGroup.ToString()
-        );
-      }
-    }
-
-    Verb = [.. uniqueWildcardTerms];
-    Group = [.. uniqueGroups];
-
     if (
       Verb.Length == 0
       || Verb.Length == 1
