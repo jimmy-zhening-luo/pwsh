@@ -210,6 +210,10 @@ public abstract class CoreCommand(
     .Commands
     .Clear();
 
+  private protected Collection<PSObject> InvokePowerShell() => PS.Invoke();
+
+  private protected Collection<PSObject> InvokePowerShell<T>() => PS.Invoke<T>();
+
   private protected string Reanchor(string path = "") => Client.File.PathString.FullPathLocationRelative(
     Location is
     {
