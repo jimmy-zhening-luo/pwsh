@@ -91,7 +91,7 @@ if ($null -ne $Env:SSH_CLIENT) {
         Function = 'SwitchPredictionView'
       }
     ) |
-      ForEach-Object {
+      ForEach-Object -Process {
         Set-PSReadLineKeyHandler @PSItem
       }
   }

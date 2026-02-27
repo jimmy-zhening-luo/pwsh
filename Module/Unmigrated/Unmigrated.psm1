@@ -339,7 +339,7 @@ function Get-ChildGitRepository {
   end {
     [string[]]$Repositories = Get-ChildItem -LiteralPath $HOME\code -Directory |
       Select-Object -ExpandProperty FullName |
-      Resolve-GitRepository
+      ForEach-Object -Process { Resolve-GitRepository -WorkingDirectory $PSItem }
     $Count = $Repositories.Count
 
     Write-Progress -Activity Pull -Status "0/$Count" -PercentComplete 0
@@ -611,12 +611,12 @@ function Reset-GitRepository {
 
     if (
       $TreeMatch.Success -and (
-        $TreeMatch.Groups["step"].Value -eq '' -or $TreeMatch.Groups["step"].Value -as [int]
+        $TreeMatch.Groups['step'].Value -eq '' -or $TreeMatch.Groups['step'].Value -as [int]
       )
     ) {
-      [string]$Branching = $TreeMatch.Groups["branching"].Value -ne '' ? $TreeMatch.Groups["branching"].Value : '~'
+      [string]$Branching = $TreeMatch.Groups['branching'].Value -ne '' ? $TreeMatch.Groups['branching'].Value : '~'
 
-      $Tree = 'HEAD' + $Branching + $TreeMatch.Groups["step"].Value
+      $Tree = 'HEAD' + $Branching + $TreeMatch.Groups['step'].Value
     }
     else {
       $ResetArgument.Insert(0, $Tree)
@@ -640,12 +640,12 @@ function Reset-GitRepository {
 
       if (
         $TreeMatch.Success -and (
-          $TreeMatch.Groups["step"].Value -eq '' -or $TreeMatch.Groups["step"].Value -as [int]
+          $TreeMatch.Groups['step'].Value -eq '' -or $TreeMatch.Groups['step'].Value -as [int]
         )
       ) {
-        [string]$Branching = $TreeMatch.Groups["branching"].Value -ne '' ? $TreeMatch.Groups["branching"].Value : '~'
+        [string]$Branching = $TreeMatch.Groups['branching'].Value -ne '' ? $TreeMatch.Groups['branching'].Value : '~'
 
-        $Tree = 'HEAD' + $Branching + $TreeMatch.Groups["step"].Value
+        $Tree = 'HEAD' + $Branching + $TreeMatch.Groups['step'].Value
       }
       else {
         $ResetArgument.Insert(0, $WorkingDirectory)
