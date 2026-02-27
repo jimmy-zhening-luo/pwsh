@@ -11,21 +11,17 @@ internal static class Start
     [argument],
     noNewWindow
   );
-
   internal static void CreateProcess(
     string fileName,
     IEnumerable<string>? arguments = default,
     bool noNewWindow = default
-  )
-  {
-    _ = System.Diagnostics.Process.Start(
-      ArgumentList(
-        fileName,
-        arguments,
-        noNewWindow
-      )
-    );
-  }
+  ) => System.Diagnostics.Process.Start(
+    ArgumentList(
+      fileName,
+      arguments,
+      noNewWindow
+    )
+  );
 
   internal static void ShellExecute(
     string fileName,
@@ -38,34 +34,27 @@ internal static class Start
     administrator,
     noNewWindow
   );
-
   internal static void ShellExecute(
     string fileName,
     IEnumerable<string>? arguments = default,
     bool administrator = default,
     bool noNewWindow = default
-  )
-  {
-    var startInfo = ArgumentList(
+  ) => System.Diagnostics.Process.Start(
+    ArgumentList(
       fileName,
       arguments,
-      noNewWindow
-    );
-
-    startInfo.UseShellExecute = true;
-
-    if (administrator)
-    {
-      startInfo.Verb = "RunAs";
-    }
-
-    _ = System.Diagnostics.Process.Start(startInfo);
-  }
+      noNewWindow,
+      true,
+      administrator
+    )
+  );
 
   private static System.Diagnostics.ProcessStartInfo ArgumentList(
     string fileName,
     IEnumerable<string>? arguments,
-    bool noNewWindow
+    bool noNewWindow,
+    bool shellExecute = default,
+    bool administrator = default
   )
   {
     List<string> argumentList = [
@@ -82,6 +71,16 @@ internal static class Start
     if (noNewWindow)
     {
       startInfo.CreateNoWindow = true;
+    }
+
+    if (shellExecute)
+    {
+      startInfo.UseShellExecute = true;
+    }
+
+    if (administrator)
+    {
+      startInfo.Verb = "RunAs";
     }
 
     return startInfo;
