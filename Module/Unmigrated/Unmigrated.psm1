@@ -1,79 +1,3 @@
-function Resolve-GitRepository {
-  [CmdletBinding()]
-  [OutputType([string])]
-  param(
-    [Parameter(
-      Mandatory,
-      Position = 0,
-      ValueFromPipeline,
-      ValueFromPipelineByPropertyName
-    )]
-    [AllowEmptyString()]
-    [AllowEmptyCollection()]
-    [string[]]$WorkingDirectory,
-
-    [Parameter()]
-    [switch]$Newable
-  )
-
-  process {
-    foreach ($wd in $WorkingDirectory) {
-      if ($Newable) {
-        if (!$wd) {
-          Write-Output $PWD.Path
-        }
-        elseif (Test-Path $wd -PathType Container) {
-          Write-Output (
-            Resolve-Path $wd
-          ).Path
-        }
-        elseif (
-          ![System.IO.Path]::IsPathRooted($wd) -and (
-            Test-Path (
-              Join-Path $HOME code $wd
-            ) -PathType Container
-          )
-        ) {
-          Write-Output (
-            Resolve-Path (
-              Join-Path $HOME code $wd
-            ) -Force
-          ).Path
-        }
-      }
-      else {
-        if (!$wd) {
-          if (Test-Path .git -PathType Container) {
-            Write-Output $PWD.Path
-          }
-        }
-        elseif (
-          Test-Path (
-            Join-Path $wd .git
-          ) -PathType Container
-        ) {
-          Write-Output (
-            Resolve-Path $wd
-          ).Path
-        }
-        elseif (
-          ![System.IO.Path]::IsPathRooted($wd) -and (
-            Test-Path (
-              Join-Path $HOME code $wd .git
-            ) -PathType Container
-          )
-        ) {
-          Write-Output (
-            Resolve-Path (
-              Join-Path $HOME code $wd
-            ) -Force
-          ).Path
-        }
-      }
-    }
-  }
-}
-
 <#
 .LINK
 https://git-scm.com/docs
@@ -82,16 +6,12 @@ function Invoke-Git {
   [CmdletBinding()]
   [Alias('g')]
   param(
-    [Parameter(
-      Position = 0
-    )]
+    [Parameter(Position = 0)]
     [Module.Commands.Code.Git.GitVerbCompletionsAttribute()]
     # Git command
     [string]$Verb,
 
-    [Parameter(
-      Position = 1
-    )]
+    [Parameter(Position = 1)]
     [Module.Commands.Code.WorkingDirectoryCompletions()]
     # Repository path. For all verbs except 'clone', 'config', and 'init', the command will throw an error if there is no Git repository at the path.
     [string]$WorkingDirectory,
@@ -159,11 +79,11 @@ function Invoke-Git {
         else {
           if (
             $WorkingDirectory -and !(
-              Resolve-GitRepository -WorkingDirectory $PWD.Path
+              [Module.Commands.Code.Git.GitWorkingDirectory]::Resolve($PWD.Path, $PWD.Path)
             ) -and !(
-              Resolve-GitRepository -WorkingDirectory $WorkingDirectory
+              [Module.Commands.Code.Git.GitWorkingDirectory]::Resolve($PWD.Path, $WorkingDirectory)
             ) -and (
-              Resolve-GitRepository -WorkingDirectory $Verb
+              [Module.Commands.Code.Git.GitWorkingDirectory]::Resolve($PWD.Path, $Verb)
             )
           ) {
             $GitArgument.Add($WorkingDirectory)
@@ -189,18 +109,13 @@ function Invoke-Git {
       $Verb = 'status'
     }
 
-    $Resolve = @{
-      WorkingDirectory = $WorkingDirectory
-      Newable          = $Newable
-    }
-    $Repository = Resolve-GitRepository @Resolve
+    $Repository = [Module.Commands.Code.Git.GitWorkingDirectory]::Resolve($PWD.Path, $WorkingDirectory, $Newable)
 
     if (!$Repository) {
       if ($WorkingDirectory) {
         $GitArgument.Insert(0, $WorkingDirectory)
 
-        $Resolve.WorkingDirectory = $PWD.Path
-        $Repository = Resolve-GitRepository @Resolve
+        $Repository = [Module.Commands.Code.Git.GitWorkingDirectory]::Resolve($PWD.Path, $PWD.Path, $Newable)
       }
 
       if (!$Repository) {
@@ -339,7 +254,7 @@ function Get-ChildGitRepository {
   end {
     [string[]]$Repositories = Get-ChildItem -LiteralPath $HOME\code -Directory |
       Select-Object -ExpandProperty FullName |
-      ForEach-Object -Process { Resolve-GitRepository -WorkingDirectory $PSItem }
+      ForEach-Object -Process { [Module.Commands.Code.Git.GitWorkingDirectory]::Resolve($PWD.Path, $PSItem) }
     $Count = $Repositories.Count
 
     Write-Progress -Activity Pull -Status "0/$Count" -PercentComplete 0
@@ -381,9 +296,9 @@ function Compare-GitRepository {
 
   if (
     $WorkingDirectory -and (
-      Resolve-GitRepository -WorkingDirectory $PWD.Path
+      [Module.Commands.Code.Git.GitWorkingDirectory]::Resolve($PWD.Path, $PWD.Path)
     ) -and !(
-      Resolve-GitRepository -WorkingDirectory $WorkingDirectory
+      [Module.Commands.Code.Git.GitWorkingDirectory]::Resolve($PWD.Path, $WorkingDirectory)
     )
   ) {
     $DiffArgument.Add($WorkingDirectory)
@@ -426,9 +341,9 @@ function Add-GitRepository {
 
   if (
     $WorkingDirectory -and (
-      Resolve-GitRepository -WorkingDirectory $PWD.Path
+      [Module.Commands.Code.Git.GitWorkingDirectory]::Resolve($PWD.Path, $PWD.Path)
     ) -and !(
-      Resolve-GitRepository -WorkingDirectory $WorkingDirectory
+      [Module.Commands.Code.Git.GitWorkingDirectory]::Resolve($PWD.Path, $WorkingDirectory)
     )
   ) {
     $AddArgument.Add($WorkingDirectory)
@@ -493,9 +408,9 @@ function Write-GitRepository {
 
   if (
     $WorkingDirectory -and (
-      Resolve-GitRepository -WorkingDirectory $PWD.Path
+      [Module.Commands.Code.Git.GitWorkingDirectory]::Resolve($PWD.Path, $PWD.Path)
     ) -and !(
-      Resolve-GitRepository -WorkingDirectory $WorkingDirectory
+      [Module.Commands.Code.Git.GitWorkingDirectory]::Resolve($PWD.Path, $WorkingDirectory)
     )
   ) {
     if (
@@ -564,9 +479,9 @@ function Push-GitRepository {
 
   if (
     $WorkingDirectory -and (
-      Resolve-GitRepository -WorkingDirectory $PWD.Path
+      [Module.Commands.Code.Git.GitWorkingDirectory]::Resolve($PWD.Path, $PWD.Path)
     ) -and !(
-      Resolve-GitRepository -WorkingDirectory $WorkingDirectory
+      [Module.Commands.Code.Git.GitWorkingDirectory]::Resolve($PWD.Path, $WorkingDirectory)
     )
   ) {
     $PushArgument.Add($WorkingDirectory)
@@ -627,9 +542,9 @@ function Reset-GitRepository {
 
   if (
     $WorkingDirectory -and (
-      Resolve-GitRepository -WorkingDirectory $PWD.Path
+      [Module.Commands.Code.Git.GitWorkingDirectory]::Resolve($PWD.Path, $PWD.Path)
     ) -and !(
-      Resolve-GitRepository -WorkingDirectory $WorkingDirectory
+      [Module.Commands.Code.Git.GitWorkingDirectory]::Resolve($PWD.Path, $WorkingDirectory)
     )
   ) {
     if ($Tree) {
@@ -690,9 +605,9 @@ function Restore-GitRepository {
 
   if (
     $WorkingDirectory -and (
-      Resolve-GitRepository -WorkingDirectory $PWD.Path
+      [Module.Commands.Code.Git.GitWorkingDirectory]::Resolve($PWD.Path, $PWD.Path)
     ) -and !(
-      Resolve-GitRepository -WorkingDirectory $WorkingDirectory
+      [Module.Commands.Code.Git.GitWorkingDirectory]::Resolve($PWD.Path, $WorkingDirectory)
     )
   ) {
     $ResetArgument.Add($WorkingDirectory)
@@ -718,9 +633,7 @@ function Invoke-Npm {
   [CmdletBinding()]
   [Alias('n')]
   param(
-    [Parameter(
-      Position = 0
-    )]
+    [Parameter(Position = 0)]
     [Module.Commands.Code.Node.NodeVerbCompletionsAttribute()]
     # npm command verb
     [string]$Command,
@@ -940,9 +853,7 @@ function Compare-NodeModule {
   [CmdletBinding()]
   [Alias('npo')]
   param(
-    [Parameter(
-      Position = 0
-    )]
+    [Parameter(Position = 0)]
     [Module.Commands.Code.WorkingDirectoryCompletions()]
     # Node package path
     [string]$WorkingDirectory,
@@ -989,16 +900,12 @@ function Step-NodePackageVersion {
   [CmdletBinding()]
   [Alias('nu')]
   param(
-    [Parameter(
-      Position = 0
-    )]
+    [Parameter(Position = 0)]
     [Module.Commands.Code.Node.NodePackageVersionCompletions()]
     # New package version, default 'patch'
     [string]$Version,
 
-    [Parameter(
-      Position = 1
-    )]
+    [Parameter(Position = 1)]
     [Module.Commands.Code.WorkingDirectoryCompletions()]
     # Node package path
     [string]$WorkingDirectory,
@@ -1113,9 +1020,7 @@ function Test-NodePackage {
   [CmdletBinding()]
   [Alias('nt')]
   param(
-    [Parameter(
-      Position = 0
-    )]
+    [Parameter(Position = 0)]
     [Module.Commands.Code.WorkingDirectoryCompletions()]
     # Node package path
     [string]$WorkingDirectory,
