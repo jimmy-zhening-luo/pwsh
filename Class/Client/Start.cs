@@ -68,11 +68,11 @@ internal static class Start
     bool noNewWindow
   )
   {
-    List<string>? argumentList = arguments is null
-      ? default
-      : new(arguments);
+    List<string> argumentList = [
+      .. arguments ?? [],
+    ];
 
-    System.Diagnostics.ProcessStartInfo startInfo = argumentList is null or []
+    System.Diagnostics.ProcessStartInfo startInfo = argumentList is []
       ? new(fileName)
       : new(
           fileName,
