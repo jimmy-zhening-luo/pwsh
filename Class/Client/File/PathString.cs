@@ -4,7 +4,7 @@ internal static partial class PathString
 {
   internal static string FullPathLocationRelative(
     string location,
-    string path,
+    string? path,
     bool preserveTrailingSeparator = default
   ) => System.IO.Path.GetFullPath(
     Normalize(
@@ -15,10 +15,15 @@ internal static partial class PathString
   );
 
   internal static string Normalize(
-    string path,
+    string? path,
     bool preserveTrailingSeparator = default
   )
   {
+    if (path is null)
+    {
+      return string.Empty;
+    }
+
     var normalPath = TrimRelativePrefix(
       ExpandHomePrefix(
         DuplicateSeparatorRegex().Replace(
