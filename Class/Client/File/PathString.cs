@@ -19,18 +19,15 @@ internal static partial class PathString
     bool preserveTrailingSeparator = default
   )
   {
-    if (path is null)
-    {
-      return string.Empty;
-    }
-
     var normalPath = TrimRelativePrefix(
       ExpandHomePrefix(
         DuplicateSeparatorRegex().Replace(
           System
             .Environment
             .ExpandEnvironmentVariables(
-              path.Trim()
+              path
+                ?.Trim()
+                ?? string.Empty
             )
             .Replace(
               '/',
