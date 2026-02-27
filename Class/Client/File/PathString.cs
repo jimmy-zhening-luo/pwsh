@@ -43,21 +43,21 @@ internal static partial class PathString
       : System.IO.Path.TrimEndingDirectorySeparator(normalPath);
   }
 
-  private static string ExpandHomePrefix(string path) => path.StartsWith('~')
-    ? path.Length is 1
-      ? Environment.Known.Folder.Home()
-      : path[1] is '\\'
-        ? Environment.Known.Folder.Home(
-            path[2..]
-          )
-        : path
-      : path;
+  private static string ExpandHomePrefix(string path) => path switch
+  {
+    "~" => Environment.Known.Folder.Home(),
+    _ when path.StartsWith(@"~\") => Environment.Known.Folder.Home(
+        path[2..]
+      ),
+    _ => path
+  };
 
-  private static string TrimRelativePrefix(string path) => path is "."
-    ? string.Empty
-    : path.StartsWith(@".\")
-      ? path[2..]
-      : path;
+  private static string TrimRelativePrefix(string path) => path switch
+  {
+    "." => string.Empty,
+    _ when path.StartsWith(@".\") => path[2..],
+    _ => path
+  };
 
   [System.Text.RegularExpressions.GeneratedRegex(
     @"(?<!^)(?>\\\\+)"
