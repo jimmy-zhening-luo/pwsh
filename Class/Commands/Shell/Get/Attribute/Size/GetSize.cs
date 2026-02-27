@@ -123,9 +123,9 @@ public sealed class GetSize : CoreCommand
           new System.IO.FileNotFoundException(
             $"The path '{path}' does not exist."
           ),
-          "PathNotFound",
           ErrorCategory.InvalidOperation,
-          absolutePath
+          absolutePath,
+          "PathNotFound"
         );
       }
 

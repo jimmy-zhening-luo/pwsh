@@ -38,7 +38,7 @@ public abstract class CoreCommand(
 
   private bool Alive => !disposed
     && !stopped;
-  
+
   private bool ContinueProcessing => Alive
     && !BlockedBySsh;
 
@@ -127,7 +127,6 @@ public abstract class CoreCommand(
     command,
     commandType
   );
-
   private protected PowerShell AddCommand(
     PowerShell ps,
     string command,
@@ -139,81 +138,26 @@ public abstract class CoreCommand(
     )
   );
 
-  private protected PowerShell AddParameter(string parameterName) => AddParameter(
-    PS,
-    parameterName
-  );
-
-  private protected PowerShell AddParameter(
-    PowerShell ps,
-    string parameterName
-  ) => ps.AddParameter(
-    parameterName
-  );
-
+  private protected PowerShell AddParameter(string parameterName) => PS.AddParameter(parameterName);
   private protected PowerShell AddParameter(
     string parameterName,
     object value
-  ) => AddParameter(
-    PS,
+  ) => PS.AddParameter(
     parameterName,
     value
   );
 
-  private protected PowerShell AddParameter(
-    PowerShell ps,
-    string parameterName,
-    object value
-  ) => ps.AddParameter(
-    parameterName,
-    value
-  );
 
-  private protected PowerShell AddParameters(IList parameters) => AddParameters(
-    PS,
-    parameters
-  );
+  private protected PowerShell AddParameters(IList parameters) => PS.AddParameters(parameters);
+  private protected PowerShell AddParameters(IDictionary parameters) => PS.AddParameters(parameters);
 
-  private protected PowerShell AddParameters(IDictionary parameters) => AddParameters(
-    PS,
-    parameters
-  );
+  private protected PowerShell AddScript(string script) => PS.AddScript(script);
 
-  private protected PowerShell AddParameters(
-    PowerShell ps,
-    IList parameters
-  ) => ps.AddParameters(
-    parameters
-  );
-
-  private protected PowerShell AddParameters(
-    PowerShell ps,
-    IDictionary parameters
-  ) => ps.AddParameters(
-    parameters
-  );
-
-  private protected PowerShell AddScript(string script) => AddScript(
-    PS,
-    script
-  );
-
-  private protected PowerShell AddScript(
-    PowerShell ps,
-    string script
-  ) => ps.AddScript(
-    script,
-    true
-  );
-
-  private protected void Clear() => Clear(PS);
-
-  private protected void Clear(PowerShell ps) => ps
+  private protected void Clear() => PS
     .Commands
     .Clear();
 
   private protected Collection<PSObject> InvokePowerShell() => PS.Invoke();
-
   private protected Collection<T> InvokePowerShell<T>() => PS.Invoke<T>();
 
   private protected void BeginSteppablePipeline()
@@ -256,7 +200,6 @@ public abstract class CoreCommand(
   );
 
   private protected PSObject PSVariable(string variable) => PSVariable<PSObject>(variable);
-
   private protected T PSVariable<T>(string variable) => (T)SessionState
     .PSVariable
     .GetValue(variable);
@@ -271,18 +214,13 @@ public abstract class CoreCommand(
     path
   );
 
-  private protected void WriteLog(object log) => WriteLog(
-    log,
-    GetName()
-  );
-
-  private protected void WriteLog(
+  private protected void WriteEvent(
     object log,
-    string source
+    string? source = default
   ) => WriteInformation(
     new(
       log,
-      source
+      source ?? GetName()
     )
   );
 
@@ -290,45 +228,20 @@ public abstract class CoreCommand(
   private protected void Throw(
     string message,
     ErrorCategory category = ErrorCategory.InvalidOperation,
-    object? target = default
-  ) => Throw(
-    message,
-    $"{GetName()}Exception",
-    category,
-    target
-  );
-
-  [System.Diagnostics.CodeAnalysis.DoesNotReturn]
-  private protected void Throw(
-    string message,
-    string id,
-    ErrorCategory category = ErrorCategory.InvalidOperation,
-    object? target = default
+    object? target = default,
+    string? id = default
   ) => Throw(
     new System.Exception(message),
-    id,
     category,
-    target
+    target,
+    id
   );
-
   [System.Diagnostics.CodeAnalysis.DoesNotReturn]
   private protected void Throw(
     System.Exception exception,
     ErrorCategory category = ErrorCategory.InvalidOperation,
-    object? target = default
-  ) => Throw(
-    exception,
-    $"{GetName()}Exception",
-    category,
-    target
-  );
-
-  [System.Diagnostics.CodeAnalysis.DoesNotReturn]
-  private protected void Throw(
-    System.Exception exception,
-    string id,
-    ErrorCategory category = ErrorCategory.InvalidOperation,
-    object? target = default
+    object? target = default,
+    string? id = default
   )
   {
     Dispose();
@@ -336,7 +249,7 @@ public abstract class CoreCommand(
     ThrowTerminatingError(
       new(
         exception,
-        id,
+        $"{GetName()}Exception" + (id ?? string.Empty),
         category,
         target
       )
