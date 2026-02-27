@@ -190,9 +190,9 @@ public sealed class GetHelpOnline : CoreCommand
             ActionPreference.SilentlyContinue
           );
 
-        SteppablePipeline.Begin(this);
+        BeginSteppablePipeline();
 
-        _ = SteppablePipeline.Process();
+        ProcessSteppablePipeline();
       }
     }
   }

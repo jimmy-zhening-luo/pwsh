@@ -30,7 +30,7 @@ public abstract class CoreCommand(
   private protected PowerShell PS => powershell ??= PowerShellHost.Create();
   private PowerShell? powershell;
 
-  private protected SteppablePipeline SteppablePipeline => steppablePipeline ??= PS.GetSteppablePipeline();
+  private SteppablePipeline SteppablePipeline => steppablePipeline ??= PS.GetSteppablePipeline();
   private SteppablePipeline? steppablePipeline;
 
   private bool BlockedBySsh => SkipSsh
@@ -213,6 +213,20 @@ public abstract class CoreCommand(
   private protected Collection<PSObject> InvokePowerShell() => PS.Invoke();
 
   private protected Collection<T> InvokePowerShell<T>() => PS.Invoke<T>();
+
+  private protected void BeginSteppablePipeline() => SteppablePipeline.Begin(this);
+
+  private protected void ProcessSteppablePipeline()
+  {
+    _ = SteppablePipeline.Process();
+  }
+
+  private protected void ProcessSteppablePipeline(
+    object input
+  )
+  {
+    _ = SteppablePipeline.Process(input);
+  }
 
   private protected string Reanchor(string path = "") => Client.File.PathString.FullPathLocationRelative(
     Location is

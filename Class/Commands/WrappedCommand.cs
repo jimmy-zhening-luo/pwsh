@@ -41,7 +41,7 @@ public abstract class WrappedCommand(
     )
       .AddParameters(BoundParameters);
 
-    SteppablePipeline.Begin(this);
+    BeginSteppablePipeline();
   }
 
   private protected sealed override void Process()
@@ -61,16 +61,16 @@ public abstract class WrappedCommand(
         && pipelineInput is not null
       )
       {
-        _ = SteppablePipeline.Process(pipelineInput);
+        ProcessSteppablePipeline(pipelineInput);
       }
       else
       {
-        _ = SteppablePipeline.Process();
+        ProcessSteppablePipeline();
       }
     }
     else
     {
-      _ = SteppablePipeline.Process();
+      ProcessSteppablePipeline();
     }
   }
 
