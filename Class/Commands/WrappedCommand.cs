@@ -43,7 +43,7 @@ public abstract class WrappedCommand(
     )
       .AddParameters(BoundParameters);
 
-    steppablePipeline = PS.GetSteppablePipeline();
+    steppablePipeline = GetSteppablePipeline();
 
     steppablePipeline.Begin(this);
   }

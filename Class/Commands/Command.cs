@@ -214,6 +214,8 @@ public abstract class CoreCommand(
 
   private protected Collection<T> InvokePowerShell<T>() => PS.Invoke<T>();
 
+  private protected SteppablePipeline GetSteppablePipeline() => PS.GetSteppablePipeline();
+
   private protected string Reanchor(string path = "") => Client.File.PathString.FullPathLocationRelative(
     Location is
     {
