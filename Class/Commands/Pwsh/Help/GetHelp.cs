@@ -192,7 +192,7 @@ public sealed class GetHelpOnline : CoreCommand
 
         SteppablePipeline.Begin(this);
 
-        _ = steppablePipeline.Process();
+        _ = SteppablePipeline.Process();
       }
     }
   }
