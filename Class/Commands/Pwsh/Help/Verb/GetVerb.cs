@@ -87,7 +87,7 @@ public sealed class GetVerb : CoreCommand
 
   private protected sealed override void Postprocess()
   {
-    const string COMMAND = @"Microsoft.PowerShell.Utility\Get-Verb"
+    const string COMMAND = @"Microsoft.PowerShell.Utility\Get-Verb";
 
     if (Verb is [] or ["*"])
     {
