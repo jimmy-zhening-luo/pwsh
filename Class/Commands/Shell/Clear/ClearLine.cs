@@ -55,12 +55,11 @@ public sealed class ClearLine : CoreCommand
     }
     else
     {
-      _ = AddCommand(
+      using var steppablePipeline = AddCommand(
         @"Microsoft.PowerShell.Management\Clear-Content"
       )
-        .AddParameters(BoundParameters);
-
-      using var steppablePipeline = PS.GetSteppablePipeline();
+        .AddParameters(BoundParameters)
+        .GetSteppablePipeline();
 
       steppablePipeline.Begin(this);
 
