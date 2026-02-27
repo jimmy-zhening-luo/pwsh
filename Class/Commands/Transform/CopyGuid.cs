@@ -46,7 +46,9 @@ public sealed class CopyGuid : CoreCommand
       WriteObject(guid);
     }
 
-    _ = AddCommand("Set-Clipboard")
+    _ = AddCommand(
+      @"Microsoft.PowerShell.Management\Set-Clipboard"
+    )
       .AddParameter(
         "Value",
         new string[]

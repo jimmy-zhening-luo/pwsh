@@ -85,7 +85,9 @@ public sealed class GetCommandAlias : CoreCommand
 
     SortedDictionary<string, AliasInfo> commandAliasDictionary = [];
 
-    _ = AddCommand("Get-Alias")
+    _ = AddCommand(
+      @"Microsoft.PowerShell.Utility\Get-Alias"
+    )
       .AddParameter(
         "Definition",
         Definition

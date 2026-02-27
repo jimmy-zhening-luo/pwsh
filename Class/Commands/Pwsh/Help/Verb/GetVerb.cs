@@ -87,9 +87,11 @@ public sealed class GetVerb : CoreCommand
 
   private protected sealed override void Postprocess()
   {
+    const string COMMAND = @"Microsoft.PowerShell.Utility\Get-Verb"
+
     if (Verb is [] or ["*"])
     {
-      _ = AddCommand("Get-Verb")
+      _ = AddCommand(COMMAND)
         .AddParameter(
           "Verb",
           "*"
@@ -104,12 +106,16 @@ public sealed class GetVerb : CoreCommand
       }
 
       WriteObject(
-        AddCommand("Select-Object")
+        AddCommand(
+          @"Microsoft.PowerShell.Utility\Select-Object"
+        )
           .AddParameter(
             "ExpandProperty",
             "Verb"
           )
-          .AddCommand("Sort-Object")
+          .AddCommand(
+            @"Microsoft.PowerShell.Utility\Sort-Object"
+          )
           .Invoke(),
         true
       );
@@ -118,7 +124,7 @@ public sealed class GetVerb : CoreCommand
     {
       SortedDictionary<string, VerbInfo> verbDictionary = [];
 
-      _ = AddCommand("Get-Verb")
+      _ = AddCommand(COMMAND)
         .AddParameter(
           "Verb",
           Verb
