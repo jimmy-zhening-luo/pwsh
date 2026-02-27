@@ -27,7 +27,7 @@ public abstract class CoreCommand(
 
   private protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
 
-  private protected PowerShell PS => powershell ??= PowerShellHost.Create();
+  private PowerShell PS => powershell ??= PowerShellHost.Create();
   private PowerShell? powershell;
 
   private SteppablePipeline SteppablePipeline => steppablePipeline ??= PS.GetSteppablePipeline();
@@ -36,8 +36,10 @@ public abstract class CoreCommand(
   private bool BlockedBySsh => SkipSsh
     && Client.Environment.Known.Variable.InSsh;
 
-  private bool ContinueProcessing => !disposed
-    && !stopped
+  private bool Alive => !disposed
+    && !stopped;
+  
+  private bool ContinueProcessing => Alive
     && !BlockedBySsh;
 
   public void Dispose()
@@ -214,18 +216,30 @@ public abstract class CoreCommand(
 
   private protected Collection<T> InvokePowerShell<T>() => PS.Invoke<T>();
 
-  private protected void BeginSteppablePipeline() => SteppablePipeline.Begin(this);
+  private protected void BeginSteppablePipeline()
+  {
+    if (Alive)
+    {
+      SteppablePipeline.Begin(this);
+    }
+  }
 
   private protected void ProcessSteppablePipeline()
   {
-    _ = SteppablePipeline.Process();
+    if (Alive)
+    {
+      _ = SteppablePipeline.Process();
+    }
   }
 
   private protected void ProcessSteppablePipeline(
     object input
   )
   {
-    _ = SteppablePipeline.Process(input);
+    if (Alive)
+    {
+      _ = SteppablePipeline.Process(input);
+    }
   }
 
   private protected string Reanchor(string path = "") => Client.File.PathString.FullPathLocationRelative(
