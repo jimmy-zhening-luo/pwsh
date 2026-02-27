@@ -1,4 +1,5 @@
 New-Alias clb Clear-RecycleBin
+New-Alias fe ForEach-Object
 New-Alias k Get-Member
 New-Alias key Get-Member
 New-Alias psk Get-PSReadLineKeyHandler
@@ -13,6 +14,7 @@ New-Alias s Select-Object
 New-Alias sesv Set-Service
 New-Alias z Sort-Object
 New-Alias upman Update-Help
+New-Alias w Where-Object
 New-Alias wg $env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe
 
 <#

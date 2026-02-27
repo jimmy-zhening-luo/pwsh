@@ -16,6 +16,7 @@
   VariablesToExport    = @()
   AliasesToExport      = @(
     'clb'
+    'fe'
     'k'
     'key'
     'psk'
@@ -30,6 +31,7 @@
     'sesv'
     'z'
     'upman'
+    'w'
     'wg'
     'wga'
     'wgf'
