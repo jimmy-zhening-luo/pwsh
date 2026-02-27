@@ -15,7 +15,10 @@ public abstract class CoreCommand(
 
   private bool disposed;
 
-  ~CoreCommand() => Dispose(default);
+  ~CoreCommand()
+  {
+    Dispose(default);
+  }
 
   private protected virtual Locator Location => new();
 
