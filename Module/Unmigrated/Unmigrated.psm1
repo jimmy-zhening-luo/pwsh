@@ -795,24 +795,6 @@ function Invoke-Npm {
 
 <#
 .LINK
-https://nodejs.org/api/cli.html
-#>
-function Invoke-Node {
-
-  [Alias('no')]
-  param()
-
-  if ($args) {
-    & node.exe @args
-
-    if ($LASTEXITCODE -notin 0, 1) {
-      throw "Node.exe error, execution stopped with exit code: $LASTEXITCODE"
-    }
-  }
-}
-
-<#
-.LINK
 https://docs.npmjs.com/cli/commands/npx
 #>
 function Invoke-NodeExecutable {
