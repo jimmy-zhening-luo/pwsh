@@ -30,6 +30,9 @@ public abstract class CoreCommand(
   private protected PowerShell PS => powershell ??= PowerShellHost.Create();
   private PowerShell? powershell;
 
+  private protected SteppablePipeline SteppablePipeline => steppablePipeline ??= PS.GetSteppablePipeline();
+  private SteppablePipeline? steppablePipeline;
+
   private bool BlockedBySsh => SkipSsh
     && Client.Environment.Known.Variable.InSsh;
 
@@ -102,9 +105,6 @@ public abstract class CoreCommand(
   { }
 
   private protected virtual void Postprocess()
-  { }
-
-  private protected virtual void CleanResources()
   { }
 
   private protected CommandInfo GetCommand(
@@ -213,8 +213,6 @@ public abstract class CoreCommand(
   private protected Collection<PSObject> InvokePowerShell() => PS.Invoke();
 
   private protected Collection<T> InvokePowerShell<T>() => PS.Invoke<T>();
-
-  private protected SteppablePipeline GetSteppablePipeline() => PS.GetSteppablePipeline();
 
   private protected string Reanchor(string path = "") => Client.File.PathString.FullPathLocationRelative(
     Location is
@@ -340,7 +338,15 @@ public abstract class CoreCommand(
 
   private void Clean()
   {
-    CleanResources();
+    if (steppablePipeline is not null)
+    {
+      _ = steppablePipeline.End();
+
+      steppablePipeline.Clean();
+      steppablePipeline.Dispose();
+
+      steppablePipeline = default;
+    }
 
     powershell?.Dispose();
     powershell = default;

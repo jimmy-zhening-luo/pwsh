@@ -9,8 +9,6 @@ public abstract class WrappedCommand(
 {
   private protected bool Piped;
 
-  private SteppablePipeline? steppablePipeline = default;
-
   private protected virtual Dictionary<string, object?> CoercedParameters => [];
 
   private protected virtual void TransformArguments()
@@ -43,59 +41,41 @@ public abstract class WrappedCommand(
     )
       .AddParameters(BoundParameters);
 
-    steppablePipeline = GetSteppablePipeline();
-
-    steppablePipeline.Begin(this);
+    SteppablePipeline.Begin(this);
   }
 
   private protected sealed override void Process()
   {
-    if (steppablePipeline is not null)
+    if (
+      Piped
+      && BoundParameters.ContainsKey(PipelineInputParameterName)
+    )
     {
+      TransformPipelineInput();
+
       if (
-        Piped
-        && BoundParameters.ContainsKey(PipelineInputParameterName)
+        BoundParameters.TryGetValue(
+          PipelineInputParameterName,
+          out var pipelineInput
+        )
+        && pipelineInput is not null
       )
       {
-        TransformPipelineInput();
-
-        if (
-          BoundParameters.TryGetValue(
-            PipelineInputParameterName,
-            out var pipelineInput
-          )
-          && pipelineInput is not null
-        )
-        {
-          _ = steppablePipeline.Process(pipelineInput);
-        }
-        else
-        {
-          _ = steppablePipeline.Process();
-        }
+        _ = SteppablePipeline.Process(pipelineInput);
       }
       else
       {
-        _ = steppablePipeline.Process();
+        _ = SteppablePipeline.Process();
       }
+    }
+    else
+    {
+      _ = SteppablePipeline.Process();
     }
   }
 
   private protected sealed override void Postprocess()
   { }
-
-  private protected sealed override void CleanResources()
-  {
-    if (steppablePipeline is not null)
-    {
-      _ = steppablePipeline.End();
-
-      steppablePipeline.Clean();
-      steppablePipeline.Dispose();
-
-      steppablePipeline = default;
-    }
-  }
 
   private void CoerceParameters()
   {

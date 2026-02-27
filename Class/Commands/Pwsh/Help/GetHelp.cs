@@ -9,8 +9,6 @@ namespace Module.Commands.Pwsh.Help;
 [OutputType(typeof(object))]
 public sealed class GetHelpOnline : CoreCommand
 {
-  private static readonly string AboutBaseUrl = "https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about";
-
   [Parameter(
     Position = default,
     ValueFromRemainingArguments = true
@@ -30,22 +28,7 @@ public sealed class GetHelpOnline : CoreCommand
   [Parameter]
   public string[] Parameter { get; set; } = [];
 
-  private static System.Uri? ResolveAboutArticle(
-    string topic,
-    System.Net.Http.HttpClient client
-  )
-  {
-    System.Uri testUri = new($"{AboutBaseUrl}/{topic}");
-
-    return Client.Network.Url.Test(
-      testUri,
-      client
-    )
-      ? testUri
-      : default;
-  }
-
-  private static List<System.Uri>? TryHelpLink(Collection<PSObject> helpContent)
+  private static List<System.Uri>? TryExtractHelpLink(Collection<PSObject> helpContent)
   {
     if (helpContent is null or [])
     {
@@ -54,15 +37,14 @@ public sealed class GetHelpOnline : CoreCommand
 
     dynamic pscustomobject = helpContent[0];
 
+    List<System.Uri> urls = [];
+
     if (
       pscustomobject
         ?.relatedLinks
-        ?.navigationLink is not null
-        and IEnumerable<object> links
+        ?.navigationLink is IEnumerable<object> links
     )
     {
-      List<System.Uri> urls = [];
-
       foreach (dynamic link in links)
       {
         if (
@@ -95,117 +77,31 @@ public sealed class GetHelpOnline : CoreCommand
           }
         }
       }
+    }
 
-      return urls is []
-        ? default
-        : urls;
-    }
-    else
-    {
-      return default;
-    }
+    return urls is [] ? default : urls;
   }
 
   private protected sealed override void Postprocess()
   {
-    if (topic is not "")
-    {
-      var helpContent = GetHelpContent(
-        topic,
-        []
-      );
+    const string GET_HELP = "Get-Help";
 
-      if (helpContent is not [_])
-      {
-        helpContent = default;
-      }
-
-      List<System.Uri> helpLinks = [];
-
-      if (helpContent is not null)
-      {
-        var helpContentLinks = TryHelpLink(helpContent);
-
-        if (helpContentLinks is not null)
-        {
-          foreach (var helpLink in helpContentLinks)
-          {
-            helpLinks.Add(helpLink);
-          }
-        }
-
-        if (Parameter is not [])
-        {
-          var parameterHelpContent = GetHelpContent(
-            topic,
-            Parameter
-          );
-
-          if (parameterHelpContent is not null)
-          {
-            helpContent = parameterHelpContent;
-          }
-        }
-
-        WriteObject(
-          helpContent,
-          true
-        );
-      }
-
-      if (helpLinks is not [])
-      {
-        foreach (var helpLink in helpLinks)
-        {
-          WriteLog(helpLink.ToString());
-        }
-      }
-
-      if (!Client.Environment.Known.Variable.InSsh)
-      {
-        if (helpLinks is not [])
-        {
-          foreach (var helpLink in helpLinks)
-          {
-            Client.Network.Url.Open(helpLink);
-          }
-        }
-        else if (helpContent is not null)
-        {
-          _ = GetHelpContent(
-            topic,
-            [],
-            true
-          );
-        }
-      }
-    }
-    else
+    if (topic is "")
     {
       WriteObject(
-        AddCommand("Get-Help")
+        AddCommand(GET_HELP)
           .AddParameter(
             "Name",
-            "Get-Help"
+            GET_HELP
           )
           .Invoke(),
         true
       );
+
+      return;
     }
-  }
 
-  private Collection<PSObject> GetHelpContent(
-    string topic,
-    string[] parameters,
-    bool online = default
-  )
-  {
-    using var ps = PowerShellHost.Create(true);
-
-    _ = AddCommand(
-      ps,
-      "Get-Help"
-    )
+    var helpContent = AddCommand(GET_HELP)
       .AddParameter(
         "Name",
         topic
@@ -217,35 +113,87 @@ public sealed class GetHelpOnline : CoreCommand
       .AddParameter(
         "ProgressAction",
         ActionPreference.SilentlyContinue
-      );
+      )
+      .Invoke();
 
-    if (parameters is not [])
+    if (helpContent is not [_])
     {
-      _ = ps.AddParameter(
-        "Parameter",
-        parameters
+      helpContent = default;
+    }
+
+    List<System.Uri> helpLinks = [];
+
+    if (helpContent is not null)
+    {
+      var helpContentLinks = TryExtractHelpLink(helpContent);
+
+      if (helpContentLinks is not null)
+      {
+        foreach (var link in helpContentLinks)
+        {
+          helpLinks.Add(link);
+        }
+      }
+
+      if (Parameter is not [])
+      {
+        var parameterHelpContent = AddParameter(
+          "Parameter",
+          Parameter
+        )
+          .Invoke();
+
+        if (parameterHelpContent is [_])
+        {
+          helpContent = parameterHelpContent;
+        }
+      }
+
+      WriteObject(
+        helpContent,
+        true
       );
     }
 
-    if (
-      online
-      && parameters is []
-    )
+    if (helpLinks is not [])
     {
-      try
+      foreach (var helpLink in helpLinks)
       {
-        _ = ps.AddParameter("Online");
-
-        return [];
-      }
-      catch
-      {
-        return [];
+        WriteLog(helpLink.ToString());
       }
     }
-    else
+
+    if (!Client.Environment.Known.Variable.InSsh)
     {
-      return ps.Invoke();
+      if (helpLinks is not [])
+      {
+        foreach (var helpLink in helpLinks)
+        {
+          Client.Network.Url.Open(helpLink);
+        }
+      }
+      else if (helpContent is not null)
+      {
+        Clear();
+
+        AddCommand(GET_HELP)
+          .AddParameter(
+            "Name",
+            topic
+          )
+          .AddParameter(
+            "ErrorAction",
+            ActionPreference.SilentlyContinue
+          )
+          .AddParameter(
+            "ProgressAction",
+            ActionPreference.SilentlyContinue
+          );
+
+        SteppablePipeline.Begin(this);
+
+        _ = steppablePipeline.Process();
+      }
     }
   }
 }
