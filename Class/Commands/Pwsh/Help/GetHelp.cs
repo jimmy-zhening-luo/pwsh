@@ -116,7 +116,7 @@ public sealed class GetHelpOnline : CoreCommand
       )
       .Invoke();
 
-    if (helpContent is not [_])
+    if (helpContent is not [not null])
     {
       helpContent = default;
     }
@@ -143,7 +143,7 @@ public sealed class GetHelpOnline : CoreCommand
         )
           .Invoke();
 
-        if (parameterHelpContent is [_])
+        if (parameterHelpContent is [not null])
         {
           helpContent = parameterHelpContent;
         }
