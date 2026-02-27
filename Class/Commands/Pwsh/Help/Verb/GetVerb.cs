@@ -138,7 +138,7 @@ public sealed class GetVerb : CoreCommand
         );
       }
 
-      var verbObjects = PS.Invoke<VerbInfo>();
+      var verbObjects = InvokePowerShell<VerbInfo>();
 
       if (verbObjects is not null)
       {

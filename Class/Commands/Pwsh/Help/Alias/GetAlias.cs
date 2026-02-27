@@ -105,7 +105,7 @@ public sealed class GetCommandAlias : CoreCommand
       );
     }
 
-    var aliasInfoObjects = PS.Invoke<AliasInfo>();
+    var aliasInfoObjects = InvokePowerShell<AliasInfo>();
 
     if (aliasInfoObjects is not null)
     {
