@@ -87,11 +87,11 @@ public sealed class GetVerb : CoreCommand
 
   private protected sealed override void Postprocess()
   {
-    const string COMMAND = @"Microsoft.PowerShell.Utility\Get-Verb";
+    const string GET_VERB = @"Microsoft.PowerShell.Utility\Get-Verb";
 
     if (Verb is [] or ["*"])
     {
-      _ = AddCommand(COMMAND)
+      _ = AddCommand(GET_VERB)
         .AddParameter(
           "Verb",
           "*"
@@ -99,7 +99,7 @@ public sealed class GetVerb : CoreCommand
 
       if (Group is not [])
       {
-        _ = PS.AddParameter(
+        _ = AddParameter(
           "Group",
           Group
         );
@@ -124,7 +124,7 @@ public sealed class GetVerb : CoreCommand
     {
       SortedDictionary<string, VerbInfo> verbDictionary = [];
 
-      _ = AddCommand(COMMAND)
+      _ = AddCommand(GET_VERB)
         .AddParameter(
           "Verb",
           Verb
@@ -132,7 +132,7 @@ public sealed class GetVerb : CoreCommand
 
       if (Group is not [])
       {
-        _ = PS.AddParameter(
+        _ = AddParameter(
           "Group",
           Group
         );

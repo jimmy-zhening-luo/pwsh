@@ -99,7 +99,7 @@ public sealed class GetCommandAlias : CoreCommand
 
     if (Exclude is not [])
     {
-      _ = PS.AddParameter(
+      _ = AddParameter(
         "Exclude",
         Exclude
       );
