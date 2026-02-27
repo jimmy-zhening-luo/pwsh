@@ -41,7 +41,12 @@ internal static class Url
     }
   }
 
-  internal static void Open(string target)
+  internal static void Open(
+    [System.Diagnostics.CodeAnalysis.StringSyntax(
+      System.Diagnostics.CodeAnalysis.StringSyntaxAttribute.Uri
+    )]
+    string target
+  )
   {
     if (!Environment.Known.Variable.InSsh)
     {
