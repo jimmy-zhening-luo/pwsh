@@ -137,6 +137,79 @@ public abstract class CoreCommand(
     )
   );
 
+  private protected PowerShell AddParameter(string parameterName) => AddParameter(
+    PS,
+    parameterName
+  );
+
+  private protected PowerShell AddParameter(
+    PowerShell ps,
+    string parameterName
+  ) => ps.AddParameter(
+    parameterName
+  );
+
+  private protected PowerShell AddParameter(
+    string parameterName,
+    object value
+  ) => AddParameter(
+    PS,
+    parameterName,
+    value
+  );
+
+  private protected PowerShell AddParameter(
+    PowerShell ps,
+    string parameterName,
+    object value
+  ) => ps.AddParameter(
+    parameterName,
+    value
+  );
+
+  private protected PowerShell AddParameters(IList parameters) => AddParameters(
+    PS,
+    parameters
+  );
+
+  private protected PowerShell AddParameters(IDictionary parameters) => AddParameters(
+    PS,
+    parameters
+  );
+
+  private protected PowerShell AddParameters(
+    PowerShell ps,
+    IList parameters
+  ) => ps.AddParameters(
+    parameters
+  );
+
+  private protected PowerShell AddParameters(
+    PowerShell ps,
+    IDictionary parameters
+  ) => ps.AddParameters(
+    parameters
+  );
+
+  private protected PowerShell AddScript(string script) => AddScript(
+    PS,
+    script
+  );
+
+  private protected PowerShell AddScript(
+    PowerShell ps,
+    string script
+  ) => ps.AddScript(
+    script,
+    true
+  );
+
+  private protected void Clear() => Clear(PS);
+
+  private protected void Clear(PowerShell ps) => ps
+    .Commands
+    .Clear();
+
   private protected string Reanchor(string path = "") => Client.File.PathString.FullPathLocationRelative(
     Location is
     {
