@@ -49,6 +49,9 @@ public sealed class TestCommand : CoreCommand
         Greeting
       )
     );
+    WriteObject(
+      Host.Name
+    );
   }
 
   private string Greet(string name) => string.Concat(
