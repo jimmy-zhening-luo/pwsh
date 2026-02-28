@@ -6,7 +6,7 @@ namespace Module.Commands.Code.Node.Verbs;
   HelpUri = "https://docs.npmjs.com/cli/commands"
 )]
 [Alias("n")]
-public sealed class NpmInvoke : NodeCommand
+public sealed class Node : NodeCommand
 {
   [Parameter(
     Position = default,

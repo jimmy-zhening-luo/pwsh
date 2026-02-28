@@ -6,7 +6,7 @@ namespace Module.Commands.Code.Git.Verbs;
   HelpUri = "https://git-scm.com/docs"
 )]
 [Alias("g")]
-public sealed class GitInvoke : NativeCommand
+public sealed class Git : NativeCommand
 {
   private static readonly HashSet<string> Verbs = [
     "switch",
