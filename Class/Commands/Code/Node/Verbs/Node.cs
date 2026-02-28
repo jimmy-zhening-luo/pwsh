@@ -37,7 +37,7 @@ public sealed class Node : NodeCommand
 
     if (WorkingDirectory is not "")
     {
-      if (NodeWorkingDirectory.Test(Pwd(), WorkingDirectory))
+      if (IsNodePackage(WorkingDirectory))
       {
         var packagePrefix = WorkingDirectory is ""
           ? ""

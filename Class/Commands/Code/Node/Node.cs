@@ -129,7 +129,7 @@ public abstract class NodeCommand(
 
     if (WorkingDirectory is not "")
     {
-      if (NodeWorkingDirectory.Test(Pwd(), WorkingDirectory))
+      if (IsNodePackage(WorkingDirectory))
       {
         var packagePrefix = WorkingDirectory is ""
           ? ""
@@ -197,4 +197,12 @@ public abstract class NodeCommand(
 
     return command;
   }
+
+  private protected bool IsNodePackage(string path) => System.IO.File.Exists(
+    System.IO.Path.Combine(
+      Pwd(path),
+      "package.json"
+    )
+  );
+
 }

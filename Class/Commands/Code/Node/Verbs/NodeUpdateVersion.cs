@@ -90,10 +90,7 @@ public sealed class NodeUpdateVersion() : NodeCommand("version")
 
     if (
       WorkingDirectory is not ""
-      && !NodeWorkingDirectory.Test(
-        Pwd(),
-        WorkingDirectory
-      )
+      && !IsNodePackage(WorkingDirectory)
     )
     {
       arguments.Add(WorkingDirectory);

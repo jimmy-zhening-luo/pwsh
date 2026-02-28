@@ -22,10 +22,7 @@ public sealed class NodeRunScript() : NodeCommand("run")
 
     if (
       WorkingDirectory is not ""
-      && !NodeWorkingDirectory.Test(
-        Pwd(),
-        WorkingDirectory
-      )
+      && !IsNodePackage(WorkingDirectory)
     )
     {
       arguments.Add(WorkingDirectory);
