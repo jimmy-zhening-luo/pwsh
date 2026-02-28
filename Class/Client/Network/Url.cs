@@ -20,6 +20,7 @@ internal static class Url
   {
     IsAbsoluteUri: true,
     Scheme: "file",
+    IsFile: true,
   };
 
   internal static bool IsHttpOrFile(
@@ -51,6 +52,11 @@ internal static class Url
 
   internal static bool Test(System.Uri url)
   {
+    if (!IsHttp(url))
+    {
+      return false;
+    }
+
     try
     {
       using var response = (
