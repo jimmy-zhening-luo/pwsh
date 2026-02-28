@@ -8,14 +8,14 @@ namespace Module.Commands.Code.Git;
 [Alias("g")]
 public sealed class GitInvoke : CoreCommand
 {
-  public enum NewableVerb
+  private enum NewableVerb
   {
     clone,
     config,
     init
   }
 
-  public static readonly HashSet<string> Verbs = [
+  private static readonly HashSet<string> Verbs = [
     "switch",
     "merge",
     "diff",
