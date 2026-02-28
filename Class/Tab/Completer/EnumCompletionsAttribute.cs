@@ -3,6 +3,7 @@ namespace Module.Tab.Completer;
 public class EnumCompletionsAttribute(
   System.Type EnumType,
   CompletionCase Casing = CompletionCase.Lower,
+  string[]? Include = default,
   string[]? Exclude = default
 ) : CompletionsAttribute<System.Type>(
   EnumType,
@@ -11,19 +12,20 @@ public class EnumCompletionsAttribute(
 {
   private protected sealed override IEnumerable<string> ResolveDomain(System.Type enumType)
   {
-    var domain = System.Enum.GetNames(enumType);
+    var domain = new HashSet<string>(
+      System.Enum.GetNames(enumType)
+    );
 
-    if (Exclude is null or [])
+    if (Include is [_, ..])
     {
-      return domain;
+      domain.UnionWith(Include);
     }
-    else
+
+    if (Exclude is [_, ..])
     {
-      var domainSet = new HashSet<string>(domain);
-
-      domainSet.ExceptWith(Exclude);
-
-      return domainSet;
+      domain.ExceptWith(Exclude);
     }
+
+    return domain;
   }
 }
