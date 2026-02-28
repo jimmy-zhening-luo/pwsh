@@ -98,12 +98,19 @@ internal static class Url
   internal static void Open() => Open(string.Empty);
   internal static void Open(System.Uri uri)
   {
-    if (
-      uri.ToString() is string url
-      && !string.IsNullOrWhiteSpace(url)
-    )
+    switch (uri)
     {
-      Open(url);
+      case { IsAbsoluteUri: false }:
+        break;
+
+      case { Scheme: "http" or "https" }:
+      case
+      {
+        Scheme: "file",
+        LocalPath: string localPath
+      } when System.IO.File.Exists(localPath):
+        Open(uri.ToString());
+        break;
     }
   }
   internal static void Open(
