@@ -76,9 +76,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
 
   private protected sealed override Dictionary<string, object?> CoercedParameters => new()
   {
-    ["Filter"] = filter is ""
-      ? null
-      : filter,
+    ["Filter"] = filter,
   };
 
   private protected sealed override void TransformPipelineInput()

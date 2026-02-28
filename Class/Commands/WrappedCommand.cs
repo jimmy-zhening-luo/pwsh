@@ -86,13 +86,19 @@ public abstract class WrappedCommand(
       ) in CoercedParameters
     )
     {
-      if (value is null)
+      switch (value)
       {
-        _ = BoundParameters.Remove(key);
-      }
-      else
-      {
-        BoundParameters[key] = value;
+        case null or false or "":
+          _ = BoundParameters.Remove(key);
+          break;
+
+        case true:
+          BoundParameters[key] = SwitchParameter.Present;
+          break;
+
+        default:
+          BoundParameters[key] = value;
+          break;
       }
     }
   }

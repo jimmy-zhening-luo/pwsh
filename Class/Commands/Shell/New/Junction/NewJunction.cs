@@ -31,6 +31,6 @@ public sealed class NewJunction() : WrappedCommandShouldProcess(
   private protected sealed override Dictionary<string, object?> CoercedParameters => new()
   {
     ["ItemType"] = "Junction",
-    ["Force"] = SwitchParameter.Present,
+    ["Force"] = true,
   };
 }
