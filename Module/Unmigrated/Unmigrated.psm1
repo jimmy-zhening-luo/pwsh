@@ -772,7 +772,7 @@ function Clear-NodeModuleCache {
   [Alias('ncc')]
   param()
   end {
-    Invoke-Npm -Command cache -Argument @(
+    Invoke-Npm -Verb cache -Argument @(
       'clean'
       '--force'
     )
@@ -818,7 +818,7 @@ function Compare-NodeModule {
       $NodeArgument.Add('--all')
     }
 
-    Invoke-Npm -Command outdated -WorkingDirectory $WorkingDirectory -NoThrow -Argument $NodeArgument
+    Invoke-Npm -Verb outdated -WorkingDirectory $WorkingDirectory -NoThrow -Argument $NodeArgument
   }
 }
 
@@ -898,7 +898,7 @@ function Step-NodePackageVersion {
       $NodeArgument.AddRange([string[]]$Argument)
     }
 
-    Invoke-Npm -Command version -WorkingDirectory $WorkingDirectory -Argument $NodeArgument
+    Invoke-Npm -Verb version -WorkingDirectory $WorkingDirectory -Argument $NodeArgument
   }
 }
 
@@ -938,7 +938,7 @@ function Invoke-NodePackageScript {
     $NodeArgument.AddRange([string[]]$args)
   }
 
-  Invoke-Npm -Command run -WorkingDirectory $WorkingDirectory -Argument $NodeArgument
+  Invoke-Npm -Verb run -WorkingDirectory $WorkingDirectory -Argument $NodeArgument
 }
 
 <#
@@ -984,6 +984,6 @@ function Test-NodePackage {
       $NodeArgument.Add('--ignore-scripts')
     }
 
-    Invoke-Npm -Command test -WorkingDirectory $WorkingDirectory -Argument $NodeArgument
+    Invoke-Npm -Verb test -WorkingDirectory $WorkingDirectory -Argument $NodeArgument
   }
 }
