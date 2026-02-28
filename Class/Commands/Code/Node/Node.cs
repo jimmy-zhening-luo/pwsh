@@ -4,7 +4,7 @@ public abstract class NodeCommand(
   string IntrinsicVerb = ""
 ) : NativeCommand
 {
-  private protected static readonly HashSet<string> Verbs = [
+  internal static readonly HashSet<string> Verbs = [
     "access",
     "adduser",
     "audit",
