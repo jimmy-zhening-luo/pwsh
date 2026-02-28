@@ -33,7 +33,7 @@ public sealed class WinGetAdd() : CoreCommand
       args.AddRange(ArgumentList);
     }
 
-    AddScript(string.Join(' ', ArgumentList));
+    AddScript(string.Join(' ', args));
 
     ProcessSteppablePipeline();
     EndSteppablePipeline();
