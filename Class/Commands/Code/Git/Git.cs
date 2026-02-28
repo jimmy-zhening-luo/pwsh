@@ -4,7 +4,7 @@ public abstract class GitCommand(
   string IntrinsicVerb = ""
 ) : NativeCommand
 {
-  internal enum NewableVerb
+  private enum NewableVerb
   {
     clone,
     config,

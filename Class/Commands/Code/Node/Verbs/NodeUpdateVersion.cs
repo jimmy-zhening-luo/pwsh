@@ -19,7 +19,7 @@ public sealed class NodeUpdateVersion() : NodeCommand("version")
     premajor,
   }
 
-  internal sealed class NodeVersionCompletionsAttribute() : EnumCompletionsAttribute(
+  private sealed class NodeVersionCompletionsAttribute() : EnumCompletionsAttribute(
     typeof(NodeVersion),
     default,
     ["from-git"],

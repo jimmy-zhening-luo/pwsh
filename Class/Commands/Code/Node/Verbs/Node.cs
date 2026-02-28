@@ -8,7 +8,7 @@ namespace Module.Commands.Code.Node.Verbs;
 [Alias("n")]
 public sealed class Node : NodeCommand
 {
-  internal sealed class NodeVerbCompletionsAttribute() : CompletionsAttribute([.. Verbs]);
+  private sealed class NodeVerbCompletionsAttribute() : CompletionsAttribute([.. Verbs]);
 
   [Parameter(
     Position = default,
