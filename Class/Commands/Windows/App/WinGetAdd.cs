@@ -9,7 +9,9 @@ namespace Module.Commands.Windows.App;
 [OutputType(typeof(void))]
 public sealed class WinGetAdd : WinGetCommand
 {
-  private protected sealed override List<string> ParseArguments() => ArgumentList is []
-    ? "upgrade"
-    : "install";
+  private protected sealed override List<string> ParseArguments() => [
+    ArgumentList is []
+      ? "upgrade"
+      : "install",
+  ];
 }

@@ -9,7 +9,9 @@ namespace Module.Commands.Windows.App;
 [OutputType(typeof(void))]
 public sealed class WinGetFind : WinGetCommand
 {
-  private protected sealed override List<string> ParseArguments() => ArgumentList is []
-    ? "list"
-    : "search";
+  private protected sealed override List<string> ParseArguments() => [
+    ArgumentList is []
+      ? "list"
+      : "search",
+  ];
 }
