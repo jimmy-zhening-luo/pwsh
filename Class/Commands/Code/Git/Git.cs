@@ -246,7 +246,16 @@ public sealed class InvokeGit : CoreCommand
       gitCommand.AddRange(gitArguments);
     }
 
-    AddScript(string.Join(' ', gitCommand));
+    List<string> escapedGitCommand = [];
+
+    foreach (var word in gitCommand)
+    {
+      escapedGitCommand.Add(
+        Client.Console.String.EscapeDoubleQuoted(word)
+      );
+    }
+
+    AddScript(string.Join(' ', escapedGitCommand));
 
     ProcessSteppablePipeline();
     EndSteppablePipeline();
