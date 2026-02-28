@@ -635,7 +635,7 @@ function Invoke-Npm {
       DontShow
     )]
     # Additional npm arguments
-    [string[]]$Argument,
+    [string[]]$ArgumentList,
 
     [Parameter()]
     # When npm command execution results in a non-zero exit code, write a warning and continue instead of the default behavior of throwing a terminating error.
@@ -676,8 +676,8 @@ function Invoke-Npm {
 
     $NodeCommandArgument = [System.Collections.Generic.List[string]]::new()
 
-    if ($Argument) {
-      $NodeCommandArgument.AddRange([string[]]$Argument)
+    if ($ArgumentList) {
+      $NodeCommandArgument.AddRange([string[]]$ArgumentList)
     }
 
     if ($WorkingDirectory) {
@@ -772,7 +772,7 @@ function Clear-NodeModuleCache {
   [Alias('ncc')]
   param()
   end {
-    Invoke-Npm -Verb cache -Argument @(
+    Invoke-Npm -Verb cache -ArgumentList @(
       'clean'
       '--force'
     )
@@ -799,7 +799,7 @@ function Compare-NodeModule {
     )]
     [Module.Commands.Code.WorkingDirectoryCompletions()]
     # Additional npm arguments
-    [string[]]$Argument,
+    [string[]]$ArgumentList,
 
     [Parameter()]
     [Alias('a')]
@@ -810,15 +810,15 @@ function Compare-NodeModule {
   end {
     $NodeArgument = [System.Collections.Generic.List[string]]::new()
 
-    if ($Argument) {
-      $NodeArgument.AddRange([string[]]$Argument)
+    if ($ArgumentList) {
+      $NodeArgument.AddRange([string[]]$ArgumentList)
     }
 
     if ($All -and !$NodeArgument.Contains('--all')) {
       $NodeArgument.Add('--all')
     }
 
-    Invoke-Npm -Verb outdated -WorkingDirectory $WorkingDirectory -NoThrow -Argument $NodeArgument
+    Invoke-Npm -Verb outdated -WorkingDirectory $WorkingDirectory -NoThrow -ArgumentList $NodeArgument
   }
 }
 
@@ -847,7 +847,7 @@ function Step-NodePackageVersion {
     )]
     [Module.Commands.Code.WorkingDirectoryCompletions()]
     # Additional npm arguments
-    [string[]]$Argument
+    [string[]]$ArgumentList
   )
 
   end {
@@ -894,11 +894,11 @@ function Step-NodePackageVersion {
       $WorkingDirectory = ''
     }
 
-    if ($Argument) {
-      $NodeArgument.AddRange([string[]]$Argument)
+    if ($ArgumentList) {
+      $NodeArgument.AddRange([string[]]$ArgumentList)
     }
 
-    Invoke-Npm -Verb version -WorkingDirectory $WorkingDirectory -Argument $NodeArgument
+    Invoke-Npm -Verb version -WorkingDirectory $WorkingDirectory -ArgumentList $NodeArgument
   }
 }
 
@@ -938,7 +938,7 @@ function Invoke-NodePackageScript {
     $NodeArgument.AddRange([string[]]$args)
   }
 
-  Invoke-Npm -Verb run -WorkingDirectory $WorkingDirectory -Argument $NodeArgument
+  Invoke-Npm -Verb run -WorkingDirectory $WorkingDirectory -ArgumentList $NodeArgument
 }
 
 <#
@@ -961,7 +961,7 @@ function Test-NodePackage {
     )]
     [Module.Commands.Code.WorkingDirectoryCompletions()]
     # Additional npm arguments
-    [string[]]$Argument,
+    [string[]]$ArgumentList,
 
     [Parameter()]
     [Alias('i')]
@@ -972,8 +972,8 @@ function Test-NodePackage {
   end {
     $NodeArgument = [System.Collections.Generic.List[string]]::new()
 
-    if ($Argument) {
-      $NodeArgument.AddRange([string[]]$Argument)
+    if ($ArgumentList) {
+      $NodeArgument.AddRange([string[]]$ArgumentList)
     }
 
     if (
@@ -984,6 +984,6 @@ function Test-NodePackage {
       $NodeArgument.Add('--ignore-scripts')
     }
 
-    Invoke-Npm -Verb test -WorkingDirectory $WorkingDirectory -Argument $NodeArgument
+    Invoke-Npm -Verb test -WorkingDirectory $WorkingDirectory -ArgumentList $NodeArgument
   }
 }
