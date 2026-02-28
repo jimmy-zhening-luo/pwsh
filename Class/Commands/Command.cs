@@ -215,9 +215,9 @@ public abstract class CoreCommand(
 
   private protected void EndSteppablePipeline()
   {
-    if (Alive && steppablePipeline is not null)
+    if (Alive)
     {
-      _ = steppablePipeline.End();
+      CleanPipeline();
     }
   }
 
@@ -337,4 +337,3 @@ public abstract class CoreCommand(
     }
   }
 }
-

@@ -69,6 +69,7 @@
     'Invoke-Git'
     'Measure-GitRepository'
     'Get-GitRepository'
+    'Get-ChildGitRepository'
   )
   VariablesToExport    = @()
   AliasesToExport      = @(
@@ -138,5 +139,6 @@
     'g'
     'gg'
     'gp'
+    'gpp'
   )
 }

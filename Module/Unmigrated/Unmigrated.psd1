@@ -9,7 +9,6 @@
   PowerShellVersion    = '7.5'
   FunctionsToExport    = @(
     'Import-GitRepository'
-    'Get-ChildGitRepository'
     'Compare-GitRepository'
     'Add-GitRepository'
     'Write-GitRepository'
@@ -27,7 +26,6 @@
   VariablesToExport    = @()
   AliasesToExport      = @(
     'gitcl'
-    'gpp'
     'gd'
     'ga'
     'gm'
