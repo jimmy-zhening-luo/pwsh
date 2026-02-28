@@ -114,7 +114,7 @@ public abstract class GitCommand(
     {
       if (WorkingDirectory is not "")
       {
-        arguments.Insert(0, WorkingDirectory);
+        arguments.Insert(default, WorkingDirectory);
 
         repository = GitWorkingDirectory.Resolve(
           Pwd(),

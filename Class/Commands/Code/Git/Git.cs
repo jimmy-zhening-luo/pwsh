@@ -211,7 +211,7 @@ public sealed class GitInvoke : CoreCommand
     {
       if (WorkingDirectory is not "")
       {
-        gitArguments.Insert(0, WorkingDirectory);
+        gitArguments.Insert(default, WorkingDirectory);
 
         repository = GitWorkingDirectory.Resolve(
           Pwd(),
