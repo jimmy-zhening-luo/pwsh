@@ -38,7 +38,7 @@ public sealed class WinGetAdd() : CoreCommand
     ProcessSteppablePipeline();
     EndSteppablePipeline();
 
-    if (HadNativeError)
+    if (HadNativeErrors)
     {
       Throw("winget error");
     }
