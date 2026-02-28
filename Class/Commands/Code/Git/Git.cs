@@ -1,4 +1,4 @@
-namespace Module.Commands.Windows.App;
+namespace Module.Commands.Code.Git;
 
 public abstract class GitCommand : CoreCommand
 {
