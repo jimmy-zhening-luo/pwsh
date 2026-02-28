@@ -166,8 +166,8 @@ public abstract class CoreCommand(
 
   private protected PowerShell AddScript(string script) => PS.AddScript(script);
 
-  private protected void Clear() => PS
-    .Commands
+  private protected void Clear() => powershell
+    ?.Commands
     .Clear();
 
   private protected Collection<PSObject> InvokePowerShell() => PS.Invoke();
