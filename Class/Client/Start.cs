@@ -10,7 +10,7 @@ internal static class Start
     fileName,
     string.IsNullOrWhiteSpace(argument)
       ? default
-      : [argument],
+      : [argument.Trim()],
     noNewWindow
   );
   internal static void CreateProcess(
@@ -34,7 +34,7 @@ internal static class Start
     fileName,
     string.IsNullOrWhiteSpace(argument)
       ? default
-      : [argument],
+      : [argument.Trim()],
     administrator,
     noNewWindow
   );
