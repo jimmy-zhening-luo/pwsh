@@ -447,8 +447,6 @@ function Restore-GitRepository {
 <#
 .LINK
 https://docs.npmjs.com/cli/commands
-.LINK
-https://docs.npmjs.com/cli/commands/npm
 #>
 function Invoke-Npm {
   [CmdletBinding()]
