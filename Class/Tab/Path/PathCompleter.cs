@@ -166,9 +166,9 @@ public sealed class PathCompleter : TabCompleter
         foreach (
           var directory in EnumerateDirectories(
             searchPath,
-            accumulator,
             searchFilter,
             searchOptions,
+            accumulator,
             !Flat
           )
         )
@@ -190,9 +190,9 @@ public sealed class PathCompleter : TabCompleter
           foreach (
             var directory in EnumerateDirectories(
               searchPath,
-              accumulator,
               searchFilter,
               searchOptions,
+              accumulator,
               !Flat
             )
           )
@@ -209,9 +209,9 @@ public sealed class PathCompleter : TabCompleter
         foreach (
           var file in EnumerateFiles(
             searchPath,
-            accumulator,
             searchFilter,
-            searchOptions
+            searchOptions,
+            accumulator
           )
         )
         {
@@ -232,9 +232,9 @@ public sealed class PathCompleter : TabCompleter
           foreach (
             var file in EnumerateFiles(
               searchPath,
-              accumulator,
               searchFilter,
-              searchOptions
+              searchOptions,
+              accumulator
             )
           )
           {
@@ -249,9 +249,9 @@ public sealed class PathCompleter : TabCompleter
         foreach (
           var directory in EnumerateDirectories(
             searchPath,
-            accumulator,
             searchFilter,
             searchOptions,
+            accumulator,
             true
           )
         )
@@ -273,9 +273,9 @@ public sealed class PathCompleter : TabCompleter
           foreach (
             var directory in EnumerateDirectories(
               searchPath,
-              accumulator,
               searchFilter,
               searchOptions,
+              accumulator,
               true
             )
           )
@@ -292,9 +292,9 @@ public sealed class PathCompleter : TabCompleter
         foreach (
           var directory in EnumerateDirectories(
             searchPath,
-            accumulator,
             searchFilter,
             searchOptions,
+            accumulator,
             !Flat
           )
         )
@@ -305,9 +305,9 @@ public sealed class PathCompleter : TabCompleter
         foreach (
           var file in EnumerateFiles(
             searchPath,
-            accumulator,
             searchFilter,
-            searchOptions
+            searchOptions,
+            accumulator
           )
         )
         {
@@ -328,9 +328,9 @@ public sealed class PathCompleter : TabCompleter
           foreach (
             var directory in EnumerateDirectories(
               searchPath,
-              accumulator,
               searchFilter,
               searchOptions,
+              accumulator,
               !Flat
             )
           )
@@ -341,9 +341,9 @@ public sealed class PathCompleter : TabCompleter
           foreach (
             var file in EnumerateFiles(
               searchPath,
-              accumulator,
               searchFilter,
-              searchOptions
+              searchOptions,
+              accumulator
             )
           )
           {
@@ -380,9 +380,9 @@ public sealed class PathCompleter : TabCompleter
 
   private IEnumerable<string> EnumerateDirectories(
     string searchPath,
-    string accumulatedSubpath,
     string searchFilter,
     System.IO.EnumerationOptions searchOptions,
+    string accumulatedSubpath,
     bool trailingSeparator = default
   ) => EnumerateCompletions(
      System.IO.Directory.EnumerateDirectories(
@@ -396,9 +396,9 @@ public sealed class PathCompleter : TabCompleter
 
   private IEnumerable<string> EnumerateFiles(
     string searchPath,
-    string accumulatedSubpath,
     string searchFilter,
-    System.IO.EnumerationOptions searchOptions
+    System.IO.EnumerationOptions searchOptions,
+    string accumulatedSubpath
   ) => EnumerateCompletions(
     System.IO.Directory.EnumerateFiles(
       searchPath,
