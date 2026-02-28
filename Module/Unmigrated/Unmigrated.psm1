@@ -50,7 +50,7 @@ function Invoke-Git {
 
     [Parameter(DontShow)]
     # Pass -v flag as git argument
-    [switch]$v
+    [switch]$V
   )
 
   end {
