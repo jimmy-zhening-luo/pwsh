@@ -39,13 +39,23 @@ public sealed class OpenUrl() : CoreCommand(true)
         else if (
           Client.Network.Url.ToAbsoluteFileUri(
             Pwd(value)
-          ) is { } resolvedFileUri
+          ) is { } relativeFileUri
           && System.IO.File.Exists(
-            resolvedFileUri.LocalPath
+            relativeFileUri.LocalPath
           )
         )
         {
-          pathUri = resolvedFileUri;
+          pathUri = relativeFileUri;
+        }
+        else if (
+          System.Uri.TryCreate(
+            value,
+            System.UriKind.Relative,
+            out var relativeHttpUri
+          )
+        )
+        {
+          pathUri = relativeHttpUri;
         }
       }
     }
@@ -95,13 +105,28 @@ public sealed class OpenUrl() : CoreCommand(true)
   {
     if (ParameterSetName is "Path")
     {
-      if (pathUri is null)
+      switch (pathUri)
       {
-        Client.Network.Url.Open();
-      }
-      else
-      {
-        Client.Network.Url.Open(pathUri);
+        case null:
+          Client.Network.Url.Open();
+          break;
+
+        case { IsAbsoluteUri: true }:
+          Client.Network.Url.Open(pathUri);
+          break;
+
+        case
+        {
+          IsAbsoluteUri: false,
+          OriginalString: var s
+        }
+          when Client.Network.Url.ToAbsoluteHttpUri(
+            $"http://{s}"
+          ) is { } uri
+          && Client.Network.Dns.Resolve(uri)
+          && Client.Network.Url.Test(uri):
+          Client.Network.Url.Open(uri);
+          break;
       }
     }
   }
