@@ -15,7 +15,8 @@ public sealed class GitAdd() : GitCommand("add")
     HelpMessage = "File pattern of files to add, defaults to '.' (all)"
   )]
   [PathSpecCompletions]
-  public string Name {
+  public string Name
+  {
     get => name is "" ? "." : name;
     set => name = value.Trim();
   }

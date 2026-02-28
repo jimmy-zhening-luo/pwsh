@@ -16,7 +16,8 @@ public sealed class GitClone() : GitCommand("clone")
     HelpMessage = "Remote repository URL or 'org/repo'"
   )]
   [ValidateNotNullOrWhiteSpace]
-  public string Repository {
+  public string Repository
+  {
     get => remote;
     set
     {
