@@ -93,7 +93,7 @@ public abstract class NpmCommand(string Verb) : CoreCommand
   }
   private bool p;
 
-  private protected abstract List<string> ParseNpmArguments();
+  private protected abstract List<string> ParseArguments();
 
   private protected sealed override void Postprocess()
   {
@@ -105,7 +105,7 @@ public abstract class NpmCommand(string Verb) : CoreCommand
 
     List<string> arguments = [];
 
-    arguments.AddRange(ParseNpmArguments());
+    arguments.AddRange(ParseArguments());
 
     if (WorkingDirectory is not "")
     {
