@@ -53,7 +53,7 @@ public sealed class GitPullChild : CoreCommand
       )
     );
 
-    List<string> gitCommandPreamble = [
+    List<string> baseCommand = [
       "&",
       "\"" + Client.Environment.Known.Application.Git + "\"",
       "-c",
@@ -63,13 +63,13 @@ public sealed class GitPullChild : CoreCommand
 
     foreach (var repository in repositories)
     {
-      List<string> gitCommand = [
-        .. gitCommandPreamble,
+      List<string> command = [
+        .. baseCommand,
         Client.Console.String.EscapeDoubleQuoted(repository),
         "pull"
       ];
 
-      AddScript(string.Join(" ", gitCommand));
+      AddScript(string.Join(' ', command));
 
       ProcessSteppablePipeline();
       EndSteppablePipeline();

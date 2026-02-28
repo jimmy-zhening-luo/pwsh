@@ -11,7 +11,7 @@ public abstract class NpmCommand(string Verb) : NativeCommand
 
   private protected abstract List<string> ParseArguments();
 
-  private protected sealed override CommandArguments BuildNativeCommand()
+  private protected sealed override List<string> BuildNativeCommand()
   {
     List<string> command = [
       "&",
@@ -66,6 +66,8 @@ public abstract class NpmCommand(string Verb) : NativeCommand
       p = false;
     }
 
-    return new(command, arguments);
+    command.AddRange(arguments);
+
+    return command;
   }
 }

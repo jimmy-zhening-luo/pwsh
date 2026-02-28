@@ -20,9 +20,6 @@ public sealed class NodeClearCache() : NpmCommand("cache")
     p = false;
     V = false;
 
-    return [
-      "clean",
-      "--force"
-    ];
+    return ["clean", "--force"];
   }
 }

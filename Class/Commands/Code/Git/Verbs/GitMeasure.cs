@@ -8,8 +8,5 @@ namespace Module.Commands.Code.Git.Verbs;
 [Alias("gg")]
 public sealed class GitMeasure() : GitCommand("status")
 {
-  private protected sealed override List<string> ParseArguments()
-  {
-    return [];
-  }
+  private protected sealed override List<string> ParseArguments() => [];
 }

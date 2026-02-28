@@ -134,7 +134,7 @@ public sealed class NpmInvoke : NativeCommand
 
   new public SwitchParameter V { get; set; }
 
-  private protected sealed override CommandArguments BuildNativeCommand()
+  private protected sealed override List<string> BuildNativeCommand()
   {
     List<string> command = [
       "&",
@@ -227,6 +227,8 @@ public sealed class NpmInvoke : NativeCommand
       }
     }
 
-    return new(command, arguments);
+    command.AddRange(arguments);
+
+    return command;
   }
 }

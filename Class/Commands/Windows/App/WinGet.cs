@@ -4,12 +4,9 @@ public abstract class WinGetCommand : NativeCommand
 {
   private protected abstract List<string> ParseArguments();
 
-  private protected sealed override CommandArguments BuildNativeCommand() => new(
-    [
-      "&",
-      Client.Environment.Known.Application.WinGet,
-      .. ParseWinGetCommand(),
-    ],
-    []
-  );
+  private protected sealed override List<string> BuildNativeCommand() => [
+    "&",
+    Client.Environment.Known.Application.WinGet,
+    .. ParseArguments(),
+  ];
 }

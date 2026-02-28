@@ -14,11 +14,21 @@ public abstract class GitCommand(
 
   private protected abstract List<string> ParseArguments();
 
-  private protected sealed override CommandArguments BuildNativeCommand()
+  private protected sealed override List<string> BuildNativeCommand()
   {
-    List<string> arguments = [];
+    List<string> command = [
+      "&",
+      Client.Environment.Known.Application.Git,
+      "-c",
+      "color.ui=always",
+      "-C",
+      repository,
+      Verb
+    ];
 
-    arguments.AddRange(ParseArguments());
+    List<string> arguments = [
+      .. ParseArguments(),
+    ];
 
     var repository = GitWorkingDirectory.Resolve(
       Pwd(),
@@ -30,7 +40,7 @@ public abstract class GitCommand(
     {
       if (WorkingDirectory is not "")
       {
-        arguments.Insert(default, WorkingDirectory);
+        command.Add(WorkingDirectory);
 
         repository = GitWorkingDirectory.Resolve(
           Pwd(),
@@ -47,15 +57,7 @@ public abstract class GitCommand(
       }
     }
 
-    List<string> command = [
-      "&",
-      Client.Environment.Known.Application.Git,
-      "-c",
-      "color.ui=always",
-      "-C",
-      repository,
-      Verb
-    ];
+    command.AddRange(arguments);
 
     if (e)
     {
@@ -64,10 +66,10 @@ public abstract class GitCommand(
     }
     if (p)
     {
-      arguments.Add("-P");
+      command.Add("-P");
       p = false;
     }
 
-    return new(command, arguments);
+    return command;
   }
 }
