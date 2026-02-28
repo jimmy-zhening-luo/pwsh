@@ -241,7 +241,7 @@ public abstract class CoreCommand(
     .PSVariable
     .GetValue(name) is { } value
     ? (T)value
-    : null;
+    : default(T);
 
   private protected string Pwd(string path = "") => Client.File.PathString.FullPathLocationRelative(
     SessionState.Path.CurrentLocation.Path,
