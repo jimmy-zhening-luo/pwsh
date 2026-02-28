@@ -51,7 +51,7 @@ public abstract class VirtualStartWorkspace() : CoreCommand(true)
 
         break;
 
-      case _ when Name.StartsWith("--"):
+      default when Name.StartsWith("--"):
         argumentList.Add(Name);
 
         break;
