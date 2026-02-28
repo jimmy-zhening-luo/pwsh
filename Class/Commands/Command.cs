@@ -13,7 +13,7 @@ public abstract class CoreCommand(
     {
       Root: "",
       Subpath: "",
-    }
+    };
   }
 
   private uint steps;
