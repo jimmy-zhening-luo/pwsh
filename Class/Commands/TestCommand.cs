@@ -54,6 +54,8 @@ public sealed class TestCommand : CoreCommand
       "& npm -v"
     );
 
+    WriteObject(HadErrors);
+
     BeginSteppablePipeline();
     ProcessSteppablePipeline();
   }
