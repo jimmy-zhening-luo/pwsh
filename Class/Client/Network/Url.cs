@@ -4,11 +4,27 @@ internal static class Url
 {
   static System.Net.Http.HttpClient? client;
 
+  internal static bool IsHttp(
+    [NotNullWhen(true)]
+    System.Uri? uri
+  ) => uri is
+  {
+    IsAbsoluteUri: true,
+    Scheme: "http" or "https",
+  };
+
+  internal static bool IsFile(
+    [NotNullWhen(true)]
+    System.Uri? uri
+  ) => uri is
+  {
+    IsAbsoluteUri: true,
+    Scheme: "file",
+  };
+
   internal static System.Uri? ToAbsoluteUri(object? uri) => ToAbsoluteUri(uri?.ToString());
   internal static System.Uri? ToAbsoluteUri(
-    [System.Diagnostics.CodeAnalysis.StringSyntax(
-      System.Diagnostics.CodeAnalysis.StringSyntaxAttribute.Uri
-    )]
+    [StringSyntax(StringSyntaxAttribute.Uri)]
     string? uri
   ) => !string.IsNullOrWhiteSpace(uri)
     && System.Uri.TryCreate(
@@ -84,9 +100,7 @@ internal static class Url
     }
   }
   internal static void Open(
-    [System.Diagnostics.CodeAnalysis.StringSyntax(
-      System.Diagnostics.CodeAnalysis.StringSyntaxAttribute.Uri
-    )]
+    [StringSyntax(StringSyntaxAttribute.Uri)]
     string target
   )
   {
