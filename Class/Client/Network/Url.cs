@@ -2,8 +2,8 @@ namespace Module.Client.Network;
 
 internal static class Url
 {
-  internal static System.Uri? ToAbsoluteUrl(object? uri) => ToAbsoluteUrl(uri?.ToString());
-  internal static System.Uri? ToAbsoluteUrl(
+  internal static System.Uri? ToAbsoluteUri(object? uri) => ToAbsoluteUri(uri?.ToString());
+  internal static System.Uri? ToAbsoluteUri(
     [System.Diagnostics.CodeAnalysis.StringSyntax(
       System.Diagnostics.CodeAnalysis.StringSyntaxAttribute.Uri
     )]
@@ -14,19 +14,19 @@ internal static class Url
         System.UriKind.RelativeOrAbsolute,
         out var url
       )
-    ? ToAbsoluteUrl(url)
+    ? ToAbsoluteUri(url)
     : null;
-  internal static System.Uri? ToAbsoluteUrl(System.Uri? uri) => uri switch
+  internal static System.Uri? ToAbsoluteUri(System.Uri? uri) => uri switch
   {
     null => null,
     {
       IsAbsoluteUri: true,
-      Scheme: string scheme,
-      Host: string host,
-    } when string.IsNullOrWhiteSpace(host)
-      || scheme is not ("http" or "https") => null,
-    { IsAbsoluteUri: true } => uri,
-    { OriginalString: string s } when !string.IsNullOrWhiteSpace(s)
+      Scheme: "http" or "https" or "file",
+    } => uri,
+    {
+      IsAbsoluteUri: false,
+      OriginalString: string s
+    } when !string.IsNullOrWhiteSpace(s)
       && System.Uri.TryCreate(
           "http://" + s.Trim(),
           System.UriKind.Absolute,
