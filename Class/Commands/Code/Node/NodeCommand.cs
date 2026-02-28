@@ -1,7 +1,11 @@
 namespace Module.Commands.Code.Node;
 
-public abstract class NpmCommand(string Verb) : NativeCommand
+public abstract class NpmCommand(
+  string IntrinsicVerb = ""
+) : NativeCommand
 {
+  public string IntrinsicVerb { get; set; } = IntrinsicVerb;
+
   [Parameter(
     Position = 50,
     HelpMessage = "Node package path"
@@ -22,6 +26,11 @@ public abstract class NpmCommand(string Verb) : NativeCommand
     List<string> arguments = [
       .. ParseArguments(),
     ];
+
+    if (IntrinsicVerb is "")
+    {
+      Throw("No npm command given.");
+    }
 
     if (WorkingDirectory is not "")
     {
@@ -44,11 +53,12 @@ public abstract class NpmCommand(string Verb) : NativeCommand
       {
         arguments.Insert(default, WorkingDirectory);
 
-        WorkingDirectory = string.Empty;
       }
     }
 
-    command.Add(Verb.ToLower());
+    WorkingDirectory = string.Empty;
+
+    command.Add(IntrinsicVerb.ToLower());
 
     if (d)
     {
