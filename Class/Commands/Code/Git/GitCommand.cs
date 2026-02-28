@@ -13,14 +13,6 @@ public abstract class GitCommand(
   public string WorkingDirectory { get; set; } = string.Empty;
 
   [Parameter(
-    Position = 100,
-    ValueFromRemainingArguments = true,
-    DontShow = true,
-    HelpMessage = "Additional git arguments"
-  )]
-  public string[] ArgumentList { get; set; } = [];
-
-  [Parameter(
     DontShow = true,
     HelpMessage = "Pass -v flag as argument"
   )]
@@ -33,7 +25,7 @@ public abstract class GitCommand(
 
   private protected abstract List<string> ParseArguments();
 
-  private protected sealed override void BuildNativeCommand()
+  private protected sealed override List<string> BuildNativeCommand()
   {
     List<string> arguments = [];
 
@@ -66,7 +58,7 @@ public abstract class GitCommand(
       }
     }
 
-    List<string> gitCommand = [
+    List<string> command = [
       "&",
       Client.Environment.Known.Application.Git,
       "-c",
@@ -101,40 +93,11 @@ public abstract class GitCommand(
       arguments.Add("-v");
     }
 
-    if (ArgumentList is not [])
-    {
-      arguments.AddRange(ArgumentList);
-    }
-
     if (arguments is not [])
     {
-      gitCommand.AddRange(arguments);
+      command.AddRange(arguments);
     }
 
-    List<string> escapedGitCommand = [];
-
-    foreach (var word in gitCommand)
-    {
-      escapedGitCommand.Add(
-        Client.Console.String.EscapeDoubleQuoted(word)
-      );
-    }
-
-    AddScript(string.Join(' ', escapedGitCommand));
-
-    ProcessSteppablePipeline();
-    EndSteppablePipeline();
-
-    if (HadNativeErrors)
-    {
-      if (noThrow)
-      {
-        WriteWarning("git error");
-      }
-      else
-      {
-        Throw("git error");
-      }
-    }
+    return command;
   }
 }

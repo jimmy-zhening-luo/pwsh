@@ -116,14 +116,6 @@ public sealed class NpmInvoke : NativeCommand
   public string Verb { get; set; } = string.Empty;
 
   [Parameter(
-    Position = 1,
-    ValueFromRemainingArguments = true,
-    DontShow = true,
-    HelpMessage = "Additional npm arguments"
-  )]
-  public string[] ArgumentList { get; set; } = [];
-
-  [Parameter(
     HelpMessage = "Node package path"
   )]
   [WorkingDirectoryCompletions]
@@ -140,9 +132,9 @@ public sealed class NpmInvoke : NativeCommand
   }
   private bool version;
 
-  private protected sealed override void BuildNativeCommand()
+  private protected sealed override List<string> BuildNativeCommand()
   {
-    List<string> npmCommand = [
+    List<string> command = [
       "&",
       "npm.ps1",
       "--color=always",
@@ -154,6 +146,8 @@ public sealed class NpmInvoke : NativeCommand
     {
       arguments.AddRange(ArgumentList);
     }
+
+    ArgumentList = [];
 
     if (WorkingDirectory is not "")
     {
@@ -169,7 +163,7 @@ public sealed class NpmInvoke : NativeCommand
 
         if (packagePrefix is not "")
         {
-          npmCommand.Add(packagePrefix);
+          command.Add(packagePrefix);
         }
       }
       else
@@ -207,7 +201,7 @@ public sealed class NpmInvoke : NativeCommand
 
     if (Verb is not "")
     {
-      npmCommand.Add(Verb.ToLower());
+      command.Add(Verb.ToLower());
 
       if (d)
       {
@@ -238,39 +232,15 @@ public sealed class NpmInvoke : NativeCommand
     {
       if (version)
       {
-        npmCommand.Add("-v");
+        command.Add("-v");
       }
     }
 
     if (arguments is not [])
     {
-      npmCommand.AddRange(arguments);
+      command.AddRange(arguments);
     }
 
-    List<string> escapedNodeCommand = [];
-
-    foreach (var word in npmCommand)
-    {
-      escapedNodeCommand.Add(
-        Client.Console.String.EscapeDoubleQuoted(word)
-      );
-    }
-
-    AddScript(string.Join(' ', escapedNodeCommand));
-
-    ProcessSteppablePipeline();
-    EndSteppablePipeline();
-
-    if (HadNativeErrors)
-    {
-      if (noThrow)
-      {
-        WriteWarning("npm error");
-      }
-      else
-      {
-        Throw("npm error");
-      }
-    }
+    return command;
   }
 }

@@ -56,14 +56,6 @@ public sealed class GitInvoke : NativeCommand
   public string WorkingDirectory { get; set; } = string.Empty;
 
   [Parameter(
-    Position = 2,
-    ValueFromRemainingArguments = true,
-    DontShow = true,
-    HelpMessage = "Additional git arguments"
-  )]
-  public string[] ArgumentList { get; set; } = [];
-
-  [Parameter(
     HelpMessage = "Show git version if no command is specified. Otherwise, pass the -v flag as argument."
   )]
   [Alias("v")]
@@ -74,7 +66,7 @@ public sealed class GitInvoke : NativeCommand
   }
   private bool version;
 
-  private protected sealed override void BuildNativeCommand()
+  private protected sealed override List<string> BuildNativeCommand()
   {
     List<string> arguments = [];
     bool newable = default;
@@ -163,7 +155,7 @@ public sealed class GitInvoke : NativeCommand
       }
     }
 
-    List<string> gitCommand = [
+    List<string> command = [
       "&",
       Client.Environment.Known.Application.Git,
       "-c",
@@ -174,7 +166,7 @@ public sealed class GitInvoke : NativeCommand
 
     if (Verb is not "")
     {
-      gitCommand.Add(Verb);
+      command.Add(Verb);
     }
 
     if (d)
@@ -202,40 +194,11 @@ public sealed class GitInvoke : NativeCommand
       arguments.Add("-v");
     }
 
-    if (ArgumentList is not [])
-    {
-      arguments.AddRange(ArgumentList);
-    }
-
     if (arguments is not [])
     {
-      gitCommand.AddRange(arguments);
+      command.AddRange(arguments);
     }
 
-    List<string> escapedGitCommand = [];
-
-    foreach (var word in gitCommand)
-    {
-      escapedGitCommand.Add(
-        Client.Console.String.EscapeDoubleQuoted(word)
-      );
-    }
-
-    AddScript(string.Join(' ', escapedGitCommand));
-
-    ProcessSteppablePipeline();
-    EndSteppablePipeline();
-
-    if (HadNativeErrors)
-    {
-      if (noThrow)
-      {
-        WriteWarning("git error");
-      }
-      else
-      {
-        Throw("git error");
-      }
-    }
+    return command;
   }
 }

@@ -5,6 +5,14 @@ public abstract class NativeCommand(
 ) : CoreCommand(SkipSsh)
 {
   [Parameter(
+    Position = 100,
+    ValueFromRemainingArguments = true,
+    DontShow = true,
+    HelpMessage = "Additional arguments"
+  )]
+  public string[] ArgumentList { get; set; } = [];
+
+  [Parameter(
     HelpMessage = "When execution results in a non-zero exit code, warn and continue instead of the default behavior of throwing a terminating error"
   )]
   public SwitchParameter NoThrow
@@ -69,12 +77,43 @@ public abstract class NativeCommand(
   }
   private protected bool p;
 
-  private protected List<string> NativeArguments = [];
+  private protected abstract List<string> BuildNativeCommand();
 
   private protected sealed override void Postprocess()
   {
-    BuildNativeCommand();
-  }
+    List<string> command = [];
 
-  private protected abstract void BuildNativeCommand();
+    command.AddRange(BuildNativeCommand());
+
+    if (ArgumentList is not [])
+    {
+      command.AddRange(ArgumentList);
+    }
+
+    List<string> escapedCommand = [];
+
+    foreach (var word in command)
+    {
+      escapedCommand.Add(
+        Client.Console.String.EscapeDoubleQuoted(word)
+      );
+    }
+
+    AddScript(string.Join(' ', escapedCommand));
+
+    ProcessSteppablePipeline();
+    EndSteppablePipeline();
+
+    if (HadNativeErrors)
+    {
+      if (noThrow)
+      {
+        WriteWarning("Execution error");
+      }
+      else
+      {
+        Throw("Execution error");
+      }
+    }
+  }
 }

@@ -10,15 +10,6 @@ public abstract class NpmCommand(string Verb) : NativeCommand
   public string WorkingDirectory { get; set; } = string.Empty;
 
   [Parameter(
-    Position = 100,
-    ValueFromRemainingArguments = true,
-    DontShow = true,
-    HelpMessage = "Additional npm arguments"
-  )]
-  [WorkingDirectoryCompletions]
-  public string[] ArgumentList { get; set; } = [];
-
-  [Parameter(
     HelpMessage = "Pass -v flag as argument"
   )]
   public SwitchParameter V
@@ -30,9 +21,9 @@ public abstract class NpmCommand(string Verb) : NativeCommand
 
   private protected abstract List<string> ParseArguments();
 
-  private protected sealed override void BuildNativeCommand()
+  private protected sealed override List<string> BuildNativeCommand()
   {
-    List<string> nodeCommand = [
+    List<string> command = [
       "&",
       "npm.ps1",
       "--color=always",
@@ -56,7 +47,7 @@ public abstract class NpmCommand(string Verb) : NativeCommand
 
         if (packagePrefix is not "")
         {
-          nodeCommand.Add(packagePrefix);
+          command.Add(packagePrefix);
         }
       }
       else
@@ -67,7 +58,7 @@ public abstract class NpmCommand(string Verb) : NativeCommand
       }
     }
 
-    nodeCommand.Add(Verb.ToLower());
+    command.Add(Verb.ToLower());
 
     if (d)
     {
@@ -94,40 +85,11 @@ public abstract class NpmCommand(string Verb) : NativeCommand
       arguments.Add("-v");
     }
 
-    if (ArgumentList is not [])
-    {
-      arguments.AddRange(ArgumentList);
-    }
-
     if (arguments is not [])
     {
-      nodeCommand.AddRange(arguments);
+      command.AddRange(arguments);
     }
 
-    List<string> escapedNodeCommand = [];
-
-    foreach (var word in nodeCommand)
-    {
-      escapedNodeCommand.Add(
-        Client.Console.String.EscapeDoubleQuoted(word)
-      );
-    }
-
-    AddScript(string.Join(' ', escapedNodeCommand));
-
-    ProcessSteppablePipeline();
-    EndSteppablePipeline();
-
-    if (HadNativeErrors)
-    {
-      if (noThrow)
-      {
-        WriteWarning("npm error");
-      }
-      else
-      {
-        Throw("npm error");
-      }
-    }
+    return command;
   }
 }
