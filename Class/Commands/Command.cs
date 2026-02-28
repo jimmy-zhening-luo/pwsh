@@ -6,7 +6,8 @@ public abstract class CoreCommand(
 {
   private protected record Locator(
     string Root = "",
-    string Subpath = ""
+    string Subpath = "",
+    bool IsEmpty => Root is "" and Subpath is "";
   );
 
   private uint steps;
@@ -22,11 +23,7 @@ public abstract class CoreCommand(
 
   private protected virtual Locator Location => new();
 
-  private protected bool UsingDefaultLocation => Location is
-  {
-    Root: "",
-    Subpath: ""
-  };
+  private protected bool UsingDefaultLocation => Location.IsEmpty;
 
   private protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
 
