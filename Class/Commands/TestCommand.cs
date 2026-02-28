@@ -51,7 +51,7 @@ public sealed class TestCommand : CoreCommand
     );
 
     AddScript(
-      "& npm foo"
+      "& git status"
     );
 
     ProcessSteppablePipeline();
