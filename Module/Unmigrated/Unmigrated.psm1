@@ -28,9 +28,14 @@ function Invoke-Git {
     # If git returns a non-zero exit code, warn and continue instead of the default behavior of throwing a terminating error.
     [switch]$NoThrow,
 
+    [Parameter()]
+    [Alias('v')]
+    # Show git version if no command is specified. Otherwise, pass the -v flag as git argument.
+    [switch]$Version
+
     [Parameter(DontShow)]
     # Pass -d flag as git argument
-    [switch]$d,
+    [switch]$D,
 
     [Parameter(DontShow)]
     # Pass -E flag as git argument
@@ -46,11 +51,7 @@ function Invoke-Git {
 
     [Parameter(DontShow)]
     # Pass -P flag as git argument
-    [switch]$P,
-
-    [Parameter(DontShow)]
-    # Pass -v flag as git argument
-    [switch]$V
+    [switch]$P
   )
 
   end {
@@ -106,7 +107,12 @@ function Invoke-Git {
       }
     }
     else {
-      $Verb = 'status'
+      if ($Version -and -not $Argument.Count) {
+        $Newable = $true
+      }
+      else {
+        $Verb = 'status'
+      }
     }
 
     $Repository = [Module.Commands.Code.Git.GitWorkingDirectory]::Resolve($PWD.Path, $WorkingDirectory, $Newable)
@@ -123,20 +129,20 @@ function Invoke-Git {
       }
     }
 
-    [string[]]$GitCommand = @(
+    $GitCommand = [System.Collections.Generic.List[string]]::new([string[]]@(
       '-c'
       'color.ui=always'
       '-C'
       $Repository
-      $Verb
-    )
+    ))
+    if ($Verb) { $GitCommand.Add($Verb) }
 
     if ($D) { $GitArgument.Add('-d') }
     if ($E) { $GitArgument.Add('-E') }
     if ($I) { $GitArgument.Add('-i') }
     if ($O) { $GitArgument.Add('-o') }
     if ($P) { $GitArgument.Add('-P') }
-    if ($V) { $GitArgument.Add('-v') }
+    if ($Version) { $GitArgument.Add('-v') }
 
     if ($Argument) {
       $GitArgument.AddRange([string[]]$Argument)
@@ -616,7 +622,7 @@ function Invoke-Npm {
     [Parameter(Position = 0)]
     [Module.Commands.Code.Node.NodeVerbCompletionsAttribute()]
     # npm command verb
-    [string]$Command,
+    [string]$Verb,
 
     [Parameter()]
     [Module.Commands.Code.WorkingDirectoryCompletions()]
@@ -636,6 +642,7 @@ function Invoke-Npm {
     [switch]$NoThrow,
 
     [Parameter()]
+    [Alias('v')]
     # Show npm version if no command is specified. Otherwise, pass the -v flag as npm argument.
     [switch]$Version,
 
@@ -697,12 +704,12 @@ function Invoke-Npm {
     }
 
     if (
-      $Command -and $Command.StartsWith(
+      $Verb -and $Verb.StartsWith(
         [char]'-'
       ) -or ![Module.Commands.Code.Node.NodeVerb]::Verbs.Contains(
-        $Command.ToLower()
+        $Verb.ToLower()
       ) -and ![Module.Commands.Code.Node.NodeVerb]::Aliases.ContainsKey(
-        $Command.ToLower()
+        $Verb.ToLower()
       )
     ) {
       [string]$DeferredVerb = $NodeCommandArgument.Count ? $NodeCommandArgument.Find(
@@ -719,14 +726,14 @@ function Invoke-Npm {
 
       $NodeCommandArgument.Insert(
         0,
-        $Command
+        $Verb
       )
 
-      $Command = $DeferredVerb
+      $Verb = $DeferredVerb
     }
 
-    if ($Command) {
-      $NodeArgument.Add($Command.ToLower())
+    if ($Verb) {
+      $NodeArgument.Add($Verb.ToLower())
       if ($D) { $NodeCommandArgument.Add('-D') }
       if ($E) { $NodeCommandArgument.Add('-E') }
       if ($I) { $NodeCommandArgument.Add('-i') }
