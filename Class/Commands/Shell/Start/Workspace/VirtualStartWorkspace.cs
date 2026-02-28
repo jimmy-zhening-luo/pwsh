@@ -41,27 +41,27 @@ public abstract class VirtualStartWorkspace() : CoreCommand(true)
         : Reanchor(Path),
     ];
 
-    if (Name is not "")
+    switch (Name)
     {
-      if (Name.StartsWith("--"))
-      {
+      case "":
+        break;
+
+      case "se":
+        argumentList.Add("--profile=Setting");
+
+        break;
+
+      case _ when Name.StartsWith("--"):
         argumentList.Add(Name);
-      }
-      else
-      {
-        if (Name is "se")
-        {
-          argumentList.Add(
-            "--profile=Setting"
-          );
-        }
-        else
-        {
-          WriteWarning(
-            "Profiles not supported except for se (Setting) lmaoo."
-          );
-        }
-      }
+
+        break;
+
+      default:
+        WriteWarning(
+          "Profiles not supported except for se (Setting) lmaoo."
+        );
+
+        break;
     }
 
     if (window)
