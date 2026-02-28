@@ -76,7 +76,7 @@ public sealed class GitInvoke : NativeCommand
 
   private protected sealed override void BuildNativeCommand()
   {
-    List<string> gitArguments = [];
+    List<string> arguments = [];
     bool newable = default;
 
     if (Verb is not "")
@@ -91,7 +91,7 @@ public sealed class GitInvoke : NativeCommand
 
           if (GitArgument.Regex().IsMatch(WorkingDirectory))
           {
-            gitArguments.Add(WorkingDirectory);
+            arguments.Add(WorkingDirectory);
 
             WorkingDirectory = string.Empty;
           }
@@ -114,7 +114,7 @@ public sealed class GitInvoke : NativeCommand
             ) is not ""
           )
           {
-            gitArguments.Add(WorkingDirectory);
+            arguments.Add(WorkingDirectory);
 
             WorkingDirectory = Verb;
             Verb = "status";
@@ -146,7 +146,7 @@ public sealed class GitInvoke : NativeCommand
     {
       if (WorkingDirectory is not "")
       {
-        gitArguments.Insert(default, WorkingDirectory);
+        arguments.Insert(default, WorkingDirectory);
 
         repository = GitWorkingDirectory.Resolve(
           Pwd(),
@@ -179,37 +179,37 @@ public sealed class GitInvoke : NativeCommand
 
     if (d)
     {
-      gitArguments.Add("-d");
+      arguments.Add("-d");
     }
     if (e)
     {
-      gitArguments.Add("-E");
+      arguments.Add("-E");
     }
     if (i)
     {
-      gitArguments.Add("-i");
+      arguments.Add("-i");
     }
     if (o)
     {
-      gitArguments.Add("-o");
+      arguments.Add("-o");
     }
     if (p)
     {
-      gitArguments.Add("-P");
+      arguments.Add("-P");
     }
     if (version)
     {
-      gitArguments.Add("-v");
+      arguments.Add("-v");
     }
 
     if (ArgumentList is not [])
     {
-      gitArguments.AddRange(ArgumentList);
+      arguments.AddRange(ArgumentList);
     }
 
-    if (gitArguments is not [])
+    if (arguments is not [])
     {
-      gitCommand.AddRange(gitArguments);
+      gitCommand.AddRange(arguments);
     }
 
     List<string> escapedGitCommand = [];
