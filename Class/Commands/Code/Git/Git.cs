@@ -11,6 +11,32 @@ public abstract class GitCommand(
     init
   }
 
+  internal static readonly HashSet<string> Verbs = [
+    "switch",
+    "merge",
+    "diff",
+    "stash",
+    "tag",
+    "config",
+    "remote",
+    "submodule",
+    "fetch",
+    "checkout",
+    "branch",
+    "rm",
+    "mv",
+    "ls-files",
+    "ls-tree",
+    "init",
+    "status",
+    "clone",
+    "pull",
+    "add",
+    "commit",
+    "push",
+    "reset",
+  ];
+
   private protected string IntrinsicVerb { get; set; } = IntrinsicVerb;
 
   [Parameter(

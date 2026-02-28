@@ -8,31 +8,7 @@ namespace Module.Commands.Code.Git.Verbs;
 [Alias("g")]
 public sealed class Git : NativeCommand
 {
-  internal readonly HashSet<string> Verbs = [
-    "switch",
-    "merge",
-    "diff",
-    "stash",
-    "tag",
-    "config",
-    "remote",
-    "submodule",
-    "fetch",
-    "checkout",
-    "branch",
-    "rm",
-    "mv",
-    "ls-files",
-    "ls-tree",
-    "init",
-    "status",
-    "clone",
-    "pull",
-    "add",
-    "commit",
-    "push",
-    "reset",
-  ];
+  internal sealed class GitVerbCompletionsAttribute() : CompletionsAttribute([.. Verbs]);
 
   [Parameter(
     Position = default,
