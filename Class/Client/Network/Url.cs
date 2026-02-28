@@ -1,5 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-
 namespace Module.Client.Network;
 
 internal static class Url
@@ -7,7 +5,7 @@ internal static class Url
   static System.Net.Http.HttpClient? client;
 
   internal static bool IsHttp(
-    [NotNullWhen(true)]
+    [System.Diagnostics.CodeAnalysis.NotNullWhen(true)]
     System.Uri? uri
   ) => uri is
   {
@@ -16,7 +14,7 @@ internal static class Url
   };
 
   internal static bool IsFile(
-    [NotNullWhen(true)]
+    [System.Diagnostics.CodeAnalysis.NotNullWhen(true)]
     System.Uri? uri
   ) => uri is
   {
@@ -25,13 +23,13 @@ internal static class Url
   };
 
   internal static bool IsHttpOrFile(
-    [NotNullWhen(true)]
+    [System.Diagnostics.CodeAnalysis.NotNullWhen(true)]
     System.Uri? uri
   ) => IsHttp(uri) || IsFile(uri);
 
   internal static System.Uri? ToAbsoluteUri(object? uri) => ToAbsoluteUri(uri?.ToString());
   internal static System.Uri? ToAbsoluteUri(
-    [StringSyntax(StringSyntaxAttribute.Uri)]
+    [System.Diagnostics.CodeAnalysis.StringSyntax(System.Diagnostics.CodeAnalysis.StringSyntaxAttribute.Uri)]
     string? uri
   ) => !string.IsNullOrWhiteSpace(uri)
     && System.Uri.TryCreate(
@@ -114,7 +112,7 @@ internal static class Url
     }
   }
   internal static void Open(
-    [StringSyntax(StringSyntaxAttribute.Uri)]
+    [System.Diagnostics.CodeAnalysis.StringSyntax(System.Diagnostics.CodeAnalysis.StringSyntaxAttribute.Uri)]
     string target
   )
   {
