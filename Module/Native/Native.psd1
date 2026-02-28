@@ -7,10 +7,7 @@
   CompanyName          = 'Jimmy Zhening Luo'
   Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
   PowerShellVersion    = '7.5'
-  FunctionsToExport    = @(
-    'Find-WinGetApp'
-    'Remove-WinGetApp'
-  )
+  FunctionsToExport    = @()
   CmdletsToExport      = @()
   VariablesToExport    = @()
   AliasesToExport      = @(
@@ -32,7 +29,5 @@
     'upman'
     'w'
     'wg'
-    'wgf'
-    'wgr'
   )
 }
