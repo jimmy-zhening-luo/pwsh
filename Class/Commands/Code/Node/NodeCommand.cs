@@ -9,16 +9,6 @@ public abstract class NpmCommand(string Verb) : NativeCommand
   [WorkingDirectoryCompletions]
   public string WorkingDirectory { get; set; } = string.Empty;
 
-  [Parameter(
-    HelpMessage = "Pass -v flag as argument"
-  )]
-  public SwitchParameter V
-  {
-    get => v;
-    set => v = value;
-  }
-  private bool v;
-
   private protected abstract List<string> ParseArguments();
 
   private protected sealed override List<string> BuildNativeCommand()

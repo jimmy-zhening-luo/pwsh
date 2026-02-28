@@ -132,6 +132,8 @@ public sealed class NpmInvoke : NativeCommand
   }
   private bool version;
 
+  new public SwitchParameter V { get; set; }
+
   private protected sealed override List<string> BuildNativeCommand()
   {
     List<string> command = [

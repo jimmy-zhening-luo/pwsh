@@ -24,6 +24,17 @@ public abstract class NativeCommand(
 
   [Parameter(
     DontShow = true,
+    HelpMessage = "Pass -v flag as argument"
+  )]
+  public SwitchParameter V
+  {
+    get => v;
+    set => v = value;
+  }
+  private protected bool v;
+
+  [Parameter(
+    DontShow = true,
     HelpMessage = "Pass -d flag as argument"
   )]
   public SwitchParameter D
