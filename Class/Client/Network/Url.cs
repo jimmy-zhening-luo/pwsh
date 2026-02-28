@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Module.Client.Network;
 
 internal static class Url
@@ -21,6 +23,11 @@ internal static class Url
     IsAbsoluteUri: true,
     Scheme: "file",
   };
+
+  internal static bool IsHttpOrFile(
+    [NotNullWhen(true)]
+    System.Uri? uri
+  ) => IsHttp(uri) || IsFile(uri);
 
   internal static System.Uri? ToAbsoluteUri(object? uri) => ToAbsoluteUri(uri?.ToString());
   internal static System.Uri? ToAbsoluteUri(
