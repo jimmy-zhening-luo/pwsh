@@ -13,6 +13,32 @@ public abstract class WinGetCommand : NativeCommand
 
     command.AddRange(ParseWinGetCommand());
 
+    if (d)
+    {
+      command.Add("-d");
+    }
+    if (e)
+    {
+      command.Add("-e");
+    }
+    if (i)
+    {
+      command.Add("-i");
+    }
+    if (o)
+    {
+      command.Add("-o");
+    }
+    if (p)
+    {
+      command.Add("-p");
+    }
+    if (v)
+    {
+      command.Add("-v");
+    }
+
+
     return command;
   }
 }
