@@ -28,7 +28,7 @@ public sealed class NodeRunScript() : NpmCommand("run")
       )
     )
     {
-      arguments.Add(WorkingDirectory)
+      arguments.Add(WorkingDirectory);
       WorkingDirectory = string.Empty;
     }
 

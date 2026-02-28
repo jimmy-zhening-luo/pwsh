@@ -96,7 +96,7 @@ public sealed class NodeUpdateVersion() : NpmCommand("version")
       )
     )
     {
-      arguments.Add(WorkingDirectory)
+      arguments.Add(WorkingDirectory);
       WorkingDirectory = string.Empty;
     }
 
