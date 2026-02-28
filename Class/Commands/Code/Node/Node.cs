@@ -207,17 +207,17 @@ public sealed class NpmInvoke : CoreCommand
 
   private protected sealed override void Postprocess()
   {
-    List<string> nodeCommand = [
+    List<string> npmCommand = [
       "&",
       "npm.ps1",
       "--color=always",
     ];
 
-    List<string> nodeArguments = [];
+    List<string> npmArguments = [];
 
     if (ArgumentList is not [])
     {
-      nodeArguments.AddRange(ArgumentList);
+      npmArguments.AddRange(ArgumentList);
     }
 
     if (WorkingDirectory is not "")
@@ -234,12 +234,12 @@ public sealed class NpmInvoke : CoreCommand
 
         if (packagePrefix is not "")
         {
-          nodeCommand.Add(packagePrefix);
+          npmCommand.Add(packagePrefix);
         }
       }
       else
       {
-        nodeArguments.Insert(default, WorkingDirectory);
+        npmArguments.Insert(default, WorkingDirectory);
 
         WorkingDirectory = string.Empty;
       }
@@ -252,9 +252,9 @@ public sealed class NpmInvoke : CoreCommand
       && !Aliases.ContainsKey(Verb.ToLower())
     )
     {
-      var deferredVerb = nodeArguments is []
+      var deferredVerb = npmArguments is []
         ? ""
-        : nodeArguments.Find(
+        : npmArguments.Find(
             argument => Verbs.Contains(
               argument.ToLower()
             )
@@ -262,55 +262,55 @@ public sealed class NpmInvoke : CoreCommand
 
       if (deferredVerb is not (null or ""))
       {
-        _ = nodeArguments.Remove(deferredVerb);
+        _ = npmArguments.Remove(deferredVerb);
       }
 
-      nodeArguments.Insert(default, Verb);
+      npmArguments.Insert(default, Verb);
 
       Verb = deferredVerb ?? string.Empty;
     }
 
     if (Verb is not "")
     {
-      nodeCommand.Add(Verb.ToLower());
+      npmCommand.Add(Verb.ToLower());
 
       if (d)
       {
-        nodeArguments.Add("-D");
+        npmArguments.Add("-D");
       }
       if (e)
       {
-        nodeArguments.Add("-E");
+        npmArguments.Add("-E");
       }
       if (i)
       {
-        nodeArguments.Add("-i");
+        npmArguments.Add("-i");
       }
       if (o)
       {
-        nodeArguments.Add("-o");
+        npmArguments.Add("-o");
       }
       if (p)
       {
-        nodeArguments.Add("-P");
+        npmArguments.Add("-P");
       }
     }
     else
     {
       if (version)
       {
-        nodeCommand.Add("-v");
+        npmCommand.Add("-v");
       }
     }
 
-    if (nodeArguments is not [])
+    if (npmArguments is not [])
     {
-      nodeCommand.AddRange(nodeArguments);
+      npmCommand.AddRange(npmArguments);
     }
 
     List<string> escapedNodeCommand = [];
 
-    foreach (var word in nodeCommand)
+    foreach (var word in npmCommand)
     {
       escapedNodeCommand.Add(
         Client.Console.String.EscapeDoubleQuoted(word)
