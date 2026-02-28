@@ -38,19 +38,23 @@ public sealed class TestUrl : CoreCommand
 
   private protected sealed override void Process()
   {
-    using System.Net.Http.HttpClient client = new()
-    {
-      Timeout = System.TimeSpan.FromMilliseconds(3500)
-    };
-
     foreach (var url in Uri)
     {
-      if (
-        Client.Network.Dns.Resolve(url)
-        && Client.Network.Url.Test(url)
-      )
+      switch (url)
       {
-        WriteObject(url);
+        case
+        {
+          Scheme: "file",
+          IsFile: true,
+          LocalPath: string path
+        } when System.IO.Path.Exists(path):
+        case
+        {
+          Scheme: "http" or "https",
+        } when Client.Network.Dns.Resolve(url)
+          && Client.Network.Url.Test(url):
+          WriteObject(url);
+          break;
       }
     }
   }
