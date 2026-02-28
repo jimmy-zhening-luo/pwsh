@@ -9,8 +9,11 @@ public abstract class CoreCommand(
     string Subpath = ""
   )
   {
-    public bool IsEmpty => Root is ""
-      && Subpath is "";
+    public bool IsEmpty => this is
+    {
+      Root: "",
+      Subpath: "",
+    }
   }
 
   private uint steps;
