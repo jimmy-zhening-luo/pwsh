@@ -68,7 +68,7 @@ public sealed class GitInvoke : NativeCommand
 
   new public SwitchParameter V { get; set; }
 
-  private protected sealed override List<string> BuildNativeCommand()
+  private protected sealed override CommandArguments BuildNativeCommand()
   {
     List<string> arguments = [];
     bool newable = default;
@@ -171,36 +171,21 @@ public sealed class GitInvoke : NativeCommand
       command.Add(Verb);
     }
 
-    if (d)
-    {
-      arguments.Add("-d");
-    }
     if (e)
     {
       arguments.Add("-E");
-    }
-    if (i)
-    {
-      arguments.Add("-i");
-    }
-    if (o)
-    {
-      arguments.Add("-o");
+      e = false;
     }
     if (p)
     {
       arguments.Add("-P");
+      p = false;
     }
     if (version)
     {
       arguments.Add("-v");
     }
 
-    if (arguments is not [])
-    {
-      command.AddRange(arguments);
-    }
-
-    return command;
+    return new(command, arguments);
   }
 }

@@ -4,6 +4,11 @@ public abstract class NativeCommand(
   bool SkipSsh = default
 ) : CoreCommand(SkipSsh)
 {
+  private protected record CommandArguments(
+    List<string> Command,
+    List<string> Arguments
+  );
+
   [Parameter(
     Position = 100,
     ValueFromRemainingArguments = true,
@@ -88,13 +93,42 @@ public abstract class NativeCommand(
   }
   private protected bool p;
 
-  private protected abstract List<string> BuildNativeCommand();
+  private protected abstract CommandArguments BuildNativeCommand();
 
   private protected sealed override void Postprocess()
   {
     List<string> command = [];
 
-    command.AddRange(BuildNativeCommand());
+    var commandArguments = BuildNativeCommand();
+
+    command.AddRange(commandArguments.Command);
+
+    if (d)
+    {
+      arguments.Add("-d");
+    }
+    if (e)
+    {
+      arguments.Add("-e");
+    }
+    if (i)
+    {
+      arguments.Add("-i");
+    }
+    if (o)
+    {
+      arguments.Add("-o");
+    }
+    if (p)
+    {
+      arguments.Add("-p");
+    }
+    if (v)
+    {
+      arguments.Add("-v");
+    }
+
+    command.AddRange(commandArguments.Arguments);
 
     if (ArgumentList is not [])
     {

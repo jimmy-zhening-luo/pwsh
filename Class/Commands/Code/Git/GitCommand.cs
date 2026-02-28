@@ -14,7 +14,7 @@ public abstract class GitCommand(
 
   private protected abstract List<string> ParseArguments();
 
-  private protected sealed override List<string> BuildNativeCommand()
+  private protected sealed override CommandArguments BuildNativeCommand()
   {
     List<string> arguments = [];
 
@@ -57,36 +57,17 @@ public abstract class GitCommand(
       Verb
     ];
 
-    if (d)
-    {
-      arguments.Add("-d");
-    }
     if (e)
     {
       arguments.Add("-E");
-    }
-    if (i)
-    {
-      arguments.Add("-i");
-    }
-    if (o)
-    {
-      arguments.Add("-o");
+      e = false;
     }
     if (p)
     {
       arguments.Add("-P");
-    }
-    if (v)
-    {
-      arguments.Add("-v");
+      p = false;
     }
 
-    if (arguments is not [])
-    {
-      command.AddRange(arguments);
-    }
-
-    return command;
+    return new(command, arguments);
   }
 }
