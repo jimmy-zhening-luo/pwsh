@@ -51,15 +51,17 @@ public abstract class VirtualStartWorkspace() : CoreCommand(true)
 
         break;
 
-      case Name.StartsWith("--"):
-        argumentList.Add(Name);
-
-        break;
-
       default:
-        WriteWarning(
-          "Profiles not supported except for se (Setting) lmaoo."
-        );
+        if (Name.StartsWith("--"))
+        {
+          argumentList.Add(Name);
+        }
+        else
+        {
+          WriteWarning(
+            "Profiles not supported except for se (Setting) lmaoo."
+          );
+        }
 
         break;
     }
