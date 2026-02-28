@@ -23,7 +23,7 @@ public sealed class NodeTest() : NpmCommand("test")
   }
   private bool ignoreScript;
 
-  private protected sealed override List<string> ParseArguments() => ignoreScript && !ArgumentList.Contains(FlagIgnoreScript)
+  private protected sealed override List<string> ParseArguments() => ignoreScript && !(new List<string>(ArgumentList)).Contains(FlagIgnoreScript)
     ? [FlagIgnoreScript]
     : [];
 }

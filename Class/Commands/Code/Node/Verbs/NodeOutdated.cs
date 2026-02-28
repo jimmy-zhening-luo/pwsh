@@ -25,7 +25,7 @@ public sealed class NodeOutdated() : NpmCommand("outdated")
   {
     noThrow = true;
 
-    return all && !ArgumentList.Contains(FlagAll)
+    return all && !(new List<string>(ArgumentList)).Contains(FlagAll)
       ? [FlagAll]
       : [];
   }
