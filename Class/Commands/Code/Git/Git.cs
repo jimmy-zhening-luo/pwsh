@@ -11,7 +11,7 @@ public abstract class GitCommand(
     init
   }
 
-  public string IntrinsicVerb { get; set; } = IntrinsicVerb;
+  public string IntrinsicVerb { get; private protected set; } = IntrinsicVerb;
 
   [Parameter(
     Position = 50,
