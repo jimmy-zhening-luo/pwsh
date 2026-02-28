@@ -18,10 +18,39 @@ public sealed class OpenUrl() : CoreCommand(true)
   [PathCompletions]
   public string Path
   {
-    get => path;
-    set => path = Client.File.PathString.Normalize(value);
+    get => pathUri?.ToString() ?? string.Empty;
+    set
+    {
+      pathUri = default;
+
+      if (!string.IsNullOrWhiteSpace(value))
+      {
+        if (Client.Network.Url.ToAbsoluteHttpUri(value) is { } httpUri)
+        {
+          pathUri = httpUri;
+        }
+        else if (
+          Client.Network.Url.ToAbsoluteFileUri(value) is { } fileUri
+          && System.IO.File.Exists(fileUri.LocalPath)
+        )
+        {
+          pathUri = fileUri;
+        }
+        else if (
+          Client.Network.Url.ToAbsoluteFileUri(
+            Pwd(value)
+          ) is { } resolvedFileUri
+          && System.IO.File.Exists(
+            resolvedFileUri.LocalPath
+          )
+        )
+        {
+          pathUri = resolvedFileUri;
+        }
+      }
+    }
   }
-  private string path = string.Empty;
+  private System.Uri? pathUri;
 
   [Parameter(
     ParameterSetName = "Uri",
@@ -32,7 +61,27 @@ public sealed class OpenUrl() : CoreCommand(true)
     HelpMessage = "The URL(s) to open."
   )]
   [AllowEmptyCollection]
-  public System.Uri[] Uri { get; set; } = [];
+  public System.Uri[] Uri
+  {
+    get => [.. uris];
+    set
+    {
+      uris.Clear();
+
+      foreach (var uri in value)
+      {
+        if (
+          Client.Network.Url.IsHttp(uri)
+          || Client.Network.Url.IsFile(uri)
+          && System.IO.File.Exists(uri.LocalPath)
+        )
+        {
+          uris.Add(uri);
+        }
+      }
+    }
+  }
+  private readonly List<System.Uri> uris = [];
 
   private protected sealed override void Process()
   {
@@ -46,18 +95,14 @@ public sealed class OpenUrl() : CoreCommand(true)
   {
     if (ParameterSetName is "Path")
     {
-      var target = string.Empty;
-
-      if (Path is not "")
+      if (pathUri is null)
       {
-        var fullPath = Pwd(path);
-
-        target = System.IO.Path.Exists(fullPath)
-          ? fullPath
-          : Path;
+        Client.Network.Url.Open();
       }
-
-      Client.Network.Url.Open(target);
+      else
+      {
+        Client.Network.Url.Open(pathUri);
+      }
     }
   }
 }
