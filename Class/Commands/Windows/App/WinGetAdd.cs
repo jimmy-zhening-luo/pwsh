@@ -7,40 +7,22 @@ namespace Module.Commands.Windows.App;
 )]
 [Alias("wga")]
 [OutputType(typeof(void))]
-public sealed class WinGetAdd() : CoreCommand
+public sealed class WinGetAdd : WinGetCommand
 {
-  [Parameter(
-    Position = default,
-    ValueFromRemainingArguments = true,
-    DontShow = true
-  )]
-  public string[] ArgumentList { get; set; } = [];
-
-  private protected sealed override void Postprocess()
+  private protected sealed override List<string> ParseWinGetCommand()
   {
-    List<string> args = [
-      "&",
-       Client.Environment.Known.Application.WinGet
-    ];
+    List<string> arguments = [];
 
     if (ArgumentList is [])
     {
-      args.Add("upgrade");
+      arguments.Add("upgrade");
     }
     else
     {
-      args.Add("install");
-      args.AddRange(ArgumentList);
+      arguments.Add("install");
+      arguments.AddRange(ArgumentList);
     }
 
-    AddScript(string.Join(' ', args));
-
-    ProcessSteppablePipeline();
-    EndSteppablePipeline();
-
-    if (HadNativeErrors)
-    {
-      Throw("winget error");
-    }
+    return arguments;
   }
 }
