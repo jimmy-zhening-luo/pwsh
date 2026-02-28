@@ -15,7 +15,7 @@ public sealed class TestCommand : CoreCommand
   public string[] Name { get; set; } = [];
 
   [Parameter(
-    Position = 1
+    Position = 100
   )]
   [ValidateNotNullOrWhiteSpace]
   public string Greeting { get; set; } = "Hello";
