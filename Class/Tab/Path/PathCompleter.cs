@@ -127,53 +127,53 @@ public sealed class PathCompleter : TabCompleter
     string filter,
     System.IO.EnumerationOptions options,
     bool trailingSeparator = default
-  )
-  {
-    foreach (
-      var directory in System.IO.Directory.EnumerateDirectories(
-        path,
-        filter,
-        options
-      )
-    )
-    {
-      yield return JoinPathCompletion(
-        System.IO.Path.GetFileName(directory),
-        accumulatedSubpath,
-        trailingSeparator
-      );
-    }
-  }
+  ) => EnumerateCompletions(
+     System.IO.Directory.EnumerateDirectories(
+      path,
+      filter,
+      options
+    ),
+    accumulatedSubpath,
+    trailingSeparator
+  );
 
   private static IEnumerable<string> EnumerateFiles(
     string path,
     string accumulatedSubpath,
     string filter,
     System.IO.EnumerationOptions options
+  ) => EnumerateCompletions(
+    System.IO.Directory.EnumerateFiles(
+      path,
+      filter,
+      options
+    ),
+    accumulatedSubpath
+  );
+
+  private static IEnumerable<string> EnumerateCompletions(
+    IEnumerable<string> paths,
+    string accumulatedSubpath,
+    bool trailingSeparator = default
   )
   {
-    foreach (
-      var file in System.IO.Directory.EnumerateFiles(
-        path,
-        filter,
-        options
-      )
-    )
+    foreach (var path in paths)
     {
       yield return JoinPathCompletion(
-        System.IO.Path.GetFileName(file),
-        accumulatedSubpath
+        System.IO.Path.GetFileName(path),
+        accumulatedSubpath,
+        trailingSeparator
       );
     }
   }
 
   private static string JoinPathCompletion(
-    string path,
+    string filename,
     string accumulatedSubpath,
     bool trailingSeparator = default
   ) => System.IO.Path.Join(
     accumulatedSubpath,
-    path,
+    filename,
     trailingSeparator
       ? @"\"
       : string.Empty
