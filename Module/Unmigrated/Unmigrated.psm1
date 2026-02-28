@@ -56,10 +56,10 @@ function Compare-GitRepository {
     [string]$WorkingDirectory
   )
 
-  $DiffArgument = [System.Collections.Generic.List[string]]::new()
+  $Arguments = [System.Collections.Generic.List[string]]::new()
 
   if ($Name) {
-    $DiffArgument.Add($Name)
+    $Arguments.Add($Name)
   }
 
   if (
@@ -69,15 +69,15 @@ function Compare-GitRepository {
       [Module.Commands.Code.Git.GitWorkingDirectory]::Resolve($PWD.Path, $WorkingDirectory)
     )
   ) {
-    $DiffArgument.Add($WorkingDirectory)
+    $Arguments.Add($WorkingDirectory)
     $WorkingDirectory = ''
   }
 
   if ($args) {
-    $DiffArgument.AddRange([string[]]$args)
+    $Arguments.AddRange([string[]]$args)
   }
 
-  Invoke-Git -Verb diff -WorkingDirectory $WorkingDirectory -ArgumentList $DiffArgument
+  Invoke-Git -Verb diff -WorkingDirectory $WorkingDirectory -ArgumentList $Arguments
 }
 
 <#
