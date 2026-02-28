@@ -39,17 +39,17 @@ internal static class Url
     System.Uri? uri
   ) => IsHttp(uri) || IsFile(uri);
 
-  internal static System.Uri? ToAbsoluteHttpUri(object? uri) => ToAbsoluteHttpUri(uri?.ToString());
-  internal static System.Uri? ToAbsoluteHttpUri(string? uri) => ToAbsoluteUri(uri, Scheme.Http);
-  internal static System.Uri? ToAbsoluteHttpUri(System.Uri? uri) => ToAbsoluteUri(uri, Scheme.Http);
+  internal static System.Uri? ToAbsoluteHttpOrFileUri(object? uri) => ToAbsoluteUri(uri, Scheme.HttpOrFile);
+  internal static System.Uri? ToAbsoluteHttpOrFileUri(string? uri) => ToAbsoluteUri(uri, Scheme.HttpOrFile);
+  internal static System.Uri? ToAbsoluteHttpOrFileUri(System.Uri? uri) => ToAbsoluteUri(uri, Scheme.HttpOrFile);
 
-  internal static System.Uri? ToAbsoluteFileUri(object? uri) => ToAbsoluteFileUri(uri?.ToString());
+  internal static System.Uri? ToAbsoluteFileUri(object? uri) => ToAbsoluteUri(uri, Scheme.File);
   internal static System.Uri? ToAbsoluteFileUri(string? uri) => ToAbsoluteUri(uri, Scheme.File);
   internal static System.Uri? ToAbsoluteFileUri(System.Uri? uri) => ToAbsoluteUri(uri, Scheme.File);
 
-  internal static System.Uri? ToAbsoluteHttpOrFileUri(object? uri) => ToAbsoluteHttpOrFileUri(uri?.ToString());
-  internal static System.Uri? ToAbsoluteHttpOrFileUri(string? uri) => ToAbsoluteUri(uri, Scheme.HttpOrFile);
-  internal static System.Uri? ToAbsoluteHttpOrFileUri(System.Uri? uri) => ToAbsoluteUri(uri, Scheme.HttpOrFile);
+  internal static System.Uri? ToAbsoluteHttpUri(object? uri) => ToAbsoluteUri(uri);
+  internal static System.Uri? ToAbsoluteHttpUri(string? uri) => ToAbsoluteUri(uri);
+  internal static System.Uri? ToAbsoluteHttpUri(System.Uri? uri) => ToAbsoluteUri(uri);
 
   internal static System.Uri? ToAbsoluteUri(
     object? uri,
