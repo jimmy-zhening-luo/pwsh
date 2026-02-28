@@ -59,11 +59,7 @@ public sealed class TestCommand : CoreCommand
 
     Clear();
 
-    WriteObject(
-      PSVariable<int>(
-        "LASTEXITCODE"
-      )
-    );
+    WriteObject(LastExitCode);
   }
 
   private string Greet(string name) => string.Concat(
