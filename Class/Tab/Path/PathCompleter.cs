@@ -32,14 +32,10 @@ public sealed class PathCompleter : TabCompleter
   );
 
   private static string Canonicalize(
-    string path,
-    bool preserveTrailingSeparator = default
+    string path
   )
   {
-    var normalPath = Client.File.PathString.Normalize(
-      path,
-      preserveTrailingSeparator
-    );
+    var normalPath = Client.File.PathString.Normalize(path);
 
     return System.IO.Path.IsPathFullyQualified(normalPath)
       ? normalPath
