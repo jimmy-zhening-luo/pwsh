@@ -27,22 +27,7 @@ public sealed class TestHost() : WrappedCommand(
     WINRM
   }
 
-  [Parameter(
-    ParameterSetName = "ICMP",
-    Position = default
-  )]
-  [Parameter(
-    ParameterSetName = "CommonTCPPort",
-    Position = default
-  )]
-  [Parameter(
-    ParameterSetName = "RemotePort",
-    Position = default
-  )]
-  [Parameter(
-    ParameterSetName = "NetRouteDiagnostics",
-    Position = default
-  )]
+  [Parameter(Position = default)]
   [Alias(
     "Name",
     "RemoteAddress",
