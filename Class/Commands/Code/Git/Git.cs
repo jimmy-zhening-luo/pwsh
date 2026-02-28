@@ -37,19 +37,6 @@ public abstract class GitCommand(
     "reset",
   ];
 
-  private static bool IsGitRepository(
-    string location,
-    string path,
-    bool newable
-  ) => System.IO.Directory.Exists(
-    newable
-      ? Client.File.PathString.FullPathLocationRelative(location, path)
-      : System.IO.Path.Combine(
-          Client.File.PathString.FullPathLocationRelative(location, path),
-          ".git"
-        )
-  );
-
   private protected string IntrinsicVerb { get; set; } = IntrinsicVerb;
 
   [Parameter(
@@ -128,18 +115,19 @@ public abstract class GitCommand(
   private protected string ResolveWorkingDirectory(
     string path,
     bool newable = default
-  ) => IsGitRepository(
-    Pwd(),
-    path,
-    newable
+  ) => System.IO.Directory.Exists(
+    System.IO.Path.Combine(
+      path,
+      newable ? string.Empty : ".git"
+    )
   )
     ? Pwd(path)
-    : !System.IO.Path.IsPathRooted(path)
-      && IsGitRepository(
-          Client.Environment.Known.Folder.Code(),
-          path,
-          newable
+    : System.IO.Directory.Exists(
+        System.IO.Path.Combine(
+          Client.Environment.Known.Folder.Code(path),
+          newable ? string.Empty : ".git"
         )
+      )
       ? Client.Environment.Known.Folder.Code(path)
       : string.Empty;
 }
