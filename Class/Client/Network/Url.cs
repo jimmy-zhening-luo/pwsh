@@ -21,7 +21,9 @@ internal static class Url
     IsAbsoluteUri: true,
     Scheme: "file",
     IsFile: true,
-  };
+    LocalPath: string localPath
+  }
+    && !string.IsNullOrWhiteSpace(localPath);
 
   internal static bool IsHttpOrFile(
     [System.Diagnostics.CodeAnalysis.NotNullWhen(true)]
@@ -42,11 +44,7 @@ internal static class Url
       )
     ? ToAbsoluteHttpOrFileUri(url)
     : null;
-  internal static System.Uri? ToAbsoluteHttpOrFileUri(System.Uri? uri) => uri is
-  {
-    IsAbsoluteUri: true,
-    Scheme: "http" or "https" or "file",
-  }
+  internal static System.Uri? ToAbsoluteHttpOrFileUri(System.Uri? uri) => IsHttpOrFile(uri)
     ? uri
     : null;
 
