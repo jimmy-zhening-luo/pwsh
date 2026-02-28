@@ -147,7 +147,6 @@ public abstract class NodeCommand(
       else
       {
         arguments.Insert(default, WorkingDirectory);
-
       }
     }
 
