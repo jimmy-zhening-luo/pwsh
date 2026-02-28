@@ -173,7 +173,6 @@ public sealed class PathCompleter : TabCompleter
           )
         )
         {
-          ++Index;
           yield return directory;
         }
 
@@ -198,7 +197,6 @@ public sealed class PathCompleter : TabCompleter
             )
           )
           {
-            ++Index;
             yield return directory;
           }
 
@@ -217,7 +215,6 @@ public sealed class PathCompleter : TabCompleter
           )
         )
         {
-          ++Index;
           yield return file;
         }
 
@@ -241,7 +238,6 @@ public sealed class PathCompleter : TabCompleter
             )
           )
           {
-            ++Index;
             yield return file;
           }
 
@@ -260,7 +256,6 @@ public sealed class PathCompleter : TabCompleter
           )
         )
         {
-          ++Index;
           yield return directory;
         }
 
@@ -285,7 +280,6 @@ public sealed class PathCompleter : TabCompleter
             )
           )
           {
-            ++Index;
             yield return directory;
           }
 
@@ -305,7 +299,6 @@ public sealed class PathCompleter : TabCompleter
           )
         )
         {
-          ++Index;
           yield return directory;
         }
 
@@ -318,7 +311,6 @@ public sealed class PathCompleter : TabCompleter
           )
         )
         {
-          ++Index;
           yield return file;
         }
 
@@ -343,7 +335,6 @@ public sealed class PathCompleter : TabCompleter
             )
           )
           {
-            ++Index;
             yield return directory;
           }
 
@@ -356,7 +347,6 @@ public sealed class PathCompleter : TabCompleter
             )
           )
           {
-            ++Index;
             yield return file;
           }
 
@@ -426,7 +416,7 @@ public sealed class PathCompleter : TabCompleter
   {
     foreach (var path in paths)
     {
-      Index++;
+      ++Index;
 
       yield return JoinPathCompletion(
         System.IO.Path.GetFileName(path),
