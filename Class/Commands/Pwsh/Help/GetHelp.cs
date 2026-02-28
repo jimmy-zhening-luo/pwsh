@@ -35,7 +35,7 @@ public sealed class GetHelpOnline : CoreCommand
       return default;
     }
 
-    dynamic pscustomobject = helpContent[0];
+    dynamic pscustomobject = helpContent[default];
 
     List<System.Uri> urls = [];
 

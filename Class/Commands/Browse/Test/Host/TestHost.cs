@@ -108,7 +108,7 @@ public sealed class TestHost() : WrappedCommand(
 
   private protected sealed override Dictionary<string, object?> CoercedParameters => new()
   {
-    ["Detailed"] = null,
+    ["Detailed"] = default,
     ["InformationLevel"] = detailed
       ? TestHostVerbosity.Detailed
       : InformationLevel,

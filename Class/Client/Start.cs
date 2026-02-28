@@ -9,7 +9,7 @@ internal static class Start
   ) => CreateProcess(
     fileName,
     string.IsNullOrWhiteSpace(argument)
-      ? null
+      ? default
       : [argument],
     noNewWindow
   );
@@ -33,7 +33,7 @@ internal static class Start
   ) => ShellExecute(
     fileName,
     string.IsNullOrWhiteSpace(argument)
-      ? null
+      ? default
       : [argument],
     administrator,
     noNewWindow

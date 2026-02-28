@@ -20,7 +20,7 @@ internal static class PowerShellHost
       .AddCommand(
         @"Microsoft.PowerShell.Management\Get-Location"
       )
-      .Invoke()[0]
+      .Invoke()[default]
       .BaseObject
       .ToString();
 

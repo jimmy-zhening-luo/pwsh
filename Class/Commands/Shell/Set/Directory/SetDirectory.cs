@@ -72,9 +72,9 @@ public sealed class SetDirectory : WrappedSetDirectory
 
   private protected sealed override Dictionary<string, object?> CoercedParameters => new()
   {
-    ["C"] = null,
-    ["D"] = null,
-    ["E"] = null,
+    ["C"] = default,
+    ["D"] = default,
+    ["E"] = default,
   };
 
   private protected sealed override void TransformArguments()
