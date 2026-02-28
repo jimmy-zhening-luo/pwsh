@@ -229,10 +229,15 @@ public abstract class CoreCommand(
     path
   );
 
-  private protected PSObject PSVariable(string variable) => PSVariable<PSObject>(variable);
-  private protected T PSVariable<T>(string variable) => (T)SessionState
+  private protected object? PSVariable(string name) => SessionState
     .PSVariable
-    .GetValue(variable);
+    .GetValue(
+      name,
+      null
+    );
+  private protected T PSVariable<T>(string name) => (T)SessionState
+    .PSVariable
+      .GetValue(name);
 
   private protected string Pwd(string path = "") => Client.File.PathString.FullPathLocationRelative(
     SessionState.Path.CurrentLocation.Path,
