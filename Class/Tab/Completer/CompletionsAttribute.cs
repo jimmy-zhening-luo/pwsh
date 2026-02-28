@@ -10,7 +10,6 @@ public class CompletionsAttribute(
 {
   private protected sealed override IEnumerable<string> ResolveDomain(string[] domain) => domain;
 }
-
 public abstract class CompletionsAttribute<TDomain>(
   TDomain Domain,
   CompletionCase Casing
