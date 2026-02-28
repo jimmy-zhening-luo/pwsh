@@ -59,7 +59,7 @@ public sealed class TestCommand : CoreCommand
 
     Clear();
 
-    WriteObject(LastExitCode);
+    WriteObject(HadNativeErrors);
   }
 
   private string Greet(string name) => string.Concat(
