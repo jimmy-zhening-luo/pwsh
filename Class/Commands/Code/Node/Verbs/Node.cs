@@ -1,4 +1,4 @@
-namespace Module.Commands.Code.Node;
+namespace Module.Commands.Code.Node.Verbs;
 
 [Cmdlet(
   VerbsLifecycle.Invoke,
