@@ -7,7 +7,15 @@ public abstract class CoreCommand(
   private protected record Locator(
     string Root = "",
     string Subpath = ""
-  );
+  )
+  {
+    public string Path => Root is ""
+      ? Pwd(Subpath)
+      : Client.File.PathString.FullPathLocationRelative(
+          Root,
+          Subpath
+        );
+  }
 
   private uint steps;
 
