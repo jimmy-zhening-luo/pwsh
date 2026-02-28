@@ -139,8 +139,6 @@ public sealed class GitInvoke : CoreCommand
   }
   private bool p;
 
-  private static string Git => Client.Environment.Known.Application.Git;
-
   private protected sealed override void Postprocess()
   {
     List<string> gitArguments = [];
@@ -232,7 +230,7 @@ public sealed class GitInvoke : CoreCommand
 
     List<string> gitCommand = [
       "&",
-      Git,
+      Client.Environment.Known.Application.Git,
       "-c",
       "color.ui=always",
       "-C",
