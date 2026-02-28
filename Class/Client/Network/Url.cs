@@ -29,7 +29,9 @@ internal static class Url
 
   internal static System.Uri? ToAbsoluteUri(object? uri) => ToAbsoluteUri(uri?.ToString());
   internal static System.Uri? ToAbsoluteUri(
-    [System.Diagnostics.CodeAnalysis.StringSyntax(System.Diagnostics.CodeAnalysis.StringSyntaxAttribute.Uri)]
+    [System.Diagnostics.CodeAnalysis.StringSyntax(
+      System.Diagnostics.CodeAnalysis.StringSyntaxAttribute.Uri
+    )]
     string? uri
   ) => !string.IsNullOrWhiteSpace(uri)
     && System.Uri.TryCreate(
@@ -112,7 +114,9 @@ internal static class Url
     }
   }
   internal static void Open(
-    [System.Diagnostics.CodeAnalysis.StringSyntax(System.Diagnostics.CodeAnalysis.StringSyntaxAttribute.Uri)]
+    [System.Diagnostics.CodeAnalysis.StringSyntax(
+      System.Diagnostics.CodeAnalysis.StringSyntaxAttribute.Uri
+    )]
     string target
   )
   {
