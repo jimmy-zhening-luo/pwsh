@@ -18,7 +18,7 @@ internal static class Start
     IEnumerable<string>? arguments = default,
     bool noNewWindow = default
   ) => System.Diagnostics.Process.Start(
-    ArgumentList(
+    ProcessStartOptions(
       fileName,
       arguments,
       noNewWindow
@@ -44,7 +44,7 @@ internal static class Start
     bool administrator = default,
     bool noNewWindow = default
   ) => System.Diagnostics.Process.Start(
-    ArgumentList(
+    ProcessStartOptions(
       fileName,
       arguments,
       noNewWindow,
@@ -53,7 +53,7 @@ internal static class Start
     )
   );
 
-  private static System.Diagnostics.ProcessStartInfo ArgumentList(
+  private static System.Diagnostics.ProcessStartInfo ProcessStartOptions(
     string fileName,
     IEnumerable<string>? arguments,
     bool noNewWindow,
