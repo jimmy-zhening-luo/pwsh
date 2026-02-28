@@ -131,6 +131,28 @@ public abstract class NodeCommand(
     {
       Throw("No npm command given.");
     }
+    else if (
+      Aliases.TryGetValue(
+        IntrinsicVerb.ToLower(),
+        out var alias
+      )
+    )
+    {
+      IntrinsicVerb = alias;
+    }
+    else if (
+      Verbs.TryGetValue(
+        IntrinsicVerb.ToLower(),
+        out var verb
+      )
+    )
+    {
+      IntrinsicVerb = verb;
+    }
+    else
+    {
+      Throw($"Unknown npm command: {IntrinsicVerb}");
+    }
 
     if (WorkingDirectory is not "")
     {
