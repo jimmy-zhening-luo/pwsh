@@ -14,6 +14,11 @@ public abstract class CoreCommand(
       Root: "",
       Subpath: "",
     };
+
+    public bool IsRooted => this is
+    {
+      Root: not "",
+    };
   }
 
   private uint steps;
@@ -192,15 +197,12 @@ public abstract class CoreCommand(
   }
 
   private protected string Reanchor(string path = "") => Client.File.PathString.FullPathLocationRelative(
-    Location is
-    {
-      Root: ""
-    }
-      ? Pwd(Location.Subpath)
-      : Client.File.PathString.FullPathLocationRelative(
+    Location.IsRooted
+      ? Client.File.PathString.FullPathLocationRelative(
           Location.Root,
           Location.Subpath
-        ),
+        )
+      : Pwd(Location.Subpath),
     path
   );
 
