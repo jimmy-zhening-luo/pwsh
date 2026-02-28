@@ -4,6 +4,8 @@ public abstract class NodeCommand(
   string IntrinsicVerb = ""
 ) : NativeCommand
 {
+  private protected sealed class NodeVerbCompletionsAttribute() : CompletionsAttribute([.. Verbs]);
+
   private protected static readonly HashSet<string> Verbs = [
     "access",
     "adduser",

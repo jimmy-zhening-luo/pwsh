@@ -8,8 +8,6 @@ namespace Module.Commands.Code.Git.Verbs;
 [Alias("g")]
 public sealed class Git : GitCommand
 {
-  private sealed class GitVerbCompletionsAttribute() : CompletionsAttribute([.. Verbs]);
-
   [Parameter(
     Position = default,
     HelpMessage = "Git command"

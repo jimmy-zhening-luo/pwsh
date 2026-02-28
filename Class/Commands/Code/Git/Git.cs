@@ -11,7 +11,9 @@ public abstract class GitCommand(
     init
   }
 
-  private protected static readonly HashSet<string> Verbs = [
+  private protected sealed class GitVerbCompletionsAttribute() : CompletionsAttribute([.. Verbs]);
+
+  private static readonly HashSet<string> Verbs = [
     "switch",
     "merge",
     "diff",

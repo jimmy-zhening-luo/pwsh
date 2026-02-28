@@ -8,8 +8,6 @@ namespace Module.Commands.Code.Node.Verbs;
 [Alias("n")]
 public sealed class Node : NodeCommand
 {
-  private sealed class NodeVerbCompletionsAttribute() : CompletionsAttribute([.. Verbs]);
-
   [Parameter(
     Position = default,
     HelpMessage = "npm command"
