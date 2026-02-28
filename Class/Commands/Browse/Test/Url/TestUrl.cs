@@ -27,7 +27,7 @@ public sealed class TestUrl : CoreCommand
 
       foreach (var uri in value)
       {
-        if (Client.Network.Url.ToAbsoluteUri(uri) is { } url)
+        if (Client.Network.Url.ToAbsoluteHttpOrFileUri(uri) is { } url)
         {
           urls.Add(url);
         }

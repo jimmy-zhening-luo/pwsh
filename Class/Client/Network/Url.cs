@@ -27,8 +27,8 @@ internal static class Url
     System.Uri? uri
   ) => IsHttp(uri) || IsFile(uri);
 
-  internal static System.Uri? ToAbsoluteUri(object? uri) => ToAbsoluteUri(uri?.ToString());
-  internal static System.Uri? ToAbsoluteUri(
+  internal static System.Uri? ToAbsoluteHttpOrFileUri(object? uri) => ToAbsoluteHttpOrFileUri(uri?.ToString());
+  internal static System.Uri? ToAbsoluteHttpOrFileUri(
     [System.Diagnostics.CodeAnalysis.StringSyntax(
       System.Diagnostics.CodeAnalysis.StringSyntaxAttribute.Uri
     )]
@@ -36,29 +36,18 @@ internal static class Url
   ) => !string.IsNullOrWhiteSpace(uri)
     && System.Uri.TryCreate(
         uri,
-        System.UriKind.RelativeOrAbsolute,
+        System.UriKind.Absolute,
         out var url
       )
-    ? ToAbsoluteUri(url)
+    ? ToAbsoluteHttpOrFileUri(url)
     : null;
-  internal static System.Uri? ToAbsoluteUri(System.Uri? uri) => uri switch
+  internal static System.Uri? ToAbsoluteHttpOrFileUri(System.Uri? uri) => uri is
   {
-    null => null,
-    {
-      IsAbsoluteUri: true,
-      Scheme: "http" or "https" or "file",
-    } => uri,
-    {
-      IsAbsoluteUri: false,
-      OriginalString: string s
-    } when !string.IsNullOrWhiteSpace(s)
-      && System.Uri.TryCreate(
-          "http://" + s.Trim(),
-          System.UriKind.Absolute,
-          out var absoluteUrl
-        ) => absoluteUrl,
-    _ => null,
-  };
+    IsAbsoluteUri: true,
+    Scheme: "http" or "https" or "file",
+  }
+    ? uri
+    : null;
 
   internal static bool Test(System.Uri url)
   {
