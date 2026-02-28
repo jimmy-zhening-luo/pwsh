@@ -20,6 +20,14 @@ public abstract class GitCommand(
       .. ParseArguments(),
     ];
 
+    var newable = System.Enum.TryParse<Git.NewableVerb>(
+      Verb,
+      true,
+      out var _
+    )
+      ? true
+      : false;
+
     var repository = GitWorkingDirectory.Resolve(
       Pwd(),
       WorkingDirectory,

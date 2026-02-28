@@ -8,7 +8,7 @@ namespace Module.Commands.Code.Git;
 [Alias("g")]
 public sealed class GitInvoke : NativeCommand
 {
-  private enum NewableVerb
+  public enum NewableVerb
   {
     clone,
     config,
