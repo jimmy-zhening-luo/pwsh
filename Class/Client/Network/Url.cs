@@ -2,6 +2,39 @@ namespace Module.Client.Network;
 
 internal static class Url
 {
+  internal static System.Uri? ToAbsoluteUrl(object? uri) => ToAbsoluteUrl(uri?.ToString());
+  internal static System.Uri? ToAbsoluteUrl(
+    [System.Diagnostics.CodeAnalysis.StringSyntax(
+      System.Diagnostics.CodeAnalysis.StringSyntaxAttribute.Uri
+    )]
+    string? uri
+  ) => !string.IsNullOrWhiteSpace(uri)
+    && System.Uri.TryCreate(
+        uri,
+        System.UriKind.RelativeOrAbsolute,
+        out var url
+      )
+    ? ToAbsoluteUrl(url)
+    : null;
+  internal static System.Uri? ToAbsoluteUrl(System.Uri? uri) => uri switch
+  {
+    null => null,
+    {
+      IsAbsoluteUri: true,
+      Scheme: string scheme,
+      Host: string host,
+    } when string.IsNullOrWhiteSpace(host)
+      || scheme is not ("http" or "https") => null,
+    { IsAbsoluteUri: true } => uri,
+    { OriginalString: string s } when !string.IsNullOrWhiteSpace(s)
+      && System.Uri.TryCreate(
+          "http://" + s.Trim(),
+          System.UriKind.Absolute,
+          out var absoluteUrl
+        ) => absoluteUrl,
+    _ => null,
+  };
+
   internal static bool Test(
     System.Uri url,
     System.Net.Http.HttpClient client
