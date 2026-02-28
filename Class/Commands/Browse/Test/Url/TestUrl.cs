@@ -27,9 +27,19 @@ public sealed class TestUrl : CoreCommand
 
       foreach (var uri in value)
       {
-        if (Client.Network.Url.ToAbsoluteHttpOrFileUri(uri) is { } url)
+        if (Client.Network.Url.IsHttpOrFile(uri))
         {
-          urls.Add(url);
+          urls.Add(uri);
+        }
+        else if (
+          !uri.IsAbsoluteUri
+          && Client.Network.Url.ToAbsoluteHttpOrFileUri(
+            $"http://{uri.OriginalString.Trim()}"
+          ) is var httpUri
+          && Client.Network.Url.IsHttp(httpUri)
+        )
+        {
+          urls.Add(httpUri);
         }
       }
     }
@@ -46,7 +56,7 @@ public sealed class TestUrl : CoreCommand
         {
           Scheme: "file",
           IsFile: true,
-          LocalPath: string path
+          LocalPath: var path
         } when System.IO.Path.Exists(path):
         case
         {
