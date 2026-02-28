@@ -49,17 +49,6 @@ public sealed class TestCommand : CoreCommand
         Greeting
       )
     );
-
-    AddScript(
-      "& git status"
-    );
-
-    ProcessSteppablePipeline();
-    EndSteppablePipeline();
-
-    Clear();
-
-    WriteObject(HadNativeErrors);
   }
 
   private string Greet(string name) => string.Concat(
