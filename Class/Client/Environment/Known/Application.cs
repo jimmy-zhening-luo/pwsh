@@ -6,6 +6,10 @@ internal static class Application
     @"Programs\Microsoft VS Code\bin\code.cmd"
   );
 
+  internal static string WinGet => Folder.LocalAppData(
+    @"Microsoft\WindowsApps\winget.exe"
+  );
+
   internal static string Chrome => Folder.ProgramFiles(
     @"Google\Chrome\Application\chrome.exe"
   );
