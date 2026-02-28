@@ -294,6 +294,10 @@ public sealed class NpmInvoke : CoreCommand
       {
         npmArguments.Add("-P");
       }
+      if (version)
+      {
+        npmArguments.Add("-v");
+      }
     }
     else
     {
