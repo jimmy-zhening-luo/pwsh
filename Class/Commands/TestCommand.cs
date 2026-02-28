@@ -49,9 +49,13 @@ public sealed class TestCommand : CoreCommand
         Greeting
       )
     );
-    WriteObject(
-      Host.Name
+
+    AddScript(
+      "& echo hello"
     );
+
+    BeginSteppablePipeline();
+    ProcessSteppablePipeline();
   }
 
   private string Greet(string name) => string.Concat(
