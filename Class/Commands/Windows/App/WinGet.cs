@@ -9,7 +9,7 @@ public abstract class WinGetCommand : CoreCommand
   )]
   public string[] ArgumentList { get; set; } = [];
 
-  private protected WinGet => Client.Environment.Known.Application.WinGet;
+  private protected string WinGet => Client.Environment.Known.Application.WinGet;
 
   private protected abstract List<string> ParseWinGetCommand();
 
