@@ -44,8 +44,8 @@ public abstract class CoreCommand(
   private SteppablePipeline SteppablePipeline => steppablePipeline ??= PS.GetSteppablePipeline();
   private SteppablePipeline? steppablePipeline;
 
-  private bool HadError => powershell is not null
-    && powershell.HadError;
+  private bool HadErrors => powershell is not null
+    && powershell.HadErrors;
 
   private bool BlockedBySsh => SkipSsh
     && Client.Environment.Known.Variable.InSsh;
