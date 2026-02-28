@@ -50,31 +50,12 @@ public sealed class GetHelpOnline : CoreCommand
         if (
           link?.Uri is not null
           and object noteProperty
+          && Client.Network.Url.ToAbsoluteHttpOrFileUri(
+            noteProperty
+          ) is { } uri
         )
         {
-          var uriString = noteProperty.ToString();
-
-          if (
-            uriString is not (null or "")
-            && (
-              uriString.StartsWith("https://")
-              || uriString.StartsWith("http://")
-            )
-          )
-          {
-            System.Uri url = new(uriString);
-
-            if (
-              url is
-              {
-                IsAbsoluteUri: true,
-                Host: not ""
-              }
-            )
-            {
-              urls.Add(url);
-            }
-          }
+          urls.Add(uri);
         }
       }
     }
