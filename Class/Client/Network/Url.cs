@@ -2,6 +2,15 @@ namespace Module.Client.Network;
 
 internal static class Url
 {
+  [System.Flags]
+  public enum Scheme
+  {
+    None,
+    Http,
+    File,
+    HttpOrFile,
+  }
+
   static System.Net.Http.HttpClient? client;
 
   internal static bool IsHttp(
@@ -30,23 +39,42 @@ internal static class Url
     System.Uri? uri
   ) => IsHttp(uri) || IsFile(uri);
 
-  internal static System.Uri? ToAbsoluteHttpOrFileUri(object? uri) => ToAbsoluteHttpOrFileUri(uri?.ToString());
-  internal static System.Uri? ToAbsoluteHttpOrFileUri(
-    [System.Diagnostics.CodeAnalysis.StringSyntax(
-      System.Diagnostics.CodeAnalysis.StringSyntaxAttribute.Uri
-    )]
-    string? uri
+  internal static System.Uri? ToAbsoluteUri(
+    object? uri,
+    Scheme scheme = Scheme.Http
+  ) => ToAbsoluteUri(uri?.ToString(), scheme);
+  internal static System.Uri? ToAbsoluteUri(
+    string? uri,
+    Scheme scheme = Scheme.Http
   ) => !string.IsNullOrWhiteSpace(uri)
     && System.Uri.TryCreate(
         uri,
         System.UriKind.Absolute,
         out var url
       )
-    ? ToAbsoluteHttpOrFileUri(url)
+    ? ToAbsoluteUri(url, scheme)
     : default;
-  internal static System.Uri? ToAbsoluteHttpOrFileUri(System.Uri? uri) => IsHttpOrFile(uri)
+  internal static System.Uri? ToAbsoluteUri(
+    System.Uri? uri,
+    Scheme scheme = Scheme.Http
+  ) => (scheme | Scheme.Http) != default
+    && IsHttp(uri)
+    || (scheme | Scheme.File) != default
+    && IsFile(uri)
     ? uri
     : default;
+
+  internal static System.Uri? ToAbsoluteHttpUri(object? uri) => ToAbsoluteHttpUri(uri?.ToString());
+  internal static System.Uri? ToAbsoluteHttpUri(string? uri) => ToAbsoluteUri(uri, Scheme.Http);
+  internal static System.Uri? ToAbsoluteHttpUri(System.Uri? uri) => ToAbsoluteUri(uri, Scheme.Http);
+
+  internal static System.Uri? ToAbsoluteFileUri(object? uri) => ToAbsoluteFileUri(uri?.ToString());
+  internal static System.Uri? ToAbsoluteFileUri(string? uri) => ToAbsoluteUri(uri, Scheme.File);
+  internal static System.Uri? ToAbsoluteFileUri(System.Uri? uri) => ToAbsoluteUri(uri, Scheme.File);
+
+  internal static System.Uri? ToAbsoluteHttpOrFileUri(object? uri) => ToAbsoluteHttpOrFileUri(uri?.ToString());
+  internal static System.Uri? ToAbsoluteHttpOrFileUri(string? uri) => ToAbsoluteUri(uri, Scheme.HttpOrFile);
+  internal static System.Uri? ToAbsoluteHttpOrFileUri(System.Uri? uri) => ToAbsoluteUri(uri, Scheme.HttpOrFile);
 
   internal static bool Test(System.Uri url)
   {

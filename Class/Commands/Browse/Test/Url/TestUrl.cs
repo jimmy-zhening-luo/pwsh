@@ -33,10 +33,9 @@ public sealed class TestUrl : CoreCommand
         }
         else if (
           !uri.IsAbsoluteUri
-          && Client.Network.Url.ToAbsoluteHttpOrFileUri(
+          && Client.Network.Url.ToAbsoluteHttpUri(
             $"http://{uri.OriginalString.Trim()}"
-          ) is var httpUri
-          && Client.Network.Url.IsHttp(httpUri)
+          ) is { } httpUri
         )
         {
           urls.Add(httpUri);
@@ -50,21 +49,15 @@ public sealed class TestUrl : CoreCommand
   {
     foreach (var url in Uri)
     {
-      switch (url)
+      if (
+        Client.Network.Url.IsFile(url)
+        && System.IO.Path.Exists(url.LocalPath)
+        || Client.Network.Url.IsHttp(url)
+        && Client.Network.Dns.Resolve(url)
+        && Client.Network.Url.Test(url)
+      )
       {
-        case
-        {
-          Scheme: "file",
-          IsFile: true,
-          LocalPath: var path
-        } when System.IO.Path.Exists(path):
-        case
-        {
-          Scheme: "http" or "https",
-        } when Client.Network.Dns.Resolve(url)
-          && Client.Network.Url.Test(url):
-          WriteObject(url);
-          break;
+        WriteObject(url);
       }
     }
   }
