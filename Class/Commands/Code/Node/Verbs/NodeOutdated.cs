@@ -25,7 +25,7 @@ public sealed class NodeOutdated() : NodeCommand("outdated")
   {
     noThrow = true;
 
-    return all && !(new List<string>(ArgumentList)).Contains(FlagAll)
+    return all && !new List<string>(ArgumentList).Contains(FlagAll)
       ? [FlagAll]
       : [];
   }
