@@ -51,7 +51,7 @@ public sealed class TestCommand : CoreCommand
     );
 
     AddScript(
-      "& echo hello"
+      "& npm -v"
     );
 
     BeginSteppablePipeline();
