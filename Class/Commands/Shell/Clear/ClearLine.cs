@@ -60,8 +60,6 @@ public sealed class ClearLine : CoreCommand
       )
         .AddParameters(BoundParameters);
 
-      BeginSteppablePipeline();
-
       ProcessSteppablePipeline();
     }
   }
