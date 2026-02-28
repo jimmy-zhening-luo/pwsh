@@ -62,6 +62,7 @@ internal static class Url
     }
   }
 
+  internal static void Open() => Open(string.Empty);
   internal static void Open(System.Uri uri)
   {
     if (
