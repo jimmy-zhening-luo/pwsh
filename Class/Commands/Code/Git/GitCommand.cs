@@ -17,7 +17,7 @@ public abstract class GitCommand(string Verb) : NativeCommand
       .. ParseArguments(),
     ];
 
-    var newable = System.Enum.TryParse<GitInvoke.NewableVerb>(
+    var newable = System.Enum.TryParse<Verbs.GitInvoke.NewableVerb>(
       Verb,
       true,
       out var _
