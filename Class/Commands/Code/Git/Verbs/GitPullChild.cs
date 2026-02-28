@@ -73,6 +73,12 @@ public sealed class GitPullChild : CoreCommand
 
       ProcessSteppablePipeline();
       EndSteppablePipeline();
+
+      if (HadNativeErrors)
+      {
+        WriteWarning("git error");
+      }
+
       Clear();
 
       ++progress;
