@@ -26,14 +26,8 @@ public sealed class GitCompare() : GitCommand("diff")
 
     if (
       WorkingDirectory is not ""
-      && GitWorkingDirectory.Resolve(
-        Pwd(),
-        Pwd()
-      ) is not ""
-      && GitWorkingDirectory.Resolve(
-        Pwd(),
-        WorkingDirectory
-      ) is ""
+      && ResolveWorkingDirectory(Pwd()) is not ""
+      && ResolveWorkingDirectory(WorkingDirectory) is ""
     )
     {
       arguments.Add(WorkingDirectory);

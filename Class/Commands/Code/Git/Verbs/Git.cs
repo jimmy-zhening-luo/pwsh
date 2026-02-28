@@ -63,18 +63,9 @@ public sealed class Git : NativeCommand
         {
           if (
             WorkingDirectory is not ""
-            && GitWorkingDirectory.Resolve(
-              Pwd(),
-              Pwd()
-            ) is ""
-            && GitWorkingDirectory.Resolve(
-              Pwd(),
-              WorkingDirectory
-            ) is ""
-            && GitWorkingDirectory.Resolve(
-              Pwd(),
-              Verb
-            ) is not ""
+            && ResolveWorkingDirectory(Pwd()) is ""
+            && ResolveWorkingDirectory(WorkingDirectory) is ""
+            && ResolveWorkingDirectory(Verb) is not ""
           )
           {
             arguments.Add(WorkingDirectory);
@@ -99,11 +90,7 @@ public sealed class Git : NativeCommand
       }
     }
 
-    var repository = GitWorkingDirectory.Resolve(
-      Pwd(),
-      WorkingDirectory,
-      newable
-    );
+    var repository = ResolveWorkingDirectory(WorkingDirectory, newable);
 
     if (repository is "")
     {
@@ -111,11 +98,7 @@ public sealed class Git : NativeCommand
       {
         arguments.Insert(default, WorkingDirectory);
 
-        repository = GitWorkingDirectory.Resolve(
-          Pwd(),
-          Pwd(),
-          newable
-        );
+        repository = ResolveWorkingDirectory(Pwd(), newable);
       }
 
       if (repository is "")
