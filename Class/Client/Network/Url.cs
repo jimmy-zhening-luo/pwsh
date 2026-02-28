@@ -31,11 +31,10 @@ internal static class Url
 
   internal static void Open(System.Uri uri)
   {
-    var url = uri
-      .ToString()
-      .Trim();
-
-    if (url is not "")
+    if (
+      uri.ToString() is string url
+      && !string.IsNullOrWhiteSpace(url)
+    )
     {
       Open(url);
     }
