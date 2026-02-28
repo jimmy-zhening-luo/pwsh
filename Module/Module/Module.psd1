@@ -70,6 +70,7 @@
     'Measure-GitRepository'
     'Get-GitRepository'
     'Get-ChildGitRepository'
+    'Invoke-Npm'
   )
   VariablesToExport    = @()
   AliasesToExport      = @(
@@ -140,5 +141,6 @@
     'gg'
     'gp'
     'gpp'
+    'n'
   )
 }
