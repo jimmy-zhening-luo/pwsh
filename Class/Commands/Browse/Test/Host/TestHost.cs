@@ -55,6 +55,7 @@ public sealed class TestHost() : WrappedCommand(
     Mandatory = true,
     Position = 1
   )]
+  [ValidateNotNullOrWhiteSpace]
   [EnumCompletions(typeof(TestHostWellKnownPort))]
   public string CommonTCPPort { get; set; } = string.Empty;
 
