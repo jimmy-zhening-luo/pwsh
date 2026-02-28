@@ -1,47 +1,5 @@
 <#
 .LINK
-https://git-scm.com/docs/git-clone
-#>
-function Import-GitRepository {
-  [Alias('gitcl')]
-  param(
-    # Remote repository URL or 'org/repo'
-    [string]$Repository,
-
-    [Module.Commands.Code.WorkingDirectoryCompletions()]
-    # Directory path into which to clone the repository. If the path points to a non-existant container, the container will be created. Throws a terminating error if container creation fails or git returns an error.
-    [string]$WorkingDirectory,
-
-    [Alias('ssh')]
-    # Use git@github.com remote protocol instead of the default HTTPS
-    [switch]$ForceSsh
-  )
-
-  [string[]]$RepositoryPathSegments = $Repository -split '/' -notmatch '^\s*$'
-
-  if (!$RepositoryPathSegments) {
-    throw 'No repository name given.'
-  }
-
-  if ($RepositoryPathSegments.Count -eq 1) {
-    $RepositoryPathSegments = , 'jimmy-zhening-luo' + $RepositoryPathSegments
-  }
-
-  $Origin = (
-    $ForceSsh ? 'git@github.com:' : 'https://github.com/'
-  ) + ($RepositoryPathSegments -join '/')
-
-  $CloneArgument = [System.Collections.Generic.List[string]]::new()
-  $CloneArgument.Add($Origin)
-  if ($args) {
-    $CloneArgument.AddRange([string[]]$args)
-  }
-
-  Invoke-Git -Verb clone -WorkingDirectory $WorkingDirectory -ArgumentList $CloneArgument
-}
-
-<#
-.LINK
 https://git-scm.com/docs/git-commit
 #>
 function Write-GitRepository {

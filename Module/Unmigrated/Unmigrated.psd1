@@ -8,7 +8,6 @@
   Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
   PowerShellVersion    = '7.5'
   FunctionsToExport    = @(
-    'Import-GitRepository'
     'Write-GitRepository'
     'Push-GitRepository'
     'Reset-GitRepository'
@@ -17,7 +16,6 @@
   CmdletsToExport      = @()
   VariablesToExport    = @()
   AliasesToExport      = @(
-    'gitcl'
     'gm'
     'gs'
     'gr'
