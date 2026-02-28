@@ -173,7 +173,6 @@ function Invoke-Git {
 https://git-scm.com/docs/git-status
 #>
 function Measure-GitRepository {
-
   [Alias('gg')]
   param(
     [Module.Commands.Code.WorkingDirectoryCompletions()]
@@ -189,7 +188,6 @@ function Measure-GitRepository {
 https://git-scm.com/docs/git-clone
 #>
 function Import-GitRepository {
-
   [Alias('gitcl')]
   param(
     # Remote repository URL or 'org/repo'
@@ -232,7 +230,6 @@ function Import-GitRepository {
 https://git-scm.com/docs/git-pull
 #>
 function Get-GitRepository {
-
   [Alias('gp')]
   param(
     [Module.Commands.Code.WorkingDirectoryCompletions()]
@@ -276,7 +273,6 @@ function Get-ChildGitRepository {
 https://git-scm.com/docs/git-diff
 #>
 function Compare-GitRepository {
-
   [Alias('gd')]
   param(
     [Module.Commands.Code.PathSpecCompletions()]
@@ -317,7 +313,6 @@ function Compare-GitRepository {
 https://git-scm.com/docs/git-add
 #>
 function Add-GitRepository {
-
   [Alias('ga')]
   param(
     [Module.Commands.Code.PathSpecCompletions()]
@@ -366,7 +361,6 @@ function Add-GitRepository {
 https://git-scm.com/docs/git-commit
 #>
 function Write-GitRepository {
-
   [Alias('gm')]
   param(
     [Module.Commands.Code.WorkingDirectoryCompletions()]
@@ -467,7 +461,6 @@ function Write-GitRepository {
 https://git-scm.com/docs/git-push
 #>
 function Push-GitRepository {
-
   [Alias('gs')]
   param(
     [Module.Commands.Code.WorkingDirectoryCompletions()]
@@ -502,7 +495,6 @@ function Push-GitRepository {
 https://git-scm.com/docs/git-reset
 #>
 function Reset-GitRepository {
-
   [Alias('gr')]
   param(
     [Module.Commands.Code.WorkingDirectoryCompletions()]
@@ -593,7 +585,6 @@ function Reset-GitRepository {
 https://git-scm.com/docs/git-reset
 #>
 function Restore-GitRepository {
-
   [Alias('grp')]
   param(
     [Module.Commands.Code.WorkingDirectoryCompletions()]
@@ -941,7 +932,6 @@ function Step-NodePackageVersion {
 https://docs.npmjs.com/cli/commands/npm-run
 #>
 function Invoke-NodePackageScript {
-
   [Alias('nr')]
   param(
     # Name of the npm script to run
