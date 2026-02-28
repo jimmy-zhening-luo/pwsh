@@ -40,32 +40,7 @@ function Import-GitRepository {
   Invoke-Git -Verb clone -WorkingDirectory $WorkingDirectory -ArgumentList $CloneArgument
 }
 
-<#
-.LINK
-https://git-scm.com/docs/git-add
-#>
 function Add-GitRepository {
-  [Alias('ga')]
-  param(
-    [Module.Commands.Code.PathSpecCompletions()]
-    # File pattern of files to add, defaults to '.' (all)
-    [string]$Name,
-
-    [Module.Commands.Code.WorkingDirectoryCompletions()]
-    # Repository path
-    [string]$WorkingDirectory,
-
-    # Equivalent to git add --renormalize flag
-    [switch]$Renormalize
-  )
-
-  if (!$Name) {
-    $Name = '.'
-  }
-
-  $AddArgument = [System.Collections.Generic.List[string]]::new()
-  $AddArgument.Add($Name)
-
   if (
     $WorkingDirectory -and (
       [Module.Commands.Code.Git.GitWorkingDirectory]::Resolve($PWD.Path, $PWD.Path)
