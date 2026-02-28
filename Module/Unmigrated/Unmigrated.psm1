@@ -807,11 +807,7 @@ function Compare-NodeModule {
       $NodeArgument.AddRange([string[]]$Argument)
     }
 
-    if (
-      $All -and -not $NodeArgument.Contains(
-        '--all'
-      )
-    ) {
+    if ($All -and !$NodeArgument.Contains('--all')) {
       $NodeArgument.Add('--all')
     }
 
@@ -974,7 +970,7 @@ function Test-NodePackage {
     }
 
     if (
-      $IgnoreScript -and -not $NodeArgument.Contains(
+      $IgnoreScript -and !$NodeArgument.Contains(
         '--ignore-scripts'
       )
     ) {
