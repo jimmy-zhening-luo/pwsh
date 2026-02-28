@@ -40,7 +40,7 @@ public abstract class CoreCommand(
 
   private protected bool HadErrors => powershell?.HadErrors ?? default;
 
-  private protected int LastExitCode => PSVariable<int>("LASTEXITCODE") ?? default;
+  private protected int LastExitCode => PSVariable<int>("LASTEXITCODE");
 
   private PowerShell PS => powershell ??= PowerShellHost.Create();
   private PowerShell? powershell;
