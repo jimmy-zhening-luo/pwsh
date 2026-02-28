@@ -20,7 +20,7 @@ public abstract class GitCommand(
       .. ParseArguments(),
     ];
 
-    var newable = System.Enum.TryParse<Git.NewableVerb>(
+    var newable = System.Enum.TryParse<Git.Git.NewableVerb>(
       Verb,
       true,
       out var _
