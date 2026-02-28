@@ -136,7 +136,7 @@ function Invoke-Git {
     if ($I) { $GitArgument.Add('-i') }
     if ($O) { $GitArgument.Add('-o') }
     if ($P) { $GitArgument.Add('-P') }
-    if ($Version) { $GitArgument.Add('-v') }
+    if ($V) { $GitArgument.Add('-v') }
 
     if ($Argument) {
       $GitArgument.AddRange([string[]]$Argument)
