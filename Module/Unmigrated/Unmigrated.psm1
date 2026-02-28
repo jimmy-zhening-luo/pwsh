@@ -31,7 +31,7 @@ function Invoke-Git {
     [Parameter()]
     [Alias('v')]
     # Show git version if no command is specified. Otherwise, pass the -v flag as git argument.
-    [switch]$Version
+    [switch]$Version,
 
     [Parameter(DontShow)]
     # Pass -d flag as git argument
