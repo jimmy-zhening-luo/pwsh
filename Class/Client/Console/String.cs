@@ -22,4 +22,15 @@ internal static partial class String
         "'"
       )
     : escapedText;
+
+  internal static string EscapeDoubleQuoted(string text) => text.Contains(' ')
+  ? string.Concat(
+      "\"",
+      text.Replace(
+        "\"",
+        "\\\""
+      ),
+      "\""
+    )
+  : text;
 }
