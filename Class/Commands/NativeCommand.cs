@@ -130,10 +130,7 @@ public abstract class NativeCommand(
 
     command.AddRange(commandArguments.Arguments);
 
-    if (ArgumentList is not [])
-    {
-      command.AddRange(ArgumentList);
-    }
+    command.AddRange(ArgumentList);
 
     List<string> escapedCommand = [];
 
