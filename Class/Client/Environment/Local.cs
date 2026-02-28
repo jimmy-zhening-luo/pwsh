@@ -13,7 +13,7 @@ internal static class Local
   ) => File.PathString.FullPathLocationRelative(
     folders.TryGetValue(
       folder,
-      out string? folderLocation
+      out var folderLocation
     )
       ? folderLocation
       : folders[folder] = System.Environment.GetFolderPath(folder),
