@@ -67,6 +67,7 @@
     'Get-Type'
     'Tee-Variable'
     'Invoke-Git'
+    'Measure-GitRepository'
   )
   VariablesToExport    = @()
   AliasesToExport      = @(
@@ -134,5 +135,6 @@
     'typeof'
     't'
     'g'
+    'gg'
   )
 }

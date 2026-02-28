@@ -1,20 +1,5 @@
 <#
 .LINK
-https://git-scm.com/docs/git-status
-#>
-function Measure-GitRepository {
-  [Alias('gg')]
-  param(
-    [Module.Commands.Code.WorkingDirectoryCompletions()]
-    # Repository path
-    [string]$WorkingDirectory
-  )
-
-  Invoke-Git -Verb status -WorkingDirectory $WorkingDirectory -ArgumentList $args
-}
-
-<#
-.LINK
 https://git-scm.com/docs/git-clone
 #>
 function Import-GitRepository {

@@ -8,7 +8,6 @@
   Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
   PowerShellVersion    = '7.5'
   FunctionsToExport    = @(
-    'Measure-GitRepository'
     'Import-GitRepository'
     'Get-GitRepository'
     'Get-ChildGitRepository'
@@ -28,7 +27,6 @@
   CmdletsToExport      = @()
   VariablesToExport    = @()
   AliasesToExport      = @(
-    'gg'
     'gitcl'
     'gp'
     'gpp'
