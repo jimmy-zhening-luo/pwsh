@@ -213,11 +213,11 @@ public sealed class NpmInvoke : CoreCommand
       "--color=always",
     ];
 
-    List<string> npmArguments = [];
+    List<string> arguments = [];
 
     if (ArgumentList is not [])
     {
-      npmArguments.AddRange(ArgumentList);
+      arguments.AddRange(ArgumentList);
     }
 
     if (WorkingDirectory is not "")
@@ -239,7 +239,7 @@ public sealed class NpmInvoke : CoreCommand
       }
       else
       {
-        npmArguments.Insert(default, WorkingDirectory);
+        arguments.Insert(default, WorkingDirectory);
 
         WorkingDirectory = string.Empty;
       }
@@ -252,9 +252,9 @@ public sealed class NpmInvoke : CoreCommand
       && !Aliases.ContainsKey(Verb.ToLower())
     )
     {
-      var deferredVerb = npmArguments is []
+      var deferredVerb = arguments is []
         ? ""
-        : npmArguments.Find(
+        : arguments.Find(
             argument => Verbs.Contains(
               argument.ToLower()
             )
@@ -262,10 +262,10 @@ public sealed class NpmInvoke : CoreCommand
 
       if (deferredVerb is not (null or ""))
       {
-        _ = npmArguments.Remove(deferredVerb);
+        _ = arguments.Remove(deferredVerb);
       }
 
-      npmArguments.Insert(default, Verb);
+      arguments.Insert(default, Verb);
 
       Verb = deferredVerb ?? string.Empty;
     }
@@ -276,27 +276,27 @@ public sealed class NpmInvoke : CoreCommand
 
       if (d)
       {
-        npmArguments.Add("-D");
+        arguments.Add("-D");
       }
       if (e)
       {
-        npmArguments.Add("-E");
+        arguments.Add("-E");
       }
       if (i)
       {
-        npmArguments.Add("-i");
+        arguments.Add("-i");
       }
       if (o)
       {
-        npmArguments.Add("-o");
+        arguments.Add("-o");
       }
       if (p)
       {
-        npmArguments.Add("-P");
+        arguments.Add("-P");
       }
       if (version)
       {
-        npmArguments.Add("-v");
+        arguments.Add("-v");
       }
     }
     else
@@ -307,9 +307,9 @@ public sealed class NpmInvoke : CoreCommand
       }
     }
 
-    if (npmArguments is not [])
+    if (arguments is not [])
     {
-      npmCommand.AddRange(npmArguments);
+      npmCommand.AddRange(arguments);
     }
 
     List<string> escapedNodeCommand = [];
