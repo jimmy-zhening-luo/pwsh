@@ -43,9 +43,6 @@ public abstract class CoreCommand(
   private PowerShell PS => powershell ??= PowerShellHost.Create();
   private PowerShell? powershell;
 
-  private SteppablePipeline SteppablePipeline => steppablePipeline ??= PS.GetSteppablePipeline();
-  private SteppablePipeline? steppablePipeline;
-
   private bool BlockedBySsh => SkipSsh
     && Client.Environment.Known.Variable.InSsh;
 
@@ -178,25 +175,45 @@ public abstract class CoreCommand(
   {
     if (Alive)
     {
-      SteppablePipeline.Begin(this);
-    }
-  }
+      if (steppablePipeline is not null)
+      {
+        CleanPipeline();
+      }
 
-  private protected void ProcessSteppablePipeline()
-  {
-    if (Alive)
-    {
-      _ = SteppablePipeline.Process();
+      if (powershell is not null)
+      {
+        steppablePipeline = powershell.GetSteppablePipeline();
+
+        steppablePipeline.Begin(this);
+      }
     }
   }
 
   private protected void ProcessSteppablePipeline(
-    object input
+    object? input = default
   )
   {
     if (Alive)
     {
-      _ = SteppablePipeline.Process(input);
+      if (steppablePipeline is null)
+      {
+        BeginSteppablePipeline();
+      }
+
+      if (steppablePipeline is not null)
+      {
+        _ = input is null
+          ? steppablePipeline.Process();
+          : steppablePipeline.Process(input);
+      }
+    }
+  }
+
+  private protected void EndSteppablePipeline()
+  {
+    if (Alive && steppablePipeline is not null)
+    {
+      _ = steppablePipeline.End();
     }
   }
 
@@ -290,6 +307,14 @@ public abstract class CoreCommand(
 
   private void Clean()
   {
+    CleanPipeline();
+
+    powershell?.Dispose();
+    powershell = default;
+  }
+
+  private void CleanPipeline()
+  {
     if (steppablePipeline is not null)
     {
       _ = steppablePipeline.End();
@@ -299,8 +324,6 @@ public abstract class CoreCommand(
 
       steppablePipeline = default;
     }
-
-    powershell?.Dispose();
-    powershell = default;
   }
 }
+

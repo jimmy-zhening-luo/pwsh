@@ -56,6 +56,7 @@ public sealed class TestCommand : CoreCommand
 
     BeginSteppablePipeline();
     ProcessSteppablePipeline();
+    EndSteppablePipeline();
 
     WriteObject(HadErrors);
   }
