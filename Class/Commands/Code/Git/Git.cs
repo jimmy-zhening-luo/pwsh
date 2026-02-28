@@ -54,14 +54,36 @@ public abstract class GitCommand(
       .. ParseArguments(),
     ];
 
-    var newable = System.Enum.TryParse<NewableVerb>(
-      IntrinsicVerb,
-      true,
-      out var _
-    )
-      ? true
-      : false;
+    bool newable = default;
+    switch (IntrinsicVerb)
+    {
+      case "" when v:
+        newable = true;
+        break;
 
+      case "":
+        IntrinsicVerb = "status";
+        break;
+
+      case string verb when System.Enum.TryParse<NewableVerb>(
+        verb,
+        true,
+        out var newableVerb
+      ):
+        newable = true;
+        IntrinsicVerb = newableVerb.ToString();
+
+        break;
+
+      case string verb when Verbs.TryGetValue(
+        verb.ToLower(),
+        out var exactVerb
+      ):
+        IntrinsicVerb = exactVerb;
+        break;
+    }
+
+    var pwd = Pwd();
     var repository = ResolveWorkingDirectory(
       WorkingDirectory,
       newable
@@ -73,18 +95,17 @@ public abstract class GitCommand(
       {
         arguments.Insert(default, WorkingDirectory);
 
-        repository = ResolveWorkingDirectory(
-          Pwd(),
-          newable
-        );
+        repository = ResolveWorkingDirectory(pwd, newable);
       }
+    }
 
-      if (repository is "")
-      {
-        Throw(
-          $"Path {WorkingDirectory} is not a git repository."
-        );
-      }
+    if (repository is "")
+    {
+      Throw(
+         newable
+          ? $"Path does not support the current git operation: {WorkingDirectory}"
+          : $"Path is not a git repository: {WorkingDirectory}"
+      );
     }
 
     List<string> command = [
@@ -92,11 +113,23 @@ public abstract class GitCommand(
       Client.Environment.Known.Application.Git,
       "-c",
       "color.ui=always",
-      "-C",
-      repository,
-      IntrinsicVerb,
-      .. arguments,
     ];
+
+    if (
+      repository is not ""
+      && repository != pwd
+    )
+    {
+      command.Add("-C");
+      command.Add(repository);
+    }
+
+    if (IntrinsicVerb is not "")
+    {
+      command.Add(IntrinsicVerb);
+    }
+
+    command.AddRange(arguments);
 
     if (e)
     {

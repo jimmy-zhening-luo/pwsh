@@ -6,7 +6,7 @@ namespace Module.Commands.Code.Git.Verbs;
   HelpUri = "https://git-scm.com/docs"
 )]
 [Alias("g")]
-public sealed class Git : NativeCommand
+public sealed class Git : GitCommand
 {
   internal sealed class GitVerbCompletionsAttribute() : CompletionsAttribute([.. Verbs]);
 
@@ -15,14 +15,13 @@ public sealed class Git : NativeCommand
     HelpMessage = "Git command"
   )]
   [GitVerbCompletions]
-  public string Verb { get; set; } = string.Empty;
+  public string Verb
+  {
+    get => IntrinsicVerb;
+    set => IntrinsicVerb = value;
+  }
 
-  [Parameter(
-    Position = 1,
-    HelpMessage = "Repository path. For all verbs except 'clone', 'config', and 'init', the command will throw an error if there is no Git repository at the path."
-  )]
-  [WorkingDirectoryCompletions]
-  public string WorkingDirectory { get; set; } = string.Empty;
+  new public SwitchParameter V { get; set; }
 
   [Parameter(
     HelpMessage = "Show git version if no command is specified. Otherwise, pass the -v flag as argument."
@@ -30,116 +29,9 @@ public sealed class Git : NativeCommand
   [Alias("v")]
   public SwitchParameter Version
   {
-    get => version;
-    set => version = value;
+    get => v;
+    set => v = value;
   }
-  private bool version;
 
-  new public SwitchParameter V { get; set; }
-
-  private protected sealed override List<string> BuildNativeCommand()
-  {
-    bool newable = default;
-    List<string> arguments = [];
-
-    if (Verb is not "")
-    {
-      if (Verbs.Contains(Verb.ToLower()))
-      {
-        if (System.Enum.TryParse<GitCommand.NewableVerb>(Verb, true, out var newableVerb))
-        {
-          newable = true;
-
-          Verb = newableVerb.ToString();
-
-          if (GitArgument.Regex().IsMatch(WorkingDirectory))
-          {
-            arguments.Add(WorkingDirectory);
-
-            WorkingDirectory = string.Empty;
-          }
-        }
-        else
-        {
-          if (
-            WorkingDirectory is not ""
-            && ResolveWorkingDirectory(Pwd()) is ""
-            && ResolveWorkingDirectory(WorkingDirectory) is ""
-            && ResolveWorkingDirectory(Verb) is not ""
-          )
-          {
-            arguments.Add(WorkingDirectory);
-
-            WorkingDirectory = Verb;
-            Verb = "status";
-          }
-        }
-
-        Verb = Verb.ToLower();
-      }
-    }
-    else
-    {
-      if (version && ArgumentList is [])
-      {
-        newable = true;
-      }
-      else
-      {
-        Verb = "status";
-      }
-    }
-
-    var repository = ResolveWorkingDirectory(WorkingDirectory, newable);
-
-    if (repository is "")
-    {
-      if (WorkingDirectory is not "")
-      {
-        arguments.Insert(default, WorkingDirectory);
-
-        repository = ResolveWorkingDirectory(Pwd(), newable);
-      }
-
-      if (repository is "")
-      {
-        Throw(
-          $"Path {WorkingDirectory} is not a git repository."
-        );
-      }
-    }
-
-    List<string> command = [
-      "&",
-      Client.Environment.Known.Application.Git,
-      "-c",
-      "color.ui=always",
-      "-C",
-      repository
-    ];
-
-    if (Verb is not "")
-    {
-      command.Add(Verb);
-    }
-
-    command.AddRange(arguments);
-
-    if (e)
-    {
-      command.Add("-E");
-      e = false;
-    }
-    if (p)
-    {
-      command.Add("-P");
-      p = false;
-    }
-    if (version)
-    {
-      command.Add("-v");
-    }
-
-    return command;
-  }
+  private protected sealed override List<string> ParseArguments() => [];
 }
