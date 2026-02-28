@@ -32,7 +32,7 @@ public abstract class GitCommand(
 
   [Parameter(
     DontShow = true,
-    HelpMessage = "Pass -v flag as git argument"
+    HelpMessage = "Pass -v flag as argument"
   )]
   public SwitchParameter V
   {
@@ -43,7 +43,7 @@ public abstract class GitCommand(
 
   [Parameter(
     DontShow = true,
-    HelpMessage = "Pass -d flag as git argument"
+    HelpMessage = "Pass -d flag as argument"
   )]
   public SwitchParameter D
   {
@@ -54,7 +54,7 @@ public abstract class GitCommand(
 
   [Parameter(
     DontShow = true,
-    HelpMessage = "Pass -E flag as git argument"
+    HelpMessage = "Pass -E flag as argument"
   )]
   public SwitchParameter E
   {
@@ -65,7 +65,7 @@ public abstract class GitCommand(
 
   [Parameter(
     DontShow = true,
-    HelpMessage = "Pass -i flag as git argument"
+    HelpMessage = "Pass -i flag as argument"
   )]
   public SwitchParameter I
   {
@@ -76,7 +76,7 @@ public abstract class GitCommand(
 
   [Parameter(
     DontShow = true,
-    HelpMessage = "Pass -o flag as git argument"
+    HelpMessage = "Pass -o flag as argument"
   )]
   public SwitchParameter O
   {
@@ -87,7 +87,7 @@ public abstract class GitCommand(
 
   [Parameter(
     DontShow = true,
-    HelpMessage = "Pass -P flag as git argument"
+    HelpMessage = "Pass -P flag as argument"
   )]
   public SwitchParameter P
   {

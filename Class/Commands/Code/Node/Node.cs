@@ -140,7 +140,7 @@ public sealed class NpmInvoke : CoreCommand
   private bool noThrow;
 
   [Parameter(
-    HelpMessage = "Show npm version if no command is specified. Otherwise, pass the -v flag as npm argument."
+    HelpMessage = "Show npm version if no command is specified. Otherwise, pass the -v flag as argument."
   )]
   [Alias("v")]
   public SwitchParameter Version
@@ -152,7 +152,7 @@ public sealed class NpmInvoke : CoreCommand
 
   [Parameter(
     DontShow = true,
-    HelpMessage = "Pass -D flag as npm argument"
+    HelpMessage = "Pass -D flag as argument"
   )]
   public SwitchParameter D
   {
@@ -163,7 +163,7 @@ public sealed class NpmInvoke : CoreCommand
 
   [Parameter(
     DontShow = true,
-    HelpMessage = "Pass -E flag as npm argument"
+    HelpMessage = "Pass -E flag as argument"
   )]
   public SwitchParameter E
   {
@@ -174,7 +174,7 @@ public sealed class NpmInvoke : CoreCommand
 
   [Parameter(
     DontShow = true,
-    HelpMessage = "Pass -i flag as npm argument"
+    HelpMessage = "Pass -i flag as argument"
   )]
   public SwitchParameter I
   {
@@ -185,7 +185,7 @@ public sealed class NpmInvoke : CoreCommand
 
   [Parameter(
     DontShow = true,
-    HelpMessage = "Pass -o flag as npm argument"
+    HelpMessage = "Pass -o flag as argument"
   )]
   public SwitchParameter O
   {
@@ -196,7 +196,7 @@ public sealed class NpmInvoke : CoreCommand
 
   [Parameter(
     DontShow = true,
-    HelpMessage = "Pass -P flag as npm argument"
+    HelpMessage = "Pass -P flag as argument"
   )]
   public SwitchParameter P
   {

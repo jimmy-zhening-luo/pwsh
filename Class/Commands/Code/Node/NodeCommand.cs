@@ -29,7 +29,7 @@ public abstract class NpmCommand(string Verb) : CoreCommand
   private bool noThrow;
 
   [Parameter(
-    HelpMessage = "Pass -v flag as npm argument"
+    HelpMessage = "Pass -v flag as argument"
   )]
   public SwitchParameter V
   {
@@ -40,7 +40,7 @@ public abstract class NpmCommand(string Verb) : CoreCommand
 
   [Parameter(
     DontShow = true,
-    HelpMessage = "Pass -D flag as npm argument"
+    HelpMessage = "Pass -D flag as argument"
   )]
   public SwitchParameter D
   {
@@ -51,7 +51,7 @@ public abstract class NpmCommand(string Verb) : CoreCommand
 
   [Parameter(
     DontShow = true,
-    HelpMessage = "Pass -E flag as npm argument"
+    HelpMessage = "Pass -E flag as argument"
   )]
   public SwitchParameter E
   {
@@ -62,7 +62,7 @@ public abstract class NpmCommand(string Verb) : CoreCommand
 
   [Parameter(
     DontShow = true,
-    HelpMessage = "Pass -i flag as npm argument"
+    HelpMessage = "Pass -i flag as argument"
   )]
   public SwitchParameter I
   {
@@ -73,7 +73,7 @@ public abstract class NpmCommand(string Verb) : CoreCommand
 
   [Parameter(
     DontShow = true,
-    HelpMessage = "Pass -o flag as npm argument"
+    HelpMessage = "Pass -o flag as argument"
   )]
   public SwitchParameter O
   {
@@ -84,7 +84,7 @@ public abstract class NpmCommand(string Verb) : CoreCommand
 
   [Parameter(
     DontShow = true,
-    HelpMessage = "Pass -P flag as npm argument"
+    HelpMessage = "Pass -P flag as argument"
   )]
   public SwitchParameter P
   {

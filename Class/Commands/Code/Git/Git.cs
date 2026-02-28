@@ -74,7 +74,7 @@ public sealed class GitInvoke : CoreCommand
   private bool noThrow;
 
   [Parameter(
-    HelpMessage = "Show git version if no command is specified. Otherwise, pass the -v flag as git argument."
+    HelpMessage = "Show git version if no command is specified. Otherwise, pass the -v flag as argument."
   )]
   [Alias("v")]
   public SwitchParameter Version
@@ -86,7 +86,7 @@ public sealed class GitInvoke : CoreCommand
 
   [Parameter(
     DontShow = true,
-    HelpMessage = "Pass -d flag as git argument"
+    HelpMessage = "Pass -d flag as argument"
   )]
   public SwitchParameter D
   {
@@ -97,7 +97,7 @@ public sealed class GitInvoke : CoreCommand
 
   [Parameter(
     DontShow = true,
-    HelpMessage = "Pass -E flag as git argument"
+    HelpMessage = "Pass -E flag as argument"
   )]
   public SwitchParameter E
   {
@@ -108,7 +108,7 @@ public sealed class GitInvoke : CoreCommand
 
   [Parameter(
     DontShow = true,
-    HelpMessage = "Pass -i flag as git argument"
+    HelpMessage = "Pass -i flag as argument"
   )]
   public SwitchParameter I
   {
@@ -119,7 +119,7 @@ public sealed class GitInvoke : CoreCommand
 
   [Parameter(
     DontShow = true,
-    HelpMessage = "Pass -o flag as git argument"
+    HelpMessage = "Pass -o flag as argument"
   )]
   public SwitchParameter O
   {
@@ -130,7 +130,7 @@ public sealed class GitInvoke : CoreCommand
 
   [Parameter(
     DontShow = true,
-    HelpMessage = "Pass -P flag as git argument"
+    HelpMessage = "Pass -P flag as argument"
   )]
   public SwitchParameter P
   {
