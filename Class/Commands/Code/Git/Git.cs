@@ -11,7 +11,7 @@ public abstract class GitCommand(
     init
   }
 
-  internal static readonly HashSet<string> Verbs = [
+  private protected static readonly HashSet<string> Verbs = [
     "switch",
     "merge",
     "diff",

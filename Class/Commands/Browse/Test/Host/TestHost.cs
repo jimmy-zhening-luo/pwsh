@@ -13,7 +13,7 @@ public sealed class TestHost() : WrappedCommand(
   CommandType: CommandTypes.Function
 )
 {
-  public enum TestHostVerbosity
+  private enum TestHostVerbosity
   {
     Quiet,
     Detailed
