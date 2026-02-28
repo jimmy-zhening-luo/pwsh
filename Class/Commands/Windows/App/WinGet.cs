@@ -13,7 +13,7 @@ public abstract class WinGetCommand : NativeCommand
 
   private protected abstract List<string> ParseWinGetCommand();
 
-  private protected sealed override void Postprocess()
+  private protected sealed override void BuildNativeCommand()
   {
     List<string> command = ["&", WinGet];
 

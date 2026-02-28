@@ -74,7 +74,7 @@ public sealed class GitInvoke : NativeCommand
   }
   private bool version;
 
-  private protected sealed override void Postprocess()
+  private protected sealed override void BuildNativeCommand()
   {
     List<string> gitArguments = [];
     bool newable = default;

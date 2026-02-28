@@ -33,7 +33,7 @@ public abstract class GitCommand(
 
   private protected abstract List<string> ParseArguments();
 
-  private protected sealed override void Postprocess()
+  private protected sealed override void BuildNativeCommand()
   {
     List<string> arguments = [];
 

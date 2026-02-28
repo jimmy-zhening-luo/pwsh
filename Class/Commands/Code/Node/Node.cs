@@ -140,7 +140,7 @@ public sealed class NpmInvoke : NativeCommand
   }
   private bool version;
 
-  private protected sealed override void Postprocess()
+  private protected sealed override void BuildNativeCommand()
   {
     List<string> npmCommand = [
       "&",

@@ -68,4 +68,13 @@ public abstract class NativeCommand(
     set => p = value;
   }
   private protected bool p;
+
+  private protected List<string> NativeArguments = [];
+
+  private protected sealed override void Postprocess()
+  {
+    BuildNativeCommand();
+  }
+
+  private protected abstract void BuildNativeCommand();
 }
