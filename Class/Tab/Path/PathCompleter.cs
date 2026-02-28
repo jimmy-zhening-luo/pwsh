@@ -2,6 +2,12 @@ namespace Module.Tab.Path;
 
 public sealed class PathCompleter : TabCompleter
 {
+  private record SearchContext(
+    string Path,
+    string Filter,
+    System.IO.EnumerationOptions Options
+  );
+
   private readonly string Location;
 
   private readonly PathItemType ItemType;
@@ -36,90 +42,103 @@ public sealed class PathCompleter : TabCompleter
     location is ""
   );
 
-  private static (string, string, string) ParsePathToComplete(
+  private static (SearchContext, string) ParsePathToComplete(
     string wordToComplete,
     string location,
-    bool allowReanchor
+    bool allowReanchor,
+    bool includeHidden
   )
   {
-    var pathToComplete = Client.File.PathString.Normalize(
+    var normalWordToComplete = Client.File.PathString.Normalize(
       wordToComplete,
       true
     );
-    var accumulatedPath = string.Empty;
-    var accumulatedPathSubpathPart = string.Empty;
-    var leaf = string.Empty;
+    var resolvedSearchPath = string.Empty;
+    var normalWordToCompleteSubpathPart = string.Empty;
+    var normalWordToCompleteLeafPart = string.Empty;
 
-    while (pathToComplete is not "")
+    while (normalWordToComplete is not "")
     {
-      var pathEnd = pathToComplete.LastIndexOf('\\');
+      var indexLastDirectorySeparator = normalWordToComplete.LastIndexOf('\\');
 
-      if (pathEnd < 0)
+      if (indexLastDirectorySeparator < 0)
       {
-        leaf = pathToComplete;
-        pathToComplete = string.Empty;
+        normalWordToCompleteLeafPart = normalWordToComplete;
+        normalWordToComplete = string.Empty;
       }
       else
       {
-        var subpathPart = pathToComplete[..pathEnd].Trim();
-        var wordStart = pathEnd + 1;
+        var candidateSubpathPart = normalWordToComplete[..indexLastDirectorySeparator].Trim();
+        var indexNormalPathToCompleteLeafPart = indexLastDirectorySeparator + 1;
 
-        if (wordStart < pathToComplete.Length)
+        if (indexNormalPathToCompleteLeafPart < normalWordToComplete.Length)
         {
-          leaf = pathToComplete[wordStart..].Trim();
+          normalWordToCompleteLeafPart = normalWordToComplete[indexNormalPathToCompleteLeafPart..].Trim();
         }
 
-        if (subpathPart is "")
+        if (candidateSubpathPart is "")
         {
-          pathToComplete = string.Empty;
+          normalWordToComplete = string.Empty;
         }
         else
         {
-          var anchoredPath = System.IO.Path.GetFullPath(
-            subpathPart,
+          var candidateResolvedSearchPath = System.IO.Path.GetFullPath(
+            candidateSubpathPart,
             location
           );
 
           if (
             System.IO.Directory.Exists(
-              anchoredPath
+              candidateResolvedSearchPath
             )
           )
           {
-            accumulatedPathSubpathPart = System.IO.Path.GetRelativePath(
+            normalWordToCompleteSubpathPart = System.IO.Path.GetRelativePath(
               location,
-              anchoredPath
+              candidateResolvedSearchPath
             );
-            accumulatedPath = anchoredPath;
-            pathToComplete = string.Empty;
+            resolvedSearchPath = candidateResolvedSearchPath;
+            normalWordToComplete = string.Empty;
           }
           else if (
             allowReanchor
-            && System.IO.Directory.Exists(subpathPart)
+            && System.IO.Directory.Exists(candidateSubpathPart)
           )
           {
-            accumulatedPathSubpathPart = System.IO.Path.GetFullPath(subpathPart);
-            accumulatedPath = accumulatedPathSubpathPart;
-            pathToComplete = string.Empty;
+            normalWordToCompleteSubpathPart = System.IO.Path.GetFullPath(candidateSubpathPart);
+            resolvedSearchPath = normalWordToCompleteSubpathPart;
+            normalWordToComplete = string.Empty;
           }
           else
           {
-            leaf = string.Empty;
-            pathToComplete = subpathPart;
+            normalWordToCompleteLeafPart = string.Empty;
+            normalWordToComplete = candidateSubpathPart;
           }
         }
       }
     }
 
-    if (accumulatedPath is "")
+    if (resolvedSearchPath is "")
     {
-      accumulatedPath = location;
+      resolvedSearchPath = location;
+    }
+
+    System.IO.EnumerationOptions searchOptions = new()
+    {
+      IgnoreInaccessible = default
+    };
+    if (includeHidden)
+    {
+      searchOptions.AttributesToSkip = System.IO.FileAttributes.System;
     }
 
     return (
-      accumulatedPath,
-      accumulatedPathSubpathPart,
-      leaf + "*"
+      new(
+        resolvedSearchPath,
+        normalWordToCompleteLeafPart + "*",
+        searchOptions
+      ),
+      normalWordToCompleteSubpathPart
     );
   }
 
@@ -141,33 +160,23 @@ public sealed class PathCompleter : TabCompleter
     Index = default;
 
     var (
-      searchPath,
-      accumulator,
-      searchFilter
+      searchContext,
+      accumulator
     ) = ParsePathToComplete(
       wordToComplete,
       Location,
-      AllowReanchor
+      AllowReanchor,
+      IncludeHidden
     );
 
-    System.IO.EnumerationOptions searchOptions = new()
-    {
-      IgnoreInaccessible = default
-    };
-    if (IncludeHidden)
-    {
-      searchOptions.AttributesToSkip = System.IO.FileAttributes.System;
-    }
-    var originalAttributes = searchOptions.AttributesToSkip;
+    var originalAttributes = searchContext.Options.AttributesToSkip;
 
     switch (ItemType)
     {
       case PathItemType.Directory:
         foreach (
           var directory in EnumerateDirectories(
-            searchPath,
-            searchFilter,
-            searchOptions,
+            searchContext,
             accumulator,
             !Flat
           )
@@ -178,20 +187,18 @@ public sealed class PathCompleter : TabCompleter
 
         if (
           Index is 0
-          && searchFilter.Length > 1
-          && searchOptions is not
+          && searchContext is
           {
-            AttributesToSkip: System.IO.FileAttributes.System
+            Filter.Length: > 1,
+            Options.AttributesToSkip: not System.IO.FileAttributes.System,
           }
         )
         {
-          searchOptions.AttributesToSkip = System.IO.FileAttributes.System;
+          searchContext.Options.AttributesToSkip = System.IO.FileAttributes.System;
 
           foreach (
             var directory in EnumerateDirectories(
-              searchPath,
-              searchFilter,
-              searchOptions,
+              searchContext,
               accumulator,
               !Flat
             )
@@ -200,7 +207,7 @@ public sealed class PathCompleter : TabCompleter
             yield return directory;
           }
 
-          searchOptions.AttributesToSkip = originalAttributes;
+          searchContext.Options.AttributesToSkip = originalAttributes;
         }
 
         break;
@@ -208,9 +215,7 @@ public sealed class PathCompleter : TabCompleter
       case PathItemType.File:
         foreach (
           var file in EnumerateFiles(
-            searchPath,
-            searchFilter,
-            searchOptions,
+            searchContext,
             accumulator
           )
         )
@@ -220,20 +225,18 @@ public sealed class PathCompleter : TabCompleter
 
         if (
           Index is 0
-          && searchFilter.Length > 1
-          && searchOptions is not
+          && searchContext is
           {
-            AttributesToSkip: System.IO.FileAttributes.System
+            Filter.Length: > 1,
+            Options.AttributesToSkip: not System.IO.FileAttributes.System,
           }
         )
         {
-          searchOptions.AttributesToSkip = System.IO.FileAttributes.System;
+          searchContext.Options.AttributesToSkip = System.IO.FileAttributes.System;
 
           foreach (
             var file in EnumerateFiles(
-              searchPath,
-              searchFilter,
-              searchOptions,
+              searchContext,
               accumulator
             )
           )
@@ -241,16 +244,14 @@ public sealed class PathCompleter : TabCompleter
             yield return file;
           }
 
-          searchOptions.AttributesToSkip = originalAttributes;
+          searchContext.Options.AttributesToSkip = originalAttributes;
         }
 
         var checkpoint = Index;
 
         foreach (
           var directory in EnumerateDirectories(
-            searchPath,
-            searchFilter,
-            searchOptions,
+            searchContext,
             accumulator,
             true
           )
@@ -261,20 +262,18 @@ public sealed class PathCompleter : TabCompleter
 
         if (
           Index == checkpoint
-          && searchFilter.Length > 1
-          && searchOptions is not
+          && searchContext is
           {
-            AttributesToSkip: System.IO.FileAttributes.System
+            Filter.Length: > 1,
+            Options.AttributesToSkip: not System.IO.FileAttributes.System,
           }
         )
         {
-          searchOptions.AttributesToSkip = System.IO.FileAttributes.System;
+          searchContext.Options.AttributesToSkip = System.IO.FileAttributes.System;
 
           foreach (
             var directory in EnumerateDirectories(
-              searchPath,
-              searchFilter,
-              searchOptions,
+              searchContext,
               accumulator,
               true
             )
@@ -283,7 +282,7 @@ public sealed class PathCompleter : TabCompleter
             yield return directory;
           }
 
-          searchOptions.AttributesToSkip = originalAttributes;
+          searchContext.Options.AttributesToSkip = originalAttributes;
         }
 
         break;
@@ -291,9 +290,7 @@ public sealed class PathCompleter : TabCompleter
       default:
         foreach (
           var directory in EnumerateDirectories(
-            searchPath,
-            searchFilter,
-            searchOptions,
+            searchContext,
             accumulator,
             !Flat
           )
@@ -304,9 +301,7 @@ public sealed class PathCompleter : TabCompleter
 
         foreach (
           var file in EnumerateFiles(
-            searchPath,
-            searchFilter,
-            searchOptions,
+            searchContext,
             accumulator
           )
         )
@@ -316,20 +311,18 @@ public sealed class PathCompleter : TabCompleter
 
         if (
           Index is 0
-          && searchFilter.Length > 1
-          && searchOptions is not
+          && searchContext is
           {
-            AttributesToSkip: System.IO.FileAttributes.System
+            Filter.Length: > 1,
+            Options.AttributesToSkip: not System.IO.FileAttributes.System,
           }
         )
         {
-          searchOptions.AttributesToSkip = System.IO.FileAttributes.System;
+          searchContext.Options.AttributesToSkip = System.IO.FileAttributes.System;
 
           foreach (
             var directory in EnumerateDirectories(
-              searchPath,
-              searchFilter,
-              searchOptions,
+              searchContext,
               accumulator,
               !Flat
             )
@@ -340,9 +333,7 @@ public sealed class PathCompleter : TabCompleter
 
           foreach (
             var file in EnumerateFiles(
-              searchPath,
-              searchFilter,
-              searchOptions,
+              searchContext,
               accumulator
             )
           )
@@ -350,7 +341,7 @@ public sealed class PathCompleter : TabCompleter
             yield return file;
           }
 
-          searchOptions.AttributesToSkip = originalAttributes;
+          searchContext.Options.AttributesToSkip = originalAttributes;
         }
 
         break;
@@ -379,38 +370,34 @@ public sealed class PathCompleter : TabCompleter
   }
 
   private IEnumerable<string> EnumerateDirectories(
-    string searchPath,
-    string searchFilter,
-    System.IO.EnumerationOptions searchOptions,
-    string accumulatedSubpath,
+    SearchContext searchContext,
+    string accumulator,
     bool trailingSeparator = default
   ) => EnumerateCompletions(
      System.IO.Directory.EnumerateDirectories(
-      searchPath,
-      searchFilter,
-      searchOptions
+      searchContext.Path,
+      searchContext.Filter,
+      searchContext.Options
     ),
-    accumulatedSubpath,
+    accumulator,
     trailingSeparator
   );
 
   private IEnumerable<string> EnumerateFiles(
-    string searchPath,
-    string searchFilter,
-    System.IO.EnumerationOptions searchOptions,
-    string accumulatedSubpath
+    SearchContext searchContext,
+    string accumulator
   ) => EnumerateCompletions(
     System.IO.Directory.EnumerateFiles(
-      searchPath,
-      searchFilter,
-      searchOptions
+      searchContext.Path,
+      searchContext.Filter,
+      searchContext.Options
     ),
-    accumulatedSubpath
+    accumulator
   );
 
   private IEnumerable<string> EnumerateCompletions(
     IEnumerable<string> paths,
-    string accumulatedSubpath,
+    string accumulator,
     bool trailingSeparator = default
   )
   {
@@ -420,7 +407,7 @@ public sealed class PathCompleter : TabCompleter
 
       yield return JoinPathCompletion(
         System.IO.Path.GetFileName(path),
-        accumulatedSubpath,
+        accumulator,
         trailingSeparator
       );
     }
