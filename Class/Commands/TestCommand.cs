@@ -54,10 +54,10 @@ public sealed class TestCommand : CoreCommand
       "& npm foo"
     );
 
-    WriteObject(HadErrors);
-
     BeginSteppablePipeline();
     ProcessSteppablePipeline();
+
+    WriteObject(HadErrors);
   }
 
   private string Greet(string name) => string.Concat(

@@ -163,6 +163,8 @@ public abstract class CoreCommand(
   private protected PowerShell AddParameters(IList parameters) => PS.AddParameters(parameters);
   private protected PowerShell AddParameters(IDictionary parameters) => PS.AddParameters(parameters);
 
+  private protected PowerShell AddStatement() => PS.AddStatement();
+
   private protected PowerShell AddScript(string script) => PS.AddScript(script);
 
   private protected void Clear() => PS
