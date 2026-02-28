@@ -1,6 +1,8 @@
 namespace Module.Commands.Code.Git;
 
-public abstract class GitCommand(string Verb) : NativeCommand
+public abstract class GitCommand(
+  string IntrinsicVerb = ""
+) : NativeCommand
 {
   public enum NewableVerb
   {
@@ -25,7 +27,7 @@ public abstract class GitCommand(string Verb) : NativeCommand
     ];
 
     var newable = System.Enum.TryParse<NewableVerb>(
-      Verb,
+      IntrinsicVerb,
       true,
       out var _
     )
@@ -66,7 +68,7 @@ public abstract class GitCommand(string Verb) : NativeCommand
       "color.ui=always",
       "-C",
       repository,
-      Verb,
+      IntrinsicVerb,
       .. arguments,
     ];
 
