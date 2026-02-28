@@ -53,7 +53,7 @@ public sealed class NodeUpdateVersion() : NpmCommand("version")
       else
       {
         var numericVersion = value.StartsWith(
-          'v',
+          "v",
           System.StringComparison.OrdinalIgnoreCase
         )
           ? value[1..]
