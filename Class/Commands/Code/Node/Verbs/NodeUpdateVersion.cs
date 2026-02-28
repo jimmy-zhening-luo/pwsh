@@ -6,7 +6,7 @@ namespace Module.Commands.Code.Node.Verbs;
   HelpUri = "https://docs.npmjs.com/cli/commands/npm-version"
 )]
 [Alias("nu")]
-public sealed class NodeUpdateVersion() : NpmCommand("version")
+public sealed class NodeUpdateVersion() : NodeCommand("version")
 {
   public enum NodeVersion
   {

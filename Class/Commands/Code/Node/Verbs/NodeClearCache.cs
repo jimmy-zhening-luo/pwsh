@@ -6,7 +6,7 @@ namespace Module.Commands.Code.Node.Verbs;
   HelpUri = "https://docs.npmjs.com/cli/commands/npm-cache"
 )]
 [Alias("ncc")]
-public sealed class NodeClearCache() : NpmCommand("cache")
+public sealed class NodeClearCache() : NodeCommand("cache")
 {
   private protected sealed override List<string> ParseArguments()
   {

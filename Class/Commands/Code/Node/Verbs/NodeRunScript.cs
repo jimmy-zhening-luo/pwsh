@@ -6,7 +6,7 @@ namespace Module.Commands.Code.Node.Verbs;
   HelpUri = "https://docs.npmjs.com/cli/commands/npm-run"
 )]
 [Alias("nr")]
-public sealed class NodeRunScript() : NpmCommand("run")
+public sealed class NodeRunScript() : NodeCommand("run")
 {
   [Parameter(
     Mandatory = true,

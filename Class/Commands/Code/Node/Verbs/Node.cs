@@ -6,7 +6,7 @@ namespace Module.Commands.Code.Node.Verbs;
   HelpUri = "https://docs.npmjs.com/cli/commands"
 )]
 [Alias("n")]
-public sealed class NpmInvoke : NpmCommand
+public sealed class NpmInvoke : NodeCommand
 {
   private static readonly HashSet<string> Verbs = [
     "access",

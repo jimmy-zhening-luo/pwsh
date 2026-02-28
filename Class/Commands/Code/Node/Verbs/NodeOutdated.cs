@@ -6,7 +6,7 @@ namespace Module.Commands.Code.Node.Verbs;
   HelpUri = "https://docs.npmjs.com/cli/commands/npm-outdated"
 )]
 [Alias("npo")]
-public sealed class NodeOutdated() : NpmCommand("outdated")
+public sealed class NodeOutdated() : NodeCommand("outdated")
 {
   private static string FlagAll => "--all";
 

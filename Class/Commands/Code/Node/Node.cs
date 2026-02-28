@@ -1,6 +1,6 @@
 namespace Module.Commands.Code.Node;
 
-public abstract class NpmCommand(
+public abstract class NodeCommand(
   string IntrinsicVerb = ""
 ) : NativeCommand
 {

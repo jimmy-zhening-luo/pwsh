@@ -6,7 +6,7 @@ namespace Module.Commands.Code.Node.Verbs;
   HelpUri = "https://docs.npmjs.com/cli/commands/npm-test"
 )]
 [Alias("nt")]
-public sealed class NodeTest() : NpmCommand("test")
+public sealed class NodeTest() : NodeCommand("test")
 {
   private static string FlagIgnoreScript => "--ignore-scripts";
 
