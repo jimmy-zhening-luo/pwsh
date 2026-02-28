@@ -7,12 +7,12 @@ public class PathCompletionsAttribute(
 {
   public bool Flat { get; init; }
 
-  public bool Hidden { get; init; }
+  public bool IncludeHidden { get; init; }
 
   public sealed override PathCompleter Create() => new(
     Location,
     ItemType,
     Flat,
-    Hidden
+    IncludeHidden
   );
 }

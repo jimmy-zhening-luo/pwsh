@@ -8,7 +8,7 @@ public sealed class PathCompleter : TabCompleter
 
   private readonly bool Flat;
 
-  private readonly bool Hidden;
+  private readonly bool IncludeHidden;
 
   private readonly bool AllowReanchor;
 
@@ -21,7 +21,7 @@ public sealed class PathCompleter : TabCompleter
     Location,
     ItemType,
     Flat,
-    Hidden,
+    IncludeHidden,
     AllowReanchor
   ) = (
     Client.File.PathString.Normalize(location) is var normalPath
@@ -34,43 +34,19 @@ public sealed class PathCompleter : TabCompleter
     location is ""
   );
 
-  private static string FormatPathCompletion(
-    string path,
-    string location = "",
-    string subpath = ""
-  ) => System.IO
-    .Path
-    .Join(
-      location,
-      path,
-      subpath
-    )
-    .Replace(
-      '\\',
-      '/'
-    );
-
-  private static string CompletionString(
-    string path,
-    string accumulatedSubpath,
-    bool trailingSeparator = default
-  ) => FormatPathCompletion(
-    System.IO.Path.GetFileName(path),
-    accumulatedSubpath,
-    trailingSeparator
-      ? @"\"
-      : string.Empty
-  );
-
-  private protected sealed override IEnumerable<string> GenerateCompletion(string wordToComplete)
+  private static (string, string, string) ParsePathToComplete(
+    string wordToComplete,
+    string location,
+    bool allowReanchor
+  )
   {
     var pathToComplete = Client.File.PathString.Normalize(
       wordToComplete,
       true
     );
-    var accumulatedSubpath = string.Empty;
-    var fullAccumulatedPath = string.Empty;
-    var filter = string.Empty;
+    var accumulatedPath = string.Empty;
+    var accumulatedPathSubpathPart = string.Empty;
+    var leaf = string.Empty;
 
     while (pathToComplete is not "")
     {
@@ -78,7 +54,7 @@ public sealed class PathCompleter : TabCompleter
 
       if (pathEnd < 0)
       {
-        filter = pathToComplete;
+        leaf = pathToComplete;
         pathToComplete = string.Empty;
       }
       else
@@ -90,8 +66,7 @@ public sealed class PathCompleter : TabCompleter
 
         if (wordStart < pathToComplete.Length)
         {
-          filter = pathToComplete[wordStart..]
-            .Trim();
+          leaf = pathToComplete[wordStart..].Trim();
         }
 
         if (subpathPart is "")
@@ -102,7 +77,7 @@ public sealed class PathCompleter : TabCompleter
         {
           var anchoredPath = System.IO.Path.GetFullPath(
             subpathPart,
-            Location
+            location
           );
 
           if (
@@ -111,164 +86,348 @@ public sealed class PathCompleter : TabCompleter
             )
           )
           {
-            accumulatedSubpath = System.IO.Path.GetRelativePath(
-              Location,
+            accumulatedPathSubpathPart = System.IO.Path.GetRelativePath(
+              location,
               anchoredPath
             );
-            fullAccumulatedPath = anchoredPath;
+            accumulatedPath = anchoredPath;
             pathToComplete = string.Empty;
           }
           else if (
-            AllowReanchor
+            allowReanchor
             && System.IO.Directory.Exists(subpathPart)
           )
           {
-            accumulatedSubpath = System.IO.Path.GetFullPath(subpathPart);
-            fullAccumulatedPath = accumulatedSubpath;
+            accumulatedPathSubpathPart = System.IO.Path.GetFullPath(subpathPart);
+            accumulatedPath = accumulatedPathSubpathPart;
             pathToComplete = string.Empty;
           }
           else
           {
-            filter = string.Empty;
+            leaf = string.Empty;
             pathToComplete = subpathPart;
           }
         }
       }
     }
 
-    if (fullAccumulatedPath is "")
+    if (accumulatedPath is "")
     {
-      fullAccumulatedPath = Location;
+      accumulatedPath = location;
     }
 
-    uint count = default;
-    filter += "*";
-    System.IO.EnumerationOptions options = new()
-    {
-      IgnoreInaccessible = default
-    };
+    return (
+      accumulatedPath,
+      accumulatedPathSubpathPart,
+      leaf + "*"
+    );
+  }
 
-    if (Hidden)
-    {
-      options.AttributesToSkip = System.IO.FileAttributes.System;
-    }
-
-    if (ItemType is PathItemType.File)
-    {
-FileFirstMatch:
-      foreach (
-        var file in System.IO.Directory.EnumerateFiles(
-          fullAccumulatedPath,
-          filter,
-          options
-        )
-      )
-      {
-        ++count;
-        yield return CompletionString(
-          file,
-          accumulatedSubpath
-        );
-      }
-
-      if (
-        count is 0
-        && filter.Length > 1
-        && options is not
-        {
-          AttributesToSkip: System.IO.FileAttributes.System
-        }
-      )
-      {
-        options.AttributesToSkip = System.IO.FileAttributes.System;
-
-        goto FileFirstMatch;
-      }
-    }
-
-    var checkpoint = count;
-
-Match:
+  private static IEnumerable<string> EnumerateDirectories(
+    string path,
+    string accumulatedSubpath,
+    string filter,
+    System.IO.EnumerationOptions options,
+    bool trailingSeparator = default
+  )
+  {
     foreach (
       var directory in System.IO.Directory.EnumerateDirectories(
-        fullAccumulatedPath,
+        path,
         filter,
         options
       )
     )
     {
-      ++count;
-      yield return CompletionString(
-        directory,
+      yield return JoinPathCompletion(
+        System.IO.Path.GetFileName(directory),
         accumulatedSubpath,
-        !Flat
+        trailingSeparator
       );
     }
+  }
 
-    if (
-      count == checkpoint
-      && filter.Length > 1
-      && options is not
-      {
-        AttributesToSkip: System.IO.FileAttributes.System
-      }
+  private static IEnumerable<string> EnumerateFiles(
+    string path,
+    string accumulatedSubpath,
+    string filter,
+    System.IO.EnumerationOptions options
+  )
+  {
+    foreach (
+      var file in System.IO.Directory.EnumerateFiles(
+        path,
+        filter,
+        options
+      )
     )
+    {
+      yield return JoinPathCompletion(
+        System.IO.Path.GetFileName(file),
+        accumulatedSubpath
+      );
+    }
+  }
+
+  private static string JoinPathCompletion(
+    string path,
+    string accumulatedSubpath,
+    bool trailingSeparator = default
+  ) => System.IO.Path.Join(
+    accumulatedSubpath,
+    path,
+    trailingSeparator
+      ? @"\"
+      : string.Empty
+  )
+    .Replace('\\', '/');
+
+  private protected sealed override IEnumerable<string> GenerateCompletion(string wordToComplete)
+  {
+    uint matches = default;
+
+    var (
+      searchPath,
+      accumulator,
+      searchFilter
+    ) = ParsePathToComplete(
+      wordToComplete,
+      Location,
+      AllowReanchor
+    );
+
+    System.IO.EnumerationOptions options = new()
+    {
+      IgnoreInaccessible = default
+    };
+    if (IncludeHidden)
     {
       options.AttributesToSkip = System.IO.FileAttributes.System;
-
-      goto Match;
     }
+    var originalAttributes = options.AttributesToSkip;
 
-    checkpoint = count;
-
-    if (ItemType is PathItemType.Any)
+    switch (ItemType)
     {
-      foreach (
-        var file in System.IO.Directory.EnumerateFiles(
-          fullAccumulatedPath,
-          filter,
-          options
+      case PathItemType.Directory:
+        foreach (
+          var directory in EnumerateDirectories(
+            searchPath,
+            accumulator,
+            searchFilter,
+            options,
+            !Flat
+          )
         )
-      )
-      {
-        ++count;
-        yield return CompletionString(
-          file,
-          accumulatedSubpath
-        );
-      }
-
-      if (
-        count == checkpoint
-        && filter.Length > 1
-        && options is not
         {
-          AttributesToSkip: System.IO.FileAttributes.System
+          ++matches;
+          yield return directory;
         }
-      )
-      {
-        options.AttributesToSkip = System.IO.FileAttributes.System;
 
-        goto Match;
-      }
+        if (
+          matches is 0
+          && searchFilter.Length > 1
+          && options is not
+          {
+            AttributesToSkip: System.IO.FileAttributes.System
+          }
+        )
+        {
+          options.AttributesToSkip = System.IO.FileAttributes.System;
+
+          foreach (
+            var directory in EnumerateDirectories(
+              searchPath,
+              accumulator,
+              searchFilter,
+              options,
+              !Flat
+            )
+          )
+          {
+            ++matches;
+            yield return directory;
+          }
+
+          options.AttributesToSkip = originalAttributes;
+        }
+
+        break;
+
+      case PathItemType.File:
+        foreach (
+          var file in EnumerateFiles(
+            searchPath,
+            accumulator,
+            searchFilter,
+            options
+          )
+        )
+        {
+          ++matches;
+          yield return file;
+        }
+
+        if (
+          matches is 0
+          && searchFilter.Length > 1
+          && options is not
+          {
+            AttributesToSkip: System.IO.FileAttributes.System
+          }
+        )
+        {
+          options.AttributesToSkip = System.IO.FileAttributes.System;
+
+          foreach (
+            var file in EnumerateFiles(
+              searchPath,
+              accumulator,
+              searchFilter,
+              options
+            )
+          )
+          {
+            ++matches;
+            yield return file;
+          }
+
+          options.AttributesToSkip = originalAttributes;
+        }
+
+        var checkpoint = matches;
+
+        foreach (
+          var directory in EnumerateDirectories(
+            searchPath,
+            accumulator,
+            searchFilter,
+            options,
+            true
+          )
+        )
+        {
+          ++matches;
+          yield return directory;
+        }
+
+        if (
+          matches == checkpoint
+          && searchFilter.Length > 1
+          && options is not
+          {
+            AttributesToSkip: System.IO.FileAttributes.System
+          }
+        )
+        {
+          options.AttributesToSkip = System.IO.FileAttributes.System;
+
+          foreach (
+            var directory in EnumerateDirectories(
+              searchPath,
+              accumulator,
+              searchFilter,
+              options,
+              true
+            )
+          )
+          {
+            ++matches;
+            yield return directory;
+          }
+
+          options.AttributesToSkip = originalAttributes;
+        }
+
+        break;
+
+      default:
+        foreach (
+          var directory in EnumerateDirectories(
+            searchPath,
+            accumulator,
+            searchFilter,
+            options,
+            !Flat
+          )
+        )
+        {
+          ++matches;
+          yield return directory;
+        }
+
+        foreach (
+          var file in EnumerateFiles(
+            searchPath,
+            accumulator,
+            searchFilter,
+            options
+          )
+        )
+        {
+          ++matches;
+          yield return file;
+        }
+
+        if (
+          matches is 0
+          && searchFilter.Length > 1
+          && options is not
+          {
+            AttributesToSkip: System.IO.FileAttributes.System
+          }
+        )
+        {
+          options.AttributesToSkip = System.IO.FileAttributes.System;
+
+          foreach (
+            var directory in EnumerateDirectories(
+              searchPath,
+              accumulator,
+              searchFilter,
+              options,
+              !Flat
+            )
+          )
+          {
+            ++matches;
+            yield return directory;
+          }
+
+          foreach (
+            var file in EnumerateFiles(
+              searchPath,
+              accumulator,
+              searchFilter,
+              options
+            )
+          )
+          {
+            ++matches;
+            yield return file;
+          }
+
+          options.AttributesToSkip = originalAttributes;
+        }
+
+        break;
     }
 
-    if (accumulatedSubpath is not "")
+    if (accumulator is not "")
     {
-      yield return FormatPathCompletion(
+      yield return JoinPathCompletion(
         @"\",
-        accumulatedSubpath
+        accumulator
       );
     }
 
     if (
-      accumulatedSubpath is not ""
-      || count is not 0
+      accumulator is not ""
+      || matches is not 0
     )
     {
-      yield return FormatPathCompletion(
+      yield return JoinPathCompletion(
         @"..\",
-        accumulatedSubpath
+        accumulator
       );
     }
 
