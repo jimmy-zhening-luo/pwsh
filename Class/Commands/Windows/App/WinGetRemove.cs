@@ -9,15 +9,5 @@ namespace Module.Commands.Windows.App;
 [OutputType(typeof(void))]
 public sealed class WinGetRemove : WinGetCommand
 {
-  private protected sealed override List<string> ParseWinGetCommand()
-  {
-    List<string> arguments = ["uninstall"];
-
-    if (ArgumentList is not [])
-    {
-      arguments.AddRange(ArgumentList);
-    }
-
-    return arguments;
-  }
+  private protected sealed override List<string> ParseArguments() => ["uninstall"];
 }

@@ -19,9 +19,9 @@ public abstract class NpmCommand(string Verb) : NativeCommand
       "--color=always",
     ];
 
-    List<string> arguments = [];
-
-    arguments.AddRange(ParseArguments());
+    List<string> arguments = [
+      .. ParseArguments(),
+    ];
 
     if (WorkingDirectory is not "")
     {

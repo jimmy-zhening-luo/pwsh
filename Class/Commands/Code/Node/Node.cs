@@ -142,13 +142,7 @@ public sealed class NpmInvoke : NativeCommand
       "--color=always",
     ];
 
-    List<string> arguments = [];
-
-    if (ArgumentList is not [])
-    {
-      arguments.AddRange(ArgumentList);
-    }
-
+    List<string> arguments = [.. ArgumentList];
     ArgumentList = [];
 
     if (WorkingDirectory is not "")
