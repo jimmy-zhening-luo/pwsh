@@ -51,10 +51,12 @@ public sealed class GitAdd() : GitCommand("add")
       WorkingDirectory = string.Empty;
     }
 
+    arguments.AddRange(ArgumentList);
+    ArgumentList = [];
+
     if (
       renormalize
       && !arguments.Contains(FlagRenormalize)
-      && !(new List<string>(ArgumentList)).Contains(FlagRenormalize)
     )
     {
       arguments.Add(FlagRenormalize);

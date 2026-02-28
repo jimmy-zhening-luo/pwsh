@@ -40,29 +40,6 @@ function Import-GitRepository {
   Invoke-Git -Verb clone -WorkingDirectory $WorkingDirectory -ArgumentList $CloneArgument
 }
 
-function Add-GitRepository {
-  if (
-    $WorkingDirectory -and (
-      [Module.Commands.Code.Git.GitWorkingDirectory]::Resolve($PWD.Path, $PWD.Path)
-    ) -and !(
-      [Module.Commands.Code.Git.GitWorkingDirectory]::Resolve($PWD.Path, $WorkingDirectory)
-    )
-  ) {
-    $AddArgument.Add($WorkingDirectory)
-    $WorkingDirectory = ''
-  }
-
-  if ($args) {
-    $AddArgument.AddRange([string[]]$args)
-  }
-
-  if ($Renormalize -and '--renormalize' -notin $AddArgument) {
-    $AddArgument.Add('--renormalize')
-  }
-
-  Invoke-Git -Verb add -WorkingDirectory $WorkingDirectory -ArgumentList $AddArgument
-}
-
 <#
 .LINK
 https://git-scm.com/docs/git-commit
