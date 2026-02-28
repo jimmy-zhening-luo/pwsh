@@ -8,13 +8,6 @@ namespace Module.Commands.Code.Git.Verbs;
 [Alias("g")]
 public sealed class GitInvoke : NativeCommand
 {
-  public enum NewableVerb
-  {
-    clone,
-    config,
-    init
-  }
-
   private static readonly HashSet<string> Verbs = [
     "switch",
     "merge",
@@ -77,7 +70,7 @@ public sealed class GitInvoke : NativeCommand
     {
       if (Verbs.Contains(Verb.ToLower()))
       {
-        if (System.Enum.TryParse<NewableVerb>(Verb, true, out var newableVerb))
+        if (System.Enum.TryParse<GitCommand.NewableVerb>(Verb, true, out var newableVerb))
         {
           newable = true;
 

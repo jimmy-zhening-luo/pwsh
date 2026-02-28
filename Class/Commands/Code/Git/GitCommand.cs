@@ -2,6 +2,13 @@ namespace Module.Commands.Code.Git;
 
 public abstract class GitCommand(string Verb) : NativeCommand
 {
+  public enum NewableVerb
+  {
+    clone,
+    config,
+    init
+  }
+
   [Parameter(
     Position = 50,
     HelpMessage = "Repository path"
@@ -17,7 +24,7 @@ public abstract class GitCommand(string Verb) : NativeCommand
       .. ParseArguments(),
     ];
 
-    var newable = System.Enum.TryParse<Verbs.GitInvoke.NewableVerb>(
+    var newable = System.Enum.TryParse<NewableVerb>(
       Verb,
       true,
       out var _
