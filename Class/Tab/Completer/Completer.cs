@@ -18,7 +18,7 @@ public class Completer(
       yield break;
     }
 
-    int count = default;
+    int matches = default;
 
     foreach (var member in Domain)
     {
@@ -29,14 +29,14 @@ public class Completer(
         )
       )
       {
-        ++count;
+        ++matches;
         yield return member;
       }
     }
 
     if (
       Strict
-      || count is not 1
+      || matches is not 1
     )
     {
       yield break;
@@ -53,8 +53,11 @@ public class Completer(
         ) > 0
       )
       {
+        ++matches;
         yield return member;
       }
     }
+
+    yield break;
   }
 }
