@@ -91,19 +91,13 @@ internal static class Url
   internal static void Open() => Open(string.Empty);
   internal static void Open(System.Uri uri)
   {
-    switch (uri)
+    if (
+      IsHttp(uri)
+      || IsFile(uri)
+      && System.IO.File.Exists(uri.LocalPath)
+    )
     {
-      case { IsAbsoluteUri: false }:
-        break;
-
-      case { Scheme: "http" or "https" }:
-      case
-      {
-        Scheme: "file",
-        LocalPath: var localPath
-      } when System.IO.File.Exists(localPath):
-        Open(uri.ToString());
-        break;
+      Open(uri.ToString());
     }
   }
   internal static void Open(string target)
