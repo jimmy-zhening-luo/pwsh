@@ -127,11 +127,7 @@ public abstract class NodeCommand(
       .. ParseArguments(),
     ];
 
-    if (IntrinsicVerb is "")
-    {
-      Throw("No npm command given.");
-    }
-    else if (
+    if (
       Aliases.TryGetValue(
         IntrinsicVerb.ToLower(),
         out var alias
@@ -151,7 +147,8 @@ public abstract class NodeCommand(
     }
     else
     {
-      Throw($"Unknown npm command: {IntrinsicVerb}");
+      arguments.Insert(default, IntrinsicVerb);
+      IntrinsicVerb = string.Empty;
     }
 
     if (WorkingDirectory is not "")
@@ -180,7 +177,10 @@ public abstract class NodeCommand(
 
     WorkingDirectory = string.Empty;
 
-    command.Add(IntrinsicVerb.ToLower());
+    if (IntrinsicVerb is not "")
+    {
+      command.Add(IntrinsicVerb);
+    }
 
     if (d)
     {
