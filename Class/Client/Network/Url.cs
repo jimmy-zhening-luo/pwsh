@@ -39,7 +39,6 @@ internal static class Url
       Open(url);
     }
   }
-
   internal static void Open(
     [System.Diagnostics.CodeAnalysis.StringSyntax(
       System.Diagnostics.CodeAnalysis.StringSyntaxAttribute.Uri
