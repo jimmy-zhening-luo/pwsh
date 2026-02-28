@@ -1,6 +1,6 @@
 namespace Module.Commands.Windows.App;
 
-public abstract class WinGetCommand : CoreCommand
+public abstract class WinGetCommand : NativeCommand
 {
   private protected static string WinGet => Client.Environment.Known.Application.WinGet;
 
@@ -26,7 +26,14 @@ public abstract class WinGetCommand : CoreCommand
 
     if (HadNativeErrors)
     {
-      Throw("winget error");
+      if (noThrow)
+      {
+        WriteWarning("winget error");
+      }
+      else
+      {
+        Throw("winget error");
+      }
     }
   }
 }

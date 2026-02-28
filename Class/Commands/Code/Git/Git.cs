@@ -6,7 +6,7 @@ namespace Module.Commands.Code.Git;
   HelpUri = "https://git-scm.com/docs"
 )]
 [Alias("g")]
-public sealed class GitInvoke : CoreCommand
+public sealed class GitInvoke : NativeCommand
 {
   private enum NewableVerb
   {
@@ -64,16 +64,6 @@ public sealed class GitInvoke : CoreCommand
   public string[] ArgumentList { get; set; } = [];
 
   [Parameter(
-    HelpMessage = "If git returns a non-zero exit code, warn and continue instead of the default behavior of throwing a terminating error."
-  )]
-  public SwitchParameter NoThrow
-  {
-    get => noThrow;
-    set => noThrow = value;
-  }
-  private bool noThrow;
-
-  [Parameter(
     HelpMessage = "Show git version if no command is specified. Otherwise, pass the -v flag as argument."
   )]
   [Alias("v")]
@@ -83,61 +73,6 @@ public sealed class GitInvoke : CoreCommand
     set => version = value;
   }
   private bool version;
-
-  [Parameter(
-    DontShow = true,
-    HelpMessage = "Pass -d flag as argument"
-  )]
-  public SwitchParameter D
-  {
-    get => d;
-    set => d = value;
-  }
-  private bool d;
-
-  [Parameter(
-    DontShow = true,
-    HelpMessage = "Pass -E flag as argument"
-  )]
-  public SwitchParameter E
-  {
-    get => e;
-    set => e = value;
-  }
-  private bool e;
-
-  [Parameter(
-    DontShow = true,
-    HelpMessage = "Pass -i flag as argument"
-  )]
-  public SwitchParameter I
-  {
-    get => i;
-    set => i = value;
-  }
-  private bool i;
-
-  [Parameter(
-    DontShow = true,
-    HelpMessage = "Pass -o flag as argument"
-  )]
-  public SwitchParameter O
-  {
-    get => o;
-    set => o = value;
-  }
-  private bool o;
-
-  [Parameter(
-    DontShow = true,
-    HelpMessage = "Pass -P flag as argument"
-  )]
-  public SwitchParameter P
-  {
-    get => p;
-    set => p = value;
-  }
-  private bool p;
 
   private protected sealed override void Postprocess()
   {

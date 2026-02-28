@@ -6,7 +6,7 @@ namespace Module.Commands.Code.Node;
   HelpUri = "https://docs.npmjs.com/cli/commands"
 )]
 [Alias("n")]
-public sealed class NpmInvoke : CoreCommand
+public sealed class NpmInvoke : NativeCommand
 {
   private static readonly HashSet<string> Verbs = [
     "access",
@@ -130,16 +130,6 @@ public sealed class NpmInvoke : CoreCommand
   public string WorkingDirectory { get; set; } = string.Empty;
 
   [Parameter(
-    HelpMessage = "When npm command execution results in a non-zero exit code, write a warning and continue instead of the default behavior of throwing a terminating error."
-  )]
-  public SwitchParameter NoThrow
-  {
-    get => noThrow;
-    set => noThrow = value;
-  }
-  private bool noThrow;
-
-  [Parameter(
     HelpMessage = "Show npm version if no command is specified. Otherwise, pass the -v flag as argument."
   )]
   [Alias("v")]
@@ -149,61 +139,6 @@ public sealed class NpmInvoke : CoreCommand
     set => version = value;
   }
   private bool version;
-
-  [Parameter(
-    DontShow = true,
-    HelpMessage = "Pass -D flag as argument"
-  )]
-  public SwitchParameter D
-  {
-    get => d;
-    set => d = value;
-  }
-  private bool d;
-
-  [Parameter(
-    DontShow = true,
-    HelpMessage = "Pass -E flag as argument"
-  )]
-  public SwitchParameter E
-  {
-    get => e;
-    set => e = value;
-  }
-  private bool e;
-
-  [Parameter(
-    DontShow = true,
-    HelpMessage = "Pass -i flag as argument"
-  )]
-  public SwitchParameter I
-  {
-    get => i;
-    set => i = value;
-  }
-  private bool i;
-
-  [Parameter(
-    DontShow = true,
-    HelpMessage = "Pass -o flag as argument"
-  )]
-  public SwitchParameter O
-  {
-    get => o;
-    set => o = value;
-  }
-  private bool o;
-
-  [Parameter(
-    DontShow = true,
-    HelpMessage = "Pass -P flag as argument"
-  )]
-  public SwitchParameter P
-  {
-    get => p;
-    set => p = value;
-  }
-  private bool p;
 
   private protected sealed override void Postprocess()
   {

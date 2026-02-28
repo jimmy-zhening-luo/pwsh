@@ -12,12 +12,12 @@ public sealed class NodeClearCache() : NpmCommand("cache")
   {
     ArgumentList = [];
     WorkingDirectory = string.Empty;
-    NoThrow = false;
-    D = false;
-    E = false;
-    I = false;
-    O = false;
-    P = false;
+    noThrow = false;
+    d = false;
+    e = false;
+    i = false;
+    o = false;
+    p = false;
     V = false;
 
     return [

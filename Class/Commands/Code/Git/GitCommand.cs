@@ -3,7 +3,7 @@ namespace Module.Commands.Code.Git;
 public abstract class GitCommand(
   string Verb,
   bool Newable = default
-) : CoreCommand
+) : NativeCommand
 {
   [Parameter(
     Position = default,
@@ -21,16 +21,6 @@ public abstract class GitCommand(
   public string[] ArgumentList { get; set; } = [];
 
   [Parameter(
-    HelpMessage = "If git returns a non-zero exit code, warn and continue instead of the default behavior of throwing a terminating error."
-  )]
-  public SwitchParameter NoThrow
-  {
-    get => noThrow;
-    set => noThrow = value;
-  }
-  private bool noThrow;
-
-  [Parameter(
     DontShow = true,
     HelpMessage = "Pass -v flag as argument"
   )]
@@ -40,61 +30,6 @@ public abstract class GitCommand(
     set => v = value;
   }
   private bool v;
-
-  [Parameter(
-    DontShow = true,
-    HelpMessage = "Pass -d flag as argument"
-  )]
-  public SwitchParameter D
-  {
-    get => d;
-    set => d = value;
-  }
-  private bool d;
-
-  [Parameter(
-    DontShow = true,
-    HelpMessage = "Pass -E flag as argument"
-  )]
-  public SwitchParameter E
-  {
-    get => e;
-    set => e = value;
-  }
-  private bool e;
-
-  [Parameter(
-    DontShow = true,
-    HelpMessage = "Pass -i flag as argument"
-  )]
-  public SwitchParameter I
-  {
-    get => i;
-    set => i = value;
-  }
-  private bool i;
-
-  [Parameter(
-    DontShow = true,
-    HelpMessage = "Pass -o flag as argument"
-  )]
-  public SwitchParameter O
-  {
-    get => o;
-    set => o = value;
-  }
-  private bool o;
-
-  [Parameter(
-    DontShow = true,
-    HelpMessage = "Pass -P flag as argument"
-  )]
-  public SwitchParameter P
-  {
-    get => p;
-    set => p = value;
-  }
-  private bool p;
 
   private protected abstract List<string> ParseArguments();
 
