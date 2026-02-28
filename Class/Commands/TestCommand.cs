@@ -60,7 +60,7 @@ public sealed class TestCommand : CoreCommand
     Clear();
 
     WriteObject(
-      PSVariable(
+      PSVariable<int>(
         "LASTEXITCODE"
       )
     );
