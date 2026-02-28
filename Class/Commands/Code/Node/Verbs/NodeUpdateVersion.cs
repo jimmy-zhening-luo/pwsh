@@ -19,6 +19,13 @@ public sealed class NodeUpdateVersion() : NodeCommand("version")
     premajor,
   }
 
+  internal sealed class NodeVersionCompletionsAttribute() : EnumCompletionsAttribute(
+    typeof(NodeVersion),
+    default,
+    ["from-git"],
+    ["prepatch"]
+  );
+
   new public SwitchParameter V { get; set; }
 
   [Parameter(
