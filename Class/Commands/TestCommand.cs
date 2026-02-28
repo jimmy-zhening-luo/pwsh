@@ -57,7 +57,13 @@ public sealed class TestCommand : CoreCommand
     ProcessSteppablePipeline();
     EndSteppablePipeline();
 
-    WriteObject(HadErrors);
+    Clear();
+
+    WriteObject(
+      PSVariable(
+        "LASTEXITCODE"
+      )
+    );
   }
 
   private string Greet(string name) => string.Concat(
