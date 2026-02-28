@@ -44,21 +44,6 @@ function Import-GitRepository {
 .LINK
 https://git-scm.com/docs/git-pull
 #>
-function Get-GitRepository {
-  [Alias('gp')]
-  param(
-    [Module.Commands.Code.WorkingDirectoryCompletions()]
-    # Repository path
-    [string]$WorkingDirectory
-  )
-
-  Invoke-Git -Verb pull -WorkingDirectory $WorkingDirectory -ArgumentList $args
-}
-
-<#
-.LINK
-https://git-scm.com/docs/git-pull
-#>
 function Get-ChildGitRepository {
   [CmdletBinding()]
   [Alias('gpp')]
