@@ -15,10 +15,6 @@
     'Push-GitRepository'
     'Reset-GitRepository'
     'Restore-GitRepository'
-    'Compare-NodeModule'
-    'Step-NodePackageVersion'
-    'Invoke-NodePackageScript'
-    'Test-NodePackage'
   )
   CmdletsToExport      = @()
   VariablesToExport    = @()
@@ -30,9 +26,5 @@
     'gs'
     'gr'
     'grp'
-    'npo'
-    'nu'
-    'nr'
-    'nt'
   )
 }

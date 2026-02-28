@@ -72,6 +72,10 @@
     'Get-ChildGitRepository'
     'Invoke-Npm'
     'Clear-NodeModuleCache'
+    'Compare-NodeModule'
+    'Step-NodePackageVersion'
+    'Invoke-NodePackageScript'
+    'Test-NodePackage'
   )
   VariablesToExport    = @()
   AliasesToExport      = @(
@@ -144,5 +148,9 @@
     'gpp'
     'n'
     'ncc'
+    'npo'
+    'nu'
+    'nr'
+    'nt'
   )
 }
