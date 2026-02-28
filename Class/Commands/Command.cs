@@ -235,9 +235,11 @@ public abstract class CoreCommand(
       name,
       null
     );
-  private protected T PSVariable<T>(string name) => (T)SessionState
+  private protected T? PSVariable<T>(string name) => SessionState
     .PSVariable
-      .GetValue(name);
+    .GetValue(name) is { } value
+    ? (T)value
+    : default;
 
   private protected string Pwd(string path = "") => Client.File.PathString.FullPathLocationRelative(
     SessionState.Path.CurrentLocation.Path,
