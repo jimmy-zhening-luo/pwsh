@@ -21,7 +21,7 @@ internal static class Url
     IsAbsoluteUri: true,
     Scheme: "file",
     IsFile: true,
-    LocalPath: string localPath
+    LocalPath: var localPath
   }
     && !string.IsNullOrWhiteSpace(localPath);
 
@@ -43,16 +43,16 @@ internal static class Url
         out var url
       )
     ? ToAbsoluteHttpOrFileUri(url)
-    : null;
+    : default;
   internal static System.Uri? ToAbsoluteHttpOrFileUri(System.Uri? uri) => IsHttpOrFile(uri)
     ? uri
-    : null;
+    : default;
 
   internal static bool Test(System.Uri url)
   {
     if (!IsHttp(url))
     {
-      return false;
+      return default;
     }
 
     try
@@ -100,18 +100,13 @@ internal static class Url
       case
       {
         Scheme: "file",
-        LocalPath: string localPath
+        LocalPath: var localPath
       } when System.IO.File.Exists(localPath):
         Open(uri.ToString());
         break;
     }
   }
-  internal static void Open(
-    [System.Diagnostics.CodeAnalysis.StringSyntax(
-      System.Diagnostics.CodeAnalysis.StringSyntaxAttribute.Uri
-    )]
-    string target
-  )
+  internal static void Open(string target)
   {
     if (!Environment.Known.Variable.InSsh)
     {
