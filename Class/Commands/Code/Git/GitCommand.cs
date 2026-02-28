@@ -11,6 +11,8 @@ public abstract class GitCommand(
     init
   }
 
+  public string IntrinsicVerb { get; set; } = IntrinsicVerb;
+
   [Parameter(
     Position = 50,
     HelpMessage = "Repository path"
