@@ -159,7 +159,7 @@ public abstract class NodeCommand(
       )
     )
     {
-      IntrinsicVerb = alias;
+      command.Add(alias);
     }
     else if (
       Verbs.TryGetValue(
@@ -168,18 +168,14 @@ public abstract class NodeCommand(
       )
     )
     {
-      IntrinsicVerb = verb;
+      command.Add(verb);
     }
     else
     {
       arguments.Insert(default, IntrinsicVerb);
-      IntrinsicVerb = string.Empty;
     }
 
-    if (IntrinsicVerb is not "")
-    {
-      command.Add(IntrinsicVerb);
-    }
+    IntrinsicVerb = string.Empty;
 
     if (d)
     {
