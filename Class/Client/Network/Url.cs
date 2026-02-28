@@ -2,6 +2,8 @@ namespace Module.Client.Network;
 
 internal static class Url
 {
+  static System.Net.Http.HttpClient? client;
+
   internal static System.Uri? ToAbsoluteUri(object? uri) => ToAbsoluteUri(uri?.ToString());
   internal static System.Uri? ToAbsoluteUri(
     [System.Diagnostics.CodeAnalysis.StringSyntax(
@@ -35,14 +37,22 @@ internal static class Url
     _ => null,
   };
 
-  internal static bool Test(
-    System.Uri url,
-    System.Net.Http.HttpClient client
-  )
+  internal static bool Test(System.Uri url)
   {
     try
     {
-      using var response = client
+      using var response = (
+        client ??= new System.Net.Http.HttpClient(
+          new System.Net.Http.SocketsHttpHandler()
+          {
+            PooledConnectionLifetime = System.TimeSpan.FromMinutes(2),
+            ConnectTimeout = System.TimeSpan.FromMilliseconds(3000),
+          }
+        )
+        {
+          Timeout = System.TimeSpan.FromMilliseconds(3500),
+        }
+      )
         .GetAsync(
           url,
           System.Net.Http.HttpCompletionOption.ResponseHeadersRead
