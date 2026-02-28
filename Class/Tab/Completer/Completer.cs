@@ -18,7 +18,7 @@ public class Completer(
       yield break;
     }
 
-    int matches = default;
+    uint matches = default;
 
     foreach (var member in Domain)
     {

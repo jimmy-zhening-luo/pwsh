@@ -141,7 +141,7 @@ public sealed class PathCompleter : TabCompleter
       fullAccumulatedPath = Location;
     }
 
-    int count = default;
+    uint count = default;
     filter += "*";
     System.IO.EnumerationOptions options = new()
     {
