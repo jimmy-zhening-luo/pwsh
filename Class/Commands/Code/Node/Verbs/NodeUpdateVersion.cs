@@ -75,7 +75,7 @@ public sealed class NodeUpdateVersion() : NpmCommand("version")
       }
     }
   }
-  private string version = nameof(NodePackageVersion.patch);
+  private string version = nameof(NodeVersion.patch);
 
   private protected sealed override List<string> ParseArguments()
   {
