@@ -203,7 +203,7 @@ public abstract class CoreCommand(
       if (steppablePipeline is not null)
       {
         _ = input is null
-          ? steppablePipeline.Process();
+          ? steppablePipeline.Process()
           : steppablePipeline.Process(input);
       }
     }
