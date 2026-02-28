@@ -1,6 +1,6 @@
 namespace Module.Client.File;
 
-public enum Encoding
+internal enum Encoding
 {
   [System.ComponentModel.Description(
     "Uses the encoding for the for the current culture's ANSI code page. This option was added in PowerShell 7.4."

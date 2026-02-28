@@ -104,7 +104,7 @@ public abstract class NodeCommand(
     ["v"] = "view",
   };
 
-  public string IntrinsicVerb { get; private protected set; } = IntrinsicVerb;
+  private protected string IntrinsicVerb { get; set; } = IntrinsicVerb;
 
   [Parameter(
     Position = 50,

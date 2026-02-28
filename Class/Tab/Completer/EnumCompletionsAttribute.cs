@@ -1,6 +1,6 @@
 namespace Module.Tab.Completer;
 
-public class EnumCompletionsAttribute(
+internal class EnumCompletionsAttribute(
   System.Type EnumType,
   CompletionCase Casing = CompletionCase.Lower,
   string[]? Include = default,

@@ -4,7 +4,7 @@ namespace Module.Tab;
   System.AttributeTargets.Property
   | System.AttributeTargets.Field
 )]
-public abstract class TabCompletionsAttribute<TCompleter>(
+internal abstract class TabCompletionsAttribute<TCompleter>(
   CompletionCase casing = default
 ) : ArgumentCompleterAttribute, IArgumentCompleterFactory where TCompleter : TabCompleter
 {

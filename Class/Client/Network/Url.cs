@@ -3,7 +3,7 @@ namespace Module.Client.Network;
 internal static class Url
 {
   [System.Flags]
-  public enum Scheme
+  internal enum Scheme
   {
     None,
     Http,
@@ -11,7 +11,7 @@ internal static class Url
     HttpOrFile,
   }
 
-  static System.Net.Http.HttpClient? client;
+  private static System.Net.Http.HttpClient? client;
 
   internal static bool IsHttp(
     [System.Diagnostics.CodeAnalysis.NotNullWhen(true)]

@@ -1,6 +1,6 @@
 namespace Module.Tab;
 
-public enum CompletionCase
+internal enum CompletionCase
 {
   Preserve,
   Lower,

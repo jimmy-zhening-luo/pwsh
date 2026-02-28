@@ -1,6 +1,6 @@
 namespace Module.Commands.Code.Git;
 
-public sealed class GitVerbCompletionsAttribute() : CompletionsAttribute(
+internal sealed class GitVerbCompletionsAttribute() : CompletionsAttribute(
   [
     "switch",
     "merge",

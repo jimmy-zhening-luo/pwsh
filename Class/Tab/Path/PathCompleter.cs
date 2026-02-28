@@ -1,6 +1,6 @@
 namespace Module.Tab.Path;
 
-public sealed class PathCompleter : TabCompleter
+internal sealed class PathCompleter : TabCompleter
 {
   private record SearchContext(
     string Path,
@@ -20,7 +20,7 @@ public sealed class PathCompleter : TabCompleter
 
   private uint Index;
 
-  public PathCompleter(
+  internal PathCompleter(
     string location,
     PathItemType itemType,
     bool flat,

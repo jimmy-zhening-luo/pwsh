@@ -8,7 +8,7 @@ namespace Module.Commands.Code.Git.Verbs;
 [Alias("g")]
 public sealed class Git : NativeCommand
 {
-  private static readonly HashSet<string> Verbs = [
+  internal readonly HashSet<string> Verbs = [
     "switch",
     "merge",
     "diff",

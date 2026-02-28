@@ -1,6 +1,6 @@
 namespace Module.Commands.Code;
 
-public sealed class PathSpecCompletionsAttribute() : PathCompletionsAttribute(
+internal sealed class PathSpecCompletionsAttribute() : PathCompletionsAttribute(
   "",
   PathItemType.File
 );

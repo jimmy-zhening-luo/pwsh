@@ -1,6 +1,6 @@
 namespace Module.Tab;
 
-public abstract class TabCompleter(
+internal abstract class TabCompleter(
   CompletionCase Casing = default
 ) : IArgumentCompleter
 {

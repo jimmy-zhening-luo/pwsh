@@ -9,13 +9,13 @@ public abstract class CoreCommand(
     string Subpath = ""
   )
   {
-    public bool IsEmpty => this is
+    internal bool IsEmpty => this is
     {
       Root: "",
       Subpath: "",
     };
 
-    public bool IsRooted => this is
+    internal bool IsRooted => this is
     {
       Root: not "",
     };

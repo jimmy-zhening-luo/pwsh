@@ -1,6 +1,6 @@
 namespace Module.Tab.Path;
 
-public enum PathItemType
+internal enum PathItemType
 {
   Any,
   File,

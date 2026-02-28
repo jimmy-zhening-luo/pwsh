@@ -13,18 +13,18 @@ public sealed class TestHost() : WrappedCommand(
   CommandType: CommandTypes.Function
 )
 {
-  public enum TestHostWellKnownPort
+  public enum TestHostVerbosity
+  {
+    Quiet,
+    Detailed
+  }
+
+  internal enum TestHostWellKnownPort
   {
     HTTP = -4,
     RDP,
     SMB,
     WINRM
-  }
-
-  public enum TestHostVerbosity
-  {
-    Quiet,
-    Detailed
   }
 
   [Parameter(

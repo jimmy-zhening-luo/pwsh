@@ -4,14 +4,14 @@ public abstract class GitCommand(
   string IntrinsicVerb = ""
 ) : NativeCommand
 {
-  public enum NewableVerb
+  internal enum NewableVerb
   {
     clone,
     config,
     init
   }
 
-  public string IntrinsicVerb { get; private protected set; } = IntrinsicVerb;
+  private protected string IntrinsicVerb { get; set; } = IntrinsicVerb;
 
   [Parameter(
     Position = 50,

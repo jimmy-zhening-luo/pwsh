@@ -1,6 +1,6 @@
 namespace Module.Tab.Completer;
 
-public class CompletionsAttribute(
+internal class CompletionsAttribute(
   string[] Domain,
   CompletionCase Casing = default
 ) : CompletionsAttribute<string[]>(
@@ -10,7 +10,7 @@ public class CompletionsAttribute(
 {
   private protected sealed override IEnumerable<string> ResolveDomain(string[] domain) => domain;
 }
-public abstract class CompletionsAttribute<TDomain>(
+internal abstract class CompletionsAttribute<TDomain>(
   TDomain Domain,
   CompletionCase Casing
 ) : TabCompletionsAttribute<Completer>(Casing)

@@ -19,7 +19,7 @@ using System.Linq;
 )]
 public sealed class GetSize : CoreCommand
 {
-  public enum DiskSizeUnit
+  internal enum DiskSizeUnit
   {
     B,
     KB,

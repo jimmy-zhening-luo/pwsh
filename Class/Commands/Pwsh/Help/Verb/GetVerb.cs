@@ -10,7 +10,7 @@ namespace Module.Commands.Pwsh.Help.Verb;
 [OutputType(typeof(string))]
 public sealed class GetVerb : CoreCommand
 {
-  public enum VerbGroup
+  internal enum VerbGroup
   {
     Common,
     Communications,

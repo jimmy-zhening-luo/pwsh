@@ -1,8 +1,8 @@
 namespace Module.Commands.Code;
 
-public sealed class WorkingDirectoryCompletionsAttribute : PathCompletionsAttribute
+internal sealed class WorkingDirectoryCompletionsAttribute : PathCompletionsAttribute
 {
-  public WorkingDirectoryCompletionsAttribute() : base(
+  internal WorkingDirectoryCompletionsAttribute() : base(
     @"~\code",
     PathItemType.Directory
   )

@@ -1,12 +1,12 @@
 namespace Module.Tab.Completer;
 
-public class Completer(
+internal sealed class Completer(
   IEnumerable<string> Domain,
   CompletionCase Casing,
   bool Strict
 ) : TabCompleter(Casing)
 {
-  private protected override IEnumerable<string> GenerateCompletion(string wordToComplete)
+  private protected sealed override IEnumerable<string> GenerateCompletion(string wordToComplete)
   {
     if (wordToComplete is "")
     {
