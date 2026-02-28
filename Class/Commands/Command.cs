@@ -6,9 +6,11 @@ public abstract class CoreCommand(
 {
   private protected record Locator(
     string Root = "",
-    string Subpath = "",
+    string Subpath = ""
+  )
+  {
     bool IsEmpty => Root is "" and Subpath is "";
-  );
+  }
 
   private uint steps;
 
