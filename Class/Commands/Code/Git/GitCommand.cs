@@ -1,9 +1,6 @@
 namespace Module.Commands.Code.Git;
 
-public abstract class GitCommand(
-  string Verb,
-  bool Newable = default
-) : NativeCommand
+public abstract class GitCommand(string Verb) : NativeCommand
 {
   [Parameter(
     Position = 50,
@@ -31,7 +28,7 @@ public abstract class GitCommand(
     var repository = GitWorkingDirectory.Resolve(
       Pwd(),
       WorkingDirectory,
-      Newable
+      newable
     );
 
     if (repository is "")
@@ -43,7 +40,7 @@ public abstract class GitCommand(
         repository = GitWorkingDirectory.Resolve(
           Pwd(),
           Pwd(),
-          Newable
+          newable
         );
       }
 
