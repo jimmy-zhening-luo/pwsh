@@ -6,7 +6,7 @@ namespace Module.Commands.Code.Node;
   HelpUri = "https://docs.npmjs.com/cli/commands"
 )]
 [Alias("n")]
-public sealed class NpmInvoke : NativeCommand
+public sealed class NpmInvoke : NpmCommand
 {
   private static readonly HashSet<string> Verbs = [
     "access",
@@ -115,11 +115,7 @@ public sealed class NpmInvoke : NativeCommand
   [NodeVerbCompletions]
   public string Verb { get; set; } = string.Empty;
 
-  [Parameter(
-    HelpMessage = "Node package path"
-  )]
-  [WorkingDirectoryCompletions]
-  public string WorkingDirectory { get; set; } = string.Empty;
+  new public SwitchParameter V { get; set; }
 
   [Parameter(
     HelpMessage = "Show npm version if no command is specified. Otherwise, pass the -v flag as argument."
@@ -132,15 +128,9 @@ public sealed class NpmInvoke : NativeCommand
   }
   private bool version;
 
-  new public SwitchParameter V { get; set; }
-
-  private protected sealed override List<string> BuildNativeCommand()
+  private protected sealed override List<string> ParseArguments()
   {
-    List<string> command = [
-      "&",
-      "npm.ps1",
-      "--color=always",
-    ];
+    List<string> command = [];
 
     List<string> arguments = [.. ArgumentList];
     ArgumentList = [];
@@ -165,10 +155,10 @@ public sealed class NpmInvoke : NativeCommand
       else
       {
         arguments.Insert(default, WorkingDirectory);
-
-        WorkingDirectory = string.Empty;
       }
     }
+
+    WorkingDirectory = string.Empty;
 
     if (
       Verb is not ""
@@ -197,23 +187,8 @@ public sealed class NpmInvoke : NativeCommand
 
     if (Verb is not "")
     {
-      command.Add(Verb.ToLower());
+      IntrinsicVerb = Verb;
 
-      if (d)
-      {
-        arguments.Add("-D");
-        d = false;
-      }
-      if (e)
-      {
-        arguments.Add("-E");
-        e = false;
-      }
-      if (p)
-      {
-        arguments.Add("-P");
-        p = false;
-      }
       if (version)
       {
         arguments.Add("-v");
