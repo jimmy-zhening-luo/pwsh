@@ -38,13 +38,13 @@ public abstract class CoreCommand(
 
   private protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
 
+  private protected bool HadErrors => powershell?.HadErrors ?? default;
+
   private PowerShell PS => powershell ??= PowerShellHost.Create();
   private PowerShell? powershell;
 
   private SteppablePipeline SteppablePipeline => steppablePipeline ??= PS.GetSteppablePipeline();
   private SteppablePipeline? steppablePipeline;
-
-  private bool HadErrors => powershell?.HadErrors ?? default;
 
   private bool BlockedBySsh => SkipSsh
     && Client.Environment.Known.Variable.InSsh;
