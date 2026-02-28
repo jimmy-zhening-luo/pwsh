@@ -9,10 +9,21 @@ public class EnumCompletionsAttribute(
   Casing
 )
 {
-  private protected sealed override IEnumerable<string> ResolveDomain(System.Type enumType) => Exclude is null
-    ? System.Enum.GetNames(enumType)
-    : new HashSet<string>(
-        System.Enum.GetNames(enumType)
-      )
-        .ExceptWith(Exclude);
+  private protected sealed override IEnumerable<string> ResolveDomain(System.Type enumType)
+  {
+    var domain = System.Enum.GetNames(enumType);
+
+    if (Exclude is null or [])
+    {
+      return domain;
+    }
+    else
+    {
+      var domainSet = new HashSet<string>(domain);
+
+      domainSet.ExceptWith(Exclude);
+
+      return domainSet;
+    }
+  }
 }
