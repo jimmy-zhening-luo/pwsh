@@ -6,8 +6,41 @@ namespace Module.Commands.Code.Git;
   HelpUri = "https://git-scm.com/docs"
 )]
 [Alias("g")]
-public sealed class InvokeGit : CoreCommand
+public sealed class GitInvoke : CoreCommand
 {
+  public enum NewableVerb
+  {
+    clone,
+    config,
+    init
+  }
+
+  public static readonly HashSet<string> Verbs = [
+    "switch",
+    "merge",
+    "diff",
+    "stash",
+    "tag",
+    "config",
+    "remote",
+    "submodule",
+    "fetch",
+    "checkout",
+    "branch",
+    "rm",
+    "mv",
+    "ls-files",
+    "ls-tree",
+    "init",
+    "status",
+    "clone",
+    "pull",
+    "add",
+    "commit",
+    "push",
+    "reset",
+  ];
+
   [Parameter(
     Position = default,
     HelpMessage = "Git command"
@@ -115,9 +148,9 @@ public sealed class InvokeGit : CoreCommand
 
     if (Verb is not "")
     {
-      if (GitVerb.Verbs.Contains(Verb.ToLower()))
+      if (Verbs.Contains(Verb.ToLower()))
       {
-        if (System.Enum.TryParse<GitVerb.NewableVerb>(Verb, true, out var newableVerb))
+        if (System.Enum.TryParse<NewableVerb>(Verb, true, out var newableVerb))
         {
           newable = true;
 
