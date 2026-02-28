@@ -96,13 +96,13 @@ public abstract class GitCommand(
   }
   private bool p;
 
-  private protected abstract List<string> ParseGitArguments();
+  private protected abstract List<string> ParseArguments();
 
   private protected sealed override void Postprocess()
   {
     List<string> arguments = [];
 
-    arguments.AddRange(ParseGitArguments());
+    arguments.AddRange(ParseArguments());
 
     var repository = GitWorkingDirectory.Resolve(
       Pwd(),
