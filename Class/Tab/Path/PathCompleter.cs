@@ -24,23 +24,15 @@ public sealed class PathCompleter : TabCompleter
     Hidden,
     AllowReanchor
   ) = (
-    Canonicalize(location),
+    Client.File.PathString.Normalize(location) is var normalPath
+    && System.IO.Path.IsPathFullyQualified(normalPath)
+      ? normalPath
+      : PowerShellHost.FullPathCurrentLocationRelative(normalPath),
     itemType,
     flat,
     hidden,
     location is ""
   );
-
-  private static string Canonicalize(
-    string path
-  )
-  {
-    var normalPath = Client.File.PathString.Normalize(path);
-
-    return System.IO.Path.IsPathFullyQualified(normalPath)
-      ? normalPath
-      : PowerShellHost.FullPathCurrentLocationRelative(normalPath);
-  }
 
   private static string FormatPathCompletion(
     string path,
