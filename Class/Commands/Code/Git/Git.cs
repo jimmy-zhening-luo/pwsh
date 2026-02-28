@@ -10,8 +10,6 @@ public sealed class InvokeGit : CoreCommand
 {
   [Parameter(
     Position = default,
-    ValueFromRemainingArguments = true,
-    DontShow = true,
     HelpMessage = "Git command"
   )]
   [GitVerbCompletions]
@@ -54,6 +52,7 @@ public sealed class InvokeGit : CoreCommand
   private bool version;
 
   [Parameter(
+    DontShow = true,
     HelpMessage = "Pass -d flag as git argument"
   )]
   public SwitchParameter D
@@ -64,6 +63,7 @@ public sealed class InvokeGit : CoreCommand
   private bool d;
 
   [Parameter(
+    DontShow = true,
     HelpMessage = "Pass -E flag as git argument"
   )]
   public SwitchParameter E
@@ -74,6 +74,7 @@ public sealed class InvokeGit : CoreCommand
   private bool e;
 
   [Parameter(
+    DontShow = true,
     HelpMessage = "Pass -i flag as git argument"
   )]
   public SwitchParameter I
@@ -84,6 +85,7 @@ public sealed class InvokeGit : CoreCommand
   private bool i;
 
   [Parameter(
+    DontShow = true,
     HelpMessage = "Pass -o flag as git argument"
   )]
   public SwitchParameter O
@@ -94,6 +96,7 @@ public sealed class InvokeGit : CoreCommand
   private bool o;
 
   [Parameter(
+    DontShow = true,
     HelpMessage = "Pass -P flag as git argument"
   )]
   public SwitchParameter P
