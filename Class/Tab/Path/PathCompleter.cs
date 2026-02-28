@@ -184,6 +184,8 @@ public sealed class PathCompleter : TabCompleter
 
   private protected sealed override IEnumerable<string> GenerateCompletion(string wordToComplete)
   {
+    Index = default;
+
     var (
       searchPath,
       accumulator,
