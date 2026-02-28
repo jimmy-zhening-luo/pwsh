@@ -12,6 +12,8 @@ public sealed class PathCompleter : TabCompleter
 
   private readonly bool AllowReanchor;
 
+  private uint Index;
+
   public PathCompleter(
     string location,
     PathItemType itemType,
@@ -182,8 +184,6 @@ public sealed class PathCompleter : TabCompleter
 
   private protected sealed override IEnumerable<string> GenerateCompletion(string wordToComplete)
   {
-    uint matches = default;
-
     var (
       searchPath,
       accumulator,
@@ -217,12 +217,12 @@ public sealed class PathCompleter : TabCompleter
           )
         )
         {
-          ++matches;
+          ++Index;
           yield return directory;
         }
 
         if (
-          matches is 0
+          Index is 0
           && searchFilter.Length > 1
           && options is not
           {
@@ -242,7 +242,7 @@ public sealed class PathCompleter : TabCompleter
             )
           )
           {
-            ++matches;
+            ++Index;
             yield return directory;
           }
 
@@ -261,12 +261,12 @@ public sealed class PathCompleter : TabCompleter
           )
         )
         {
-          ++matches;
+          ++Index;
           yield return file;
         }
 
         if (
-          matches is 0
+          Index is 0
           && searchFilter.Length > 1
           && options is not
           {
@@ -285,14 +285,14 @@ public sealed class PathCompleter : TabCompleter
             )
           )
           {
-            ++matches;
+            ++Index;
             yield return file;
           }
 
           options.AttributesToSkip = originalAttributes;
         }
 
-        var checkpoint = matches;
+        var checkpoint = Index;
 
         foreach (
           var directory in EnumerateDirectories(
@@ -304,12 +304,12 @@ public sealed class PathCompleter : TabCompleter
           )
         )
         {
-          ++matches;
+          ++Index;
           yield return directory;
         }
 
         if (
-          matches == checkpoint
+          Index == checkpoint
           && searchFilter.Length > 1
           && options is not
           {
@@ -329,7 +329,7 @@ public sealed class PathCompleter : TabCompleter
             )
           )
           {
-            ++matches;
+            ++Index;
             yield return directory;
           }
 
@@ -349,7 +349,7 @@ public sealed class PathCompleter : TabCompleter
           )
         )
         {
-          ++matches;
+          ++Index;
           yield return directory;
         }
 
@@ -362,12 +362,12 @@ public sealed class PathCompleter : TabCompleter
           )
         )
         {
-          ++matches;
+          ++Index;
           yield return file;
         }
 
         if (
-          matches is 0
+          Index is 0
           && searchFilter.Length > 1
           && options is not
           {
@@ -387,7 +387,7 @@ public sealed class PathCompleter : TabCompleter
             )
           )
           {
-            ++matches;
+            ++Index;
             yield return directory;
           }
 
@@ -400,7 +400,7 @@ public sealed class PathCompleter : TabCompleter
             )
           )
           {
-            ++matches;
+            ++Index;
             yield return file;
           }
 
@@ -420,7 +420,7 @@ public sealed class PathCompleter : TabCompleter
 
     if (
       accumulator is not ""
-      || matches is not 0
+      || Index is not 0
     )
     {
       yield return JoinPathCompletion(
