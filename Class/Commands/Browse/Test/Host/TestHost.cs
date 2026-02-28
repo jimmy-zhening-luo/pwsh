@@ -19,7 +19,7 @@ public sealed class TestHost() : WrappedCommand(
     Detailed
   }
 
-  internal enum TestHostWellKnownPort
+  private enum TestHostWellKnownPort
   {
     HTTP = -4,
     RDP,
@@ -96,7 +96,18 @@ public sealed class TestHost() : WrappedCommand(
 
   [Parameter]
   [EnumCompletions(typeof(TestHostVerbosity))]
-  public TestHostVerbosity InformationLevel { get; set; }
+  public string InformationLevel
+  {
+    get => informationLevel.ToString();
+    set => informationLevel = System.Enum.TryParse<TestHostVerbosity>(
+      value,
+      true,
+      out var parsedVerbosity
+    )
+      ? parsedVerbosity
+      : TestHostVerbosity.Quiet;
+  }
+  private TestHostVerbosity informationLevel = default;
 
   [Parameter]
   public SwitchParameter Detailed
@@ -110,7 +121,7 @@ public sealed class TestHost() : WrappedCommand(
   {
     ["Detailed"] = default,
     ["InformationLevel"] = detailed
-      ? TestHostVerbosity.Detailed
+      ? nameof(TestHostVerbosity.Detailed)
       : InformationLevel,
   };
 

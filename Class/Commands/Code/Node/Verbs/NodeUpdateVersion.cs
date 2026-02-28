@@ -8,7 +8,7 @@ namespace Module.Commands.Code.Node.Verbs;
 [Alias("nu")]
 public sealed class NodeUpdateVersion() : NodeCommand("version")
 {
-  internal enum NodeVersion
+  private enum NodeVersion
   {
     patch,
     minor,
