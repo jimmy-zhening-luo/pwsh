@@ -22,7 +22,7 @@ function Invoke-Git {
       DontShow
     )]
     # Additional git arguments
-    [string[]]$Argument,
+    [string[]]$ArgumentList,
 
     [Parameter()]
     # If git returns a non-zero exit code, warn and continue instead of the default behavior of throwing a terminating error.
@@ -96,7 +96,7 @@ function Invoke-Git {
         $Verb = $Verb.ToLower()
       }
       else {
-        if ($WorkingDirectory -or $Argument) {
+        if ($WorkingDirectory -or $ArgumentList) {
           $GitArgument.Add($Verb)
         }
         else {
@@ -107,7 +107,7 @@ function Invoke-Git {
       }
     }
     else {
-      if ($Version -and -not $Argument.Count) {
+      if ($Version -and -not $ArgumentList.Count) {
         $Newable = $true
       }
       else {
@@ -130,11 +130,11 @@ function Invoke-Git {
     }
 
     $GitCommand = [System.Collections.Generic.List[string]]::new([string[]]@(
-      '-c'
-      'color.ui=always'
-      '-C'
-      $Repository
-    ))
+        '-c'
+        'color.ui=always'
+        '-C'
+        $Repository
+      ))
     if ($Verb) { $GitCommand.Add($Verb) }
 
     if ($D) { $GitArgument.Add('-d') }
@@ -144,8 +144,8 @@ function Invoke-Git {
     if ($P) { $GitArgument.Add('-P') }
     if ($Version) { $GitArgument.Add('-v') }
 
-    if ($Argument) {
-      $GitArgument.AddRange([string[]]$Argument)
+    if ($ArgumentList) {
+      $GitArgument.AddRange([string[]]$ArgumentList)
     }
 
     & "$env:ProgramFiles\Git\cmd\git.exe" @GitCommand @GitArgument
@@ -175,7 +175,7 @@ function Measure-GitRepository {
     [string]$WorkingDirectory
   )
 
-  Invoke-Git -Verb status -WorkingDirectory $WorkingDirectory -Argument $args
+  Invoke-Git -Verb status -WorkingDirectory $WorkingDirectory -ArgumentList $args
 }
 
 <#
@@ -217,7 +217,7 @@ function Import-GitRepository {
     $CloneArgument.AddRange([string[]]$args)
   }
 
-  Invoke-Git -Verb clone -WorkingDirectory $WorkingDirectory -Argument $CloneArgument
+  Invoke-Git -Verb clone -WorkingDirectory $WorkingDirectory -ArgumentList $CloneArgument
 }
 
 <#
@@ -232,7 +232,7 @@ function Get-GitRepository {
     [string]$WorkingDirectory
   )
 
-  Invoke-Git -Verb pull -WorkingDirectory $WorkingDirectory -Argument $args
+  Invoke-Git -Verb pull -WorkingDirectory $WorkingDirectory -ArgumentList $args
 }
 
 <#
@@ -300,7 +300,7 @@ function Compare-GitRepository {
     $DiffArgument.AddRange([string[]]$args)
   }
 
-  Invoke-Git -Verb diff -WorkingDirectory $WorkingDirectory -Argument $DiffArgument
+  Invoke-Git -Verb diff -WorkingDirectory $WorkingDirectory -ArgumentList $DiffArgument
 }
 
 <#
@@ -348,7 +348,7 @@ function Add-GitRepository {
     $AddArgument.Add('--renormalize')
   }
 
-  Invoke-Git -Verb add -WorkingDirectory $WorkingDirectory -Argument $AddArgument
+  Invoke-Git -Verb add -WorkingDirectory $WorkingDirectory -ArgumentList $AddArgument
 }
 
 <#
@@ -375,7 +375,7 @@ function Write-GitRepository {
   $CommitArgument = [System.Collections.Generic.List[string]]::new()
   $Messages = [System.Collections.Generic.List[string]]::new()
 
-  [string[]]$Argument, [string[]]$MessageWord = (
+  [string[]]$ArgumentList, [string[]]$MessageWord = (
     $Message ? (, $Message + $args) : $args
   ).Where(
     {
@@ -388,8 +388,8 @@ function Write-GitRepository {
     'Split'
   )
 
-  if ($Argument) {
-    $CommitArgument.AddRange([string[]]$Argument)
+  if ($ArgumentList) {
+    $CommitArgument.AddRange([string[]]$ArgumentList)
   }
   if ($MessageWord) {
     $Messages.AddRange([string[]]$MessageWord)
@@ -448,7 +448,7 @@ function Write-GitRepository {
     Add-GitRepository -WorkingDirectory $WorkingDirectory
   }
 
-  Invoke-Git -Verb commit -WorkingDirectory $WorkingDirectory -Argument $CommitArgument
+  Invoke-Git -Verb commit -WorkingDirectory $WorkingDirectory -ArgumentList $CommitArgument
 }
 
 <#
@@ -482,7 +482,7 @@ function Push-GitRepository {
 
   Get-GitRepository -WorkingDirectory $WorkingDirectory
 
-  Invoke-Git -Verb push -WorkingDirectory $WorkingDirectory -Argument $PushArgument
+  Invoke-Git -Verb push -WorkingDirectory $WorkingDirectory -ArgumentList $PushArgument
 }
 
 <#
@@ -572,7 +572,7 @@ function Reset-GitRepository {
     Add-GitRepository -WorkingDirectory $WorkingDirectory
   }
 
-  Invoke-Git -Verb reset -WorkingDirectory $WorkingDirectory -Argument $ResetArgument
+  Invoke-Git -Verb reset -WorkingDirectory $WorkingDirectory -ArgumentList $ResetArgument
 }
 
 <#
