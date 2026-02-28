@@ -59,9 +59,7 @@ public sealed class PathCompleter : TabCompleter
       }
       else
       {
-        var subpathPart = pathToComplete[..pathEnd]
-          .Trim();
-
+        var subpathPart = pathToComplete[..pathEnd].Trim();
         var wordStart = pathEnd + 1;
 
         if (wordStart < pathToComplete.Length)
