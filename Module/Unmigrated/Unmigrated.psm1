@@ -131,24 +131,13 @@ function Invoke-Git {
       $Verb
     )
 
-    if ($D) {
-      $GitArgument.Add('-d')
-    }
-    if ($E) {
-      $GitArgument.Add('-E')
-    }
-    if ($I) {
-      $GitArgument.Add('-i')
-    }
-    if ($O) {
-      $GitArgument.Add('-o')
-    }
-    if ($P) {
-      $GitArgument.Add('-P')
-    }
-    if ($Version) {
-      $GitArgument.Add('-v')
-    }
+    if ($D) { $GitArgument.Add('-d') }
+    if ($E) { $GitArgument.Add('-E') }
+    if ($I) { $GitArgument.Add('-i') }
+    if ($O) { $GitArgument.Add('-o') }
+    if ($P) { $GitArgument.Add('-P') }
+    if ($Version) { $GitArgument.Add('-v') }
+
     if ($Argument) {
       $GitArgument.AddRange([string[]]$Argument)
     }
@@ -737,33 +726,16 @@ function Invoke-Npm {
     }
 
     if ($Command) {
-      $NodeArgument.Add(
-        $Command.ToLower()
-      )
-      if ($D) {
-        $NodeCommandArgument.Add('-D')
-      }
-      if ($E) {
-        $NodeCommandArgument.Add('-E')
-      }
-      if ($I) {
-        $NodeCommandArgument.Add('-i')
-      }
-      if ($O) {
-        $NodeCommandArgument.Add('-o')
-      }
-      if ($P) {
-        $NodeCommandArgument.Add('-P')
-      }
-      if ($Version) {
-        $NodeCommandArgument.Add('-v')
-      }
+      $NodeArgument.Add($Command.ToLower())
+      if ($D) { $NodeCommandArgument.Add('-D') }
+      if ($E) { $NodeCommandArgument.Add('-E') }
+      if ($I) { $NodeCommandArgument.Add('-i') }
+      if ($O) { $NodeCommandArgument.Add('-o') }
+      if ($P) { $NodeCommandArgument.Add('-P') }
+      if ($Version) { $NodeCommandArgument.Add('-v') }
     }
-    else {
-      if ($Version) {
-        $NodeArgument.Add('-v')
-      }
-    }
+
+    if ($Version) { $NodeArgument.Add('-v') }
 
     if ($NodeCommandArgument.Count) {
       $NodeArgument.AddRange($NodeCommandArgument)
