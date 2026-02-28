@@ -66,6 +66,7 @@
     'Get-TypeAccelerator'
     'Get-Type'
     'Tee-Variable'
+    'Invoke-Git'
   )
   VariablesToExport    = @()
   AliasesToExport      = @(
@@ -132,5 +133,6 @@
     'ty'
     'typeof'
     't'
+    'g'
   )
 }
