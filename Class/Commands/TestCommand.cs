@@ -54,7 +54,6 @@ public sealed class TestCommand : CoreCommand
       "& npm foo"
     );
 
-    BeginSteppablePipeline();
     ProcessSteppablePipeline();
     EndSteppablePipeline();
 
