@@ -6,7 +6,7 @@ namespace Module.Commands.Code.Git.Verbs;
   HelpUri = "https://git-scm.com/docs/git-status"
 )]
 [Alias("gg")]
-public sealed class GitMeasure() : GitCommand("status")
+public sealed class GitStatus() : GitCommand("status")
 {
   private protected sealed override List<string> ParseArguments() => [];
 }

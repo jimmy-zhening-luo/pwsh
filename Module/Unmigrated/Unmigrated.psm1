@@ -42,46 +42,6 @@ function Import-GitRepository {
 
 <#
 .LINK
-https://git-scm.com/docs/git-diff
-#>
-function Compare-GitRepository {
-  [Alias('gd')]
-  param(
-    [Module.Commands.Code.PathSpecCompletions()]
-    # File pattern of files to diff, defaults to '.' (all)
-    [string]$Name,
-
-    [Module.Commands.Code.WorkingDirectoryCompletions()]
-    # Repository path
-    [string]$WorkingDirectory
-  )
-
-  $Arguments = [System.Collections.Generic.List[string]]::new()
-
-  if ($Name) {
-    $Arguments.Add($Name)
-  }
-
-  if (
-    $WorkingDirectory -and (
-      [Module.Commands.Code.Git.GitWorkingDirectory]::Resolve($PWD.Path, $PWD.Path)
-    ) -and !(
-      [Module.Commands.Code.Git.GitWorkingDirectory]::Resolve($PWD.Path, $WorkingDirectory)
-    )
-  ) {
-    $Arguments.Add($WorkingDirectory)
-    $WorkingDirectory = ''
-  }
-
-  if ($args) {
-    $Arguments.AddRange([string[]]$args)
-  }
-
-  Invoke-Git -Verb diff -WorkingDirectory $WorkingDirectory -ArgumentList $Arguments
-}
-
-<#
-.LINK
 https://git-scm.com/docs/git-add
 #>
 function Add-GitRepository {
