@@ -5,10 +5,10 @@ namespace Module.Tab;
   | System.AttributeTargets.Field
 )]
 internal abstract class TabCompletionsAttribute<TCompleter>(
-  CompletionCase casing = default
+  CompletionCase Casing = default
 ) : ArgumentCompleterAttribute, IArgumentCompleterFactory where TCompleter : TabCompleter
 {
-  private protected readonly CompletionCase Casing = casing;
+  public CompletionCase Casing { get; init; } = Casing;
 
   public abstract TCompleter Create();
   IArgumentCompleter IArgumentCompleterFactory.Create() => Create();
