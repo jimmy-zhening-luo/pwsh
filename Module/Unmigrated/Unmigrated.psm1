@@ -795,24 +795,6 @@ function Invoke-Npm {
 
 <#
 .LINK
-https://docs.npmjs.com/cli/commands/npx
-#>
-function Invoke-NodeExecutable {
-
-  [Alias('nx')]
-  param()
-
-  if ($args) {
-    & npx.ps1 @args
-
-    if ($LASTEXITCODE -notin 0, 1) {
-      throw "npx error, execution stopped with exit code: $LASTEXITCODE"
-    }
-  }
-}
-
-<#
-.LINK
 https://docs.npmjs.com/cli/commands/npm-cache
 #>
 function Clear-NodeModuleCache {
