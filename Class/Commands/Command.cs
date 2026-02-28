@@ -10,7 +10,7 @@ public abstract class CoreCommand(
   )
   {
     public string Path => Root is ""
-      ? CoreCommand.Pwd(Subpath)
+      ? this.Pwd(Subpath)
       : Client.File.PathString.FullPathLocationRelative(
           Root,
           Subpath
