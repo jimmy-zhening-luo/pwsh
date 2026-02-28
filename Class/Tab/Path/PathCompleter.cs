@@ -123,52 +123,6 @@ public sealed class PathCompleter : TabCompleter
     );
   }
 
-  private static IEnumerable<string> EnumerateDirectories(
-    string path,
-    string accumulatedSubpath,
-    string filter,
-    System.IO.EnumerationOptions options,
-    bool trailingSeparator = default
-  ) => EnumerateCompletions(
-     System.IO.Directory.EnumerateDirectories(
-      path,
-      filter,
-      options
-    ),
-    accumulatedSubpath,
-    trailingSeparator
-  );
-
-  private static IEnumerable<string> EnumerateFiles(
-    string path,
-    string accumulatedSubpath,
-    string filter,
-    System.IO.EnumerationOptions options
-  ) => EnumerateCompletions(
-    System.IO.Directory.EnumerateFiles(
-      path,
-      filter,
-      options
-    ),
-    accumulatedSubpath
-  );
-
-  private static IEnumerable<string> EnumerateCompletions(
-    IEnumerable<string> paths,
-    string accumulatedSubpath,
-    bool trailingSeparator = default
-  )
-  {
-    foreach (var path in paths)
-    {
-      yield return JoinPathCompletion(
-        System.IO.Path.GetFileName(path),
-        accumulatedSubpath,
-        trailingSeparator
-      );
-    }
-  }
-
   private static string JoinPathCompletion(
     string filename,
     string accumulatedSubpath,
@@ -196,15 +150,15 @@ public sealed class PathCompleter : TabCompleter
       AllowReanchor
     );
 
-    System.IO.EnumerationOptions options = new()
+    System.IO.EnumerationOptions searchOptions = new()
     {
       IgnoreInaccessible = default
     };
     if (IncludeHidden)
     {
-      options.AttributesToSkip = System.IO.FileAttributes.System;
+      searchOptions.AttributesToSkip = System.IO.FileAttributes.System;
     }
-    var originalAttributes = options.AttributesToSkip;
+    var originalAttributes = searchOptions.AttributesToSkip;
 
     switch (ItemType)
     {
@@ -214,7 +168,7 @@ public sealed class PathCompleter : TabCompleter
             searchPath,
             accumulator,
             searchFilter,
-            options,
+            searchOptions,
             !Flat
           )
         )
@@ -226,20 +180,20 @@ public sealed class PathCompleter : TabCompleter
         if (
           Index is 0
           && searchFilter.Length > 1
-          && options is not
+          && searchOptions is not
           {
             AttributesToSkip: System.IO.FileAttributes.System
           }
         )
         {
-          options.AttributesToSkip = System.IO.FileAttributes.System;
+          searchOptions.AttributesToSkip = System.IO.FileAttributes.System;
 
           foreach (
             var directory in EnumerateDirectories(
               searchPath,
               accumulator,
               searchFilter,
-              options,
+              searchOptions,
               !Flat
             )
           )
@@ -248,7 +202,7 @@ public sealed class PathCompleter : TabCompleter
             yield return directory;
           }
 
-          options.AttributesToSkip = originalAttributes;
+          searchOptions.AttributesToSkip = originalAttributes;
         }
 
         break;
@@ -259,7 +213,7 @@ public sealed class PathCompleter : TabCompleter
             searchPath,
             accumulator,
             searchFilter,
-            options
+            searchOptions
           )
         )
         {
@@ -270,20 +224,20 @@ public sealed class PathCompleter : TabCompleter
         if (
           Index is 0
           && searchFilter.Length > 1
-          && options is not
+          && searchOptions is not
           {
             AttributesToSkip: System.IO.FileAttributes.System
           }
         )
         {
-          options.AttributesToSkip = System.IO.FileAttributes.System;
+          searchOptions.AttributesToSkip = System.IO.FileAttributes.System;
 
           foreach (
             var file in EnumerateFiles(
               searchPath,
               accumulator,
               searchFilter,
-              options
+              searchOptions
             )
           )
           {
@@ -291,7 +245,7 @@ public sealed class PathCompleter : TabCompleter
             yield return file;
           }
 
-          options.AttributesToSkip = originalAttributes;
+          searchOptions.AttributesToSkip = originalAttributes;
         }
 
         var checkpoint = Index;
@@ -301,7 +255,7 @@ public sealed class PathCompleter : TabCompleter
             searchPath,
             accumulator,
             searchFilter,
-            options,
+            searchOptions,
             true
           )
         )
@@ -313,20 +267,20 @@ public sealed class PathCompleter : TabCompleter
         if (
           Index == checkpoint
           && searchFilter.Length > 1
-          && options is not
+          && searchOptions is not
           {
             AttributesToSkip: System.IO.FileAttributes.System
           }
         )
         {
-          options.AttributesToSkip = System.IO.FileAttributes.System;
+          searchOptions.AttributesToSkip = System.IO.FileAttributes.System;
 
           foreach (
             var directory in EnumerateDirectories(
               searchPath,
               accumulator,
               searchFilter,
-              options,
+              searchOptions,
               true
             )
           )
@@ -335,7 +289,7 @@ public sealed class PathCompleter : TabCompleter
             yield return directory;
           }
 
-          options.AttributesToSkip = originalAttributes;
+          searchOptions.AttributesToSkip = originalAttributes;
         }
 
         break;
@@ -346,7 +300,7 @@ public sealed class PathCompleter : TabCompleter
             searchPath,
             accumulator,
             searchFilter,
-            options,
+            searchOptions,
             !Flat
           )
         )
@@ -360,7 +314,7 @@ public sealed class PathCompleter : TabCompleter
             searchPath,
             accumulator,
             searchFilter,
-            options
+            searchOptions
           )
         )
         {
@@ -371,20 +325,20 @@ public sealed class PathCompleter : TabCompleter
         if (
           Index is 0
           && searchFilter.Length > 1
-          && options is not
+          && searchOptions is not
           {
             AttributesToSkip: System.IO.FileAttributes.System
           }
         )
         {
-          options.AttributesToSkip = System.IO.FileAttributes.System;
+          searchOptions.AttributesToSkip = System.IO.FileAttributes.System;
 
           foreach (
             var directory in EnumerateDirectories(
               searchPath,
               accumulator,
               searchFilter,
-              options,
+              searchOptions,
               !Flat
             )
           )
@@ -398,7 +352,7 @@ public sealed class PathCompleter : TabCompleter
               searchPath,
               accumulator,
               searchFilter,
-              options
+              searchOptions
             )
           )
           {
@@ -406,7 +360,7 @@ public sealed class PathCompleter : TabCompleter
             yield return file;
           }
 
-          options.AttributesToSkip = originalAttributes;
+          searchOptions.AttributesToSkip = originalAttributes;
         }
 
         break;
@@ -432,5 +386,53 @@ public sealed class PathCompleter : TabCompleter
     }
 
     yield break;
+  }
+
+  private IEnumerable<string> EnumerateDirectories(
+    string searchPath,
+    string accumulatedSubpath,
+    string searchFilter,
+    System.IO.EnumerationOptions searchOptions,
+    bool trailingSeparator = default
+  ) => EnumerateCompletions(
+     System.IO.Directory.EnumerateDirectories(
+      searchPath,
+      searchFilter,
+      searchOptions
+    ),
+    accumulatedSubpath,
+    trailingSeparator
+  );
+
+  private IEnumerable<string> EnumerateFiles(
+    string searchPath,
+    string accumulatedSubpath,
+    string searchFilter,
+    System.IO.EnumerationOptions searchOptions
+  ) => EnumerateCompletions(
+    System.IO.Directory.EnumerateFiles(
+      searchPath,
+      searchFilter,
+      searchOptions
+    ),
+    accumulatedSubpath
+  );
+
+  private IEnumerable<string> EnumerateCompletions(
+    IEnumerable<string> paths,
+    string accumulatedSubpath,
+    bool trailingSeparator = default
+  )
+  {
+    foreach (var path in paths)
+    {
+      Index++;
+
+      yield return JoinPathCompletion(
+        System.IO.Path.GetFileName(path),
+        accumulatedSubpath,
+        trailingSeparator
+      );
+    }
   }
 }
