@@ -6,7 +6,7 @@ public abstract class GitCommand(
 ) : NativeCommand
 {
   [Parameter(
-    Position = default,
+    Position = 50,
     HelpMessage = "Repository path"
   )]
   [WorkingDirectoryCompletions]
