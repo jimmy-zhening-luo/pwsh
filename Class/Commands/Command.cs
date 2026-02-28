@@ -43,6 +43,8 @@ public abstract class CoreCommand(
   private PowerShell PS => powershell ??= PowerShellHost.Create();
   private PowerShell? powershell;
 
+  private SteppablePipeline? steppablePipeline;
+
   private bool BlockedBySsh => SkipSsh
     && Client.Environment.Known.Variable.InSsh;
 
