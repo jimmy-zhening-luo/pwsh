@@ -443,16 +443,16 @@ function Invoke-Npm {
   )
 
   end {
-    $NodeArgument = [System.Collections.Generic.List[string]]::new(
+    $NpmCommand = [System.Collections.Generic.List[string]]::new(
       [string[]]@(
         '--color=always'
       )
     )
 
-    $NodeCommandArgument = [System.Collections.Generic.List[string]]::new()
+    $NpmArguments = [System.Collections.Generic.List[string]]::new()
 
     if ($ArgumentList) {
-      $NodeCommandArgument.AddRange([string[]]$ArgumentList)
+      $NpmArguments.AddRange([string[]]$ArgumentList)
     }
 
     if ($WorkingDirectory) {
@@ -465,11 +465,11 @@ function Invoke-Npm {
         $PackagePrefix = $WorkingDirectory ? "--prefix=$((Resolve-Path $WorkingDirectory).Path)" : ''
 
         if ($PackagePrefix) {
-          $NodeArgument.Add($PackagePrefix)
+          $NpmCommand.Add($PackagePrefix)
         }
       }
       else {
-        $NodeCommandArgument.Insert(
+        $NpmArguments.Insert(
           0,
           $WorkingDirectory
         )
@@ -487,7 +487,7 @@ function Invoke-Npm {
         $Verb.ToLower()
       )
     ) {
-      [string]$DeferredVerb = $NodeCommandArgument.Count ? $NodeCommandArgument.Find(
+      [string]$DeferredVerb = $NpmArguments.Count ? $NpmArguments.Find(
         {
           [Module.Commands.Code.Node.NodeVerb]::Verbs.Contains(
             $args[0].ToLower()
@@ -496,10 +496,10 @@ function Invoke-Npm {
       ) : ''
 
       if ($DeferredVerb) {
-        [void]$NodeCommandArgument.Remove($DeferredVerb)
+        [void]$NpmArguments.Remove($DeferredVerb)
       }
 
-      $NodeCommandArgument.Insert(
+      $NpmArguments.Insert(
         0,
         $Verb
       )
@@ -508,22 +508,22 @@ function Invoke-Npm {
     }
 
     if ($Verb) {
-      $NodeArgument.Add($Verb.ToLower())
-      if ($D) { $NodeCommandArgument.Add('-D') }
-      if ($E) { $NodeCommandArgument.Add('-E') }
-      if ($I) { $NodeCommandArgument.Add('-i') }
-      if ($O) { $NodeCommandArgument.Add('-o') }
-      if ($P) { $NodeCommandArgument.Add('-P') }
-      if ($Version) { $NodeCommandArgument.Add('-v') }
+      $NpmCommand.Add($Verb.ToLower())
+      if ($D) { $NpmArguments.Add('-D') }
+      if ($E) { $NpmArguments.Add('-E') }
+      if ($I) { $NpmArguments.Add('-i') }
+      if ($O) { $NpmArguments.Add('-o') }
+      if ($P) { $NpmArguments.Add('-P') }
+      if ($Version) { $NpmArguments.Add('-v') }
     }
 
-    if ($Version) { $NodeArgument.Add('-v') }
+    if ($Version) { $NpmCommand.Add('-v') }
 
-    if ($NodeCommandArgument.Count) {
-      $NodeArgument.AddRange($NodeCommandArgument)
+    if ($NpmArguments.Count) {
+      $NpmCommand.AddRange($NpmArguments)
     }
 
-    & npm.ps1 @NodeArgument
+    & npm.ps1 @NpmCommand
 
     if ($LASTEXITCODE -notin 0, 1) {
       $Exception = "npm command error, execution returned exit code: $LASTEXITCODE"
