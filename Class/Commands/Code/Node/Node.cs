@@ -127,30 +127,6 @@ public abstract class NodeCommand(
       .. ParseArguments(),
     ];
 
-    if (
-      Aliases.TryGetValue(
-        IntrinsicVerb.ToLower(),
-        out var alias
-      )
-    )
-    {
-      IntrinsicVerb = alias;
-    }
-    else if (
-      Verbs.TryGetValue(
-        IntrinsicVerb.ToLower(),
-        out var verb
-      )
-    )
-    {
-      IntrinsicVerb = verb;
-    }
-    else
-    {
-      arguments.Insert(default, IntrinsicVerb);
-      IntrinsicVerb = string.Empty;
-    }
-
     if (WorkingDirectory is not "")
     {
       if (NodeWorkingDirectory.Test(Pwd(), WorkingDirectory))
@@ -176,6 +152,30 @@ public abstract class NodeCommand(
     }
 
     WorkingDirectory = string.Empty;
+
+    if (
+      Aliases.TryGetValue(
+        IntrinsicVerb.ToLower(),
+        out var alias
+      )
+    )
+    {
+      IntrinsicVerb = alias;
+    }
+    else if (
+      Verbs.TryGetValue(
+        IntrinsicVerb.ToLower(),
+        out var verb
+      )
+    )
+    {
+      IntrinsicVerb = verb;
+    }
+    else
+    {
+      arguments.Insert(default, IntrinsicVerb);
+      IntrinsicVerb = string.Empty;
+    }
 
     if (IntrinsicVerb is not "")
     {
