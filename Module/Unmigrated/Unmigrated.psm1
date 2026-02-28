@@ -42,34 +42,6 @@ function Import-GitRepository {
 
 <#
 .LINK
-https://git-scm.com/docs/git-pull
-#>
-function Get-ChildGitRepository {
-  [CmdletBinding()]
-  [Alias('gpp')]
-  param()
-  end {
-    [string[]]$Repositories = Get-ChildItem -LiteralPath $HOME\code -Directory |
-      Select-Object -ExpandProperty FullName |
-      ForEach-Object -Process { [Module.Commands.Code.Git.GitWorkingDirectory]::Resolve($PWD.Path, $PSItem) }
-    $Count = $Repositories.Count
-
-    Write-Progress -Activity Pull -Status "0/$Count" -PercentComplete 0
-
-    $i = 0
-    foreach ($Repository in $Repositories) {
-      Get-GitRepository -WorkingDirectory $Repository
-
-      ++$i
-      Write-Progress -Activity Pull -Status "$i/$Count" -PercentComplete ($i * 100 / $Count)
-    }
-
-    return "`nPulled $Count repositor" + ($Count -eq 1 ? 'y' : 'ies')
-  }
-}
-
-<#
-.LINK
 https://git-scm.com/docs/git-diff
 #>
 function Compare-GitRepository {
