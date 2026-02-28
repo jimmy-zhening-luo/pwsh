@@ -2,14 +2,14 @@ namespace Module.Commands.Windows.App;
 
 public abstract class WinGetCommand : CoreCommand
 {
+  private protected static string WinGet => Client.Environment.Known.Application.WinGet;
+
   [Parameter(
     Position = default,
     ValueFromRemainingArguments = true,
     DontShow = true
   )]
   public string[] ArgumentList { get; set; } = [];
-
-  private protected string WinGet => Client.Environment.Known.Application.WinGet;
 
   private protected abstract List<string> ParseWinGetCommand();
 
