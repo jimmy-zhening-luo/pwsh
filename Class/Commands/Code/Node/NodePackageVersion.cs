@@ -6,6 +6,7 @@ public enum NodePackageVersion
   minor,
   major,
   prerelease,
+  prepatch = prerelease,
   preminor,
-  premajor
+  premajor,
 }
