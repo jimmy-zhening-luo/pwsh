@@ -1,4 +1,4 @@
-namespace Module.Commands.Code.Git;
+namespace Module.Commands.Code.Git.Verbs;
 
 [Cmdlet(
   VerbsLifecycle.Invoke,
