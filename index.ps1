@@ -29,11 +29,11 @@ $Global:PSDefaultParameterValues = @{
   $MODULE = "$PSScriptRoot\Module\Module"
   $ASSEMBLY = "$MODULE\Module.dll"
 
-  $Exists = Test-Path -LiteralPath $ASSEMBLY -PathType Leaf
-
   if (Test-Path -LiteralPath $DIST -PathType Leaf) {
     if (
-      !$Exists -or (
+      -not (
+        Test-Path -LiteralPath $ASSEMBLY -PathType Leaf
+      ) -or (
         (
           Get-ItemPropertyValue -LiteralPath $ASSEMBLY -Name LastWriteTime
         ) -ne (
@@ -54,10 +54,6 @@ $Global:PSDefaultParameterValues = @{
   }
   else {
     Write-Warning -Message 'Module assembly is not built.'
-  }
-
-  if ($Exists) {
-    Add-Type -LiteralPath $ASSEMBLY
   }
 }
 
