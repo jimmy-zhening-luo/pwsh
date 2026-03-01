@@ -8,6 +8,13 @@ namespace Module.Commands.Code.Node.Verbs;
 [Alias("nu")]
 public sealed class NodeUpdateVersion() : NodeCommand("version")
 {
+  private sealed class NodeVersionCompletionsAttribute() : EnumCompletionsAttribute(
+    typeof(NodeVersion),
+    default,
+    ["from-git"],
+    ["prepatch"]
+  );
+
   private enum NodeVersion
   {
     patch,
@@ -18,13 +25,6 @@ public sealed class NodeUpdateVersion() : NodeCommand("version")
     preminor,
     premajor,
   }
-
-  private sealed class NodeVersionCompletionsAttribute() : EnumCompletionsAttribute(
-    typeof(NodeVersion),
-    default,
-    ["from-git"],
-    ["prepatch"]
-  );
 
   new public SwitchParameter V { get; set; }
 

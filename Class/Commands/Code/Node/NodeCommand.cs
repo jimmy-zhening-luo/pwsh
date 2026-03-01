@@ -6,7 +6,7 @@ public abstract class NodeCommand(
 {
   private protected sealed class NodeVerbCompletionsAttribute() : CompletionsAttribute([.. Verbs]);
 
-  private protected static readonly HashSet<string> Verbs = [
+  private static readonly HashSet<string> Verbs = [
     "access",
     "adduser",
     "audit",
@@ -73,7 +73,7 @@ public abstract class NodeCommand(
     "whoami",
   ];
 
-  private protected static readonly Dictionary<string, string> Aliases = new()
+  private static readonly Dictionary<string, string> Aliases = new()
   {
     ["issues"] = "bugs",
     ["c"] = "config",
@@ -211,5 +211,4 @@ public abstract class NodeCommand(
       "package.json"
     )
   );
-
 }

@@ -4,14 +4,14 @@ public abstract class GitCommand(
   string IntrinsicVerb = ""
 ) : NativeCommand
 {
+  private protected sealed class GitVerbCompletionsAttribute() : CompletionsAttribute([.. Verbs]);
+
   private enum NewableVerb
   {
     clone,
     config,
     init
   }
-
-  private protected sealed class GitVerbCompletionsAttribute() : CompletionsAttribute([.. Verbs]);
 
   private static readonly HashSet<string> Verbs = [
     "switch",
