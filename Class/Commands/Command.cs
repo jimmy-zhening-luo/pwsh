@@ -291,13 +291,12 @@ public abstract class CoreCommand(
     );
   }
 
-  private string GetName()
+  private string GetName() => GetType() is
   {
-    var type = GetType();
-
-    return type.FullName
-      ?? type.ToString();
-  }
+    FullName: var name
+  } type
+    ? name ?? type.ToString()
+    : string.Empty;
 
   private void Dispose(bool disposing)
   {
