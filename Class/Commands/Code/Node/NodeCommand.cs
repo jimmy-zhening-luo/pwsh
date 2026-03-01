@@ -125,14 +125,13 @@ public abstract class NodeCommand(
   }
   private string workingDirectory = string.Empty;
 
+  private protected sealed override string CommandPath => Client.Environment.Known.Application.Node;
+
   private protected abstract List<string> ParseArguments();
 
   private protected sealed override List<string> BuildNativeCommand()
   {
-    List<string> command = [
-      "npm.ps1",
-      "--color=always",
-    ];
+    List<string> command = ["--color=always"];
 
     List<string> arguments = [
       .. ParseArguments(),

@@ -58,6 +58,8 @@ public abstract class GitCommand(
   }
   private string workingDirectory = string.Empty;
 
+  private protected sealed override string CommandPath => Client.Environment.Known.Application.Git;
+
   private protected abstract List<string> ParseArguments();
 
   private protected sealed override List<string> BuildNativeCommand()
@@ -121,7 +123,6 @@ public abstract class GitCommand(
     }
 
     List<string> command = [
-      Client.Environment.Known.Application.Git,
       "-c",
       "color.ui=always",
     ];

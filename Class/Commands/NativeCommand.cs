@@ -88,12 +88,15 @@ public abstract class NativeCommand(
   }
   private protected bool p;
 
+  private protected abstract string CommandPath { get; }
+
   private protected abstract List<string> BuildNativeCommand();
 
   private protected sealed override void Postprocess()
   {
     List<string> command = [
       "&",
+      CommandPath,
       .. BuildNativeCommand(),
     ];
 
