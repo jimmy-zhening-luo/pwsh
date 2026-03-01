@@ -121,7 +121,6 @@ public abstract class GitCommand(
     }
 
     List<string> command = [
-      "&",
       Client.Environment.Known.Application.Git,
       "-c",
       "color.ui=always",

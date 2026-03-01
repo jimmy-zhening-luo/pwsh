@@ -93,6 +93,7 @@ public abstract class NativeCommand(
   private protected sealed override void Postprocess()
   {
     List<string> command = [
+      "&",
       .. BuildNativeCommand(),
     ];
 

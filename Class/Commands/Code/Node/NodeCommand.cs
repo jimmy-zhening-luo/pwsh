@@ -130,7 +130,6 @@ public abstract class NodeCommand(
   private protected sealed override List<string> BuildNativeCommand()
   {
     List<string> command = [
-      "&",
       "npm.ps1",
       "--color=always",
     ];
