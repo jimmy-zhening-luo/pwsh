@@ -182,7 +182,7 @@ public sealed class GetDirectoryDrive : WrappedGetDirectory
   )]
   [SupportsWildcards]
   [PathCompletions(
-    @"\",
+    Client.File.PathString.SeparatorString,
     PathItemType.Directory
   )]
   public sealed override string[] Path
