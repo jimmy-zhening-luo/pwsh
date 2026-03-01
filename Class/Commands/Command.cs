@@ -71,10 +71,6 @@ public abstract class CoreCommand(
     {
       Preprocess();
     }
-    else
-    {
-      stopped = true;
-    }
 
     WriteDebug("</BEGIN>");
   }
