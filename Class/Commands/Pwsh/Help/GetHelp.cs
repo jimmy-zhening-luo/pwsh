@@ -140,7 +140,7 @@ public sealed class GetHelpOnline : CoreCommand
     {
       foreach (var helpLink in helpLinks)
       {
-        WriteEvent(helpLink.ToString());
+        ShowInformation(helpLink.ToString());
       }
     }
 

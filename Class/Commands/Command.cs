@@ -21,11 +21,14 @@ public abstract class CoreCommand(
     };
   }
 
-  private uint steps;
+  private enum CommandState
+  {
+    Alive,
+    Stopped,
+    Disposed,
+  }
 
-  private bool stopped;
-
-  private bool disposed;
+  private CommandState state;
 
   ~CoreCommand()
   {
@@ -47,12 +50,10 @@ public abstract class CoreCommand(
 
   private SteppablePipeline? steppablePipeline;
 
-  private bool Alive => !disposed && !stopped;
-
   private bool BlockedBySsh => SkipSsh
     && Client.Environment.Known.Variable.InSsh;
 
-  private bool ContinueProcessing => Alive
+  private bool ContinueProcessing => state is CommandState.Alive
     && !BlockedBySsh;
 
   public void Dispose()
@@ -76,12 +77,10 @@ public abstract class CoreCommand(
   {
     if (ContinueProcessing)
     {
-      ++steps;
-      WriteDebug($"<PROCESS:{steps}>");
-
+      WriteDebug("<PROCESS>");
       Process();
 
-      WriteDebug($"</PROCESS:{steps}>");
+      WriteDebug("</PROCESS>");
     }
   }
 
@@ -99,7 +98,8 @@ public abstract class CoreCommand(
 
   protected sealed override void StopProcessing()
   {
-    stopped = true;
+    state = CommandState.Stopped;
+
     Dispose();
   }
 
@@ -125,19 +125,10 @@ public abstract class CoreCommand(
   private protected PowerShell AddCommand(
     string command,
     CommandTypes commandType = CommandTypes.Cmdlet
-  ) => AddCommand(
-    PS,
-    command,
-    commandType
-  );
-  private protected PowerShell AddCommand(
-    PowerShell ps,
-    string command,
-    CommandTypes commandType = CommandTypes.Cmdlet
-  ) => ps.AddCommand(
+  ) => PS.AddCommand(
     GetCommand(
       command,
-      commandType
+      mcommandType
     )
   );
 
@@ -157,16 +148,16 @@ public abstract class CoreCommand(
 
   private protected PowerShell AddScript(string script) => PS.AddScript(script);
 
+  private protected Collection<PSObject> InvokePowerShell() => PS.Invoke();
+  private protected Collection<T> InvokePowerShell<T>() => PS.Invoke<T>();
+
   private protected void Clear() => powershell
     ?.Commands
     .Clear();
 
-  private protected Collection<PSObject> InvokePowerShell() => PS.Invoke();
-  private protected Collection<T> InvokePowerShell<T>() => PS.Invoke<T>();
-
   private protected void BeginSteppablePipeline()
   {
-    if (Alive)
+    if (state is CommandState.Alive)
     {
       if (steppablePipeline is not null)
       {
@@ -182,11 +173,9 @@ public abstract class CoreCommand(
     }
   }
 
-  private protected void ProcessSteppablePipeline(
-    object? input = default
-  )
+  private protected void ProcessSteppablePipeline(object? input = default)
   {
-    if (Alive)
+    if (state is CommandState.Alive)
     {
       if (steppablePipeline is null)
       {
@@ -202,10 +191,7 @@ public abstract class CoreCommand(
     }
   }
 
-  private protected void EndSteppablePipeline()
-  {
-    CleanPipeline();
-  }
+  private protected void EndSteppablePipeline() => CleanPipeline();
 
   private protected string Reanchor(string path = "") => Client.File.PathString.FullPathLocationRelative(
     Location.IsRooted
@@ -236,7 +222,7 @@ public abstract class CoreCommand(
     path
   );
 
-  private protected void WriteEvent(
+  private protected void ShowInformation(
     object log,
     string? source = default
   ) => WriteInformation(
@@ -285,16 +271,14 @@ public abstract class CoreCommand(
     ? name ?? type.ToString()
     : string.Empty;
 
-  private void Dispose(bool disposing)
+  private void CleanPipeline()
   {
-    if (!disposed)
+    if (steppablePipeline is not null)
     {
-      if (disposing)
-      {
-        Clean();
-      }
-
-      disposed = true;
+      _ = steppablePipeline.End();
+      steppablePipeline.Clean();
+      steppablePipeline.Dispose();
+      steppablePipeline = default;
     }
   }
 
@@ -306,14 +290,15 @@ public abstract class CoreCommand(
     powershell = default;
   }
 
-  private void CleanPipeline()
+  private void Dispose(bool disposing)
   {
-    if (steppablePipeline is not null)
+    if (state is not CommandState.Disposed)
     {
-      _ = steppablePipeline.End();
-      steppablePipeline.Clean();
-      steppablePipeline.Dispose();
-      steppablePipeline = default;
+      if (disposing)
+      {
+        Clean();
+      }
+      state = CommandState.Disposed;
     }
   }
 }
