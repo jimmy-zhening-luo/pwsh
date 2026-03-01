@@ -353,9 +353,9 @@ internal sealed class PathCompleter : TabCompleter
     SearchContext searchContext,
     string accumulator,
     bool trailingSeparator = default
-  ) => EnumerateSearch(
+  ) => EnumerateResults(
     accumulator,
-    System.IO.Directory.Directories(
+    System.IO.Directory.EnumerateDirectories(
       searchContext.Path,
       searchContext.Filter,
       searchContext.Options
@@ -366,16 +366,16 @@ internal sealed class PathCompleter : TabCompleter
   private IEnumerable<string> Files(
     SearchContext searchContext,
     string accumulator
-  ) => EnumerateSearch(
+  ) => EnumerateResults(
     accumulator,
-    System.IO.Directory.Files(
+    System.IO.Directory.EnumerateFiles(
       searchContext.Path,
       searchContext.Filter,
       searchContext.Options
     )
   );
 
-  private IEnumerable<string> EnumerateSearch(
+  private IEnumerable<string> EnumerateResults(
     string accumulator,
     IEnumerable<string> paths,
     bool trailingSeparator = default
