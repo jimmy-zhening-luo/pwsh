@@ -164,7 +164,7 @@ public sealed class GetFileDrive : WrappedGetFile
   )]
   [SupportsWildcards]
   [PathCompletions(
-    @"\",
+    Client.File.PathString.SeparatorString,
     PathItemType.File
   )]
   public sealed override string[] Path

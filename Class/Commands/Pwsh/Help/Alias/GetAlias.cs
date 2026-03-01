@@ -99,10 +99,7 @@ public sealed class GetCommandAlias : CoreCommand
 
     if (Exclude is not [])
     {
-      _ = AddParameter(
-        "Exclude",
-        Exclude
-      );
+      _ = AddParameter("Exclude", Exclude);
     }
 
     var aliasInfoObjects = InvokePowerShell<AliasInfo>();
