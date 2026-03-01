@@ -65,12 +65,10 @@ public abstract class CoreCommand(
   protected sealed override void BeginProcessing()
   {
     WriteDebug("<BEGIN>");
-
     if (ContinueProcessing)
     {
       Preprocess();
     }
-
     WriteDebug("</BEGIN>");
   }
 
@@ -79,7 +77,6 @@ public abstract class CoreCommand(
     if (ContinueProcessing)
     {
       ++steps;
-
       WriteDebug($"<PROCESS:{steps}>");
 
       Process();
@@ -91,12 +88,10 @@ public abstract class CoreCommand(
   protected sealed override void EndProcessing()
   {
     WriteDebug("<END>");
-
     if (ContinueProcessing)
     {
       Postprocess();
     }
-
     WriteDebug("</END>");
 
     StopProcessing();
@@ -105,7 +100,6 @@ public abstract class CoreCommand(
   protected sealed override void StopProcessing()
   {
     stopped = true;
-
     Dispose();
   }
 
