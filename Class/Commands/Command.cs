@@ -211,10 +211,7 @@ public abstract class CoreCommand(
 
   private protected void EndSteppablePipeline()
   {
-    if (Alive)
-    {
-      CleanPipeline();
-    }
+    CleanPipeline();
   }
 
   private protected string Reanchor(string path = "") => Client.File.PathString.FullPathLocationRelative(
