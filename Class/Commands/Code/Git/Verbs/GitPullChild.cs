@@ -55,7 +55,7 @@ public sealed class GitPullChild : CoreCommand
 
     List<string> baseCommand = [
       "&",
-      Client.Console.EscapeDoubleQuoted(
+      Client.Console.String.EscapeDoubleQuoted(
         Client.Environment.Known.Application.Git
       ),
       "-c",
