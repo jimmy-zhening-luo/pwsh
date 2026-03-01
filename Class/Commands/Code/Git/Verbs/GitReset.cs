@@ -6,8 +6,13 @@ namespace Module.Commands.Code.Git.Verbs;
   HelpUri = "https://git-scm.com/docs/git-reset"
 )]
 [Alias("gr")]
-public sealed class GitReset() : GitCommand("reset")
+public sealed partial class GitReset() : GitCommand("reset")
 {
+  [System.Text.RegularExpressions.GeneratedRegex(
+    @"^(?=.)(?>HEAD)?(?<branching>(?>~|\^)?)(?<step>(?>\d{0,10}))$"
+  )]
+  internal static partial System.Text.RegularExpressions.Regex TreeRegex();
+
   private static string FlagAllowEmpty => "--allow-empty";
 
   [Parameter(
@@ -24,7 +29,7 @@ public sealed class GitReset() : GitCommand("reset")
 
       if (trimmed is not "")
       {
-        var treeMatch = GitArgument.TreeRegex().Match(trimmed);
+        var treeMatch = TreeRegex().Match(trimmed);
 
         if (treeMatch.Success && treeMatch.Groups["step"].Value is var step
         && (step is ""
@@ -67,7 +72,7 @@ public sealed class GitReset() : GitCommand("reset")
       }
       else
       {
-        var treeMatch = GitArgument.TreeRegex().Match(WorkingDirectory);
+        var treeMatch = TreeRegex().Match(WorkingDirectory);
 
         if (treeMatch.Success && treeMatch.Groups["step"].Value is var step && (step is "" || int.TryParse(step, out var _)))
         {
