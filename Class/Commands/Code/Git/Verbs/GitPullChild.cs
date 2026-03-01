@@ -55,7 +55,9 @@ public sealed class GitPullChild : CoreCommand
 
     List<string> baseCommand = [
       "&",
-      "\"" + Client.Environment.Known.Application.Git + "\"",
+      Client.Console.EscapeDoubleQuoted(
+        Client.Environment.Known.Application.Git
+      ),
       "-c",
       "color.ui=always",
       "-C",

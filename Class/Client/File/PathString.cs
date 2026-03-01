@@ -2,8 +2,8 @@ namespace Module.Client.File;
 
 internal static partial class PathString
 {
-  internal const char PathSeparator = '\\';
-  internal const string PathSeparatorString = @"\";
+  internal const char Separator = '\\';
+  internal const string SeparatorString = @"\";
 
   internal static string FullPathLocationRelative(
     string location,
@@ -34,9 +34,9 @@ internal static partial class PathString
             )
             .Replace(
               '/',
-              PathSeparator
+              Separator
             ),
-          PathSeparatorString
+          SeparatorString
         )
       )
     );
@@ -51,7 +51,7 @@ internal static partial class PathString
     "~" => Environment.Known.Folder.Home(),
     [
       '~',
-      PathSeparator,
+      Separator,
       .. var subpath,
     ] => Environment.Known.Folder.Home(subpath),
     _ => path,
@@ -62,7 +62,7 @@ internal static partial class PathString
     "." => string.Empty,
     [
       '.',
-      PathSeparator,
+      Separator,
       .. var subpath,
     ] => subpath,
     _ => path,

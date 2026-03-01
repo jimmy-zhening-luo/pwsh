@@ -60,7 +60,7 @@ internal sealed class PathCompleter : TabCompleter
     while (line is not "")
     {
       var marker = line.LastIndexOf(
-        Client.File.PathString.PathSeparator
+        Client.File.PathString.Separator
       );
 
       if (marker < 0)
@@ -141,10 +141,13 @@ internal sealed class PathCompleter : TabCompleter
     accumulator,
     filename,
     trailingSeparator
-      ? @"\"
+      ? Client.File.PathString.SeparatorString
       : string.Empty
   )
-    .Replace('\\', '/');
+    .Replace(
+      Client.File.PathString.Separator,
+      '/'
+    );
 
   private protected sealed override IEnumerable<string> GenerateCompletion(string wordToComplete)
   {
@@ -332,7 +335,10 @@ internal sealed class PathCompleter : TabCompleter
 
     if (accumulator is not "")
     {
-      yield return Join(accumulator, @"\");
+      yield return Join(
+        accumulator,
+        Client.File.PathString.SeparatorString
+      );
     }
 
     if (accumulator is not "" || Index is not 0)
