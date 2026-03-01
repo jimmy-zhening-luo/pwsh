@@ -226,10 +226,7 @@ public abstract class CoreCommand(
 
   private protected object? PSVariable(string name) => SessionState
     .PSVariable
-    .GetValue(
-      name,
-      default
-    );
+    .GetValue(name, default);
   private protected T? PSVariable<T>(string name) => SessionState
     .PSVariable
     .GetValue(name) is { } value
