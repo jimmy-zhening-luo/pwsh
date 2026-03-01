@@ -64,7 +64,7 @@ public abstract class WrappedGetFile() : WrappedCommand(
 
   private protected sealed override void TransformPipelineInput()
   {
-    if (!UsingCurrentLocation)
+    if (!InCurrentLocation)
     {
       if (Path is [])
       {
