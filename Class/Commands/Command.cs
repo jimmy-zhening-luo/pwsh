@@ -324,10 +324,8 @@ public abstract class CoreCommand(
     if (steppablePipeline is not null)
     {
       _ = steppablePipeline.End();
-
       steppablePipeline.Clean();
       steppablePipeline.Dispose();
-
       steppablePipeline = default;
     }
   }
