@@ -47,11 +47,10 @@ public abstract class CoreCommand(
 
   private SteppablePipeline? steppablePipeline;
 
+  private bool Alive => !disposed && !stopped;
+
   private bool BlockedBySsh => SkipSsh
     && Client.Environment.Known.Variable.InSsh;
-
-  private bool Alive => !disposed
-    && !stopped;
 
   private bool ContinueProcessing => Alive
     && !BlockedBySsh;
