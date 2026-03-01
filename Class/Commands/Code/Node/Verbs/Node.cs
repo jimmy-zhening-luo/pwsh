@@ -13,7 +13,11 @@ public sealed class Node : NodeCommand
     HelpMessage = "npm command"
   )]
   [NodeVerbCompletions]
-  public string Verb { get; set; } = string.Empty;
+  public string Verb
+  {
+    get => IntrinsicVerb;
+    set => IntrinsicVerb = value;
+  }
 
   new public SwitchParameter V { get; set; }
 
@@ -23,87 +27,21 @@ public sealed class Node : NodeCommand
   [Alias("v")]
   public SwitchParameter Version
   {
-    get => version;
-    set => version = value;
+    get => v;
+    set => v = value;
   }
-  private bool version;
 
   private protected sealed override List<string> ParseArguments()
   {
-    List<string> command = [];
-
-    List<string> arguments = [.. ArgumentList];
-    ArgumentList = [];
-
-    if (WorkingDirectory is not "")
+    if (v && Verb is "")
     {
-      if (IsNodePackage(WorkingDirectory))
-      {
-        var packagePrefix = WorkingDirectory is ""
-          ? ""
-          : "--prefix="
-            + Client.File.PathString.FullPathLocationRelative(
-                Pwd(),
-                WorkingDirectory
-              );
+      v = false;
 
-        if (packagePrefix is not "")
-        {
-          command.Add(packagePrefix);
-        }
-      }
-      else
-      {
-        arguments.Insert(default, WorkingDirectory);
-      }
-    }
-
-    WorkingDirectory = string.Empty;
-
-    if (
-      Verb is not ""
-      && Verb.StartsWith('-')
-      || !Verbs.Contains(Verb.ToLower())
-      && !Aliases.ContainsKey(Verb.ToLower())
-    )
-    {
-      var deferredVerb = arguments is []
-        ? ""
-        : arguments.Find(
-            argument => Verbs.Contains(
-              argument.ToLower()
-            )
-          );
-
-      if (deferredVerb is not (null or ""))
-      {
-        _ = arguments.Remove(deferredVerb);
-      }
-
-      arguments.Insert(default, Verb);
-
-      Verb = deferredVerb ?? string.Empty;
-    }
-
-    if (Verb is not "")
-    {
-      IntrinsicVerb = Verb;
-
-      if (version)
-      {
-        arguments.Add("-v");
-      }
+      return ["-v"];
     }
     else
     {
-      if (version)
-      {
-        command.Add("-v");
-      }
+      return [];
     }
-
-    command.AddRange(arguments);
-
-    return command;
   }
 }

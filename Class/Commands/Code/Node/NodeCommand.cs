@@ -139,70 +139,65 @@ public abstract class NodeCommand(
       .. ParseArguments(),
     ];
 
-    if (WorkingDirectory is not "")
+    switch (WorkingDirectory)
     {
-      if (IsNodePackage(WorkingDirectory))
-      {
-        var packagePrefix = WorkingDirectory is ""
-          ? ""
-          : "--prefix="
-            + Client.File.PathString.FullPathLocationRelative(
-                Pwd(),
-                WorkingDirectory
-              );
+      case "":
+        break;
 
-        if (packagePrefix is not "")
-        {
-          command.Add(packagePrefix);
-        }
-      }
-      else
-      {
-        arguments.Insert(default, WorkingDirectory);
-      }
+      case string path when !IsNodePackage(path):
+        arguments.Insert(default, path);
+        break;
+
+      case string path when Pwd(path) is string fullPath
+        && fullPath != Pwd():
+        command.Add(
+          $"--prefix={Pwd(fullPath)}"
+        );
+        break;
     }
 
     WorkingDirectory = string.Empty;
 
-    if (
-      Aliases.TryGetValue(
-        IntrinsicVerb.ToLower(),
+    switch (IntrinsicVerb)
+    {
+      case "":
+        break;
+
+      case string verb when Aliases.TryGetValue(
+        verb.ToLower(),
         out var alias
-      )
-    )
-    {
-      command.Add(alias);
-    }
-    else if (
-      Verbs.TryGetValue(
-        IntrinsicVerb.ToLower(),
-        out var verb
-      )
-    )
-    {
-      command.Add(verb);
-    }
-    else
-    {
-      arguments.Insert(default, IntrinsicVerb);
+      ):
+        command.Add(alias);
+        break;
+
+      case string verb when Verbs.TryGetValue(
+        verb.ToLower(),
+        out var exactVerb
+      ):
+        command.Add(exactVerb);
+        break;
+
+      default:
+        arguments.Insert(default, IntrinsicVerb);
+        break;
     }
 
     IntrinsicVerb = string.Empty;
 
     if (d)
     {
-      arguments.Add("-D");
       d = false;
+      arguments.Add("-D");
     }
     if (e)
     {
-      arguments.Add("-E");
       e = false;
+      arguments.Add("-E");
     }
     if (p)
     {
-      arguments.Add("-P");
       p = false;
+      arguments.Add("-P");
     }
 
     command.AddRange(arguments);
