@@ -2,6 +2,9 @@ namespace Module.Client.File;
 
 internal static partial class PathString
 {
+  internal const char PathSeparator = '\\';
+  internal const string PathSeparatorString = @"\";
+
   internal static string FullPathLocationRelative(
     string location,
     string? path,
@@ -31,9 +34,9 @@ internal static partial class PathString
             )
             .Replace(
               '/',
-              '\\'
+              PathSeparator
             ),
-          @"\"
+          PathSeparatorString
         )
       )
     );
@@ -46,17 +49,23 @@ internal static partial class PathString
   private static string ExpandHomePrefix(string path) => path switch
   {
     "~" => Environment.Known.Folder.Home(),
-    _ when path.StartsWith(@"~\") => Environment.Known.Folder.Home(
-        path[2..]
-      ),
-    _ => path
+    [
+      '~',
+      PathSeparator,
+      .. var subpath,
+    ] => Environment.Known.Folder.Home(subpath),
+    _ => path,
   };
 
   private static string TrimRelativePrefix(string path) => path switch
   {
     "." => string.Empty,
-    _ when path.StartsWith(@".\") => path[2..],
-    _ => path
+    [
+      '.',
+      PathSeparator,
+      .. var subpath,
+    ] => subpath,
+    _ => path,
   };
 
   [System.Text.RegularExpressions.GeneratedRegex(

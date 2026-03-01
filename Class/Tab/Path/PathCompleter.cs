@@ -59,11 +59,13 @@ internal sealed class PathCompleter : TabCompleter
     
     while (line is not "")
     {
-      var marker = line.LastIndexOf('\\');
+      var marker = line.LastIndexOf(
+        Client.File.PathString.PathSeparator
+      );
 
       if (marker < 0)
       {
-        (line, lineRemaining) = ("", line);
+        (line, lineRemaining) = (string.Empty, line);
       }
       else
       {
@@ -106,8 +108,7 @@ internal sealed class PathCompleter : TabCompleter
           }
           else
           {
-            line = buffer;
-            lineRemaining = string.Empty;
+            (line, lineRemaining) = (buffer, string.Empty);
           }
         }
       }
