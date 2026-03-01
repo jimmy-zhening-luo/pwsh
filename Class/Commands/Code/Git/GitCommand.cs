@@ -143,7 +143,7 @@ public abstract class GitCommand(
     bool newable = default
   ) => System.IO.Directory.Exists(
     System.IO.Path.Combine(
-      path,
+      Pwd(path),
       newable ? string.Empty : ".git"
     )
   )
