@@ -6,8 +6,13 @@ namespace Module.Commands.Code.Git.Verbs;
   HelpUri = "https://git-scm.com/docs/git-commit"
 )]
 [Alias("gm")]
-public sealed class GitCommit() : GitCommand("commit")
+public sealed partial class GitCommit() : GitCommand("commit")
 {
+  [System.Text.RegularExpressions.GeneratedRegex(
+    @"^(?>(?=.*[*=])(?>.+)|-(?>\w|(?>-\w[-\w]*\w)))$"
+  )]
+  internal static partial System.Text.RegularExpressions.Regex ArgumentRegex();
+
   private static string FlagAllowEmpty => "--allow-empty";
 
   [Parameter(
@@ -51,7 +56,7 @@ public sealed class GitCommit() : GitCommand("commit")
     {
       if (word.Trim() is not "" and var w)
       {
-        if (GitArgument.Regex().IsMatch(w))
+        if (ArgumentRegex().IsMatch(w))
         {
           arguments.Add(w);
         }
@@ -64,7 +69,7 @@ public sealed class GitCommit() : GitCommand("commit")
 
     if (WorkingDirectory is not "" && ResolveWorkingDirectory(Pwd()) is not "" && ResolveWorkingDirectory(WorkingDirectory) is "")
     {
-      if (GitArgument.Regex().IsMatch(WorkingDirectory))
+      if (ArgumentRegex().IsMatch(WorkingDirectory))
       {
         arguments.Insert(default, WorkingDirectory);
       }
@@ -78,7 +83,7 @@ public sealed class GitCommit() : GitCommand("commit")
 
     if (Message is not "")
     {
-      if (GitArgument.Regex().IsMatch(Message))
+      if (ArgumentRegex().IsMatch(Message))
       {
         arguments.Insert(default, Message);
       }
