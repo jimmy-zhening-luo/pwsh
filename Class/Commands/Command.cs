@@ -128,7 +128,7 @@ public abstract class CoreCommand(
   ) => PS.AddCommand(
     GetCommand(
       command,
-      mcommandType
+      commandType
     )
   );
 
