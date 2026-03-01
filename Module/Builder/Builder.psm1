@@ -3,21 +3,15 @@ function Restore-PSProfile {
   [OutputType([void])]
   [Alias('upr')]
   param()
-  end {
-    Update-PSProfile -Build -Restore
-  }
+  end { Update-PSProfile -Build -Restore }
 }
-
 function Build-PSProfile {
   [CmdletBinding()]
   [OutputType([void])]
   [Alias('upp')]
   param()
-  end {
-    Update-PSProfile -Build
-  }
+  end { Update-PSProfile -Build }
 }
-
 function Update-PSProfile {
   [CmdletBinding()]
   [OutputType([void])]
