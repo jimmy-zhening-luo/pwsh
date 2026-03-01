@@ -19,43 +19,37 @@ internal static partial class String
     : text;
 
   internal static string EscapeDoubleQuoted(string text) => text.Contains(Space)
-  ? string.Concat(
-      DoubleQuote,
-      text.Replace(
-        DoubleQuoteString,
-        EscapedDoubleQuote
-      ),
-      DoubleQuote
-    )
-  : text;
+    ? string.Concat(
+        DoubleQuote,
+        text.Replace(
+          DoubleQuoteString,
+          EscapedDoubleQuote
+        ),
+        DoubleQuote
+      )
+    : text;
 
-  internal static string UnescapeSingleQuoted(string escapedText) => Unescape(
-    escapedText,
+  internal static string UnescapeSingleQuoted(string escapedText) => escapedText is
+  [
     SingleQuote,
-    EscapedSingleQuote,
-    SingleQuoteString
-  );
+    .. var text,
+    SingleQuote,
+  ]
+    ? text.Replace(
+        EscapedSingleQuote,
+        SingleQuoteString
+      )
+    : escapedText;
 
-  internal static string UnescapeDoubleQuoted(string escapedText) => Unescape(
-    escapedText,
+  internal static string UnescapeDoubleQuoted(string escapedText) => escapedText is
+  [
     DoubleQuote,
-    EscapedDoubleQuote,
-    DoubleQuoteString
-  );
-
-  private static string Unescape(
-    string escapedText,
-    char quote,
-    string escapedQuote,
-    string quoteString
-  ) => (
-    escapedText.Length > 1
-    && escapedText.StartsWith(quote)
-    && escapedText.EndsWith(quote)
-  )
-    ? escapedText[1..^1].Replace(
-        escapedQuote,
-        quoteString
+    .. var text,
+    DoubleQuote,
+  ]
+    ? text.Replace(
+        EscapedDoubleQuote,
+        DoubleQuoteString
       )
     : escapedText;
 }
