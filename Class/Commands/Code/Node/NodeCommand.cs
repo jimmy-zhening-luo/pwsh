@@ -110,6 +110,12 @@ public abstract class NodeCommand(
 
   private protected sealed override string CommandPath => Client.Environment.Known.Application.Npm;
 
+  private protected override SwitchBoard Uppercase => new(
+    D: true,
+    E: true,
+    P: true
+  );
+
   private protected abstract List<string> ParseArguments();
 
   private protected sealed override List<string> NativeCommandArguments()
@@ -164,22 +170,6 @@ public abstract class NodeCommand(
       .. Buffer,
       .. ParseArguments(),
     ];
-
-    if (d)
-    {
-      d = false;
-      arguments.Add("-D");
-    }
-    if (e)
-    {
-      e = false;
-      arguments.Add("-E");
-    }
-    if (p)
-    {
-      p = false;
-      arguments.Add("-P");
-    }
 
     return arguments;
   }

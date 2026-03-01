@@ -43,6 +43,11 @@ public abstract class GitCommand(
 
   private protected sealed override string CommandPath => Client.Environment.Known.Application.Git;
 
+  private protected override SwitchBoard Uppercase => new(
+    E: true,
+    P: true
+  );
+
   private protected abstract List<string> ParseArguments();
 
   private protected sealed override List<string> NativeCommandArguments()
@@ -123,17 +128,6 @@ public abstract class GitCommand(
       .. Buffer,
       .. ParseArguments(),
     ];
-
-    if (e)
-    {
-      arguments.Add("-E");
-      e = false;
-    }
-    if (p)
-    {
-      arguments.Add("-P");
-      p = false;
-    }
 
     return arguments;
   }

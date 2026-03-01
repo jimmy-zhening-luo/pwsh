@@ -4,6 +4,16 @@ public abstract class NativeCommand(
   bool SkipSsh = default
 ) : CoreCommand(SkipSsh)
 {
+  public record SwitchBoard(
+    bool D = default,
+    bool E = default,
+    bool I = default,
+    bool O = default,
+    bool P = default,
+    bool V = default
+  );
+  private protected virtual SwitchBoard Uppercase => new();
+
   [Parameter(
     Position = 100,
     ValueFromRemainingArguments = true,
@@ -102,27 +112,27 @@ public abstract class NativeCommand(
 
     if (d)
     {
-      command.Add("-d");
+      command.Add(Uppercase.D ? "-D" : "-d");
     }
     if (e)
     {
-      command.Add("-e");
+      command.Add(Uppercase.E ? "-E" : "-e");
     }
     if (i)
     {
-      command.Add("-i");
+      command.Add(Uppercase.I ? "-I" : "-i");
     }
     if (o)
     {
-      command.Add("-o");
+      command.Add(Uppercase.O ? "-O" : "-o");
     }
     if (p)
     {
-      command.Add("-p");
+      command.Add(Uppercase.P ? "-P" : "-p");
     }
     if (v)
     {
-      command.Add("-v");
+      command.Add(Uppercase.V ? "-V" : "-v");
     }
 
     command.AddRange(ArgumentList);
