@@ -39,14 +39,24 @@ public abstract class GitCommand(
     "reset",
   ];
 
-  private protected string IntrinsicVerb { get; set; } = IntrinsicVerb;
+  private protected string IntrinsicVerb
+  {
+    get => intrinsicVerb;
+    set => intrinsicVerb = value.Trim();
+  }
+  private string intrinsicVerb = IntrinsicVerb.Trim();
 
   [Parameter(
     Position = 50,
     HelpMessage = "Repository path"
   )]
   [WorkingDirectoryCompletions]
-  public string WorkingDirectory { get; set; } = string.Empty;
+  public string WorkingDirectory
+  {
+    get => workingDirectory;
+    set => workingDirectory = value.Trim();
+  }
+  private string workingDirectory = string.Empty;
 
   private protected abstract List<string> ParseArguments();
 
