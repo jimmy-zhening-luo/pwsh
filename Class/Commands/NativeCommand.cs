@@ -146,7 +146,7 @@ public abstract class NativeCommand(
       );
     }
 
-    AddScript(string.Join(' ', escapedCommand));
+    AddScript(string.Join(Client.Console.String.Space, escapedCommand));
 
     ProcessSteppablePipeline();
     EndSteppablePipeline();

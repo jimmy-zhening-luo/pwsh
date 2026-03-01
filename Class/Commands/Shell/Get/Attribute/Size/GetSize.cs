@@ -153,7 +153,7 @@ public sealed class GetSize : CoreCommand
                 scaledSize,
                 3
               ),
-              ' ',
+              Client.Console.String.Space,
               unit
             )
       );

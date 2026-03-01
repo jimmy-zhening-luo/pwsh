@@ -69,7 +69,7 @@ public sealed class GitPullChild : CoreCommand
         "pull"
       ];
 
-      AddScript(string.Join(' ', command));
+      AddScript(string.Join(Client.Console.String.Space, command));
 
       ProcessSteppablePipeline();
       EndSteppablePipeline();
