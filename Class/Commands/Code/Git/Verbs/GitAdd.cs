@@ -32,31 +32,27 @@ public sealed class GitAdd() : GitCommand("add")
   }
   private bool renormalize;
 
-  private protected sealed override List<string> ParseArguments()
+  private protected sealed override void PreprocessArguments()
   {
-    List<string> arguments = [Name];
-
-    if (
-      WorkingDirectory is not ""
-      && ResolveWorkingDirectory(Pwd()) is not ""
-      && ResolveWorkingDirectory(WorkingDirectory) is ""
-    )
+    if (renormalize)
     {
-      arguments.Add(WorkingDirectory);
-      WorkingDirectory = string.Empty;
+      if (WorkingDirectory == FlagRenormalize)
+      {
+        WorkingDirectory = string.Empty;
+      }
+      else if (
+        new List<string>(ArgumentList) is var arguments
+        && arguments.Contains(FlagRenormalize)
+      )
+      {
+        _ = arguments.Remove(FlagRenormalize);
+
+        ArgumentList = [.. arguments];
+      }
     }
-
-    arguments.AddRange(ArgumentList);
-    ArgumentList = [];
-
-    if (
-      renormalize
-      && !arguments.Contains(FlagRenormalize)
-    )
-    {
-      arguments.Add(FlagRenormalize);
-    }
-
-    return arguments;
   }
+
+  private protected sealed override List<string> ParseArguments() => renormalize
+    ? [Name, FlagRenormalize]
+    : [Name];
 }

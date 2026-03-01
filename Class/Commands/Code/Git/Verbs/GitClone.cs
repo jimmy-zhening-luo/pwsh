@@ -48,20 +48,20 @@ public sealed class GitClone() : GitCommand("clone")
   }
   private bool forceSsh;
 
-  private protected sealed override List<string> ParseArguments()
+  private protected sealed override void PreprocessArguments()
   {
     if (Repository is "")
     {
       Throw("No repository name given.");
     }
-
-    return [
-      string.Concat(
-        forceSsh
-          ? "git@github.com:"
-          : "https://github.com/",
-        Repository
-      ),
-    ];
   }
+
+  private protected sealed override List<string> ParseArguments() => [
+    string.Concat(
+      forceSsh
+        ? "git@github.com:"
+        : "https://github.com/",
+      Repository
+    ),
+  ];
 }

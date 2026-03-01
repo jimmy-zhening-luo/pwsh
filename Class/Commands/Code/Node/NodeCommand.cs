@@ -2,7 +2,7 @@ namespace Module.Commands.Code.Node;
 
 public abstract class NodeCommand(
   string IntrinsicVerb = ""
-) : NativeCommand
+) : RemoteNativeVerbCommand(IntrinsicVerb)
 {
   private protected sealed class NodeVerbCompletionsAttribute() : CompletionsAttribute([.. Verbs]);
 
@@ -106,36 +106,35 @@ public abstract class NodeCommand(
     ["v"] = "view",
   };
 
-  private protected string IntrinsicVerb
-  {
-    get => intrinsicVerb;
-    set => intrinsicVerb = value.Trim();
-  }
-  private string intrinsicVerb = IntrinsicVerb.Trim();
+  private readonly List<string> Buffer = [];
 
-  [Parameter(
-    Position = 50,
-    HelpMessage = "Node package path"
-  )]
-  [WorkingDirectoryCompletions]
-  public string WorkingDirectory
-  {
-    get => workingDirectory;
-    set => workingDirectory = value.Trim();
-  }
-  private string workingDirectory = string.Empty;
-
-  private protected sealed override string CommandPath => Client.Environment.Known.Application.Node;
+  private protected sealed override string CommandPath => Client.Environment.Known.Application.Npm;
 
   private protected abstract List<string> ParseArguments();
 
-  private protected sealed override List<string> BuildNativeCommand()
+  private protected sealed override List<string> NativeCommandArguments()
   {
     List<string> command = ["--color=always"];
 
-    List<string> arguments = [
-      .. ParseArguments(),
-    ];
+    switch (IntrinsicVerb)
+    {
+      case "":
+        break;
+
+      case string verb when Aliases.TryGetValue(
+        verb.ToLower(),
+        out var alias
+      ):
+        IntrinsicVerb = alias;
+        break;
+
+      case string verb when Verbs.TryGetValue(
+        verb.ToLower(),
+        out var exactVerb
+      ):
+        IntrinsicVerb = exactVerb;
+        break;
+    }
 
     switch (WorkingDirectory)
     {
@@ -143,7 +142,7 @@ public abstract class NodeCommand(
         break;
 
       case string path when !IsNodePackage(path):
-        arguments.Insert(default, path);
+        Buffer.Add(path);
         break;
 
       case string path when Pwd(path) is string fullPath
@@ -156,31 +155,15 @@ public abstract class NodeCommand(
 
     WorkingDirectory = string.Empty;
 
-    switch (IntrinsicVerb)
-    {
-      case "":
-        break;
+    return command;
+  }
 
-      case string verb when Aliases.TryGetValue(
-        verb.ToLower(),
-        out var alias
-      ):
-        command.Add(alias);
-        break;
-
-      case string verb when Verbs.TryGetValue(
-        verb.ToLower(),
-        out var exactVerb
-      ):
-        command.Add(exactVerb);
-        break;
-
-      default:
-        arguments.Insert(default, IntrinsicVerb);
-        break;
-    }
-
-    IntrinsicVerb = string.Empty;
+  private protected sealed override List<string> NativeCommandVerbArguments()
+  {
+    List<string> arguments = [
+      .. Buffer,
+      .. ParseArguments(),
+    ];
 
     if (d)
     {
@@ -198,9 +181,7 @@ public abstract class NodeCommand(
       arguments.Add("-P");
     }
 
-    command.AddRange(arguments);
-
-    return command;
+    return arguments;
   }
 
   private protected bool IsNodePackage(string path) => System.IO.File.Exists(

@@ -8,7 +8,7 @@ namespace Module.Commands.Code.Node.Verbs;
 [Alias("ncc")]
 public sealed class NodeClearCache() : NodeCommand("cache")
 {
-  private protected sealed override List<string> ParseArguments()
+  private protected sealed override void PreprocessArguments()
   {
     ArgumentList = [];
     WorkingDirectory = string.Empty;
@@ -19,7 +19,7 @@ public sealed class NodeClearCache() : NodeCommand("cache")
     o = false;
     p = false;
     V = false;
-
-    return ["clean", "--force"];
   }
+
+  private protected sealed override List<string> ParseArguments() => ["clean", "--force"];
 }

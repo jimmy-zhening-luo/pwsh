@@ -7,11 +7,15 @@ namespace Module.Commands.Windows.App;
 )]
 [Alias("wga")]
 [OutputType(typeof(void))]
-public sealed class WinGetAdd : WinGetCommand
+public sealed class WinGetAdd() : WinGetCommand("install")
 {
-  private protected sealed override List<string> ParseArguments() => [
-    ArgumentList is []
-      ? "upgrade"
-      : "install",
-  ];
+  private protected sealed override void PreprocessArguments()
+  {
+    if (ArgumentList is [])
+    {
+      IntrinsicVerb = "upgrade";
+    }
+  }
+
+  private protected sealed override List<string> NativeCommandVerbArguments() => [];
 }

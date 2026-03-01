@@ -14,21 +14,7 @@ public sealed class NodeRunScript() : NodeCommand("run")
     HelpMessage = "Name of the npm script to run"
   )]
   [ValidateNotNullOrWhiteSpace]
-  public string Script { get; set; } = "";
+  public string Script { get; set; } = string.Empty;
 
-  private protected sealed override List<string> ParseArguments()
-  {
-    List<string> arguments = [Script];
-
-    if (
-      WorkingDirectory is not ""
-      && !IsNodePackage(WorkingDirectory)
-    )
-    {
-      arguments.Add(WorkingDirectory);
-      WorkingDirectory = string.Empty;
-    }
-
-    return arguments;
-  }
+  private protected sealed override List<string> ParseArguments() => [Script];
 }

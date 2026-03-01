@@ -7,11 +7,15 @@ namespace Module.Commands.Windows.App;
 )]
 [Alias("wgf")]
 [OutputType(typeof(void))]
-public sealed class WinGetFind : WinGetCommand
+public sealed class WinGetFind() : WinGetCommand("search")
 {
-  private protected sealed override List<string> ParseArguments() => [
-    ArgumentList is []
-      ? "list"
-      : "search",
-  ];
+  private protected sealed override void PreprocessArguments()
+  {
+    if (ArgumentList is [])
+    {
+      IntrinsicVerb = "list";
+    }
+  }
+
+  private protected sealed override List<string> NativeCommandVerbArguments() => [];
 }

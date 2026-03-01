@@ -84,7 +84,7 @@ public sealed class NodeUpdateVersion() : NodeCommand("version")
   }
   private string version = nameof(NodeVersion.patch);
 
-  private protected sealed override List<string> ParseArguments()
+  private protected sealed override void PreprocessArguments()
   {
     if (version is "")
     {
@@ -92,18 +92,7 @@ public sealed class NodeUpdateVersion() : NodeCommand("version")
         "Provided version was neither a well-known version nor parseable as a semantic version."
       );
     }
-
-    List<string> arguments = [version.ToLower()];
-
-    if (
-      WorkingDirectory is not ""
-      && !IsNodePackage(WorkingDirectory)
-    )
-    {
-      arguments.Add(WorkingDirectory);
-      WorkingDirectory = string.Empty;
-    }
-
-    return arguments;
   }
+
+  private protected sealed override List<string> ParseArguments() => [version.ToLower()];
 }

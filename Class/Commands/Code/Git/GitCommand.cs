@@ -2,7 +2,7 @@ namespace Module.Commands.Code.Git;
 
 public abstract class GitCommand(
   string IntrinsicVerb = ""
-) : NativeCommand
+) : RemoteNativeVerbCommand(IntrinsicVerb)
 {
   private protected sealed class GitVerbCompletionsAttribute() : CompletionsAttribute([.. Verbs]);
 
@@ -39,35 +39,14 @@ public abstract class GitCommand(
     "reset",
   ];
 
-  private protected string IntrinsicVerb
-  {
-    get => intrinsicVerb;
-    set => intrinsicVerb = value.Trim();
-  }
-  private string intrinsicVerb = IntrinsicVerb.Trim();
-
-  [Parameter(
-    Position = 50,
-    HelpMessage = "Repository path"
-  )]
-  [WorkingDirectoryCompletions]
-  public string WorkingDirectory
-  {
-    get => workingDirectory;
-    set => workingDirectory = value.Trim();
-  }
-  private string workingDirectory = string.Empty;
+  private readonly List<string> Buffer = [];
 
   private protected sealed override string CommandPath => Client.Environment.Known.Application.Git;
 
   private protected abstract List<string> ParseArguments();
 
-  private protected sealed override List<string> BuildNativeCommand()
+  private protected sealed override List<string> NativeCommandArguments()
   {
-    List<string> arguments = [
-      .. ParseArguments(),
-    ];
-
     bool newable = default;
     switch (IntrinsicVerb)
     {
@@ -86,7 +65,6 @@ public abstract class GitCommand(
       ):
         newable = true;
         IntrinsicVerb = newableVerb.ToString();
-
         break;
 
       case string verb when Verbs.TryGetValue(
@@ -107,7 +85,7 @@ public abstract class GitCommand(
     {
       if (WorkingDirectory is not "")
       {
-        arguments.Insert(default, WorkingDirectory);
+        Buffer.Insert(default, WorkingDirectory);
 
         repository = ResolveWorkingDirectory(pwd, newable);
       }
@@ -136,25 +114,28 @@ public abstract class GitCommand(
       command.Add(repository);
     }
 
-    if (IntrinsicVerb is not "")
-    {
-      command.Add(IntrinsicVerb);
-    }
+    return command;
+  }
 
-    command.AddRange(arguments);
+  private protected sealed override List<string> NativeCommandVerbArguments()
+  {
+    List<string> arguments = [
+      .. Buffer,
+      .. ParseArguments(),
+    ];
 
     if (e)
     {
-      command.Add("-E");
+      arguments.Add("-E");
       e = false;
     }
     if (p)
     {
-      command.Add("-P");
+      arguments.Add("-P");
       p = false;
     }
 
-    return command;
+    return arguments;
   }
 
   private protected string ResolveWorkingDirectory(

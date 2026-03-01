@@ -21,12 +21,12 @@ public sealed class NodeOutdated() : NodeCommand("outdated")
   }
   private bool all;
 
-  private protected sealed override List<string> ParseArguments()
+  private protected sealed override void PreprocessArguments()
   {
     noThrow = true;
-
-    return all && !new List<string>(ArgumentList).Contains(FlagAll)
-      ? [FlagAll]
-      : [];
   }
+
+  private protected sealed override List<string> ParseArguments() => all && !new List<string>(ArgumentList).Contains(FlagAll)
+    ? [FlagAll]
+    : [];
 }

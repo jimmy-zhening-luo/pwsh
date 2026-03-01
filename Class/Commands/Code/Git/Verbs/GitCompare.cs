@@ -15,25 +15,5 @@ public sealed class GitCompare() : GitCommand("diff")
   [PathSpecCompletions]
   public string Name { get; set; } = "";
 
-  private protected sealed override List<string> ParseArguments()
-  {
-    List<string> arguments = [];
-
-    if (Name is not "")
-    {
-      arguments.Add(Name);
-    }
-
-    if (
-      WorkingDirectory is not ""
-      && ResolveWorkingDirectory(Pwd()) is not ""
-      && ResolveWorkingDirectory(WorkingDirectory) is ""
-    )
-    {
-      arguments.Add(WorkingDirectory);
-      WorkingDirectory = string.Empty;
-    }
-
-    return arguments;
-  }
+  private protected sealed override List<string> ParseArguments() => Name is "" ? [] : [Name];
 }
