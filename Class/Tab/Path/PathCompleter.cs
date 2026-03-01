@@ -173,8 +173,7 @@ internal sealed class PathCompleter : TabCompleter
         }
 
         if (
-          Index is 0
-          && searchContext is
+          Index is 0 && searchContext is
           {
             Filter.Length: > 1,
             Options.AttributesToSkip: not System.IO.FileAttributes.System,
@@ -211,8 +210,7 @@ internal sealed class PathCompleter : TabCompleter
         }
 
         if (
-          Index is 0
-          && searchContext is
+          Index is 0 && searchContext is
           {
             Filter.Length: > 1,
             Options.AttributesToSkip: not System.IO.FileAttributes.System,
@@ -248,8 +246,7 @@ internal sealed class PathCompleter : TabCompleter
         }
 
         if (
-          Index == checkpoint
-          && searchContext is
+          Index == checkpoint && searchContext is
           {
             Filter.Length: > 1,
             Options.AttributesToSkip: not System.IO.FileAttributes.System,
@@ -297,8 +294,7 @@ internal sealed class PathCompleter : TabCompleter
         }
 
         if (
-          Index is 0
-          && searchContext is
+          Index is 0 && searchContext is
           {
             Filter.Length: > 1,
             Options.AttributesToSkip: not System.IO.FileAttributes.System,
@@ -339,10 +335,7 @@ internal sealed class PathCompleter : TabCompleter
       yield return Join(accumulator, @"\");
     }
 
-    if (
-      accumulator is not ""
-      || Index is not 0
-    )
+    if (accumulator is not "" || Index is not 0)
     {
       yield return Join(accumulator, @"..\");
     }
