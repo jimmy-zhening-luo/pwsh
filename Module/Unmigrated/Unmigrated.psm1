@@ -1,39 +1,5 @@
 <#
 .LINK
-https://git-scm.com/docs/git-push
-#>
-function Push-GitRepository {
-  [Alias('gs')]
-  param(
-    [Module.Commands.Code.WorkingDirectoryCompletions()]
-    # Repository path
-    [string]$WorkingDirectory
-  )
-
-  $PushArgument = [System.Collections.Generic.List[string]]::new()
-
-  if (
-    $WorkingDirectory -and (
-      [Module.Commands.Code.Git.GitWorkingDirectory]::Resolve($PWD.Path, $PWD.Path)
-    ) -and !(
-      [Module.Commands.Code.Git.GitWorkingDirectory]::Resolve($PWD.Path, $WorkingDirectory)
-    )
-  ) {
-    $PushArgument.Add($WorkingDirectory)
-    $WorkingDirectory = ''
-  }
-
-  if ($args) {
-    $PushArgument.AddRange([string[]]$args)
-  }
-
-  Get-GitRepository -WorkingDirectory $WorkingDirectory
-
-  Invoke-Git -Verb push -WorkingDirectory $WorkingDirectory -ArgumentList $PushArgument
-}
-
-<#
-.LINK
 https://git-scm.com/docs/git-reset
 #>
 function Reset-GitRepository {
