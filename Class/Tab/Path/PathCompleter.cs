@@ -42,112 +42,102 @@ internal sealed class PathCompleter : TabCompleter
     location is ""
   );
 
-  private static (SearchContext, string) ParsePathToComplete(
+  private static (string, SearchContext) ParseLine(
     string wordToComplete,
     string location,
     bool allowReanchor,
     bool includeHidden
   )
   {
-    var normalWordToComplete = Client.File.PathString.Normalize(
+    var line = Client.File.PathString.Normalize(
       wordToComplete,
       true
     );
-    var resolvedSearchPath = string.Empty;
-    var normalWordToCompleteSubpathPart = string.Empty;
-    var normalWordToCompleteLeafPart = string.Empty;
-
-    while (normalWordToComplete is not "")
+    var lineRemaining = string.Empty;
+    var lineCaptured = string.Empty;
+    var searchPath = location;
+    
+    while (line is not "")
     {
-      var indexLastDirectorySeparator = normalWordToComplete.LastIndexOf('\\');
+      var marker = line.LastIndexOf('\\');
 
-      if (indexLastDirectorySeparator < 0)
+      if (marker < 0)
       {
-        normalWordToCompleteLeafPart = normalWordToComplete;
-        normalWordToComplete = string.Empty;
+        (line, lineRemaining) = ("", line);
       }
       else
       {
-        var candidateSubpathPart = normalWordToComplete[..indexLastDirectorySeparator].Trim();
-        var indexNormalPathToCompleteLeafPart = indexLastDirectorySeparator + 1;
+        var buffer = line[..marker].Trim();
+        var next = marker + 1;
 
-        if (indexNormalPathToCompleteLeafPart < normalWordToComplete.Length)
+        if (next < line.Length)
         {
-          normalWordToCompleteLeafPart = normalWordToComplete[indexNormalPathToCompleteLeafPart..].Trim();
+          lineRemaining = line[next..].Trim();
         }
 
-        if (candidateSubpathPart is "")
+        if (buffer is "")
         {
-          normalWordToComplete = string.Empty;
+          line = string.Empty;
         }
         else
         {
-          var candidateResolvedSearchPath = System.IO.Path.GetFullPath(
-            candidateSubpathPart,
-            location
+          var fullPathCaptured = Client.File.PathString.FullPathLocationRelative(
+            location,
+            buffer
           );
 
-          if (
-            System.IO.Directory.Exists(
-              candidateResolvedSearchPath
-            )
-          )
+          if (System.IO.Directory.Exists(fullPathCaptured))
           {
-            normalWordToCompleteSubpathPart = System.IO.Path.GetRelativePath(
+            line = string.Empty;
+            lineCaptured = System.IO.Path.GetRelativePath(
               location,
-              candidateResolvedSearchPath
+              fullPathCaptured
             );
-            resolvedSearchPath = candidateResolvedSearchPath;
-            normalWordToComplete = string.Empty;
+            searchPath = fullPathCaptured;
           }
           else if (
             allowReanchor
-            && System.IO.Directory.Exists(candidateSubpathPart)
+            && System.IO.Directory.Exists(buffer)
           )
           {
-            normalWordToCompleteSubpathPart = System.IO.Path.GetFullPath(candidateSubpathPart);
-            resolvedSearchPath = normalWordToCompleteSubpathPart;
-            normalWordToComplete = string.Empty;
+            line = string.Empty;
+            lineCaptured = System.IO.Path.GetFullPath(buffer);
+            searchPath = lineCaptured;
           }
           else
           {
-            normalWordToCompleteLeafPart = string.Empty;
-            normalWordToComplete = candidateSubpathPart;
+            line = buffer;
+            lineRemaining = string.Empty;
           }
         }
       }
     }
 
-    if (resolvedSearchPath is "")
-    {
-      resolvedSearchPath = location;
-    }
-
-    System.IO.EnumerationOptions searchOptions = new()
-    {
-      IgnoreInaccessible = default
-    };
-    if (includeHidden)
-    {
-      searchOptions.AttributesToSkip = System.IO.FileAttributes.System;
-    }
-
     return (
+      lineCaptured,
       new(
-        resolvedSearchPath,
-        normalWordToCompleteLeafPart + "*",
-        searchOptions
-      ),
-      normalWordToCompleteSubpathPart
+        searchPath,
+        lineRemaining + "*",
+        new()
+        {
+          IgnoreInaccessible = default,
+          AttributesToSkip = System.IO.FileAttributes.System
+            | (
+              includeHidden
+                ? 0
+                : System.IO.FileAttributes.Hidden
+            ),
+        }
+      )
     );
   }
 
-  private static string JoinPathCompletion(
+  private static string Join(
+    string accumulator,
     string filename,
-    string accumulatedSubpath,
     bool trailingSeparator = default
   ) => System.IO.Path.Join(
-    accumulatedSubpath,
+    accumulator,
     filename,
     trailingSeparator
       ? @"\"
@@ -159,23 +149,19 @@ internal sealed class PathCompleter : TabCompleter
   {
     Index = default;
 
-    var (
-      searchContext,
-      accumulator
-    ) = ParsePathToComplete(
+    var (accumulator, searchContext) = ParseLine(
       wordToComplete,
       Location,
       AllowReanchor,
       IncludeHidden
     );
-
     var originalAttributes = searchContext.Options.AttributesToSkip;
 
     switch (ItemType)
     {
       case PathItemType.Directory:
         foreach (
-          var directory in EnumerateDirectories(
+          var directory in Directories(
             searchContext,
             accumulator,
             !Flat
@@ -197,7 +183,7 @@ internal sealed class PathCompleter : TabCompleter
           searchContext.Options.AttributesToSkip = System.IO.FileAttributes.System;
 
           foreach (
-            var directory in EnumerateDirectories(
+            var directory in Directories(
               searchContext,
               accumulator,
               !Flat
@@ -214,7 +200,7 @@ internal sealed class PathCompleter : TabCompleter
 
       case PathItemType.File:
         foreach (
-          var file in EnumerateFiles(
+          var file in Files(
             searchContext,
             accumulator
           )
@@ -235,7 +221,7 @@ internal sealed class PathCompleter : TabCompleter
           searchContext.Options.AttributesToSkip = System.IO.FileAttributes.System;
 
           foreach (
-            var file in EnumerateFiles(
+            var file in Files(
               searchContext,
               accumulator
             )
@@ -250,7 +236,7 @@ internal sealed class PathCompleter : TabCompleter
         var checkpoint = Index;
 
         foreach (
-          var directory in EnumerateDirectories(
+          var directory in Directories(
             searchContext,
             accumulator,
             true
@@ -272,7 +258,7 @@ internal sealed class PathCompleter : TabCompleter
           searchContext.Options.AttributesToSkip = System.IO.FileAttributes.System;
 
           foreach (
-            var directory in EnumerateDirectories(
+            var directory in Directories(
               searchContext,
               accumulator,
               true
@@ -289,7 +275,7 @@ internal sealed class PathCompleter : TabCompleter
 
       default:
         foreach (
-          var directory in EnumerateDirectories(
+          var directory in Directories(
             searchContext,
             accumulator,
             !Flat
@@ -300,7 +286,7 @@ internal sealed class PathCompleter : TabCompleter
         }
 
         foreach (
-          var file in EnumerateFiles(
+          var file in Files(
             searchContext,
             accumulator
           )
@@ -321,7 +307,7 @@ internal sealed class PathCompleter : TabCompleter
           searchContext.Options.AttributesToSkip = System.IO.FileAttributes.System;
 
           foreach (
-            var directory in EnumerateDirectories(
+            var directory in Directories(
               searchContext,
               accumulator,
               !Flat
@@ -332,7 +318,7 @@ internal sealed class PathCompleter : TabCompleter
           }
 
           foreach (
-            var file in EnumerateFiles(
+            var file in Files(
               searchContext,
               accumulator
             )
@@ -349,10 +335,7 @@ internal sealed class PathCompleter : TabCompleter
 
     if (accumulator is not "")
     {
-      yield return JoinPathCompletion(
-        @"\",
-        accumulator
-      );
+      yield return Join(accumulator, @"\");
     }
 
     if (
@@ -360,54 +343,50 @@ internal sealed class PathCompleter : TabCompleter
       || Index is not 0
     )
     {
-      yield return JoinPathCompletion(
-        @"..\",
-        accumulator
-      );
+      yield return Join(accumulator, @"..\");
     }
 
     yield break;
   }
 
-  private IEnumerable<string> EnumerateDirectories(
+  private IEnumerable<string> Directories(
     SearchContext searchContext,
     string accumulator,
     bool trailingSeparator = default
-  ) => EnumerateCompletions(
-     System.IO.Directory.EnumerateDirectories(
+  ) => EnumerateSearch(
+    accumulator,
+    System.IO.Directory.Directories(
       searchContext.Path,
       searchContext.Filter,
       searchContext.Options
     ),
-    accumulator,
     trailingSeparator
   );
 
-  private IEnumerable<string> EnumerateFiles(
+  private IEnumerable<string> Files(
     SearchContext searchContext,
     string accumulator
-  ) => EnumerateCompletions(
-    System.IO.Directory.EnumerateFiles(
+  ) => EnumerateSearch(
+    accumulator,
+    System.IO.Directory.Files(
       searchContext.Path,
       searchContext.Filter,
       searchContext.Options
-    ),
-    accumulator
+    )
   );
 
-  private IEnumerable<string> EnumerateCompletions(
-    IEnumerable<string> paths,
+  private IEnumerable<string> EnumerateSearch(
     string accumulator,
+    IEnumerable<string> paths,
     bool trailingSeparator = default
   )
   {
     foreach (var path in paths)
     {
       ++Index;
-
-      yield return JoinPathCompletion(
-        System.IO.Path.GetFileName(path),
+      yield return Join(
         accumulator,
+        System.IO.Path.GetFileName(path),
         trailingSeparator
       );
     }
