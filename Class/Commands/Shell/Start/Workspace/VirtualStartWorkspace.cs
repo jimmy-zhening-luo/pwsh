@@ -36,7 +36,7 @@ public abstract class VirtualStartWorkspace() : CoreCommand(true)
   private protected sealed override void Postprocess()
   {
     List<string> argumentList = [
-      UsingDefaultLocation
+      UsingCurrentLocation
         ? Pwd(Path)
         : Reanchor(Path),
     ];

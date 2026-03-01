@@ -34,7 +34,7 @@ public abstract class CoreCommand(
 
   private protected virtual Locator Location => new();
 
-  private protected bool UsingDefaultLocation => Location.IsEmpty;
+  private protected bool UsingCurrentLocation => Location.IsEmpty;
 
   private protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
 
