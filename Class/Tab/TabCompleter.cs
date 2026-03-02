@@ -9,7 +9,7 @@ internal abstract class TabCompleter(
     string parameterName,
     string wordToComplete,
     System.Management.Automation.Language.CommandAst commandAst,
-    IDictionary fakeBoundParameters
+    System.Collections.IDictionary fakeBoundParameters
   ) => WrapArgumentCompletionResult(
     GenerateCompletion(
       Client.Console.String.UnescapeSingleQuoted(

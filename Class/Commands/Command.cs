@@ -141,8 +141,8 @@ public abstract class CoreCommand(
     value
   );
 
-  private protected PowerShell AddParameters(IList parameters) => PS.AddParameters(parameters);
-  private protected PowerShell AddParameters(IDictionary parameters) => PS.AddParameters(parameters);
+  private protected PowerShell AddParameters(System.Collections.IList parameters) => PS.AddParameters(parameters);
+  private protected PowerShell AddParameters(System.Collections.IDictionary parameters) => PS.AddParameters(parameters);
 
   private protected PowerShell AddStatement() => PS.AddStatement();
 

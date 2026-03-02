@@ -13,7 +13,6 @@
   </ItemGroup>
   <ItemGroup>
     <Using Include="System.Management.Automation"/>
-    <Using Include="System.Collections"/>
     <Using Include="System.Collections.Generic"/>
     <Using Include="System.Collections.ObjectModel"/>
   </ItemGroup>

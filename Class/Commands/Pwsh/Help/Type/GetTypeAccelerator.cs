@@ -22,7 +22,7 @@ public sealed class GetTypeAccelerator : Cmdlet
           System.Reflection.BindingFlags.Static
           | System.Reflection.BindingFlags.Public
         )
-        ?.GetValue(default) is IDictionary typeAccelerators
+        ?.GetValue(default) is System.Collections.IDictionary typeAccelerators
     )
     {
       HashSet<string> uniqueTypes = new(System.StringComparer.OrdinalIgnoreCase);
