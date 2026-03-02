@@ -67,7 +67,7 @@ public abstract class TaskManager : CoreCommand
       case "InputObject":
         foreach (var process in InputObject)
         {
-          Process.Kill(descendant);
+          process.Kill(descendant);
         }
         break;
 
