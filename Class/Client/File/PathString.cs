@@ -2,6 +2,8 @@ namespace Module.Client.File;
 
 internal static partial class PathString
 {
+  internal const char Here = '.';
+  internal const char Home = '~';
   internal const char Separator = '\\';
   internal const string SeparatorString = @"\";
 
@@ -48,9 +50,9 @@ internal static partial class PathString
 
   private static string ExpandHomePrefix(string path) => path switch
   {
-    "~" => Environment.Known.Folder.Home(),
+    [Home] => Environment.Known.Folder.Home(),
     [
-      '~',
+      Home,
       Separator,
       .. var subpath,
     ] => Environment.Known.Folder.Home(subpath),
@@ -59,9 +61,9 @@ internal static partial class PathString
 
   private static string TrimRelativePrefix(string path) => path switch
   {
-    "." => string.Empty,
+    [Here] => string.Empty,
     [
-      '.',
+      Here,
       Separator,
       .. var subpath,
     ] => subpath,
