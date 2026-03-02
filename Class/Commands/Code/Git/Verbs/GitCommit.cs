@@ -120,7 +120,7 @@ public sealed partial class GitCommit() : GitCommand("commit")
       default,
       [
         "-m",
-        string.Join(Client.Console.String.Space, messageWords)
+        string.Join(Client.Console.String.Space, messageWords),
       ]
     );
 

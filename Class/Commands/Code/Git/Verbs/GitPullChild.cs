@@ -68,7 +68,7 @@ public sealed class GitPullChild : CoreCommand
       List<string> command = [
         .. baseCommand,
         Client.Console.String.EscapeDoubleQuoted(repository),
-        "pull"
+        "pull",
       ];
 
       AddScript(string.Join(Client.Console.String.Space, command));
