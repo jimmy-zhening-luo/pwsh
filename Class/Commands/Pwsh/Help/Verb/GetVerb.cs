@@ -77,7 +77,7 @@ public sealed class GetVerb : CoreCommand
 
       foreach (var group in value)
       {
-        _ = groups.Add(parsedGroup);
+        _ = groups.Add(group);
       }
     }
   }
