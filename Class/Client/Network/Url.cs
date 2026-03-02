@@ -76,9 +76,12 @@ internal static class Url
     ? uri
     : default;
 
-  internal static bool Test(System.Uri url)
+  internal static bool TestHttp(
+    [System.Diagnostics.CodeAnalysis.NotNullWhen(true)]
+    System.Uri? uri
+  )
   {
-    if (!IsHttp(url))
+    if (!IsHttp(uri))
     {
       return default;
     }
@@ -98,7 +101,7 @@ internal static class Url
         }
       )
         .GetAsync(
-          url,
+          uri,
           System.Net.Http.HttpCompletionOption.ResponseHeadersRead
         )
         .GetAwaiter()

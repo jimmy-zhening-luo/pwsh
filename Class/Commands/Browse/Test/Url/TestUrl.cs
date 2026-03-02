@@ -54,7 +54,7 @@ public sealed class TestUrl : CoreCommand
         && System.IO.Path.Exists(url.LocalPath)
         || Client.Network.Url.IsHttp(url)
         && Client.Network.Dns.Resolve(url)
-        && Client.Network.Url.Test(url)
+        && Client.Network.Url.TestHttp(url)
       )
       {
         WriteObject(url);

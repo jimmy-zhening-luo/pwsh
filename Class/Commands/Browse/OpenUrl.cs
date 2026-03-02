@@ -124,7 +124,7 @@ public sealed class OpenUrl() : CoreCommand(true)
             $"http://{s}"
           ) is { } uri
           && Client.Network.Dns.Resolve(uri)
-          && Client.Network.Url.Test(uri):
+          && Client.Network.Url.TestHttp(uri):
           Client.Network.Url.Open(uri);
           break;
       }
