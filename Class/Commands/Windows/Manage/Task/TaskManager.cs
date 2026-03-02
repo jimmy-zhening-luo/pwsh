@@ -1,5 +1,3 @@
-using System.Reflection.Metadata;
-
 namespace Module.Commands.Windows.Manage.Task;
 
 public abstract class TaskManager : CoreCommand
