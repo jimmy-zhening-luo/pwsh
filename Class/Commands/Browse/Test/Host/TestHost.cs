@@ -125,42 +125,30 @@ public sealed class TestHost() : WrappedCommand(
     switch (ParameterSetName)
     {
       case "ICMP" when ComputerName is "":
-        CommonTCPPort = nameof(TestHostWellKnownPort.HTTP);
-        BoundParameters["CommonTCPPort"] = CommonTCPPort;
-
+        BoundParameters["CommonTCPPort"] = CommonTCPPort = nameof(TestHostWellKnownPort.HTTP);
         break;
+
       case "RemotePort":
         BoundParameters["Port"] = (int)Port;
-
         break;
+
       case "CommonTCPPort":
-        if (
-          ushort.TryParse(
-            CommonTCPPort,
-            out var parsedPortNumber
-          )
-        )
+        switch (CommonTCPPort)
         {
-          CommonTCPPort = string.Empty;
-          _ = BoundParameters.Remove("CommonTCPPort");
+          case var port when ushort.TryParse(port, out var numericPort):
+            _ = BoundParameters.Remove("CommonTCPPort");
+            CommonTCPPort = string.Empty;
+            BoundParameters["Port"] = (int)(Port = numericPort);
+            break;
 
-          Port = parsedPortNumber;
-          BoundParameters["Port"] = (int)Port;
-        }
-        else if (
-          System.Enum.TryParse(
-            CommonTCPPort,
+          case var port when System.Enum.TryParse<TestHostWellKnownPort>(
+            port,
             true,
-            out TestHostWellKnownPort parsedPortEnum
-          )
-        )
-        {
-          CommonTCPPort = parsedPortEnum.ToString();
-          BoundParameters["CommonTCPPort"] = CommonTCPPort;
+            out var commonPort
+          ):
+            BoundParameters["CommonTCPPort"] = CommonTCPPort = commonPort.ToString();
+            break;
         }
-
-        break;
-      default:
         break;
     }
   }
@@ -169,8 +157,7 @@ public sealed class TestHost() : WrappedCommand(
   {
     if (ComputerName is "")
     {
-      ComputerName = "google.com";
-      BoundParameters["ComputerName"] = ComputerName;
+      BoundParameters["ComputerName"] = ComputerName = "google.com";
     }
   }
 }

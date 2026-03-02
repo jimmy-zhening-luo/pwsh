@@ -80,12 +80,14 @@ public abstract class TaskManager : CoreCommand
           {
             case "":
               break;
+
             case var n when int.TryParse(
-              name,
+              n,
               out int pid
             ):
               KillProcess(pid, descendant);
               break;
+
             default:
               KillProcesses(name, descendant);
               break;

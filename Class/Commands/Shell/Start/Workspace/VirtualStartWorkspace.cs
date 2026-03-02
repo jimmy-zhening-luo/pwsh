@@ -46,21 +46,16 @@ public abstract class VirtualStartWorkspace() : CoreCommand(true)
 
       case "se":
         argumentList.Add("--profile=Setting");
+        break;
 
+      case ['-', '-', ..]:
+        argumentList.Add(Name);
         break;
 
       default:
-        if (Name.StartsWith("--"))
-        {
-          argumentList.Add(Name);
-        }
-        else
-        {
-          WriteWarning(
-            "Profiles not supported except for se (Setting) lmaoo."
-          );
-        }
-
+        WriteWarning(
+          "Profiles not supported except for se (Setting)"
+        );
         break;
     }
 
