@@ -35,7 +35,7 @@ internal sealed class PathCompleter : TabCompleter
     Client.File.PathString.Normalize(location) is var normalPath
     && System.IO.Path.IsPathFullyQualified(normalPath)
       ? normalPath
-      : PowerShellHost.FullPathCurrentLocationRelative(normalPath),
+      : Module.FullPathCurrentLocationRelative(normalPath),
     itemType,
     flat,
     hidden,
@@ -56,7 +56,7 @@ internal sealed class PathCompleter : TabCompleter
     var lineRemaining = string.Empty;
     var lineCaptured = string.Empty;
     var searchPath = location;
-    
+
     while (line is not "")
     {
       var marker = line.LastIndexOf(

@@ -1,6 +1,6 @@
 namespace Module;
 
-internal static class PowerShellHost
+internal static class Module
 {
   internal static PowerShell Create() => PowerShell.Create(RunspaceMode.CurrentRunspace);
 

@@ -45,7 +45,7 @@ public abstract class CoreCommand(
 
   private protected bool HadNativeErrors => PSVariable<int>("LASTEXITCODE") is not (0 or 1);
 
-  private PowerShell PS => powershell ??= PowerShellHost.Create();
+  private PowerShell PS => powershell ??= Module.Create();
   private PowerShell? powershell;
 
   private SteppablePipeline? steppablePipeline;
