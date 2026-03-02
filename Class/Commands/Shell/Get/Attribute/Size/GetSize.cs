@@ -1,7 +1,5 @@
 namespace Module.Commands.Shell.Get.Attribute.Size;
 
-using System.Linq;
-
 [Cmdlet(
   VerbsCommon.Get,
   "Size",
