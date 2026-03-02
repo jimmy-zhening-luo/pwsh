@@ -4,18 +4,14 @@ namespace Module.Tab;
   System.AttributeTargets.Property
   | System.AttributeTargets.Field
 )]
-internal abstract class TabCompletionsAttribute(
-  CompletionCase Casing = default
-) : ArgumentCompleterAttribute, IArgumentCompleterFactory
+internal abstract class TabCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory
 {
-  public CompletionCase Casing { get; init; } = Casing;
+  public CompletionCase Case { get; init; } = default;
 
-  public abstract IArgumentCompleter Create();
+  public abstract TabCompleter Create();
   IArgumentCompleter IArgumentCompleterFactory.Create() => Create();
 
-  internal abstract class TabCompleter(
-    CompletionCase Casing = default
-  ) : IArgumentCompleter
+  internal abstract class TabCompleter(CompletionCase Case) : IArgumentCompleter
   {
     public IEnumerable<CompletionResult> CompleteArgument(
       string commandName,
@@ -40,7 +36,7 @@ internal abstract class TabCompletionsAttribute(
       {
         yield return new(
           Client.Console.String.EscapeSingleQuoted(
-            Casing switch
+            Case switch
             {
               CompletionCase.Upper => completedString.ToUpper(),
               CompletionCase.Lower => completedString.ToLower(),

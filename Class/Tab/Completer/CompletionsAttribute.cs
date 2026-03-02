@@ -1,35 +1,26 @@
 namespace Module.Tab.Completer;
 
-internal class CompletionsAttribute(
-  string[] Domain,
-  CompletionCase Casing = default
-) : CompletionsAttribute<string[]>(
-  Domain,
-  Casing
-)
+internal class CompletionsAttribute(string[] Domain) : CompletionsAttribute<string[]>(Domain)
 {
-  private protected sealed override IEnumerable<string> ResolveDomain(string[] domain) => domain;
+  private protected sealed override IEnumerable<string> CreateDomain(string[] domain) => domain;
 }
-internal abstract class CompletionsAttribute<TDomain>(
-  TDomain Domain,
-  CompletionCase Casing
-) : TabCompletionsAttribute(Casing)
+internal abstract class CompletionsAttribute<TDomain>(TDomain Domain) : TabCompletionsAttribute
 {
   public bool Strict { get; init; }
 
-  private protected abstract IEnumerable<string> ResolveDomain(TDomain domain);
+  private protected abstract IEnumerable<string> CreateDomain(TDomain domain);
 
   public sealed override Completer Create() => new(
-    ResolveDomain(Domain),
-    Casing,
-    Strict
+    CreateDomain(Domain),
+    Strict,
+    Case
   );
 
   internal sealed class Completer(
     IEnumerable<string> Domain,
-    CompletionCase Casing,
-    bool Strict
-  ) : TabCompleter(Casing)
+    bool Strict,
+    CompletionCase Case
+  ) : TabCompleter(Case)
   {
     private protected sealed override IEnumerable<string> GenerateCompletion(string wordToComplete)
     {
@@ -59,10 +50,7 @@ internal abstract class CompletionsAttribute<TDomain>(
         }
       }
 
-      if (
-        Strict
-        || matches is not 1
-      )
+      if (Strict || matches is not 1)
       {
         yield break;
       }

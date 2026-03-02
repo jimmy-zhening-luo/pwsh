@@ -1,8 +1,6 @@
 namespace Module.Commands;
 
-public abstract class NativeCommand(
-  bool SkipSsh = default
-) : CoreCommand(SkipSsh)
+public abstract class NativeCommand(bool SkipSsh = default) : CoreCommand(SkipSsh)
 {
   public record SwitchBoard(
     bool D = default,

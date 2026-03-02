@@ -1,8 +1,6 @@
 namespace Module.Commands.Code.Node;
 
-public abstract class NodeCommand(
-  string IntrinsicVerb = ""
-) : RemoteNativeVerbCommand(IntrinsicVerb)
+public abstract class NodeCommand(string IntrinsicVerb = "") : RemoteNativeVerbCommand(IntrinsicVerb)
 {
   private protected sealed class NodeVerbCompletionsAttribute() : Tab.Completer.CompletionsAttribute([.. Verbs]);
 

@@ -2,13 +2,11 @@ namespace Module.Tab.Path;
 
 internal class PathCompletionsAttribute(
   string Location = "",
-  PathItemType ItemType = default
+  PathItemType ItemType = default,
+  bool Flat = default,
+  bool IncludeHidden = default
 ) : TabCompletionsAttribute
 {
-  public bool Flat { get; init; }
-
-  public bool IncludeHidden { get; init; }
-
   public sealed override PathCompleter Create() => new(
     Location,
     ItemType,
@@ -25,23 +23,18 @@ internal class PathCompletionsAttribute(
     );
 
     private readonly string Location;
-
     private readonly PathItemType ItemType;
-
     private readonly bool Flat;
-
     private readonly bool IncludeHidden;
-
     private readonly bool AllowReanchor;
-
     private uint Index;
 
     internal PathCompleter(
       string location,
       PathItemType itemType,
       bool flat,
-      bool hidden
-    ) => (
+      bool includeHidden
+    ) : base(default) => (
       Location,
       ItemType,
       Flat,
@@ -54,7 +47,7 @@ internal class PathCompletionsAttribute(
         : Module.FullPathCurrentLocationRelative(normalPath),
       itemType,
       flat,
-      hidden,
+      includeHidden,
       location is ""
     );
 

@@ -8,13 +8,6 @@ namespace Module.Commands.Code.Node.Verbs;
 [Alias("nu")]
 public sealed class NodeUpdateVersion() : NodeCommand("version")
 {
-  private sealed class NodeVersionCompletionsAttribute() : Tab.Completer.EnumCompletionsAttribute(
-    typeof(NodeVersion),
-    default,
-    ["from-git"],
-    ["prepatch"]
-  );
-
   private enum NodeVersion
   {
     [System.ComponentModel.Description("Increment patch version (default)")]
@@ -46,7 +39,12 @@ public sealed class NodeUpdateVersion() : NodeCommand("version")
     HelpMessage = "New package version, default 'patch'"
   )]
   [Alias("v")]
-  [NodeVersionCompletions]
+  [Tab.Completer.EnumCompletions(
+    typeof(NodeVersion),
+    Include: ["from-git"],
+    Exclude: ["prepatch"],
+    Case = Tab.CompletionCase.Preserve
+  )]
   public string Version
   {
     get => version;
