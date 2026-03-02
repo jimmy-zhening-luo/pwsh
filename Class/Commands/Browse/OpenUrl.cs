@@ -13,52 +13,25 @@ public sealed class OpenUrl() : CoreCommand(true)
   [Parameter(
     ParameterSetName = "Path",
     Position = default,
-    HelpMessage = "The file path or URL to open. Defaults to the current directory."
+    HelpMessage = "The file path or URL to open.  Defaults to the current directory."
   )]
   [Tab.Path.PathCompletions]
   public string Path
   {
     get => pathUri?.ToString() ?? string.Empty;
-    set
+    set => pathUri = switch value.Trim()
     {
-      pathUri = default;
-
-      if (!string.IsNullOrWhiteSpace(value))
-      {
-        if (Client.Network.Url.ToAbsoluteHttpUri(value) is { } httpUri)
-        {
-          pathUri = httpUri;
-        }
-        else if (
-          Client.Network.Url.ToAbsoluteFileUri(value) is { } fileUri
-          && System.IO.File.Exists(fileUri.LocalPath)
-        )
-        {
-          pathUri = fileUri;
-        }
-        else if (
-          Client.Network.Url.ToAbsoluteFileUri(
-            Pwd(value)
-          ) is { } relativeFileUri
-          && System.IO.File.Exists(
-            relativeFileUri.LocalPath
-          )
-        )
-        {
-          pathUri = relativeFileUri;
-        }
-        else if (
-          System.Uri.TryCreate(
-            value,
-            System.UriKind.Relative,
-            out var relativeHttpUri
-          )
-        )
-        {
-          pathUri = relativeHttpUri;
-        }
-      }
-    }
+      "" => default,
+      var path when Client.Network.Url.ToAbsoluteHttpUri(path) is { } url => url,
+      var path when Client.Network.Url.ToAbsoluteFileUri(path) is var fileUri && Client.Network.Url.TestFile(fileUri) => fileUri,
+      _ => System.Uri.TryCreate(
+        value,
+        System.UriKind.Relative,
+        out var relativeHttpUri
+      )
+        ? relativeHttpUri
+        : default,
+    };
   }
   private System.Uri? pathUri;
 
