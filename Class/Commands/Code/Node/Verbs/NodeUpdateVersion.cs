@@ -37,56 +37,27 @@ public sealed class NodeUpdateVersion() : NodeCommand("version")
   public string Version
   {
     get => version;
-    set
+    set => version = value.Trim() switch
     {
-      if (value is "")
-      {
-        version = nameof(NodeVersion.patch);
-      }
-      else if (value.ToLower() is "from-git")
-      {
-        version = "from-git";
-      }
-      else if (
-        System.Enum.TryParse<NodeVersion>(
-          value,
-          true,
-          out var namedVersion
-        )
-      )
-      {
-        version = namedVersion.ToString();
-      }
-      else
-      {
-        var numericVersion = value.StartsWith(
-          "v",
-          System.StringComparison.OrdinalIgnoreCase
-        )
-          ? value[1..]
-          : value;
-
-        if (
-          SemanticVersion.TryParse(
-            numericVersion,
-            out var semver
-          )
-        )
-        {
-          version = semver.ToString();
-        }
-        else
-        {
-          version = string.Empty;
-        }
-      }
-    }
+      "" => nameof(NodeVersion.patch),
+      var v when v.Equals("from-git", System.StringComparison.OrdinalIgnoreCase) => "from-git",
+      var v when System.Enum.TryParse<NodeVersion>(
+        v,
+        true,
+        out var named
+      ) => named.ToString(),
+      var v when SemanticVersion.TryParse(
+        v is ['v' or 'V', .. var num] ? num : v,
+        out var semver
+      ) => semver.ToString(),
+      _ => string.Empty,
+    };
   }
   private string version = nameof(NodeVersion.patch);
 
   private protected sealed override void PreprocessArguments()
   {
-    if (version is "")
+    if (Version is "")
     {
       Throw(
         "Provided version was neither a well-known version nor parseable as a semantic version."
@@ -94,5 +65,5 @@ public sealed class NodeUpdateVersion() : NodeCommand("version")
     }
   }
 
-  private protected sealed override List<string> ParseArguments() => [version.ToLower()];
+  private protected sealed override List<string> ParseArguments() => [Version];
 }
