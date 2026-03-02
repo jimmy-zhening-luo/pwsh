@@ -3,7 +3,7 @@ namespace Module.Tab.Path;
 internal class PathCompletionsAttribute(
   string Location = "",
   PathItemType ItemType = default
-) : TabCompletionsAttribute<PathCompleter>
+) : TabCompletionsAttribute
 {
   public bool Flat { get; init; }
 

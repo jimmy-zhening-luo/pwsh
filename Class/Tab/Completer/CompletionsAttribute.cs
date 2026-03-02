@@ -13,7 +13,7 @@ internal class CompletionsAttribute(
 internal abstract class CompletionsAttribute<TDomain>(
   TDomain Domain,
   CompletionCase Casing
-) : TabCompletionsAttribute<Completer>(Casing)
+) : TabCompletionsAttribute(Casing)
 {
   public bool Strict { get; init; }
 

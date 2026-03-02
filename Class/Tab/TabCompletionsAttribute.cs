@@ -4,12 +4,12 @@ namespace Module.Tab;
   System.AttributeTargets.Property
   | System.AttributeTargets.Field
 )]
-internal abstract class TabCompletionsAttribute<TCompleter>(
+internal abstract class TabCompletionsAttribute(
   CompletionCase Casing = default
-) : ArgumentCompleterAttribute, IArgumentCompleterFactory where TCompleter : TabCompleter
+) : ArgumentCompleterAttribute, IArgumentCompleterFactory
 {
   public CompletionCase Casing { get; init; } = Casing;
 
-  public abstract TCompleter Create();
+  public abstract IArgumentCompleter Create();
   IArgumentCompleter IArgumentCompleterFactory.Create() => Create();
 }
