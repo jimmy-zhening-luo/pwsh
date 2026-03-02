@@ -28,7 +28,7 @@ public sealed class GetHelpOnline : CoreCommand
   [Parameter]
   public string[] Parameter { get; set; } = [];
 
-  private static List<System.Uri>? TryExtractHelpLink(Collection<PSObject> helpContent)
+  private static List<System.Uri>? TryExtractHelpLink(System.Collections.ObjectModel.Collection<PSObject> helpContent)
   {
     if (helpContent is null or [])
     {
