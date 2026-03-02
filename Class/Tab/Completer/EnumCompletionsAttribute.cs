@@ -3,8 +3,9 @@ namespace Module.Tab.Completer;
 internal class EnumCompletionsAttribute(
   System.Type EnumType,
   string[]? Include = default,
-  string[]? Exclude = default
-) : CompletionsAttribute<System.Type>(EnumType)
+  string[]? Exclude = default,
+  CompletionCase Case = CompletionCase.Lower
+) : CompletionsAttribute<System.Type>(EnumType, Case)
 {
   private protected sealed override IEnumerable<string> CreateDomain(System.Type enumType)
   {
