@@ -27,9 +27,9 @@ public sealed class OpenUrl() : CoreCommand(true)
       var path => System.Uri.TryCreate(
         path,
         System.UriKind.Relative,
-        out var relativeHttpUri
+        out var relativeUrl
       )
-        ? relativeHttpUri
+        ? relativeUrl
         : default,
     };
   }
