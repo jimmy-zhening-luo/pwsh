@@ -22,13 +22,13 @@ public sealed class NodeUpdateVersion() : NodeCommand("version")
     [System.ComponentModel.Description("If current version is a release, increment patch version and add a prerelease tag. If current version is a prerelease, increment prerelease version.")]
     prerelease,
 
-    [System.ComponentModel.Description("Increment patch version and add a prerelease tag.")]
+    [System.ComponentModel.Description("Increment patch version and add a prerelease tag")]
     prepatch,
 
-    [System.ComponentModel.Description("Increment minor version and add a prerelease tag.")]
+    [System.ComponentModel.Description("Increment minor version and add a prerelease tag")]
     preminor,
 
-    [System.ComponentModel.Description("Increment major version and add a prerelease tag.")]
+    [System.ComponentModel.Description("Increment major version and add a prerelease tag")]
     premajor,
   }
 
