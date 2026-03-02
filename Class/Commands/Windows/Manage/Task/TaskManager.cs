@@ -19,7 +19,7 @@ public abstract class TaskManager : CoreCommand
     Position = default,
     HelpMessage = "The process ID(s) of the process to stop."
   )]
-  public uint[] Id { get; set; } = [];
+  public int[] Id { get; set; } = [];
 
   [Parameter(
     ParameterSetName = "InputObject",
@@ -61,19 +61,16 @@ public abstract class TaskManager : CoreCommand
         foreach (var pid in Id)
         {
           KillProcess(
-            (int)pid,
+            pid,
             descendant
           );
         }
 
         break;
       case "InputObject":
-        foreach (var input in InputObject)
+        foreach (var process in InputObject)
         {
-          KillProcess(
-            input.Id,
-            descendant
-          );
+          Process.Kill(descendant);
         }
 
         break;
