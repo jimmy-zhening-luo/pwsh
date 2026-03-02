@@ -12,18 +12,26 @@ public sealed class GetVerb : CoreCommand
 {
   private enum VerbGroup
   {
+    [System.ComponentModel.Description("Common verbs: Add, Clear, Get, New, Set, ..")]
     Common,
+
+    [System.ComponentModel.Description("Communication verbs: Connect, Read, Write, ..")]
     Communications,
+
+    [System.ComponentModel.Description("Data verbs: Edit, Import, Save, Update, ..")]
     Data,
+
+    [System.ComponentModel.Description("Diagnostic verbs: Measure, Resolve, Test, ..")]
     Diagnostic,
+
+    [System.ComponentModel.Description("Lifecycle verbs: Build, Invoke, Start, Stop, ..")]
     Lifecycle,
+
+    [System.ComponentModel.Description("Other verbs: Use, ..")]
     Other,
+
+    [System.ComponentModel.Description("Security verbs: Block, Revoke, ..")]
     Security,
-    Service,
-    Settings,
-    Support,
-    System,
-    Utility,
   }
 
   [Parameter(
