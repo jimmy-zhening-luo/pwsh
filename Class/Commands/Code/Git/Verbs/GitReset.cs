@@ -62,7 +62,11 @@ public sealed partial class GitReset() : GitCommand("reset")
   {
     List<string> resetArguments = [.. ArgumentList];
 
-    if (WorkingDirectory is not "" && ResolveWorkingDirectory(Pwd()) is not "" && ResolveWorkingDirectory(WorkingDirectory) is "")
+    if (
+      WorkingDirectory is not ""
+      && ResolveWorkingDirectory(Pwd()) is not ""
+      && ResolveWorkingDirectory(WorkingDirectory) is ""
+    )
     {
       if (Tree is not "")
       {

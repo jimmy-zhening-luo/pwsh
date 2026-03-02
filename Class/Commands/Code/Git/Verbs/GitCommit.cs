@@ -66,8 +66,11 @@ public sealed partial class GitCommit() : GitCommand("commit")
         }
       }
     }
-
-    if (WorkingDirectory is not "" && ResolveWorkingDirectory(Pwd()) is not "" && ResolveWorkingDirectory(WorkingDirectory) is "")
+    if (
+      WorkingDirectory is not ""
+      && ResolveWorkingDirectory(Pwd()) is not ""
+      && ResolveWorkingDirectory(WorkingDirectory) is ""
+    )
     {
       if (ArgumentRegex().IsMatch(WorkingDirectory))
       {

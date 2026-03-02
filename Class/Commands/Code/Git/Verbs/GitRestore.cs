@@ -13,8 +13,11 @@ public sealed class GitRestore() : GitCommand("pull")
     List<string> resetArguments = [.. ArgumentList];
 
     ArgumentList = [];
-
-    if (WorkingDirectory is not "" && ResolveWorkingDirectory(Pwd()) is not "" && ResolveWorkingDirectory(WorkingDirectory) is "")
+    if (
+      WorkingDirectory is not ""
+      && ResolveWorkingDirectory(Pwd()) is not ""
+      && ResolveWorkingDirectory(WorkingDirectory) is ""
+    )
     {
       resetArguments.Insert(default, WorkingDirectory);
       WorkingDirectory = string.Empty;
