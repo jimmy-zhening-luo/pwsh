@@ -85,7 +85,10 @@ public sealed class GetSize : CoreCommand
     Position = 1,
     HelpMessage = "The unit in which to return the size."
   )]
-  [Tab.Completer.EnumCompletions(typeof(DiskSizeUnit))]
+  [Tab.Completer.EnumCompletions(
+    typeof(DiskSizeUnit),
+    Case = Tab.CompletionCase.Lower
+  )]
   public string Unit
   {
     get => unit.ToString();

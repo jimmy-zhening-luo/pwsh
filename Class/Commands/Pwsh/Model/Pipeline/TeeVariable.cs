@@ -51,9 +51,6 @@ public sealed class TeeVariable() : WrappedCommand(
     ParameterSetName = "LiteralFile"
   )]
   [ValidateNotNullOrEmpty]
-  [Tab.Completer.EnumCompletions(
-    typeof(Client.File.Encoding),
-    Case: default
-  )]
+  [Tab.Completer.EnumCompletions(typeof(Client.File.Encoding))]
   public required string Encoding { get; set; }
 }

@@ -51,7 +51,10 @@ public sealed class TestHost() : WrappedCommand(
     Position = 1
   )]
   [ValidateNotNullOrWhiteSpace]
-  [Tab.Completer.EnumCompletions(typeof(TestHostWellKnownPort))]
+  [Tab.Completer.EnumCompletions(
+    typeof(TestHostWellKnownPort),
+    Case = Tab.CompletionCase.Lower
+  )]
   public string CommonTCPPort { get; set; } = string.Empty;
 
   [Parameter(

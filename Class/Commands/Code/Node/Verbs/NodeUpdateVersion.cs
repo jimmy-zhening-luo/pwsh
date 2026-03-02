@@ -42,8 +42,7 @@ public sealed class NodeUpdateVersion() : NodeCommand("version")
   [Tab.Completer.EnumCompletions(
     typeof(NodeVersion),
     Include: ["from-git"],
-    Exclude: ["prepatch"],
-    Case: default
+    Exclude: ["prepatch"]
   )]
   public string Version
   {
