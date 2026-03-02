@@ -2,13 +2,7 @@ namespace Module;
 
 internal static class PowerShellHost
 {
-  internal static PowerShell Create(
-    bool newRunspace = default
-  ) => PowerShell.Create(
-    newRunspace
-      ? RunspaceMode.NewRunspace
-      : RunspaceMode.CurrentRunspace
-  );
+  internal static PowerShell Create() => PowerShell.Create(RunspaceMode.CurrentRunspace);
 
   internal static string FullPathCurrentLocationRelative(
     string path = ""
