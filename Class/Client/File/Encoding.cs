@@ -45,12 +45,12 @@ internal enum Encoding
   [System.ComponentModel.Description(
     "Encodes in UTF-8 format with Byte Order Mark (BOM)"
   )]
-  utf8BOM,
+  utf8bom,
 
   [System.ComponentModel.Description(
     "Encodes in UTF-8 format without Byte Order Mark (BOM)"
   )]
-  utf8NoBOM,
+  utf8nobom,
 
   [System.ComponentModel.Description(
     "Encodes in UTF-32 format using the little-endian byte order."
