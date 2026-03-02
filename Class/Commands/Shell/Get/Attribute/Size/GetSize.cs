@@ -120,7 +120,7 @@ public sealed class GetSize : CoreCommand
             $"The path '{path}' does not exist."
           ),
           ErrorCategory.InvalidOperation,
-          absolutePath,
+          fullPath,
           "PathNotFound"
         );
       }
