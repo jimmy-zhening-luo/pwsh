@@ -87,13 +87,9 @@ public sealed class OpenUrl() : CoreCommand(true)
           Client.Network.Url.Open(pathUri);
           break;
 
-        case
-        {
-          IsAbsoluteUri: false,
-          OriginalString: var originalString,
-        }
+        case { OriginalString: var s }
           when Client.Network.Url.ToAbsoluteHttpUri(
-            $"http://{originalString}"
+            $"http://{s}"
           ) is var url
           && Client.Network.Dns.Resolve(url)
           && Client.Network.Url.TestHttp(url):
