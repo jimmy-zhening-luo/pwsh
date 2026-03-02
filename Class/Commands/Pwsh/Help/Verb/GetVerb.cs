@@ -10,28 +10,28 @@ namespace Module.Commands.Pwsh.Help.Verb;
 [OutputType(typeof(string))]
 public sealed class GetVerb : CoreCommand
 {
-  private enum VerbGroup
+  public enum VerbGroup
   {
     [System.ComponentModel.Description("Common verbs: Add, Clear, Get, New, Set, ..")]
-    Common,
+    common,
 
     [System.ComponentModel.Description("Communication verbs: Connect, Read, Write, ..")]
-    Communications,
+    communications,
 
     [System.ComponentModel.Description("Data verbs: Edit, Import, Save, Update, ..")]
-    Data,
+    data,
 
     [System.ComponentModel.Description("Diagnostic verbs: Measure, Resolve, Test, ..")]
-    Diagnostic,
+    diagnostic,
 
     [System.ComponentModel.Description("Lifecycle verbs: Build, Invoke, Start, Stop, ..")]
-    Lifecycle,
+    lifecycle,
 
     [System.ComponentModel.Description("Other verbs: Use, ..")]
-    Other,
+    other,
 
     [System.ComponentModel.Description("Security verbs: Block, Revoke, ..")]
-    Security,
+    security,
   }
 
   [Parameter(
@@ -68,8 +68,7 @@ public sealed class GetVerb : CoreCommand
     Position = 1,
     HelpMessage = "Gets only the specified groups. Enter the name of a group. Wildcards aren't allowed."
   )]
-  [Tab.Completer.EnumCompletions(typeof(VerbGroup))]
-  public string[] Group
+  public VerbGroup[] Group
   {
     get => [.. groups];
     set
@@ -78,20 +77,11 @@ public sealed class GetVerb : CoreCommand
 
       foreach (var group in value)
       {
-        if (
-          System.Enum.TryParse<VerbGroup>(
-            group,
-            true,
-            out var parsedGroup
-          )
-        )
-        {
-          _ = groups.Add(parsedGroup.ToString());
-        }
+        _ = groups.Add(parsedGroup);
       }
     }
   }
-  private readonly HashSet<string> groups = [];
+  private readonly HashSet<VerbGroup> groups = [];
 
   private protected sealed override void Postprocess()
   {

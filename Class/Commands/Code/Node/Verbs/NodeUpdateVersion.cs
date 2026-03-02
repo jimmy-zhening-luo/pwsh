@@ -43,7 +43,7 @@ public sealed class NodeUpdateVersion() : NodeCommand("version")
     typeof(NodeVersion),
     Include: ["from-git"],
     Exclude: ["prepatch"],
-    Case = Tab.CompletionCase.Preserve
+    Case: default
   )]
   public string Version
   {
