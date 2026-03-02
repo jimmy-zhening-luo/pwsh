@@ -82,8 +82,7 @@ public sealed class OpenUrl() : CoreCommand(true)
       {
         if (
           Client.Network.Url.IsHttp(uri)
-          || Client.Network.Url.IsFile(uri)
-          && System.IO.File.Exists(uri.LocalPath)
+          || Client.Network.Url.TestFile(uri)
         )
         {
           uris.Add(uri);

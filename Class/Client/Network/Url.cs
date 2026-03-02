@@ -119,6 +119,13 @@ internal static class Url
     }
   }
 
+  internal static bool TestFile(
+    [System.Diagnostics.CodeAnalysis.NotNullWhen(true)]
+    System.Uri? uri
+  ) => IsFile(uri) && System.IO.Path.Exists(
+    uri.LocalPath
+  );
+
   internal static void Open() => Open(string.Empty);
   internal static void Open(System.Uri uri)
   {
