@@ -5,12 +5,7 @@ public abstract class NativeVerbCommand(
   bool SkipSsh = default
 ) : NativeCommand(SkipSsh)
 {
-  private protected string IntrinsicVerb
-  {
-    get => intrinsicVerb;
-    set => intrinsicVerb = value.Trim();
-  }
-  private string intrinsicVerb = IntrinsicVerb.Trim();
+  private protected string IntrinsicVerb { get; set; } = IntrinsicVerb;
 
   private protected virtual void PreprocessArguments()
   { }
