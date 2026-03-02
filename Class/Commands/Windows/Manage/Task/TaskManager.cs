@@ -31,14 +31,14 @@ public abstract class TaskManager : CoreCommand
 
   private protected bool descendant;
 
-  private protected static void KillProcess(
+  private static void KillProcess(
     int pid,
     bool entireProcessTree = default
   ) => System.Diagnostics.Process
     .GetProcessById(pid)
     .Kill(entireProcessTree);
 
-  private protected static void KillProcesses(
+  private static void KillProcesses(
     string name,
     bool entireProcessTree = default
   )
