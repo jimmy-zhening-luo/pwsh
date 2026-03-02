@@ -90,14 +90,14 @@ public sealed class OpenUrl() : CoreCommand(true)
         case
         {
           IsAbsoluteUri: false,
-          OriginalString: var s,
+          OriginalString: var originalString,
         }
           when Client.Network.Url.ToAbsoluteHttpUri(
-            $"http://{s}"
-          ) is { } uri
-          && Client.Network.Dns.Resolve(uri)
-          && Client.Network.Url.TestHttp(uri):
-          Client.Network.Url.Open(uri);
+            $"http://{originalString}"
+          ) is var url
+          && Client.Network.Dns.Resolve(url)
+          && Client.Network.Url.TestHttp(url):
+          Client.Network.Url.Open(url);
           break;
       }
     }
