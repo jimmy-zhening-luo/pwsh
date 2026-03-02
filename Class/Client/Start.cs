@@ -61,27 +61,20 @@ internal static class Start
     bool administrator = default
   )
   {
-    List<string> argumentList = [
-      .. arguments ?? [],
-    ];
+    List<string> argumentList = [.. arguments ?? []];
 
     System.Diagnostics.ProcessStartInfo startInfo = argumentList is []
       ? new(fileName)
-      : new(
-          fileName,
-          argumentList
-        );
+      : new(fileName, argumentList);
 
     if (noNewWindow)
     {
       startInfo.CreateNoWindow = true;
     }
-
     if (shellExecute)
     {
       startInfo.UseShellExecute = true;
     }
-
     if (administrator)
     {
       startInfo.Verb = "RunAs";
