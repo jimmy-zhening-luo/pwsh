@@ -19,7 +19,7 @@ public sealed class OpenUrl() : CoreCommand(true)
   public string Path
   {
     get => pathUri?.ToString() ?? string.Empty;
-    set => pathUri = switch value.Trim()
+    set => pathUri = value.Trim() switch
     {
       "" => default,
       var path when Client.Network.Url.ToAbsoluteHttpUri(path) is { } url => url,
