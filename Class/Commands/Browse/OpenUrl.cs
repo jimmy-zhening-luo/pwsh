@@ -24,8 +24,8 @@ public sealed class OpenUrl() : CoreCommand(true)
       "" => default,
       var path when Client.Network.Url.ToAbsoluteHttpUri(path) is { } url => url,
       var path when Client.Network.Url.ToAbsoluteFileUri(path) is var fileUri && Client.Network.Url.TestFile(fileUri) => fileUri,
-      _ => System.Uri.TryCreate(
-        value,
+      var path => System.Uri.TryCreate(
+        path,
         System.UriKind.Relative,
         out var relativeHttpUri
       )
