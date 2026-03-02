@@ -13,13 +13,13 @@ public sealed class TestHost() : WrappedCommand(
   CommandType: CommandTypes.Function
 )
 {
-  private enum TestHostVerbosity
+  public enum TestHostVerbosity
   {
     [System.ComponentModel.Description("Only display the boolean result of whether the host is reachable (Default)")]
-    Quiet,
+    quiet,
 
     [System.ComponentModel.Description("Display the full output of Test-NetConnection, which includes diagnostic information such as round-trip time and IP address information")]
-    Detailed,
+    detailed,
   }
 
   private enum TestHostWellKnownPort
@@ -90,19 +90,7 @@ public sealed class TestHost() : WrappedCommand(
   public uint ConstrainInterface { get; set; }
 
   [Parameter]
-  [Tab.Completer.EnumCompletions(typeof(TestHostVerbosity))]
-  public string InformationLevel
-  {
-    get => informationLevel.ToString();
-    set => informationLevel = System.Enum.TryParse<TestHostVerbosity>(
-      value,
-      true,
-      out var parsedVerbosity
-    )
-      ? parsedVerbosity
-      : TestHostVerbosity.Quiet;
-  }
-  private TestHostVerbosity informationLevel = default;
+  public TestHostVerbosity InformationLevel { get; set; }
 
   [Parameter]
   public SwitchParameter Detailed
@@ -116,7 +104,7 @@ public sealed class TestHost() : WrappedCommand(
   {
     ["Detailed"] = default,
     ["InformationLevel"] = detailed
-      ? nameof(TestHostVerbosity.Detailed)
+      ? TestHostVerbosity.detailed
       : InformationLevel,
   };
 
