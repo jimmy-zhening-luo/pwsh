@@ -111,13 +111,9 @@ public sealed class GetSize : CoreCommand
   {
     foreach (var path in Path)
     {
-      var absolutePath = Pwd(path);
+      var fullPath = Pwd(path);
 
-      if (
-        !System.IO.Path.Exists(
-          absolutePath
-        )
-      )
+      if (!System.IO.Path.Exists(fullPath))
       {
         Throw(
           new System.IO.FileNotFoundException(
@@ -129,17 +125,24 @@ public sealed class GetSize : CoreCommand
         );
       }
 
-      long bytes = System.IO.Directory.Exists(absolutePath)
-        ? new System.IO.DirectoryInfo(absolutePath)
-          .EnumerateFiles(
+      long bytes = default;
+
+      if (System.IO.Directory.Exists(fullPath))
+      {
+        foreach (
+          var file in new System.IO.DirectoryInfo(fullPath).EnumerateFiles(
             "*",
             System.IO.SearchOption.AllDirectories
           )
-          .Sum(
-            file => file.Length
-          )
-        : new System.IO.FileInfo(absolutePath)
-          .Length;
+        )
+        {
+          bytes += file.Length;
+        }
+      }
+      else
+      {
+        bytes = new System.IO.FileInfo(fullPath).Length;
+      }
 
       double scaledSize = (double)bytes / (
         1L << ((int)unit * 10)
@@ -148,14 +151,7 @@ public sealed class GetSize : CoreCommand
       WriteObject(
         number
           ? scaledSize
-          : string.Concat(
-              System.Math.Round(
-                scaledSize,
-                3
-              ),
-              Client.Console.String.Space,
-              unit
-            )
+          : $"{System.Math.Round(scaledSize, 3)} {unit}"
       );
     }
   }
