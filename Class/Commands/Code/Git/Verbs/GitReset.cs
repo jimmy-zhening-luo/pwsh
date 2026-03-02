@@ -13,8 +13,6 @@ public sealed partial class GitReset() : GitCommand("reset")
   )]
   internal static partial System.Text.RegularExpressions.Regex TreeRegex();
 
-  private static string FlagAllowEmpty => "--allow-empty";
-
   [Parameter(
     Position = 60,
     HelpMessage = "The tree spec to which to revert given as '[HEAD]([~]|^)[n]'. Defaults to HEAD. If only the number index is given, defaults to '~' branching. If only branching is given, defaults to index 0 (HEAD)."

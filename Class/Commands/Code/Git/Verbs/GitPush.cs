@@ -10,8 +10,6 @@ public sealed class GitPush() : GitCommand("push")
 {
   private protected sealed override void PreprocessArguments()
   {
-    List<string> pusharguments = [];
-
     if (WorkingDirectory is not ""
      && ResolveWorkingDirectory(Pwd()) is not ""
      && ResolveWorkingDirectory(WorkingDirectory) is "")

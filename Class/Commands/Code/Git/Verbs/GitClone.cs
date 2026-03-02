@@ -8,8 +8,6 @@ namespace Module.Commands.Code.Git.Verbs;
 [Alias("gitcl")]
 public sealed class GitClone() : GitCommand("clone")
 {
-  private static string FlagRenormalize => "--renormalize";
-
   [Parameter(
     Mandatory = true,
     Position = default,
