@@ -55,5 +55,5 @@ internal enum Encoding
   [System.ComponentModel.Description(
     "Encodes in UTF-32 format using the little-endian byte order."
   )]
-  utf32
+  utf32,
 }

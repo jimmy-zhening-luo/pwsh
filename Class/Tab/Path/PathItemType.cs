@@ -9,5 +9,5 @@ internal enum PathItemType
   EnvironmentVariable,
   Variable,
   Alias,
-  Function
+  Function,
 }

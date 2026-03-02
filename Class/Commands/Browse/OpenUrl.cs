@@ -118,7 +118,7 @@ public sealed class OpenUrl() : CoreCommand(true)
         case
         {
           IsAbsoluteUri: false,
-          OriginalString: var s
+          OriginalString: var s,
         }
           when Client.Network.Url.ToAbsoluteHttpUri(
             $"http://{s}"

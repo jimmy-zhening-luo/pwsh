@@ -26,7 +26,7 @@ public sealed class GetSize : CoreCommand
     MB,
     GB,
     TB,
-    PB
+    PB,
   }
 
   private enum DiskSizeUnitAlias
@@ -41,7 +41,7 @@ public sealed class GetSize : CoreCommand
     TB,
     T = TB,
     PB,
-    P = PB
+    P = PB,
   }
 
   [Parameter(

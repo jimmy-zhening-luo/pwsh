@@ -10,7 +10,7 @@ public abstract class GitCommand(
   {
     clone,
     config,
-    init
+    init,
   }
 
   private static readonly HashSet<string> Verbs = [

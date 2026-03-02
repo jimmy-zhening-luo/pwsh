@@ -6,7 +6,7 @@ internal static class Dns
   {
     IsAbsoluteUri: true,
     Scheme: "http" or "https",
-    Host: var host
+    Host: var host,
   }
     && Resolve(host);
   internal static bool Resolve(

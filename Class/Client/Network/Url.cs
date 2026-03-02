@@ -30,7 +30,7 @@ internal static class Url
     IsAbsoluteUri: true,
     Scheme: "file",
     IsFile: true,
-    LocalPath: var localPath
+    LocalPath: var localPath,
   }
     && !string.IsNullOrWhiteSpace(localPath);
 

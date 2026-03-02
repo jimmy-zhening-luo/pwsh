@@ -16,7 +16,7 @@ public sealed class TestHost() : WrappedCommand(
   private enum TestHostVerbosity
   {
     Quiet,
-    Detailed
+    Detailed,
   }
 
   private enum TestHostWellKnownPort
@@ -24,7 +24,7 @@ public sealed class TestHost() : WrappedCommand(
     HTTP = -4,
     RDP,
     SMB,
-    WINRM
+    WINRM,
   }
 
   [Parameter(Position = default)]

@@ -23,7 +23,7 @@ public sealed class GetVerb : CoreCommand
     Settings,
     Support,
     System,
-    Utility
+    Utility,
   }
 
   [Parameter(

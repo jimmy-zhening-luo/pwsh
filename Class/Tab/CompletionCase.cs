@@ -4,5 +4,5 @@ internal enum CompletionCase
 {
   Preserve,
   Lower,
-  Upper
+  Upper,
 }

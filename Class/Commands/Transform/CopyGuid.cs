@@ -53,7 +53,7 @@ public sealed class CopyGuid : CoreCommand
         "Value",
         new string[]
         {
-          guid
+          guid,
         }
       )
       .Invoke();

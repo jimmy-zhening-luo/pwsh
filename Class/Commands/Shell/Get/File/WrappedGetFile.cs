@@ -68,9 +68,7 @@ public abstract class WrappedGetFile() : WrappedCommand(
     {
       if (Path is [])
       {
-        Path = [
-          Reanchor(),
-        ];
+        Path = [Reanchor()];
       }
       else
       {

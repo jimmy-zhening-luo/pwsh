@@ -5,9 +5,7 @@ public abstract class VirtualStartWorkspace() : CoreCommand(true)
   public abstract string Path { get; set; }
   private protected string path = string.Empty;
 
-  [Parameter(
-    Position = 1
-  )]
+  [Parameter(Position = 1)]
   public string Name { get; set; } = string.Empty;
 
   [Parameter(
