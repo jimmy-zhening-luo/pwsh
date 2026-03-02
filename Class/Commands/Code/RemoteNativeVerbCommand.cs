@@ -5,20 +5,20 @@ public abstract class RemoteNativeVerbCommand(
   bool SkipSsh = default
 ) : NativeVerbCommand(IntrinsicVerb, SkipSsh)
 {
-  internal sealed class WorkingDirectoryCompletionsAttribute : PathCompletionsAttribute
+  internal sealed class WorkingDirectoryCompletionsAttribute : Tab.Path.PathCompletionsAttribute
   {
     internal WorkingDirectoryCompletionsAttribute() : base(
       @"~\code",
-      PathItemType.Directory
+      Tab.Path.PathItemType.Directory
     )
     {
       Flat = true;
     }
   }
 
-  internal sealed class PathSpecCompletionsAttribute() : PathCompletionsAttribute(
+  internal sealed class PathSpecCompletionsAttribute() : Tab.Path.PathCompletionsAttribute(
     "",
-    PathItemType.File
+    Tab.Path.PathItemType.File
   );
 
   [Parameter(

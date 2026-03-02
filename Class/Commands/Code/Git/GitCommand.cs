@@ -4,7 +4,7 @@ public abstract class GitCommand(
   string IntrinsicVerb = ""
 ) : RemoteNativeVerbCommand(IntrinsicVerb)
 {
-  private protected sealed class GitVerbCompletionsAttribute() : CompletionsAttribute([.. Verbs]);
+  private protected sealed class GitVerbCompletionsAttribute() : Tab.Completer.CompletionsAttribute([.. Verbs]);
 
   private enum NewableVerb
   {

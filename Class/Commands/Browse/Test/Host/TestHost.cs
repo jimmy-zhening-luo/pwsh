@@ -41,7 +41,7 @@ public sealed class TestHost() : WrappedCommand(
     Position = 1
   )]
   [ValidateNotNullOrWhiteSpace]
-  [EnumCompletions(typeof(TestHostWellKnownPort))]
+  [Tab.Completer.EnumCompletions(typeof(TestHostWellKnownPort))]
   public string CommonTCPPort { get; set; } = string.Empty;
 
   [Parameter(
@@ -80,7 +80,7 @@ public sealed class TestHost() : WrappedCommand(
   public uint ConstrainInterface { get; set; }
 
   [Parameter]
-  [EnumCompletions(typeof(TestHostVerbosity))]
+  [Tab.Completer.EnumCompletions(typeof(TestHostVerbosity))]
   public string InformationLevel
   {
     get => informationLevel.ToString();

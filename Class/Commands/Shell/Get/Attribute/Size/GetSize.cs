@@ -57,7 +57,7 @@ public sealed class GetSize : CoreCommand
     ValueFromPipelineByPropertyName = true,
     HelpMessage = "The path of the file or directory to be measured."
   )]
-  [PathCompletions]
+  [Tab.Path.PathCompletions]
   public string[] Path
   {
     get => paths is []
@@ -76,7 +76,7 @@ public sealed class GetSize : CoreCommand
     Position = 1,
     HelpMessage = "The unit in which to return the size."
   )]
-  [EnumCompletions(typeof(DiskSizeUnit))]
+  [Tab.Completer.EnumCompletions(typeof(DiskSizeUnit))]
   public string Unit
   {
     get => unit.ToString();

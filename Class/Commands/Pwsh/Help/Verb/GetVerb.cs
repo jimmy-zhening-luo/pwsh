@@ -31,7 +31,7 @@ public sealed class GetVerb : CoreCommand
     HelpMessage = "Gets only the specified verbs. Enter the name of a verb or a name pattern. Wildcards are allowed."
   )]
   [SupportsWildcards]
-  [Completions(["*"])]
+  [Tab.Completer.Completions(["*"])]
   public string[] Verb
   {
     get => [.. verbs];
@@ -60,7 +60,7 @@ public sealed class GetVerb : CoreCommand
     Position = 1,
     HelpMessage = "Gets only the specified groups. Enter the name of a group. Wildcards aren't allowed."
   )]
-  [EnumCompletions(typeof(VerbGroup))]
+  [Tab.Completer.EnumCompletions(typeof(VerbGroup))]
   public string[] Group
   {
     get => [.. groups];

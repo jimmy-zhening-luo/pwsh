@@ -8,7 +8,7 @@ namespace Module.Commands.Code.Node.Verbs;
 [Alias("nu")]
 public sealed class NodeUpdateVersion() : NodeCommand("version")
 {
-  private sealed class NodeVersionCompletionsAttribute() : EnumCompletionsAttribute(
+  private sealed class NodeVersionCompletionsAttribute() : Tab.Completer.EnumCompletionsAttribute(
     typeof(NodeVersion),
     default,
     ["from-git"],

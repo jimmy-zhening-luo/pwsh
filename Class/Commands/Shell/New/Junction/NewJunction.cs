@@ -17,7 +17,7 @@ public sealed class NewJunction() : WrappedCommandShouldProcess(
     Mandatory = true,
     Position = default
   )]
-  [PathCompletions]
+  [Tab.Path.PathCompletions]
   public required string[] Path { get; set; }
 
   [Parameter(
@@ -25,7 +25,7 @@ public sealed class NewJunction() : WrappedCommandShouldProcess(
     Position = 1
   )]
   [Alias("Target")]
-  [PathCompletions]
+  [Tab.Path.PathCompletions]
   public required object Value { get; set; }
 
   private protected sealed override Dictionary<string, object?> CoercedParameters => new()

@@ -71,7 +71,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   public SwitchParameter FollowSymlink { get; set; }
 
   [Parameter]
-  [EnumCompletions(typeof(System.IO.FileAttributes))]
+  [Tab.Completer.EnumCompletions(typeof(System.IO.FileAttributes))]
   public required FlagsExpression<System.IO.FileAttributes> Attributes { get; set; }
 
   private protected sealed override Dictionary<string, object?> CoercedParameters => new()

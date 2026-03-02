@@ -4,7 +4,7 @@ public abstract class NodeCommand(
   string IntrinsicVerb = ""
 ) : RemoteNativeVerbCommand(IntrinsicVerb)
 {
-  private protected sealed class NodeVerbCompletionsAttribute() : CompletionsAttribute([.. Verbs]);
+  private protected sealed class NodeVerbCompletionsAttribute() : Tab.Completer.CompletionsAttribute([.. Verbs]);
 
   private static readonly HashSet<string> Verbs = [
     "access",

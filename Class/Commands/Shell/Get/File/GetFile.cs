@@ -15,9 +15,9 @@ public sealed class GetFile : WrappedGetFile
     Position = default
   )]
   [SupportsWildcards]
-  [PathCompletions(
+  [Tab.Path.PathCompletions(
     "",
-    PathItemType.File
+    Tab.Path.PathItemType.File
   )]
   public sealed override string[] Path
   {
@@ -48,9 +48,9 @@ public sealed class GetFileSibling : WrappedGetFile
     Position = default
   )]
   [SupportsWildcards]
-  [PathCompletions(
+  [Tab.Path.PathCompletions(
     "..",
-    PathItemType.File
+    Tab.Path.PathItemType.File
   )]
   public sealed override string[] Path
   {
@@ -76,9 +76,9 @@ public sealed class GetFileRelative : WrappedGetFile
     Position = default
   )]
   [SupportsWildcards]
-  [PathCompletions(
+  [Tab.Path.PathCompletions(
     @"..\..",
-    PathItemType.File
+    Tab.Path.PathItemType.File
   )]
   public sealed override string[] Path
   {
@@ -104,9 +104,9 @@ public sealed class GetFileHome : WrappedGetFile
     Position = default
   )]
   [SupportsWildcards]
-  [PathCompletions(
+  [Tab.Path.PathCompletions(
     "~",
-    PathItemType.File
+    Tab.Path.PathItemType.File
   )]
   public sealed override string[] Path
   {
@@ -132,9 +132,9 @@ public sealed class GetFileCode : WrappedGetFile
     Position = default
   )]
   [SupportsWildcards]
-  [PathCompletions(
+  [Tab.Path.PathCompletions(
     @"~\code",
-    PathItemType.File
+    Tab.Path.PathItemType.File
   )]
   public sealed override string[] Path
   {
@@ -163,9 +163,9 @@ public sealed class GetFileDrive : WrappedGetFile
     Position = default
   )]
   [SupportsWildcards]
-  [PathCompletions(
+  [Tab.Path.PathCompletions(
     Client.File.PathString.SeparatorString,
-    PathItemType.File
+    Tab.Path.PathItemType.File
   )]
   public sealed override string[] Path
   {
