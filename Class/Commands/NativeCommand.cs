@@ -18,6 +18,7 @@ public abstract class NativeCommand(bool SkipSsh = default) : CoreCommand(SkipSs
     DontShow = true,
     HelpMessage = "Additional arguments"
   )]
+  [Tab.Path.PathCompletions]
   public string[] ArgumentList { get; set; } = [];
 
   [Parameter(
