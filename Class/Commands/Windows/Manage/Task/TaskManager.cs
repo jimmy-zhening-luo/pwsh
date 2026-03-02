@@ -60,55 +60,39 @@ public abstract class TaskManager : CoreCommand
       case "Id":
         foreach (var pid in Id)
         {
-          KillProcess(
-            pid,
-            descendant
-          );
+          KillProcess(pid, descendant);
         }
-
         break;
+
       case "InputObject":
         foreach (var process in InputObject)
         {
           Process.Kill(descendant);
         }
-
         break;
-      case "Name":
-        if (Name is [])
+
+      case "Name" when Name is []:
+        KillProcesses("explorer");
+        break;
+
+      default:
+        foreach (var name in Name)
         {
-          KillProcesses("explorer");
-        }
-        else
-        {
-          foreach (var name in Name)
+          switch (name)
           {
-            if (name is "")
-            {
-              continue;
-            }
-            else if (
-              int.TryParse(
-                name,
-                out int pid
-              )
-            )
-            {
-              KillProcess(
-                pid,
-                descendant
-              );
-            }
-            else
-            {
-              KillProcesses(
-                name,
-                descendant
-              );
-            }
+            case "":
+              break;
+            case var n when int.TryParse(
+              name,
+              out int pid
+            ):
+              KillProcess(pid, descendant);
+              break;
+            default:
+              KillProcesses(name, descendant);
+              break;
           }
         }
-
         break;
     }
   }
