@@ -39,16 +39,12 @@ public abstract class GitCommand(
     "reset",
   ];
 
-  private readonly List<string> Buffer = [];
-
   private protected sealed override string CommandPath => Client.Environment.Known.Application.Git;
 
   private protected override SwitchBoard Uppercase => new(
     E: true,
     P: true
   );
-
-  private protected abstract List<string> ParseArguments();
 
   private protected sealed override List<string> NativeCommandArguments()
   {
@@ -90,7 +86,7 @@ public abstract class GitCommand(
     {
       if (WorkingDirectory is not "")
       {
-        Buffer.Insert(default, WorkingDirectory);
+        DeferredVerbArguments.Insert(default, WorkingDirectory);
 
         repository = ResolveWorkingDirectory(pwd, newable);
       }
@@ -120,16 +116,6 @@ public abstract class GitCommand(
     }
 
     return command;
-  }
-
-  private protected sealed override List<string> NativeCommandVerbArguments()
-  {
-    List<string> arguments = [
-      .. Buffer,
-      .. ParseArguments(),
-    ];
-
-    return arguments;
   }
 
   private protected string ResolveWorkingDirectory(

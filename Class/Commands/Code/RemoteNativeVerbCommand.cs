@@ -32,4 +32,13 @@ public abstract class RemoteNativeVerbCommand(
     set => workingDirectory = value.Trim();
   }
   private string workingDirectory = string.Empty;
+
+  private protected readonly List<string> DeferredVerbArguments = [];
+
+  private protected abstract List<string> ParseArguments();
+
+  private protected sealed override List<string> NativeCommandVerbArguments() => [
+    .. DeferredVerbArguments,
+    .. ParseArguments(),
+  ];
 }

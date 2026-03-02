@@ -106,8 +106,6 @@ public abstract class NodeCommand(
     ["v"] = "view",
   };
 
-  private readonly List<string> Buffer = [];
-
   private protected sealed override string CommandPath => Client.Environment.Known.Application.Npm;
 
   private protected override SwitchBoard Uppercase => new(
@@ -115,8 +113,6 @@ public abstract class NodeCommand(
     E: true,
     P: true
   );
-
-  private protected abstract List<string> ParseArguments();
 
   private protected sealed override List<string> NativeCommandArguments()
   {
@@ -148,7 +144,7 @@ public abstract class NodeCommand(
         break;
 
       case string path when !IsNodePackage(path):
-        Buffer.Add(path);
+        DeferredVerbArguments.Add(path);
         break;
 
       case string path when Pwd(path) is string fullPath
@@ -162,16 +158,6 @@ public abstract class NodeCommand(
     WorkingDirectory = string.Empty;
 
     return command;
-  }
-
-  private protected sealed override List<string> NativeCommandVerbArguments()
-  {
-    List<string> arguments = [
-      .. Buffer,
-      .. ParseArguments(),
-    ];
-
-    return arguments;
   }
 
   private protected bool IsNodePackage(string path) => System.IO.File.Exists(
