@@ -17,12 +17,25 @@ public sealed class NodeUpdateVersion() : NodeCommand("version")
 
   private enum NodeVersion
   {
+    [System.ComponentModel.Description("Increment patch version (default)")]
     patch,
+
+    [System.ComponentModel.Description("Increment minor version")]
     minor,
+
+    [System.ComponentModel.Description("Increment major version")]
     major,
+
+    [System.ComponentModel.Description("If current version is a release, increment patch version and add a prerelease tag. If current version is a prerelease, increment prerelease version.")]
     prerelease,
-    prepatch = prerelease,
+
+    [System.ComponentModel.Description("Increment patch version and add a prerelease tag.")]
+    prepatch,
+
+    [System.ComponentModel.Description("Increment minor version and add a prerelease tag.")]
     preminor,
+
+    [System.ComponentModel.Description("Increment major version and add a prerelease tag.")]
     premajor,
   }
 
