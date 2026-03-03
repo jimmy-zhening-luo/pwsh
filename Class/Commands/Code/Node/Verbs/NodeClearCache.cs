@@ -10,7 +10,6 @@ public sealed class NodeClearCache() : NodeCommand("cache")
 {
   private protected sealed override void PreprocessArguments()
   {
-    ArgumentList = [];
     WorkingDirectory = string.Empty;
     noThrow = false;
     d = false;
@@ -18,7 +17,9 @@ public sealed class NodeClearCache() : NodeCommand("cache")
     i = false;
     o = false;
     p = false;
-    V = false;
+    v = false;
+
+    ArgumentList = [];
 
     NativeArguments.Clear();
     NativeArguments.Add("--force");

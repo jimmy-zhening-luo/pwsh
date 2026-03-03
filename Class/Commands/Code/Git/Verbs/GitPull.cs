@@ -7,6 +7,4 @@ namespace Module.Commands.Code.Git.Verbs;
 )]
 [Alias("gp")]
 public sealed class GitPull() : GitCommand("pull")
-{
-  private protected sealed override List<string> ParseArguments() => [];
-}
+{ }

@@ -27,7 +27,7 @@ public abstract class RemoteNativeVerbCommand(
 
   private protected readonly List<string> DeferredVerbArguments = [];
 
-  private protected abstract List<string> ParseArguments();
+  private protected virtual List<string> ParseArguments() => [];
 
   private protected sealed override List<string> NativeCommandVerbArguments() => [
     .. DeferredVerbArguments,

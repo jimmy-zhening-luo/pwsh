@@ -30,6 +30,4 @@ public sealed class Git : GitCommand
     get => v;
     set => v = value;
   }
-
-  private protected sealed override List<string> ParseArguments() => [];
 }

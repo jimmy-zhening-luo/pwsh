@@ -122,6 +122,4 @@ public sealed partial class GitReset() : GitCommand("reset")
       }
     }
   }
-
-  private protected sealed override List<string> ParseArguments() => [];
 }

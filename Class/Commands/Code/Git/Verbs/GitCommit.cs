@@ -45,6 +45,7 @@ public sealed partial class GitCommit() : GitCommand("commit")
   private protected sealed override void PreprocessArguments()
   {
     List<string> messageWords = [.. ArgumentList];
+    ArgumentList = [];
 
     if (
       WorkingDirectory is not ""
@@ -81,7 +82,6 @@ public sealed partial class GitCommit() : GitCommand("commit")
       NativeArguments.Add(FlagAllowEmpty);
     }
 
-
     if (messageWords is [])
     {
       if (NativeArguments.Contains(FlagAllowEmpty))
@@ -96,10 +96,7 @@ public sealed partial class GitCommit() : GitCommand("commit")
       }
     }
 
-    ArgumentList = [
-      "-m",
-      string.Join(Client.Console.String.Space, messageWords),
-    ];
+    Message = string.Join(Client.Console.String.Space, messageWords);
 
     AddCommand("Add-GitRepository")
       .AddParameter("WorkingDirectory", WorkingDirectory);
@@ -118,5 +115,10 @@ public sealed partial class GitCommit() : GitCommand("commit")
     }
   }
 
-  private protected sealed override List<string> ParseArguments() => [];
+  private protected sealed override List<string> ParseArguments() => Message is ""
+  ? []
+  : [
+      "-m",
+      Message
+    ];
 }

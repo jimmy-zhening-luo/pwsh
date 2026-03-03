@@ -30,6 +30,4 @@ public sealed class NodeOutdated() : NodeCommand("outdated")
       NativeArguments.Insert(default, FlagAll);
     }
   }
-
-  private protected sealed override List<string> ParseArguments() => [];
 }

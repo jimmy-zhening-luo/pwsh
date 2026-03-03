@@ -42,6 +42,4 @@ public sealed class GitRestore() : GitCommand("pull")
       Clear();
     }
   }
-
-  private protected sealed override List<string> ParseArguments() => [];
 }

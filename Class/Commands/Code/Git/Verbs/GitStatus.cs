@@ -7,6 +7,4 @@ namespace Module.Commands.Code.Git.Verbs;
 )]
 [Alias("gg")]
 public sealed class GitStatus() : GitCommand("status")
-{
-  private protected sealed override List<string> ParseArguments() => [];
-}
+{ }

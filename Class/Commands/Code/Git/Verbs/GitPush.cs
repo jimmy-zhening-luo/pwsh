@@ -33,6 +33,4 @@ public sealed class GitPush() : GitCommand("push")
       Throw("Git returned error when pulling repository prior to pushing");
     }
   }
-
-  private protected sealed override List<string> ParseArguments() => [];
 }

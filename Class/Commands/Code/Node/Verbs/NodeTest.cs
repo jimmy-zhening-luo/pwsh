@@ -30,6 +30,4 @@ public sealed class NodeTest() : NodeCommand("test")
       NativeArguments.Insert(default, FlagIgnoreScript);
     }
   }
-
-  private protected sealed override List<string> ParseArguments() => [];
 }
