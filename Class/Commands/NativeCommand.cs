@@ -2,6 +2,11 @@ namespace Module.Commands;
 
 public abstract class NativeCommand(bool SkipSsh = default) : CoreCommand(SkipSsh)
 {
+  [System.Text.RegularExpressions.GeneratedRegex(
+    @"^(?>-(?>[A-Za-z]|(?>(?>-[A-Za-z][A-Za-z\d]*(?>_[A-Za-z\d]+)*)(?>-[A-Za-z\d]+(?>_[A-Za-z\d]+)*)*)))(?>=\S+)?$"
+  )]
+  private protected static partial System.Text.RegularExpressions.Regex NativeArgumentRegex();
+
   private protected record SwitchBoard(
     bool D = default,
     bool E = default,
