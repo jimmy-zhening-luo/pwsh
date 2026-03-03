@@ -101,6 +101,11 @@ public abstract class NativeCommand(bool SkipSsh = default) : CoreCommand(SkipSs
 
   private protected abstract List<string> BuildNativeCommand();
 
+  private protected virtual void PreprocessArguments()
+  { }
+
+  private protected sealed override void Preprocess() => PreprocessArguments();
+
   private protected sealed override void Postprocess()
   {
     List<string> command = [

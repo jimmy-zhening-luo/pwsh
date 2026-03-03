@@ -7,11 +7,6 @@ public abstract class NativeVerbCommand(
 {
   private protected string IntrinsicVerb { get; set; } = IntrinsicVerb;
 
-  private protected virtual void PreprocessArguments()
-  { }
-
-  private protected sealed override void Preprocess() => PreprocessArguments();
-
   private protected abstract List<string> NativeCommandArguments();
 
   private protected abstract List<string> NativeCommandVerbArguments();
