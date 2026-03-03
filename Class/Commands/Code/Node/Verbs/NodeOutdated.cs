@@ -24,9 +24,12 @@ public sealed class NodeOutdated() : NodeCommand("outdated")
   private protected sealed override void PreprocessArguments()
   {
     noThrow = true;
+
+    if (all && !NativeArguments.Contains(FlagAll))
+    {
+      NativeArguments.Insert(default, FlagAll);
+    }
   }
 
-  private protected sealed override List<string> ParseArguments() => all && !new List<string>(ArgumentList).Contains(FlagAll)
-    ? [FlagAll]
-    : [];
+  private protected sealed override List<string> ParseArguments() => [];
 }

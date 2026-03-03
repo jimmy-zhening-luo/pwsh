@@ -44,23 +44,8 @@ public sealed partial class GitCommit() : GitCommand("commit")
 
   private protected sealed override void PreprocessArguments()
   {
-    List<string> arguments = [];
-    List<string> messageWords = [];
+    List<string> messageWords = [.. ArgumentList];
 
-    foreach (string word in ArgumentList)
-    {
-      if (word.Trim() is not "" and var w)
-      {
-        if (NativeArgumentRegex().IsMatch(w))
-        {
-          arguments.Add(w);
-        }
-        else
-        {
-          messageWords.Add(w);
-        }
-      }
-    }
     if (
       WorkingDirectory is not ""
       && ResolveWorkingDirectory(Pwd()) is not ""
@@ -69,7 +54,7 @@ public sealed partial class GitCommit() : GitCommand("commit")
     {
       if (NativeArgumentRegex().IsMatch(WorkingDirectory))
       {
-        arguments.Insert(default, WorkingDirectory);
+        NativeArguments.Insert(default, WorkingDirectory);
       }
       else
       {
@@ -83,7 +68,7 @@ public sealed partial class GitCommit() : GitCommand("commit")
     {
       if (NativeArgumentRegex().IsMatch(Message))
       {
-        arguments.Insert(default, Message);
+        NativeArguments.Insert(default, Message);
       }
       else
       {
@@ -91,15 +76,15 @@ public sealed partial class GitCommit() : GitCommand("commit")
       }
     }
 
-    if (allowEmpty && !arguments.Contains(FlagAllowEmpty))
+    if (allowEmpty && !NativeArguments.Contains(FlagAllowEmpty))
     {
-      arguments.Add(FlagAllowEmpty);
+      NativeArguments.Add(FlagAllowEmpty);
     }
 
 
     if (messageWords is [])
     {
-      if (arguments.Contains(FlagAllowEmpty))
+      if (NativeArguments.Contains(FlagAllowEmpty))
       {
         messageWords.Add("No message");
       }
@@ -111,15 +96,10 @@ public sealed partial class GitCommit() : GitCommand("commit")
       }
     }
 
-    arguments.InsertRange(
-      default,
-      [
-        "-m",
-        string.Join(Client.Console.String.Space, messageWords),
-      ]
-    );
-
-    ArgumentList = [.. arguments];
+    ArgumentList = [
+      "-m",
+      string.Join(Client.Console.String.Space, messageWords),
+    ];
 
     AddCommand("Add-GitRepository")
       .AddParameter("WorkingDirectory", WorkingDirectory);

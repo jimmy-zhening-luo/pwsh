@@ -19,7 +19,10 @@ public sealed class NodeClearCache() : NodeCommand("cache")
     o = false;
     p = false;
     V = false;
+
+    NativeArguments.Clear();
+    NativeArguments.Add("--force");
   }
 
-  private protected sealed override List<string> ParseArguments() => ["clean", "--force"];
+  private protected sealed override List<string> ParseArguments() => ["clean"];
 }

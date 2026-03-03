@@ -23,7 +23,13 @@ public sealed class NodeTest() : NodeCommand("test")
   }
   private bool ignoreScript;
 
-  private protected sealed override List<string> ParseArguments() => ignoreScript && !new List<string>(ArgumentList).Contains(FlagIgnoreScript)
-    ? [FlagIgnoreScript]
-    : [];
+  private protected sealed override void PreprocessArguments()
+  {
+    if (ignoreScript && !NativeArguments.Contains(FlagIgnoreScript))
+    {
+      NativeArguments.Insert(default, FlagIgnoreScript);
+    }
+  }
+
+  private protected sealed override List<string> ParseArguments() => [];
 }

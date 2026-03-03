@@ -97,11 +97,13 @@ public sealed partial class GitReset() : GitCommand("reset")
       resetArguments.Insert(default, Tree);
     }
 
-    _ = resetArguments.RemoveAll(a => a is "--hard");
+    ArgumentList = [.. resetArguments];
+
+    _ = NativeArguments.RemoveAll(a => a is "--hard");
 
     if (!soft)
     {
-      resetArguments.Insert(default, "--hard");
+      NativeArguments.Insert(default, "--hard");
 
       AddCommand("Add-GitRepository")
         .AddParameter("WorkingDirectory", WorkingDirectory);
@@ -119,8 +121,6 @@ public sealed partial class GitReset() : GitCommand("reset")
         Clear();
       }
     }
-
-    ArgumentList = [.. resetArguments];
   }
 
   private protected sealed override List<string> ParseArguments() => [];

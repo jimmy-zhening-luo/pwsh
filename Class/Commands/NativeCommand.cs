@@ -17,6 +17,8 @@ public abstract partial class NativeCommand(bool SkipSsh = default) : CoreComman
   );
   private protected virtual SwitchBoard Uppercase => new();
 
+  private protected readonly List<string> NativeArguments = [];
+
   [Parameter(
     Position = 100,
     ValueFromRemainingArguments = true,
@@ -109,7 +111,26 @@ public abstract partial class NativeCommand(bool SkipSsh = default) : CoreComman
   private protected virtual void PreprocessArguments()
   { }
 
-  private protected sealed override void Preprocess() => PreprocessArguments();
+  private protected sealed override void Preprocess()
+  {
+    List<string> arguments = [];
+
+    foreach (var argument in ArgumentList)
+    {
+      if (NativeArgumentRegex().IsMatch(argument))
+      {
+        NativeArguments.Add(argument);
+      }
+      else
+      {
+        arguments.Add(argument);
+      }
+    }
+
+    ArgumentList = [.. arguments];
+
+    PreprocessArguments();
+  }
 
   private protected sealed override void Postprocess()
   {
@@ -145,6 +166,7 @@ public abstract partial class NativeCommand(bool SkipSsh = default) : CoreComman
     }
 
     command.AddRange(ArgumentList);
+    command.AddRange(NativeArguments);
 
     List<string> escapedCommand = [];
 

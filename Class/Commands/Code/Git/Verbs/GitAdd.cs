@@ -40,19 +40,12 @@ public sealed class GitAdd() : GitCommand("add")
       {
         WorkingDirectory = string.Empty;
       }
-      else if (
-        new List<string>(ArgumentList) is var arguments
-        && arguments.Contains(FlagRenormalize)
-      )
+      else if (!NativeArguments.Contains(FlagRenormalize))
       {
-        _ = arguments.Remove(FlagRenormalize);
-
-        ArgumentList = [.. arguments];
+        NativeArguments.Add(FlagRenormalize);
       }
     }
   }
 
-  private protected sealed override List<string> ParseArguments() => renormalize
-    ? [Name, FlagRenormalize]
-    : [Name];
+  private protected sealed override List<string> ParseArguments() => [Name];
 }
