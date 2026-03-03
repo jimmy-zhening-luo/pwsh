@@ -71,7 +71,7 @@ internal static partial class PathString
   };
 
   [System.Text.RegularExpressions.GeneratedRegex(
-    @"(?<!^)(?>\\\\+)"
+    @"(?<!^)(?>\\{2,})"
   )]
   private static partial System.Text.RegularExpressions.Regex DuplicateSeparatorRegex();
 }
