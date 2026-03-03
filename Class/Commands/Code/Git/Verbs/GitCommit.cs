@@ -8,11 +8,6 @@ namespace Module.Commands.Code.Git.Verbs;
 [Alias("gm")]
 public sealed partial class GitCommit() : GitCommand("commit")
 {
-  [System.Text.RegularExpressions.GeneratedRegex(
-    @"^(?>(?=.*[*=])(?>.+)|-(?>\w|(?>-\w[-\w]*\w)))$"
-  )]
-  private static partial System.Text.RegularExpressions.Regex GitArgumentRegex();
-
   private static string FlagAllowEmpty => "--allow-empty";
 
   [Parameter(
@@ -56,7 +51,7 @@ public sealed partial class GitCommit() : GitCommand("commit")
     {
       if (word.Trim() is not "" and var w)
       {
-        if (GitArgumentRegex().IsMatch(w))
+        if (NativeArgumentRegex().IsMatch(w))
         {
           arguments.Add(w);
         }
@@ -72,7 +67,7 @@ public sealed partial class GitCommit() : GitCommand("commit")
       && ResolveWorkingDirectory(WorkingDirectory) is ""
     )
     {
-      if (GitArgumentRegex().IsMatch(WorkingDirectory))
+      if (NativeArgumentRegex().IsMatch(WorkingDirectory))
       {
         arguments.Insert(default, WorkingDirectory);
       }
@@ -86,7 +81,7 @@ public sealed partial class GitCommit() : GitCommand("commit")
 
     if (Message is not "")
     {
-      if (GitArgumentRegex().IsMatch(Message))
+      if (NativeArgumentRegex().IsMatch(Message))
       {
         arguments.Insert(default, Message);
       }
