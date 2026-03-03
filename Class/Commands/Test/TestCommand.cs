@@ -33,26 +33,14 @@ public sealed class TestCommand : CoreCommand
   {
     foreach (var name in Name)
     {
-      WriteObject(
-        Greet(name)
-      );
+      WriteObject(Greet(name));
     }
   }
 
   private protected sealed override void Postprocess()
   {
-    WriteObject(
-      string.Concat(
-        "The greeting was: ",
-        Greeting
-      )
-    );
+    WriteObject($"The greeting was: {Greeting}");
   }
 
-  private string Greet(string name) => string.Concat(
-    Greeting,
-    ", ",
-    name,
-    "!"
-  );
+  private string Greet(string name) => $"{Greeting}, {Name}!";
 }
