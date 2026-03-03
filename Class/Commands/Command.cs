@@ -250,7 +250,7 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
     string? id = default
   )
   {
-    Dispose();
+    StopProcessing();
 
     ThrowTerminatingError(
       new(
