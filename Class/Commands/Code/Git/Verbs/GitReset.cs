@@ -9,7 +9,8 @@ namespace Module.Commands.Code.Git.Verbs;
 public sealed partial class GitReset() : GitCommand("reset")
 {
   [System.Text.RegularExpressions.GeneratedRegex(
-    @"^(?=.)(?>HEAD)?(?<branching>(?>~|\^)?)(?<step>(?>\d{0,10}))$"
+    @"^(?=.)(?>HEAD)?(?<branching>(?>~|\^)?)(?<step>(?>\d{0,10}))$",
+    System.Text.RegularExpressions.RegexOptions.IgnoreCase
   )]
   private static partial System.Text.RegularExpressions.Regex GitTreeRegex();
 
