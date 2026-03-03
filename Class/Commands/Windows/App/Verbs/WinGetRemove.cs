@@ -8,6 +8,4 @@ namespace Module.Commands.Windows.App;
 [Alias("wgr")]
 [OutputType(typeof(void))]
 public sealed class WinGetRemove() : WinGetCommand("uninstall")
-{
-  private protected sealed override List<string> NativeCommandVerbArguments() => [];
-}
+{ }

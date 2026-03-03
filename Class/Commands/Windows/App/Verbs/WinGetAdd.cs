@@ -16,6 +16,4 @@ public sealed class WinGetAdd() : WinGetCommand("install")
       IntrinsicVerb = "upgrade";
     }
   }
-
-  private protected sealed override List<string> NativeCommandVerbArguments() => [];
 }

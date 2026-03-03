@@ -16,6 +16,4 @@ public sealed class WinGetFind() : WinGetCommand("search")
       IntrinsicVerb = "list";
     }
   }
-
-  private protected sealed override List<string> NativeCommandVerbArguments() => [];
 }
