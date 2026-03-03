@@ -11,7 +11,7 @@ public sealed partial class GitReset() : GitCommand("reset")
   [System.Text.RegularExpressions.GeneratedRegex(
     @"^(?=.)(?>HEAD)?(?<branching>(?>~|\^)?)(?<step>(?>\d{0,10}))$"
   )]
-  internal static partial System.Text.RegularExpressions.Regex TreeRegex();
+  internal static partial System.Text.RegularExpressions.Regex GitTreeRegex();
 
   [Parameter(
     Position = 60,
@@ -27,7 +27,7 @@ public sealed partial class GitReset() : GitCommand("reset")
 
       if (trimmed is not "")
       {
-        var treeMatch = TreeRegex().Match(trimmed);
+        var treeMatch = GitTreeRegex().Match(trimmed);
 
         if (treeMatch.Success && treeMatch.Groups["step"].Value is var step
         && (step is ""
@@ -74,7 +74,7 @@ public sealed partial class GitReset() : GitCommand("reset")
       }
       else
       {
-        var treeMatch = TreeRegex().Match(WorkingDirectory);
+        var treeMatch = GitTreeRegex().Match(WorkingDirectory);
 
         if (treeMatch.Success && treeMatch.Groups["step"].Value is var step && (step is "" || int.TryParse(step, out var _)))
         {
