@@ -11,7 +11,7 @@ public sealed partial class GitCommit() : GitCommand("commit")
   [System.Text.RegularExpressions.GeneratedRegex(
     @"^(?>(?=.*[*=])(?>.+)|-(?>\w|(?>-\w[-\w]*\w)))$"
   )]
-  internal static partial System.Text.RegularExpressions.Regex GitArgumentRegex();
+  private static partial System.Text.RegularExpressions.Regex GitArgumentRegex();
 
   private static string FlagAllowEmpty => "--allow-empty";
 

@@ -11,7 +11,7 @@ public sealed partial class GitReset() : GitCommand("reset")
   [System.Text.RegularExpressions.GeneratedRegex(
     @"^(?=.)(?>HEAD)?(?<branching>(?>~|\^)?)(?<step>(?>\d{0,10}))$"
   )]
-  internal static partial System.Text.RegularExpressions.Regex GitTreeRegex();
+  private static partial System.Text.RegularExpressions.Regex GitTreeRegex();
 
   [Parameter(
     Position = 60,
