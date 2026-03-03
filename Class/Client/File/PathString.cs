@@ -22,31 +22,21 @@ internal static partial class PathString
   internal static string Normalize(
     string? path,
     bool preserveTrailingSeparator = default
-  )
-  {
-    var normalPath = TrimRelativePrefix(
+  ) => path is not null
+    && TrimRelativePrefix(
       ExpandHomePrefix(
-        DuplicateSeparatorRegex().Replace(
-          System
-            .Environment
-            .ExpandEnvironmentVariables(
-              path
-                ?.Trim()
-                ?? string.Empty
-            )
-            .Replace(
-              '/',
-              Separator
-            ),
-          SeparatorString
+        DeduplicateSeparator(
+          System.Environment.ExpandEnvironmentVariables(
+            path.Trim()
+          )
+            .Replace('/', Separator)
         )
       )
-    );
-
-    return preserveTrailingSeparator
+    ) is var normalPath
+    ? preserveTrailingSeparator
       ? normalPath
-      : System.IO.Path.TrimEndingDirectorySeparator(normalPath);
-  }
+      : System.IO.Path.TrimEndingDirectorySeparator(normalPath)
+    : string.Empty;
 
   private static string ExpandHomePrefix(string path) => path switch
   {
@@ -70,8 +60,13 @@ internal static partial class PathString
     _ => path,
   };
 
+
   [System.Text.RegularExpressions.GeneratedRegex(
     @"(?<!^)(?>\\{2,})"
   )]
   private static partial System.Text.RegularExpressions.Regex DuplicateSeparatorRegex();
+  private static string DeduplicateSeparator(string path) => DuplicateSeparatorRegex().Replace(
+    path,
+    SeparatorString
+  );
 }
