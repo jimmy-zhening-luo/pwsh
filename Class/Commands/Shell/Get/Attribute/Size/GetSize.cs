@@ -76,12 +76,7 @@ public sealed class GetSize : CoreCommand
     ParameterSetName = "Number",
     HelpMessage = "If specified, returns the size as a numeric value instead of a formatted string."
   )]
-  public SwitchParameter Number
-  {
-    get => number;
-    set => number = value;
-  }
-  private bool number;
+  public SwitchParameter Number { get; set; }
 
   private protected sealed override void Process()
   {
@@ -125,7 +120,7 @@ public sealed class GetSize : CoreCommand
       );
 
       WriteObject(
-        number
+        Number
           ? scaledSize
           : $"{System.Math.Round(scaledSize, 3)} {Unit.ToString().ToUpper()}"
       );
