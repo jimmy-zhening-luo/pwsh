@@ -25,12 +25,7 @@ public sealed class ConvertToHex : Cmdlet
     HelpMessage = "Output hexadecimal letters in lowercase"
   )]
   [Alias("Case")]
-  public SwitchParameter Lowercase
-  {
-    get => lowercase;
-    set => lowercase = value;
-  }
-  private bool lowercase;
+  public SwitchParameter Lowercase { get; set; }
 
   protected sealed override void ProcessRecord()
   {
@@ -39,7 +34,7 @@ public sealed class ConvertToHex : Cmdlet
       var hex = number.ToString("X");
 
       WriteObject(
-        lowercase
+        Lowercase
           ? hex.ToLower()
           : hex
       );
