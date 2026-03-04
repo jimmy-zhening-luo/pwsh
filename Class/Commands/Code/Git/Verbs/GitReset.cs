@@ -9,7 +9,7 @@ namespace Module.Commands.Code.Git.Verbs;
 public sealed partial class GitReset() : GitCommand("reset")
 {
   [System.Text.RegularExpressions.GeneratedRegex(
-    @"^(?=.)(?>HEAD)?(?<branching>(?>~|\^)?)(?<step>(?>\d{0,10}))$",
+    @"^(?=.)(?>HEAD)?(?<Branching>(?>~|\^)?)(?<Step>(?>\d{0,10}))$",
     System.Text.RegularExpressions.RegexOptions.IgnoreCase
   )]
   private static partial System.Text.RegularExpressions.Regex GitTreeRegex();
@@ -30,12 +30,12 @@ public sealed partial class GitReset() : GitCommand("reset")
       {
         var treeMatch = GitTreeRegex().Match(trimmed);
 
-        if (treeMatch.Success && treeMatch.Groups["step"].Value is var step
+        if (treeMatch.Success && treeMatch.Groups["Step"].Value is var step
         && (step is ""
           || int.TryParse(step, out var _)
         ))
         {
-          var branching = treeMatch.Groups["branching"].Value is not "" and var b ? b : "~";
+          var branching = treeMatch.Groups["Branching"].Value is not "" and var b ? b : "~";
 
           tree = $"HEAD{branching}{step}";
         }
@@ -77,9 +77,9 @@ public sealed partial class GitReset() : GitCommand("reset")
       {
         var treeMatch = GitTreeRegex().Match(WorkingDirectory);
 
-        if (treeMatch.Success && treeMatch.Groups["step"].Value is var step && (step is "" || int.TryParse(step, out var _)))
+        if (treeMatch.Success && treeMatch.Groups["Step"].Value is var step && (step is "" || int.TryParse(step, out var _)))
         {
-          var branching = treeMatch.Groups["branching"].Value is not "" and var b ? b : "~";
+          var branching = treeMatch.Groups["Branching"].Value is not "" and var b ? b : "~";
 
           tree = $"HEAD{branching}{step}";
         }
