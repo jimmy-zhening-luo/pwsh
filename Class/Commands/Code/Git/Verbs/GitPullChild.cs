@@ -8,21 +8,6 @@ namespace Module.Commands.Code.Git.Verbs;
 [Alias("gpp")]
 public sealed class GitPullChild : CoreCommand
 {
-  private static ProgressRecord GetProgress(
-    int total,
-    int progress
-  ) => new(
-    0,
-    "Pull",
-    $"{progress}/{total}"
-  )
-  {
-    PercentComplete = 100 * progress / total,
-    RecordType = progress == total
-      ? ProgressRecordType.Completed
-      : ProgressRecordType.Processing,
-  };
-
   private protected sealed override void Postprocess()
   {
     List<string> repositories = [];
@@ -47,10 +32,9 @@ public sealed class GitPullChild : CoreCommand
     int progress = default;
 
     WriteProgress(
-      GetProgress(
-        total,
-        progress
-      )
+      total,
+      progress,
+      "Pull"
     );
 
     List<string> baseCommand = [
@@ -86,10 +70,9 @@ public sealed class GitPullChild : CoreCommand
       ++progress;
 
       WriteProgress(
-        GetProgress(
-          total,
-          progress
-        )
+        total,
+        progress,
+        "Pull"
       );
     }
 

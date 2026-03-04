@@ -220,6 +220,25 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
     path
   );
 
+  private protected void WriteProgress(
+    int total,
+    int progress,
+    string? activity = default,
+    int activityId = default
+  ) => base.WriteProgress(
+    new(
+      activityId,
+      activity ?? "Progress",
+      $"{progress}/{total}"
+    )
+    {
+      PercentComplete = 100 * progress / total,
+      RecordType = progress == total
+        ? ProgressRecordType.Completed
+        : ProgressRecordType.Processing,
+    }
+  );
+
   private protected void WriteInformation(
     object log,
     string? source = default
