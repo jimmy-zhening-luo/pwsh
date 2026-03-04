@@ -96,17 +96,12 @@ public sealed class TestHost() : WrappedCommand(
   public TestHostVerbosity InformationLevel { get; set; }
 
   [Parameter]
-  public SwitchParameter Detailed
-  {
-    get => detailed;
-    set => detailed = value;
-  }
-  private bool detailed;
+  public SwitchParameter Detailed { get; set; }
 
   private protected sealed override Dictionary<string, object?> CoercedParameters => new()
   {
     ["Detailed"] = default,
-    ["InformationLevel"] = detailed
+    ["InformationLevel"] = Detailed
       ? TestHostVerbosity.detailed
       : InformationLevel,
   };
