@@ -39,17 +39,14 @@ public abstract class VirtualStartWorkspace() : NativeCommand(true, true)
         break;
     }
 
-    if (Window && !NativeArguments.Contains(FlagNewWindow))
-    {
-      _ = NativeArguments.Remove(FlagReuseWindow);
+    _ = NativeArguments.RemoveAll(a => a is FlagNewWindow);
+    _ = NativeArguments.RemoveAll(a => a is FlagReuseWindow);
 
+    if (Window)
+    {
       NativeArguments.Add(FlagNewWindow);
     }
-    if (
-      ReuseWindow
-      && !NativeArguments.Contains(FlagReuseWindow)
-      && !NativeArguments.Contains(FlagNewWindow)
-    )
+    else if (ReuseWindow)
     {
       NativeArguments.Add(FlagReuseWindow);
     }

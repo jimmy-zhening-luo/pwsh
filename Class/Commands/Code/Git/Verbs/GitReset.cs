@@ -8,6 +8,8 @@ namespace Module.Commands.Code.Git.Verbs;
 [Alias("gr")]
 public sealed partial class GitReset() : GitCommand("reset")
 {
+  private const string FlagHard = "--hard";
+
   [System.Text.RegularExpressions.GeneratedRegex(
     @"^(?=.)(?>HEAD)?(?<Branching>(?>~|\^)?)(?<Step>(?>\d{0,10}))$",
     System.Text.RegularExpressions.RegexOptions.IgnoreCase
@@ -94,11 +96,11 @@ public sealed partial class GitReset() : GitCommand("reset")
 
     ArgumentList = [.. resetArguments];
 
-    _ = NativeArguments.RemoveAll(a => a is "--hard");
+    _ = NativeArguments.RemoveAll(a => a is FlagHard);
 
     if (!Soft)
     {
-      NativeArguments.Insert(default, "--hard");
+      NativeArguments.Insert(default, FlagHard);
 
       AddCommand("Add-GitRepository")
         .AddParameter("WorkingDirectory", WorkingDirectory);
