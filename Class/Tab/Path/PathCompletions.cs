@@ -419,6 +419,7 @@ internal class PathCompletionsAttribute(
           trailingSeparator
         );
       }
+      yield break;
     }
   }
 }
