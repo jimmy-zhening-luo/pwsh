@@ -348,7 +348,7 @@ internal class PathCompletionsAttribute(
             accumulator,
             Client.File.PathString.SeparatorString
           ),
-          Tooltip: path.Combine(
+          Tooltip: System.IO.Path.Combine(
             searchContext.Path,
             Client.File.PathString.SeparatorString
           ),
