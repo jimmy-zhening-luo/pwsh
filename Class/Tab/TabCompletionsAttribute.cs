@@ -8,8 +8,7 @@ internal abstract class TabCompletionsAttribute : ArgumentCompleterAttribute, IA
 {
   public CompletionCase Case { get; init; } = default;
 
-  public abstract TabCompleter Create();
-  IArgumentCompleter IArgumentCompleterFactory.Create() => Create();
+  public abstract IArgumentCompleter Create();
 
   internal abstract class TabCompleter(CompletionCase Case) : IArgumentCompleter
   {
