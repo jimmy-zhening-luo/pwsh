@@ -11,14 +11,15 @@ internal abstract class TabCompletionsAttribute(CompletionCase Case = default) :
   public abstract IArgumentCompleter Create();
 
   internal abstract class TabCompleter(
-    CompletionCase Case
+    CompletionCase Case,
+    CompletionResultType? CompletionType = CompletionResultType.ParameterValue
   ) : IArgumentCompleter
   {
     private protected record CompletionResultRecord(
       string Result,
       string? DisplayText = default,
       string? Tooltip = default,
-      CompletionResultType CompletionType = CompletionResultType.ParameterValue
+      CompletionResultType? CompletionType
     );
 
     public IEnumerable<CompletionResult> CompleteArgument(
@@ -53,7 +54,7 @@ internal abstract class TabCompletionsAttribute(CompletionCase Case = default) :
         yield return new(
           Client.Console.String.EscapeSingleQuoted(casedResult),
           completion.DisplayText ?? casedResult,
-          completion.CompletionType,
+          completion.CompletionType ?? CompletionType,
           completion.Tooltip ?? result
         );
       }
