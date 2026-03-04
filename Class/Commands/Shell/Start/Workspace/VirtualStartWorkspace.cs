@@ -1,19 +1,16 @@
 namespace Module.Commands.Shell.Start.Workspace;
 
-public abstract class VirtualStartWorkspace() : CoreCommand(true)
+public abstract class VirtualStartWorkspace() : NativeCommand(true, true)
 {
+  private const string FlagNewWindow = "--new-window";
+  private const string FlagReuseWindow = "--reuse-window";
+
   public abstract string Path { get; set; }
   private protected string path = string.Empty;
 
   [Parameter(Position = 1)]
-  public string Name { get; set; } = string.Empty;
-
-  [Parameter(
-    Position = 2,
-    ValueFromRemainingArguments = true,
-    DontShow = true
-  )]
-  public string[] Argument { get; set; } = [];
+  [Alias("p")]
+  public string Profile { get; set; } = string.Empty;
 
   [Parameter]
   public SwitchParameter Window
@@ -31,52 +28,47 @@ public abstract class VirtualStartWorkspace() : CoreCommand(true)
   }
   private bool reuseWindow;
 
-  private protected sealed override void Postprocess()
-  {
-    List<string> argumentList = [
-      InCurrentLocation
-        ? Pwd(Path)
-        : Reanchor(Path),
-    ];
+  private protected sealed override string CommandPath => Client.Environment.Known.Application.VSCode;
 
-    switch (Name)
+  private protected sealed override void PreprocessArguments()
+  {
+    switch (Profile)
     {
       case "":
         break;
 
       case "se":
-        argumentList.Add("--profile=Setting");
+        NativeArguments.Add("--profile=Setting");
         break;
 
-      case ['-', '-', ..]:
-        argumentList.Add(Name);
+      case var profile when NativeArgumentRegex().IsMatch(profile):
+        NativeArguments.Add(Profile);
         break;
 
       default:
-        WriteWarning(
-          "Profiles not supported except for se (Setting)"
-        );
+        WriteWarning("Profiles not supported except for se (Setting)");
         break;
     }
 
-    if (window)
+    if (window && !NativeArguments.Contains(FlagNewWindow))
     {
-      argumentList.Add("--new-window");
-    }
-    else if (reuseWindow)
-    {
-      argumentList.Add("--reuse-window");
-    }
+      _ = NativeArguments.Remove(FlagReuseWindow);
 
-    if (Argument is not [])
-    {
-      argumentList.AddRange(Argument);
+      NativeArguments.Add(FlagNewWindow);
     }
-
-    Client.Start.CreateProcess(
-      Client.Environment.Known.Application.VSCode,
-      argumentList,
-      true
-    );
+    if (
+      reuseWindow
+      && !NativeArguments.Contains(FlagReuseWindow)
+      && !NativeArguments.Contains(FlagNewWindow)
+    )
+    {
+      NativeArguments.Add(FlagReuseWindow);
+    }
   }
+
+  private protected sealed override List<string> BuildNativeCommand() => [
+    InCurrentLocation
+      ? Pwd(Path)
+      : Reanchor(Path),
+  ];
 }
