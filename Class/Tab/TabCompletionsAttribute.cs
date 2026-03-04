@@ -10,7 +10,9 @@ internal abstract class TabCompletionsAttribute(CompletionCase Case = default) :
 
   public abstract IArgumentCompleter Create();
 
-  internal abstract class TabCompleter(CompletionCase Case) : IArgumentCompleter
+  internal abstract class TabCompleter(
+    CompletionCase Case = default
+  ) : IArgumentCompleter
   {
     private protected record CompletionResultRecord(
       string Result,
