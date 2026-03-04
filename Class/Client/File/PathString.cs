@@ -30,7 +30,10 @@ internal static partial class PathString
           System.Environment.ExpandEnvironmentVariables(
             path.Trim() ?? string.Empty
           )
-            .Replace('/', Separator)
+            .Replace(
+              '/',
+              Separator
+            )
         )
       )
     );
