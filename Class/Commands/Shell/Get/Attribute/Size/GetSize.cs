@@ -17,40 +17,40 @@ namespace Module.Commands.Shell.Get.Attribute.Size;
 )]
 public sealed class GetSize : CoreCommand
 {
-  private enum DiskSizeUnit
+  public enum DiskSizeUnit
   {
     [System.ComponentModel.Description("Bytes")]
-    B,
+    b,
 
     [System.ComponentModel.Description("Kilobytes")]
-    KB,
+    kb,
 
     [System.ComponentModel.Description("Megabytes")]
-    MB,
+    mb,
 
     [System.ComponentModel.Description("Gigabytes")]
-    GB,
+    gb,
 
     [System.ComponentModel.Description("Terabytes")]
-    TB,
+    tb,
 
     [System.ComponentModel.Description("Petabytes")]
-    PB,
+    pb,
   }
 
   private enum DiskSizeUnitAlias
   {
-    B,
-    KB,
-    K = KB,
-    MB,
-    M = MB,
-    GB,
-    G = GB,
-    TB,
-    T = TB,
-    PB,
-    P = PB,
+    b,
+    kb,
+    k = kb,
+    mb,
+    m = mb,
+    gb,
+    g = gb,
+    tb,
+    t = tb,
+    pb,
+    p = pb,
   }
 
   [Parameter(
@@ -86,8 +86,7 @@ public sealed class GetSize : CoreCommand
     HelpMessage = "The unit in which to return the size."
   )]
   [Tab.Completer.EnumCompletions(
-    typeof(DiskSizeUnit),
-    Case = Tab.CompletionCase.Lower
+    typeof(DiskSizeUnit)
   )]
   public string Unit
   {
@@ -104,9 +103,9 @@ public sealed class GetSize : CoreCommand
           out DiskSizeUnitAlias parsedUnitAlias
         )
         ? (DiskSizeUnit)parsedUnitAlias
-        : DiskSizeUnit.KB;
+        : DiskSizeUnit.kb;
   }
-  private DiskSizeUnit unit = DiskSizeUnit.KB;
+  private DiskSizeUnit unit = DiskSizeUnit.kb;
 
   [Parameter(
     ParameterSetName = "Number",
