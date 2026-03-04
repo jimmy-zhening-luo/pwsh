@@ -12,7 +12,7 @@ internal abstract class TabCompletionsAttribute(CompletionCase Case = default) :
 
   internal abstract class TabCompleter(
     CompletionCase Case,
-    CompletionResultType? CompletionType = CompletionResultType.ParameterValue
+    CompletionResultType CompletionType = CompletionResultType.ParameterValue
   ) : IArgumentCompleter
   {
     private protected record CompletionResultRecord(
