@@ -63,6 +63,7 @@ internal abstract class TabCompletionsAttribute(
           completion.Description ?? result
         );
       }
+      yield break;
     }
   }
 }
