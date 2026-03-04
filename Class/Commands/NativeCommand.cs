@@ -165,7 +165,7 @@ public abstract partial class NativeCommand(
 
       if (HadNativeError)
       {
-        if (noThrow)
+        if (NoThrow)
         {
           WriteWarning("Execution error");
         }
