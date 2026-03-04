@@ -6,7 +6,7 @@ namespace Module.Tab;
 )]
 internal abstract class TabCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory
 {
-  public CompletionCase Case { get; init; } = default;
+  public CompletionCase Case { get; init; }
 
   public abstract IArgumentCompleter Create();
 
