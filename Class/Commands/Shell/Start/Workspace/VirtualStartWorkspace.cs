@@ -9,8 +9,7 @@ public abstract class VirtualStartWorkspace() : NativeCommand(true, true)
   private protected string path = string.Empty;
 
   [Parameter(Position = 1)]
-  [Alias("p")]
-  public string Profile { get; set; } = string.Empty;
+  public string Name { get; set; } = string.Empty;
 
   [Parameter]
   public SwitchParameter Window
@@ -32,7 +31,7 @@ public abstract class VirtualStartWorkspace() : NativeCommand(true, true)
 
   private protected sealed override void PreprocessArguments()
   {
-    switch (Profile)
+    switch (Name)
     {
       case "":
         break;
@@ -42,7 +41,7 @@ public abstract class VirtualStartWorkspace() : NativeCommand(true, true)
         break;
 
       case var profile when NativeArgumentRegex().IsMatch(profile):
-        NativeArguments.Add(Profile);
+        NativeArguments.Add(Name);
         break;
 
       default:
