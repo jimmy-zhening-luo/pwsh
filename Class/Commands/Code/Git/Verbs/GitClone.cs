@@ -20,7 +20,7 @@ public sealed class GitClone() : GitCommand("clone")
     set
     {
       var segments = value.Split(
-        '/',
+        Client.File.PathString.AltSeparator,
         System.StringSplitOptions.RemoveEmptyEntries
         | System.StringSplitOptions.TrimEntries
       );

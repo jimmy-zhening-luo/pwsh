@@ -5,6 +5,7 @@ internal static partial class PathString
   internal const char Here = '.';
   internal const char Home = '~';
   internal const char Separator = '\\';
+  internal const char AltSeparator = '/';
   internal const string SeparatorString = @"\";
 
   internal static string FullPathLocationRelative(
@@ -31,7 +32,7 @@ internal static partial class PathString
             path?.Trim() ?? string.Empty
           )
             .Replace(
-              '/',
+              AltSeparator,
               Separator
             )
         )

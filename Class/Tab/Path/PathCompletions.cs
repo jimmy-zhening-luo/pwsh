@@ -160,7 +160,7 @@ internal class PathCompletionsAttribute(
       )
         .Replace(
           Client.File.PathString.Separator,
-          '/'
+          Client.File.PathString.AltSeparator
         ),
       Description: description
     );
