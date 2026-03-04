@@ -49,7 +49,7 @@ public sealed class GetSize : CoreCommand
     Position = default,
     ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true,
-    HelpMessage = "The path of the file or directory to be measured."
+    HelpMessage = "Path of the file or directory of which to get the size"
   )]
   [Tab.Path.PathCompletions]
   public string[] Path
@@ -68,13 +68,13 @@ public sealed class GetSize : CoreCommand
   [Parameter(
     ParameterSetName = "Number",
     Position = 1,
-    HelpMessage = "The unit in which to return the size."
+    HelpMessage = "Unit in which to return the size"
   )]
   public DiskSizeUnit Unit { get; set; } = DiskSizeUnit.kb;
 
   [Parameter(
     ParameterSetName = "Number",
-    HelpMessage = "If specified, returns the size as a numeric value instead of a formatted string."
+    HelpMessage = "If specified, returns the size as a numeric value instead of a formatted string"
   )]
   public SwitchParameter Number { get; set; }
 

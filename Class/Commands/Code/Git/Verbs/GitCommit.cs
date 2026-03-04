@@ -12,7 +12,7 @@ public sealed partial class GitCommit() : GitCommand("commit")
 
   [Parameter(
     Position = 60,
-    HelpMessage = "Commit message, which must be non-empty except on an empty commit on which it defaults to 'No message'"
+    HelpMessage = "Commit message, defaulting to 'No message' on an empty commit"
   )]
   [PathSpecCompletions]
   public string Message
@@ -28,7 +28,7 @@ public sealed partial class GitCommit() : GitCommand("commit")
   public SwitchParameter Staged { get; set; }
 
   [Parameter(
-    HelpMessage = "Allow an empty commit, equivalent to git commit --allow-empty"
+    HelpMessage = "Allow commit with no changes, equivalent to --allow-empty"
   )]
   public SwitchParameter AllowEmpty { get; set; }
 

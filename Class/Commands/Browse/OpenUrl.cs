@@ -13,7 +13,7 @@ public sealed class OpenUrl() : CoreCommand(true)
   [Parameter(
     ParameterSetName = "Path",
     Position = default,
-    HelpMessage = "The file path or URL to open.  Defaults to the current directory."
+    HelpMessage = "File path or URL to open, defaulting to the current directory"
   )]
   [Tab.Path.PathCompletions]
   public string Path
@@ -41,7 +41,7 @@ public sealed class OpenUrl() : CoreCommand(true)
     Position = default,
     ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true,
-    HelpMessage = "The URL(s) to open."
+    HelpMessage = "URLs to open"
   )]
   [AllowEmptyCollection]
   public System.Uri[] Uri

@@ -15,7 +15,7 @@ public sealed class TestUrl : CoreCommand
     ValueFromPipeline = true,
     ValueFromPipelineByPropertyName = true,
     ValueFromRemainingArguments = true,
-    HelpMessage = "The URL to test. If the URL has no scheme, it defaults to 'http'."
+    HelpMessage = "URL to test"
   )]
   [AllowEmptyCollection]
   public System.Uri[] Uri

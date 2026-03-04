@@ -2,12 +2,12 @@ namespace Module.Tab;
 
 internal enum CompletionCase
 {
-  [System.ComponentModel.Description("Preserve the original case of the matched completion item")]
+  [System.ComponentModel.Description("Preserve the original case of the matched completion")]
   Preserve,
 
-  [System.ComponentModel.Description("Change the matched completion item to lowercase")]
+  [System.ComponentModel.Description("Convert the matched completion to lowercase")]
   Lower,
 
-  [System.ComponentModel.Description("Change the matched completion item to uppercase")]
+  [System.ComponentModel.Description("Convert the matched completion to uppercase")]
   Upper,
 }

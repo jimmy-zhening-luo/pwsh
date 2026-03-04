@@ -35,7 +35,7 @@ public sealed class GitRestore() : GitCommand("pull")
     if (HadNativeError)
     {
       Clear();
-      ThrowError("Git returned error when resetting repository.");
+      ThrowError("Git error encountered when resetting repository.");
     }
     else
     {

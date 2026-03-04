@@ -12,7 +12,7 @@ public sealed class GitAdd() : GitCommand("add")
 
   [Parameter(
     Position = default,
-    HelpMessage = "File pattern of files to add, defaults to '.' (all)"
+    HelpMessage = "File pattern of files to add, defaulting to '.' (all)"
   )]
   [PathSpecCompletions]
   public string Name
@@ -23,7 +23,7 @@ public sealed class GitAdd() : GitCommand("add")
   private string name = string.Empty;
 
   [Parameter(
-    HelpMessage = "Equivalent to git add --renormalize flag"
+    HelpMessage = "Equivalent to --renormalize"
   )]
   public SwitchParameter Renormalize { get; set; }
 

@@ -36,7 +36,7 @@ public sealed class GitClone() : GitCommand("clone")
   private string remote = string.Empty;
 
   [Parameter(
-    HelpMessage = "Use git@github.com remote protocol instead of the default HTTPS"
+    HelpMessage = "Use git@github.com remote protocol instead of HTTPS"
   )]
   [Alias("ssh")]
   public SwitchParameter ForceSsh { get; set; }

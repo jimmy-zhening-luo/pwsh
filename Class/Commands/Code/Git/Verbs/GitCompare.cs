@@ -10,7 +10,7 @@ public sealed class GitCompare() : GitCommand("diff")
 {
   [Parameter(
     Position = default,
-    HelpMessage = "File pattern of files to diff, defaults to '.' (all)"
+    HelpMessage = "File pattern of files to diff, defaulting to '.' (all)"
   )]
   [PathSpecCompletions]
   public string Name { get; set; } = string.Empty;

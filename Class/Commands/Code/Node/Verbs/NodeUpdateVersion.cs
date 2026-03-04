@@ -70,7 +70,7 @@ public sealed class NodeUpdateVersion() : NodeCommand("version")
     if (Version is "")
     {
       ThrowError(
-        "Provided version was neither a well-known version nor parseable as a semantic version."
+        "The specified version is neither well-known nor parseable as a semantic version."
       );
     }
   }

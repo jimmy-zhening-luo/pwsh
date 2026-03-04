@@ -36,15 +36,6 @@ public sealed class TestCommand : CoreCommand
   {
     WriteObject($"The greeting was: {Greeting}");
     WriteObject($"The value of 'Switch' is: {Switch}");
-
-    if (!Switch)
-    {
-      WriteObject("Switch evaluates to false.");
-    }
-    else
-    {
-      WriteObject("Switch evaluates to true.");
-    }
   }
 
   private string Greet(string name) => $"{Greeting}, {Name}!";

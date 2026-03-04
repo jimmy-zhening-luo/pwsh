@@ -12,7 +12,7 @@ public sealed class GetType : CoreCommand
     Mandatory = true,
     Position = default,
     ValueFromPipeline = true,
-    HelpMessage = "The object whose type to check"
+    HelpMessage = "Object to type-check"
   )]
   public required object InputObject { get; set; }
 
@@ -22,7 +22,7 @@ public sealed class GetType : CoreCommand
     {
       ThrowError(
         new System.ArgumentException(
-          "Cannot get type of null InputObject.",
+          "The input object is null.",
           nameof(InputObject)
         ),
         ErrorCategory.InvalidArgument,

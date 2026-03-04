@@ -36,7 +36,7 @@ public sealed class GetVerb : CoreCommand
 
   [Parameter(
     Position = default,
-    HelpMessage = "Gets only the specified verbs. Enter the name of a verb or a name pattern. Wildcards are allowed."
+    HelpMessage = "Get only the specified verbs or verb patterns"
   )]
   [SupportsWildcards]
   [Tab.Completer.Completions(["*"])]
@@ -66,7 +66,7 @@ public sealed class GetVerb : CoreCommand
 
   [Parameter(
     Position = 1,
-    HelpMessage = "Gets only the specified groups. Enter the name of a group. Wildcards aren't allowed."
+    HelpMessage = "Get only the specified verb groups"
   )]
   public VerbGroup[] Group
   {

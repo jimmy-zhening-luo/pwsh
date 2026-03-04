@@ -19,7 +19,7 @@ internal static class Module
     if (currentLocation is null or "")
     {
       throw new System.InvalidOperationException(
-        "Failed to get current location of PowerShell host."
+        "Failed to get the current location of the PowerShell host."
       );
     }
 

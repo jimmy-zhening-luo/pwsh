@@ -11,7 +11,7 @@ namespace Module.Commands.Windows.Manage.Task;
 public sealed class StopTask : TaskManager
 {
   [Parameter(
-    HelpMessage = "Stop the entire process tree (the process and all its descendants)."
+    HelpMessage = "Stop the entire process tree (the processe and all of its descendants)"
   )]
   public SwitchParameter Descendant
   {

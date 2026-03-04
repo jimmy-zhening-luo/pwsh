@@ -18,7 +18,7 @@ public sealed partial class GitReset() : GitCommand("reset")
 
   [Parameter(
     Position = 60,
-    HelpMessage = "The tree spec to which to revert given as '[HEAD]([~]|^)[n]'. Defaults to HEAD. If only the number index is given, defaults to '~' branching. If only branching is given, defaults to index 0 (HEAD)."
+    HelpMessage = "Tree spec to which to revert given as '[HEAD]([~]|^)[n]', defaulting to HEAD. If only the number index is given, branching defaults to '~'. If only branching is given, the index defaults to 0 (HEAD)."
   )]
   [PathSpecCompletions]
   public string Tree
@@ -52,7 +52,7 @@ public sealed partial class GitReset() : GitCommand("reset")
   private string tree = string.Empty;
 
   [Parameter(
-    HelpMessage = "Non-destructive reset, equivalent to running git reset without --hard"
+    HelpMessage = "Perform a non-destructive reset, equivalent to [--hard=false]"
   )]
   public SwitchParameter Soft { get; set; }
 

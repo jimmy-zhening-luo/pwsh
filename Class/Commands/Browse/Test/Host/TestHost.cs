@@ -15,10 +15,10 @@ public sealed class TestHost() : WrappedCommand(
 {
   public enum TestHostVerbosity
   {
-    [System.ComponentModel.Description("Only display the boolean result of whether the host is reachable (Default)")]
+    [System.ComponentModel.Description("Display only whether or not the host is reachable (Default)")]
     quiet,
 
-    [System.ComponentModel.Description("Display the full output of Test-NetConnection, which includes diagnostic information such as round-trip time and IP address information")]
+    [System.ComponentModel.Description("Display the full output of Test-NetConnection, including diagnostic information such as round-trip time and IP address resolution")]
     detailed,
   }
 
