@@ -25,16 +25,11 @@ public sealed class GitAdd() : GitCommand("add")
   [Parameter(
     HelpMessage = "Equivalent to git add --renormalize flag"
   )]
-  public SwitchParameter Renormalize
-  {
-    get => renormalize;
-    set => renormalize = value;
-  }
-  private bool renormalize;
+  public SwitchParameter Renormalize { get; set; }
 
   private protected sealed override void PreprocessArguments()
   {
-    if (renormalize)
+    if (Renormalize)
     {
       if (WorkingDirectory == FlagRenormalize)
       {

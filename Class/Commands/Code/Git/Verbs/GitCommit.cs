@@ -25,22 +25,12 @@ public sealed partial class GitCommit() : GitCommand("commit")
   [Parameter(
     HelpMessage = "Only commit files that are already staged"
   )]
-  public SwitchParameter Staged
-  {
-    get => staged;
-    set => staged = value;
-  }
-  private bool staged;
+  public SwitchParameter Staged { get; set; }
 
   [Parameter(
     HelpMessage = "Allow an empty commit, equivalent to git commit --allow-empty"
   )]
-  public SwitchParameter AllowEmpty
-  {
-    get => allowEmpty;
-    set => allowEmpty = value;
-  }
-  private bool allowEmpty;
+  public SwitchParameter AllowEmpty { get; set; }
 
   private protected sealed override void PreprocessArguments()
   {
@@ -77,7 +67,7 @@ public sealed partial class GitCommit() : GitCommand("commit")
       }
     }
 
-    if (allowEmpty && !NativeArguments.Contains(FlagAllowEmpty))
+    if (AllowEmpty && !NativeArguments.Contains(FlagAllowEmpty))
     {
       NativeArguments.Add(FlagAllowEmpty);
     }
@@ -98,20 +88,23 @@ public sealed partial class GitCommit() : GitCommand("commit")
 
     Message = string.Join(Client.Console.String.Space, messageWords);
 
-    AddCommand("Add-GitRepository")
-      .AddParameter("WorkingDirectory", WorkingDirectory);
-
-    ProcessSteppablePipeline();
-    EndSteppablePipeline();
-
-    if (HadNativeError)
+    if (!Staged)
     {
-      Clear();
-      ThrowError("Git returned error when staging files for commit");
-    }
-    else
-    {
-      Clear();
+      AddCommand("Add-GitRepository")
+        .AddParameter("WorkingDirectory", WorkingDirectory);
+
+      ProcessSteppablePipeline();
+      EndSteppablePipeline();
+
+      if (HadNativeError)
+      {
+        Clear();
+        ThrowError("Git returned error when staging files for commit");
+      }
+      else
+      {
+        Clear();
+      }
     }
   }
 

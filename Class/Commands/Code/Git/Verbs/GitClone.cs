@@ -39,12 +39,7 @@ public sealed class GitClone() : GitCommand("clone")
     HelpMessage = "Use git@github.com remote protocol instead of the default HTTPS"
   )]
   [Alias("ssh")]
-  public SwitchParameter ForceSsh
-  {
-    get => forceSsh;
-    set => forceSsh = value;
-  }
-  private bool forceSsh;
+  public SwitchParameter ForceSsh { get; set; }
 
   private protected sealed override void PreprocessArguments()
   {
@@ -56,7 +51,7 @@ public sealed class GitClone() : GitCommand("clone")
 
   private protected sealed override List<string> ParseArguments() => [
     string.Concat(
-      forceSsh
+      ForceSsh
         ? "git@github.com:"
         : "https://github.com/",
       Repository
