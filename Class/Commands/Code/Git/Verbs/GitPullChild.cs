@@ -78,7 +78,7 @@ public sealed class GitPullChild : CoreCommand
 
       if (HadNativeError)
       {
-        WriteWarning("git error");
+        WriteWarning($"git error when pulling repository {repository}");
       }
 
       Clear();
