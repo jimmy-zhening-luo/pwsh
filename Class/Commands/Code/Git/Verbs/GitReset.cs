@@ -114,7 +114,7 @@ public sealed partial class GitReset() : GitCommand("reset")
       if (HadNativeError)
       {
         Clear();
-        Throw("Git returned error when staging files for commit");
+        ThrowError("Git returned error when staging files for commit");
       }
       else
       {

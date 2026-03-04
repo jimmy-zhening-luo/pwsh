@@ -30,7 +30,7 @@ public sealed class GitPush() : GitCommand("push")
 
     if (HadNativeError)
     {
-      Throw("Git returned error when pulling repository prior to pushing");
+      ThrowError("Git returned error when pulling repository prior to pushing");
     }
   }
 }

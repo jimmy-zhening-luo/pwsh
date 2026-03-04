@@ -20,7 +20,7 @@ public sealed class GetType : CoreCommand
   {
     if (InputObject is null)
     {
-      Throw(
+      ThrowError(
         new System.ArgumentException(
           "Cannot get type of null InputObject.",
           nameof(InputObject)

@@ -220,10 +220,10 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
     path
   );
 
-  private protected void ShowInformation(
+  private protected void WriteInformation(
     object log,
     string? source = default
-  ) => WriteInformation(
+  ) => base.WriteInformation(
     new(
       log,
       source ?? GetName()
@@ -231,19 +231,19 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
   );
 
   [System.Diagnostics.CodeAnalysis.DoesNotReturn]
-  private protected void Throw(
+  private protected void ThrowError(
     string message,
     ErrorCategory category = ErrorCategory.InvalidOperation,
     object? target = default,
     string? id = default
-  ) => Throw(
+  ) => ThrowError(
     new System.Exception(message),
     category,
     target,
     id
   );
   [System.Diagnostics.CodeAnalysis.DoesNotReturn]
-  private protected void Throw(
+  private protected void ThrowError(
     System.Exception exception,
     ErrorCategory category = ErrorCategory.InvalidOperation,
     object? target = default,

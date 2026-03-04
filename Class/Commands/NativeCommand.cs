@@ -190,7 +190,7 @@ public abstract partial class NativeCommand(bool SkipSsh = default) : CoreComman
       }
       else
       {
-        Throw("Execution error");
+        ThrowError("Execution error");
       }
     }
   }

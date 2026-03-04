@@ -50,7 +50,7 @@ public sealed class GitClone() : GitCommand("clone")
   {
     if (Repository is "")
     {
-      Throw("No repository name given.");
+      ThrowError("No repository name given.");
     }
   }
 

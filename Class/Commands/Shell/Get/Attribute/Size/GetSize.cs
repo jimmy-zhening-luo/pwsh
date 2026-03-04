@@ -127,7 +127,7 @@ public sealed class GetSize : CoreCommand
 
       if (!System.IO.Path.Exists(fullPath))
       {
-        Throw(
+        ThrowError(
           new System.IO.FileNotFoundException(
             $"The path '{path}' does not exist."
           ),

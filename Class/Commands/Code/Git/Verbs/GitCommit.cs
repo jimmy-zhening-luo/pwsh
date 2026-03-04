@@ -90,7 +90,7 @@ public sealed partial class GitCommit() : GitCommand("commit")
       }
       else
       {
-        Throw(
+        ThrowError(
           "Commit message is required unless --allow-empty is specified"
         );
       }
@@ -107,7 +107,7 @@ public sealed partial class GitCommit() : GitCommand("commit")
     if (HadNativeError)
     {
       Clear();
-      Throw("Git returned error when staging files for commit");
+      ThrowError("Git returned error when staging files for commit");
     }
     else
     {

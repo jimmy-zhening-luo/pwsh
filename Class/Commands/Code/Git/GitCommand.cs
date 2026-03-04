@@ -94,7 +94,7 @@ public abstract class GitCommand(
 
     if (repository is "")
     {
-      Throw(
+      ThrowError(
          newable
           ? $"Path does not support the current git operation: {WorkingDirectory}"
           : $"Path is not a git repository: {WorkingDirectory}"
