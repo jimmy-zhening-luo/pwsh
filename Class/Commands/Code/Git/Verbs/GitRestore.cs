@@ -32,7 +32,7 @@ public sealed class GitRestore() : GitCommand("pull")
     ProcessSteppablePipeline();
     EndSteppablePipeline();
 
-    if (HadNativeErrors)
+    if (HadNativeError)
     {
       Clear();
       Throw("Git returned error when resetting repository.");

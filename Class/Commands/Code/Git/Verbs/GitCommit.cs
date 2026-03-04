@@ -104,7 +104,7 @@ public sealed partial class GitCommit() : GitCommand("commit")
     ProcessSteppablePipeline();
     EndSteppablePipeline();
 
-    if (HadNativeErrors)
+    if (HadNativeError)
     {
       Clear();
       Throw("Git returned error when staging files for commit");

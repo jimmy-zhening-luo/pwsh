@@ -111,7 +111,7 @@ public sealed partial class GitReset() : GitCommand("reset")
       ProcessSteppablePipeline();
       EndSteppablePipeline();
 
-      if (HadNativeErrors)
+      if (HadNativeError)
       {
         Clear();
         Throw("Git returned error when staging files for commit");

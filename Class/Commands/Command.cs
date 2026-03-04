@@ -41,7 +41,7 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
 
   private protected bool HadErrors => powershell?.HadErrors ?? default;
 
-  private protected bool HadNativeErrors => PSVariable<int>("LASTEXITCODE") is not (0 or 1);
+  private protected bool HadNativeError => PSVariable<int>("LASTEXITCODE") is not (0 or 1);
 
   private PowerShell PS => powershell ??= Module.Create();
   private PowerShell? powershell;

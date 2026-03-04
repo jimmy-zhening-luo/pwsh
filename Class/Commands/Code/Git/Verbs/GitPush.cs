@@ -28,7 +28,7 @@ public sealed class GitPush() : GitCommand("push")
     EndSteppablePipeline();
     Clear();
 
-    if (HadNativeErrors)
+    if (HadNativeError)
     {
       Throw("Git returned error when pulling repository prior to pushing");
     }

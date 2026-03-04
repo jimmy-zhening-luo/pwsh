@@ -182,7 +182,7 @@ public abstract partial class NativeCommand(bool SkipSsh = default) : CoreComman
     ProcessSteppablePipeline();
     EndSteppablePipeline();
 
-    if (HadNativeErrors)
+    if (HadNativeError)
     {
       if (noThrow)
       {
