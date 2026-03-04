@@ -38,21 +38,6 @@ public sealed class GetSize : CoreCommand
     pb,
   }
 
-  public enum DiskSizeUnitAlias
-  {
-    b,
-    kb,
-    k = kb,
-    mb,
-    m = mb,
-    gb,
-    g = gb,
-    tb,
-    t = tb,
-    pb,
-    p = pb,
-  }
-
   [Parameter(
     ParameterSetName = "String",
     Position = default,
@@ -85,12 +70,7 @@ public sealed class GetSize : CoreCommand
     Position = 1,
     HelpMessage = "The unit in which to return the size."
   )]
-  public DiskSizeUnit Unit
-  {
-    get => unit;
-    set => unit = value;
-  }
-  private DiskSizeUnit unit = DiskSizeUnit.kb;
+  public DiskSizeUnit Unit { get; set; } = DiskSizeUnit.kb;
 
   [Parameter(
     ParameterSetName = "Number",
