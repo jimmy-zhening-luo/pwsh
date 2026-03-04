@@ -2,37 +2,37 @@ namespace Module.Client.Environment.Known;
 
 internal static class Application
 {
-  internal static string VSCode => Folder.LocalAppData(
+  internal static string VSCode => vscode ??= Folder.LocalAppData(
     @"Programs\Microsoft VS Code\bin\code.cmd"
   );
   private static string? vscode;
 
-  internal static string WinGet => Folder.LocalAppData(
+  internal static string WinGet => winget ??= Folder.LocalAppData(
     @"Microsoft\WindowsApps\winget.exe"
   );
   private static string? winget;
 
-  internal static string Chrome => Folder.ProgramFiles(
+  internal static string Chrome => chrome ??= Folder.ProgramFiles(
     @"Google\Chrome\Application\chrome.exe"
   );
   private static string? chrome;
 
-  internal static string Git => Folder.ProgramFiles(
+  internal static string Git => git ??= Folder.ProgramFiles(
     @"Git\cmd\git.exe"
   );
   private static string? git;
 
-  internal static string Node => Folder.SystemDrive(
+  internal static string Node => node ??= Folder.SystemDrive(
     @"nvm4w\nodejs\node.exe"
   );
   private static string? node;
 
-  internal static string Npm => Folder.SystemDrive(
+  internal static string Npm => npm ??= Folder.SystemDrive(
     @"nvm4w\nodejs\npm.ps1"
   );
   private static string? npm;
 
-  internal static string Npx => Folder.SystemDrive(
+  internal static string Npx => npx ??= Folder.SystemDrive(
     @"nvm4w\nodejs\npx.ps1"
   );
   private static string? npx;
