@@ -12,12 +12,12 @@ public sealed class NodeClearCache() : NodeCommand("cache")
   {
     WorkingDirectory = string.Empty;
     noThrow = false;
-    d = false;
-    e = false;
-    i = false;
-    o = false;
-    p = false;
-    v = false;
+    D = false;
+    E = false;
+    I = false;
+    O = false;
+    P = false;
+    V = false;
 
     ArgumentList = [];
 

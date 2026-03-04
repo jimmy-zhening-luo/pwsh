@@ -51,7 +51,7 @@ public abstract class GitCommand(
     bool newable = default;
     switch (IntrinsicVerb)
     {
-      case "" when v:
+      case "" when V:
         newable = true;
         break;
 

@@ -33,9 +33,9 @@ public sealed class Node : NodeCommand
 
   private protected sealed override List<string> ParseArguments()
   {
-    if (v && Verb is "")
+    if (Version && Verb is "")
     {
-      v = false;
+      Version = false;
 
       return ["-v"];
     }
