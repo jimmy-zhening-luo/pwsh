@@ -12,20 +12,10 @@ public abstract class VirtualStartWorkspace() : NativeCommand(true, true)
   public string Name { get; set; } = string.Empty;
 
   [Parameter]
-  public SwitchParameter Window
-  {
-    get => window;
-    set => window = value;
-  }
-  private bool window;
+  public SwitchParameter Window { get; set; }
 
   [Parameter]
-  public SwitchParameter ReuseWindow
-  {
-    get => reuseWindow;
-    set => reuseWindow = value;
-  }
-  private bool reuseWindow;
+  public SwitchParameter ReuseWindow { get; set; }
 
   private protected sealed override string CommandPath => Client.Environment.Known.Application.VSCode;
 
@@ -49,14 +39,14 @@ public abstract class VirtualStartWorkspace() : NativeCommand(true, true)
         break;
     }
 
-    if (window && !NativeArguments.Contains(FlagNewWindow))
+    if (Window && !NativeArguments.Contains(FlagNewWindow))
     {
       _ = NativeArguments.Remove(FlagReuseWindow);
 
       NativeArguments.Add(FlagNewWindow);
     }
     if (
-      reuseWindow
+      ReuseWindow
       && !NativeArguments.Contains(FlagReuseWindow)
       && !NativeArguments.Contains(FlagNewWindow)
     )
