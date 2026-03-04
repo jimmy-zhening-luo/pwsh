@@ -343,15 +343,29 @@ internal class PathCompletionsAttribute(
 
       if (accumulator is not "")
       {
-        yield return Join(
-          accumulator,
-          Client.File.PathString.SeparatorString
+        yield return new (
+          Join(
+            accumulator,
+            Client.File.PathString.SeparatorString
+          ),
+          Tooltip: path.Combine(
+            searchContext.Path,
+            Client.File.PathString.SeparatorString
+          ),
+          CompletionType: CompletionResultType.ProviderItem
         );
       }
 
       if (accumulator is not "" || Index is not 0)
       {
-        yield return Join(accumulator, @"..\");
+        yield return new (
+          Join(accumulator, @"..\"),
+          Tooltip: Client.File.PathString.FullPathLocationRelative(
+            searchContext.Path,
+            ".."
+          ),
+          CompletionType: CompletionResultType.ProviderItem
+        );
       }
 
       yield break;
