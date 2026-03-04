@@ -7,7 +7,7 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
     private bool disposed;
 
     internal PowerShell PS => powershell;
-    private PowerShell? powershell;
+    private readonly PowerShell powershell;
 
     private SteppablePipeline? steppablePipeline;
 
