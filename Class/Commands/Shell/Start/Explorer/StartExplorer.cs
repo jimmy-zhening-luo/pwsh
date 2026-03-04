@@ -130,8 +130,7 @@ public sealed class StartExplorerCode : WrappedStartExplorer
   }
 
   private protected sealed override Locator Location => new(
-    Client.Environment.Known.Folder.Home(),
-    "code"
+    Client.Environment.Known.Folder.Code()
   );
 }
 

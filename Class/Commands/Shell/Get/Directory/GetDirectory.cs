@@ -158,8 +158,7 @@ public sealed class GetDirectoryCode : WrappedGetDirectory
   }
 
   private protected sealed override Locator Location => new(
-    Client.Environment.Known.Folder.Home(),
-    "code"
+    Client.Environment.Known.Folder.Code()
   );
 }
 
