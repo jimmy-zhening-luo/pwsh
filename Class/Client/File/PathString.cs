@@ -22,8 +22,9 @@ internal static partial class PathString
   internal static string Normalize(
     string? path,
     bool preserveTrailingSeparator = default
-  ) => path is not null
-    && TrimRelativePrefix(
+  )
+  {
+    var normalPath = TrimRelativePrefix(
       ExpandHomePrefix(
         DeduplicateSeparator(
           System.Environment.ExpandEnvironmentVariables(
@@ -32,11 +33,12 @@ internal static partial class PathString
             .Replace('/', Separator)
         )
       )
-    ) is var normalPath
-    ? preserveTrailingSeparator
-      ? normalPath
-      : System.IO.Path.TrimEndingDirectorySeparator(normalPath)
-    : string.Empty;
+    );
+
+   return preserveTrailingSeparator
+    ? normalPath
+    : System.IO.Path.TrimEndingDirectorySeparator(normalPath);
+  }
 
   private static string ExpandHomePrefix(string path) => path switch
   {
