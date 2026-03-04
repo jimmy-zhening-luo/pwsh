@@ -85,9 +85,6 @@ public sealed class GetSize : CoreCommand
     Position = 1,
     HelpMessage = "The unit in which to return the size."
   )]
-  [Tab.Completer.EnumCompletions(
-    typeof(DiskSizeUnit)
-  )]
   public DiskSizeUnit Unit
   {
     get => unit;
@@ -150,7 +147,7 @@ public sealed class GetSize : CoreCommand
       WriteObject(
         number
           ? scaledSize
-          : $"{System.Math.Round(scaledSize, 3)} {Unit}"
+          : $"{System.Math.Round(scaledSize, 3)} {Unit.ToString().ToUpper()}"
       );
     }
   }
