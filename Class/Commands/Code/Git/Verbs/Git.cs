@@ -27,7 +27,7 @@ public sealed class Git : GitCommand
   [Alias("v")]
   public SwitchParameter Version
   {
-    get => v;
-    set => v = value;
+    get => base.V;
+    set => base.V = value;
   }
 }

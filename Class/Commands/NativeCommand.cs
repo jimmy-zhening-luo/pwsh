@@ -35,78 +35,43 @@ public abstract partial class NativeCommand(
   [Parameter(
     HelpMessage = "When execution results in a non-zero exit code, warn and continue instead of the default behavior of throwing a terminating error"
   )]
-  public SwitchParameter NoThrow
-  {
-    get => noThrow;
-    set => noThrow = value;
-  }
-  private protected bool noThrow;
+  public SwitchParameter NoThrow { get; set; }
 
   [Parameter(
     DontShow = true,
     HelpMessage = "Pass -v flag as argument"
   )]
-  public SwitchParameter V
-  {
-    get => v;
-    set => v = value;
-  }
-  private protected bool v;
+  public SwitchParameter V { get; set; }
 
   [Parameter(
     DontShow = true,
     HelpMessage = "Pass -d flag as argument"
   )]
-  public SwitchParameter D
-  {
-    get => d;
-    set => d = value;
-  }
-  private protected bool d;
+  public SwitchParameter D { get; set; }
 
   [Parameter(
     DontShow = true,
     HelpMessage = "Pass -E flag as argument"
   )]
-  public SwitchParameter E
-  {
-    get => e;
-    set => e = value;
-  }
-  private protected bool e;
+  public SwitchParameter E { get; set; }
 
   [Parameter(
     DontShow = true,
     HelpMessage = "Pass -i flag as argument"
   )]
-  public SwitchParameter I
-  {
-    get => i;
-    set => i = value;
-  }
-  private protected bool i;
+  public SwitchParameter I { get; set; }
 
   [Parameter(
     DontShow = true,
     HelpMessage = "Pass -o flag as argument"
   )]
-  public SwitchParameter O
-  {
-    get => o;
-    set => o = value;
-  }
-  private protected bool o;
+  public SwitchParameter O { get; set; }
 
   [Parameter(
     DontShow = true,
     HelpMessage = "Pass -P flag as argument"
   )]
-  public SwitchParameter P
-  {
-    get => p;
-    set => p = value;
-  }
-  private protected bool p;
+  public SwitchParameter P { get; set; }
 
   private protected abstract string CommandPath { get; }
 
@@ -140,27 +105,27 @@ public abstract partial class NativeCommand(
   {
     List<string> arguments = BuildNativeCommand();
 
-    if (d)
+    if (D)
     {
       arguments.Add(Uppercase.D ? "-D" : "-d");
     }
-    if (e)
+    if (E)
     {
       arguments.Add(Uppercase.E ? "-E" : "-e");
     }
-    if (i)
+    if (I)
     {
       arguments.Add(Uppercase.I ? "-I" : "-i");
     }
-    if (o)
+    if (O)
     {
       arguments.Add(Uppercase.O ? "-O" : "-o");
     }
-    if (p)
+    if (P)
     {
       arguments.Add(Uppercase.P ? "-P" : "-p");
     }
-    if (v)
+    if (V)
     {
       arguments.Add(Uppercase.V ? "-V" : "-v");
     }

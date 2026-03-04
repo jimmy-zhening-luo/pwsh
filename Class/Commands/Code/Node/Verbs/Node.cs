@@ -27,8 +27,8 @@ public sealed class Node : NodeCommand
   [Alias("v")]
   public SwitchParameter Version
   {
-    get => v;
-    set => v = value;
+    get => base.V;
+    set => base.V = value;
   }
 
   private protected sealed override List<string> ParseArguments()
