@@ -8,9 +8,7 @@ internal static class Start
     bool noNewWindow = default
   ) => CreateProcess(
     fileName,
-    string.IsNullOrWhiteSpace(argument)
-      ? default
-      : [argument.Trim()],
+    [argument.Trim()],
     noNewWindow
   );
   internal static void CreateProcess(
@@ -32,9 +30,7 @@ internal static class Start
     bool noNewWindow = default
   ) => ShellExecute(
     fileName,
-    string.IsNullOrWhiteSpace(argument)
-      ? default
-      : [argument.Trim()],
+    [argument.Trim()],
     administrator,
     noNewWindow
   );
