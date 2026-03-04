@@ -52,12 +52,7 @@ public sealed partial class GitReset() : GitCommand("reset")
   [Parameter(
     HelpMessage = "Non-destructive reset, equivalent to running git reset without --hard"
   )]
-  public SwitchParameter Soft
-  {
-    get => soft;
-    set => soft = value;
-  }
-  private bool soft;
+  public SwitchParameter Soft { get; set; }
 
   private protected sealed override void PreprocessArguments()
   {
@@ -101,7 +96,7 @@ public sealed partial class GitReset() : GitCommand("reset")
 
     _ = NativeArguments.RemoveAll(a => a is "--hard");
 
-    if (!soft)
+    if (!Soft)
     {
       NativeArguments.Insert(default, "--hard");
 
