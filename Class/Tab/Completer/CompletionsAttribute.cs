@@ -16,14 +16,16 @@ internal abstract class CompletionsAttribute<TDomain>(
   public sealed override Completer Create() => new(
     CreateDomain(Domain),
     Strict,
-    Case
+    Case,
+    CompletionType
   );
 
   internal sealed class Completer(
     IEnumerable<string> Domain,
     bool Strict,
-    CompletionCase Case
-  ) : TabCompleter(Case)
+    CompletionCase Case,
+    CompletionResultType CompletionType
+  ) : TabCompleter(Case, CompletionType)
   {
     private protected sealed override IEnumerable<CompletionResultRecord> GenerateCompletion(string wordToComplete)
     {
