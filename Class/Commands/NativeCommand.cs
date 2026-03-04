@@ -51,7 +51,7 @@ public abstract partial class NativeCommand(
 
   [Parameter(
     DontShow = true,
-    HelpMessage = "Pass -E flag as argument"
+    HelpMessage = "Pass -e flag as argument"
   )]
   public SwitchParameter E { get; set; }
 
@@ -69,7 +69,7 @@ public abstract partial class NativeCommand(
 
   [Parameter(
     DontShow = true,
-    HelpMessage = "Pass -P flag as argument"
+    HelpMessage = "Pass -p flag as argument"
   )]
   public SwitchParameter P { get; set; }
 
