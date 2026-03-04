@@ -40,7 +40,7 @@ public abstract class VirtualStartWorkspace() : NativeCommand(true, true)
         NativeArguments.Add("--profile=Setting");
         break;
 
-      case var profile when NativeArgumentRegex().IsMatch(profile):
+      case var profile when IsNativeArgument(profile):
         NativeArguments.Add(Name);
         break;
 

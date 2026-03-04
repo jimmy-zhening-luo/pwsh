@@ -9,7 +9,7 @@ public abstract partial class NativeCommand(
   [System.Text.RegularExpressions.GeneratedRegex(
     @"^(?>-(?>[A-Za-z]|(?>(?>-[A-Za-z][A-Za-z\d]*(?>_[A-Za-z\d]+)*)(?>-[A-Za-z\d]+(?>_[A-Za-z\d]+)*)*)))(?>=\S+)?$"
   )]
-  private protected static partial System.Text.RegularExpressions.Regex NativeArgumentRegex();
+  private static partial System.Text.RegularExpressions.Regex NativeArgumentRegex();
 
   private protected record SwitchBoard(
     bool D = default,
@@ -121,7 +121,7 @@ public abstract partial class NativeCommand(
 
     foreach (var argument in ArgumentList)
     {
-      if (NativeArgumentRegex().IsMatch(argument))
+      if (IsNativeArgument(argument))
       {
         NativeArguments.Add(argument);
       }

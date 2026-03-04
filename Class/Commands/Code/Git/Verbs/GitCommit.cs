@@ -53,7 +53,7 @@ public sealed partial class GitCommit() : GitCommand("commit")
       && ResolveWorkingDirectory(WorkingDirectory) is ""
     )
     {
-      if (NativeArgumentRegex().IsMatch(WorkingDirectory))
+      if (IsNativeArgument(WorkingDirectory))
       {
         NativeArguments.Insert(default, WorkingDirectory);
       }
@@ -67,7 +67,7 @@ public sealed partial class GitCommit() : GitCommand("commit")
 
     if (Message is not "")
     {
-      if (NativeArgumentRegex().IsMatch(Message))
+      if (IsNativeArgument(Message))
       {
         NativeArguments.Insert(default, Message);
       }
