@@ -112,8 +112,7 @@ internal class PathCompletionsAttribute(
             )
             {
               line = string.Empty;
-              lineCaptured = System.IO.Path.GetFullPath(buffer);
-              searchPath = lineCaptured;
+              searchPath = lineCaptured = System.IO.Path.GetFullPath(buffer);
             }
             else
             {
