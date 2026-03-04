@@ -191,6 +191,22 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
 
   private protected void EndSteppablePipeline() => CleanPipeline();
 
+  private protected string[] ReanchorPath(string[] paths)
+  {
+    List<string> reanchoredPaths = [];
+
+    foreach (var path in paths)
+    {
+      reanchoredPaths.Add(ReanchorPath(path));
+    }
+
+    if (reanchoredPaths is [])
+    {
+      reanchoredPaths.Add(ReanchorPath());
+    }
+
+    return [.. reanchoredPaths];
+  }
   private protected string ReanchorPath(string path = "") => Client.File.PathString.FullPathLocationRelative(
     Location.IsRooted
       ? Client.File.PathString.FullPathLocationRelative(
