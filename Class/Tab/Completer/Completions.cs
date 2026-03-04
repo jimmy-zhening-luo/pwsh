@@ -29,17 +29,18 @@ internal abstract class CompletionsAttribute<TDomain>(
   {
     private protected sealed override IEnumerable<CompletionResultRecord> GenerateCompletion(string wordToComplete)
     {
+      uint index = default;
+
       if (wordToComplete is "")
       {
         foreach (var member in Domain)
         {
+          ++index;
           yield return new (member);
         }
 
         yield break;
       }
-
-      uint matches = default;
 
       foreach (var member in Domain)
       {
@@ -50,12 +51,12 @@ internal abstract class CompletionsAttribute<TDomain>(
           )
         )
         {
-          ++matches;
+          ++index;
           yield return new (member);
         }
       }
 
-      if (Strict || matches is not 1)
+      if (Strict || index is not 1)
       {
         yield break;
       }
@@ -71,7 +72,7 @@ internal abstract class CompletionsAttribute<TDomain>(
           ) > 0
         )
         {
-          ++matches;
+          ++index;
           yield return new (member);
         }
       }

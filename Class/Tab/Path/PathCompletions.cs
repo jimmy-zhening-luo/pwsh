@@ -27,6 +27,7 @@ internal class PathCompletionsAttribute(
     private readonly bool Flat;
     private readonly bool IncludeHidden;
     private readonly bool AllowReanchor;
+
     private uint Index;
 
     internal PathCompleter(
