@@ -28,7 +28,7 @@ internal static partial class PathString
       ExpandHomePrefix(
         DeduplicateSeparator(
           System.Environment.ExpandEnvironmentVariables(
-            path.Trim()
+            path.Trim() ?? string.Empty
           )
             .Replace('/', Separator)
         )
