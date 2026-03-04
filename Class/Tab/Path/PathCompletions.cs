@@ -145,21 +145,25 @@ internal class PathCompletionsAttribute(
       );
     }
 
-    private static string FormatCompletionPath(
+    private static CompletionResultRecord CreateCompletionRecord(
+      string description,
       string accumulator,
       string filename,
       bool trailingSeparator = default
-    ) => System.IO.Path.Join(
-      accumulator,
-      filename,
-      trailingSeparator
-        ? Client.File.PathString.SeparatorString
-        : string.Empty
-    )
-      .Replace(
-        Client.File.PathString.Separator,
-        '/'
-      );
+    ) => new(
+      System.IO.Path.Join(
+        accumulator,
+        filename,
+        trailingSeparator
+          ? Client.File.PathString.SeparatorString
+          : string.Empty
+      )
+        .Replace(
+          Client.File.PathString.Separator,
+          '/'
+        ),
+      Description: description
+    );
 
     private protected sealed override IEnumerable<CompletionResultRecord> GenerateCompletion(string wordToComplete)
     {
@@ -347,26 +351,25 @@ internal class PathCompletionsAttribute(
 
       if (accumulator is not "")
       {
-        yield return new (
-          FormatCompletionPath(
-            accumulator,
-            Client.File.PathString.SeparatorString
-          ),
-          Description: System.IO.Path.Combine(
+        yield return CreateCompletionRecord(
+          System.IO.Path.Combine(
             searchContext.Path,
             Client.File.PathString.SeparatorString
-          )
+          ),
+          accumulator,
+          Client.File.PathString.SeparatorString
         );
       }
 
       if (accumulator is not "" || Index is not 0)
       {
-        yield return new (
-          FormatCompletionPath(accumulator, @"..\"),
-          Description: Client.File.PathString.FullPathLocationRelative(
+        yield return CreateCompletionRecord(
+          Client.File.PathString.FullPathLocationRelative(
             searchContext.Path,
             ".."
-          )
+          ),
+          accumulator,
+          @"..\"
         );
       }
 
@@ -409,13 +412,11 @@ internal class PathCompletionsAttribute(
       {
         ++Index;
 
-        yield return new (
-          FormatCompletionPath(
-            accumulator,
-            System.IO.Path.GetFileName(path),
-            trailingSeparator
-          ),
-          Description: path
+        yield return CreateCompletionRecord(
+          path,
+          accumulator,
+          System.IO.Path.GetFileName(path),
+          trailingSeparator
         );
       }
     }
