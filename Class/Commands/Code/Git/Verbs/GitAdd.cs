@@ -8,7 +8,7 @@ namespace Module.Commands.Code.Git.Verbs;
 [Alias("ga")]
 public sealed class GitAdd() : GitCommand("add")
 {
-  private static string FlagRenormalize => "--renormalize";
+  private const string FlagRenormalize = "--renormalize";
 
   [Parameter(
     Position = default,

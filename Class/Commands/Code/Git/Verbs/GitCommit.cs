@@ -8,7 +8,7 @@ namespace Module.Commands.Code.Git.Verbs;
 [Alias("gm")]
 public sealed partial class GitCommit() : GitCommand("commit")
 {
-  private static string FlagAllowEmpty => "--allow-empty";
+  private const string FlagAllowEmpty = "--allow-empty";
 
   [Parameter(
     Position = 60,
