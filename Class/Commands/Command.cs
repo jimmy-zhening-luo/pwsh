@@ -2,65 +2,6 @@ namespace Module.Commands;
 
 public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDisposable
 {
-  private class PowerShellHost : System.IDisposable
-  {
-    private bool disposed;
-
-    internal PowerShell? PS => powershell;
-    private PowerShell? powershell;
-
-    private SteppablePipeline? steppablePipeline;
-
-    public PowerShellHost()
-    {
-      powershell = Module.Create();
-    }
-
-    ~PowerShellHost()
-    {
-      Dispose(default);
-    }
-
-    public void Dispose()
-    {
-      Dispose(true);
-
-      System.GC.SuppressFinalize(this);
-    }
-
-    private void Dispose(bool disposing)
-    {
-      if (!disposed)
-      {
-        if (disposing)
-        {
-          Clean();
-        }
-
-        disposed = true;
-      }
-    }
-
-    private void Clean()
-    {
-      CleanPipeline();
-
-      powershell?.Dispose();
-      powershell = default;
-    }
-
-    private void CleanPipeline()
-    {
-      if (steppablePipeline is not null)
-      {
-        _ = steppablePipeline.End();
-        steppablePipeline.Clean();
-        steppablePipeline.Dispose();
-        steppablePipeline = default;
-      }
-    }
-  }
-
   private protected record Locator(
     string Root = "",
     string Subpath = ""
