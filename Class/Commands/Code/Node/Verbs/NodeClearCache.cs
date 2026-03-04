@@ -11,7 +11,8 @@ public sealed class NodeClearCache() : NodeCommand("cache")
   private protected sealed override void PreprocessArguments()
   {
     WorkingDirectory = string.Empty;
-    noThrow = false;
+
+    NoThrow = false;
     D = false;
     E = false;
     I = false;

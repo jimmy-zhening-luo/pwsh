@@ -18,7 +18,7 @@ public sealed class NodeOutdated() : NodeCommand("outdated")
 
   private protected sealed override void PreprocessArguments()
   {
-    noThrow = true;
+    NoThrow = true;
 
     if (All && !NativeArguments.Contains(FlagAll))
     {
