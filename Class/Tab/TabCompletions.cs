@@ -22,7 +22,7 @@ internal abstract class TabCompletionsAttribute(
   {
     private protected record CompletionResultRecord(
       string Result,
-      string? DisplayText = default,
+      string? DisplayName = default,
       string? Tooltip = default,
       CompletionResultType? CompletionType = default
     );
@@ -58,7 +58,7 @@ internal abstract class TabCompletionsAttribute(
 
         yield return new(
           Client.Console.String.EscapeSingleQuoted(casedResult),
-          completion.DisplayText ?? casedResult,
+          completion.DisplayName ?? casedResult,
           completion.CompletionType ?? CompletionType,
           completion.Tooltip ?? result
         );
