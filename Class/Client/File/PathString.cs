@@ -61,12 +61,12 @@ internal static partial class PathString
   };
 
 
-  [System.Text.RegularExpressions.GeneratedRegex(
-    @"(?<!^)(?>\\{2,})"
-  )]
-  private static partial System.Text.RegularExpressions.Regex DuplicateSeparatorRegex();
   private static string DeduplicateSeparator(string path) => DuplicateSeparatorRegex().Replace(
     path,
     SeparatorString
   );
+  [System.Text.RegularExpressions.GeneratedRegex(
+    @"(?<!^)(?>\\{2,})"
+  )]
+  private static partial System.Text.RegularExpressions.Regex DuplicateSeparatorRegex();
 }

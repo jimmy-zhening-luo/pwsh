@@ -5,6 +5,7 @@ public abstract partial class NativeCommand(
   bool SkipSsh = default
 ) : CoreCommand(SkipSsh)
 {
+  private protected static bool IsNativeArgument(string argument) => NativeArgumentRegex().IsMatch(argument);
   [System.Text.RegularExpressions.GeneratedRegex(
     @"^(?>-(?>[A-Za-z]|(?>(?>-[A-Za-z][A-Za-z\d]*(?>_[A-Za-z\d]+)*)(?>-[A-Za-z\d]+(?>_[A-Za-z\d]+)*)*)))(?>=\S+)?$"
   )]
