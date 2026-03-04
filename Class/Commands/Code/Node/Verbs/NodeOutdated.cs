@@ -14,18 +14,13 @@ public sealed class NodeOutdated() : NodeCommand("outdated")
     HelpMessage = "In addition to direct dependencies, check for outdated meta-dependencies (--all)"
   )]
   [Alias("a")]
-  public SwitchParameter All
-  {
-    get => all;
-    set => all = value;
-  }
-  private bool all;
+  public SwitchParameter All { get; set; }
 
   private protected sealed override void PreprocessArguments()
   {
     noThrow = true;
 
-    if (all && !NativeArguments.Contains(FlagAll))
+    if (All && !NativeArguments.Contains(FlagAll))
     {
       NativeArguments.Insert(default, FlagAll);
     }

@@ -43,32 +43,17 @@ public sealed class SetDirectory : WrappedSetDirectory
   [Parameter(
     ParameterSetName = "DriveC"
   )]
-  public SwitchParameter C
-  {
-    get => driveC;
-    set => driveC = value;
-  }
-  private bool driveC;
+  public SwitchParameter C { get; set; }
 
   [Parameter(
     ParameterSetName = "DriveD"
   )]
-  public SwitchParameter D
-  {
-    get => driveD;
-    set => driveD = value;
-  }
-  private bool driveD;
+  public SwitchParameter D { get; set; }
 
   [Parameter(
     ParameterSetName = "DriveE"
   )]
-  public SwitchParameter E
-  {
-    get => driveE;
-    set => driveE = value;
-  }
-  private bool driveE;
+  public SwitchParameter E { get; set; }
 
   private protected sealed override Dictionary<string, object?> CoercedParameters => new()
   {
