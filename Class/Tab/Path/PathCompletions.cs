@@ -352,7 +352,7 @@ internal class PathCompletionsAttribute(
       if (accumulator is not "")
       {
         yield return CreateCompletionRecord(
-          System.IO.Path.Combine(
+          System.IO.Path.Join(
             searchContext.Path,
             Client.File.PathString.SeparatorString
           ),
