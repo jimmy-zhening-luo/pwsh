@@ -67,7 +67,12 @@ public abstract class VirtualStartWorkspace() : NativeCommand(true, true)
 
   private protected sealed override List<string> BuildNativeCommand() => [
     InCurrentLocation
-      ? Pwd(Path)
+      ? Path is ""
+        ? Pwd() == Client.Environment.Known.Folder.Code()
+        || Pwd() == Client.Environment.Known.Folder.Home()
+          ? string.Empty
+          : Reanchor(Pwd())
+        : Pwd(Path)
       : Reanchor(Path),
   ];
 }
