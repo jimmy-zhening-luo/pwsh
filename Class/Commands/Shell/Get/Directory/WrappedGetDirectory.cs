@@ -88,7 +88,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
     {
       if (Path is [])
       {
-        Path = [Reanchor()];
+        Path = [ReanchorPath()];
       }
       else
       {
@@ -98,7 +98,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
           ++i
         )
         {
-          Path[i] = Reanchor(Path[i]);
+          Path[i] = ReanchorPath(Path[i]);
         }
       }
 

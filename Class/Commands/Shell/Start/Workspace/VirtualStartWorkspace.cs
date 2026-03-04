@@ -71,8 +71,8 @@ public abstract class VirtualStartWorkspace() : NativeCommand(true, true)
         ? Pwd() == Client.Environment.Known.Folder.Code()
         || Pwd() == Client.Environment.Known.Folder.Home()
           ? string.Empty
-          : Reanchor(Pwd())
+          : ReanchorPath(Pwd())
         : Pwd(Path)
-      : Reanchor(Path),
+      : ReanchorPath(Path),
   ];
 }
