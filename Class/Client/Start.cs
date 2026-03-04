@@ -15,7 +15,7 @@ internal static class Start
   );
   internal static void CreateProcess(
     string fileName,
-    IEnumerable<string>? arguments = default,
+    IList<string>? arguments = default,
     bool noNewWindow = default
   ) => System.Diagnostics.Process.Start(
     ProcessStartOptions(
@@ -40,7 +40,7 @@ internal static class Start
   );
   internal static void ShellExecute(
     string fileName,
-    IEnumerable<string>? arguments = default,
+    IList<string>? arguments = default,
     bool administrator = default,
     bool noNewWindow = default
   ) => System.Diagnostics.Process.Start(
@@ -55,7 +55,7 @@ internal static class Start
 
   private static System.Diagnostics.ProcessStartInfo ProcessStartOptions(
     string fileName,
-    IEnumerable<string>? arguments,
+    IList<string>? arguments,
     bool noNewWindow,
     bool shellExecute = default,
     bool administrator = default
