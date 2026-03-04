@@ -38,7 +38,7 @@ public sealed class GetSize : CoreCommand
     pb,
   }
 
-  private enum DiskSizeUnitAlias
+  public enum DiskSizeUnitAlias
   {
     b,
     kb,
