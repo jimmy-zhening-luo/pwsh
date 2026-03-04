@@ -19,12 +19,7 @@ public sealed class TestCommand : CoreCommand
   public string Greeting { get; set; } = "Hello";
 
   [Parameter]
-  public SwitchParameter Switch
-  {
-    get => switchParameter;
-    set => switchParameter = value;
-  }
-  private bool switchParameter;
+  public SwitchParameter Switch { get; set; }
 
   private protected sealed override void Preprocess()
   { }
@@ -40,6 +35,16 @@ public sealed class TestCommand : CoreCommand
   private protected sealed override void Postprocess()
   {
     WriteObject($"The greeting was: {Greeting}");
+    WriteObject($"The value of 'Switch' is: {Switch}");
+
+    if (Switch)
+    {
+      WriteObject("Switch evaluates to true.");
+    }
+    else
+    {
+      WriteObject("Switch evaluates to false.");
+    }
   }
 
   private string Greet(string name) => $"{Greeting}, {Name}!";
