@@ -86,23 +86,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   {
     if (!InCurrentLocation)
     {
-      if (Path is [])
-      {
-        Path = [ReanchorPath()];
-      }
-      else
-      {
-        for (
-          int i = default;
-          i < Path.Length;
-          ++i
-        )
-        {
-          Path[i] = ReanchorPath(Path[i]);
-        }
-      }
-
-      BoundParameters["Path"] = Path;
+      BoundParameters["Path"] = Path = ReanchorPath(Path);
     }
   }
 }

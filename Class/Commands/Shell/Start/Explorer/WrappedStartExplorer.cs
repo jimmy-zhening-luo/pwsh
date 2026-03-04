@@ -22,30 +22,6 @@ public abstract class WrappedStartExplorer() : WrappedCommandShouldProcess(
 
   private protected sealed override void TransformPipelineInput()
   {
-    if (Path is [])
-    {
-      Path = [
-        InCurrentLocation
-          ? Pwd()
-          : ReanchorPath(),
-      ];
-      BoundParameters["Path"] = Path;
-    }
-    else
-    {
-      if (!InCurrentLocation)
-      {
-        for (
-          int i = default;
-          i < Path.Length;
-          ++i
-        )
-        {
-          Path[i] = ReanchorPath(Path[i]);
-        }
-
-        BoundParameters["Path"] = Path;
-      }
-    }
+    BoundParameters["Path"] = Path = ReanchorPath(Path);
   }
 }
