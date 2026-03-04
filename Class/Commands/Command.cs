@@ -25,7 +25,6 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
     Stopped,
     Disposed,
   }
-
   private CommandState state;
 
   ~CoreCommand()
