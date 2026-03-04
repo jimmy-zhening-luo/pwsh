@@ -157,7 +157,7 @@ internal class PathCompletionsAttribute(
         '/'
       );
 
-    private protected sealed override IEnumerable<string> GenerateCompletion(string wordToComplete)
+    private protected sealed override IEnumerable<CompletionResultRecord> GenerateCompletion(string wordToComplete)
     {
       Index = default;
 
@@ -357,7 +357,7 @@ internal class PathCompletionsAttribute(
       yield break;
     }
 
-    private IEnumerable<string> Directories(
+    private IEnumerable<CompletionResultRecord> Directories(
       SearchContext searchContext,
       string accumulator,
       bool trailingSeparator = default
@@ -371,7 +371,7 @@ internal class PathCompletionsAttribute(
       trailingSeparator
     );
 
-    private IEnumerable<string> Files(
+    private IEnumerable<CompletionResultRecord> Files(
       SearchContext searchContext,
       string accumulator
     ) => EnumerateResults(
@@ -383,7 +383,7 @@ internal class PathCompletionsAttribute(
       )
     );
 
-    private IEnumerable<string> EnumerateResults(
+    private IEnumerable<CompletionResultRecord> EnumerateResults(
       string accumulator,
       IEnumerable<string> paths,
       bool trailingSeparator = default
@@ -392,10 +392,15 @@ internal class PathCompletionsAttribute(
       foreach (var path in paths)
       {
         ++Index;
-        yield return Join(
-          accumulator,
-          System.IO.Path.GetFileName(path),
-          trailingSeparator
+
+        yield return new (
+          Join(
+            accumulator,
+            System.IO.Path.GetFileName(path),
+            trailingSeparator
+          ),
+          Tooltip: path,
+          CompletionType: CompletionResultType.ProviderItem
         );
       }
     }

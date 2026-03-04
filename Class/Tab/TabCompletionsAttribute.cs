@@ -34,21 +34,25 @@ internal abstract class TabCompletionsAttribute : ArgumentCompleterAttribute, IA
       )
     );
 
-    private protected abstract IEnumerable<string> GenerateCompletion(string wordToComplete);
+    private protected abstract IEnumerable<CompletionResultRecord> GenerateCompletion(string wordToComplete);
 
-    private IEnumerable<CompletionResult> WrapArgumentCompletionResult(IEnumerable<string> completedStrings)
+    private IEnumerable<CompletionResult> WrapArgumentCompletionResult(IEnumerable<CompletionResultRecord> completions)
     {
-      foreach (var completedString in completedStrings)
+      foreach (var completion in completions)
       {
+        var result = completion.Result;
+        var casedResult = Case switch
+        {
+          CompletionCase.Upper => result.ToUpper(),
+          CompletionCase.Lower => result.ToLower(),
+          _ => result,
+        };
+
         yield return new(
-          Client.Console.String.EscapeSingleQuoted(
-            Case switch
-            {
-              CompletionCase.Upper => completedString.ToUpper(),
-              CompletionCase.Lower => completedString.ToLower(),
-              _ => completedString,
-            }
-          )
+          Client.Console.String.EscapeSingleQuoted(casedResult),
+          completion.DisplayText ?? casedResult,
+          completion.CompletionType,
+          completion.Tooltip ?? result
         );
       }
     }

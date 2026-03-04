@@ -22,13 +22,13 @@ internal abstract class CompletionsAttribute<TDomain>(TDomain Domain) : TabCompl
     CompletionCase Case
   ) : TabCompleter(Case)
   {
-    private protected sealed override IEnumerable<string> GenerateCompletion(string wordToComplete)
+    private protected sealed override IEnumerable<CompletionResultRecord> GenerateCompletion(string wordToComplete)
     {
       if (wordToComplete is "")
       {
         foreach (var member in Domain)
         {
-          yield return member;
+          yield return new (member);
         }
 
         yield break;
@@ -46,7 +46,7 @@ internal abstract class CompletionsAttribute<TDomain>(TDomain Domain) : TabCompl
         )
         {
           ++matches;
-          yield return member;
+          yield return new (member);
         }
       }
 
@@ -67,7 +67,7 @@ internal abstract class CompletionsAttribute<TDomain>(TDomain Domain) : TabCompl
         )
         {
           ++matches;
-          yield return member;
+          yield return new (member);
         }
       }
 
