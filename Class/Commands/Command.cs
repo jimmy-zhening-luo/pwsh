@@ -13,7 +13,7 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
 
     public PowerShellHost()
     {
-      PS = Module.Create();
+      powershell = Module.Create();
     }
 
     ~PowerShellHost()
