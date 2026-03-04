@@ -1,6 +1,9 @@
 namespace Module.Commands;
 
-public abstract partial class NativeCommand(bool SkipSsh = default) : CoreCommand(SkipSsh)
+public abstract partial class NativeCommand(
+  bool CreateProcess = default,
+  bool SkipSsh = default
+) : CoreCommand(SkipSsh)
 {
   [System.Text.RegularExpressions.GeneratedRegex(
     @"^(?>-(?>[A-Za-z]|(?>(?>-[A-Za-z][A-Za-z\d]*(?>_[A-Za-z\d]+)*)(?>-[A-Za-z\d]+(?>_[A-Za-z\d]+)*)*)))(?>=\S+)?$"
@@ -134,63 +137,76 @@ public abstract partial class NativeCommand(bool SkipSsh = default) : CoreComman
 
   private protected sealed override void Postprocess()
   {
-    List<string> command = [
-      "&",
-      CommandPath,
-      .. BuildNativeCommand(),
-    ];
+    List<string> arguments = BuildNativeCommand();
 
     if (d)
     {
-      command.Add(Uppercase.D ? "-D" : "-d");
+      arguments.Add(Uppercase.D ? "-D" : "-d");
     }
     if (e)
     {
-      command.Add(Uppercase.E ? "-E" : "-e");
+      arguments.Add(Uppercase.E ? "-E" : "-e");
     }
     if (i)
     {
-      command.Add(Uppercase.I ? "-I" : "-i");
+      arguments.Add(Uppercase.I ? "-I" : "-i");
     }
     if (o)
     {
-      command.Add(Uppercase.O ? "-O" : "-o");
+      arguments.Add(Uppercase.O ? "-O" : "-o");
     }
     if (p)
     {
-      command.Add(Uppercase.P ? "-P" : "-p");
+      arguments.Add(Uppercase.P ? "-P" : "-p");
     }
     if (v)
     {
-      command.Add(Uppercase.V ? "-V" : "-v");
+      arguments.Add(Uppercase.V ? "-V" : "-v");
     }
 
-    command.AddRange(ArgumentList);
-    command.AddRange(NativeArguments);
+    arguments.AddRange(ArgumentList);
+    arguments.AddRange(NativeArguments);
 
-    List<string> escapedCommand = [];
+    List<string> escapedArguments = [];
 
-    foreach (var word in command)
+    foreach (var word in arguments)
     {
-      escapedCommand.Add(
+      escapedArguments.Add(
         Client.Console.String.EscapeDoubleQuoted(word)
       );
     }
 
-    AddScript(string.Join(Client.Console.String.Space, escapedCommand));
-
-    ProcessSteppablePipeline();
-    EndSteppablePipeline();
-
-    if (HadNativeError)
+    if (CreateProcess)
     {
-      if (noThrow)
+      Client.Start.CreateProcess(
+        CommandPath,
+        escapedArguments,
+        noNewWindow: true
+      );
+    }
+    else
+    {
+      List<string> command = [
+        "&",
+        Client.Console.String.EscapeDoubleQuoted(CommandPath),
+        .. escapedArguments,
+      ];
+
+      AddScript(string.Join(Client.Console.String.Space, command));
+
+      ProcessSteppablePipeline();
+      EndSteppablePipeline();
+
+      if (HadNativeError)
       {
-        WriteWarning("Execution error");
-      }
-      else
-      {
-        ThrowError("Execution error");
+        if (noThrow)
+        {
+          WriteWarning("Execution error");
+        }
+        else
+        {
+          ThrowError("Execution error");
+        }
       }
     }
   }
