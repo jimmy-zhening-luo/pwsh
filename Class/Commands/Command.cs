@@ -11,7 +11,7 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
 
     private SteppablePipeline? steppablePipeline;
 
-    PowerShellHost()
+    public PowerShellHost()
     {
       powershell = Module.Create();
     }
