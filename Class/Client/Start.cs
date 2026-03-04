@@ -61,13 +61,9 @@ internal static class Start
     bool administrator = default
   )
   {
-    List<string> argumentList = arguments is null or [] or [""]
-      ? []
-      : [.. arguments ?? []];
-
-    System.Diagnostics.ProcessStartInfo startInfo = argumentList is []
+    System.Diagnostics.ProcessStartInfo startInfo = arguments is null or [] or [""]
       ? new(fileName)
-      : new(fileName, argumentList);
+      : new(fileName, arguments);
 
     if (noNewWindow)
     {
