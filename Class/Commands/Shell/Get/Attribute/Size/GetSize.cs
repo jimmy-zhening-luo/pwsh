@@ -88,22 +88,10 @@ public sealed class GetSize : CoreCommand
   [Tab.Completer.EnumCompletions(
     typeof(DiskSizeUnit)
   )]
-  public string Unit
+  public DiskSizeUnit Unit
   {
-    get => unit.ToString();
-    set => unit = System.Enum.TryParse(
-      value,
-      true,
-      out DiskSizeUnit parsedUnit
-    )
-      ? parsedUnit
-      : System.Enum.TryParse(
-          value,
-          true,
-          out DiskSizeUnitAlias parsedUnitAlias
-        )
-        ? (DiskSizeUnit)parsedUnitAlias
-        : DiskSizeUnit.kb;
+    get => unit;
+    set => unit = value;
   }
   private DiskSizeUnit unit = DiskSizeUnit.kb;
 
@@ -156,13 +144,13 @@ public sealed class GetSize : CoreCommand
       }
 
       double scaledSize = (double)bytes / (
-        1L << ((int)unit * 10)
+        1L << ((int)Unit * 10)
       );
 
       WriteObject(
         number
           ? scaledSize
-          : $"{System.Math.Round(scaledSize, 3)} {unit}"
+          : $"{System.Math.Round(scaledSize, 3)} {Unit}"
       );
     }
   }
