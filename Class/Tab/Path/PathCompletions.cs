@@ -352,7 +352,7 @@ internal class PathCompletionsAttribute(
             accumulator,
             Client.File.PathString.SeparatorString
           ),
-          Tooltip: System.IO.Path.Combine(
+          Description: System.IO.Path.Combine(
             searchContext.Path,
             Client.File.PathString.SeparatorString
           )
@@ -363,7 +363,7 @@ internal class PathCompletionsAttribute(
       {
         yield return new (
           FormatCompletionPath(accumulator, @"..\"),
-          Tooltip: Client.File.PathString.FullPathLocationRelative(
+          Description: Client.File.PathString.FullPathLocationRelative(
             searchContext.Path,
             ".."
           )
@@ -415,7 +415,7 @@ internal class PathCompletionsAttribute(
             System.IO.Path.GetFileName(path),
             trailingSeparator
           ),
-          Tooltip: path
+          Description: path
         );
       }
     }
