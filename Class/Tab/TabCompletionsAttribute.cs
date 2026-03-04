@@ -12,6 +12,13 @@ internal abstract class TabCompletionsAttribute : ArgumentCompleterAttribute, IA
 
   internal abstract class TabCompleter(CompletionCase Case) : IArgumentCompleter
   {
+    private protected record CompletionResultRecord(
+      string Result,
+      string? DisplayText = default,
+      string? Tooltip = default,
+      CompletionResultType CompletionType = CompletionResultType.ParameterValue
+    );
+
     public IEnumerable<CompletionResult> CompleteArgument(
       string commandName,
       string parameterName,
