@@ -4,9 +4,9 @@ namespace Module.Tab;
   System.AttributeTargets.Property
   | System.AttributeTargets.Field
 )]
-internal abstract class TabCompletionsAttribute : ArgumentCompleterAttribute, IArgumentCompleterFactory
+internal abstract class TabCompletionsAttribute(CompletionCase Case = default) : ArgumentCompleterAttribute, IArgumentCompleterFactory
 {
-  public CompletionCase Case { get; init; }
+  public CompletionCase Case { get; init; } = Case;
 
   public abstract IArgumentCompleter Create();
 

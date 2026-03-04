@@ -4,7 +4,10 @@ internal class CompletionsAttribute(string[] Domain) : CompletionsAttribute<stri
 {
   private protected sealed override IEnumerable<string> CreateDomain(string[] domain) => domain;
 }
-internal abstract class CompletionsAttribute<TDomain>(TDomain Domain) : TabCompletionsAttribute
+internal abstract class CompletionsAttribute<TDomain>(
+  TDomain Domain,
+  CompletionCase Case = default
+) : TabCompletionsAttribute(Case)
 {
   public bool Strict { get; init; }
 
