@@ -19,7 +19,7 @@ internal abstract class TabCompletionsAttribute(CompletionCase Case = default) :
       string Result,
       string? DisplayText = default,
       string? Tooltip = default,
-      CompletionResultType? CompletionType
+      CompletionResultType? CompletionType = default
     );
 
     public IEnumerable<CompletionResult> CompleteArgument(
