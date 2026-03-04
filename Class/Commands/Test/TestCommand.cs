@@ -37,13 +37,13 @@ public sealed class TestCommand : CoreCommand
     WriteObject($"The greeting was: {Greeting}");
     WriteObject($"The value of 'Switch' is: {Switch}");
 
-    if (Switch)
+    if (!Switch)
     {
-      WriteObject("Switch evaluates to true.");
+      WriteObject("Switch evaluates to false.");
     }
     else
     {
-      WriteObject("Switch evaluates to false.");
+      WriteObject("Switch evaluates to true.");
     }
   }
 
