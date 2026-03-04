@@ -141,7 +141,7 @@ internal class PathCompletionsAttribute(
       );
     }
 
-    private static string Join(
+    private static string FormatCompletionPath(
       string accumulator,
       string filename,
       bool trailingSeparator = default
@@ -344,7 +344,7 @@ internal class PathCompletionsAttribute(
       if (accumulator is not "")
       {
         yield return new (
-          Join(
+          FormatCompletionPath(
             accumulator,
             Client.File.PathString.SeparatorString
           ),
@@ -359,7 +359,7 @@ internal class PathCompletionsAttribute(
       if (accumulator is not "" || Index is not 0)
       {
         yield return new (
-          Join(accumulator, @"..\"),
+          FormatCompletionPath(accumulator, @"..\"),
           Tooltip: Client.File.PathString.FullPathLocationRelative(
             searchContext.Path,
             ".."
@@ -408,7 +408,7 @@ internal class PathCompletionsAttribute(
         ++Index;
 
         yield return new (
-          Join(
+          FormatCompletionPath(
             accumulator,
             System.IO.Path.GetFileName(path),
             trailingSeparator
