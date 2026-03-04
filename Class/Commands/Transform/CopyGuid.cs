@@ -13,22 +13,12 @@ public sealed class CopyGuid : CoreCommand
     HelpMessage = "Uppercase GUID"
   )]
   [Alias("Case")]
-  public SwitchParameter Uppercase
-  {
-    get => uppercase;
-    set => uppercase = value;
-  }
-  private bool uppercase;
+  public SwitchParameter Uppercase { get; set; }
 
   [Parameter(
     HelpMessage = "Only copy GUID to clipboard, omit console output"
   )]
-  public SwitchParameter Silent
-  {
-    get => silent;
-    set => silent = value;
-  }
-  private bool silent;
+  public SwitchParameter Silent { get; set; }
 
   private protected sealed override void Postprocess()
   {
@@ -36,12 +26,12 @@ public sealed class CopyGuid : CoreCommand
       .NewGuid()
       .ToString("D");
 
-    if (uppercase)
+    if (Uppercase)
     {
       guid = guid.ToUpper();
     }
 
-    if (!silent)
+    if (!Silent)
     {
       WriteObject(guid);
     }
