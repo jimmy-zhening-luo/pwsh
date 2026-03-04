@@ -1,8 +1,6 @@
 namespace Module.Commands.Code.Git;
 
-public abstract class GitCommand(
-  string IntrinsicVerb = ""
-) : RemoteNativeVerbCommand(IntrinsicVerb)
+public abstract class GitCommand(string IntrinsicVerb = "") : RemoteNativeVerbCommand(IntrinsicVerb)
 {
   private protected sealed class GitVerbCompletionsAttribute() : Tab.Completer.CompletionsAttribute([.. Verbs]);
 

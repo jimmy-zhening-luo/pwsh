@@ -206,7 +206,7 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
 
     return [.. reanchoredPaths];
   }
-  private protected string ReanchorPath(string path = "") => Client.File.PathString.FullPathLocationRelative(
+  private protected string ReanchorPath(string? path = default) => Client.File.PathString.FullPathLocationRelative(
     Location.IsRooted
       ? Client.File.PathString.FullPathLocationRelative(
           Location.Root,
@@ -225,12 +225,12 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
     ? (T)value
     : default;
 
-  private protected string Pwd(string path = "") => Client.File.PathString.FullPathLocationRelative(
+  private protected string Pwd(string? path = default) => Client.File.PathString.FullPathLocationRelative(
     SessionState.Path.CurrentLocation.Path,
     path
   );
 
-  private protected string Drive(string path = "") => Client.File.PathString.FullPathLocationRelative(
+  private protected string Drive(string? path = default) => Client.File.PathString.FullPathLocationRelative(
     SessionState.Drive.Current.Root,
     path
   );
