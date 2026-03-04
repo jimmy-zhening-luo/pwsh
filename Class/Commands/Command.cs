@@ -225,7 +225,7 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
     int progress,
     string? activity = default,
     int activityId = default
-  ) => base.WriteProgress(
+  ) => WriteProgress(
     new(
       activityId,
       activity ?? "Progress",
