@@ -47,7 +47,7 @@ public abstract class VirtualStartWorkspace() : NativeCommand(true, true)
       NativeArguments.Add(
         Window
           ? FlagNewWindow
-          : ReuseWindow
+          : FlagReuseWindow
       );
     }
   }
