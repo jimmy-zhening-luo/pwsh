@@ -11,6 +11,16 @@ internal static class Url
     HttpOrFile,
   }
 
+  private static System.Net.Http.HttpClient HttpClient => client ??= new System.Net.Http.HttpClient(
+    new System.Net.Http.SocketsHttpHandler()
+    {
+      PooledConnectionLifetime = System.TimeSpan.FromMinutes(2),
+      ConnectTimeout = System.TimeSpan.FromMilliseconds(3000),
+    }
+  )
+  {
+    Timeout = System.TimeSpan.FromMilliseconds(3500),
+  };
   private static System.Net.Http.HttpClient? client;
 
   internal static bool IsHttp(
@@ -88,18 +98,7 @@ internal static class Url
 
     try
     {
-      using var response = (
-        client ??= new System.Net.Http.HttpClient(
-          new System.Net.Http.SocketsHttpHandler()
-          {
-            PooledConnectionLifetime = System.TimeSpan.FromMinutes(2),
-            ConnectTimeout = System.TimeSpan.FromMilliseconds(3000),
-          }
-        )
-        {
-          Timeout = System.TimeSpan.FromMilliseconds(3500),
-        }
-      )
+      using var response = HttpClient
         .GetAsync(
           uri,
           System.Net.Http.HttpCompletionOption.ResponseHeadersRead
