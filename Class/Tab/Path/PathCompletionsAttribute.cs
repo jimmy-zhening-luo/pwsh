@@ -34,7 +34,10 @@ internal class PathCompletionsAttribute(
       PathItemType itemType,
       bool flat,
       bool includeHidden
-    ) : base(default) => (
+    ) : base(
+      default,
+      CompletionResultType.ProviderItem
+    ) => (
       Location,
       ItemType,
       Flat,
@@ -351,8 +354,7 @@ internal class PathCompletionsAttribute(
           Tooltip: System.IO.Path.Combine(
             searchContext.Path,
             Client.File.PathString.SeparatorString
-          ),
-          CompletionType: CompletionResultType.ProviderItem
+          )
         );
       }
 
@@ -363,8 +365,7 @@ internal class PathCompletionsAttribute(
           Tooltip: Client.File.PathString.FullPathLocationRelative(
             searchContext.Path,
             ".."
-          ),
-          CompletionType: CompletionResultType.ProviderItem
+          )
         );
       }
 
@@ -413,8 +414,7 @@ internal class PathCompletionsAttribute(
             System.IO.Path.GetFileName(path),
             trailingSeparator
           ),
-          Tooltip: path,
-          CompletionType: CompletionResultType.ProviderItem
+          Tooltip: path
         );
       }
     }
