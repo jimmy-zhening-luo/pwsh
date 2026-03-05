@@ -11,6 +11,8 @@ public abstract partial class CoreCommand
       Dispose(default);
     }
 
+    internal bool HadErrors => PS.HadErrors;
+
     private PowerShell PS
     {
       get
