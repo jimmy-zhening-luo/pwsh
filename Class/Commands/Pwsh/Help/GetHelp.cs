@@ -48,11 +48,8 @@ public sealed class GetHelpOnline : CoreCommand
       foreach (dynamic link in links)
       {
         if (
-          link?.Uri is not null
-          and object noteProperty
-          && Client.Network.Url.ToAbsoluteHttpOrFileUri(
-            noteProperty.ToString() ?? ""
-          ) is { } uri
+          link?.Uri?.ToString() is string helpLink
+          && Client.Network.Url.ToAbsoluteHttpOrFileUri(helpLink) is { } uri
         )
         {
           urls.Add(uri);
