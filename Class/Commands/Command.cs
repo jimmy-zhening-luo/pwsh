@@ -292,32 +292,6 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
   private protected virtual void Postprocess()
   { }
 
-  private protected void WriteProgress(
-    int total,
-    int progress,
-    string activity = "Progress",
-    int activityId = default
-  ) => WriteProgress(
-    new(
-      activityId,
-      activity,
-      $"{progress}/{total}"
-    )
-    {
-      PercentComplete = 100 * progress / total,
-      RecordType = progress == total
-        ? ProgressRecordType.Completed
-        : ProgressRecordType.Processing,
-    }
-  );
-
-  private protected void WriteInformation(object log) => base.WriteInformation(
-    new InformationRecord(
-      log,
-      GetName()
-    )
-  );
-
   [System.Diagnostics.CodeAnalysis.DoesNotReturn]
   private protected void ThrowError(
     string message,
@@ -349,6 +323,32 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
       )
     );
   }
+
+  private protected void WriteProgress(
+    int total,
+    int progress,
+    string activity = "Progress",
+    int activityId = default
+  ) => WriteProgress(
+    new(
+      activityId,
+      activity,
+      $"{progress}/{total}"
+    )
+    {
+      PercentComplete = 100 * progress / total,
+      RecordType = progress == total
+        ? ProgressRecordType.Completed
+        : ProgressRecordType.Processing,
+    }
+  );
+
+  private protected void WriteInformation(object log) => base.WriteInformation(
+    new InformationRecord(
+      log,
+      GetName()
+    )
+  );
 
   private protected PowerShell AddCommand(
     string command,
