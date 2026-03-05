@@ -183,6 +183,9 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
 
   private protected bool HadNativeError => PSVariable<int>("LASTEXITCODE") is not (0 or 1);
 
+  private bool BlockedBySsh => SkipSsh
+    && Client.Environment.Known.Variable.InSsh;
+
   private PowerShellHost PSHost
   {
     get
@@ -193,9 +196,6 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     }
   }
   private PowerShellHost? pshost;
-
-  private bool BlockedBySsh => SkipSsh
-    && Client.Environment.Known.Variable.InSsh;
 
   private bool Disposed { get; set; }
 
