@@ -10,7 +10,7 @@ internal static partial class PathString
 
   internal static string FullPathLocationRelative(
     string location,
-    string? path,
+    string path,
     bool preserveTrailingSeparator = default
   ) => System.IO.Path.GetFullPath(
     Normalize(
@@ -21,16 +21,14 @@ internal static partial class PathString
   );
 
   internal static string Normalize(
-    string? path,
+    string path,
     bool preserveTrailingSeparator = default
   )
   {
     var normalPath = TrimRelativePrefix(
       ExpandHomePrefix(
         DeduplicateSeparator(
-          System.Environment.ExpandEnvironmentVariables(
-            path?.Trim() ?? string.Empty
-          )
+          System.Environment.ExpandEnvironmentVariables(path)
             .Replace(
               AltSeparator,
               Separator

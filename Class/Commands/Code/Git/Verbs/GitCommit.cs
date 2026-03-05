@@ -18,7 +18,7 @@ public sealed partial class GitCommit() : GitCommand("commit")
   public string Message
   {
     get => message;
-    set => message = value.Trim();
+    set => message = value;
   }
   private string message = string.Empty;
 

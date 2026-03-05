@@ -26,11 +26,9 @@ public sealed partial class GitReset() : GitCommand("reset")
     get => tree;
     set
     {
-      var trimmed = value.Trim();
-
-      if (trimmed is not "")
+      if (tree is not "")
       {
-        var treeMatch = GitTreeRegex().Match(trimmed);
+        var treeMatch = GitTreeRegex().Match(tree);
 
         if (treeMatch.Success && treeMatch.Groups["Step"].Value is var step
         && (step is ""
@@ -43,7 +41,7 @@ public sealed partial class GitReset() : GitCommand("reset")
         }
         else
         {
-          ArgumentList = [trimmed, .. ArgumentList];
+          ArgumentList = [tree, .. ArgumentList];
           tree = string.Empty;
         }
       }

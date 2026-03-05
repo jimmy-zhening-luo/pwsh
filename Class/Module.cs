@@ -4,7 +4,7 @@ internal static class Module
 {
   internal static PowerShell Create() => PowerShell.Create(RunspaceMode.CurrentRunspace);
 
-  internal static string FullPathCurrentLocationRelative(string? path = default)
+  internal static string FullPathCurrentLocationRelative(string path = "")
   {
     using var ps = Create();
 

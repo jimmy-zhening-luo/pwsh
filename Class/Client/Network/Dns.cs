@@ -2,22 +2,16 @@ namespace Module.Client.Network;
 
 internal static class Dns
 {
-  internal static bool Resolve(
-    [System.Diagnostics.CodeAnalysis.NotNullWhen(true)]
-    System.Uri? uri
-  ) => uri is
+  internal static bool Resolve(System.Uri uri) => uri is
   {
     IsAbsoluteUri: true,
     Scheme: "http" or "https",
     Host: var host,
   }
     && Resolve(host);
-  internal static bool Resolve(
-    [System.Diagnostics.CodeAnalysis.NotNullWhen(true)]
-    string? host
-  )
+  internal static bool Resolve(string host)
   {
-    if (string.IsNullOrWhiteSpace(host))
+    if (host is "")
     {
       return default;
     }

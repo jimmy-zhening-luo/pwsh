@@ -47,7 +47,7 @@ public sealed class NodeUpdateVersion() : NodeCommand("version")
   public string Version
   {
     get => version;
-    set => version = value.Trim() switch
+    set => version = value switch
     {
       "" => nameof(NodeVersion.patch),
       var v when v.Equals("from-git", System.StringComparison.OrdinalIgnoreCase) => "from-git",

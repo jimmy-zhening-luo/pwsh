@@ -9,7 +9,7 @@ internal static class Local
 
   internal static string GetFolder(
     System.Environment.SpecialFolder folder,
-    string? path = default
+    string path = ""
   ) => File.PathString.FullPathLocationRelative(
     folders.TryGetValue(
       folder,

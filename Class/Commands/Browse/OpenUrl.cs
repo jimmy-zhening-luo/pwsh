@@ -19,11 +19,11 @@ public sealed class OpenUrl() : CoreCommand(true)
   public string Path
   {
     get => pathUri?.ToString() ?? string.Empty;
-    set => pathUri = value.Trim() switch
+    set => pathUri = value switch
     {
       "" => default,
       var path when Client.Network.Url.ToAbsoluteHttpUri(path) is { } url => url,
-      var path when Client.Network.Url.ToAbsoluteFileUri(path) is var fileUri && Client.Network.Url.TestFile(fileUri) => fileUri,
+      var path when Client.Network.Url.ToAbsoluteFileUri(path) is { } fileUri && Client.Network.Url.TestFile(fileUri) => fileUri,
       var path => System.Uri.TryCreate(
         path,
         System.UriKind.Relative,
@@ -90,7 +90,7 @@ public sealed class OpenUrl() : CoreCommand(true)
         case { OriginalString: var s }
           when Client.Network.Url.ToAbsoluteHttpUri(
             $"http://{s}"
-          ) is var url
+          ) is { } url
           && Client.Network.Dns.Resolve(url)
           && Client.Network.Url.TestHttp(url):
           Client.Network.Url.Open(url);

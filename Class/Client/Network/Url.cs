@@ -23,52 +23,36 @@ internal static class Url
   };
   private static System.Net.Http.HttpClient? client;
 
-  internal static bool IsHttp(
-    [System.Diagnostics.CodeAnalysis.NotNullWhen(true)]
-    System.Uri? uri
-  ) => uri is
+  internal static bool IsHttp(System.Uri uri) => uri is
   {
     IsAbsoluteUri: true,
     Scheme: "http" or "https",
   };
 
-  internal static bool IsFile(
-    [System.Diagnostics.CodeAnalysis.NotNullWhen(true)]
-    System.Uri? uri
-  ) => uri is
+  internal static bool IsFile(System.Uri uri) => uri is
   {
     IsAbsoluteUri: true,
     Scheme: "file",
     IsFile: true,
-    LocalPath: var localPath,
+    LocalPath: { } localPath,
   }
-    && !string.IsNullOrWhiteSpace(localPath);
+    && localPath is not "";
 
-  internal static bool IsHttpOrFile(
-    [System.Diagnostics.CodeAnalysis.NotNullWhen(true)]
-    System.Uri? uri
-  ) => IsHttp(uri) || IsFile(uri);
+  internal static bool IsHttpOrFile(System.Uri uri) => IsHttp(uri) || IsFile(uri);
 
-  internal static System.Uri? ToAbsoluteHttpUri(object? uri) => ToAbsoluteUri(uri);
-  internal static System.Uri? ToAbsoluteHttpUri(string? uri) => ToAbsoluteUri(uri);
-  internal static System.Uri? ToAbsoluteHttpUri(System.Uri? uri) => ToAbsoluteUri(uri);
+  internal static System.Uri? ToAbsoluteHttpUri(string uri) => ToAbsoluteUri(uri);
+  internal static System.Uri? ToAbsoluteHttpUri(System.Uri uri) => ToAbsoluteUri(uri);
 
-  internal static System.Uri? ToAbsoluteFileUri(object? uri) => ToAbsoluteUri(uri, Scheme.File);
-  internal static System.Uri? ToAbsoluteFileUri(string? uri) => ToAbsoluteUri(uri, Scheme.File);
-  internal static System.Uri? ToAbsoluteFileUri(System.Uri? uri) => ToAbsoluteUri(uri, Scheme.File);
+  internal static System.Uri? ToAbsoluteFileUri(string uri) => ToAbsoluteUri(uri, Scheme.File);
+  internal static System.Uri? ToAbsoluteFileUri(System.Uri uri) => ToAbsoluteUri(uri, Scheme.File);
 
-  internal static System.Uri? ToAbsoluteHttpOrFileUri(object? uri) => ToAbsoluteUri(uri, Scheme.HttpOrFile);
-  internal static System.Uri? ToAbsoluteHttpOrFileUri(string? uri) => ToAbsoluteUri(uri, Scheme.HttpOrFile);
-  internal static System.Uri? ToAbsoluteHttpOrFileUri(System.Uri? uri) => ToAbsoluteUri(uri, Scheme.HttpOrFile);
+  internal static System.Uri? ToAbsoluteHttpOrFileUri(string uri) => ToAbsoluteUri(uri, Scheme.HttpOrFile);
+  internal static System.Uri? ToAbsoluteHttpOrFileUri(System.Uri uri) => ToAbsoluteUri(uri, Scheme.HttpOrFile);
 
   internal static System.Uri? ToAbsoluteUri(
-    object? uri,
+    string uri,
     Scheme scheme = Scheme.Http
-  ) => ToAbsoluteUri(uri?.ToString(), scheme);
-  internal static System.Uri? ToAbsoluteUri(
-    string? uri,
-    Scheme scheme = Scheme.Http
-  ) => !string.IsNullOrWhiteSpace(uri)
+  ) => uri is not ""
     && System.Uri.TryCreate(
         uri,
         System.UriKind.Absolute,
@@ -77,7 +61,7 @@ internal static class Url
     ? ToAbsoluteUri(url, scheme)
     : default;
   internal static System.Uri? ToAbsoluteUri(
-    System.Uri? uri,
+    System.Uri uri,
     Scheme scheme = Scheme.Http
   ) => (scheme | Scheme.Http) != default
     && IsHttp(uri)
@@ -86,10 +70,7 @@ internal static class Url
     ? uri
     : default;
 
-  internal static bool TestHttp(
-    [System.Diagnostics.CodeAnalysis.NotNullWhen(true)]
-    System.Uri? uri
-  )
+  internal static bool TestHttp(System.Uri uri)
   {
     if (!IsHttp(uri))
     {
@@ -118,10 +99,7 @@ internal static class Url
     }
   }
 
-  internal static bool TestFile(
-    [System.Diagnostics.CodeAnalysis.NotNullWhen(true)]
-    System.Uri? uri
-  ) => IsFile(uri) && System.IO.Path.Exists(
+  internal static bool TestFile(System.Uri uri) => IsFile(uri) && System.IO.Path.Exists(
     uri.LocalPath
   );
 

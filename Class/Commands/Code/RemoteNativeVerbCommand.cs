@@ -21,7 +21,7 @@ public abstract class RemoteNativeVerbCommand(
   public string WorkingDirectory
   {
     get => workingDirectory;
-    set => workingDirectory = value.Trim();
+    set => workingDirectory = value;
   }
   private string workingDirectory = string.Empty;
 

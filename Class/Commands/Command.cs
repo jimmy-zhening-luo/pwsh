@@ -209,7 +209,7 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
 
     return [.. reanchoredPaths];
   }
-  private protected string ReanchorPath(string? path = default) => Client.File.PathString.FullPathLocationRelative(
+  private protected string ReanchorPath(string path = "") => Client.File.PathString.FullPathLocationRelative(
     Location.IsRooted
       ? Client.File.PathString.FullPathLocationRelative(
           Location.Root,
@@ -228,12 +228,12 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
     ? (T)value
     : default;
 
-  private protected string Pwd(string? path = default) => Client.File.PathString.FullPathLocationRelative(
+  private protected string Pwd(string path = "") => Client.File.PathString.FullPathLocationRelative(
     SessionState.Path.CurrentLocation.Path,
     path
   );
 
-  private protected string Drive(string? path = default) => Client.File.PathString.FullPathLocationRelative(
+  private protected string Drive(string path = "") => Client.File.PathString.FullPathLocationRelative(
     SessionState.Drive.Current.Root,
     path
   );
@@ -241,12 +241,12 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
   private protected void WriteProgress(
     int total,
     int progress,
-    string? activity = default,
+    string activity = "Progress",
     int activityId = default
   ) => WriteProgress(
     new(
       activityId,
-      activity ?? "Progress",
+      activity,
       $"{progress}/{total}"
     )
     {
@@ -257,13 +257,10 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
     }
   );
 
-  private protected void WriteInformation(
-    object log,
-    string? source = default
-  ) => base.WriteInformation(
-    new(
+  private protected void WriteInformation(object log) => base.WriteInformation(
+    new InformationRecord(
       log,
-      source ?? GetName()
+      GetName()
     )
   );
 
@@ -272,7 +269,7 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
     string message,
     ErrorCategory category = ErrorCategory.InvalidOperation,
     object? target = default,
-    string? id = default
+    string id = ""
   ) => ThrowError(
     new System.Exception(message),
     category,
@@ -284,7 +281,7 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
     System.Exception exception,
     ErrorCategory category = ErrorCategory.InvalidOperation,
     object? target = default,
-    string? id = default
+    string id = ""
   )
   {
     StopProcessing();
@@ -292,7 +289,7 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
     ThrowTerminatingError(
       new(
         exception,
-        $"{GetName()}Exception" + (id ?? string.Empty),
+        $"{GetName()}Exception{id}",
         category,
         target
       )

@@ -34,7 +34,7 @@ public sealed class TestUrl : CoreCommand
         else if (
           !uri.IsAbsoluteUri
           && Client.Network.Url.ToAbsoluteHttpUri(
-            $"http://{uri.OriginalString.Trim()}"
+            $"http://{uri.OriginalString}"
           ) is { } httpUri
         )
         {

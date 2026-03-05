@@ -18,7 +18,7 @@ public sealed class GitAdd() : GitCommand("add")
   public string Name
   {
     get => name is "" ? "." : name;
-    set => name = value.Trim();
+    set => name = value;
   }
   private string name = string.Empty;
 

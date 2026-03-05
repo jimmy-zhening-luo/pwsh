@@ -82,12 +82,12 @@ internal class PathCompletionsAttribute(
         }
         else
         {
-          var buffer = line[..marker].Trim();
+          var buffer = line[..marker];
           var next = marker + 1;
 
           if (next < line.Length)
           {
-            lineRemaining = line[next..].Trim();
+            lineRemaining = line[next..];
           }
 
           if (buffer is "")

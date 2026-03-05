@@ -51,7 +51,7 @@ public sealed class GetHelpOnline : CoreCommand
           link?.Uri is not null
           and object noteProperty
           && Client.Network.Url.ToAbsoluteHttpOrFileUri(
-            noteProperty
+            noteProperty.ToString() ?? ""
           ) is { } uri
         )
         {

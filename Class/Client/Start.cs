@@ -8,7 +8,7 @@ internal static class Start
     bool noNewWindow = default
   ) => CreateProcess(
     fileName,
-    [argument.Trim()],
+    [argument],
     noNewWindow
   );
   internal static void CreateProcess(
@@ -30,7 +30,7 @@ internal static class Start
     bool noNewWindow = default
   ) => ShellExecute(
     fileName,
-    [argument.Trim()],
+    [argument],
     administrator,
     noNewWindow
   );

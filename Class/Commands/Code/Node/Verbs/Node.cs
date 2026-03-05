@@ -16,7 +16,7 @@ public sealed class Node : NodeCommand
   public string Verb
   {
     get => IntrinsicVerb;
-    set => IntrinsicVerb = value.Trim();
+    set => IntrinsicVerb = value;
   }
 
   new public SwitchParameter V { get; set; }

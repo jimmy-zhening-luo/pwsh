@@ -38,7 +38,6 @@ internal abstract class TabCompletionsAttribute(
         Client.Console.String.UnescapeSingleQuoted(
           wordToComplete
         )
-          .Trim()
       )
     );
 
