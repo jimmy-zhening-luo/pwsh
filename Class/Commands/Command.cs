@@ -194,10 +194,8 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
   }
   private PowerShellHost? pshost;
 
-  private bool ContinueProcessing => !Disposed && !(
-    SkipSsh
-    && Client.Environment.Known.Variable.InSsh
-  );
+  private bool BlockedBySsh => !SkipSsh
+    || !Client.Environment.Known.Variable.InSsh;
 
   private bool Disposed { get; set; }
 
@@ -210,8 +208,10 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
 
   protected sealed override void BeginProcessing()
   {
+    System.ObjectDisposedException.ThrowIf(Disposed, this);
+
     WriteDebug("<BEGIN>");
-    if (ContinueProcessing)
+    if (BlockedBySsh)
     {
       Preprocess();
     }
@@ -220,7 +220,9 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
 
   protected sealed override void ProcessRecord()
   {
-    if (ContinueProcessing)
+    System.ObjectDisposedException.ThrowIf(Disposed, this);
+
+    if (BlockedBySsh)
     {
       WriteDebug("<PROCESS>");
       Process();
@@ -231,8 +233,10 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
 
   protected sealed override void EndProcessing()
   {
+    System.ObjectDisposedException.ThrowIf(Disposed, this);
+
     WriteDebug("<END>");
-    if (ContinueProcessing)
+    if (BlockedBySsh)
     {
       Postprocess();
     }
