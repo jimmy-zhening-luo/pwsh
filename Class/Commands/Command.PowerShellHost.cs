@@ -4,13 +4,8 @@ public abstract partial class CoreCommand
 {
   private class PowerShellHost : System.IDisposable
   {
-    private PowerShell? powershell;
+    private PowerShell? powershell = Module.Create();
     private SteppablePipeline? steppablePipeline;
-
-    internal PowerShellHost()
-    {
-      powershell = Module.Create();
-    }
 
     ~PowerShellHost()
     {
