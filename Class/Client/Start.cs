@@ -19,7 +19,9 @@ internal static class Start
     ProcessStartOptions(
       fileName,
       arguments,
-      noNewWindow
+      noNewWindow,
+      default,
+      default
     )
   );
 
@@ -53,8 +55,8 @@ internal static class Start
     string fileName,
     IList<string>? arguments,
     bool noNewWindow,
-    bool shellExecute = default,
-    bool administrator = default
+    bool shellExecute,
+    bool administrator
   )
   {
     System.Diagnostics.ProcessStartInfo startInfo = arguments is null or [] or [""]
