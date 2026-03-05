@@ -259,6 +259,64 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
   private protected virtual void Postprocess()
   { }
 
+  private protected void WriteProgress(
+    int total,
+    int progress,
+    string activity = "Progress",
+    int activityId = default
+  ) => WriteProgress(
+    new(
+      activityId,
+      activity,
+      $"{progress}/{total}"
+    )
+    {
+      PercentComplete = 100 * progress / total,
+      RecordType = progress == total
+        ? ProgressRecordType.Completed
+        : ProgressRecordType.Processing,
+    }
+  );
+
+  private protected void WriteInformation(object log) => base.WriteInformation(
+    new InformationRecord(
+      log,
+      GetName()
+    )
+  );
+
+  [System.Diagnostics.CodeAnalysis.DoesNotReturn]
+  private protected void ThrowError(
+    string message,
+    ErrorCategory category = ErrorCategory.InvalidOperation,
+    object? target = default,
+    string id = ""
+  ) => ThrowError(
+    new System.Exception(message),
+    category,
+    target,
+    id
+  );
+  [System.Diagnostics.CodeAnalysis.DoesNotReturn]
+  private protected void ThrowError(
+    System.Exception exception,
+    ErrorCategory category = ErrorCategory.InvalidOperation,
+    object? target = default,
+    string id = ""
+  )
+  {
+    StopProcessing();
+
+    ThrowTerminatingError(
+      new(
+        exception,
+        $"{GetName()}Exception{id}",
+        category,
+        target
+      )
+    );
+  }
+
   private protected PowerShell AddCommand(
     string command,
     CommandTypes commandType = CommandTypes.Cmdlet
@@ -347,64 +405,6 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     SessionState.Drive.Current.Root,
     path
   );
-
-  private protected void WriteProgress(
-    int total,
-    int progress,
-    string activity = "Progress",
-    int activityId = default
-  ) => WriteProgress(
-    new(
-      activityId,
-      activity,
-      $"{progress}/{total}"
-    )
-    {
-      PercentComplete = 100 * progress / total,
-      RecordType = progress == total
-        ? ProgressRecordType.Completed
-        : ProgressRecordType.Processing,
-    }
-  );
-
-  private protected void WriteInformation(object log) => base.WriteInformation(
-    new InformationRecord(
-      log,
-      GetName()
-    )
-  );
-
-  [System.Diagnostics.CodeAnalysis.DoesNotReturn]
-  private protected void ThrowError(
-    string message,
-    ErrorCategory category = ErrorCategory.InvalidOperation,
-    object? target = default,
-    string id = ""
-  ) => ThrowError(
-    new System.Exception(message),
-    category,
-    target,
-    id
-  );
-  [System.Diagnostics.CodeAnalysis.DoesNotReturn]
-  private protected void ThrowError(
-    System.Exception exception,
-    ErrorCategory category = ErrorCategory.InvalidOperation,
-    object? target = default,
-    string id = ""
-  )
-  {
-    StopProcessing();
-
-    ThrowTerminatingError(
-      new(
-        exception,
-        $"{GetName()}Exception{id}",
-        category,
-        target
-      )
-    );
-  }
 
   private string GetName() => GetType() is
   {
