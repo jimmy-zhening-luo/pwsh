@@ -4,13 +4,23 @@ public abstract partial class CoreCommand
 {
   private class PowerShellHost : System.IDisposable
   {
-    private PowerShell? powershell = Module.Create();
     private SteppablePipeline? steppablePipeline;
 
     ~PowerShellHost()
     {
       Dispose(default);
     }
+
+    private PowerShell PS
+    {
+      get
+      {
+        System.ObjectDisposedException.ThrowIf(Disposed, this);
+
+        return powershell;
+      }
+    }
+    private PowerShell? powershell = Module.Create();
 
     [System.Diagnostics.CodeAnalysis.MemberNotNullWhen(
       default,
@@ -37,7 +47,7 @@ public abstract partial class CoreCommand
         EndSteppablePipeline();
       }
 
-      steppablePipeline = powershell.GetSteppablePipeline();
+      steppablePipeline = PS.GetSteppablePipeline();
 
       steppablePipeline.Begin(owner);
     }
