@@ -2,6 +2,7 @@ namespace Module.Client;
 
 internal static class Start
 {
+  internal static void CreateProcess(string fileName) => System.Diagnostics.Process.Start(fileName);
   internal static void CreateProcess(
     string fileName,
     string argument,
@@ -13,7 +14,7 @@ internal static class Start
   );
   internal static void CreateProcess(
     string fileName,
-    IList<string>? arguments = default,
+    IList<string> arguments,
     bool noNewWindow = default
   ) => System.Diagnostics.Process.Start(
     ProcessStartOptions(
@@ -25,6 +26,12 @@ internal static class Start
     )
   );
 
+  internal static void CreateProcess(string fileName) => System.Diagnostics.Process.Start(
+    new(fileName)
+    {
+      UseShellExecute = true,
+    }
+  );
   internal static void ShellExecute(
     string fileName,
     string argument,
@@ -38,7 +45,7 @@ internal static class Start
   );
   internal static void ShellExecute(
     string fileName,
-    IList<string>? arguments = default,
+    IList<string> arguments,
     bool administrator = default,
     bool noNewWindow = default
   ) => System.Diagnostics.Process.Start(
@@ -53,13 +60,13 @@ internal static class Start
 
   private static System.Diagnostics.ProcessStartInfo ProcessStartOptions(
     string fileName,
-    IList<string>? arguments,
+    IList<string> arguments,
     bool noNewWindow,
     bool shellExecute,
     bool administrator
   )
   {
-    System.Diagnostics.ProcessStartInfo startInfo = arguments is null or [] or [""]
+    System.Diagnostics.ProcessStartInfo startInfo = arguments is [] or [""]
       ? new(fileName)
       : new(fileName, arguments);
 
