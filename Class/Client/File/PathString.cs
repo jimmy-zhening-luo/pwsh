@@ -64,7 +64,6 @@ internal static partial class PathString
     _ => path,
   };
 
-
   private static string DeduplicateSeparator(string path) => DuplicateSeparatorRegex().Replace(
     path,
     SeparatorString
