@@ -49,9 +49,20 @@ internal static class Url
   internal static System.Uri? ToAbsoluteHttpOrFileUri(string uri) => ToAbsoluteUri(uri, Scheme.HttpOrFile);
   internal static System.Uri? ToAbsoluteHttpOrFileUri(System.Uri uri) => ToAbsoluteUri(uri, Scheme.HttpOrFile);
 
+  internal static System.Uri? ToAbsoluteUri(string uri) => uri is not ""
+    && System.Uri.TryCreate(
+        uri,
+        System.UriKind.Absolute,
+        out var url
+      )
+    ? ToAbsoluteUri(url)
+    : default;
+  internal static System.Uri? ToAbsoluteUri(System.Uri uri) => IsHttp(uri)
+    ? uri
+    : default;
   internal static System.Uri? ToAbsoluteUri(
     string uri,
-    Scheme scheme = Scheme.Http
+    Scheme scheme
   ) => uri is not ""
     && System.Uri.TryCreate(
         uri,
@@ -62,7 +73,7 @@ internal static class Url
     : default;
   internal static System.Uri? ToAbsoluteUri(
     System.Uri uri,
-    Scheme scheme = Scheme.Http
+    Scheme scheme
   ) => (scheme | Scheme.Http) != default
     && IsHttp(uri)
     || (scheme | Scheme.File) != default
