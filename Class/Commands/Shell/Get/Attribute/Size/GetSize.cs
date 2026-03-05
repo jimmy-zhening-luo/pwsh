@@ -87,10 +87,6 @@ public sealed class GetSize : CoreCommand
 
   [Parameter(
     ParameterSetName = "String",
-    Position = 1
-  )]
-  [Parameter(
-    ParameterSetName = "Number",
     Position = 1,
     HelpMessage = "Unit in which to return the size"
   )]
@@ -98,7 +94,7 @@ public sealed class GetSize : CoreCommand
 
   [Parameter(
     ParameterSetName = "Number",
-    HelpMessage = "If specified, returns the size as a numeric value instead of a formatted string"
+    HelpMessage = "If specified, returns the size as the number of bytes instead of a formatted string"
   )]
   public SwitchParameter Number { get; set; }
 
@@ -139,15 +135,24 @@ public sealed class GetSize : CoreCommand
         bytes = new System.IO.FileInfo(fullPath).Length;
       }
 
-      double scaledSize = (double)bytes / (
-        1L << ((int)Unit * 10)
-      );
+      switch (ParameterSetName)
+      {
+        case "Number":
+          WriteObject(bytes);
+          break;
 
-      WriteObject(
-        Number
-          ? scaledSize
-          : $"{System.Math.Round(scaledSize, 3)} {Unit.ToString().ToUpper()}"
-      );
+        default:
+          double scaledSize = (double)bytes / (
+            1L << ((int)Unit * 10)
+          );
+
+          WriteObject(
+            $"{System.Math.Round(scaledSize, 3)} {Unit.ToString().ToUpper()}"
+          );
+          break;
+      }
+
+
     }
   }
 }
