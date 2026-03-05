@@ -2,10 +2,8 @@ namespace Module.Client.Environment.Known;
 
 internal static class Application
 {
-  internal static System.Lazy<string> VSCode = new(
-    () => Folder.LocalAppData(
-      @"Programs\Microsoft VS Code\bin\code.cmd"
-    )
+  internal static string VSCode => vscode ??= Folder.LocalAppData(
+    @"Programs\Microsoft VS Code\bin\code.cmd"
   );
 
   internal static string WinGet => winget ??= Folder.LocalAppData(
