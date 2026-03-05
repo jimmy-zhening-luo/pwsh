@@ -12,6 +12,10 @@ public sealed class GetVerb : CoreCommand
 {
   public enum VerbGroup
   {
+    [System.ComponentModel.DataAnnotations.Display(
+      Name = "Common"
+      ShortName = "c"
+    )]
     [System.ComponentModel.Description("Common verbs: Add, Clear, Get, New, Set, ..")]
     common,
 
