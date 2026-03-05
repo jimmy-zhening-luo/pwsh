@@ -16,7 +16,6 @@ $Global:PSDefaultParameterValues = @{
 }
 
 @(
-  'clear'
   'rd'
   'man'
   'gm'

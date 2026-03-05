@@ -88,7 +88,6 @@
   AliasesToExport      = @(
     'tt'
     'cl'
-    'clear'
     'c'
     'cx'
     'cxx'

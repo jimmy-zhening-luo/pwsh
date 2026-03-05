@@ -6,7 +6,7 @@ namespace Module.Commands.Shell.Clear;
   DefaultParameterSetName = "Path",
   HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096807"
 )]
-[Alias("cl", "clear")]
+[Alias("cl")]
 [OutputType(typeof(void))]
 public sealed class ClearLine : CoreCommand
 {
