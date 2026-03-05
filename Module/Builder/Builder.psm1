@@ -56,16 +56,14 @@ function Update-PSProfile {
     }
 
     try {
-      $DotnetExecutable = Get-Command -Name dotnet.exe -CommandType Application -All |
-        ForEach-Object -MemberName Source
-
+      $DOTNET = "$env:ProgramFiles\dotnet\dotnet.exe"
       $DotnetArgument = @(
         "$PROFILE_REPO_ROOT\Class.slnx"
         '--configuration=Release'
         '--nologo'
       )
 
-      & $DotnetExecutable clean @DotnetArgument --verbosity=quiet
+      & $DOTNET clean @DotnetArgument --verbosity=quiet
 
       if ($LASTEXITCODE -notin 0, 1) {
         throw "dotnet returned a non-zero exit code ($LASTEXITCODE) when trying to clean the project."
@@ -79,7 +77,7 @@ function Update-PSProfile {
         )
       }
 
-      & $DotnetExecutable build @DotnetArgument
+      & $DOTNET build @DotnetArgument
 
       if ($LASTEXITCODE -notin 0, 1) {
         throw "dotnet returned a non-zero exit code ($LASTEXITCODE) when trying to build the project."
