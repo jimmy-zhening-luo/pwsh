@@ -30,13 +30,24 @@ public abstract partial class CoreCommand
       System.GC.SuppressFinalize(this);
     }
 
-    private void CleanPipeline()
+    internal void EndSteppablePipeline()
     {
       System.ObjectDisposedException.ThrowIf(Disposed, this);
 
       if (steppablePipeline is not null)
       {
         _ = steppablePipeline.End();
+      }
+
+      CleanPipeline();
+    }
+
+    private void CleanPipeline()
+    {
+      System.ObjectDisposedException.ThrowIf(Disposed, this);
+
+      if (steppablePipeline is not null)
+      {
         steppablePipeline.Clean();
         steppablePipeline.Dispose();
       }
