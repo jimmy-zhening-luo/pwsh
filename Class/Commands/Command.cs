@@ -193,16 +193,13 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
 
   private protected void EndSteppablePipeline() => CleanPipeline();
 
-  private protected string[] ReanchorPath(IEnumerable<string>? paths)
+  private protected string[] ReanchorPath(IEnumerable<string> paths)
   {
     List<string> reanchoredPaths = [];
 
-    if (paths is not null)
+    foreach (var path in paths)
     {
-      foreach (var path in paths)
-      {
-        reanchoredPaths.Add(ReanchorPath(path));
-      }
+      reanchoredPaths.Add(ReanchorPath(path));
     }
 
     if (reanchoredPaths is [])
@@ -212,15 +209,16 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
 
     return [.. reanchoredPaths];
   }
-  private protected string ReanchorPath(string path = "") => Client.File.PathString.FullPathLocationRelative(
-    Location.IsRooted
-      ? Client.File.PathString.FullPathLocationRelative(
-          Location.Root,
-          Location.Subpath
-        )
-      : Pwd(Location.Subpath),
+  private protected string ReanchorPath(string path) => Client.File.PathString.FullPathLocationRelative(
+    ReanchorPath(),
     path
   );
+  private protected string ReanchorPath() => Location.IsRooted
+    ? Client.File.PathString.FullPathLocationRelative(
+        Location.Root,
+        Location.Subpath
+      )
+    : Pwd(Location.Subpath);
 
   private protected object? PSVariable(string name) => SessionState
     .PSVariable
@@ -231,12 +229,14 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
     ? (T)value
     : default;
 
-  private protected string Pwd(string path = "") => Client.File.PathString.FullPathLocationRelative(
+  private protected string Pwd() => SessionState.Path.CurrentLocation.Path;
+  private protected string Pwd(string path) => Client.File.PathString.FullPathLocationRelative(
     SessionState.Path.CurrentLocation.Path,
     path
   );
 
-  private protected string Drive(string path = "") => Client.File.PathString.FullPathLocationRelative(
+  private protected string Drive() => SessionState.Drive.Current.Root;
+  private protected string Drive(string path) => Client.File.PathString.FullPathLocationRelative(
     SessionState.Drive.Current.Root,
     path
   );
