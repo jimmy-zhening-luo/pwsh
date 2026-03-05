@@ -19,7 +19,7 @@ public sealed class TestHost() : WrappedCommand(
     [System.ComponentModel.Description("Display only whether or not the host is reachable (Default)")]
     quiet,
 
-      [System.ComponentModel.DataAnnotations.Display(Name = "Detailed")]
+    [System.ComponentModel.DataAnnotations.Display(Name = "Detailed")]
     [System.ComponentModel.Description("Display the full output of Test-NetConnection, including diagnostic information such as round-trip time and IP address resolution")]
     detailed,
   }
@@ -38,7 +38,7 @@ public sealed class TestHost() : WrappedCommand(
     [System.ComponentModel.Description("Server Message Block (SMB)")]
     SMB,
 
-      [System.ComponentModel.DataAnnotations.Display(Name = "WinRM")]
+    [System.ComponentModel.DataAnnotations.Display(Name = "WinRM")]
     [System.ComponentModel.Description("Windows Remote Management (WinRM)")]
     WINRM,
   }
