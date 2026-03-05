@@ -35,6 +35,20 @@ public abstract partial class CoreCommand
       System.GC.SuppressFinalize(this);
     }
 
+    internal PowerShell AddCommand(CommandInfo command) => PS.AddCommand(command);
+
+    internal PowerShell AddParameters(System.Collections.IList parameters) => PS.AddParameters(parameters);
+    internal PowerShell AddParameters(System.Collections.IDictionary parameters) => PS.AddParameters(parameters);
+
+    internal PowerShell AddStatement() => PS.AddStatement();
+
+    internal PowerShell AddScript(string script) => PS.AddScript(script);
+
+    internal System.Collections.ObjectModel.Collection<PSObject> InvokePowerShell() => PS.Invoke();
+    internal System.Collections.ObjectModel.Collection<T> InvokePowerShell<T>() => PS.Invoke<T>();
+
+    internal void ClearCommands() => PS.Commands.Clear();
+
     [System.Diagnostics.CodeAnalysis.MemberNotNull(
       nameof(steppablePipeline)
     )]
