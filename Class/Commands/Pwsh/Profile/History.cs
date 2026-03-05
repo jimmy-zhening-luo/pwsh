@@ -16,7 +16,6 @@ public sealed class StartHistory() : CoreCommand(true)
       ),
       "--profile=Setting",
       "--new-window",
-    ],
-    true
+    ]
   );
 }

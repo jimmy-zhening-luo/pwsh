@@ -146,8 +146,7 @@ public abstract partial class NativeCommand(
     {
       Client.Start.CreateProcess(
         CommandPath,
-        escapedArguments,
-        noNewWindow: true
+        escapedArguments
       );
     }
     else

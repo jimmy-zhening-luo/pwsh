@@ -12,8 +12,7 @@ public sealed class StartProfile() : CoreCommand(true)
   {
     Client.Start.CreateProcess(
       Client.Environment.Known.Application.VSCode,
-      Client.Environment.Known.Folder.Code("pwsh"),
-      true
+      Client.Environment.Known.Folder.Code("pwsh")
     );
   }
 }

@@ -2,29 +2,69 @@ namespace Module.Client;
 
 internal static class Start
 {
-  internal static void CreateProcess(string fileName) => System.Diagnostics.Process.Start(fileName);
+  internal static void CreateProcess(string fileName) => CreateProcess(
+    fileName,
+    default(bool)
+  );
   internal static void CreateProcess(
     string fileName,
-    string argument,
-    bool noNewWindow = default
+    bool window
+  ) => System.Diagnostics.Process.Start(
+    new System.Diagnostics.ProcessStartInfo(fileName)
+    {
+      CreateNoWindow = !window,
+    }
+  );
+  internal static void CreateProcess(
+    string fileName,
+    string argument
   ) => CreateProcess(
     fileName,
     [argument],
-    noNewWindow
+    default
+  );
+  internal static void CreateProcess(
+    string fileName,
+    IList<string> arguments
+  ) => CreateProcess(
+    fileName,
+    arguments,
+    default
+  );
+  internal static void CreateProcess(
+    string fileName,
+    string argument,
+    bool window
+  ) => CreateProcess(
+    fileName,
+    [argument],
+    window
   );
   internal static void CreateProcess(
     string fileName,
     IList<string> arguments,
-    bool noNewWindow = default
-  ) => System.Diagnostics.Process.Start(
-    ProcessStartOptions(
-      fileName,
-      arguments,
-      noNewWindow,
-      default,
-      default
-    )
-  );
+    bool window
+  )
+  {
+    switch (arguments)
+    {
+      case [] or [""]:
+        CreateProcess(fileName, window);
+        break;
+
+      default:
+        _ = System.Diagnostics.Process.Start(
+          new System.Diagnostics.ProcessStartInfo(
+            fileName,
+            arguments
+          )
+          {
+            CreateNoWindow = !window,
+          }
+        );
+        break;
+    }
+  }
 
   internal static void ShellExecute(string fileName) => System.Diagnostics.Process.Start(
     new System.Diagnostics.ProcessStartInfo(fileName)
