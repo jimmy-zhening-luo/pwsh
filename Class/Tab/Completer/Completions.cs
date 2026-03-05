@@ -1,6 +1,6 @@
 namespace Module.Tab.Completer;
 
-internal class CompletionsAttribute(string[] Domain) : CompletionsAttribute<string[]>(Domain)
+internal class CompletionsAttribute(params string[] Domain) : CompletionsAttribute<string[]>(Domain)
 {
   private protected sealed override IEnumerable<string> CreateDomain(string[] domain) => domain;
 }
