@@ -36,7 +36,7 @@ public sealed class TestCommand : CoreCommand
     foreach (var name in Name)
     {
       WriteObject(Greet(name));
-      WriteObject((TestEnum)name)
+      WriteObject((TestEnum)name);
     }
   }
 
