@@ -2,6 +2,23 @@ namespace Module.Commands;
 
 public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDisposable
 {
+  private protected record Locator(
+    string Root = "",
+    string Subpath = ""
+  )
+  {
+    internal bool IsEmpty => this is
+    {
+      Root: "",
+      Subpath: "",
+    };
+
+    internal bool IsRooted => this is
+    {
+      Root: not "",
+    };
+  }
+
   private class PowerShellHost : System.IDisposable
   {
     ~PowerShellHost()
@@ -149,23 +166,6 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
         Disposed = true;
       }
     }
-  }
-
-  private protected record Locator(
-    string Root = "",
-    string Subpath = ""
-  )
-  {
-    internal bool IsEmpty => this is
-    {
-      Root: "",
-      Subpath: "",
-    };
-
-    internal bool IsRooted => this is
-    {
-      Root: not "",
-    };
   }
 
   ~CoreCommand()
