@@ -19,8 +19,6 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     };
   }
 
-  private bool Disposed { get; set; }
-
   ~CoreCommand()
   {
     Dispose(default);
@@ -48,6 +46,8 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
   private PowerShell? powershell;
 
   private SteppablePipeline? steppablePipeline;
+
+  private bool Disposed { get; set; }
 
   private bool BlockedBySsh => SkipSsh
     && Client.Environment.Known.Variable.InSsh;
