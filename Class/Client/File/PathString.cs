@@ -10,8 +10,15 @@ internal static partial class PathString
 
   internal static string FullPathLocationRelative(
     string location,
+    string path
+  ) => System.IO.Path.GetFullPath(
+    Normalize(path),
+    location
+  );
+  internal static string FullPathLocationRelative(
+    string location,
     string path,
-    bool preserveTrailingSeparator = default
+    bool preserveTrailingSeparator
   ) => System.IO.Path.GetFullPath(
     Normalize(
       path,
