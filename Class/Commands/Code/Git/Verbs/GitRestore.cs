@@ -34,12 +34,12 @@ public sealed class GitRestore() : GitCommand("pull")
 
     if (HadNativeError)
     {
-      Clear();
+      ClearCommands();
       ThrowError("Git error encountered when resetting repository.");
     }
     else
     {
-      Clear();
+      ClearCommands();
     }
   }
 }

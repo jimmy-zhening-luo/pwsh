@@ -65,7 +65,7 @@ public sealed class GitPullChild : CoreCommand
         WriteWarning($"git error when pulling repository {repository}");
       }
 
-      Clear();
+      ClearCommands();
 
       ++progress;
 

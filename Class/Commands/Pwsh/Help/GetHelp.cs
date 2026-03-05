@@ -152,7 +152,7 @@ public sealed class GetHelpOnline : CoreCommand
       }
       else if (helpContent is not null)
       {
-        Clear();
+        ClearCommands();
 
         AddCommand(GET_HELP)
           .AddParameter(

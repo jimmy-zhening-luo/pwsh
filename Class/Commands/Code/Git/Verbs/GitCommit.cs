@@ -98,12 +98,12 @@ public sealed partial class GitCommit() : GitCommand("commit")
 
       if (HadNativeError)
       {
-        Clear();
+        ClearCommands();
         ThrowError("Git returned error when staging files for commit");
       }
       else
       {
-        Clear();
+        ClearCommands();
       }
     }
   }

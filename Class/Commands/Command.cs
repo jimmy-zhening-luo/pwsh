@@ -138,7 +138,7 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
   private protected System.Collections.ObjectModel.Collection<PSObject> InvokePowerShell() => PS.Invoke();
   private protected System.Collections.ObjectModel.Collection<T> InvokePowerShell<T>() => PS.Invoke<T>();
 
-  private protected void Clear() => powershell
+  private protected void ClearCommands() => powershell
     ?.Commands
     .Clear();
 

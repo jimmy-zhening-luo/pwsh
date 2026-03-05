@@ -26,7 +26,7 @@ public sealed class GitPush() : GitCommand("push")
 
     ProcessSteppablePipeline();
     EndSteppablePipeline();
-    Clear();
+    ClearCommands();
 
     if (HadNativeError)
     {
