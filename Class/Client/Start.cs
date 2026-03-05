@@ -2,19 +2,21 @@ namespace Module.Client;
 
 internal static class Start
 {
-  internal static void CreateProcess(string fileName) => CreateProcess(
-    fileName,
-    default(bool)
+  internal static void CreateProcess(string fileName) => System.Diagnostics.Process.Start(
+    new System.Diagnostics.ProcessStartInfo(fileName)
+    {
+      CreateNoWindow = true,
+    }
   );
   internal static void CreateProcess(
-    string fileName,
-    bool window
-  ) => StartWithArguments(
-    fileName,
-    !window,
-    default,
-    default
-  );
+   string fileName,
+   bool window
+ ) => System.Diagnostics.Process.Start(
+   new System.Diagnostics.ProcessStartInfo(fileName)
+   {
+     CreateNoWindow = !window,
+   }
+ );
   internal static void CreateProcess(
     string fileName,
     string argument
@@ -44,18 +46,21 @@ internal static class Start
     string fileName,
     IList<string> arguments,
     bool window
-  ) => StartWithArguments(
-    fileName,
-    arguments,
-    !window,
-    default,
-    default
+  ) => System.Diagnostics.Process.Start(
+    new System.Diagnostics.ProcessStartInfo(
+      fileName,
+      arguments
+    )
+    {
+      CreateNoWindow = !window,
+    }
   );
 
-  internal static void ShellExecute(string fileName) => ShellExecute(
-    fileName,
-    default(bool),
-    default
+  internal static void ShellExecute(string fileName) => System.Diagnostics.Process.Start(
+    new System.Diagnostics.ProcessStartInfo(fileName)
+    {
+      UseShellExecute = true,
+    }
   );
   internal static void ShellExecute(
     string fileName,
@@ -69,11 +74,15 @@ internal static class Start
     string fileName,
     bool administrator,
     bool noWindow
-  ) => StartWithArguments(
-    fileName,
-    noWindow,
-    administrator,
-    true
+  ) => System.Diagnostics.Process.Start(
+    new System.Diagnostics.ProcessStartInfo(fileName)
+    {
+      UseShellExecute = true,
+      Verb = administrator
+        ? "RunAs"
+        : string.Empty,
+      CreateNoWindow = noWindow,
+    }
   );
   internal static void ShellExecute(
     string fileName,
@@ -129,39 +138,13 @@ internal static class Start
     IList<string> arguments,
     bool administrator,
     bool noWindow
-  ) => StartWithArguments(
-    fileName,
-    arguments,
-    noWindow,
-    administrator,
-    true
-  );
-
-  private static void StartWithArguments(
-    string fileName,
-    bool noWindow,
-    bool administrator,
-    bool shellExecute
   ) => System.Diagnostics.Process.Start(
-    new System.Diagnostics.ProcessStartInfo(fileName)
+    new System.Diagnostics.ProcessStartInfo(
+      fileName,
+      arguments
+    )
     {
-      UseShellExecute = shellExecute,
-      Verb = administrator
-        ? "RunAs"
-        : string.Empty,
-      CreateNoWindow = noWindow,
-    }
-  );
-  private static void StartWithArguments(
-    string fileName,
-    IList<string> arguments,
-    bool noWindow,
-    bool administrator,
-    bool shellExecute
-  ) => System.Diagnostics.Process.Start(
-    new System.Diagnostics.ProcessStartInfo(fileName, arguments)
-    {
-      UseShellExecute = shellExecute,
+      UseShellExecute = true,
       Verb = administrator
         ? "RunAs"
         : string.Empty,
