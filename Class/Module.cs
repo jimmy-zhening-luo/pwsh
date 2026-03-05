@@ -4,7 +4,11 @@ internal static class Module
 {
   internal static PowerShell Create() => PowerShell.Create(RunspaceMode.CurrentRunspace);
 
-  internal static string FullPathCurrentLocationRelative(string path = "")
+  internal static string FullPathCurrentLocationRelative(string path) => Client.File.PathString.FullPathLocationRelative(
+    currentLocation,
+    path
+  );
+  internal static string FullPathCurrentLocationRelative()
   {
     using var ps = Create();
 
@@ -23,9 +27,6 @@ internal static class Module
       );
     }
 
-    return Client.File.PathString.FullPathLocationRelative(
-      currentLocation,
-      path
-    );
+    return currentLocation;
   }
 }
