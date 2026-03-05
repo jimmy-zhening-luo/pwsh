@@ -208,41 +208,74 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
 
   protected sealed override void BeginProcessing()
   {
-    System.ObjectDisposedException.ThrowIf(Disposed, this);
-
-    WriteDebug("<BEGIN>");
-    if (!BlockedBySsh)
+    try
     {
-      Preprocess();
+      System.ObjectDisposedException.ThrowIf(Disposed, this);
+
+      WriteDebug("<BEGIN>");
+      if (!BlockedBySsh)
+      {
+        Preprocess();
+      }
+      WriteDebug("</BEGIN>");
     }
-    WriteDebug("</BEGIN>");
+    catch (PipelineStoppedException)
+    {
+      throw;
+    }
+    catch (System.Exception exception)
+    {
+      ThrowError(exception);
+    }
   }
 
   protected sealed override void ProcessRecord()
   {
-    System.ObjectDisposedException.ThrowIf(Disposed, this);
-
-    if (!BlockedBySsh)
+    try
     {
-      WriteDebug("<PROCESS>");
-      Process();
+      System.ObjectDisposedException.ThrowIf(Disposed, this);
 
-      WriteDebug("</PROCESS>");
+      if (!BlockedBySsh)
+      {
+        WriteDebug("<PROCESS>");
+        Process();
+
+        WriteDebug("</PROCESS>");
+      }
+    }
+    catch (PipelineStoppedException)
+    {
+      throw;
+    }
+    catch (System.Exception exception)
+    {
+      ThrowError(exception);
     }
   }
 
   protected sealed override void EndProcessing()
   {
-    System.ObjectDisposedException.ThrowIf(Disposed, this);
-
-    WriteDebug("<END>");
-    if (!BlockedBySsh)
+    try
     {
-      Postprocess();
-    }
-    WriteDebug("</END>");
+      System.ObjectDisposedException.ThrowIf(Disposed, this);
 
-    StopProcessing();
+      WriteDebug("<END>");
+      if (!BlockedBySsh)
+      {
+        Postprocess();
+      }
+      WriteDebug("</END>");
+
+      StopProcessing();
+    }
+    catch (PipelineStoppedException)
+    {
+      throw;
+    }
+    catch (System.Exception exception)
+    {
+      ThrowError(exception);
+    }
   }
 
   protected sealed override void StopProcessing()
