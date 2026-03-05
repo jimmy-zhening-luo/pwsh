@@ -14,7 +14,7 @@ public sealed class GetCommandAlias : CoreCommand
   )]
   [Alias("Command")]
   [SupportsWildcards]
-  [Tab.Completer.Completions(["*"])]
+  [Tab.Completer.Completions("*")]
   public string[] Definition
   {
     get => [.. definitions];
@@ -42,15 +42,13 @@ public sealed class GetCommandAlias : CoreCommand
   )]
   [SupportsWildcards]
   [Tab.Completer.Completions(
-    [
-      "global",
-      "local",
-      "script",
-      "0",
-      "1",
-      "2",
-      "3",
-    ]
+    "global",
+    "local",
+    "script",
+    "0",
+    "1",
+    "2",
+    "3"
   )]
   public string Scope { get; set; } = "Global";
 
