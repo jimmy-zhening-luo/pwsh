@@ -32,13 +32,16 @@ public abstract partial class CoreCommand
 
     private void CleanPipeline()
     {
+      System.ObjectDisposedException.ThrowIf(Disposed, this);
+
       if (steppablePipeline is not null)
       {
         _ = steppablePipeline.End();
         steppablePipeline.Clean();
         steppablePipeline.Dispose();
-        steppablePipeline = default;
       }
+
+      steppablePipeline = default;
     }
 
     private void Dispose(bool disposing)
