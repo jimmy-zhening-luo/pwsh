@@ -19,21 +19,45 @@ public sealed class GetSize : CoreCommand
 {
   public enum DiskSizeUnit
   {
+    [System.ComponentModel.DataAnnotations.Display(
+      Name = "Bytes",
+      ShortName = "B"
+    )]
     [System.ComponentModel.Description("Bytes")]
     b,
 
+    [System.ComponentModel.DataAnnotations.Display(
+      Name = "Kilobytes",
+      ShortName = "KB"
+    )]
     [System.ComponentModel.Description("Kilobytes")]
     kb,
 
+    [System.ComponentModel.DataAnnotations.Display(
+      Name = "Megabytes",
+      ShortName = "MB"
+    )]
     [System.ComponentModel.Description("Megabytes")]
     mb,
 
+    [System.ComponentModel.DataAnnotations.Display(
+      Name = "Gigabytes",
+      ShortName = "GB"
+    )]
     [System.ComponentModel.Description("Gigabytes")]
     gb,
 
+    [System.ComponentModel.DataAnnotations.Display(
+      Name = "Terabytes",
+      ShortName = "TB"
+    )]
     [System.ComponentModel.Description("Terabytes")]
     tb,
 
+    [System.ComponentModel.DataAnnotations.Display(
+      Name = "Petabytes",
+      ShortName = "PB"
+    )]
     [System.ComponentModel.Description("Petabytes")]
     pb,
   }

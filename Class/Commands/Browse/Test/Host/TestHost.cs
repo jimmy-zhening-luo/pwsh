@@ -15,24 +15,30 @@ public sealed class TestHost() : WrappedCommand(
 {
   public enum TestHostVerbosity
   {
+    [System.ComponentModel.DataAnnotations.Display(Name = "Quiet")]
     [System.ComponentModel.Description("Display only whether or not the host is reachable (Default)")]
     quiet,
 
+      [System.ComponentModel.DataAnnotations.Display(Name = "Detailed")]
     [System.ComponentModel.Description("Display the full output of Test-NetConnection, including diagnostic information such as round-trip time and IP address resolution")]
     detailed,
   }
 
   private enum TestHostWellKnownPort
   {
+    [System.ComponentModel.DataAnnotations.Display(Name = "HTTP")]
     [System.ComponentModel.Description("Hypertext Transfer Protocol (HTTP)")]
     HTTP = -4,
 
+    [System.ComponentModel.DataAnnotations.Display(Name = "RDP")]
     [System.ComponentModel.Description("Remote Desktop Protocol (RDP)")]
     RDP,
 
+    [System.ComponentModel.DataAnnotations.Display(Name = "SMB")]
     [System.ComponentModel.Description("Server Message Block (SMB)")]
     SMB,
 
+      [System.ComponentModel.DataAnnotations.Display(Name = "WinRM")]
     [System.ComponentModel.Description("Windows Remote Management (WinRM)")]
     WINRM,
   }
