@@ -10,6 +10,9 @@ public sealed class TestCommand : CoreCommand
 {
   private enum TestEnum
   {
+    [System.ComponentModel.DataAnnotations.Display(
+      ShortName = "A"
+    )]
     Alpha,
     Bravo,
     Delta,
@@ -36,7 +39,6 @@ public sealed class TestCommand : CoreCommand
     foreach (var name in Name)
     {
       WriteObject(Greet(name));
-      WriteObject((TestEnum)name);
     }
   }
 
