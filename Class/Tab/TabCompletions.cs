@@ -11,7 +11,7 @@ internal abstract class TabCompletionsAttribute(
 {
   public CompletionCase Case { get; init; } = Case;
 
-  public CompletionResultType CompletionType { get; init; } = CompletionType;
+  public required CompletionResultType CompletionType { get; init; } = CompletionType;
 
   public abstract IArgumentCompleter Create();
 
