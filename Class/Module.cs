@@ -5,7 +5,7 @@ internal static class Module
   internal static PowerShell Create() => PowerShell.Create(RunspaceMode.CurrentRunspace);
 
   internal static string FullPathCurrentLocationRelative(string path) => Client.File.PathString.FullPathLocationRelative(
-    currentLocation,
+    FullPathCurrentLocationRelative(),
     path
   );
   internal static string FullPathCurrentLocationRelative()
