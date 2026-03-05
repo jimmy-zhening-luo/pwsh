@@ -26,7 +26,7 @@ internal static class Start
     )
   );
 
-  internal static void CreateProcess(string fileName) => System.Diagnostics.Process.Start(
+  internal static void ShellExecute(string fileName) => System.Diagnostics.Process.Start(
     new(fileName)
     {
       UseShellExecute = true,
