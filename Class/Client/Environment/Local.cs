@@ -14,5 +14,10 @@ internal static class Local
     GetFolder(folder),
     path
   );
-  internal static string GetFolder(System.Environment.SpecialFolder folder) => folders[folder] ??= System.Environment.GetFolderPath(folder);
+  internal static string GetFolder(System.Environment.SpecialFolder folder) => folders.TryGetValue(
+    folder,
+    out var folderLocation
+  )
+    ? folderLocation
+    : folders[folder] = System.Environment.GetFolderPath(folder);
 }
