@@ -94,7 +94,6 @@ public sealed class GetSize : CoreCommand
     Position = 1,
     HelpMessage = "Unit in which to return the size"
   )]
-  [Tab.Completer.Completions("foo")]
   public DiskSizeUnit Unit { get; set; } = DiskSizeUnit.kb;
 
   [Parameter(
