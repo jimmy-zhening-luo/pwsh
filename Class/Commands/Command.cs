@@ -19,13 +19,7 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     };
   }
 
-  private enum CommandState
-  {
-    Alive,
-    Stopped,
-    Disposed,
-  }
-  private CommandState state;
+  private bool Disposed { get; set; }
 
   ~CoreCommand()
   {
@@ -42,7 +36,15 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
 
   private protected bool HadNativeError => PSVariable<int>("LASTEXITCODE") is not (0 or 1);
 
-  private PowerShell PS => powershell ??= Module.Create();
+  private PowerShell PS
+  {
+    get
+    {
+      System.ObjectDisposedException.ThrowIf(Disposed, this);
+
+      return powershell ??= Module.Create();
+    }
+  }
   private PowerShell? powershell;
 
   private SteppablePipeline? steppablePipeline;
@@ -50,7 +52,7 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
   private bool BlockedBySsh => SkipSsh
     && Client.Environment.Known.Variable.InSsh;
 
-  private bool ContinueProcessing => state is CommandState.Alive
+  private bool ContinueProcessing => !Disposed
     && !BlockedBySsh;
 
   public void Dispose()
@@ -95,8 +97,6 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
 
   protected sealed override void StopProcessing()
   {
-    state = CommandState.Stopped;
-
     Dispose();
   }
 
@@ -144,7 +144,7 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
 
   private protected void BeginSteppablePipeline()
   {
-    if (state is CommandState.Alive)
+    if (!Disposed)
     {
       if (steppablePipeline is not null)
       {
@@ -162,7 +162,7 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
 
   private protected void ProcessSteppablePipeline()
   {
-    if (state is CommandState.Alive)
+    if (!Disposed)
     {
       if (steppablePipeline is null)
       {
@@ -177,7 +177,7 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
   }
   private protected void ProcessSteppablePipeline(object input)
   {
-    if (state is CommandState.Alive)
+    if (!Disposed)
     {
       if (steppablePipeline is null)
       {
@@ -317,24 +317,19 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     }
   }
 
-  private void Clean()
-  {
-    CleanPipeline();
-
-    powershell?.Dispose();
-    powershell = default;
-  }
-
   private void Dispose(bool disposing)
   {
-    if (state is not CommandState.Disposed)
+    if (!Disposed)
     {
       if (disposing)
       {
-        Clean();
+        CleanPipeline();
+
+        powershell?.Dispose();
+        powershell = default;
       }
 
-      state = CommandState.Disposed;
+      Disposed = true;
     }
   }
 }
