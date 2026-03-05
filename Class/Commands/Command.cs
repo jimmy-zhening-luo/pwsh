@@ -160,7 +160,7 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
     }
   }
 
-  private protected void ProcessSteppablePipeline(object? input = default)
+  private protected void ProcessSteppablePipeline()
   {
     if (state is CommandState.Alive)
     {
@@ -171,9 +171,22 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
 
       if (steppablePipeline is not null)
       {
-        _ = input is null
-          ? steppablePipeline.Process()
-          : steppablePipeline.Process(input);
+        steppablePipeline.Process();
+      }
+    }
+  }
+  private protected void ProcessSteppablePipeline(object input)
+  {
+    if (state is CommandState.Alive)
+    {
+      if (steppablePipeline is null)
+      {
+        BeginSteppablePipeline();
+      }
+
+      if (steppablePipeline is not null)
+      {
+        steppablePipeline.Process(input);
       }
     }
   }
