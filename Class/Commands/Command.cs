@@ -30,22 +30,20 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
 
   private protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
 
-  private protected bool HadErrors => powershell?.HadErrors ?? default;
+  private protected bool HadErrors => pshost?.HadErrors ?? default;
 
   private protected bool HadNativeError => PSVariable<int>("LASTEXITCODE") is not (0 or 1);
 
-  private PowerShell PS
+  private PowerShellHost PSHost
   {
     get
     {
       System.ObjectDisposedException.ThrowIf(Disposed, this);
 
-      return powershell ??= Module.Create();
+      return pshost ??= new();
     }
   }
-  private PowerShell? powershell;
-
-  private SteppablePipeline? steppablePipeline;
+  private PowerShellHost? pshost;
 
   private bool Disposed { get; set; }
 
@@ -112,86 +110,43 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
   private protected PowerShell AddCommand(
     string command,
     CommandTypes commandType = CommandTypes.Cmdlet
-  ) => PS.AddCommand(
+  ) => PSHost.AddCommand(
     SessionState.InvokeCommand.GetCommand(
       command,
       commandType
     )
   );
 
-  private protected PowerShell AddParameter(string parameterName) => PS.AddParameter(parameterName);
+  private protected PowerShell AddParameter(string parameterName) => PSHost.AddParameter(parameterName);
   private protected PowerShell AddParameter(
     string parameterName,
     object value
-  ) => PS.AddParameter(
+  ) => PSHost.AddParameter(
     parameterName,
     value
   );
 
-  private protected PowerShell AddParameters(System.Collections.IList parameters) => PS.AddParameters(parameters);
-  private protected PowerShell AddParameters(System.Collections.IDictionary parameters) => PS.AddParameters(parameters);
+  private protected PowerShell AddParameters(System.Collections.IList parameters) => PSHost.AddParameters(parameters);
+  private protected PowerShell AddParameters(System.Collections.IDictionary parameters) => PSHost.AddParameters(parameters);
 
-  private protected PowerShell AddStatement() => PS.AddStatement();
+  private protected PowerShell AddStatement() => PSHost.AddStatement();
 
-  private protected PowerShell AddScript(string script) => PS.AddScript(script);
+  private protected PowerShell AddScript(string script) => PSHost.AddScript(script);
 
-  private protected System.Collections.ObjectModel.Collection<PSObject> InvokePowerShell() => PS.Invoke();
-  private protected System.Collections.ObjectModel.Collection<T> InvokePowerShell<T>() => PS.Invoke<T>();
+  private protected System.Collections.ObjectModel.Collection<PSObject> InvokePowerShell() => PSHost.InvokePowerShell();
+  private protected System.Collections.ObjectModel.Collection<T> InvokePowerShell<T>() => PSHost.InvokePowerShell<T>();
 
-  private protected void ClearCommands() => powershell
-    ?.Commands
-    .Clear();
+  private protected void ClearCommands() => PSHost.ClearCommands();
 
-  private protected void BeginSteppablePipeline()
-  {
-    if (!Disposed)
-    {
-      if (steppablePipeline is not null)
-      {
-        CleanPipeline();
-      }
+  private protected void BeginSteppablePipeline() => PSHost.BeginSteppablePipeline(this);
 
-      if (powershell is not null)
-      {
-        steppablePipeline = powershell.GetSteppablePipeline();
+  private protected void ProcessSteppablePipeline() => PSHost.ProcessSteppablePipeline(this);
+  private protected void ProcessSteppablePipeline(object input) => PSHost.ProcessSteppablePipeline(
+    this,
+    input
+  );
 
-        steppablePipeline.Begin(this);
-      }
-    }
-  }
-
-  private protected void ProcessSteppablePipeline()
-  {
-    if (!Disposed)
-    {
-      if (steppablePipeline is null)
-      {
-        BeginSteppablePipeline();
-      }
-
-      if (steppablePipeline is not null)
-      {
-        steppablePipeline.Process();
-      }
-    }
-  }
-  private protected void ProcessSteppablePipeline(object input)
-  {
-    if (!Disposed)
-    {
-      if (steppablePipeline is null)
-      {
-        BeginSteppablePipeline();
-      }
-
-      if (steppablePipeline is not null)
-      {
-        steppablePipeline.Process(input);
-      }
-    }
-  }
-
-  private protected void EndSteppablePipeline() => CleanPipeline();
+  private protected void EndSteppablePipeline() => PSHost.EndSteppablePipeline();
 
   private protected string[] ReanchorPath(IEnumerable<string> paths)
   {
@@ -306,27 +261,17 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     ? name ?? type.ToString()
     : string.Empty;
 
-  private void CleanPipeline()
-  {
-    if (steppablePipeline is not null)
-    {
-      _ = steppablePipeline.End();
-      steppablePipeline.Clean();
-      steppablePipeline.Dispose();
-      steppablePipeline = default;
-    }
-  }
-
   private void Dispose(bool disposing)
   {
     if (!Disposed)
     {
       if (disposing)
       {
-        CleanPipeline();
-
-        powershell?.Dispose();
-        powershell = default;
+        if (pshost is not null)
+        {
+          PSHost.Dispose();
+          pshost = default;
+        }
       }
 
       Disposed = true;
