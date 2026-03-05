@@ -333,6 +333,7 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
       {
         Clean();
       }
+
       state = CommandState.Disposed;
     }
   }
