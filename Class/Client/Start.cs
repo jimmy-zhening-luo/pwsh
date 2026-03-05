@@ -2,41 +2,19 @@ namespace Module.Client;
 
 internal static class Start
 {
-  internal static void CreateProcess(string fileName) => System.Diagnostics.Process.Start(
+  internal static void CreateProcess(
+    string fileName,
+    bool window = default
+  ) => System.Diagnostics.Process.Start(
     new System.Diagnostics.ProcessStartInfo(fileName)
     {
-      CreateNoWindow = true,
+      CreateNoWindow = !window,
     }
-  );
-  internal static void CreateProcess(
-   string fileName,
-   bool window
- ) => System.Diagnostics.Process.Start(
-   new System.Diagnostics.ProcessStartInfo(fileName)
-   {
-     CreateNoWindow = !window,
-   }
- );
-  internal static void CreateProcess(
-    string fileName,
-    string argument
-  ) => CreateProcess(
-    fileName,
-    [argument],
-    default
-  );
-  internal static void CreateProcess(
-    string fileName,
-    IList<string> arguments
-  ) => CreateProcess(
-    fileName,
-    arguments,
-    default
   );
   internal static void CreateProcess(
     string fileName,
     string argument,
-    bool window
+    bool window = default
   ) => CreateProcess(
     fileName,
     [argument],
@@ -45,7 +23,7 @@ internal static class Start
   internal static void CreateProcess(
     string fileName,
     IList<string> arguments,
-    bool window
+    bool window = default
   ) => System.Diagnostics.Process.Start(
     new System.Diagnostics.ProcessStartInfo(
       fileName,
@@ -64,16 +42,8 @@ internal static class Start
   );
   internal static void ShellExecute(
     string fileName,
-    bool administrator
-  ) => ShellExecute(
-    fileName,
-    administrator,
-    default
-  );
-  internal static void ShellExecute(
-    string fileName,
     bool administrator,
-    bool noWindow
+    bool noWindow = default
   ) => System.Diagnostics.Process.Start(
     new System.Diagnostics.ProcessStartInfo(fileName)
     {
@@ -86,47 +56,9 @@ internal static class Start
   );
   internal static void ShellExecute(
     string fileName,
-    string argument
-  ) => ShellExecute(
-    fileName,
-    [argument],
-    default,
-    default
-  );
-  internal static void ShellExecute(
-    string fileName,
-    IList<string> arguments
-  ) => ShellExecute(
-    fileName,
-    arguments,
-    default,
-    default
-  );
-  internal static void ShellExecute(
-    string fileName,
     string argument,
-    bool administrator
-  ) => ShellExecute(
-    fileName,
-    [argument],
-    administrator,
-    default
-  );
-  internal static void ShellExecute(
-    string fileName,
-    IList<string> arguments,
-    bool administrator
-  ) => ShellExecute(
-    fileName,
-    arguments,
-    administrator,
-    default
-  );
-  internal static void ShellExecute(
-    string fileName,
-    string argument,
-    bool administrator,
-    bool noWindow
+    bool administrator = default,
+    bool noWindow = default
   ) => ShellExecute(
     fileName,
     [argument],
@@ -136,8 +68,8 @@ internal static class Start
   internal static void ShellExecute(
     string fileName,
     IList<string> arguments,
-    bool administrator,
-    bool noWindow
+    bool administrator = default,
+    bool noWindow = default
   ) => System.Diagnostics.Process.Start(
     new System.Diagnostics.ProcessStartInfo(
       fileName,
