@@ -22,25 +22,26 @@ internal static partial class PathString
 
   internal static string Normalize(
     string path,
-    bool preserveTrailingSeparator = default
-  )
-  {
-    var normalPath = TrimRelativePrefix(
-      ExpandHomePrefix(
-        DeduplicateSeparator(
-          System.Environment.ExpandEnvironmentVariables(path)
-            .Replace(
-              AltSeparator,
-              Separator
-            )
-        )
+    bool preserveTrailingSeparator
+  ) => preserveTrailingSeparator
+    ? Normalize(path)
+    : System.IO.Path.TrimEndingDirectorySeparator(
+        Normalize(path)
+      );
+  internal static string Normalize(string path) => TrimRelativePrefix(
+    ExpandHomePrefix(
+      DeduplicateSeparator(
+        System.Environment
+          .ExpandEnvironmentVariables(
+            path
+          )
+          .Replace(
+            AltSeparator,
+            Separator
+          )
       )
-    );
-
-    return preserveTrailingSeparator
-      ? normalPath
-      : System.IO.Path.TrimEndingDirectorySeparator(normalPath);
-  }
+    )
+  );
 
   private static string ExpandHomePrefix(string path) => path switch
   {
