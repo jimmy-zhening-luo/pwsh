@@ -41,14 +41,14 @@ function Update-PSProfile {
       & $GIT @GitArgument reset --hard
 
       if ($LASTEXITCODE -notin 0, 1) {
-        throw "Failed to reset pwsh profile repository. Git returned exit code: $LASTEXITCODE"
+        throw "Git failed to reset profile repository, with exit code: $LASTEXITCODE"
       }
     }
 
     & $GIT @GitArgument pull
 
     if ($LASTEXITCODE -notin 0, 1) {
-      throw "Failed to pull pwsh profile repository. Git returned exit code: $LASTEXITCODE"
+      throw "Git failed to pull profile repository, with exit code: $LASTEXITCODE"
     }
 
     if (-not $Build) {
@@ -66,7 +66,7 @@ function Update-PSProfile {
       & $DOTNET clean @DotnetArgument --verbosity=quiet
 
       if ($LASTEXITCODE -notin 0, 1) {
-        throw "dotnet returned a non-zero exit code ($LASTEXITCODE) when trying to clean the project."
+        throw "dotnet failed to clean profile project, with exit code: $LASTEXITCODE"
       }
 
       if ($Restore) {
@@ -80,7 +80,7 @@ function Update-PSProfile {
       & $DOTNET build @DotnetArgument
 
       if ($LASTEXITCODE -notin 0, 1) {
-        throw "dotnet returned a non-zero exit code ($LASTEXITCODE) when trying to build the project."
+        throw "dotnet failed to build profile project, with exit code: $LASTEXITCODE"
       }
     }
     catch {
