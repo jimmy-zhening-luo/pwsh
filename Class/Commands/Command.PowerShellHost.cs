@@ -30,6 +30,55 @@ public abstract partial class CoreCommand
       System.GC.SuppressFinalize(this);
     }
 
+    [System.Diagnostics.CodeAnalysis.MemberNotNull(
+      nameof(steppablePipeline)
+    )]
+    internal void BeginSteppablePipeline(CoreCommand owner)
+    {
+      System.ObjectDisposedException.ThrowIf(Disposed, this);
+
+      if (steppablePipeline is not null)
+      {
+        EndSteppablePipeline();
+      }
+
+      steppablePipeline = powershell.GetSteppablePipeline();
+
+      steppablePipeline.Begin(owner);
+    }
+
+    [System.Diagnostics.CodeAnalysis.MemberNotNull(
+      nameof(steppablePipeline)
+    )]
+    internal void ProcessSteppablePipeline(CoreCommand owner)
+    {
+      System.ObjectDisposedException.ThrowIf(Disposed, this);
+
+      if (steppablePipeline is null)
+      {
+        BeginSteppablePipeline(owner);
+      }
+
+      _ = steppablePipeline.Process();
+    }
+    [System.Diagnostics.CodeAnalysis.MemberNotNull(
+      nameof(steppablePipeline)
+    )]
+    internal void ProcessSteppablePipeline(
+      CoreCommand owner,
+      object input
+    )
+    {
+      System.ObjectDisposedException.ThrowIf(Disposed, this);
+
+      if (steppablePipeline is null)
+      {
+        BeginSteppablePipeline(owner);
+      }
+
+      _ = steppablePipeline.Process(input);
+    }
+
     internal void EndSteppablePipeline()
     {
       System.ObjectDisposedException.ThrowIf(Disposed, this);
