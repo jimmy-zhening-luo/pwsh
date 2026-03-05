@@ -109,21 +109,11 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
   private protected virtual void Postprocess()
   { }
 
-  private protected CommandInfo GetCommand(
-    string command,
-    CommandTypes commandType = CommandTypes.Cmdlet
-  ) => SessionState
-    .InvokeCommand
-    .GetCommand(
-      command,
-      commandType
-    );
-
   private protected PowerShell AddCommand(
     string command,
     CommandTypes commandType = CommandTypes.Cmdlet
   ) => PS.AddCommand(
-    GetCommand(
+    SessionState.InvokeCommand.GetCommand(
       command,
       commandType
     )
