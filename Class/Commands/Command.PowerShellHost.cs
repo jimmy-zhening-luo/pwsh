@@ -117,7 +117,7 @@ public abstract partial class CoreCommand
         {
           CleanPipeline();
 
-          powershell.Dispose();
+          PS.Dispose();
           powershell = default;
         }
 
