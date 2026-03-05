@@ -4,8 +4,6 @@ public abstract partial class CoreCommand
 {
   private class PowerShellHost : System.IDisposable
   {
-    private SteppablePipeline? steppablePipeline;
-
     ~PowerShellHost()
     {
       Dispose(default);
@@ -23,6 +21,18 @@ public abstract partial class CoreCommand
       }
     }
     private PowerShell? powershell = Module.Create();
+
+    private SteppablePipeline? Pipeline
+    {
+      get
+      {
+        System.ObjectDisposedException.ThrowIf(Disposed, this);
+
+        return pipeline;
+      }
+      set => pipeline = value;
+    }
+    private SteppablePipeline? pipeline;
 
     [System.Diagnostics.CodeAnalysis.MemberNotNullWhen(
       default,
@@ -61,61 +71,53 @@ public abstract partial class CoreCommand
     internal void ClearCommands() => PS.Commands.Clear();
 
     [System.Diagnostics.CodeAnalysis.MemberNotNull(
-      nameof(steppablePipeline)
+      nameof(Pipeline)
     )]
     internal void BeginSteppablePipeline(CoreCommand owner)
     {
-      System.ObjectDisposedException.ThrowIf(Disposed, this);
-
-      if (steppablePipeline is not null)
+      if (Pipeline is not null)
       {
         EndSteppablePipeline();
       }
 
-      steppablePipeline = PS.GetSteppablePipeline();
+      Pipeline = PS.GetSteppablePipeline();
 
-      steppablePipeline.Begin(owner);
+      Pipeline.Begin(owner);
     }
 
     [System.Diagnostics.CodeAnalysis.MemberNotNull(
-      nameof(steppablePipeline)
+      nameof(Pipeline)
     )]
     internal void ProcessSteppablePipeline(CoreCommand owner)
     {
-      System.ObjectDisposedException.ThrowIf(Disposed, this);
-
-      if (steppablePipeline is null)
+      if (Pipeline is null)
       {
         BeginSteppablePipeline(owner);
       }
 
-      _ = steppablePipeline.Process();
+      _ = Pipeline.Process();
     }
     [System.Diagnostics.CodeAnalysis.MemberNotNull(
-      nameof(steppablePipeline)
+      nameof(Pipeline)
     )]
     internal void ProcessSteppablePipeline(
       CoreCommand owner,
       object input
     )
     {
-      System.ObjectDisposedException.ThrowIf(Disposed, this);
-
-      if (steppablePipeline is null)
+      if (Pipeline is null)
       {
         BeginSteppablePipeline(owner);
       }
 
-      _ = steppablePipeline.Process(input);
+      _ = Pipeline.Process(input);
     }
 
     internal void EndSteppablePipeline()
     {
-      System.ObjectDisposedException.ThrowIf(Disposed, this);
-
-      if (steppablePipeline is not null)
+      if (Pipeline is not null)
       {
-        _ = steppablePipeline.End();
+        _ = Pipeline.End();
       }
 
       CleanPipeline();
@@ -123,15 +125,13 @@ public abstract partial class CoreCommand
 
     private void CleanPipeline()
     {
-      System.ObjectDisposedException.ThrowIf(Disposed, this);
-
-      if (steppablePipeline is not null)
+      if (Pipeline is not null)
       {
-        steppablePipeline.Clean();
-        steppablePipeline.Dispose();
+        Pipeline.Clean();
+        Pipeline.Dispose();
       }
 
-      steppablePipeline = default;
+      Pipeline = default;
     }
 
     private void Dispose(bool disposing)
