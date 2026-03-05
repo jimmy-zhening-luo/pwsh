@@ -8,6 +8,13 @@ namespace Module.Commands.Test;
 [OutputType(typeof(object))]
 public sealed class TestCommand : CoreCommand
 {
+  private enum TestEnum
+  {
+    Alpha,
+    Bravo,
+    Delta,
+  }
+
   [Parameter(
     Position = default,
     ValueFromPipeline = true
@@ -29,6 +36,7 @@ public sealed class TestCommand : CoreCommand
     foreach (var name in Name)
     {
       WriteObject(Greet(name));
+      WriteObject((TestEnum)name)
     }
   }
 
