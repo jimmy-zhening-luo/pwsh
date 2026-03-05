@@ -39,6 +39,15 @@ public abstract partial class CoreCommand
 
     internal PowerShell AddCommand(CommandInfo command) => PS.AddCommand(command);
 
+    internal PowerShell AddParameter(string parameterName) => PS.AddParameter(parameterName);
+    internal PowerShell AddParameter(
+      string parameterName,
+      object value
+    ) => PS.AddParameter(
+      parameterName,
+      value
+    );
+
     internal PowerShell AddParameters(System.Collections.IList parameters) => PS.AddParameters(parameters);
     internal PowerShell AddParameters(System.Collections.IDictionary parameters) => PS.AddParameters(parameters);
 
