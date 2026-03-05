@@ -1,6 +1,6 @@
 namespace Module.Commands;
 
-public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDisposable
+public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDisposable
 {
   private protected record Locator(
     string Root = "",
