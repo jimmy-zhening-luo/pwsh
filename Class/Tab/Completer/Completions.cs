@@ -36,7 +36,7 @@ internal abstract class CompletionsAttribute<TDomain>(
         foreach (var member in Domain)
         {
           ++index;
-          yield return new (member);
+          yield return new(member);
         }
 
         yield break;
@@ -52,7 +52,7 @@ internal abstract class CompletionsAttribute<TDomain>(
         )
         {
           ++index;
-          yield return new (member);
+          yield return new(member);
         }
       }
 
@@ -73,7 +73,7 @@ internal abstract class CompletionsAttribute<TDomain>(
         )
         {
           ++index;
-          yield return new (member);
+          yield return new(member);
         }
       }
 

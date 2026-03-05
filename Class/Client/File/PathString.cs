@@ -39,9 +39,9 @@ internal static partial class PathString
       )
     );
 
-   return preserveTrailingSeparator
-    ? normalPath
-    : System.IO.Path.TrimEndingDirectorySeparator(normalPath);
+    return preserveTrailingSeparator
+      ? normalPath
+      : System.IO.Path.TrimEndingDirectorySeparator(normalPath);
   }
 
   private static string ExpandHomePrefix(string path) => path switch
