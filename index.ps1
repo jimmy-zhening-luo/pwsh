@@ -25,8 +25,7 @@ $Global:PSDefaultParameterValues = @{
 
 & {
   $DIST = "$PSScriptRoot\Class\bin\Release\net9.0-windows\Module.dll"
-  $MODULE = "$PSScriptRoot\Module\Module"
-  $ASSEMBLY = "$MODULE\Module.dll"
+  $ASSEMBLY = "$PSScriptRoot\Module\Module\Module.dll"
 
   if (Test-Path -LiteralPath $DIST -PathType Leaf) {
     if (
@@ -48,7 +47,7 @@ $Global:PSDefaultParameterValues = @{
         Where-Object -Property Id -NE -Value $PID |
         ForEach-Object -MemberName Kill -ArgumentList $true
 
-      Copy-Item -LiteralPath $DIST -Destination $MODULE -Force -ErrorAction Continue
+      Copy-Item -LiteralPath $DIST -Destination $ASSEMBLY -Force -ErrorAction Continue
     }
   }
   else {
