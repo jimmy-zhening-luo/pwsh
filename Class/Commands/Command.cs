@@ -346,13 +346,13 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     );
   }
 
-  private protected void CheckNativeError(bool noThrow = default) => CheckNativeError(
-    "Native command execution error",
-    noThrow
+  private protected void CheckNativeError(bool stop = default) => CheckNativeError(
+    "Native command error",
+    stop
   );
   private protected void CheckNativeError(
     string message,
-    bool noThrow = default
+    bool stop = default
   )
   {
     if (
@@ -361,13 +361,13 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
       ) is not (0 or 1)
     )
     {
-      if (noThrow)
+      if (stop)
       {
-        WriteWarning(message);
+        ThrowError(message);
       }
       else
       {
-        ThrowError(message);
+        WriteWarning(message);
       }
     }
   }

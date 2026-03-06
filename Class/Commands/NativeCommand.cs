@@ -164,7 +164,7 @@ public abstract partial class NativeCommand(
 
       CheckNativeError(
         $"{CommandPath} error",
-        NoThrow
+        !NoThrow
       );
     }
   }

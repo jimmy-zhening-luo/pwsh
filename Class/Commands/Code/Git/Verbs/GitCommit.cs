@@ -96,7 +96,10 @@ public sealed partial class GitCommit() : GitCommand("commit")
       EndSteppablePipeline();
       ClearCommands();
 
-      CheckNativeError("git error when staging files for commit");
+      CheckNativeError(
+        "git error when staging files for commit",
+        stop: true
+      );
     }
   }
 
