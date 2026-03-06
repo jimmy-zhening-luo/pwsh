@@ -316,7 +316,7 @@ internal class PathCompletionsAttribute(
       bool trailingSeparator = default
     )
     {
-      foreach (var item in Items)
+      foreach (var item in items)
       {
         if (
           item.Attributes & System.IO.FileAttributes.Hidden is System.IO.FileAttributes.None
