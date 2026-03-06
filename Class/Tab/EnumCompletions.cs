@@ -1,4 +1,4 @@
-namespace Module.Tab.Completer;
+namespace Module.Tab;
 
 internal class EnumCompletionsAttribute(
   System.Type EnumType,

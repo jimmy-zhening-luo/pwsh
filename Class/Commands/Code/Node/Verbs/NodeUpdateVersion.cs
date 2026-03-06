@@ -39,7 +39,7 @@ public sealed class NodeUpdateVersion() : NodeCommand("version")
     HelpMessage = "New package version, default 'patch'"
   )]
   [Alias("v")]
-  [Tab.Completer.EnumCompletions(
+  [Tab.EnumCompletions(
     typeof(NodeVersion),
     Include: ["from-git"],
     Exclude: ["prepatch"]

@@ -71,7 +71,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   public SwitchParameter FollowSymlink { get; set; }
 
   [Parameter]
-  [Tab.Completer.EnumCompletions(
+  [Tab.EnumCompletions(
     typeof(System.IO.FileAttributes),
     Case = Tab.CompletionCase.Lower
   )]

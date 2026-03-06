@@ -2,7 +2,7 @@ namespace Module.Commands.Code.Node;
 
 public abstract class NodeCommand(string? IntrinsicVerb) : RemoteNativeVerbCommand(IntrinsicVerb)
 {
-  private protected sealed class NodeVerbCompletionsAttribute() : Tab.Completer.CompletionsAttribute([.. Verbs]);
+  private protected sealed class NodeVerbCompletionsAttribute() : Tab.CompletionsAttribute([.. Verbs]);
 
   private static readonly HashSet<string> Verbs = [
     "access",

@@ -1,4 +1,4 @@
-namespace Module.Tab.Completer;
+namespace Module.Tab;
 
 internal class CompletionsAttribute(params string[] Domain) : CompletionsAttribute<string[]>(Domain)
 {

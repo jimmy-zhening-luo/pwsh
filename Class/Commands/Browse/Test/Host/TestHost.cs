@@ -57,7 +57,7 @@ public sealed class TestHost() : WrappedCommand(
     Position = 1
   )]
   [ValidateNotNullOrWhiteSpace]
-  [Tab.Completer.EnumCompletions(
+  [Tab.EnumCompletions(
     typeof(TestHostWellKnownPort),
     Case = Tab.CompletionCase.Lower
   )]

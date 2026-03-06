@@ -46,7 +46,7 @@ public abstract class WrappedGetFile() : WrappedCommand(
 
   [Parameter]
   [ValidateNotNullOrEmpty]
-  [Tab.Completer.EnumCompletions(typeof(Client.File.Encoding))]
+  [Tab.EnumCompletions(typeof(Client.File.Encoding))]
   public required string Encoding { get; set; }
 
   [Parameter]

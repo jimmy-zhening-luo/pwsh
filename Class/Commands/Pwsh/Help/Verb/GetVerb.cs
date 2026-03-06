@@ -46,7 +46,7 @@ public sealed class GetVerb : CoreCommand
     HelpMessage = "Get only the specified verbs or verb patterns"
   )]
   [SupportsWildcards]
-  [Tab.Completer.Completions("*")]
+  [Tab.Completions("*")]
   public string[] Verb
   {
     get => [.. verbs];
