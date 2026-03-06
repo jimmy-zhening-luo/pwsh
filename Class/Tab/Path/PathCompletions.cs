@@ -193,7 +193,6 @@ internal class PathCompletionsAttribute(
         Location,
         AllowReanchor
       );
-      var originalAttributes = searchContext.Options.AttributesToSkip;
 
       switch (ItemType)
       {
