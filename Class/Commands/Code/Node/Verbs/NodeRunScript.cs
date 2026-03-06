@@ -14,7 +14,7 @@ public sealed class NodeRunScript() : NodeCommand("run")
     HelpMessage = "Name of the npm script to run"
   )]
   [ValidateNotNullOrWhiteSpace]
-  public string Script { get; set; } = string.Empty;
+  public required string Script { get; set; }
 
   private protected sealed override List<string> ParseArguments() => [Script];
 }
