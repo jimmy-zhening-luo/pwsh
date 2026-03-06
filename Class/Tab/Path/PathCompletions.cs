@@ -312,7 +312,7 @@ internal class PathCompletionsAttribute(
 
     private IEnumerable<CompletionResultRecord> EnumerateResults(
       string accumulator,
-      IEnumerable<FileSystemInfo> items,
+      IEnumerable<System.IO.FileSystemInfo> items,
       bool trailingSeparator = default
     )
     {
