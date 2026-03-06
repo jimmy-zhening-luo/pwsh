@@ -153,8 +153,6 @@ public abstract class NodeCommand(string IntrinsicVerb = "") : RemoteNativeVerbC
         break;
     }
 
-    WorkingDirectory = string.Empty;
-
     return command;
   }
 

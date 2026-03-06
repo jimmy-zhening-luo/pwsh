@@ -67,12 +67,10 @@ public sealed class NodeUpdateVersion() : NodeCommand("version")
 
   private protected sealed override void PreprocessArguments()
   {
-    if (Version is "")
-    {
-      ThrowError(
-        "The specified version is neither well-known nor parseable as a semantic version."
-      );
-    }
+    System.ArgumentException.ThrowIfNullOrEmpty(
+      Version,
+      $"{nameof(Version)} -> SemanticVersion | NodeVersion"
+    );
   }
 
   private protected sealed override List<string> ParseArguments() => [Version];

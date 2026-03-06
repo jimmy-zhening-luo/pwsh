@@ -72,21 +72,20 @@ public sealed partial class GitCommit() : GitCommand("commit")
       NativeArguments.Add(FlagAllowEmpty);
     }
 
-    if (messageWords is [])
+    if (
+      messageWords is []
+      && NativeArguments.Contains(FlagAllowEmpty)
+    )
     {
-      if (NativeArguments.Contains(FlagAllowEmpty))
-      {
-        messageWords.Add("No message");
-      }
-      else
-      {
-        ThrowError(
-          "Commit message is required unless --allow-empty is specified"
-        );
-      }
+      messageWords.Add("No message");
     }
 
     Message = string.Join(Client.Console.String.Space, messageWords);
+
+    System.ArgumentException.ThrowIfNullOrEmpty(
+      Message,
+      nameof(Message)
+    );
 
     if (!Staged)
     {

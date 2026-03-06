@@ -34,9 +34,8 @@ internal static class Url
     IsAbsoluteUri: true,
     Scheme: "file",
     IsFile: true,
-    LocalPath: { } localPath,
-  }
-    && localPath is not "";
+    LocalPath: not "",
+  };
 
   internal static bool IsHttpOrFile(System.Uri uri) => IsHttp(uri) || IsFile(uri);
 

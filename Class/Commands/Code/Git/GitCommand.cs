@@ -86,31 +86,36 @@ public abstract class GitCommand(string IntrinsicVerb = "") : RemoteNativeVerbCo
       {
         DeferredVerbArguments.Insert(default, WorkingDirectory);
 
-        repository = ResolveWorkingDirectory(pwd, newable);
+        WorkingDirectory = string.Empty;
       }
+
+      repository = ResolveWorkingDirectory(pwd, newable);
     }
 
-    if (repository is "")
-    {
-      ThrowError(
-         newable
-          ? $"Path does not support the current git operation: {WorkingDirectory}"
-          : $"Path is not a git repository: {WorkingDirectory}"
-      );
-    }
+    WorkingDirectory = repository;
+
+    System.ArgumentException.ThrowIfNullOrEmpty(
+      WorkingDirectory,
+      string.Join(
+        Client.Console.String.Space,
+        [
+          nameof(WorkingDirectory),
+          newable
+            ? "is not a directory path"
+            : "is not a git repository",
+        ]
+      )
+    );
 
     List<string> command = [
       "-c",
       "color.ui=always",
     ];
 
-    if (
-      repository is not ""
-      && repository != pwd
-    )
+    if (WorkingDirectory != pwd)
     {
       command.Add("-C");
-      command.Add(repository);
+      command.Add(WorkingDirectory);
     }
 
     return command;

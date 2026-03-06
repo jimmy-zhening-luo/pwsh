@@ -71,11 +71,7 @@ public sealed partial class GitReset() : GitCommand("reset")
       && ResolveWorkingDirectory(WorkingDirectory) is ""
     )
     {
-      if (Tree is not "")
-      {
-        resetArguments.Insert(default, WorkingDirectory);
-      }
-      else
+      if (Tree is "")
       {
         var treeMatch = GitTreeRegex().Match(WorkingDirectory);
 
@@ -99,6 +95,10 @@ public sealed partial class GitReset() : GitCommand("reset")
         {
           resetArguments.Insert(default, WorkingDirectory);
         }
+      }
+      else
+      {
+        resetArguments.Insert(default, WorkingDirectory);
       }
 
       WorkingDirectory = string.Empty;

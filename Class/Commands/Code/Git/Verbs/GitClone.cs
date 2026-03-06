@@ -19,17 +19,15 @@ public sealed class GitClone() : GitCommand("clone")
     get => remote;
     set
     {
-      var segments = value.Split(
+      remote = value.Split(
         Client.File.PathString.AltSeparator,
         System.StringSplitOptions.RemoveEmptyEntries
         | System.StringSplitOptions.TrimEntries
-      );
-
-      remote = segments switch
+      ) switch
       {
         [string org, string repo] => $"{org}/{repo}",
         [string repo] => $"jimmy-zhening-luo/{repo}",
-        _ => string.Empty,
+        _ => string.Empty
       };
     }
   }
@@ -43,10 +41,10 @@ public sealed class GitClone() : GitCommand("clone")
 
   private protected sealed override void PreprocessArguments()
   {
-    if (Repository is "")
-    {
-      ThrowError("No repository name given.");
-    }
+    System.ArgumentException.ThrowIfNullOrEmpty(
+      Repository,
+      nameof(Repository)
+    );
   }
 
   private protected sealed override List<string> ParseArguments() => [
