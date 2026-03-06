@@ -17,7 +17,8 @@ internal class PathCompletionsAttribute(
     private record SearchContext(
       System.IO.DirectoryInfo Container,
       string Filter,
-      System.IO.EnumerationOptions Options
+      System.IO.EnumerationOptions Options,
+      string Accumulator
     );
 
     private readonly string Location;
@@ -49,7 +50,7 @@ internal class PathCompletionsAttribute(
       location is ""
     );
 
-    private static (string, SearchContext) ParseLine(
+    private static SearchContext ParseLine(
       string wordToComplete,
       string location,
       bool allowReanchor
@@ -151,7 +152,6 @@ internal class PathCompletionsAttribute(
       }
 
       return (
-        lineCaptured,
         new(
           new(searchPath),
           lineRemaining + "*",
@@ -159,7 +159,8 @@ internal class PathCompletionsAttribute(
           {
             IgnoreInaccessible = default,
             AttributesToSkip = System.IO.FileAttributes.NotContentIndexed,
-          }
+          },
+          lineCaptured
         )
       );
     }
@@ -188,7 +189,7 @@ internal class PathCompletionsAttribute(
     {
       Index = default;
 
-      var (accumulator, searchContext) = ParseLine(
+      var searchContext = ParseLine(
         wordToComplete,
         Location,
         AllowReanchor
@@ -200,7 +201,6 @@ internal class PathCompletionsAttribute(
           foreach (
             var directory in Directories(
               searchContext,
-              accumulator,
               !Flat
             )
           )
@@ -213,8 +213,7 @@ internal class PathCompletionsAttribute(
         case PathItemType.File:
           foreach (
             var file in Files(
-              searchContext,
-              accumulator
+              searchContext
             )
           )
           {
@@ -224,7 +223,6 @@ internal class PathCompletionsAttribute(
           foreach (
             var directory in Directories(
               searchContext,
-              accumulator,
               true
             )
           )
@@ -238,7 +236,6 @@ internal class PathCompletionsAttribute(
           foreach (
             var directory in Directories(
               searchContext,
-              accumulator,
               !Flat
             )
           )
@@ -248,8 +245,7 @@ internal class PathCompletionsAttribute(
 
           foreach (
             var file in Files(
-              searchContext,
-              accumulator
+              searchContext
             )
           )
           {
@@ -259,26 +255,26 @@ internal class PathCompletionsAttribute(
           break;
       }
 
-      if (accumulator is not "")
+      if (searchContext.Accumulator is not "")
       {
         yield return CreateCompletionRecord(
           System.IO.Path.Join(
             searchContext.Container.FullName,
             Client.File.PathString.SeparatorString
           ),
-          accumulator,
+          searchContext.Accumulator,
           Client.File.PathString.SeparatorString
         );
       }
 
-      if (accumulator is not "" || Index is not 0)
+      if (searchContext.Accumulator is not "" || Index is not 0)
       {
         yield return CreateCompletionRecord(
           Client.File.PathString.FullPathLocationRelative(
             searchContext.Container.FullName,
             ".."
           ),
-          accumulator,
+          searchContext.Accumulator,
           @"..\"
         );
       }
@@ -288,31 +284,29 @@ internal class PathCompletionsAttribute(
 
     private IEnumerable<CompletionResultRecord> Directories(
       SearchContext searchContext,
-      string accumulator,
       bool trailingSeparator = default
     ) => EnumerateResults(
-      accumulator,
       searchContext.Container.EnumerateDirectories(
         searchContext.Filter,
         searchContext.Options
       ),
+      searchContext.Accumulator,
       trailingSeparator
     );
 
     private IEnumerable<CompletionResultRecord> Files(
-      SearchContext searchContext,
-      string accumulator
+      SearchContext searchContext
     ) => EnumerateResults(
-      accumulator,
       searchContext.Container.EnumerateFiles(
         searchContext.Filter,
         searchContext.Options
-      )
+      ),
+      searchContext.Accumulator
     );
 
     private IEnumerable<CompletionResultRecord> EnumerateResults(
-      string accumulator,
       IEnumerable<System.IO.FileSystemInfo> items,
+      string accumulator,
       bool trailingSeparator = default
     )
     {
