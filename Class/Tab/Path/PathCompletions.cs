@@ -316,23 +316,22 @@ internal class PathCompletionsAttribute(
       bool trailingSeparator = default
     )
     {
-      var filteredItems = from item in items
-        where item.Attributes & System.IO.FileAttributes.Hidden == System.IO.FileAttributes.None
-        || item.Attributes & System.IO.FileAttributes.System == System.IO.FileAttributes.None
-        select item;
-
-      foreach (
-        var item in filteredItems
-      )
+      foreach (var item in Items)
       {
-        ++Index;
+        if (
+          item.Attributes & System.IO.FileAttributes.Hidden is System.IO.FileAttributes.None
+          || item.Attributes & System.IO.FileAttributes.System is System.IO.FileAttributes.None
+        )
+        {
+          ++Index;
 
-        yield return CreateCompletionRecord(
-          item.FullName,
-          accumulator,
-          item.Name,
-          trailingSeparator
-        );
+          yield return CreateCompletionRecord(
+            item.FullName,
+            accumulator,
+            item.Name,
+            trailingSeparator
+          );
+        }
       }
       yield break;
     }
