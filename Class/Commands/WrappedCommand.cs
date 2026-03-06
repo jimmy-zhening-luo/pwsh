@@ -2,14 +2,17 @@ namespace Module.Commands;
 
 public abstract class WrappedCommand(
   string WrappedCommandName,
-  string PipelineInputParameterName = "",
+  string? PipelineInputParameterName = default,
   CommandTypes CommandType = CommandTypes.Cmdlet,
   bool SkipSsh = default
 ) : CoreCommand(SkipSsh)
 {
-  private protected bool Piped;
-
   private protected virtual Dictionary<string, object?> CoercedParameters => [];
+
+  private string? PipelineInputParameterName { get; } = PipelineInputParameterName;
+
+  [System.Diagnostics.CodeAnalysis.MemberNotNullWhen(true, nameof(PipelineInputParameterName))]
+  private bool Piped { get; set; }
 
   private protected virtual void TransformArguments()
   { }
@@ -24,15 +27,17 @@ public abstract class WrappedCommand(
     TransformArguments();
 
     if (
-      PipelineInputParameterName is ""
-      || BoundParameters.ContainsKey(PipelineInputParameterName)
+      PipelineInputParameterName is not null
+      && !BoundParameters.ContainsKey(
+        PipelineInputParameterName
+      )
     )
     {
-      TransformPipelineInput();
+      Piped = true;
     }
     else
     {
-      Piped = true;
+      TransformPipelineInput();
     }
 
     _ = AddCommand(

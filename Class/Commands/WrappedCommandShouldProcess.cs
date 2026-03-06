@@ -2,7 +2,7 @@ namespace Module.Commands;
 
 public abstract class WrappedCommandShouldProcess(
   string WrappedCommandName,
-  string PipelineInputParameterName = "",
+  string? PipelineInputParameterName = default,
   CommandTypes CommandType = CommandTypes.Cmdlet,
   bool SkipSsh = default
 ) : WrappedCommand(
