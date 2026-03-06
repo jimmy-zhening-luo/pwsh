@@ -114,7 +114,11 @@ public sealed class GetSize : CoreCommand
         foreach (
           var file in new System.IO.DirectoryInfo(fullPath).EnumerateFiles(
             "*",
-            System.IO.SearchOption.AllDirectories
+            new()
+            {
+              RecurseSubdirectories = true,
+              AttributesToSkip = System.IO.FileAttributes.ReparsePoint,
+            }
           )
         )
         {
