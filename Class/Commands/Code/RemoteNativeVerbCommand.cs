@@ -1,7 +1,7 @@
 namespace Module.Commands.Code;
 
 public abstract class RemoteNativeVerbCommand(
-  string? IntrinsicVerb = default,
+  string? IntrinsicVerb,
   bool SkipSsh = default
 ) : NativeVerbCommand(IntrinsicVerb, SkipSsh: SkipSsh)
 {
