@@ -6,11 +6,7 @@ public abstract class NativeVerbCommand(
   bool SkipSsh = default
 ) : NativeCommand(CreateProcess, SkipSsh)
 {
-  private protected string? IntrinsicVerb
-  {
-    private protected get;
-    set;
-  } = IntrinsicVerb;
+  private protected string? IntrinsicVerb { get; set; } = IntrinsicVerb;
 
   private protected abstract List<string> NativeCommandArguments();
 
