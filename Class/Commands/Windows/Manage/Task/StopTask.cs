@@ -15,7 +15,6 @@ public sealed class StopTask : TaskManager
   )]
   public SwitchParameter Descendant
   {
-    get => descendant;
     set => descendant = value;
   }
 }

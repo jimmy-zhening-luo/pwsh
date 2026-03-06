@@ -15,12 +15,7 @@ public sealed partial class GitCommit() : GitCommand("commit")
     HelpMessage = "Commit message, defaulting to 'No message' on an empty commit"
   )]
   [PathSpecCompletions]
-  public string Message
-  {
-    get => message;
-    set => message = value;
-  }
-  private string message = string.Empty;
+  public string Message { get; set; } = string.Empty;
 
   [Parameter(
     HelpMessage = "Only commit files that are already staged"
