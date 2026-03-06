@@ -179,36 +179,6 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
 
   private protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
 
-  private protected void HandleNativeError(
-    [System.Diagnostics.CodeAnalysis.DoesNotReturnIf(default)]
-    bool noThrow = default
-  ) => HandleNativeError(
-    "Native command execution error",
-    noThrow
-  );
-  private protected void HandleNativeError(
-    string message,
-    [System.Diagnostics.CodeAnalysis.DoesNotReturnIf(default)]
-    bool noThrow = default
-  )
-  {
-    if (
-      PSVariable<int>(
-        "LASTEXITCODE"
-      ) is not (0 or 1)
-    )
-    {
-      if (noThrow)
-      {
-        WriteWarning(message);
-      }
-      else
-      {
-        ThrowError(message);
-      }
-    }
-  }
-
   private bool BlockedBySsh => SkipSsh
     && Client.Environment.Known.Variable.InSsh;
 
@@ -318,6 +288,32 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
   private protected virtual void Postprocess()
   { }
 
+  private protected void WriteInformation(object log) => base.WriteInformation(
+    new InformationRecord(
+      log,
+      GetName()
+    )
+  );
+
+  private protected void WriteProgress(
+    int total,
+    int progress,
+    string activity = "Progress",
+    int activityId = default
+  ) => WriteProgress(
+    new(
+      activityId,
+      activity,
+      $"{progress}/{total}"
+    )
+    {
+      PercentComplete = 100 * progress / total,
+      RecordType = progress == total
+        ? ProgressRecordType.Completed
+        : ProgressRecordType.Processing,
+    }
+  );
+
   [System.Diagnostics.CodeAnalysis.DoesNotReturn]
   private protected void ThrowError(
     string message,
@@ -350,31 +346,35 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     );
   }
 
-  private protected void WriteProgress(
-    int total,
-    int progress,
-    string activity = "Progress",
-    int activityId = default
-  ) => WriteProgress(
-    new(
-      activityId,
-      activity,
-      $"{progress}/{total}"
+  private protected void HandleNativeError(
+    [System.Diagnostics.CodeAnalysis.DoesNotReturnIf(default)]
+    bool noThrow = default
+  ) => HandleNativeError(
+    "Native command execution error",
+    noThrow
+  );
+  private protected void HandleNativeError(
+    string message,
+    [System.Diagnostics.CodeAnalysis.DoesNotReturnIf(default)]
+    bool noThrow = default
+  )
+  {
+    if (
+      PSVariable<int>(
+        "LASTEXITCODE"
+      ) is not (0 or 1)
     )
     {
-      PercentComplete = 100 * progress / total,
-      RecordType = progress == total
-        ? ProgressRecordType.Completed
-        : ProgressRecordType.Processing,
+      if (noThrow)
+      {
+        WriteWarning(message);
+      }
+      else
+      {
+        ThrowError(message);
+      }
     }
-  );
-
-  private protected void WriteInformation(object log) => base.WriteInformation(
-    new InformationRecord(
-      log,
-      GetName()
-    )
-  );
+  }
 
   private protected PowerShell AddCommand(
     string command,
