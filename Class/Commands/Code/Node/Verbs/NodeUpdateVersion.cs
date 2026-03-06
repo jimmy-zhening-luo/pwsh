@@ -60,7 +60,7 @@ public sealed class NodeUpdateVersion() : NodeCommand("version")
   )]
   public string Version
   {
-    get => version;
+    private get => version;
     set => version = value switch
     {
       "" => nameof(NodeVersion.patch),

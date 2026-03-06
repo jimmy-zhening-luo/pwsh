@@ -17,7 +17,7 @@ public sealed class GetHelpOnline : CoreCommand
   [SupportsWildcards]
   public string[] Name
   {
-    get => [topic];
+    private get => [topic];
     set => topic = string.Join(
       '_',
       value

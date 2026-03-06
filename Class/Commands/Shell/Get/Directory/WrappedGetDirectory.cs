@@ -14,7 +14,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   [ValidateNotNullOrEmpty]
   public string Filter
   {
-    get => filter;
+    private get => filter;
     set
     {
       filter = value.Contains('*')

@@ -23,7 +23,7 @@ public sealed partial class GitReset() : GitCommand("reset")
   [PathSpecCompletions]
   public string Tree
   {
-    get => tree;
+    private get => tree;
     set
     {
       if (tree is not "")

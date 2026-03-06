@@ -16,7 +16,7 @@ public sealed class GitClone() : GitCommand("clone")
   [ValidateNotNullOrWhiteSpace]
   public string Repository
   {
-    get => remote;
+    private get => remote;
     set
     {
       remote = value.Split(

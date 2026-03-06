@@ -18,7 +18,7 @@ public sealed class OpenUrl() : CoreCommand(true)
   [Tab.Path.PathCompletions]
   public string Path
   {
-    get => pathUri?.ToString() ?? string.Empty;
+    private get => pathUri?.ToString() ?? string.Empty;
     set => pathUri = value switch
     {
       "" => default,

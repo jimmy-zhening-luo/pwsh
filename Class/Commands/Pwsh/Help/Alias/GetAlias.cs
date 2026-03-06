@@ -17,7 +17,7 @@ public sealed class GetCommandAlias : CoreCommand
   [Tab.Completions("*")]
   public string[] Definition
   {
-    get => [.. definitions];
+    private get => [.. definitions];
     set
     {
       definitions.Clear();
@@ -62,7 +62,7 @@ public sealed class GetCommandAlias : CoreCommand
   [SupportsWildcards]
   public string[] Exclude
   {
-    get => [.. exclusions];
+    private get => [.. exclusions];
     set
     {
       exclusions.Clear();

@@ -17,7 +17,7 @@ public sealed class GitAdd() : GitCommand("add")
   [PathSpecCompletions]
   public string Name
   {
-    get => name is ""
+    private get => name is ""
       ? "."
       : name;
     set => name = value;

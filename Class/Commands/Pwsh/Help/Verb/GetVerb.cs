@@ -56,7 +56,7 @@ public sealed class GetVerb : CoreCommand
   [Tab.Completions("*")]
   public string[] Verb
   {
-    get => [.. verbs];
+    private get => [.. verbs];
     set
     {
       verbs.Clear();
@@ -84,7 +84,7 @@ public sealed class GetVerb : CoreCommand
   )]
   public VerbGroup[] Group
   {
-    get => [.. groups];
+    private get => [.. groups];
     set
     {
       groups.Clear();
