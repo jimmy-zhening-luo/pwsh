@@ -37,7 +37,9 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
         return powershell;
       }
     }
-    private PowerShell? powershell = Module.Create();
+    private PowerShell? powershell = PowerShell.Create(
+      RunspaceMode.CurrentRunspace
+    );
 
     private SteppablePipeline? Pipeline
     {
