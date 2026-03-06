@@ -14,6 +14,8 @@ internal class PathCompletionsAttribute(
 
   internal sealed class PathCompleter : TabCompleter
   {
+    private const ExcludedAttributes = System.IO.FileAttributes.NotContentIndexed;
+
     private record SearchContext(
       System.IO.DirectoryInfo Container,
       string Filter,
