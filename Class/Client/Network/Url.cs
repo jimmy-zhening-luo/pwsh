@@ -73,9 +73,9 @@ internal static class Url
   internal static System.Uri? ToAbsoluteUri(
     System.Uri uri,
     Scheme scheme
-  ) => (scheme & Scheme.Http) != default
+  ) => (scheme & Scheme.Http) is not 0
     && IsHttp(uri)
-    || (scheme & Scheme.File) != default
+    || (scheme & Scheme.File) is not 0
     && IsFile(uri)
     ? uri
     : default;
