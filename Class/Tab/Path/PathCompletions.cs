@@ -164,7 +164,7 @@ internal class PathCompletionsAttribute(
           new()
           {
             IgnoreInaccessible = default,
-            AttributesToSkip = System.IO.FileAttributes.NotContentIndexed,
+            AttributesToSkip = Attributes.NotContentIndexed,
           },
           lineCaptured
         )
@@ -319,8 +319,8 @@ internal class PathCompletionsAttribute(
       foreach (var item in items)
       {
         if (
-          (item.Attributes & System.IO.FileAttributes.Hidden) == default
-          || (item.Attributes & System.IO.FileAttributes.System) == default
+          (item.Attributes & Attributes.Hidden) == default
+          || (item.Attributes & Attributes.System) == default
         )
         {
           matched = true;
