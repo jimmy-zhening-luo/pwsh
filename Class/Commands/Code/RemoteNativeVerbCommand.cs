@@ -18,12 +18,7 @@ public abstract class RemoteNativeVerbCommand(
     Tab.Path.PathItemType.Directory,
     Flat: true
   )]
-  public string WorkingDirectory
-  {
-    get => workingDirectory;
-    set => workingDirectory = value;
-  }
-  private string workingDirectory = string.Empty;
+  public string WorkingDirectory { get; set; } = string.Empty;
 
   private protected readonly List<string> DeferredVerbArguments = [];
 
