@@ -17,19 +17,3 @@ internal enum CompletionCase
   )]
   Upper,
 }
-
-[System.AttributeUsage(
-  System.AttributeTargets.Property
-  | System.AttributeTargets.Field
-)]
-internal abstract class TCompletionsAttribute(
-  CompletionCase Case = default,
-  CompletionResultType CompletionType = CompletionResultType.ParameterValue
-) : ArgumentCompleterAttribute, IArgumentCompleterFactory
-{
-  public CompletionCase Case { get; init; } = Case;
-
-  public CompletionResultType CompletionType { get; init; } = CompletionType;
-
-  public abstract IArgumentCompleter Create();
-}

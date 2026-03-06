@@ -11,7 +11,7 @@ internal class PathCompletionsAttribute(
   string Location = "",
   PathItemType ItemType = default,
   bool Flat = default
-) : TCompletionsAttribute
+) : TCompletionsAttribute<Completers.PathCompleter>
 {
   public sealed override Completers.PathCompleter Create() => new(
     Location,
