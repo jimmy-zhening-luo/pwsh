@@ -316,10 +316,12 @@ internal class PathCompletionsAttribute(
 
       foreach (var item in items)
       {
-        var hidden = (item.Attributes & Attributes.Hidden) != default;
-        var system = (item.Attributes & Attributes.System) != default;
-
-        switch ((hidden, system))
+        switch (
+          (
+            (item.Attributes & Attributes.Hidden) != default,
+            (item.Attributes & Attributes.System) != default
+          )
+        )
         {
           case (true, true):
             break;
