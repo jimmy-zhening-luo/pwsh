@@ -6,7 +6,7 @@ namespace Module.Commands.Code.Git.Verbs;
   HelpUri = "https://git-scm.com/docs/git-commit"
 )]
 [Alias("gm")]
-public sealed partial class GitCommit() : GitCommand("commit")
+public sealed class GitCommit() : GitCommand("commit")
 {
   private const string FlagAllowEmpty = "--allow-empty";
 

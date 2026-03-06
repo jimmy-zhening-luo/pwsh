@@ -1,6 +1,6 @@
 namespace Module.Client.Console;
 
-internal static partial class String
+internal static class String
 {
   internal const char Space = ' ';
   internal const char SingleQuote = '\'';
