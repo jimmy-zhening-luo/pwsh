@@ -35,6 +35,6 @@ internal abstract class TCompletionsAttribute<T>(
 
   public CompletionResultType CompletionType { get; init; } = CompletionType;
 
-  public abstract T Create();
-  public IArgumentCompleter Create() => Create();
+  public abstract T Create<T>();
+  public IArgumentCompleter Create() => Create<T>();
 }
