@@ -15,7 +15,7 @@ public sealed class StartExplorer : WrappedStartExplorer
     Position = default
   )]
   [SupportsWildcards]
-  [Tab.Path.PathCompletions]
+  [Tab.PathCompletions]
   public sealed override string[] Path
   {
     set => paths = value;
@@ -48,7 +48,7 @@ public sealed class StartExplorerSibling : WrappedStartExplorer
     Position = default
   )]
   [SupportsWildcards]
-  [Tab.Path.PathCompletions("..")]
+  [Tab.PathCompletions("..")]
   public sealed override string[] Path
   {
     set => paths = value;
@@ -72,7 +72,7 @@ public sealed class StartExplorerRelative : WrappedStartExplorer
     Position = default
   )]
   [SupportsWildcards]
-  [Tab.Path.PathCompletions(@"..\..")]
+  [Tab.PathCompletions(@"..\..")]
   public sealed override string[] Path
   {
     set => paths = value;
@@ -96,7 +96,7 @@ public sealed class StartExplorerHome : WrappedStartExplorer
     Position = default
   )]
   [SupportsWildcards]
-  [Tab.Path.PathCompletions("~")]
+  [Tab.PathCompletions("~")]
   public sealed override string[] Path
   {
     set => paths = value;
@@ -122,7 +122,7 @@ public sealed class StartExplorerCode : WrappedStartExplorer
     Position = default
   )]
   [SupportsWildcards]
-  [Tab.Path.PathCompletions(@"~\code")]
+  [Tab.PathCompletions(@"~\code")]
   public sealed override string[] Path
   {
     set => paths = value;
@@ -148,7 +148,7 @@ public sealed class StartExplorerDrive : WrappedStartExplorer
     Position = default
   )]
   [SupportsWildcards]
-  [Tab.Path.PathCompletions(@"\")]
+  [Tab.PathCompletions(@"\")]
   public sealed override string[] Path
   {
     set => paths = value;

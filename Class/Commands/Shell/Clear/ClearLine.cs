@@ -15,7 +15,7 @@ public sealed class ClearLine : CoreCommand
     Position = default
   )]
   [SupportsWildcards]
-  [Tab.Path.PathCompletions]
+  [Tab.PathCompletions]
   public string Path
   {
     private get;

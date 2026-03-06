@@ -1,5 +1,23 @@
 namespace Module.Tab;
 
+internal enum CompletionCase
+{
+  [System.ComponentModel.Description(
+    "Preserve the original case of the matched completion"
+  )]
+  Preserve,
+
+  [System.ComponentModel.Description(
+    "Convert the matched completion to lowercase"
+  )]
+  Lower,
+
+  [System.ComponentModel.Description(
+    "Convert the matched completion to uppercase"
+  )]
+  Upper,
+}
+
 [System.AttributeUsage(
   System.AttributeTargets.Property
   | System.AttributeTargets.Field
@@ -14,55 +32,4 @@ internal abstract class TCompletionsAttribute(
   public CompletionResultType CompletionType { get; init; } = CompletionType;
 
   public abstract IArgumentCompleter Create();
-
-  internal abstract class TCompleter(
-    CompletionCase Case,
-    CompletionResultType CompletionType
-  ) : IArgumentCompleter
-  {
-    private protected record CompletionResultRecord(
-      string Result,
-      string? DisplayName = default,
-      string? Description = default,
-      CompletionResultType? CompletionType = default
-    );
-
-    public IEnumerable<CompletionResult> CompleteArgument(
-      string commandName,
-      string parameterName,
-      string wordToComplete,
-      System.Management.Automation.Language.CommandAst commandAst,
-      System.Collections.IDictionary fakeBoundParameters
-    ) => WrapArgumentCompletionResult(
-      GenerateCompletion(
-        Client.Console.String.UnescapeSingleQuoted(
-          wordToComplete
-        )
-      )
-    );
-
-    private protected abstract IEnumerable<CompletionResultRecord> GenerateCompletion(string wordToComplete);
-
-    private IEnumerable<CompletionResult> WrapArgumentCompletionResult(IEnumerable<CompletionResultRecord> completions)
-    {
-      foreach (var completion in completions)
-      {
-        var result = completion.Result;
-        var casedResult = Case switch
-        {
-          CompletionCase.Upper => result.ToUpper(),
-          CompletionCase.Lower => result.ToLower(),
-          _ => result,
-        };
-
-        yield return new(
-          Client.Console.String.EscapeSingleQuoted(casedResult),
-          completion.DisplayName ?? casedResult,
-          completion.CompletionType ?? CompletionType,
-          completion.Description ?? result
-        );
-      }
-      yield break;
-    }
-  }
 }

@@ -18,9 +18,9 @@ public sealed class GetDirectory : WrappedGetDirectory
     Position = default
   )]
   [SupportsWildcards]
-  [Tab.Path.PathCompletions(
+  [Tab.PathCompletions(
     "",
-    Tab.Path.PathItemType.Directory
+    Tab.PathItemType.Directory
   )]
   public sealed override string[] Path
   {
@@ -57,9 +57,9 @@ public sealed class GetDirectorySibling : WrappedGetDirectory
     Position = default
   )]
   [SupportsWildcards]
-  [Tab.Path.PathCompletions(
+  [Tab.PathCompletions(
     "..",
-    Tab.Path.PathItemType.Directory
+    Tab.PathItemType.Directory
   )]
   public sealed override string[] Path
   {
@@ -87,9 +87,9 @@ public sealed class GetDirectoryRelative : WrappedGetDirectory
     Position = default
   )]
   [SupportsWildcards]
-  [Tab.Path.PathCompletions(
+  [Tab.PathCompletions(
     @"..\..",
-    Tab.Path.PathItemType.Directory
+    Tab.PathItemType.Directory
   )]
   public sealed override string[] Path
   {
@@ -117,9 +117,9 @@ public sealed class GetDirectoryHome : WrappedGetDirectory
     Position = default
   )]
   [SupportsWildcards]
-  [Tab.Path.PathCompletions(
+  [Tab.PathCompletions(
     "~",
-    Tab.Path.PathItemType.Directory
+    Tab.PathItemType.Directory
   )]
   public sealed override string[] Path
   {
@@ -147,9 +147,9 @@ public sealed class GetDirectoryCode : WrappedGetDirectory
     Position = default
   )]
   [SupportsWildcards]
-  [Tab.Path.PathCompletions(
+  [Tab.PathCompletions(
     @"~\code",
-    Tab.Path.PathItemType.Directory
+    Tab.PathItemType.Directory
   )]
   public sealed override string[] Path
   {
@@ -179,9 +179,9 @@ public sealed class GetDirectoryDrive : WrappedGetDirectory
     Position = default
   )]
   [SupportsWildcards]
-  [Tab.Path.PathCompletions(
+  [Tab.PathCompletions(
     Client.File.PathString.SeparatorString,
-    Tab.Path.PathItemType.Directory
+    Tab.PathItemType.Directory
   )]
   public sealed override string[] Path
   {

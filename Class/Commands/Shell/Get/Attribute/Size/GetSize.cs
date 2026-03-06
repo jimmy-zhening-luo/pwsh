@@ -63,7 +63,7 @@ public sealed class GetSize : CoreCommand
     ValueFromPipelineByPropertyName = true,
     HelpMessage = "Path of the file or directory of which to get the size"
   )]
-  [Tab.Path.PathCompletions]
+  [Tab.PathCompletions]
   public string[] Path
   {
     get => paths is []

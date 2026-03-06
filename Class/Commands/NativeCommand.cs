@@ -29,7 +29,7 @@ public abstract partial class NativeCommand(
     DontShow = true,
     HelpMessage = "Additional arguments"
   )]
-  [Tab.Path.PathCompletions]
+  [Tab.PathCompletions]
   public string[] ArgumentList
   {
     private protected get;

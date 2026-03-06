@@ -17,7 +17,7 @@ public sealed class NewJunction() : WrappedCommand(
     Mandatory = true,
     Position = default
   )]
-  [Tab.Path.PathCompletions]
+  [Tab.PathCompletions]
   public required string[] Path
   {
     private get;
@@ -29,7 +29,7 @@ public sealed class NewJunction() : WrappedCommand(
     Position = 1
   )]
   [Alias("Target")]
-  [Tab.Path.PathCompletions]
+  [Tab.PathCompletions]
   public required object Value
   {
     private get;

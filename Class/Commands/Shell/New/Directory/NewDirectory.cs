@@ -21,7 +21,7 @@ public sealed class NewDirectory() : WrappedCommand(
     ParameterSetName = "nameSet",
     Position = default
   )]
-  [Tab.Path.PathCompletions]
+  [Tab.PathCompletions]
   public required string[] Path
   {
     private get;
@@ -40,7 +40,7 @@ public sealed class NewDirectory() : WrappedCommand(
 
   [Parameter]
   [Alias("Target")]
-  [Tab.Path.PathCompletions]
+  [Tab.PathCompletions]
   public required object Value
   {
     private get;
