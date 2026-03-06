@@ -26,7 +26,7 @@ internal class PathCompletionsAttribute(
     private readonly bool Flat;
     private readonly bool AllowReanchor;
 
-    private uint Index;
+    private bool matched;
 
     internal PathCompleter(
       string location,
@@ -187,7 +187,7 @@ internal class PathCompletionsAttribute(
 
     private protected sealed override IEnumerable<CompletionResultRecord> GenerateCompletion(string wordToComplete)
     {
-      Index = default;
+      matched = default;
 
       var searchContext = ParseLine(
         wordToComplete,
@@ -267,7 +267,7 @@ internal class PathCompletionsAttribute(
         );
       }
 
-      if (searchContext.Accumulator is not "" || Index is not 0)
+      if (matched || searchContext.Accumulator is not "")
       {
         yield return CreateCompletionRecord(
           Client.File.PathString.FullPathLocationRelative(
@@ -317,7 +317,7 @@ internal class PathCompletionsAttribute(
           || (item.Attributes & System.IO.FileAttributes.System) == default
         )
         {
-          ++Index;
+          matched = true;
 
           yield return CreateCompletionRecord(
             item.FullName,
