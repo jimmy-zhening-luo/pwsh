@@ -318,15 +318,15 @@ internal class PathCompletionsAttribute(
       {
         switch (
           (
-            (item.Attributes & Attributes.Hidden) != 0,
-            (item.Attributes & Attributes.System) != default
+            item.Attributes & Attributes.Hidden,
+            item.Attributes & Attributes.System
           )
         )
         {
-          case (true, true):
+          case (not 0, not 0):
             break;
 
-          case (true, _):
+          case (not 0, _):
             deferredItems.Add(item);
             break;
 
