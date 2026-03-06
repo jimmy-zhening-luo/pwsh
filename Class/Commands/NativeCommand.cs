@@ -162,17 +162,10 @@ public abstract partial class NativeCommand(
       ProcessSteppablePipeline();
       EndSteppablePipeline();
 
-      if (HadNativeError)
-      {
-        if (NoThrow)
-        {
-          WriteWarning("Execution error");
-        }
-        else
-        {
-          ThrowError("Execution error");
-        }
-      }
+      HandleNativeError(
+        $"{CommandPath} error",
+        NoThrow
+      );
     }
   }
 }

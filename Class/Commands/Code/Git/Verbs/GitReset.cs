@@ -118,20 +118,16 @@ public sealed partial class GitReset() : GitCommand("reset")
       NativeArguments.Insert(default, FlagHard);
 
       AddCommand("Add-GitRepository")
-        .AddParameter("WorkingDirectory", WorkingDirectory);
+        .AddParameter(
+          "WorkingDirectory",
+          WorkingDirectory
+        );
 
       ProcessSteppablePipeline();
       EndSteppablePipeline();
+      ClearCommands();
 
-      if (HadNativeError)
-      {
-        ClearCommands();
-        ThrowError("Git returned error when staging files for commit");
-      }
-      else
-      {
-        ClearCommands();
-      }
+      HandleNativeError("git error when staging files for commit");
     }
   }
 }

@@ -26,20 +26,19 @@ public sealed class GitRestore() : GitCommand("pull")
     string[] resetArgumentsArray = [.. resetArguments];
 
     AddCommand("Reset-GitRepository")
-      .AddParameter("WorkingDirectory", WorkingDirectory)
-      .AddParameter("ArgumentList", resetArgumentsArray);
+      .AddParameter(
+        "WorkingDirectory",
+        WorkingDirectory
+      )
+      .AddParameter(
+        "ArgumentList",
+        resetArgumentsArray
+      );
 
     ProcessSteppablePipeline();
     EndSteppablePipeline();
+    ClearCommands();
 
-    if (HadNativeError)
-    {
-      ClearCommands();
-      ThrowError("Git error encountered when resetting repository.");
-    }
-    else
-    {
-      ClearCommands();
-    }
+    HandleNativeError("git error when resetting repository.");
   }
 }

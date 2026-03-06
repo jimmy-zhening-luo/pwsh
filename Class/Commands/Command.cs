@@ -179,9 +179,35 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
 
   private protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
 
-  private protected bool HadErrors => pshost?.HadErrors ?? default;
-
-  private protected bool HadNativeError => PSVariable<int>("LASTEXITCODE") is not (0 or 1);
+  private protected void HandleNativeError(
+    [System.Diagnostics.CodeAnalysis.DoesNotReturnIf(default)]
+    bool noThrow = default
+  ) => HandleNativeError(
+    "Native command execution error",
+    noThrow
+  );
+  private protected void HandleNativeError(
+    string message,
+    [System.Diagnostics.CodeAnalysis.DoesNotReturnIf(default)]
+    bool noThrow = default
+  )
+  {
+    if (
+      PSVariable<int>(
+        "LASTEXITCODE"
+      ) is not (0 or 1)
+    )
+    {
+      if (noThrow)
+      {
+        WriteWarning(message);
+      }
+      else
+      {
+        ThrowError(message);
+      }
+    }
+  }
 
   private bool BlockedBySsh => SkipSsh
     && Client.Environment.Known.Variable.InSsh;
