@@ -30,10 +30,17 @@ public sealed partial class GitReset() : GitCommand("reset")
       {
         var treeMatch = GitTreeRegex().Match(tree);
 
-        if (treeMatch.Success && treeMatch.Groups["Step"].Value is var step
-        && (step is ""
-          || int.TryParse(step, out var _)
-        ))
+        if (
+          treeMatch.Success
+          && treeMatch.Groups["Step"].Value is var step
+          && (
+            step is ""
+            || int.TryParse(
+              step,
+              out var _
+            )
+          )
+        )
         {
           var branching = treeMatch.Groups["Branching"].Value is not "" and var b ? b : "~";
 
@@ -72,7 +79,17 @@ public sealed partial class GitReset() : GitCommand("reset")
       {
         var treeMatch = GitTreeRegex().Match(WorkingDirectory);
 
-        if (treeMatch.Success && treeMatch.Groups["Step"].Value is var step && (step is "" || int.TryParse(step, out var _)))
+        if (
+          treeMatch.Success
+          && treeMatch.Groups["Step"].Value is var step
+          && (
+            step is ""
+            || int.TryParse(
+              step,
+              out var _
+            )
+          )
+        )
         {
           var branching = treeMatch.Groups["Branching"].Value is not "" and var b ? b : "~";
 
