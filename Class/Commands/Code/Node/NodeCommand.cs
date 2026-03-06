@@ -121,14 +121,14 @@ public abstract class NodeCommand(string? IntrinsicVerb) : RemoteNativeVerbComma
       case null:
         break;
 
-      case string verb when Aliases.TryGetValue(
+      case var verb when Aliases.TryGetValue(
         verb.ToLower(),
         out var alias
       ):
         IntrinsicVerb = alias;
         break;
 
-      case string verb when Verbs.TryGetValue(
+      case var verb when Verbs.TryGetValue(
         verb.ToLower(),
         out var exactVerb
       ):
@@ -141,11 +141,11 @@ public abstract class NodeCommand(string? IntrinsicVerb) : RemoteNativeVerbComma
       case "":
         break;
 
-      case string path when !IsNodePackage(path):
+      case var path when !IsNodePackage(path):
         DeferredVerbArguments.Add(path);
         break;
 
-      case string path when Pwd(path) is string fullPath
+      case var path when Pwd(path) is var fullPath
         && fullPath != Pwd():
         command.Add(
           $"--prefix={Pwd(fullPath)}"

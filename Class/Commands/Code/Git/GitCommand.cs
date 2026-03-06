@@ -57,7 +57,7 @@ public abstract class GitCommand(string? IntrinsicVerb) : RemoteNativeVerbComman
         IntrinsicVerb = "status";
         break;
 
-      case string verb when System.Enum.TryParse<NewableVerb>(
+      case var verb when System.Enum.TryParse<NewableVerb>(
         verb,
         true,
         out var newableVerb
@@ -71,7 +71,7 @@ public abstract class GitCommand(string? IntrinsicVerb) : RemoteNativeVerbComman
         );
         break;
 
-      case string verb when Verbs.TryGetValue(
+      case var verb when Verbs.TryGetValue(
         verb.ToLower(),
         out var exactVerb
       ):
