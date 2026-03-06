@@ -318,7 +318,7 @@ internal class PathCompletionsAttribute(
       {
         switch (
           (
-            (item.Attributes & Attributes.Hidden) != default,
+            (item.Attributes & Attributes.Hidden) != 0,
             (item.Attributes & Attributes.System) != default
           )
         )
