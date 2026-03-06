@@ -21,7 +21,6 @@ public sealed class GetFile : WrappedGetFile
   )]
   public sealed override string[] Path
   {
-    get => paths;
     set => paths = value;
   }
 
@@ -54,7 +53,6 @@ public sealed class GetFileSibling : WrappedGetFile
   )]
   public sealed override string[] Path
   {
-    get => paths;
     set => paths = value;
   }
 
@@ -82,7 +80,6 @@ public sealed class GetFileRelative : WrappedGetFile
   )]
   public sealed override string[] Path
   {
-    get => paths;
     set => paths = value;
   }
 
@@ -110,7 +107,6 @@ public sealed class GetFileHome : WrappedGetFile
   )]
   public sealed override string[] Path
   {
-    get => paths;
     set => paths = value;
   }
 
@@ -138,7 +134,6 @@ public sealed class GetFileCode : WrappedGetFile
   )]
   public sealed override string[] Path
   {
-    get => paths;
     set => paths = value;
   }
 
@@ -168,7 +163,6 @@ public sealed class GetFileDrive : WrappedGetFile
   )]
   public sealed override string[] Path
   {
-    get => paths;
     set => paths = value;
   }
 

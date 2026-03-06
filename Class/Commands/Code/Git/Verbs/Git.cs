@@ -6,7 +6,7 @@ namespace Module.Commands.Code.Git.Verbs;
   HelpUri = "https://git-scm.com/docs"
 )]
 [Alias("g")]
-public sealed class Git : GitCommand
+public sealed class Git() : GitCommand(default)
 {
   [Parameter(
     Position = default,
@@ -15,7 +15,6 @@ public sealed class Git : GitCommand
   [GitVerbCompletions]
   public string Verb
   {
-    get => IntrinsicVerb;
     set => IntrinsicVerb = value;
   }
 
@@ -27,7 +26,6 @@ public sealed class Git : GitCommand
   [Alias("v")]
   public SwitchParameter Version
   {
-    get => base.V;
     set => base.V = value;
   }
 }

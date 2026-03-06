@@ -5,7 +5,7 @@ public abstract class VirtualStartWorkspace() : NativeCommand(true, true)
   private const string FlagNewWindow = "--new-window";
   private const string FlagReuseWindow = "--reuse-window";
 
-  public abstract string Path { get; set; }
+  public abstract string Path { set; }
   private protected string path = string.Empty;
 
   [Parameter(Position = 1)]
@@ -54,12 +54,12 @@ public abstract class VirtualStartWorkspace() : NativeCommand(true, true)
 
   private protected sealed override List<string> BuildNativeCommand() => [
     InCurrentLocation
-    && Path is ""
+    && path is ""
     && (
       Pwd() == Client.Environment.Known.Folder.Code()
       || Pwd() == Client.Environment.Known.Folder.Home()
     )
       ? string.Empty
-      : ReanchorPath(Path),
+      : ReanchorPath(path),
   ];
 }

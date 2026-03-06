@@ -4,7 +4,7 @@ public abstract class WrappedSetDirectory() : WrappedCommand(
   @"Microsoft.PowerShell.Management\Set-Location"
 )
 {
-  public abstract string Path { get; set; }
+  public abstract string Path { set; }
   private protected string path = string.Empty;
 
   [Parameter]
@@ -14,7 +14,7 @@ public abstract class WrappedSetDirectory() : WrappedCommand(
   {
     if (!InCurrentLocation)
     {
-      BoundParameters["Path"] = Path = ReanchorPath(Path);
+      BoundParameters["Path"] = path = ReanchorPath(path);
     }
   }
 }

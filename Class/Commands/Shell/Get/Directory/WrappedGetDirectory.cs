@@ -4,7 +4,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   @"Microsoft.PowerShell.Management\Get-ChildItem"
 )
 {
-  public abstract string[] Path { get; set; }
+  public abstract string[] Path { set; }
   private protected string[] paths = [];
 
   [Parameter(
@@ -86,7 +86,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   {
     if (!InCurrentLocation)
     {
-      BoundParameters["Path"] = Path = ReanchorPath(Path);
+      BoundParameters["Path"] = paths = ReanchorPath(paths);
     }
   }
 }

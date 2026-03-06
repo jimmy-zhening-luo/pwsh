@@ -6,7 +6,7 @@ namespace Module.Commands.Code.Node.Verbs;
   HelpUri = "https://docs.npmjs.com/cli/commands"
 )]
 [Alias("n")]
-public sealed class Node : NodeCommand
+public sealed class Node() : NodeCommand(default)
 {
   [Parameter(
     Position = default,
@@ -15,7 +15,6 @@ public sealed class Node : NodeCommand
   [NodeVerbCompletions]
   public string Verb
   {
-    get => IntrinsicVerb;
     set => IntrinsicVerb = value;
   }
 
@@ -27,15 +26,14 @@ public sealed class Node : NodeCommand
   [Alias("v")]
   public SwitchParameter Version
   {
-    get => base.V;
     set => base.V = value;
   }
 
   private protected sealed override List<string> ParseArguments()
   {
-    if (Version && Verb is "")
+    if (V && IntrinsicVerb is null)
     {
-      Version = false;
+      V = false;
 
       return ["-v"];
     }

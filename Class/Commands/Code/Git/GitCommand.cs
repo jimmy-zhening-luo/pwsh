@@ -1,6 +1,6 @@
 namespace Module.Commands.Code.Git;
 
-public abstract class GitCommand(string IntrinsicVerb = "") : RemoteNativeVerbCommand(IntrinsicVerb)
+public abstract class GitCommand(string? IntrinsicVerb) : RemoteNativeVerbCommand(IntrinsicVerb)
 {
   private protected sealed class GitVerbCompletionsAttribute() : Tab.Completer.CompletionsAttribute([.. Verbs]);
 
@@ -49,11 +49,11 @@ public abstract class GitCommand(string IntrinsicVerb = "") : RemoteNativeVerbCo
     bool newable = default;
     switch (IntrinsicVerb)
     {
-      case "" when V:
+      case null when V:
         newable = true;
         break;
 
-      case "":
+      case null:
         IntrinsicVerb = "status";
         break;
 
@@ -62,7 +62,10 @@ public abstract class GitCommand(string IntrinsicVerb = "") : RemoteNativeVerbCo
         true,
         out var newableVerb
       ):
-        (newable, IntrinsicVerb) = (
+        (
+          newable,
+          IntrinsicVerb
+        ) = (
           true,
           newableVerb.ToString()
         );

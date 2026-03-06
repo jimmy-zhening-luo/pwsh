@@ -16,7 +16,6 @@ public sealed class StartWorkspace : VirtualStartWorkspace
   [Tab.Path.PathCompletions]
   public sealed override string Path
   {
-    get => path;
     set => path = value;
   }
 }
@@ -37,7 +36,6 @@ public sealed class StartWorkspaceSibling : VirtualStartWorkspace
   [Tab.Path.PathCompletions("..")]
   public sealed override string Path
   {
-    get => path;
     set => path = value;
   }
 
@@ -60,7 +58,6 @@ public sealed class StartWorkspaceRelative : VirtualStartWorkspace
   [Tab.Path.PathCompletions(@"..\..")]
   public sealed override string Path
   {
-    get => path;
     set => path = value;
   }
 
@@ -83,7 +80,6 @@ public sealed class StartWorkspaceHome : VirtualStartWorkspace
   [Tab.Path.PathCompletions("~")]
   public sealed override string Path
   {
-    get => path;
     set => path = value;
   }
 
@@ -106,7 +102,6 @@ public sealed class StartWorkspaceCode : VirtualStartWorkspace
   [Tab.Path.PathCompletions(@"~\code")]
   public sealed override string Path
   {
-    get => path;
     set => path = value;
   }
 
@@ -131,7 +126,6 @@ public sealed class StartWorkspaceDrive : VirtualStartWorkspace
   [Tab.Path.PathCompletions(@"\")]
   public sealed override string Path
   {
-    get => path;
     set => path = value;
   }
 

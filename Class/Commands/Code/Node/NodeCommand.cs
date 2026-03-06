@@ -1,6 +1,6 @@
 namespace Module.Commands.Code.Node;
 
-public abstract class NodeCommand(string IntrinsicVerb = "") : RemoteNativeVerbCommand(IntrinsicVerb)
+public abstract class NodeCommand(string? IntrinsicVerb) : RemoteNativeVerbCommand(IntrinsicVerb)
 {
   private protected sealed class NodeVerbCompletionsAttribute() : Tab.Completer.CompletionsAttribute([.. Verbs]);
 
@@ -118,7 +118,7 @@ public abstract class NodeCommand(string IntrinsicVerb = "") : RemoteNativeVerbC
 
     switch (IntrinsicVerb)
     {
-      case "":
+      case null:
         break;
 
       case string verb when Aliases.TryGetValue(

@@ -5,7 +5,7 @@ public abstract class WrappedStartExplorer() : WrappedCommandShouldProcess(
   SkipSsh: true
 )
 {
-  public abstract string[] Path { get; set; }
+  public abstract string[] Path { set; }
   private protected string[] paths = [];
 
   [Parameter]
@@ -22,6 +22,6 @@ public abstract class WrappedStartExplorer() : WrappedCommandShouldProcess(
 
   private protected sealed override void TransformPipelineInput()
   {
-    BoundParameters["Path"] = Path = ReanchorPath(Path);
+    BoundParameters["Path"] = paths = ReanchorPath(paths);
   }
 }

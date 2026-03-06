@@ -1,12 +1,12 @@
 namespace Module.Commands;
 
 public abstract class NativeVerbCommand(
-  string IntrinsicVerb = "",
+  string? IntrinsicVerb = default,
   bool CreateProcess = default,
   bool SkipSsh = default
 ) : NativeCommand(CreateProcess, SkipSsh)
 {
-  private protected string IntrinsicVerb { get; set; } = IntrinsicVerb;
+  private protected string? IntrinsicVerb { get; set; } = IntrinsicVerb;
 
   private protected abstract List<string> NativeCommandArguments();
 
@@ -16,7 +16,7 @@ public abstract class NativeVerbCommand(
   {
     var arguments = NativeCommandArguments();
 
-    if (IntrinsicVerb is not "")
+    if (IntrinsicVerb is not null)
     {
       arguments.Add(IntrinsicVerb);
     }

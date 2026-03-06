@@ -24,7 +24,6 @@ public sealed class SetDirectory : WrappedSetDirectory
   )]
   public sealed override string Path
   {
-    get => path;
     set => path = value;
   }
 
@@ -66,27 +65,27 @@ public sealed class SetDirectory : WrappedSetDirectory
   {
     switch (ParameterSetName)
     {
-      case "Path" when Path is "":
-        Path = Pwd("..");
+      case "Path" when path is "":
+        path = Pwd("..");
         break;
 
       case "Path":
         return;
 
       case "DriveC":
-        Path = "C:";
+        path = "C:";
         break;
 
       case "DriveD":
-        Path = "D:";
+        path = "D:";
         break;
 
       case "DriveE":
-        Path = "E:";
+        path = "E:";
         break;
     }
 
-    BoundParameters["Path"] = Path;
+    BoundParameters["Path"] = path;
   }
 }
 
@@ -111,7 +110,6 @@ public sealed class SetDirectorySibling : WrappedSetDirectory
   )]
   public sealed override string Path
   {
-    get => path;
     set => path = value;
   }
 
@@ -139,7 +137,6 @@ public sealed class SetDirectoryRelative : WrappedSetDirectory
   )]
   public sealed override string Path
   {
-    get => path;
     set => path = value;
   }
 
@@ -167,7 +164,6 @@ public sealed class SetDirectoryHome : WrappedSetDirectory
   )]
   public sealed override string Path
   {
-    get => path;
     set => path = value;
   }
 
@@ -195,7 +191,6 @@ public sealed class SetDirectoryCode : WrappedSetDirectory
   )]
   public sealed override string Path
   {
-    get => path;
     set => path = value;
   }
 
@@ -225,7 +220,6 @@ public sealed class SetDrive : WrappedSetDirectory
   )]
   public sealed override string Path
   {
-    get => path;
     set => path = value;
   }
 

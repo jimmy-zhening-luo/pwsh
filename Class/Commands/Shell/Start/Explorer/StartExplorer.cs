@@ -18,7 +18,6 @@ public sealed class StartExplorer : WrappedStartExplorer
   [Tab.Path.PathCompletions]
   public sealed override string[] Path
   {
-    get => paths;
     set => paths = value;
   }
 
@@ -48,7 +47,6 @@ public sealed class StartExplorerSibling : WrappedStartExplorer
   [Tab.Path.PathCompletions("..")]
   public sealed override string[] Path
   {
-    get => paths;
     set => paths = value;
   }
 
@@ -73,7 +71,6 @@ public sealed class StartExplorerRelative : WrappedStartExplorer
   [Tab.Path.PathCompletions(@"..\..")]
   public sealed override string[] Path
   {
-    get => paths;
     set => paths = value;
   }
 
@@ -98,7 +95,6 @@ public sealed class StartExplorerHome : WrappedStartExplorer
   [Tab.Path.PathCompletions("~")]
   public sealed override string[] Path
   {
-    get => paths;
     set => paths = value;
   }
 
@@ -125,7 +121,6 @@ public sealed class StartExplorerCode : WrappedStartExplorer
   [Tab.Path.PathCompletions(@"~\code")]
   public sealed override string[] Path
   {
-    get => paths;
     set => paths = value;
   }
 
@@ -152,7 +147,6 @@ public sealed class StartExplorerDrive : WrappedStartExplorer
   [Tab.Path.PathCompletions(@"\")]
   public sealed override string[] Path
   {
-    get => paths;
     set => paths = value;
   }
 

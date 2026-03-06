@@ -4,7 +4,7 @@ public abstract class WrappedRemoveDirectory() : WrappedCommandShouldProcess(
   @"Microsoft.PowerShell.Management\Remove-Item"
 )
 {
-  public abstract string[] Path { get; set; }
+  public abstract string[] Path { set; }
   private protected string[] paths = [];
 
   [Parameter]

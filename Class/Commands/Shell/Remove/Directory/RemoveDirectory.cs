@@ -19,7 +19,6 @@ public sealed class RemoveDirectory : WrappedRemoveDirectory
   [Tab.Path.PathCompletions]
   public sealed override string[] Path
   {
-    get => paths;
     set => paths = value;
   }
 
