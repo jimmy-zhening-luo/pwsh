@@ -10,7 +10,7 @@ internal class EnumCompletionsAttribute(
   Case
 )
 {
-  private protected sealed override IEnumerable<string> CreateDomain(System.Type enumType)
+  private protected sealed override IEnumerable<string> EnumerateDomain(System.Type enumType)
   {
     HashSet<string> exclusions = Exclude is null
       ? new()

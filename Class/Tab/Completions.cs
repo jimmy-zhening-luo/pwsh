@@ -2,7 +2,7 @@ namespace Module.Tab;
 
 internal class CompletionsAttribute(params string[] Domain) : CompletionsAttribute<string[]>(Domain)
 {
-  private protected sealed override IEnumerable<string> CreateDomain(string[] domain) => domain;
+  private protected sealed override IEnumerable<string> EnumerateDomain(string[] domain) => domain;
 }
 internal abstract class CompletionsAttribute<TDomain>(
   TDomain Domain,
@@ -11,10 +11,10 @@ internal abstract class CompletionsAttribute<TDomain>(
 {
   public bool Strict { get; init; }
 
-  private protected abstract IEnumerable<string> CreateDomain(TDomain domain);
+  private protected abstract IEnumerable<string> EnumerateDomain(TDomain domain);
 
   public sealed override Completer Create() => new(
-    CreateDomain(Domain),
+    EnumerateDomain(Domain),
     Strict,
     Case,
     CompletionType
