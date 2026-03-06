@@ -7,7 +7,7 @@ internal class CompletionsAttribute(params string[] Domain) : CompletionsAttribu
 internal abstract class CompletionsAttribute<TDomain>(
   TDomain Domain,
   CompletionCase Case = default
-) : TabCompletionsAttribute(Case)
+) : TabAttribute(Case)
 {
   public bool Strict { get; init; }
 
@@ -25,7 +25,7 @@ internal abstract class CompletionsAttribute<TDomain>(
     bool Strict,
     CompletionCase Case,
     CompletionResultType CompletionType
-  ) : TabCompleter(Case, CompletionType)
+  ) : Tab(Case, CompletionType)
   {
     private protected sealed override IEnumerable<CompletionResultRecord> GenerateCompletion(string wordToComplete)
     {
