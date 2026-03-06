@@ -1,7 +1,5 @@
 namespace Module.Tab.Path;
 
-using Attributes = System.IO.FileAttributes;
-
 internal class PathCompletionsAttribute(
   string Location = "",
   PathItemType ItemType = default,
@@ -160,7 +158,7 @@ internal class PathCompletionsAttribute(
           new()
           {
             IgnoreInaccessible = default,
-            AttributesToSkip = Attributes.NotContentIndexed,
+            AttributesToSkip = System.IO.FileAttributes.NotContentIndexed,
           },
           lineCaptured
         )
@@ -318,8 +316,8 @@ internal class PathCompletionsAttribute(
       {
         switch (
           (
-            item.Attributes & Attributes.Hidden,
-            item.Attributes & Attributes.System
+            item.Attributes & System.IO.FileAttributes.Hidden,
+            item.Attributes & System.IO.FileAttributes.System
           )
         )
         {
