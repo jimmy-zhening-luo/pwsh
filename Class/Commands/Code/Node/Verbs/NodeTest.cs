@@ -10,7 +10,7 @@ public sealed class NodeTest() : NodeCommand("test")
 {
   private const string FlagIgnoreScript = "--ignore-scripts";
 
-  new public SwitchParameter I { get; set; }
+  new private SwitchParameter I { get; set; }
 
   [Parameter(
     HelpMessage = "Do not run scripts (--ignore-scripts). Commands explicitly intended to run a particular script, such as npm start, npm stop, npm restart, npm test, and npm run-script will still run their intended script if ignore-scripts is set, but they will not run any pre- or post-scripts."

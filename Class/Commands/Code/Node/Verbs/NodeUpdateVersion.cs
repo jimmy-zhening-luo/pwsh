@@ -46,7 +46,7 @@ public sealed class NodeUpdateVersion() : NodeCommand("version")
     premajor,
   }
 
-  new public SwitchParameter V { get; set; }
+  new private SwitchParameter V { get; set; }
 
   [Parameter(
     Position = default,

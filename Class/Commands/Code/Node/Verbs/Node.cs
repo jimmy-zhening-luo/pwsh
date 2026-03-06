@@ -18,7 +18,7 @@ public sealed class Node() : NodeCommand(default)
     set => IntrinsicVerb = value;
   }
 
-  new public SwitchParameter V { get; set; }
+  new private SwitchParameter V { get; set; }
 
   [Parameter(
     HelpMessage = "Show npm version if no command is specified. Otherwise, pass the -v flag as argument."
