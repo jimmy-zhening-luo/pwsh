@@ -5,23 +5,39 @@ internal class EnumCompletionsAttribute(
   string[]? Include = default,
   string[]? Exclude = default,
   CompletionCase Case = CompletionCase.Lower
-) : CompletionsAttribute<System.Type>(EnumType, Case)
+) : CompletionsAttribute<System.Type>(
+  EnumType,
+  Case
+)
 {
   private protected sealed override IEnumerable<string> CreateDomain(System.Type enumType)
   {
-    var domain = new HashSet<string>(
-      System.Enum.GetNames(enumType)
-    );
+    HashSet<string> exclusions = Exclude is null
+      ? new()
+      : new(Exclude);
 
-    if (Include is [_, ..])
+    foreach (
+      var name in System.Enum.GetNames(
+        enumType
+      )
+    )
     {
-      domain.UnionWith(Include);
-    }
-    if (Exclude is [_, ..])
-    {
-      domain.ExceptWith(Exclude);
+      if (!exclusions.Contains(name))
+      {
+        yield return name;
+      }
     }
 
-    return domain;
+    if (Include is null)
+    {
+      yield break;
+    }
+
+    foreach (var inclusion in Include)
+    {
+      yield return inclusion;
+    }
+
+    yield break;
   }
 }
