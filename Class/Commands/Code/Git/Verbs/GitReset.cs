@@ -51,10 +51,7 @@ public sealed partial class GitReset() : GitCommand("reset")
         }
         else
         {
-          (
-            ArgumentList,
-            tree
-          ) = (
+          (ArgumentList, tree) = (
             [
               tree,
               .. ArgumentList,

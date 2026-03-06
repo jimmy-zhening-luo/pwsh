@@ -129,8 +129,13 @@ public sealed class TestHost() : WrappedCommand(
         {
           case var port when ushort.TryParse(port, out var numericPort):
             _ = BoundParameters.Remove("CommonTCPPort");
-            CommonTCPPort = string.Empty;
-            BoundParameters["Port"] = (int)(Port = numericPort);
+            (
+              CommonTCPPort,
+              BoundParameters["Port"]
+            ) = (
+              string.Empty,
+              (int)(Port = numericPort)
+            );
             break;
 
           case var port when System.Enum.TryParse<TestHostWellKnownPort>(

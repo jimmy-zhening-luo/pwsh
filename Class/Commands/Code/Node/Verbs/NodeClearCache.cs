@@ -10,17 +10,27 @@ public sealed class NodeClearCache() : NodeCommand("cache")
 {
   private protected sealed override void PreprocessArguments()
   {
-    WorkingDirectory = string.Empty;
-
-    NoThrow = false;
-    D = false;
-    E = false;
-    I = false;
-    O = false;
-    P = false;
-    V = false;
-
-    ArgumentList = [];
+    (
+      WorkingDirectory,
+      ArgumentList,
+      NoThrow,
+      D,
+      E,
+      I,
+      O,
+      P,
+      V
+    ) = (
+      string.Empty,
+      [],
+      default,
+      default,
+      default,
+      default,
+      default,
+      default,
+      default
+    );
 
     NativeArguments.Clear();
     NativeArguments.Add("--force");

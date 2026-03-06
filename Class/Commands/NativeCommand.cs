@@ -138,7 +138,9 @@ public abstract partial class NativeCommand(
     foreach (var word in arguments)
     {
       escapedArguments.Add(
-        Client.Console.String.EscapeDoubleQuoted(word)
+        Client.Console.String.EscapeDoubleQuoted(
+          word
+        )
       );
     }
 
@@ -153,11 +155,18 @@ public abstract partial class NativeCommand(
     {
       List<string> command = [
         "&",
-        Client.Console.String.EscapeDoubleQuoted(CommandPath),
+        Client.Console.String.EscapeDoubleQuoted(
+          CommandPath
+        ),
         .. escapedArguments,
       ];
 
-      AddScript(string.Join(Client.Console.String.Space, command));
+      AddScript(
+        string.Join(
+          Client.Console.String.Space,
+          command
+        )
+      );
 
       ProcessSteppablePipeline();
       EndSteppablePipeline();

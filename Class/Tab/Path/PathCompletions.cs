@@ -62,13 +62,13 @@ internal class PathCompletionsAttribute(
       bool includeHidden
     )
     {
+      var searchPath = location;
       var line = Client.File.PathString.Normalize(
         wordToComplete,
         true
       );
-      var lineRemaining = string.Empty;
       var lineCaptured = string.Empty;
-      var searchPath = location;
+      var lineRemaining = string.Empty;
 
       while (line is not "")
       {
@@ -78,7 +78,13 @@ internal class PathCompletionsAttribute(
 
         if (marker < 0)
         {
-          (line, lineRemaining) = (string.Empty, line);
+          (
+            lineRemaining,
+            line
+          ) = (
+            line,
+            string.Empty
+          );
         }
         else
         {
@@ -101,26 +107,51 @@ internal class PathCompletionsAttribute(
               buffer
             );
 
-            if (System.IO.Directory.Exists(fullPathCaptured))
-            {
-              line = string.Empty;
-              lineCaptured = System.IO.Path.GetRelativePath(
-                location,
+            if (
+              System.IO.Directory.Exists(
                 fullPathCaptured
+              )
+            )
+            {
+              (
+                searchPath,
+                lineCaptured,
+                line
+              ) = (
+                fullPathCaptured,
+                System.IO.Path.GetRelativePath(
+                  location,
+                  fullPathCaptured
+                ),
+                string.Empty
               );
-              searchPath = fullPathCaptured;
             }
             else if (
               allowReanchor
-              && System.IO.Directory.Exists(buffer)
+              && System.IO.Directory.Exists(
+                buffer
+              )
             )
             {
-              line = string.Empty;
-              searchPath = lineCaptured = System.IO.Path.GetFullPath(buffer);
+              (
+                searchPath,
+                line
+              ) = (
+                lineCaptured = System.IO.Path.GetFullPath(
+                  buffer
+                ),
+                string.Empty
+              );
             }
             else
             {
-              (line, lineRemaining) = (buffer, string.Empty);
+              (
+                lineRemaining,
+                line
+              ) = (
+                string.Empty,
+                buffer
+              );
             }
           }
         }

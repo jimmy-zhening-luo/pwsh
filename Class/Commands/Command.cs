@@ -274,10 +274,7 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     }
   }
 
-  protected sealed override void StopProcessing()
-  {
-    Dispose();
-  }
+  protected sealed override void StopProcessing() => Dispose();
 
   private protected virtual void Preprocess()
   { }

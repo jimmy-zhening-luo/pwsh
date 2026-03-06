@@ -137,7 +137,7 @@ public sealed class GetSize : CoreCommand
           break;
 
         default:
-          double scaledSize = (double)bytes / (
+          var scaledSize = (double)bytes / (
             1L << ((int)Unit * 10)
           );
 

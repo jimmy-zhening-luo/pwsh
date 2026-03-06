@@ -62,8 +62,10 @@ public abstract class GitCommand(string IntrinsicVerb = "") : RemoteNativeVerbCo
         true,
         out var newableVerb
       ):
-        newable = true;
-        IntrinsicVerb = newableVerb.ToString();
+        (newable, IntrinsicVerb) = (
+          true,
+          newableVerb.ToString()
+        );
         break;
 
       case string verb when Verbs.TryGetValue(

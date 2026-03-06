@@ -16,9 +16,13 @@ public sealed class GitPush() : GitCommand("push")
       && ResolveWorkingDirectory(WorkingDirectory) is ""
     )
     {
-      ArgumentList = [WorkingDirectory, .. ArgumentList];
-
-      WorkingDirectory = string.Empty;
+      (ArgumentList, WorkingDirectory) = (
+        [
+          WorkingDirectory,
+          .. ArgumentList,
+        ],
+        string.Empty
+      );
     }
 
     AddCommand("Get-GitRepository")
