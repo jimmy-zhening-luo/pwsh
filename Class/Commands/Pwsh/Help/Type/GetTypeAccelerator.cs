@@ -19,8 +19,8 @@ public sealed class GetTypeAccelerator : Cmdlet
         )
         ?.GetProperty(
           "Get",
-          System.Reflection.BindingFlags.Static
-          | System.Reflection.BindingFlags.Public
+          System.Reflection.BindingFlags.Public
+          | System.Reflection.BindingFlags.Static
         )
         ?.GetValue(default) is System.Collections.IDictionary typeAccelerators
     )
