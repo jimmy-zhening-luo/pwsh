@@ -22,7 +22,8 @@ public abstract class WrappedCommandShouldProcess(
 
   [Parameter]
   [Alias("cf")]
-  public SwitchParameter Confirm {
+  public SwitchParameter Confirm
+  {
     private protected get;
     set;
   }
