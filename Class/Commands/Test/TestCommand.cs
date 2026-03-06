@@ -19,7 +19,7 @@ public sealed class TestCommand : CoreCommand
   public string Greeting { get; set; } = "Hello";
 
   [Parameter]
-  public SwitchParameter Switch { get; set; }
+  public SwitchParameter Switch { private get; set; }
 
   private protected sealed override void Preprocess()
   { }
