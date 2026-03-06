@@ -3,15 +3,13 @@ namespace Module.Tab.Path;
 internal class PathCompletionsAttribute(
   string Location = "",
   PathItemType ItemType = default,
-  bool Flat = default,
-  bool IncludeHidden = default
+  bool Flat = default
 ) : TabCompletionsAttribute
 {
   public sealed override PathCompleter Create() => new(
     Location,
     ItemType,
-    Flat,
-    IncludeHidden
+    Flat
   );
 
   internal sealed class PathCompleter : TabCompleter
@@ -25,7 +23,6 @@ internal class PathCompletionsAttribute(
     private readonly string Location;
     private readonly PathItemType ItemType;
     private readonly bool Flat;
-    private readonly bool IncludeHidden;
     private readonly bool AllowReanchor;
 
     private uint Index;
@@ -33,8 +30,7 @@ internal class PathCompletionsAttribute(
     internal PathCompleter(
       string location,
       PathItemType itemType,
-      bool flat,
-      bool includeHidden
+      bool flat
     ) : base(
       default,
       CompletionResultType.ProviderItem
@@ -42,7 +38,6 @@ internal class PathCompletionsAttribute(
       Location,
       ItemType,
       Flat,
-      IncludeHidden,
       AllowReanchor
     ) = (
       Client.File.PathString.Normalize(location) is var normalPath
@@ -51,15 +46,13 @@ internal class PathCompletionsAttribute(
         : Module.FullPathCurrentLocationRelative(normalPath),
       itemType,
       flat,
-      includeHidden,
       location is ""
     );
 
     private static (string, SearchContext) ParseLine(
       string wordToComplete,
       string location,
-      bool allowReanchor,
-      bool includeHidden
+      bool allowReanchor
     )
     {
       var searchPath = location;
@@ -165,12 +158,7 @@ internal class PathCompletionsAttribute(
           new()
           {
             IgnoreInaccessible = default,
-            AttributesToSkip = System.IO.FileAttributes.System
-              | (
-                includeHidden
-                  ? 0
-                  : System.IO.FileAttributes.Hidden
-              ),
+            AttributesToSkip = System.IO.FileAttributes.System,
           }
         )
       );
@@ -203,8 +191,7 @@ internal class PathCompletionsAttribute(
       var (accumulator, searchContext) = ParseLine(
         wordToComplete,
         Location,
-        AllowReanchor,
-        IncludeHidden
+        AllowReanchor
       );
       var originalAttributes = searchContext.Options.AttributesToSkip;
 
@@ -222,30 +209,6 @@ internal class PathCompletionsAttribute(
             yield return directory;
           }
 
-          if (
-            Index is 0 && searchContext is
-            {
-              Filter.Length: > 1,
-              Options.AttributesToSkip: not System.IO.FileAttributes.System,
-            }
-          )
-          {
-            searchContext.Options.AttributesToSkip = System.IO.FileAttributes.System;
-
-            foreach (
-              var directory in Directories(
-                searchContext,
-                accumulator,
-                !Flat
-              )
-            )
-            {
-              yield return directory;
-            }
-
-            searchContext.Options.AttributesToSkip = originalAttributes;
-          }
-
           break;
 
         case PathItemType.File:
@@ -259,31 +222,6 @@ internal class PathCompletionsAttribute(
             yield return file;
           }
 
-          if (
-            Index is 0 && searchContext is
-            {
-              Filter.Length: > 1,
-              Options.AttributesToSkip: not System.IO.FileAttributes.System,
-            }
-          )
-          {
-            searchContext.Options.AttributesToSkip = System.IO.FileAttributes.System;
-
-            foreach (
-              var file in Files(
-                searchContext,
-                accumulator
-              )
-            )
-            {
-              yield return file;
-            }
-
-            searchContext.Options.AttributesToSkip = originalAttributes;
-          }
-
-          var checkpoint = Index;
-
           foreach (
             var directory in Directories(
               searchContext,
@@ -293,30 +231,6 @@ internal class PathCompletionsAttribute(
           )
           {
             yield return directory;
-          }
-
-          if (
-            Index == checkpoint && searchContext is
-            {
-              Filter.Length: > 1,
-              Options.AttributesToSkip: not System.IO.FileAttributes.System,
-            }
-          )
-          {
-            searchContext.Options.AttributesToSkip = System.IO.FileAttributes.System;
-
-            foreach (
-              var directory in Directories(
-                searchContext,
-                accumulator,
-                true
-              )
-            )
-            {
-              yield return directory;
-            }
-
-            searchContext.Options.AttributesToSkip = originalAttributes;
           }
 
           break;
@@ -341,40 +255,6 @@ internal class PathCompletionsAttribute(
           )
           {
             yield return file;
-          }
-
-          if (
-            Index is 0 && searchContext is
-            {
-              Filter.Length: > 1,
-              Options.AttributesToSkip: not System.IO.FileAttributes.System,
-            }
-          )
-          {
-            searchContext.Options.AttributesToSkip = System.IO.FileAttributes.System;
-
-            foreach (
-              var directory in Directories(
-                searchContext,
-                accumulator,
-                !Flat
-              )
-            )
-            {
-              yield return directory;
-            }
-
-            foreach (
-              var file in Files(
-                searchContext,
-                accumulator
-              )
-            )
-            {
-              yield return file;
-            }
-
-            searchContext.Options.AttributesToSkip = originalAttributes;
           }
 
           break;
