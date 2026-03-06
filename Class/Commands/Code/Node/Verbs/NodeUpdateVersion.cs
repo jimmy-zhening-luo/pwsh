@@ -57,7 +57,9 @@ public sealed class NodeUpdateVersion() : NodeCommand("version")
         out var named
       ) => named.ToString(),
       var v when SemanticVersion.TryParse(
-        v is ['v' or 'V', .. var num] ? num : v,
+        v is ['v' or 'V', .. var num]
+          ? num
+          : v,
         out var semver
       ) => semver.ToString(),
       _ => string.Empty,

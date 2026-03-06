@@ -435,17 +435,18 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
   );
   private protected string ReanchorPath() => Location.IsRooted
     ? Client.File.PathString.FullPathLocationRelative(
-        Location.Root,
-        Location.Subpath
-      )
+      Location.Root,
+      Location.Subpath
+    )
     : Pwd(Location.Subpath);
 
-  private protected object? PSVariable(string name) => SessionState
-    .PSVariable
-    .GetValue(name, default);
-  private protected T? PSVariable<T>(string name) => SessionState
-    .PSVariable
-    .GetValue(name) is { } value
+  private protected object? PSVariable(string name) => SessionState.PSVariable.GetValue(
+    name,
+    default
+  );
+  private protected T? PSVariable<T>(string name) => SessionState.PSVariable.GetValue(
+    name
+  ) is { } value
     ? (T)value
     : default;
 

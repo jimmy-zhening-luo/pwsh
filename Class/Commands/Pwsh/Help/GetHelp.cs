@@ -57,7 +57,9 @@ public sealed class GetHelpOnline : CoreCommand
       }
     }
 
-    return urls is [] ? default : urls;
+    return urls is []
+      ? default
+      : urls;
   }
 
   private protected sealed override void Postprocess()

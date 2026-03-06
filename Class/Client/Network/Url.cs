@@ -64,10 +64,10 @@ internal static class Url
     Scheme scheme
   ) => uri is not ""
     && System.Uri.TryCreate(
-        uri,
-        System.UriKind.Absolute,
-        out var url
-      )
+      uri,
+      System.UriKind.Absolute,
+      out var url
+    )
     ? ToAbsoluteUri(url, scheme)
     : default;
   internal static System.Uri? ToAbsoluteUri(

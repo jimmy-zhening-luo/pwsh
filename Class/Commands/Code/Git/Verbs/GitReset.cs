@@ -42,14 +42,25 @@ public sealed partial class GitReset() : GitCommand("reset")
           )
         )
         {
-          var branching = treeMatch.Groups["Branching"].Value is not "" and var b ? b : "~";
+          var branching = treeMatch.Groups["Branching"].Value is not ""
+          and var b
+            ? b
+            : "~";
 
           tree = $"HEAD{branching}{step}";
         }
         else
         {
-          ArgumentList = [tree, .. ArgumentList];
-          tree = string.Empty;
+          (
+            ArgumentList,
+            tree
+          ) = (
+            [
+              tree,
+              .. ArgumentList,
+            ],
+            string.Empty
+          );
         }
       }
     }
@@ -87,7 +98,9 @@ public sealed partial class GitReset() : GitCommand("reset")
           )
         )
         {
-          var branching = treeMatch.Groups["Branching"].Value is not "" and var b ? b : "~";
+          var branching = treeMatch.Groups["Branching"].Value is not "" and var b
+            ? b
+            : "~";
 
           tree = $"HEAD{branching}{step}";
         }

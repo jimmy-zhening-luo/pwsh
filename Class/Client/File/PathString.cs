@@ -33,8 +33,8 @@ internal static partial class PathString
   ) => preserveTrailingSeparator
     ? Normalize(path)
     : System.IO.Path.TrimEndingDirectorySeparator(
-        Normalize(path)
-      );
+      Normalize(path)
+    );
   internal static string Normalize(string path) => TrimRelativePrefix(
     ExpandHomePrefix(
       DuplicateSeparatorRegex().Replace(

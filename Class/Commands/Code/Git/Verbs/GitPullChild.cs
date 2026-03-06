@@ -75,7 +75,9 @@ public sealed class GitPullChild : CoreCommand
       );
     }
 
-    var suffix = total is 1 ? "" : "ies";
+    var suffix = total is 1
+      ? string.Empty
+      : "ies";
 
     WriteObject(
       $"Pulled {progress} of {total} repositor{suffix}."

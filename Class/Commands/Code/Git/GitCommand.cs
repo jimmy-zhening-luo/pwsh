@@ -127,16 +127,20 @@ public abstract class GitCommand(string IntrinsicVerb = "") : RemoteNativeVerbCo
   ) => System.IO.Directory.Exists(
     System.IO.Path.Combine(
       Pwd(path),
-      newable ? string.Empty : ".git"
+      newable
+        ? string.Empty
+        : ".git"
     )
   )
     ? Pwd(path)
     : System.IO.Directory.Exists(
-        System.IO.Path.Combine(
-          Client.Environment.Known.Folder.Code(path),
-          newable ? string.Empty : ".git"
-        )
+      System.IO.Path.Combine(
+        Client.Environment.Known.Folder.Code(path),
+        newable
+          ? string.Empty
+          : ".git"
       )
+    )
       ? Client.Environment.Known.Folder.Code(path)
       : string.Empty;
 }

@@ -12,21 +12,21 @@ internal static partial class String
 
   internal static string EscapeSingleQuoted(string text) => text.Contains(Space)
     ? string.Concat(
-        SingleQuote,
-        System.Management.Automation.Language.CodeGeneration.EscapeSingleQuotedStringContent(text),
-        SingleQuote
-      )
+      SingleQuote,
+      System.Management.Automation.Language.CodeGeneration.EscapeSingleQuotedStringContent(text),
+      SingleQuote
+    )
     : text;
 
   internal static string EscapeDoubleQuoted(string text) => text.Contains(Space)
     ? string.Concat(
-        DoubleQuote,
-        text.Replace(
-          DoubleQuoteString,
-          EscapedDoubleQuote
-        ),
-        DoubleQuote
-      )
+      DoubleQuote,
+      text.Replace(
+        DoubleQuoteString,
+        EscapedDoubleQuote
+      ),
+      DoubleQuote
+    )
     : text;
 
   internal static string UnescapeSingleQuoted(string escapedText) => escapedText is
@@ -36,9 +36,9 @@ internal static partial class String
     SingleQuote,
   ]
     ? text.Replace(
-        EscapedSingleQuote,
-        SingleQuoteString
-      )
+      EscapedSingleQuote,
+      SingleQuoteString
+    )
     : escapedText;
 
   internal static string UnescapeDoubleQuoted(string escapedText) => escapedText is
@@ -48,8 +48,8 @@ internal static partial class String
     DoubleQuote,
   ]
     ? text.Replace(
-        EscapedDoubleQuote,
-        DoubleQuoteString
-      )
+      EscapedDoubleQuote,
+      DoubleQuoteString
+    )
     : escapedText;
 }
