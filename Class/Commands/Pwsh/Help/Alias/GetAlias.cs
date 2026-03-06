@@ -100,29 +100,24 @@ public sealed class GetCommandAlias : CoreCommand
       _ = AddParameter("Exclude", Exclude);
     }
 
-    var aliasInfoObjects = InvokePowerShell<AliasInfo>();
-
-    if (aliasInfoObjects is not null)
+    foreach (var aliasInfo in InvokePowerShell<AliasInfo>())
     {
-      foreach (var aliasInfo in aliasInfoObjects)
-      {
-        var key = string.Concat(
-          aliasInfo.Definition,
-          ':',
-          aliasInfo.Name
-        );
+      var key = string.Concat(
+        aliasInfo.Definition,
+        ':',
+        aliasInfo.Name
+      );
 
-        if (
-          !commandAliasDictionary.ContainsKey(
-            key
-          )
+      if (
+        !commandAliasDictionary.ContainsKey(
+          key
         )
-        {
-          commandAliasDictionary.Add(
-            key,
-            aliasInfo
-          );
-        }
+      )
+      {
+        commandAliasDictionary.Add(
+          key,
+          aliasInfo
+        );
       }
     }
 

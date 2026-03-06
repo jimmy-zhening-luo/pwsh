@@ -143,23 +143,18 @@ public sealed class GetVerb : CoreCommand
         );
       }
 
-      var verbObjects = InvokePowerShell<VerbInfo>();
-
-      if (verbObjects is not null)
+      foreach (var verbObject in InvokePowerShell<VerbInfo>())
       {
-        foreach (var verbObject in verbObjects)
-        {
-          if (
-            !verbDictionary.ContainsKey(
-              verbObject.Verb
-            )
+        if (
+          !verbDictionary.ContainsKey(
+            verbObject.Verb
           )
-          {
-            verbDictionary.Add(
-              verbObject.Verb,
-              verbObject
-            );
-          }
+        )
+        {
+          verbDictionary.Add(
+            verbObject.Verb,
+            verbObject
+          );
         }
       }
 
