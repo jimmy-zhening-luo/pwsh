@@ -206,74 +206,39 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
 
   protected sealed override void BeginProcessing()
   {
-    try
-    {
-      System.ObjectDisposedException.ThrowIf(Disposed, this);
+    System.ObjectDisposedException.ThrowIf(Disposed, this);
 
-      WriteDebug("<BEGIN>");
-      if (!BlockedBySsh)
-      {
-        Preprocess();
-      }
-      WriteDebug("</BEGIN>");
-    }
-    catch (PipelineStoppedException)
+    WriteDebug("<BEGIN>");
+    if (!BlockedBySsh)
     {
-      throw;
+      Preprocess();
     }
-    catch (System.Exception exception)
-    {
-      ThrowError(exception);
-    }
+    WriteDebug("</BEGIN>");
   }
 
   protected sealed override void ProcessRecord()
   {
-    try
-    {
-      System.ObjectDisposedException.ThrowIf(Disposed, this);
+    System.ObjectDisposedException.ThrowIf(Disposed, this);
 
-      if (!BlockedBySsh)
-      {
-        WriteDebug("<PROCESS>");
-        Process();
+    if (!BlockedBySsh)
+    {
+      WriteDebug("<PROCESS>");
+      Process();
 
-        WriteDebug("</PROCESS>");
-      }
-    }
-    catch (PipelineStoppedException)
-    {
-      throw;
-    }
-    catch (System.Exception exception)
-    {
-      ThrowError(exception);
+      WriteDebug("</PROCESS>");
     }
   }
 
   protected sealed override void EndProcessing()
   {
-    try
-    {
-      System.ObjectDisposedException.ThrowIf(Disposed, this);
+    System.ObjectDisposedException.ThrowIf(Disposed, this);
 
-      WriteDebug("<END>");
-      if (!BlockedBySsh)
-      {
-        Postprocess();
-      }
-      WriteDebug("</END>");
-
-      StopProcessing();
-    }
-    catch (PipelineStoppedException)
+    WriteDebug("<END>");
+    if (!BlockedBySsh)
     {
-      throw;
+      Postprocess();
     }
-    catch (System.Exception exception)
-    {
-      ThrowError(exception);
-    }
+    WriteDebug("</END>");
   }
 
   protected sealed override void StopProcessing() => Dispose();
@@ -313,38 +278,6 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
     }
   );
 
-  [System.Diagnostics.CodeAnalysis.DoesNotReturn]
-  private protected void ThrowError(
-    string message,
-    ErrorCategory category = ErrorCategory.InvalidOperation,
-    object? target = default,
-    string id = ""
-  ) => ThrowError(
-    new System.Exception(message),
-    category,
-    target,
-    id
-  );
-  [System.Diagnostics.CodeAnalysis.DoesNotReturn]
-  private protected void ThrowError(
-    System.Exception exception,
-    ErrorCategory category = ErrorCategory.InvalidOperation,
-    object? target = default,
-    string id = ""
-  )
-  {
-    StopProcessing();
-
-    ThrowTerminatingError(
-      new(
-        exception,
-        $"{GetName()}Exception{id}",
-        category,
-        target
-      )
-    );
-  }
-
   private protected void CheckNativeError(bool stop = default) => CheckNativeError(
     "Native command error",
     stop
@@ -362,7 +295,7 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
     {
       if (stop)
       {
-        ThrowError(message);
+        throw new System.InvalidOperationException(message);
       }
       else
       {
