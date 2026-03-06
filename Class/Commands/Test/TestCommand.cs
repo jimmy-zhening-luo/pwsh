@@ -12,11 +12,11 @@ public sealed class TestCommand : CoreCommand
     Position = default,
     ValueFromPipeline = true
   )]
-  public string[] Name { get; set; } = [];
+  public string[] Name { private get; set; } = [];
 
   [Parameter(Position = 1)]
   [ValidateNotNullOrWhiteSpace]
-  public string Greeting { get; set; } = "Hello";
+  public string Greeting { private get; set; } = "Hello";
 
   [Parameter]
   public SwitchParameter Switch { private get; set; }
