@@ -16,10 +16,18 @@ public sealed class TestCommand : CoreCommand
 
   [Parameter(Position = 1)]
   [ValidateNotNullOrWhiteSpace]
-  public string Greeting { private get; set; } = "Hello";
+  public string Greeting
+  {
+    private get;
+    set;
+  } = "Hello";
 
   [Parameter]
-  public SwitchParameter Switch { private get; set; }
+  public SwitchParameter Switch
+  {
+    private get;
+    set;
+  }
 
   private protected sealed override void Preprocess()
   { }

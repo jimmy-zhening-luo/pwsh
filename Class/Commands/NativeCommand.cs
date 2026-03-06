@@ -30,48 +30,80 @@ public abstract partial class NativeCommand(
     HelpMessage = "Additional arguments"
   )]
   [Tab.Path.PathCompletions]
-  public string[] ArgumentList { get; set; } = [];
+  public string[] ArgumentList
+  {
+    private protected get;
+    set;
+  } = [];
 
   [Parameter(
     HelpMessage = "When execution results in a non-zero exit code, warn and continue instead of terminating execution"
   )]
-  public SwitchParameter NoThrow { get; set; }
+  public SwitchParameter NoThrow
+  {
+    private protected get;
+    set;
+  }
 
   [Parameter(
     DontShow = true,
     HelpMessage = "Pass -v flag as argument"
   )]
-  public SwitchParameter V { get; set; }
+  public SwitchParameter V
+  {
+    private protected get;
+    set;
+  }
 
   [Parameter(
     DontShow = true,
     HelpMessage = "Pass -d flag as argument"
   )]
-  public SwitchParameter D { get; set; }
+  public SwitchParameter D
+  {
+    private protected get;
+    set;
+  }
 
   [Parameter(
     DontShow = true,
     HelpMessage = "Pass -e flag as argument"
   )]
-  public SwitchParameter E { get; set; }
+  public SwitchParameter E
+  {
+    private protected get;
+    set;
+  }
 
   [Parameter(
     DontShow = true,
     HelpMessage = "Pass -i flag as argument"
   )]
-  public SwitchParameter I { get; set; }
+  public SwitchParameter I
+  {
+    private protected get;
+    set;
+  }
 
   [Parameter(
     DontShow = true,
     HelpMessage = "Pass -o flag as argument"
   )]
-  public SwitchParameter O { get; set; }
+  public SwitchParameter O
+  {
+    private protected get;
+    set;
+  }
 
   [Parameter(
     DontShow = true,
     HelpMessage = "Pass -p flag as argument"
   )]
-  public SwitchParameter P { get; set; }
+  public SwitchParameter P
+  {
+    private protected get;
+    set;
+  }
 
   private protected abstract string CommandPath { get; }
 

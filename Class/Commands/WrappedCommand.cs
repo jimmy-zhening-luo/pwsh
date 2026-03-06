@@ -11,7 +11,10 @@ public abstract class WrappedCommand(
 
   private string? PipelineInputParameterName { get; } = PipelineInputParameterName;
 
-  [System.Diagnostics.CodeAnalysis.MemberNotNullWhen(true, nameof(PipelineInputParameterName))]
+  [System.Diagnostics.CodeAnalysis.MemberNotNullWhen(
+    true,
+    nameof(PipelineInputParameterName)
+  )]
   private bool Piped { get; set; }
 
   private protected virtual void TransformArguments()
