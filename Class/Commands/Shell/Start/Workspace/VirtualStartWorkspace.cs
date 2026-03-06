@@ -9,13 +9,25 @@ public abstract class VirtualStartWorkspace() : NativeCommand(true, true)
   private protected string path = string.Empty;
 
   [Parameter(Position = 1)]
-  public string Name { get; set; } = string.Empty;
+  public string Name
+  {
+    private get;
+    set;
+  } = string.Empty;
 
   [Parameter]
-  public SwitchParameter Window { get; set; }
+  public SwitchParameter Window
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
-  public SwitchParameter ReuseWindow { get; set; }
+  public SwitchParameter ReuseWindow
+  {
+    private get;
+    set;
+  }
 
   private protected sealed override string CommandPath => Client.Environment.Known.Application.VSCode;
 

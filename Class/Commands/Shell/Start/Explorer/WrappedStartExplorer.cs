@@ -10,15 +10,27 @@ public abstract class WrappedStartExplorer() : WrappedCommandShouldProcess(
 
   [Parameter]
   [SupportsWildcards]
-  public required string Filter { get; set; }
+  public required string Filter
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
   [SupportsWildcards]
-  public required string[] Include { get; set; }
+  public required string[] Include
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
   [SupportsWildcards]
-  public required string[] Exclude { get; set; }
+  public required string[] Exclude
+  {
+    private get;
+    set;
+  }
 
   private protected sealed override void TransformPipelineInput()
   {

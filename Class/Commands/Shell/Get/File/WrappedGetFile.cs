@@ -9,18 +9,34 @@ public abstract class WrappedGetFile() : WrappedCommand(
 
   [Parameter]
   [SupportsWildcards]
-  public required string Filter { get; set; }
+  public required string Filter
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
   [SupportsWildcards]
-  public required string[] Include { get; set; }
+  public required string[] Include
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
   [SupportsWildcards]
-  public required string[] Exclude { get; set; }
+  public required string[] Exclude
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
-  public long ReadCount { get; set; }
+  public long ReadCount
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
   [Alias("First", "Head")]
@@ -28,7 +44,11 @@ public abstract class WrappedGetFile() : WrappedCommand(
     0,
     9223372036854775807
   )]
-  public long TotalCount { get; set; }
+  public long TotalCount
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
   [Alias("Last")]
@@ -36,31 +56,63 @@ public abstract class WrappedGetFile() : WrappedCommand(
     0,
     2147483647
   )]
-  public int Tail { get; set; }
+  public int Tail
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
-  public required string Delimiter { get; set; }
+  public required string Delimiter
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
-  public required string Stream { get; set; }
+  public required string Stream
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
   [ValidateNotNullOrEmpty]
   [Tab.EnumCompletions(typeof(Client.File.Encoding))]
-  public required string Encoding { get; set; }
+  public required string Encoding
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
   [Alias("f")]
-  public SwitchParameter Force { get; set; }
+  public SwitchParameter Force
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
-  public SwitchParameter AsByteStream { get; set; }
+  public SwitchParameter AsByteStream
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
-  public SwitchParameter Raw { get; set; }
+  public SwitchParameter Raw
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
-  public SwitchParameter Wait { get; set; }
+  public SwitchParameter Wait
+  {
+    private get;
+    set;
+  }
 
   private protected sealed override void TransformPipelineInput()
   {

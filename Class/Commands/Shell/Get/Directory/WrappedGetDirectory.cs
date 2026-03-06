@@ -26,56 +26,108 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
 
   [Parameter]
   [SupportsWildcards]
-  public required string[] Include { get; set; }
+  public required string[] Include
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
   [SupportsWildcards]
-  public required string[] Exclude { get; set; }
+  public required string[] Exclude
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
   [Alias("s", "r")]
-  public SwitchParameter Recurse { get; set; }
+  public SwitchParameter Recurse
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
   [Alias("de")]
-  public uint Depth { get; set; }
+  public uint Depth
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
   [Alias("f")]
-  public SwitchParameter Force { get; set; }
+  public SwitchParameter Force
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
-  public SwitchParameter Name { get; set; }
+  public SwitchParameter Name
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
   [Alias("ad", "d")]
-  public SwitchParameter Directory { get; set; }
+  public SwitchParameter Directory
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
   [Alias("af", "fi")]
-  public SwitchParameter File { get; set; }
+  public SwitchParameter File
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
   [Alias("ah", "h")]
-  public SwitchParameter Hidden { get; set; }
+  public SwitchParameter Hidden
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
   [Alias("as")]
-  public SwitchParameter System { get; set; }
+  public SwitchParameter System
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
   [Alias("ar")]
-  public SwitchParameter ReadOnly { get; set; }
+  public SwitchParameter ReadOnly
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
-  public SwitchParameter FollowSymlink { get; set; }
+  public SwitchParameter FollowSymlink
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
   [Tab.EnumCompletions(
     typeof(System.IO.FileAttributes),
     Case = Tab.CompletionCase.Lower
   )]
-  public required FlagsExpression<System.IO.FileAttributes> Attributes { get; set; }
+  public required FlagsExpression<System.IO.FileAttributes> Attributes
+  {
+    private get;
+    set;
+  }
 
   private protected sealed override Dictionary<string, object?> CoercedParameters => new()
   {
