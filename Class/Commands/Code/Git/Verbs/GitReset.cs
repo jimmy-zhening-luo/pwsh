@@ -127,7 +127,7 @@ public sealed partial class GitReset() : GitCommand("reset")
       EndSteppablePipeline();
       ClearCommands();
 
-      HandleNativeError("git error when staging files for commit");
+      CheckNativeError("git error when staging files for commit");
     }
   }
 }

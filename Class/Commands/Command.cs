@@ -346,11 +346,11 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     );
   }
 
-  private protected void HandleNativeError(bool noThrow = default) => HandleNativeError(
+  private protected void CheckNativeError(bool noThrow = default) => CheckNativeError(
     "Native command execution error",
     noThrow
   );
-  private protected void HandleNativeError(
+  private protected void CheckNativeError(
     string message,
     bool noThrow = default
   )

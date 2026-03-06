@@ -162,7 +162,7 @@ public abstract partial class NativeCommand(
       ProcessSteppablePipeline();
       EndSteppablePipeline();
 
-      HandleNativeError(
+      CheckNativeError(
         $"{CommandPath} error",
         NoThrow
       );

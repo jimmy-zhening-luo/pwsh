@@ -39,6 +39,6 @@ public sealed class GitRestore() : GitCommand("pull")
     EndSteppablePipeline();
     ClearCommands();
 
-    HandleNativeError("git error when resetting repository.");
+    CheckNativeError("git error when resetting repository.");
   }
 }

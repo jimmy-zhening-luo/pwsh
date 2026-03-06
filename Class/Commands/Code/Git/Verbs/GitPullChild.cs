@@ -61,7 +61,7 @@ public sealed class GitPullChild : CoreCommand
       EndSteppablePipeline();
       ClearCommands();
 
-      HandleNativeError($"git error when pulling repository {repository}");
+      CheckNativeError($"git error when pulling repository {repository}");
 
       ++progress;
 
