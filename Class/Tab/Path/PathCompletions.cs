@@ -15,7 +15,7 @@ internal class PathCompletionsAttribute(
   internal sealed class PathCompleter : TabCompleter
   {
     private record SearchContext(
-      string Path,
+      System.IO.DirectoryInfo Container,
       string Filter,
       System.IO.EnumerationOptions Options
     );
@@ -153,12 +153,12 @@ internal class PathCompletionsAttribute(
       return (
         lineCaptured,
         new(
-          searchPath,
+          new(searchPath),
           lineRemaining + "*",
           new()
           {
             IgnoreInaccessible = default,
-            AttributesToSkip = System.IO.FileAttributes.System,
+            AttributesToSkip = System.IO.FileAttributes.NotContentIndexed,
           }
         )
       );
@@ -264,7 +264,7 @@ internal class PathCompletionsAttribute(
       {
         yield return CreateCompletionRecord(
           System.IO.Path.Join(
-            searchContext.Path,
+            searchContext.Container.FullName,
             Client.File.PathString.SeparatorString
           ),
           accumulator,
@@ -276,7 +276,7 @@ internal class PathCompletionsAttribute(
       {
         yield return CreateCompletionRecord(
           Client.File.PathString.FullPathLocationRelative(
-            searchContext.Path,
+            searchContext.Container.FullName,
             ".."
           ),
           accumulator,
@@ -293,8 +293,7 @@ internal class PathCompletionsAttribute(
       bool trailingSeparator = default
     ) => EnumerateResults(
       accumulator,
-      System.IO.Directory.EnumerateDirectories(
-        searchContext.Path,
+      searchContext.Container.EnumerateDirectories(
         searchContext.Filter,
         searchContext.Options
       ),
@@ -306,8 +305,7 @@ internal class PathCompletionsAttribute(
       string accumulator
     ) => EnumerateResults(
       accumulator,
-      System.IO.Directory.EnumerateFiles(
-        searchContext.Path,
+      searchContext.Container.EnumerateFiles(
         searchContext.Filter,
         searchContext.Options
       )
@@ -315,18 +313,25 @@ internal class PathCompletionsAttribute(
 
     private IEnumerable<CompletionResultRecord> EnumerateResults(
       string accumulator,
-      IEnumerable<string> paths,
+      IEnumerable<FileSystemInfo> items,
       bool trailingSeparator = default
     )
     {
-      foreach (var path in paths)
+      var filteredItems = from item in items
+        where item.Attributes & System.IO.FileAttributes.Hidden == System.IO.FileAttributes.None
+        || item.Attributes & System.IO.FileAttributes.System == System.IO.FileAttributes.None
+        select item;
+
+      foreach (
+        var item in filteredItems
+      )
       {
         ++Index;
 
         yield return CreateCompletionRecord(
-          path,
+          item.FullName,
           accumulator,
-          System.IO.Path.GetFileName(path),
+          item.Name,
           trailingSeparator
         );
       }
