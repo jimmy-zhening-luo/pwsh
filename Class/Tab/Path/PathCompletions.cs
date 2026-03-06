@@ -17,7 +17,7 @@ internal class PathCompletionsAttribute(
   internal sealed class PathCompleter : TabCompleter
   {
     private const Attributes ExcludedAttributesInitial = Attributes.NotContentIndexed
-      | Attributes.NotContentIndexed;
+      | Attributes.Hidden;
     private const Attributes ExcludedAttributesFinal = Attributes.NotContentIndexed;
 
     private record SearchContext(
