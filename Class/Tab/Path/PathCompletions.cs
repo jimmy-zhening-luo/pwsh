@@ -319,8 +319,8 @@ internal class PathCompletionsAttribute(
       foreach (var item in items)
       {
         if (
-          item.Attributes & System.IO.FileAttributes.Hidden is System.IO.FileAttributes.None
-          || item.Attributes & System.IO.FileAttributes.System is System.IO.FileAttributes.None
+          item.Attributes & System.IO.FileAttributes.Hidden == System.IO.FileAttributes.None
+          || item.Attributes & System.IO.FileAttributes.System == System.IO.FileAttributes.None
         )
         {
           ++Index;
