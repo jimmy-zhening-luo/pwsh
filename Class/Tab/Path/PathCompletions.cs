@@ -1,5 +1,7 @@
 namespace Module.Tab.Path;
 
+using Attributes = System.IO.FileAttributes;
+
 internal class PathCompletionsAttribute(
   string Location = "",
   PathItemType ItemType = default,
@@ -14,7 +16,9 @@ internal class PathCompletionsAttribute(
 
   internal sealed class PathCompleter : TabCompleter
   {
-    private const System.IO.FileAttributes ExcludedAttributes = System.IO.FileAttributes.NotContentIndexed;
+    private const Attributes ExcludedAttributesInitial = Attributes.NotContentIndexed
+      | Attributes.NotContentIndexed;
+    private const Attributes ExcludedAttributesFinal = Attributes.NotContentIndexed;
 
     private record SearchContext(
       System.IO.DirectoryInfo Container,
