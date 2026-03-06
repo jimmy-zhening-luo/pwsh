@@ -16,10 +16,6 @@ internal class PathCompletionsAttribute(
 
   internal sealed class PathCompleter : TabCompleter
   {
-    private const Attributes ExcludedAttributesInitial = Attributes.NotContentIndexed
-      | Attributes.Hidden;
-    private const Attributes ExcludedAttributesFinal = Attributes.NotContentIndexed;
-
     private record SearchContext(
       System.IO.DirectoryInfo Container,
       string Filter,
@@ -316,23 +312,47 @@ internal class PathCompletionsAttribute(
       bool trailingSeparator = default
     )
     {
+      List<System.IO.FileSystemInfo> deferredItems = [];
+
       foreach (var item in items)
       {
-        if (
-          (item.Attributes & Attributes.Hidden) == default
-          || (item.Attributes & Attributes.System) == default
-        )
-        {
-          matched = true;
+        var hidden = (item.Attributes & Attributes.Hidden) != default;
+        var system = (item.Attributes & Attributes.System) != default;
 
-          yield return CreateCompletionRecord(
-            item.FullName,
-            accumulator,
-            item.Name,
-            trailingSeparator
-          );
+        switch ((hidden, system))
+        {
+          case (true, true):
+            break;
+
+          case (true, _):
+            deferredItems.Add(item);
+            break;
+
+          default:
+            matched = true;
+
+            yield return CreateCompletionRecord(
+              item.FullName,
+              accumulator,
+              item.Name,
+              trailingSeparator
+            );
+            break;
         }
       }
+
+      foreach (var item in deferredItems)
+      {
+        matched = true;
+
+        yield return CreateCompletionRecord(
+          item.FullName,
+          accumulator,
+          item.Name,
+          trailingSeparator
+        );
+      }
+
       yield break;
     }
   }
