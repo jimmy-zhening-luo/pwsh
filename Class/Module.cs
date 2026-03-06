@@ -20,12 +20,7 @@ internal static class Module
       .BaseObject
       .ToString();
 
-    if (currentLocation is null or "")
-    {
-      throw new System.InvalidOperationException(
-        "Failed to get the current location of the PowerShell host."
-      );
-    }
+    System.ArgumentException.ThrowIfNullOrEmpty(currentLocation, nameof(currentLocation));
 
     return currentLocation;
   }
