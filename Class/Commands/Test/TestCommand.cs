@@ -2,7 +2,8 @@ namespace Module.Commands.Test;
 
 [Cmdlet(
   VerbsDiagnostic.Test,
-  "Command"
+  "Command",
+  SupportsShouldProcess = true
 )]
 [Alias("tt")]
 [OutputType(typeof(object))]
