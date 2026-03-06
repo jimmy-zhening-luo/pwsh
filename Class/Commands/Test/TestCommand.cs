@@ -12,7 +12,7 @@ public sealed class TestCommand : CoreCommand
     Position = default,
     ValueFromPipeline = true
   )]
-  public string[] Name { private get; set; } = [];
+  public string[] Name { get; set; } = [];
 
   [Parameter(Position = 1)]
   [ValidateNotNullOrWhiteSpace]
