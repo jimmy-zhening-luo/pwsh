@@ -13,7 +13,9 @@ internal static class String
   internal static string EscapeSingleQuoted(string text) => text.Contains(Space)
     ? string.Concat(
       SingleQuote,
-      System.Management.Automation.Language.CodeGeneration.EscapeSingleQuotedStringContent(text),
+      System.Management.Automation.Language.CodeGeneration.EscapeSingleQuotedStringContent(
+        text
+      ),
       SingleQuote
     )
     : text;
