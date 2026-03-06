@@ -11,7 +11,11 @@ public sealed class EditSystemPath() : CoreCommand(true)
   [Parameter(
     HelpMessage = "Launch Environment Variables control panel as Administrator"
   )]
-  public SwitchParameter Administrator { get; set; }
+  public SwitchParameter Administrator
+  {
+    private get;
+    set;
+  }
 
   private protected sealed override void Postprocess()
   {

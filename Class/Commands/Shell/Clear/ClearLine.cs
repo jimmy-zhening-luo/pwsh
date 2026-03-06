@@ -16,33 +16,61 @@ public sealed class ClearLine : CoreCommand
   )]
   [SupportsWildcards]
   [Tab.Path.PathCompletions]
-  public string Path { get; set; } = string.Empty;
+  public string Path
+  {
+    private get;
+    set;
+  } = string.Empty;
 
   [Parameter]
   [SupportsWildcards]
-  public required string Filter { get; set; }
+  public required string Filter
+  {
+    private get;
+    set;
+  }
 
   [Parameter(
     ParameterSetName = "LiteralPath",
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  public required string[] LiteralPath { get; set; }
+  public required string[] LiteralPath
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
   [SupportsWildcards]
-  public required string[] Include { get; set; }
+  public required string[] Include
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
   [SupportsWildcards]
-  public required string[] Exclude { get; set; }
+  public required string[] Exclude
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
   [Alias("f")]
-  public SwitchParameter Force { get; set; }
+  public SwitchParameter Force
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
-  public required string Stream { get; set; }
+  public required string Stream
+  {
+    private get;
+    set;
+  }
 
   private protected sealed override void Postprocess()
   {

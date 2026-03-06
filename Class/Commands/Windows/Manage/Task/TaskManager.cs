@@ -9,7 +9,11 @@ public abstract class TaskManager : CoreCommand
   )]
   [SupportsWildcards]
   [Alias("ProcessName")]
-  public string[] Name { get; set; } = [];
+  public string[] Name
+  {
+    private get;
+    set;
+  } = [];
 
   [Parameter(
     ParameterSetName = "Id",
@@ -17,7 +21,11 @@ public abstract class TaskManager : CoreCommand
     Position = default,
     HelpMessage = "Process IDs of the processes to stop"
   )]
-  public int[] Id { get; set; } = [];
+  public int[] Id
+  {
+    private get;
+    set;
+  } = [];
 
   [Parameter(
     ParameterSetName = "InputObject",
@@ -25,7 +33,11 @@ public abstract class TaskManager : CoreCommand
     Position = default,
     HelpMessage = "Process objects to stop"
   )]
-  public System.Diagnostics.Process[] InputObject { get; set; } = [];
+  public System.Diagnostics.Process[] InputObject
+  {
+    private get;
+    set;
+  } = [];
 
   private protected bool descendant;
 

@@ -37,7 +37,11 @@ public sealed class GitClone() : GitCommand("clone")
     HelpMessage = "Use git@github.com remote protocol instead of HTTPS"
   )]
   [Alias("ssh")]
-  public SwitchParameter ForceSsh { get; set; }
+  public SwitchParameter ForceSsh
+  {
+    private get;
+    set;
+  }
 
   private protected sealed override void PreprocessArguments()
   {

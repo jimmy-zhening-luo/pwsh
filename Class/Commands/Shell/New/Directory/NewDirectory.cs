@@ -22,22 +22,38 @@ public sealed class NewDirectory() : WrappedCommandShouldProcess(
     Position = default
   )]
   [Tab.Path.PathCompletions]
-  public required string[] Path { get; set; }
+  public required string[] Path
+  {
+    private get;
+    set;
+  }
 
   [Parameter(
     ParameterSetName = "nameSet",
     Mandatory = true
   )]
-  public required string Name { get; set; }
+  public required string Name
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
   [Alias("Target")]
   [Tab.Path.PathCompletions]
-  public required object Value { get; set; }
+  public required object Value
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
   [Alias("f")]
-  public SwitchParameter Force { get; set; }
+  public SwitchParameter Force
+  {
+    private get;
+    set;
+  }
 
   private protected sealed override Dictionary<string, object?> CoercedParameters => new()
   {

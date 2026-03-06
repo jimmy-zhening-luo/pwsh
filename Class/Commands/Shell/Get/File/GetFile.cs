@@ -29,7 +29,11 @@ public sealed class GetFile : WrappedGetFile
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  public required string[] LiteralPath { get; set; }
+  public required string[] LiteralPath
+  {
+    private get;
+    set;
+  }
 }
 
 [Cmdlet(

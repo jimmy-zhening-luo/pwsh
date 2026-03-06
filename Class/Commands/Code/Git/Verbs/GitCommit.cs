@@ -15,17 +15,29 @@ public sealed class GitCommit() : GitCommand("commit")
     HelpMessage = "Commit message, defaulting to 'No message' on an empty commit"
   )]
   [PathSpecCompletions]
-  public string Message { get; set; } = string.Empty;
+  public string Message
+  {
+    private get;
+    set;
+  } = string.Empty;
 
   [Parameter(
     HelpMessage = "Only commit files that are already staged"
   )]
-  public SwitchParameter Staged { get; set; }
+  public SwitchParameter Staged
+  {
+    private get;
+    set;
+  }
 
   [Parameter(
     HelpMessage = "Allow commit with no changes, equivalent to --allow-empty"
   )]
-  public SwitchParameter AllowEmpty { get; set; }
+  public SwitchParameter AllowEmpty
+  {
+    private get;
+    set;
+  }
 
   private protected sealed override void PreprocessArguments()
   {

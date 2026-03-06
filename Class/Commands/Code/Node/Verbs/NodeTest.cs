@@ -16,7 +16,11 @@ public sealed class NodeTest() : NodeCommand("test")
     HelpMessage = "Do not run scripts (--ignore-scripts). Commands explicitly intended to run a particular script, such as npm start, npm stop, npm restart, npm test, and npm run-script will still run their intended script if ignore-scripts is set, but they will not run any pre- or post-scripts."
   )]
   [Alias("i")]
-  public SwitchParameter IgnoreScript { get; set; }
+  public SwitchParameter IgnoreScript
+  {
+    private get;
+    set;
+  }
 
   private protected sealed override void PreprocessArguments()
   {

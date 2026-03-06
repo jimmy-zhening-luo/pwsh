@@ -50,7 +50,11 @@ public sealed class GetCommandAlias : CoreCommand
     "2",
     "3"
   )]
-  public string Scope { get; set; } = "Global";
+  public string Scope
+  {
+    private get;
+    set;
+  } = "Global";
 
   [Parameter(
     Position = 2

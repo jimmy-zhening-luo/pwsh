@@ -26,7 +26,11 @@ public sealed class GetHelpOnline : CoreCommand
   private string topic = string.Empty;
 
   [Parameter]
-  public string[] Parameter { get; set; } = [];
+  public string[] Parameter
+  {
+    private get;
+    set;
+  } = [];
 
   private static List<System.Uri>? TryExtractHelpLink(System.Collections.ObjectModel.Collection<PSObject> helpContent)
   {

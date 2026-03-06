@@ -55,7 +55,11 @@ public sealed class TestHost() : WrappedCommand(
     "RemoteAddress",
     "cn"
   )]
-  public string ComputerName { get; set; } = string.Empty;
+  public string ComputerName
+  {
+    private get;
+    set;
+  } = string.Empty;
 
   [Parameter(
     ParameterSetName = "CommonTCPPort",
@@ -67,7 +71,11 @@ public sealed class TestHost() : WrappedCommand(
     typeof(TestHostWellKnownPort),
     Case = Tab.CompletionCase.Lower
   )]
-  public string CommonTCPPort { get; set; } = string.Empty;
+  public string CommonTCPPort
+  {
+    private get;
+    set;
+  } = string.Empty;
 
   [Parameter(
     ParameterSetName = "RemotePort",
@@ -75,40 +83,72 @@ public sealed class TestHost() : WrappedCommand(
   )]
   [Alias("RemotePort")]
   [ValidateRange(1, 65535)]
-  public ushort Port { get; set; }
+  public ushort Port
+  {
+    private get;
+    set;
+  }
 
   [Parameter(
     ParameterSetName = "ICMP"
   )]
-  public SwitchParameter TraceRoute { get; set; }
+  public SwitchParameter TraceRoute
+  {
+    private get;
+    set;
+  }
 
   [Parameter(
     ParameterSetName = "ICMP"
   )]
   [ValidateRange(1, 120)]
-  public int Hops { get; set; }
+  public int Hops
+  {
+    private get;
+    set;
+  }
 
   [Parameter(
     ParameterSetName = "NetRouteDiagnostics",
     Mandatory = true
   )]
-  public SwitchParameter DiagnoseRouting { get; set; }
+  public SwitchParameter DiagnoseRouting
+  {
+    private get;
+    set;
+  }
 
   [Parameter(
     ParameterSetName = "NetRouteDiagnostics"
   )]
-  public required string ConstrainSourceAddress { get; set; }
+  public required string ConstrainSourceAddress
+  {
+    private get;
+    set;
+  }
 
   [Parameter(
     ParameterSetName = "NetRouteDiagnostics"
   )]
-  public uint ConstrainInterface { get; set; }
+  public uint ConstrainInterface
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
-  public TestHostVerbosity InformationLevel { get; set; }
+  public TestHostVerbosity InformationLevel
+  {
+    private get;
+    set;
+  }
 
   [Parameter]
-  public SwitchParameter Detailed { get; set; }
+  public SwitchParameter Detailed
+  {
+    private get;
+    set;
+  }
 
   private protected sealed override Dictionary<string, object?> CoercedParameters => new()
   {
