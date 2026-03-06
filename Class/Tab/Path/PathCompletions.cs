@@ -323,7 +323,7 @@ internal class PathCompletionsAttribute(
           )
         )
         {
-          case (0, _):
+          case (default, _):
             matched = true;
 
             yield return CreateCompletionRecord(
@@ -334,7 +334,7 @@ internal class PathCompletionsAttribute(
             );
             break;
 
-          case (_, 0):
+          case (_, default):
             deferredItems.Add(item);
             break;
         }
