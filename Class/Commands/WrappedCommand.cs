@@ -47,8 +47,9 @@ public abstract class WrappedCommand(
   private protected sealed override void Process()
   {
     if (
-      Piped
-      && BoundParameters.ContainsKey(PipelineInputParameterName)
+      Piped && BoundParameters.ContainsKey(
+        PipelineInputParameterName
+      )
     )
     {
       TransformPipelineInput();
