@@ -4,7 +4,7 @@ internal class PathCompletionsAttribute(
   string Location = "",
   PathItemType ItemType = default,
   bool Flat = default
-) : TabAttribute
+) : TCompletionsAttribute
 {
   public sealed override PathCompleter Create() => new(
     Location,
@@ -12,7 +12,7 @@ internal class PathCompletionsAttribute(
     Flat
   );
 
-  internal sealed class PathCompleter : Tab
+  internal sealed class PathCompleter : TCompleter
   {
     private record SearchContext(
       System.IO.DirectoryInfo Container,
