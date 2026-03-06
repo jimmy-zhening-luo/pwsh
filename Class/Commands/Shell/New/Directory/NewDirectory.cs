@@ -8,7 +8,7 @@ namespace Module.Commands.Shell.New.Directory;
 )]
 [Alias("mk")]
 [OutputType(typeof(System.IO.DirectoryInfo))]
-public sealed class NewDirectory() : WrappedCommandShouldProcess(
+public sealed class NewDirectory() : WrappedCommand(
   @"Microsoft.PowerShell.Management\New-Item"
 )
 {

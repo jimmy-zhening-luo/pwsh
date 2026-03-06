@@ -1,6 +1,6 @@
 namespace Module.Commands.Shell.Start.Explorer;
 
-public abstract class WrappedStartExplorer() : WrappedCommandShouldProcess(
+public abstract class WrappedStartExplorer() : WrappedCommand(
   @"Microsoft.PowerShell.Management\Invoke-Item",
   SkipSsh: true
 )

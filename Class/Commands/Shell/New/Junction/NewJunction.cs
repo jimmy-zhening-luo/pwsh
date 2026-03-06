@@ -8,7 +8,7 @@ namespace Module.Commands.Shell.New.Junction;
 )]
 [Alias("mj")]
 [OutputType(typeof(System.IO.DirectoryInfo))]
-public sealed class NewJunction() : WrappedCommandShouldProcess(
+public sealed class NewJunction() : WrappedCommand(
   @"Microsoft.PowerShell.Management\New-Item"
 )
 {

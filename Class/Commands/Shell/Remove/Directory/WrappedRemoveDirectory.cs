@@ -1,6 +1,6 @@
 namespace Module.Commands.Shell.Remove.Directory;
 
-public abstract class WrappedRemoveDirectory() : WrappedCommandShouldProcess(
+public abstract class WrappedRemoveDirectory() : WrappedCommand(
   @"Microsoft.PowerShell.Management\Remove-Item"
 )
 {
