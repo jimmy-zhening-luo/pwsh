@@ -60,7 +60,7 @@ public sealed class GetFileSibling : WrappedGetFile
     set => paths = value;
   }
 
-  private protected sealed override Locator Location { get; } = new(Subpath: @"..");
+  private protected sealed override string? GetLocation() => Pwd("..");
 }
 
 [Cmdlet(
@@ -87,7 +87,7 @@ public sealed class GetFileRelative : WrappedGetFile
     set => paths = value;
   }
 
-  private protected sealed override Locator Location { get; } = new(Subpath: @"..\..");
+  private protected sealed override string? GetLocation() => Pwd(@"..\..");
 }
 
 [Cmdlet(
@@ -114,7 +114,7 @@ public sealed class GetFileHome : WrappedGetFile
     set => paths = value;
   }
 
-  private protected sealed override Locator Location { get; } = new(Client.Environment.Known.Folder.Home());
+  private protected sealed override string? GetLocation() => Client.Environment.Known.Folder.Home();
 }
 
 [Cmdlet(
@@ -141,9 +141,7 @@ public sealed class GetFileCode : WrappedGetFile
     set => paths = value;
   }
 
-  private protected sealed override Locator Location { get; } = new(
-    Client.Environment.Known.Folder.Code()
-  );
+  private protected sealed override string? GetLocation() => Client.Environment.Known.Folder.Code();
 }
 
 [Cmdlet(
@@ -170,5 +168,5 @@ public sealed class GetFileDrive : WrappedGetFile
     set => paths = value;
   }
 
-  private protected sealed override Locator Location { get; } = new(Subpath: Client.File.PathString.SeparatorString);
+  private protected sealed override string? GetLocation() => Drive();
 }

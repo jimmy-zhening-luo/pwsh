@@ -2,23 +2,6 @@ namespace Module.Commands;
 
 public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDisposable
 {
-  private protected record Locator(
-    string Root = "",
-    string Subpath = ""
-  )
-  {
-    internal bool IsEmpty => this is
-    {
-      Root: "",
-      Subpath: "",
-    };
-
-    internal bool IsRooted => this is
-    {
-      Root: not "",
-    };
-  }
-
   private class PowerShellHost : System.IDisposable
   {
     ~PowerShellHost()
@@ -175,9 +158,7 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
     Dispose(default);
   }
 
-  private protected virtual Locator Location { get; } = new();
-
-  private protected bool InCurrentLocation => Location.IsEmpty;
+  private protected bool InCurrentLocation => GetLocation() is null;
 
   private protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
 
@@ -365,12 +346,9 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
     ReanchorPath(),
     path
   );
-  private protected string ReanchorPath() => Location.IsRooted
-    ? Client.File.PathString.FullPathLocationRelative(
-      Location.Root,
-      Location.Subpath
-    )
-    : Pwd(Location.Subpath);
+  private protected string ReanchorPath() => GetLocation() ?? Pwd();
+
+  private protected virtual string? GetLocation() => default;
 
   private protected object? PSVariable(string name) => SessionState.PSVariable.GetValue(
     name,
