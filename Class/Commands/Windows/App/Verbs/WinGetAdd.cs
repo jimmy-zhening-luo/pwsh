@@ -11,7 +11,7 @@ public sealed class WinGetAdd() : WinGetCommand("install")
 {
   private protected sealed override void PreprocessArguments()
   {
-    if (ArgumentList is [])
+    if (Arguments is [])
     {
       IntrinsicVerb = "upgrade";
     }

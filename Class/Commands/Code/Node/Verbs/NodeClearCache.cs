@@ -12,7 +12,6 @@ public sealed class NodeClearCache() : NodeCommand("cache")
   {
     (
       WorkingDirectory,
-      ArgumentList,
       NoThrow,
       D,
       E,
@@ -22,7 +21,6 @@ public sealed class NodeClearCache() : NodeCommand("cache")
       V
     ) = (
       string.Empty,
-      [],
       default,
       default,
       default,
@@ -32,6 +30,7 @@ public sealed class NodeClearCache() : NodeCommand("cache")
       default
     );
 
+    Arguments.Clear();
     NativeArguments.Clear();
     NativeArguments.Add("--force");
   }

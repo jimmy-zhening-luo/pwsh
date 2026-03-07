@@ -11,7 +11,7 @@ public sealed class WinGetFind() : WinGetCommand("search")
 {
   private protected sealed override void PreprocessArguments()
   {
-    if (ArgumentList is [])
+    if (Arguments is [])
     {
       IntrinsicVerb = "list";
     }

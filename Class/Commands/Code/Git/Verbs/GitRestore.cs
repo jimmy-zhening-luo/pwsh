@@ -10,9 +10,10 @@ public sealed class GitRestore() : GitCommand("pull")
 {
   private protected sealed override void PreprocessArguments()
   {
-    List<string> resetArguments = [.. ArgumentList];
+    List<string> resetArguments = [.. Arguments];
 
-    ArgumentList = [];
+    Arguments.Clear();
+
     if (
       WorkingDirectory is not ""
       && ResolveWorkingDirectory(Pwd()) is not ""

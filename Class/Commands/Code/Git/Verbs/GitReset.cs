@@ -51,13 +51,9 @@ public sealed partial class GitReset() : GitCommand("reset")
         }
         else
         {
-          (ArgumentList, tree) = (
-            [
-              tree,
-              .. ArgumentList,
-            ],
-            string.Empty
-          );
+          Arguments.Insert(default, tree),
+
+          tree = string.Empty;
         }
       }
     }
@@ -75,8 +71,6 @@ public sealed partial class GitReset() : GitCommand("reset")
 
   private protected sealed override void PreprocessArguments()
   {
-    List<string> resetArguments = [.. ArgumentList];
-
     if (
       WorkingDirectory is not ""
       && ResolveWorkingDirectory(Pwd()) is not ""
@@ -107,12 +101,12 @@ public sealed partial class GitReset() : GitCommand("reset")
         }
         else
         {
-          resetArguments.Insert(default, WorkingDirectory);
+          Arguments.Insert(default, WorkingDirectory);
         }
       }
       else
       {
-        resetArguments.Insert(default, WorkingDirectory);
+        Arguments.Insert(default, WorkingDirectory);
       }
 
       WorkingDirectory = string.Empty;
@@ -120,10 +114,8 @@ public sealed partial class GitReset() : GitCommand("reset")
 
     if (Tree is not "")
     {
-      resetArguments.Insert(default, Tree);
+      Arguments.Insert(default, Tree);
     }
-
-    ArgumentList = [.. resetArguments];
 
     _ = NativeArguments.RemoveAll(a => a is FlagHard);
 

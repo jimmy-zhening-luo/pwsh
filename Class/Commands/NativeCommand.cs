@@ -30,7 +30,7 @@ public abstract partial class NativeCommand(
   [Tab.PathCompletions]
   public string[] ArgumentList
   {
-    private protected get;
+    private get;
     set;
   } = [];
 
@@ -128,7 +128,7 @@ public abstract partial class NativeCommand(
       }
     }
 
-    ArgumentList = [.. Arguments];
+    ArgumentList = [];
 
     PreprocessArguments();
   }
@@ -162,7 +162,7 @@ public abstract partial class NativeCommand(
       arguments.Add(Uppercase.V ? "-V" : "-v");
     }
 
-    arguments.AddRange(ArgumentList);
+    arguments.AddRange(Arguments);
     arguments.AddRange(NativeArguments);
 
     List<string> escapedArguments = [];

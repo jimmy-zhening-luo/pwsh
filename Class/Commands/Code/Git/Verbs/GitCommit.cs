@@ -41,8 +41,8 @@ public sealed class GitCommit() : GitCommand("commit")
 
   private protected sealed override void PreprocessArguments()
   {
-    List<string> messageWords = [.. ArgumentList];
-    ArgumentList = [];
+    List<string> messageWords = [.. Arguments];
+    Arguments.Clear();
 
     if (
       WorkingDirectory is not ""
