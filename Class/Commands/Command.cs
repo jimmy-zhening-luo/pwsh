@@ -158,7 +158,9 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
     Dispose(default);
   }
 
-  private protected bool InCurrentLocation => GetLocation() is null;
+  private protected virtual string Location => Pwd();
+
+  private protected bool InCurrentLocation => Location == Pwd();
 
   private protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
 
@@ -337,18 +339,15 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
 
     if (reanchoredPaths is [])
     {
-      reanchoredPaths.Add(ReanchorPath());
+      reanchoredPaths.Add(Location);
     }
 
     return [.. reanchoredPaths];
   }
   private protected string ReanchorPath(string path) => Client.File.PathString.FullPathLocationRelative(
-    ReanchorPath(),
+    Location,
     path
   );
-  private protected string ReanchorPath() => GetLocation() ?? Pwd();
-
-  private protected virtual string? GetLocation() => default;
 
   private protected object? PSVariable(string name) => SessionState.PSVariable.GetValue(
     name,
