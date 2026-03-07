@@ -29,7 +29,7 @@ public abstract class VirtualStartWorkspace() : NativeCommand(true, true)
     set;
   }
 
-  private protected sealed override string CommandPath => Client.Environment.Known.Application.VSCode;
+  private protected sealed override string CommandPath { get; } = Client.Environment.Known.Application.VSCode;
 
   private protected sealed override void PreprocessArguments()
   {

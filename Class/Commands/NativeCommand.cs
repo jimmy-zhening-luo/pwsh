@@ -5,12 +5,6 @@ public abstract partial class NativeCommand(
   bool SkipSsh = default
 ) : CoreCommand(SkipSsh)
 {
-  private protected static bool IsNativeArgument(string argument) => NativeArgumentRegex().IsMatch(argument);
-  [System.Text.RegularExpressions.GeneratedRegex(
-    @"^(?>-(?>[A-Za-z]|(?>(?>-[A-Za-z][A-Za-z\d]*(?>_[A-Za-z\d]+)*)(?>-[A-Za-z\d]+(?>_[A-Za-z\d]+)*)*)))(?>=\S+)?$"
-  )]
-  private static partial System.Text.RegularExpressions.Regex NativeArgumentRegex();
-
   private protected record SwitchBoard(
     bool D = default,
     bool E = default,
@@ -19,9 +13,13 @@ public abstract partial class NativeCommand(
     bool P = default,
     bool V = default
   );
-  private protected virtual SwitchBoard Uppercase => new();
 
+  private protected readonly List<string> Arguments = []; 
   private protected readonly List<string> NativeArguments = [];
+
+  private protected abstract string CommandPath { get; }
+
+  private protected virtual SwitchBoard Uppercase { get; set; } = new();
 
   [Parameter(
     Position = 100,
@@ -105,7 +103,11 @@ public abstract partial class NativeCommand(
     set;
   }
 
-  private protected abstract string CommandPath { get; }
+  private protected static bool IsNativeArgument(string argument) => NativeArgumentRegex().IsMatch(argument);
+  [System.Text.RegularExpressions.GeneratedRegex(
+    @"^(?>-(?>[A-Za-z]|(?>(?>-[A-Za-z][A-Za-z\d]*(?>_[A-Za-z\d]+)*)(?>-[A-Za-z\d]+(?>_[A-Za-z\d]+)*)*)))(?>=\S+)?$"
+  )]
+  private static partial System.Text.RegularExpressions.Regex NativeArgumentRegex();
 
   private protected abstract List<string> BuildNativeCommand();
 
@@ -114,8 +116,6 @@ public abstract partial class NativeCommand(
 
   private protected sealed override void Preprocess()
   {
-    List<string> arguments = [];
-
     foreach (var argument in ArgumentList)
     {
       if (IsNativeArgument(argument))
@@ -124,11 +124,11 @@ public abstract partial class NativeCommand(
       }
       else
       {
-        arguments.Add(argument);
+        Arguments.Add(argument);
       }
     }
 
-    ArgumentList = [.. arguments];
+    ArgumentList = [.. Arguments];
 
     PreprocessArguments();
   }

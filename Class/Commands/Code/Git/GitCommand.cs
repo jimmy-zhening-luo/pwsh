@@ -37,9 +37,9 @@ public abstract class GitCommand(string? IntrinsicVerb) : RemoteNativeVerbComman
     "reset",
   ];
 
-  private protected sealed override string CommandPath => Client.Environment.Known.Application.Git;
+  private protected sealed override string CommandPath { get; } = Client.Environment.Known.Application.Git;
 
-  private protected override SwitchBoard Uppercase => new(
+  private protected override SwitchBoard Uppercase { get; set; } = new(
     E: true,
     P: true
   );
