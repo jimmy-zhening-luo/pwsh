@@ -55,7 +55,7 @@ public sealed class NewDirectory() : WrappedCommand(
     set;
   }
 
-  private protected sealed override Dictionary<string, object?> CoercedParameters => new()
+  private protected sealed override Dictionary<string, object?> CoercedParameters { get; } = new()
   {
     ["ItemType"] = "Directory",
   };

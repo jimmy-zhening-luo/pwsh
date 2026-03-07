@@ -74,7 +74,7 @@ public sealed class SetDirectory : WrappedSetDirectory
     set;
   }
 
-  private protected sealed override Dictionary<string, object?> CoercedParameters => new()
+  private protected sealed override Dictionary<string, object?> CoercedParameters { get; } = new()
   {
     ["C"] = default,
     ["D"] = default,

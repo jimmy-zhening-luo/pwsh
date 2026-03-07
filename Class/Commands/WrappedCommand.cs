@@ -7,7 +7,7 @@ public abstract class WrappedCommand(
   bool SkipSsh = default
 ) : CoreCommand(SkipSsh)
 {
-  private protected virtual Dictionary<string, object?> CoercedParameters => [];
+  private protected virtual Dictionary<string, object?> CoercedParameters { get; } = [];
 
   private string? PipelineInputParameterName { get; } = PipelineInputParameterName;
 

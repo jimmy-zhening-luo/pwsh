@@ -150,7 +150,7 @@ public sealed class TestHost() : WrappedCommand(
     set;
   }
 
-  private protected sealed override Dictionary<string, object?> CoercedParameters => new()
+  private protected sealed override Dictionary<string, object?> CoercedParameters { get; } = new()
   {
     ["Detailed"] = default,
     ["InformationLevel"] = Detailed

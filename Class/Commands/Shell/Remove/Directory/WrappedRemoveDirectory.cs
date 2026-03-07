@@ -31,7 +31,7 @@ public abstract class WrappedRemoveDirectory() : WrappedCommand(
     set;
   }
 
-  private protected sealed override Dictionary<string, object?> CoercedParameters => new()
+  private protected sealed override Dictionary<string, object?> CoercedParameters { get; } = new()
   {
     ["Recurse"] = true,
     ["Force"] = true,

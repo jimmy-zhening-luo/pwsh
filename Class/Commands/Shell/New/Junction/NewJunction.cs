@@ -36,7 +36,7 @@ public sealed class NewJunction() : WrappedCommand(
     set;
   }
 
-  private protected sealed override Dictionary<string, object?> CoercedParameters => new()
+  private protected sealed override Dictionary<string, object?> CoercedParameters { get; } = new()
   {
     ["ItemType"] = "Junction",
     ["Force"] = true,
