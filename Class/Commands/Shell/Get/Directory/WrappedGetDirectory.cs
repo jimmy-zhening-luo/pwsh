@@ -129,7 +129,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
     set;
   }
 
-  private protected sealed override Dictionary<string, object?> CoercedParameters { get; } = new()
+  private protected sealed override Dictionary<string, object?> CoercedParameters => new()
   {
     ["Filter"] = filter,
   };
