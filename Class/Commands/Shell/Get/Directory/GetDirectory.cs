@@ -66,7 +66,7 @@ public sealed class GetDirectorySibling : WrappedGetDirectory
     set => paths = value;
   }
 
-  private protected sealed override Locator Location => new(Subpath: @"..");
+  private protected sealed override Locator Location { get; } = new(Subpath: @"..");
 }
 
 [Cmdlet(
@@ -96,7 +96,7 @@ public sealed class GetDirectoryRelative : WrappedGetDirectory
     set => paths = value;
   }
 
-  private protected sealed override Locator Location => new(Subpath: @"..\..");
+  private protected sealed override Locator Location { get; } = new(Subpath: @"..\..");
 }
 
 [Cmdlet(
@@ -126,7 +126,7 @@ public sealed class GetDirectoryHome : WrappedGetDirectory
     set => paths = value;
   }
 
-  private protected sealed override Locator Location => new(Client.Environment.Known.Folder.Home());
+  private protected sealed override Locator Location { get; } = new(Client.Environment.Known.Folder.Home());
 }
 
 [Cmdlet(
@@ -156,7 +156,7 @@ public sealed class GetDirectoryCode : WrappedGetDirectory
     set => paths = value;
   }
 
-  private protected sealed override Locator Location => new(
+  private protected sealed override Locator Location { get; } = new(
     Client.Environment.Known.Folder.Code()
   );
 }
@@ -188,5 +188,5 @@ public sealed class GetDirectoryDrive : WrappedGetDirectory
     set => paths = value;
   }
 
-  private protected sealed override Locator Location => new(Drive());
+  private protected sealed override Locator Location { get; } = new(Drive());
 }

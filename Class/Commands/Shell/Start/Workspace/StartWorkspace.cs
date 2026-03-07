@@ -39,7 +39,7 @@ public sealed class StartWorkspaceSibling : VirtualStartWorkspace
     set => path = value;
   }
 
-  private protected sealed override Locator Location => new(Subpath: @"..");
+  private protected sealed override Locator Location { get; } = new(Subpath: @"..");
 }
 
 [Cmdlet(
@@ -61,7 +61,7 @@ public sealed class StartWorkspaceRelative : VirtualStartWorkspace
     set => path = value;
   }
 
-  private protected sealed override Locator Location => new(Subpath: @"..\..");
+  private protected sealed override Locator Location { get; } = new(Subpath: @"..\..");
 }
 
 [Cmdlet(
@@ -83,7 +83,7 @@ public sealed class StartWorkspaceHome : VirtualStartWorkspace
     set => path = value;
   }
 
-  private protected sealed override Locator Location => new(Client.Environment.Known.Folder.Home());
+  private protected sealed override Locator Location { get; } = new(Client.Environment.Known.Folder.Home());
 }
 
 [Cmdlet(
@@ -105,7 +105,7 @@ public sealed class StartWorkspaceCode : VirtualStartWorkspace
     set => path = value;
   }
 
-  private protected sealed override Locator Location => new(
+  private protected sealed override Locator Location { get; } = new(
     Client.Environment.Known.Folder.Code()
   );
 }
@@ -129,5 +129,5 @@ public sealed class StartWorkspaceDrive : VirtualStartWorkspace
     set => path = value;
   }
 
-  private protected sealed override Locator Location => new(Drive());
+  private protected sealed override Locator Location { get; } = new(Drive());
 }

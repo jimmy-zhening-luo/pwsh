@@ -175,7 +175,7 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
     Dispose(default);
   }
 
-  private protected virtual Locator Location => new();
+  private protected virtual Locator Location { get; } = new();
 
   private protected bool InCurrentLocation => Location.IsEmpty;
 
