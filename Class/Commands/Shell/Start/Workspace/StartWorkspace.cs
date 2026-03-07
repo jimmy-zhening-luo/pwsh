@@ -129,5 +129,5 @@ public sealed class StartWorkspaceDrive : VirtualStartWorkspace
     set => path = value;
   }
 
-  private protected sealed override Locator Location { get; } = new(Drive());
+  private protected sealed override Locator Location { get; } = new(Subpath: Client.File.PathString.SeparatorString);
 }

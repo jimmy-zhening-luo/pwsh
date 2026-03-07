@@ -188,5 +188,5 @@ public sealed class GetDirectoryDrive : WrappedGetDirectory
     set => paths = value;
   }
 
-  private protected sealed override Locator Location { get; } = new(Drive());
+  private protected sealed override Locator Location { get; } = new(Subpath: Client.File.PathString.SeparatorString);
 }
