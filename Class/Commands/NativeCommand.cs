@@ -14,7 +14,7 @@ public abstract partial class NativeCommand(
     bool V = default
   );
 
-  private protected readonly List<string> Arguments = []; 
+  private protected readonly List<string> Arguments = [];
   private protected readonly List<string> NativeArguments = [];
 
   private protected abstract string CommandPath { get; }
