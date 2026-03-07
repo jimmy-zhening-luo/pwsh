@@ -51,7 +51,7 @@ public sealed partial class GitReset() : GitCommand("reset")
         }
         else
         {
-          Arguments.Insert(default, tree),
+          Arguments.Insert(default, tree);
 
           tree = string.Empty;
         }
