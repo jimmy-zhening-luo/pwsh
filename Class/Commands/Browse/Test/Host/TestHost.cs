@@ -162,10 +162,6 @@ public sealed class TestHost() : WrappedCommand(
   {
     switch (ParameterSetName)
     {
-      case "ICMP" when ComputerName is "":
-        BoundParameters["CommonTCPPort"] = CommonTCPPort = nameof(TestHostWellKnownPort.HTTP);
-        break;
-
       case "RemotePort":
         BoundParameters["Port"] = (int)Port;
         break;
