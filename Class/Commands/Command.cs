@@ -13,10 +13,7 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
 
   private protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
 
-  private bool BlockedBySsh => SkipSsh
-    && Client.Environment.Known.Variable.InSsh;
-
-  private PowerShellHost PSHost
+  private protected PowerShellHost PSHost
   {
     get
     {
@@ -26,6 +23,9 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     }
   }
   private PowerShellHost? pshost;
+
+  private bool BlockedBySsh => SkipSsh
+    && Client.Environment.Known.Variable.InSsh;
 
   private bool Disposed { get; set; }
 
