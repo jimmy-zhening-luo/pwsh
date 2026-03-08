@@ -15,6 +15,7 @@ public abstract class RemoteNativeVerbCommand(
     Position = 50,
     HelpMessage = "Working directory path"
   )]
+  [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions(
     @"~\code",
     Tab.PathItemType.Directory,

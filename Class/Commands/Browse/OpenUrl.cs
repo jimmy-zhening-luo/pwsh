@@ -43,6 +43,7 @@ public sealed class OpenUrl() : CoreCommand(true)
     HelpMessage = "URLs to open"
   )]
   [AllowEmptyCollection]
+  [ValidateNotNull]
   public System.Uri[] Uri
   {
     get => [.. uris];
