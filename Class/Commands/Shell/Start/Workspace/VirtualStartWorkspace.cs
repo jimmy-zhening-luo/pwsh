@@ -25,7 +25,7 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
     set
     {
       List<string> profileNames = [
-        .. Enum.GetNames<VSCodeProfile>(),
+        .. System.Enum.GetNames<VSCodeProfile>(),
       ];
 
       var profileName = profileNames.Find(
@@ -94,7 +94,7 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
         ? string.Empty
         : ReanchorPath(path);
 
-    if (name is "")
+    if (profile is "")
     {
       Client.File.Handler.Edit(
         path,
