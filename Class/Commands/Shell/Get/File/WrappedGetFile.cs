@@ -42,7 +42,7 @@ public abstract class WrappedGetFile() : WrappedCommand(
   [Alias("First", "Head")]
   [ValidateRange(
     0,
-    9223372036854775807
+    long.MaxValue
   )]
   public long TotalCount
   {
