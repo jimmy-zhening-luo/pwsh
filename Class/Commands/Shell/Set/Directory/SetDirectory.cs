@@ -25,6 +25,7 @@ public sealed class SetDirectory : WrappedSetDirectory
   )]
   public sealed override string Path
   {
+    get => path;
     set => path = value;
   }
 
@@ -132,6 +133,7 @@ public sealed class SetDirectorySibling : WrappedSetDirectory
   )]
   public sealed override string Path
   {
+    get => path;
     set => path = value;
   }
 
@@ -160,6 +162,7 @@ public sealed class SetDirectoryRelative : WrappedSetDirectory
   )]
   public sealed override string Path
   {
+    get => path;
     set => path = value;
   }
 
@@ -188,6 +191,7 @@ public sealed class SetDirectoryHome : WrappedSetDirectory
   )]
   public sealed override string Path
   {
+    get => path;
     set => path = value;
   }
 
@@ -216,6 +220,7 @@ public sealed class SetDirectoryCode : WrappedSetDirectory
   )]
   public sealed override string Path
   {
+    get => path;
     set => path = value;
   }
 
@@ -244,6 +249,7 @@ public sealed class SetDrive : WrappedSetDirectory
   )]
   public sealed override string Path
   {
+    get => path;
     set => path = value;
   }
 

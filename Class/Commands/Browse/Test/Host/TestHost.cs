@@ -59,11 +59,7 @@ public sealed class TestHost() : WrappedCommand(
     "RemoteAddress",
     "cn"
   )]
-  public string ComputerName
-  {
-    private get;
-    set;
-  } = string.Empty;
+  public string ComputerName { get; set; } = string.Empty;
 
   [Parameter(
     ParameterSetName = "CommonTCPPort",

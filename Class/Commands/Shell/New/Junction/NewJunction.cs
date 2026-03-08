@@ -32,11 +32,7 @@ public sealed class NewJunction() : WrappedCommand(
   )]
   [Alias("Target")]
   [Tab.PathCompletions]
-  public required object Value
-  {
-    private get;
-    set;
-  }
+  public required object Value { get; set; }
 
   private protected sealed override Dictionary<string, object?> CoercedParameters { get; } = new()
   {

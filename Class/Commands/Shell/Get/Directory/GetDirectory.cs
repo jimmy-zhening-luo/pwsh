@@ -25,6 +25,7 @@ public sealed class GetDirectory : WrappedGetDirectory
   )]
   public sealed override string[] Path
   {
+    get => paths;
     set => paths = value;
   }
 
@@ -65,6 +66,7 @@ public sealed class GetDirectorySibling : WrappedGetDirectory
   )]
   public sealed override string[] Path
   {
+    get => paths;
     set => paths = value;
   }
 
@@ -96,6 +98,7 @@ public sealed class GetDirectoryRelative : WrappedGetDirectory
   )]
   public sealed override string[] Path
   {
+    get => paths;
     set => paths = value;
   }
 
@@ -127,6 +130,7 @@ public sealed class GetDirectoryHome : WrappedGetDirectory
   )]
   public sealed override string[] Path
   {
+    get => paths;
     set => paths = value;
   }
 
@@ -158,6 +162,7 @@ public sealed class GetDirectoryCode : WrappedGetDirectory
   )]
   public sealed override string[] Path
   {
+    get => paths;
     set => paths = value;
   }
 
@@ -189,6 +194,7 @@ public sealed class GetDirectoryDrive : WrappedGetDirectory
   )]
   public sealed override string[] Path
   {
+    get => paths;
     set => paths = value;
   }
 
