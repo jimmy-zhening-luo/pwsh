@@ -8,11 +8,7 @@ namespace Module.Commands.Pwsh.Profile;
 [OutputType(typeof(void))]
 sealed public class StartProfile() : CoreCommand(true)
 {
-  sealed override private protected void Postprocess()
-  {
-    Client.Start.CreateProcess(
-      Client.Environment.Known.Application.VSCode,
-      Client.Environment.Known.Folder.Code("pwsh")
-    );
-  }
+  sealed override private protected void Postprocess() => Client.File.Handler.Edit(
+    Client.Environment.Known.Folder.Code("pwsh")
+  );
 }
