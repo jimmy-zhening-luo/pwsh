@@ -1,4 +1,4 @@
-namespace Module.Commands.Windows.Manage.Task;
+namespace Module.Commands.Shell.Stop.Task;
 
 public abstract class TaskManager : CoreCommand
 {

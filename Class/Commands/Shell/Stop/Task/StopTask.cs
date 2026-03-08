@@ -1,4 +1,4 @@
-namespace Module.Commands.Windows.Manage.Task;
+namespace Module.Commands.Shell.Stop.Task;
 
 [Cmdlet(
   VerbsLifecycle.Stop,
@@ -17,4 +17,17 @@ public sealed class StopTask : TaskManager
   {
     set => descendant = value;
   }
+}
+
+[Cmdlet(
+  VerbsLifecycle.Stop,
+  "TaskTree",
+  DefaultParameterSetName = "Name",
+  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097058"
+)]
+[Alias("tkilld")]
+[OutputType(typeof(void))]
+public sealed class StopTaskTree : TaskManager
+{
+  public StopTaskTree() => descendant = true;
 }
