@@ -46,7 +46,7 @@ abstract public class GitCommand(string? IntrinsicVerb) : RemoteNativeVerbComman
     P: true
   );
 
-  sealed override private protected string[] NativeCommandBaseArguments { get; } = [
+  sealed override private protected string[] CommandBaseArguments { get; } = [
     "-c",
     "color.ui=always",
   ];

@@ -7,27 +7,25 @@ abstract public class NativeVerbCommand(
 {
   private protected string? IntrinsicVerb { get; set; } = IntrinsicVerb;
 
-  abstract private protected string[] NativeCommandArguments { get; }
+  abstract private protected string[] CommandArguments { get; }
 
-  abstract private protected string[] NativeCommandVerbArguments { get; }
+  abstract private protected string[] VerbArguments { get; }
 
   sealed override private protected List<string> NativeCommandScript
   {
     get
     {
       List<string> arguments = [
-        .. NativeCommandArguments,
+        .. CommandArguments,
       ];
-  
+
       if (IntrinsicVerb is not null)
       {
         arguments.Add(IntrinsicVerb);
       }
-  
-      arguments.AddRange(
-        NativeCommandVerbArguments
-      );
-  
+
+      arguments.AddRange(VerbArguments);
+
       return arguments;
     }
   }

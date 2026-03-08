@@ -112,7 +112,7 @@ abstract public class NodeCommand(string? IntrinsicVerb) : RemoteNativeVerbComma
     P: true
   );
 
-  sealed override private protected string[] NativeCommandBaseArguments { get; } = ["--color=always"];
+  sealed override private protected string[] CommandBaseArguments { get; } = ["--color=always"];
 
   sealed override private protected string[] WorkingDirectoryArguments => WorkingDirectory is ""
     ? []
