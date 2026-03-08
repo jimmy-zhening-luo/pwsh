@@ -90,7 +90,7 @@ public sealed class GitCommit() : GitCommand("commit")
 
     if (!Staged)
     {
-      AddCommand("Add-GitRepository")
+      AddCommand("Add-GitRepository");
 
       if (WorkingDirectory is not "")
       {

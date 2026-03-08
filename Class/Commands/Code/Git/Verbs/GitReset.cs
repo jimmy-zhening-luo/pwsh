@@ -124,7 +124,7 @@ public sealed partial class GitReset() : GitCommand("reset")
     {
       NativeArguments.Insert(default, FlagHard);
 
-      AddCommand("Add-GitRepository")
+      AddCommand("Add-GitRepository");
 
       if (WorkingDirectory is not "")
       {

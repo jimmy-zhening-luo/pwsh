@@ -21,7 +21,7 @@ public sealed class GitPush() : GitCommand("push")
       WorkingDirectory = string.Empty;
     }
 
-    AddCommand("Get-GitRepository")
+    AddCommand("Get-GitRepository");
 
     if (WorkingDirectory is not "")
     {
