@@ -89,7 +89,7 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
         ? string.Empty
         : ReanchorPath(path);
 
-    if (profile is default)
+    if (profile is 0)
     {
       Client.File.Handler.Edit(
         path,
