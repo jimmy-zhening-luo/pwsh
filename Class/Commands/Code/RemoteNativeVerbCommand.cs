@@ -3,7 +3,7 @@ namespace Module.Commands.Code;
 abstract public class RemoteNativeVerbCommand(
   string? IntrinsicVerb,
   bool SkipSsh = default
-) : NativeVerbCommand(IntrinsicVerb, SkipSsh: SkipSsh)
+) : NativeVerbCommand(IntrinsicVerb, SkipSsh)
 {
   sealed internal class PathSpecCompletionsAttribute() : Tab.PathCompletionsAttribute(
     ItemType: Tab.PathItemType.File
