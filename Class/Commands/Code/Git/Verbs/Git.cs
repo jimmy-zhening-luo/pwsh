@@ -8,6 +8,8 @@ namespace Module.Commands.Code.Git.Verbs;
 [Alias("g")]
 sealed public class Git() : GitCommand(default)
 {
+  new private SwitchParameter V { get; set; }
+
   [Parameter(
     Position = default,
     HelpMessage = "Git command"
@@ -18,8 +20,6 @@ sealed public class Git() : GitCommand(default)
   {
     set => IntrinsicVerb = value;
   }
-
-  new private SwitchParameter V { get; set; }
 
   [Parameter(
     HelpMessage = "Show git version if no command is specified. Otherwise, pass the -v flag as argument."

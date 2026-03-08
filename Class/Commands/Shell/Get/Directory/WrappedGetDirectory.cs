@@ -9,6 +9,11 @@ abstract public class WrappedGetDirectory() : WrappedCommand(
 
   sealed override private protected object? PipelineInput => Path;
 
+  sealed override private protected Dictionary<string, object?> CoercedParameters => new()
+  {
+    ["Filter"] = filter,
+  };
+
   [Parameter(
     Position = 1
   )]
@@ -130,11 +135,6 @@ abstract public class WrappedGetDirectory() : WrappedCommand(
     private get;
     set;
   }
-
-  sealed override private protected Dictionary<string, object?> CoercedParameters => new()
-  {
-    ["Filter"] = filter,
-  };
 
   sealed override private protected void TransformPipelineInput()
   {

@@ -8,6 +8,8 @@ namespace Module.Commands.Code.Node.Verbs;
 [Alias("n")]
 sealed public class Node() : NodeCommand(default)
 {
+  new private SwitchParameter V { get; set; }
+
   [Parameter(
     Position = default,
     HelpMessage = "npm command"
@@ -18,8 +20,6 @@ sealed public class Node() : NodeCommand(default)
   {
     set => IntrinsicVerb = value;
   }
-
-  new private SwitchParameter V { get; set; }
 
   [Parameter(
     HelpMessage = "Show npm version if no command is specified. Otherwise, pass the -v flag as argument."

@@ -1,4 +1,4 @@
-namespace Module.Commands.Shell.New.Directory;
+namespace Module.Commands.Shell.New;
 
 [Cmdlet(
   VerbsCommon.New,
@@ -14,6 +14,11 @@ sealed public class NewDirectory() : WrappedCommand(
 )
 {
   sealed override private protected object? PipelineInput => Value;
+
+  sealed override private protected Dictionary<string, object?> CoercedParameters { get; } = new()
+  {
+    ["ItemType"] = "Directory",
+  };
 
   [Parameter(
     ParameterSetName = "pathSet",
@@ -53,9 +58,4 @@ sealed public class NewDirectory() : WrappedCommand(
     private get;
     set;
   }
-
-  sealed override private protected Dictionary<string, object?> CoercedParameters { get; } = new()
-  {
-    ["ItemType"] = "Directory",
-  };
 }

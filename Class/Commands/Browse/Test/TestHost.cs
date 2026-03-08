@@ -52,6 +52,14 @@ sealed public class TestHost() : WrappedCommand(
 
   sealed override private protected object? PipelineInput => ComputerName;
 
+  sealed override private protected Dictionary<string, object?> CoercedParameters => new()
+  {
+    ["Detailed"] = default,
+    ["InformationLevel"] = Detailed
+      ? TestHostVerbosity.detailed
+      : InformationLevel,
+  };
+
   [Parameter(
     Position = default,
     ValueFromPipeline = true
@@ -152,14 +160,6 @@ sealed public class TestHost() : WrappedCommand(
     private get;
     set;
   }
-
-  sealed override private protected Dictionary<string, object?> CoercedParameters => new()
-  {
-    ["Detailed"] = default,
-    ["InformationLevel"] = Detailed
-      ? TestHostVerbosity.detailed
-      : InformationLevel,
-  };
 
   sealed override private protected void TransformArguments()
   {

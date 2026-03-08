@@ -9,6 +9,12 @@ abstract public class WrappedRemoveDirectory() : WrappedCommand(
 
   sealed override private protected object? PipelineInput => Path;
 
+  sealed override private protected Dictionary<string, object?> CoercedParameters { get; } = new()
+  {
+    ["Recurse"] = true,
+    ["Force"] = true,
+  };
+
   [Parameter]
   [SupportsWildcards]
   required public string Filter
@@ -32,10 +38,4 @@ abstract public class WrappedRemoveDirectory() : WrappedCommand(
     private get;
     set;
   }
-
-  sealed override private protected Dictionary<string, object?> CoercedParameters { get; } = new()
-  {
-    ["Recurse"] = true,
-    ["Force"] = true,
-  };
 }

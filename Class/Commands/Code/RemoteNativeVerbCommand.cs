@@ -9,6 +9,8 @@ abstract public class RemoteNativeVerbCommand(
     ItemType: Tab.PathItemType.File
   );
 
+  private protected readonly List<string> DeferredVerbArguments = [];
+
   abstract private protected string[] WorkingDirectoryArguments { get; }
 
   [Parameter(
@@ -26,8 +28,6 @@ abstract public class RemoteNativeVerbCommand(
     private protected get;
     set;
   } = string.Empty;
-
-  private protected readonly List<string> DeferredVerbArguments = [];
 
   abstract private protected List<string> NativeCommandBaseArguments();
 

@@ -1,4 +1,4 @@
-namespace Module.Commands.Shell.New.Junction;
+namespace Module.Commands.Shell.New;
 
 [Cmdlet(
   VerbsCommon.New,
@@ -14,6 +14,12 @@ sealed public class NewJunction() : WrappedCommand(
 )
 {
   sealed override private protected object? PipelineInput => Value;
+
+  sealed override private protected Dictionary<string, object?> CoercedParameters { get; } = new()
+  {
+    ["ItemType"] = "Junction",
+    ["Force"] = true,
+  };
 
   [Parameter(
     ParameterSetName = "pathSet",
@@ -35,10 +41,4 @@ sealed public class NewJunction() : WrappedCommand(
   [Alias("Target")]
   [Tab.PathCompletions]
   required public object Value { get; set; }
-
-  sealed override private protected Dictionary<string, object?> CoercedParameters { get; } = new()
-  {
-    ["ItemType"] = "Junction",
-    ["Force"] = true,
-  };
 }
