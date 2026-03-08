@@ -9,7 +9,8 @@ namespace Module.Commands.Shell.New.Junction;
 [Alias("mj")]
 [OutputType(typeof(System.IO.DirectoryInfo))]
 public sealed class NewJunction() : WrappedCommand(
-  @"Microsoft.PowerShell.Management\New-Item"
+  @"Microsoft.PowerShell.Management\New-Item",
+  "Value"
 )
 {
   [Parameter(
@@ -26,7 +27,8 @@ public sealed class NewJunction() : WrappedCommand(
 
   [Parameter(
     Mandatory = true,
-    Position = 1
+    Position = 1,
+    ValueFromPipeline = true
   )]
   [Alias("Target")]
   [Tab.PathCompletions]

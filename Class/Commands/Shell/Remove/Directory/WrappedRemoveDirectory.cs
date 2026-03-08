@@ -1,7 +1,8 @@
 namespace Module.Commands.Shell.Remove.Directory;
 
 public abstract class WrappedRemoveDirectory() : WrappedCommand(
-  @"Microsoft.PowerShell.Management\Remove-Item"
+  @"Microsoft.PowerShell.Management\Remove-Item",
+  "Path"
 )
 {
   public abstract string[] Path { set; }

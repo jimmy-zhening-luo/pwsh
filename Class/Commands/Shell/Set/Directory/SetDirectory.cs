@@ -15,7 +15,8 @@ public sealed class SetDirectory : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = default
+    Position = default,
+    ValueFromPipeline = true
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(
@@ -121,7 +122,8 @@ public sealed class SetDirectorySibling : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = default
+    Position = default,
+    ValueFromPipeline = true
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(
@@ -148,7 +150,8 @@ public sealed class SetDirectoryRelative : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = default
+    Position = default,
+    ValueFromPipeline = true
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(
@@ -175,7 +178,8 @@ public sealed class SetDirectoryHome : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = default
+    Position = default,
+    ValueFromPipeline = true
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(
@@ -202,7 +206,8 @@ public sealed class SetDirectoryCode : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = default
+    Position = default,
+    ValueFromPipeline = true
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(
@@ -229,7 +234,8 @@ public sealed class SetDrive : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = default
+    Position = default,
+    ValueFromPipeline = true
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(

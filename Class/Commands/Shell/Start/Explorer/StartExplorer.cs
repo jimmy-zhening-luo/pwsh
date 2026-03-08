@@ -12,7 +12,8 @@ public sealed class StartExplorer : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = default
+    Position = default,
+    ValueFromPipeline = true
   )]
   [SupportsWildcards]
   [Tab.PathCompletions]
@@ -45,7 +46,8 @@ public sealed class StartExplorerSibling : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = default
+    Position = default,
+    ValueFromPipeline = true
   )]
   [SupportsWildcards]
   [Tab.PathCompletions("..")]
@@ -69,7 +71,8 @@ public sealed class StartExplorerRelative : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = default
+    Position = default,
+    ValueFromPipeline = true
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(@"..\..")]
@@ -93,7 +96,8 @@ public sealed class StartExplorerHome : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = default
+    Position = default,
+    ValueFromPipeline = true
   )]
   [SupportsWildcards]
   [Tab.PathCompletions("~")]
@@ -117,7 +121,8 @@ public sealed class StartExplorerCode : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = default
+    Position = default,
+    ValueFromPipeline = true
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(@"~\code")]
@@ -141,7 +146,8 @@ public sealed class StartExplorerDrive : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
-    Position = default
+    Position = default,
+    ValueFromPipeline = true
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(@"\")]

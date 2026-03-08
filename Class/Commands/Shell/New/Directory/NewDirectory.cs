@@ -9,7 +9,8 @@ namespace Module.Commands.Shell.New.Directory;
 [Alias("mk")]
 [OutputType(typeof(System.IO.DirectoryInfo))]
 public sealed class NewDirectory() : WrappedCommand(
-  @"Microsoft.PowerShell.Management\New-Item"
+  @"Microsoft.PowerShell.Management\New-Item",
+  "Value"
 )
 {
   [Parameter(
@@ -38,7 +39,7 @@ public sealed class NewDirectory() : WrappedCommand(
     set;
   }
 
-  [Parameter]
+  [Parameter(ValueFromPipeline = true)]
   [Alias("Target")]
   [Tab.PathCompletions]
   public required object Value

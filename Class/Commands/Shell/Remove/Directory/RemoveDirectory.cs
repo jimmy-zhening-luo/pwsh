@@ -13,7 +13,8 @@ public sealed class RemoveDirectory : WrappedRemoveDirectory
   [Parameter(
     ParameterSetName = "Path",
     Mandatory = true,
-    Position = default
+    Position = default,
+    ValueFromPipeline = true
   )]
   [SupportsWildcards]
   [Tab.PathCompletions]
