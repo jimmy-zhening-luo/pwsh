@@ -15,12 +15,12 @@ abstract public class RemoteNativeVerbCommand(
 
   abstract private protected string[] WorkingDirectoryArguments { get; }
 
-  sealed override private protected List<string> NativeCommandArguments => [
+  sealed override private protected string[] NativeCommandArguments => [
     .. NativeCommandBaseArguments,
     .. WorkingDirectoryArguments,
   ];
 
-  sealed override private protected List<string> NativeCommandVerbArguments => [
+  sealed override private protected string[] NativeCommandVerbArguments => [
     .. DeferredVerbArguments,
     .. ParseArguments(),
   ];

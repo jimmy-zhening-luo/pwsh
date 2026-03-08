@@ -7,9 +7,9 @@ abstract public class NativeVerbCommand(
 {
   private protected string? IntrinsicVerb { get; set; } = IntrinsicVerb;
 
-  abstract private protected List<string> NativeCommandArguments { get; }
+  abstract private protected string[] NativeCommandArguments { get; }
 
-  abstract private protected List<string> NativeCommandVerbArguments { get; }
+  abstract private protected string[] NativeCommandVerbArguments { get; }
 
   sealed override private protected List<string> NativeCommandScript
   {

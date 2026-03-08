@@ -4,7 +4,7 @@ abstract public class WinGetCommand(string IntrinsicVerb) : NativeVerbCommand(In
 {
   sealed override private protected string CommandPath { get; } = Client.Environment.Known.Application.WinGet;
 
-  sealed override private protected List<string> NativeCommandArguments { get; } = [];
+  sealed override private protected string[] NativeCommandArguments { get; } = [];
 
-  override private protected List<string> NativeCommandVerbArguments { get; } = [];
+  override private protected string[] NativeCommandVerbArguments { get; } = [];
 }
