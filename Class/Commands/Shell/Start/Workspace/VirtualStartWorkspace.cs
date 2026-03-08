@@ -78,33 +78,17 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
     }
   }
 
-  sealed override private protected void Process()
-  {
-    path = InCurrentLocation
+  sealed override private protected void Process() => Client.File.Handler.Edit(
+    InCurrentLocation
       && path is ""
       && (
         Pwd() == Client.Environment.Known.Folder.Code()
         || Pwd() == Client.Environment.Known.Folder.Home()
       )
         ? string.Empty
-        : ReanchorPath(path);
-
-    if (profile is 0)
-    {
-      Client.File.Handler.Edit(
-        path,
-        window,
-        ArgumentList
-      );
-    }
-    else
-    {
-      Client.File.Handler.Edit(
-        path,
-        profile,
-        window,
-        ArgumentList
-      );
-    }
-  }
+        : ReanchorPath(path),
+    profile,
+    window,
+    ArgumentList
+  );
 }
