@@ -11,7 +11,7 @@ abstract public class NativeVerbCommand(
 
   abstract private protected string[] VerbArguments { get; }
 
-  sealed override private protected List<string> NativeCommandScript
+  sealed override private protected string[] NativeCommandScript
   {
     get
     {
@@ -26,7 +26,7 @@ abstract public class NativeVerbCommand(
 
       arguments.AddRange(VerbArguments);
 
-      return arguments;
+      return [.. arguments];
     }
   }
 }
