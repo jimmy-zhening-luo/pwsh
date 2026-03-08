@@ -2,6 +2,8 @@ namespace Module.Commands.Windows.Manage.Task;
 
 public abstract class TaskManager : CoreCommand
 {
+  private protected bool descendant;
+
   [Parameter(
     ParameterSetName = "Name",
     Position = default,
@@ -21,11 +23,11 @@ public abstract class TaskManager : CoreCommand
     Position = default,
     HelpMessage = "Process IDs of the processes to stop"
   )]
-  public int[] Id
+  public required int[] Id
   {
     private get;
     set;
-  } = [];
+  };
 
   [Parameter(
     ParameterSetName = "InputObject",
@@ -33,20 +35,11 @@ public abstract class TaskManager : CoreCommand
     Position = default,
     HelpMessage = "Process objects to stop"
   )]
-  public System.Diagnostics.Process[] InputObject
+  public required System.Diagnostics.Process[] InputObject
   {
     private get;
     set;
-  } = [];
-
-  private protected bool descendant;
-
-  private static void KillProcess(
-    int pid,
-    bool entireProcessTree = default
-  ) => System.Diagnostics.Process
-    .GetProcessById(pid)
-    .Kill(entireProcessTree);
+  };
 
   private static void KillProcesses(
     string name,
@@ -63,26 +56,36 @@ public abstract class TaskManager : CoreCommand
     }
   }
 
+  private static void KillProcess(
+    int pid,
+    bool entireProcessTree = default
+  ) => System.Diagnostics.Process
+    .GetProcessById(pid)
+    .Kill(entireProcessTree);
+
   private protected sealed override void Postprocess()
   {
     switch (ParameterSetName)
     {
-      case "Id":
-        foreach (var pid in Id)
-        {
-          KillProcess(pid, descendant);
-        }
-        break;
-
       case "InputObject":
         foreach (var process in InputObject)
         {
           process.Kill(descendant);
         }
+
+        break;
+
+      case "Id":
+        foreach (var pid in Id)
+        {
+          KillProcess(pid, descendant);
+        }
+
         break;
 
       case "Name" when Name is []:
         KillProcesses("explorer");
+
         break;
 
       default:
@@ -105,6 +108,7 @@ public abstract class TaskManager : CoreCommand
               break;
           }
         }
+
         break;
     }
   }

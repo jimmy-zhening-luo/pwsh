@@ -71,11 +71,11 @@ public sealed class TestHost() : WrappedCommand(
     typeof(TestHostWellKnownPort),
     Case = Tab.CompletionCase.Lower
   )]
-  public string CommonTCPPort
+  public required string CommonTCPPort
   {
     private get;
     set;
-  } = string.Empty;
+  };
 
   [Parameter(
     ParameterSetName = "RemotePort",
