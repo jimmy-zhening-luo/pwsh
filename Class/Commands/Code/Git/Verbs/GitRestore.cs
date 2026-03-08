@@ -40,6 +40,7 @@ public sealed class GitRestore() : GitCommand("pull")
       );
     }
 
+    BeginSteppablePipeline();
     ProcessSteppablePipeline();
     EndSteppablePipeline();
     ClearCommands();

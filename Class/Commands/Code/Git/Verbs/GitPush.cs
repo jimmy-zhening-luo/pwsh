@@ -31,6 +31,7 @@ public sealed class GitPush() : GitCommand("push")
       );
     }
 
+    BeginSteppablePipeline();
     ProcessSteppablePipeline();
     EndSteppablePipeline();
     ClearCommands();

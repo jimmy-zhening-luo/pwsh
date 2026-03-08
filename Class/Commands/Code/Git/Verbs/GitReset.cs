@@ -134,6 +134,7 @@ public sealed partial class GitReset() : GitCommand("reset")
         );
       }
 
+      BeginSteppablePipeline();
       ProcessSteppablePipeline();
       EndSteppablePipeline();
       ClearCommands();

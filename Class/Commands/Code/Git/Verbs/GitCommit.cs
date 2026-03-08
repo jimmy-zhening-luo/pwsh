@@ -100,6 +100,7 @@ public sealed class GitCommit() : GitCommand("commit")
         );
       }
 
+      BeginSteppablePipeline();
       ProcessSteppablePipeline();
       EndSteppablePipeline();
       ClearCommands();

@@ -65,6 +65,7 @@ public sealed class GitPullChild : CoreCommand
         )
       );
 
+      BeginSteppablePipeline();
       ProcessSteppablePipeline();
       EndSteppablePipeline();
       ClearCommands();

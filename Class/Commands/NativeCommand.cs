@@ -201,6 +201,7 @@ public abstract partial class NativeCommand(
         )
       );
 
+      BeginSteppablePipeline();
       ProcessSteppablePipeline();
       EndSteppablePipeline();
 
