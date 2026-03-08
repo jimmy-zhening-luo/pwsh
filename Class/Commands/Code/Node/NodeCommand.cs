@@ -2,7 +2,7 @@ namespace Module.Commands.Code.Node;
 
 public abstract class NodeCommand(string? IntrinsicVerb) : RemoteNativeVerbCommand(IntrinsicVerb)
 {
-  private protected sealed class NodeVerbCompletionsAttribute() : Tab.CompletionsAttribute([.. Verbs]);
+  sealed private protected class NodeVerbCompletionsAttribute() : Tab.CompletionsAttribute([.. Verbs]);
 
   private static readonly HashSet<string> Verbs = [
     "access",
@@ -104,7 +104,7 @@ public abstract class NodeCommand(string? IntrinsicVerb) : RemoteNativeVerbComma
     ["v"] = "view",
   };
 
-  private protected sealed override string CommandPath { get; } = Client.Environment.Known.Application.Npm;
+  sealed private protected override string CommandPath { get; } = Client.Environment.Known.Application.Npm;
 
   private protected override SwitchBoard Uppercase { get; set; } = new(
     D: true,
@@ -112,13 +112,13 @@ public abstract class NodeCommand(string? IntrinsicVerb) : RemoteNativeVerbComma
     P: true
   );
 
-  private protected sealed override string[] WorkingDirectoryArguments => WorkingDirectory is ""
+  sealed private protected override string[] WorkingDirectoryArguments => WorkingDirectory is ""
     ? []
     : [
         $"--prefix={Pwd(WorkingDirectory)}",
       ];
 
-  private protected sealed override List<string> NativeCommandBaseArguments()
+  sealed private protected override List<string> NativeCommandBaseArguments()
   {
     List<string> command = ["--color=always"];
 

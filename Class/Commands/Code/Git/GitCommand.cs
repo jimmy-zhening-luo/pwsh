@@ -2,7 +2,7 @@ namespace Module.Commands.Code.Git;
 
 public abstract class GitCommand(string? IntrinsicVerb) : RemoteNativeVerbCommand(IntrinsicVerb)
 {
-  private protected sealed class GitVerbCompletionsAttribute() : Tab.CompletionsAttribute([.. Verbs]);
+  sealed private protected class GitVerbCompletionsAttribute() : Tab.CompletionsAttribute([.. Verbs]);
 
   private enum NewableVerb
   {
@@ -37,21 +37,21 @@ public abstract class GitCommand(string? IntrinsicVerb) : RemoteNativeVerbComman
     "reset",
   ];
 
-  private protected sealed override string CommandPath { get; } = Client.Environment.Known.Application.Git;
+  sealed private protected override string CommandPath { get; } = Client.Environment.Known.Application.Git;
 
   private protected override SwitchBoard Uppercase { get; set; } = new(
     E: true,
     P: true
   );
 
-  private protected sealed override string[] WorkingDirectoryArguments => WorkingDirectory is ""
+  sealed private protected override string[] WorkingDirectoryArguments => WorkingDirectory is ""
     ? []
     : [
         "-C",
         WorkingDirectory,
       ];
 
-  private protected sealed override List<string> NativeCommandBaseArguments()
+  sealed private protected override List<string> NativeCommandBaseArguments()
   {
     bool newable = default;
     switch (IntrinsicVerb)

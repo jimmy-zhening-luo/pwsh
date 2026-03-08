@@ -80,7 +80,7 @@ public class StopTask : CoreCommand
     .GetProcessById(pid)
     .Kill(entireProcessTree);
 
-  private protected sealed override void Process()
+  sealed private protected override void Process()
   {
     if (ParameterSetName is "InputObject")
     {
@@ -91,7 +91,7 @@ public class StopTask : CoreCommand
     }
   }
 
-  private protected sealed override void Postprocess()
+  sealed private protected override void Postprocess()
   {
     switch (ParameterSetName)
     {

@@ -6,7 +6,7 @@ namespace Module.Commands.Code.Git.Verbs;
   HelpUri = "https://git-scm.com/docs"
 )]
 [Alias("g")]
-public sealed class Git() : GitCommand(default)
+sealed public class Git() : GitCommand(default)
 {
   [Parameter(
     Position = default,

@@ -6,7 +6,7 @@ namespace Module.Commands.Code.Git.Verbs;
   HelpUri = "https://git-scm.com/docs/git-commit"
 )]
 [Alias("gm")]
-public sealed class GitCommit() : GitCommand("commit")
+sealed public class GitCommit() : GitCommand("commit")
 {
   private const string FlagAllowEmpty = "--allow-empty";
 
@@ -40,7 +40,7 @@ public sealed class GitCommit() : GitCommand("commit")
     set;
   }
 
-  private protected sealed override void PreprocessOtherArguments()
+  sealed private protected override void PreprocessOtherArguments()
   {
     List<string> messageWords = [.. Arguments];
     Arguments.Clear();
@@ -112,7 +112,7 @@ public sealed class GitCommit() : GitCommand("commit")
     }
   }
 
-  private protected sealed override List<string> ParseArguments() => Message is ""
+  sealed private protected override List<string> ParseArguments() => Message is ""
   ? []
   : [
       "-m",

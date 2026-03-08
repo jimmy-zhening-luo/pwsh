@@ -8,12 +8,12 @@ namespace Module.Commands.Shell.New.Junction;
 )]
 [Alias("mj")]
 [OutputType(typeof(System.IO.DirectoryInfo))]
-public sealed class NewJunction() : WrappedCommand(
+sealed public class NewJunction() : WrappedCommand(
   @"Microsoft.PowerShell.Management\New-Item",
   AcceptsPipelineInput: true
 )
 {
-  private protected sealed override object? PipelineInput => Value;
+  sealed private protected override object? PipelineInput => Value;
 
   [Parameter(
     ParameterSetName = "pathSet",
@@ -36,7 +36,7 @@ public sealed class NewJunction() : WrappedCommand(
   [Tab.PathCompletions]
   public required object Value { get; set; }
 
-  private protected sealed override Dictionary<string, object?> CoercedParameters { get; } = new()
+  sealed private protected override Dictionary<string, object?> CoercedParameters { get; } = new()
   {
     ["ItemType"] = "Junction",
     ["Force"] = true,

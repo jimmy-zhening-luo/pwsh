@@ -6,9 +6,9 @@ namespace Module.Commands.Code.Git.Verbs;
   HelpUri = "https://git-scm.com/docs/git-push"
 )]
 [Alias("gs")]
-public sealed class GitPush() : GitCommand("push")
+sealed public class GitPush() : GitCommand("push")
 {
-  private protected sealed override void PreprocessOtherArguments()
+  sealed private protected override void PreprocessOtherArguments()
   {
     if (
       WorkingDirectory is not ""

@@ -7,7 +7,7 @@ public abstract class WrappedSetDirectory() : WrappedCommand(
 {
   public abstract string Path { get; set; }
 
-  private protected sealed override object? PipelineInput => Path;
+  sealed private protected override object? PipelineInput => Path;
 
   [Parameter]
   public SwitchParameter PassThru
@@ -16,7 +16,7 @@ public abstract class WrappedSetDirectory() : WrappedCommand(
     set;
   }
 
-  private protected sealed override void TransformPipelineInput()
+  sealed private protected override void TransformPipelineInput()
   {
     if (InCurrentLocation)
     {

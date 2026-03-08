@@ -6,5 +6,5 @@ namespace Module.Commands.Code.Git.Verbs;
   HelpUri = "https://git-scm.com/docs/git-pull"
 )]
 [Alias("gp")]
-public sealed class GitPull() : GitCommand("pull")
+sealed public class GitPull() : GitCommand("pull")
 { }

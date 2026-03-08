@@ -11,7 +11,7 @@ namespace Module.Commands.Shell.Get.Directory;
   typeof(System.IO.DirectoryInfo),
   typeof(System.IO.FileInfo)
 )]
-public sealed class GetDirectory : WrappedGetDirectory
+sealed public class GetDirectory : WrappedGetDirectory
 {
   [Parameter(
     ParameterSetName = "Items",
@@ -23,7 +23,7 @@ public sealed class GetDirectory : WrappedGetDirectory
     "",
     Tab.PathItemType.Directory
   )]
-  public sealed override string[] Path { get; set; } = [];
+  sealed public override string[] Path { get; set; } = [];
 
   [Parameter(
     ParameterSetName = "LiteralItems",
@@ -48,7 +48,7 @@ public sealed class GetDirectory : WrappedGetDirectory
   typeof(System.IO.DirectoryInfo),
   typeof(System.IO.FileInfo)
 )]
-public sealed class GetDirectorySibling : WrappedGetDirectory
+sealed public class GetDirectorySibling : WrappedGetDirectory
 {
   [Parameter(
     ParameterSetName = "Items",
@@ -60,9 +60,9 @@ public sealed class GetDirectorySibling : WrappedGetDirectory
     "..",
     Tab.PathItemType.Directory
   )]
-  public sealed override string[] Path { get; set; } = [];
+  sealed public override string[] Path { get; set; } = [];
 
-  private protected sealed override string Location => Pwd("..");
+  sealed private protected override string Location => Pwd("..");
 }
 
 [Cmdlet(
@@ -76,7 +76,7 @@ public sealed class GetDirectorySibling : WrappedGetDirectory
   typeof(System.IO.DirectoryInfo),
   typeof(System.IO.FileInfo)
 )]
-public sealed class GetDirectoryRelative : WrappedGetDirectory
+sealed public class GetDirectoryRelative : WrappedGetDirectory
 {
   [Parameter(
     ParameterSetName = "Items",
@@ -88,9 +88,9 @@ public sealed class GetDirectoryRelative : WrappedGetDirectory
     @"..\..",
     Tab.PathItemType.Directory
   )]
-  public sealed override string[] Path { get; set; } = [];
+  sealed public override string[] Path { get; set; } = [];
 
-  private protected sealed override string Location => Pwd(@"..\..");
+  sealed private protected override string Location => Pwd(@"..\..");
 }
 
 [Cmdlet(
@@ -104,7 +104,7 @@ public sealed class GetDirectoryRelative : WrappedGetDirectory
   typeof(System.IO.DirectoryInfo),
   typeof(System.IO.FileInfo)
 )]
-public sealed class GetDirectoryHome : WrappedGetDirectory
+sealed public class GetDirectoryHome : WrappedGetDirectory
 {
   [Parameter(
     ParameterSetName = "Items",
@@ -116,9 +116,9 @@ public sealed class GetDirectoryHome : WrappedGetDirectory
     "~",
     Tab.PathItemType.Directory
   )]
-  public sealed override string[] Path { get; set; } = [];
+  sealed public override string[] Path { get; set; } = [];
 
-  private protected sealed override string Location { get; } = Client.Environment.Known.Folder.Home();
+  sealed private protected override string Location { get; } = Client.Environment.Known.Folder.Home();
 }
 
 [Cmdlet(
@@ -132,7 +132,7 @@ public sealed class GetDirectoryHome : WrappedGetDirectory
   typeof(System.IO.DirectoryInfo),
   typeof(System.IO.FileInfo)
 )]
-public sealed class GetDirectoryCode : WrappedGetDirectory
+sealed public class GetDirectoryCode : WrappedGetDirectory
 {
   [Parameter(
     ParameterSetName = "Items",
@@ -144,9 +144,9 @@ public sealed class GetDirectoryCode : WrappedGetDirectory
     @"~\code",
     Tab.PathItemType.Directory
   )]
-  public sealed override string[] Path { get; set; } = [];
+  sealed public override string[] Path { get; set; } = [];
 
-  private protected sealed override string Location { get; } = Client.Environment.Known.Folder.Code();
+  sealed private protected override string Location { get; } = Client.Environment.Known.Folder.Code();
 }
 
 [Cmdlet(
@@ -160,7 +160,7 @@ public sealed class GetDirectoryCode : WrappedGetDirectory
   typeof(System.IO.DirectoryInfo),
   typeof(System.IO.FileInfo)
 )]
-public sealed class GetDirectoryDrive : WrappedGetDirectory
+sealed public class GetDirectoryDrive : WrappedGetDirectory
 {
   [Parameter(
     ParameterSetName = "Items",
@@ -172,7 +172,7 @@ public sealed class GetDirectoryDrive : WrappedGetDirectory
     Client.File.PathString.SeparatorString,
     Tab.PathItemType.Directory
   )]
-  public sealed override string[] Path { get; set; } = [];
+  sealed public override string[] Path { get; set; } = [];
 
-  private protected sealed override string Location => Drive();
+  sealed private protected override string Location => Drive();
 }

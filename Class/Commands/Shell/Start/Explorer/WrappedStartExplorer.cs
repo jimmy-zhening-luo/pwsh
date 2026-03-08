@@ -8,7 +8,7 @@ public abstract class WrappedStartExplorer() : WrappedCommand(
 {
   public abstract string[] Path { get; set; }
 
-  private protected sealed override object? PipelineInput => Path;
+  sealed private protected override object? PipelineInput => Path;
 
   [Parameter]
   [SupportsWildcards]
@@ -34,7 +34,7 @@ public abstract class WrappedStartExplorer() : WrappedCommand(
     set;
   }
 
-  private protected sealed override void TransformPipelineInput()
+  sealed private protected override void TransformPipelineInput()
   {
     BoundParameters["Path"] = Path = ReanchorPath(Path);
   }

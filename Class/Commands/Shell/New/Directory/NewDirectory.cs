@@ -8,12 +8,12 @@ namespace Module.Commands.Shell.New.Directory;
 )]
 [Alias("mk")]
 [OutputType(typeof(System.IO.DirectoryInfo))]
-public sealed class NewDirectory() : WrappedCommand(
+sealed public class NewDirectory() : WrappedCommand(
   @"Microsoft.PowerShell.Management\New-Item",
   AcceptsPipelineInput: true
 )
 {
-  private protected sealed override object? PipelineInput => Value;
+  sealed private protected override object? PipelineInput => Value;
 
   [Parameter(
     ParameterSetName = "pathSet",
@@ -54,7 +54,7 @@ public sealed class NewDirectory() : WrappedCommand(
     set;
   }
 
-  private protected sealed override Dictionary<string, object?> CoercedParameters { get; } = new()
+  sealed private protected override Dictionary<string, object?> CoercedParameters { get; } = new()
   {
     ["ItemType"] = "Directory",
   };

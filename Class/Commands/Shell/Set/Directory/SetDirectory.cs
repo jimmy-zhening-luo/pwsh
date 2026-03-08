@@ -11,7 +11,7 @@ namespace Module.Commands.Shell.Set.Directory;
   typeof(PathInfo),
   typeof(PathInfoStack)
 )]
-public sealed class SetDirectory : WrappedSetDirectory
+sealed public class SetDirectory : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -24,7 +24,7 @@ public sealed class SetDirectory : WrappedSetDirectory
     "",
     Tab.PathItemType.Directory
   )]
-  public sealed override string Path { get; set; } = string.Empty;
+  sealed public override string Path { get; set; } = string.Empty;
 
   [Parameter(
     ParameterSetName = "LiteralPath",
@@ -73,14 +73,14 @@ public sealed class SetDirectory : WrappedSetDirectory
     set;
   }
 
-  private protected sealed override Dictionary<string, object?> CoercedParameters { get; } = new()
+  sealed private protected override Dictionary<string, object?> CoercedParameters { get; } = new()
   {
     ["C"] = default,
     ["D"] = default,
     ["E"] = default,
   };
 
-  private protected sealed override void TransformArguments()
+  sealed private protected override void TransformArguments()
   {
     switch (ParameterSetName)
     {
@@ -107,7 +107,7 @@ public sealed class SetDirectory : WrappedSetDirectory
 )]
 [Alias("cx")]
 [OutputType(typeof(PathInfo))]
-public sealed class SetDirectorySibling : WrappedSetDirectory
+sealed public class SetDirectorySibling : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -119,9 +119,9 @@ public sealed class SetDirectorySibling : WrappedSetDirectory
     "..",
     Tab.PathItemType.Directory
   )]
-  public sealed override string Path { get; set; } = string.Empty;
+  sealed public override string Path { get; set; } = string.Empty;
 
-  private protected sealed override string Location => Pwd("..");
+  sealed private protected override string Location => Pwd("..");
 }
 
 [Cmdlet(
@@ -132,7 +132,7 @@ public sealed class SetDirectorySibling : WrappedSetDirectory
 )]
 [Alias("cxx")]
 [OutputType(typeof(PathInfo))]
-public sealed class SetDirectoryRelative : WrappedSetDirectory
+sealed public class SetDirectoryRelative : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -144,9 +144,9 @@ public sealed class SetDirectoryRelative : WrappedSetDirectory
     @"..\..",
     Tab.PathItemType.Directory
   )]
-  public sealed override string Path { get; set; } = string.Empty;
+  sealed public override string Path { get; set; } = string.Empty;
 
-  private protected sealed override string Location => Pwd(@"..\..");
+  sealed private protected override string Location => Pwd(@"..\..");
 }
 
 [Cmdlet(
@@ -157,7 +157,7 @@ public sealed class SetDirectoryRelative : WrappedSetDirectory
 )]
 [Alias("ch")]
 [OutputType(typeof(PathInfo))]
-public sealed class SetDirectoryHome : WrappedSetDirectory
+sealed public class SetDirectoryHome : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -169,9 +169,9 @@ public sealed class SetDirectoryHome : WrappedSetDirectory
     "~",
     Tab.PathItemType.Directory
   )]
-  public sealed override string Path { get; set; } = string.Empty;
+  sealed public override string Path { get; set; } = string.Empty;
 
-  private protected sealed override string Location { get; } = Client.Environment.Known.Folder.Home();
+  sealed private protected override string Location { get; } = Client.Environment.Known.Folder.Home();
 }
 
 [Cmdlet(
@@ -182,7 +182,7 @@ public sealed class SetDirectoryHome : WrappedSetDirectory
 )]
 [Alias("cc")]
 [OutputType(typeof(PathInfo))]
-public sealed class SetDirectoryCode : WrappedSetDirectory
+sealed public class SetDirectoryCode : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -194,9 +194,9 @@ public sealed class SetDirectoryCode : WrappedSetDirectory
     @"~\code",
     Tab.PathItemType.Directory
   )]
-  public sealed override string Path { get; set; } = string.Empty;
+  sealed public override string Path { get; set; } = string.Empty;
 
-  private protected sealed override string Location { get; } = Client.Environment.Known.Folder.Code();
+  sealed private protected override string Location { get; } = Client.Environment.Known.Folder.Code();
 }
 
 [Cmdlet(
@@ -207,7 +207,7 @@ public sealed class SetDirectoryCode : WrappedSetDirectory
 )]
 [Alias("c/")]
 [OutputType(typeof(PathInfo))]
-public sealed class SetDrive : WrappedSetDirectory
+sealed public class SetDrive : WrappedSetDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -219,7 +219,7 @@ public sealed class SetDrive : WrappedSetDirectory
     Client.File.PathString.SeparatorString,
     Tab.PathItemType.Directory
   )]
-  public sealed override string Path { get; set; } = string.Empty;
+  sealed public override string Path { get; set; } = string.Empty;
 
-  private protected sealed override string Location => Drive();
+  sealed private protected override string Location => Drive();
 }

@@ -108,7 +108,7 @@ public abstract class WrappedGetFile() : WrappedCommand(
     set;
   }
 
-  private protected sealed override void TransformPipelineInput()
+  sealed private protected override void TransformPipelineInput()
   {
     if (!InCurrentLocation)
     {

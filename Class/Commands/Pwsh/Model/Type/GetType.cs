@@ -6,7 +6,7 @@ namespace Module.Commands.Pwsh.Model.Type;
 )]
 [Alias("ty", "typeof")]
 [OutputType(typeof(System.Reflection.TypeInfo))]
-public sealed class GetType : CoreCommand
+sealed public class GetType : CoreCommand
 {
   [Parameter(
     Mandatory = true,
@@ -17,7 +17,7 @@ public sealed class GetType : CoreCommand
   [ValidateNotNull]
   public required object InputObject { get; set; }
 
-  private protected sealed override void Process()
+  sealed private protected override void Process()
   {
     if (InputObject is PSObject inputPsObject)
     {

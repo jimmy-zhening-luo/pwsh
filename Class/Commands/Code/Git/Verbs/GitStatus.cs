@@ -6,5 +6,5 @@ namespace Module.Commands.Code.Git.Verbs;
   HelpUri = "https://git-scm.com/docs/git-status"
 )]
 [Alias("gg")]
-public sealed class GitStatus() : GitCommand("status")
+sealed public class GitStatus() : GitCommand("status")
 { }

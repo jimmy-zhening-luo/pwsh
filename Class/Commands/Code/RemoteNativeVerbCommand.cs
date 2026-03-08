@@ -5,7 +5,7 @@ public abstract class RemoteNativeVerbCommand(
   bool SkipSsh = default
 ) : NativeVerbCommand(IntrinsicVerb, SkipSsh: SkipSsh)
 {
-  internal sealed class PathSpecCompletionsAttribute() : Tab.PathCompletionsAttribute(
+  sealed internal class PathSpecCompletionsAttribute() : Tab.PathCompletionsAttribute(
     ItemType: Tab.PathItemType.File
   );
 
@@ -36,7 +36,7 @@ public abstract class RemoteNativeVerbCommand(
 
   private protected virtual List<string> ParseArguments() => [];
 
-  private protected sealed override void PreprocessArguments()
+  sealed private protected override void PreprocessArguments()
   {
     if (
       WorkingDirectory is not ""
@@ -51,12 +51,12 @@ public abstract class RemoteNativeVerbCommand(
     PreprocessOtherArguments();
   }
 
-  private protected sealed override List<string> NativeCommandArguments() => [
+  sealed private protected override List<string> NativeCommandArguments() => [
     .. NativeCommandBaseArguments(),
     .. WorkingDirectoryArguments,
   ];
 
-  private protected sealed override List<string> NativeCommandVerbArguments() => [
+  sealed private protected override List<string> NativeCommandVerbArguments() => [
     .. DeferredVerbArguments,
     .. ParseArguments(),
   ];

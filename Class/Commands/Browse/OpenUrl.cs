@@ -8,7 +8,7 @@ namespace Module.Commands.Browse;
 )]
 [Alias("o", "open")]
 [OutputType(typeof(void))]
-public sealed class OpenUrl() : CoreCommand(true)
+sealed public class OpenUrl() : CoreCommand(true)
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -66,7 +66,7 @@ public sealed class OpenUrl() : CoreCommand(true)
   }
   private readonly List<System.Uri> uris = [];
 
-  private protected sealed override void Process()
+  sealed private protected override void Process()
   {
     foreach (var uri in Uri)
     {
@@ -74,7 +74,7 @@ public sealed class OpenUrl() : CoreCommand(true)
     }
   }
 
-  private protected sealed override void Postprocess()
+  sealed private protected override void Postprocess()
   {
     if (ParameterSetName is "Path")
     {

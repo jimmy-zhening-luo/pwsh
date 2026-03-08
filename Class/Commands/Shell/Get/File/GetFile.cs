@@ -8,7 +8,7 @@ namespace Module.Commands.Shell.Get.File;
 )]
 [Alias("p")]
 [OutputType(typeof(string))]
-public sealed class GetFile : WrappedGetFile
+sealed public class GetFile : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -19,7 +19,7 @@ public sealed class GetFile : WrappedGetFile
     "",
     Tab.PathItemType.File
   )]
-  public sealed override string[] Path
+  sealed public override string[] Path
   {
     set => paths = value;
   }
@@ -44,7 +44,7 @@ public sealed class GetFile : WrappedGetFile
 )]
 [Alias("px")]
 [OutputType(typeof(string))]
-public sealed class GetFileSibling : WrappedGetFile
+sealed public class GetFileSibling : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -55,12 +55,12 @@ public sealed class GetFileSibling : WrappedGetFile
     "..",
     Tab.PathItemType.File
   )]
-  public sealed override string[] Path
+  sealed public override string[] Path
   {
     set => paths = value;
   }
 
-  private protected sealed override string Location => Pwd("..");
+  sealed private protected override string Location => Pwd("..");
 }
 
 [Cmdlet(
@@ -71,7 +71,7 @@ public sealed class GetFileSibling : WrappedGetFile
 )]
 [Alias("pxx")]
 [OutputType(typeof(string))]
-public sealed class GetFileRelative : WrappedGetFile
+sealed public class GetFileRelative : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -82,12 +82,12 @@ public sealed class GetFileRelative : WrappedGetFile
     @"..\..",
     Tab.PathItemType.File
   )]
-  public sealed override string[] Path
+  sealed public override string[] Path
   {
     set => paths = value;
   }
 
-  private protected sealed override string Location => Pwd(@"..\..");
+  sealed private protected override string Location => Pwd(@"..\..");
 }
 
 [Cmdlet(
@@ -98,7 +98,7 @@ public sealed class GetFileRelative : WrappedGetFile
 )]
 [Alias("ph")]
 [OutputType(typeof(string))]
-public sealed class GetFileHome : WrappedGetFile
+sealed public class GetFileHome : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -109,12 +109,12 @@ public sealed class GetFileHome : WrappedGetFile
     "~",
     Tab.PathItemType.File
   )]
-  public sealed override string[] Path
+  sealed public override string[] Path
   {
     set => paths = value;
   }
 
-  private protected sealed override string Location { get; } = Client.Environment.Known.Folder.Home();
+  sealed private protected override string Location { get; } = Client.Environment.Known.Folder.Home();
 }
 
 [Cmdlet(
@@ -125,7 +125,7 @@ public sealed class GetFileHome : WrappedGetFile
 )]
 [Alias("pc")]
 [OutputType(typeof(string))]
-public sealed class GetFileCode : WrappedGetFile
+sealed public class GetFileCode : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -136,12 +136,12 @@ public sealed class GetFileCode : WrappedGetFile
     @"~\code",
     Tab.PathItemType.File
   )]
-  public sealed override string[] Path
+  sealed public override string[] Path
   {
     set => paths = value;
   }
 
-  private protected sealed override string Location { get; } = Client.Environment.Known.Folder.Code();
+  sealed private protected override string Location { get; } = Client.Environment.Known.Folder.Code();
 }
 
 [Cmdlet(
@@ -152,7 +152,7 @@ public sealed class GetFileCode : WrappedGetFile
 )]
 [Alias("p/")]
 [OutputType(typeof(string))]
-public sealed class GetFileDrive : WrappedGetFile
+sealed public class GetFileDrive : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -163,10 +163,10 @@ public sealed class GetFileDrive : WrappedGetFile
     Client.File.PathString.SeparatorString,
     Tab.PathItemType.File
   )]
-  public sealed override string[] Path
+  sealed public override string[] Path
   {
     set => paths = value;
   }
 
-  private protected sealed override string Location => Drive();
+  sealed private protected override string Location => Drive();
 }

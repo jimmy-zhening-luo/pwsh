@@ -8,7 +8,7 @@ namespace Module.Commands.Shell.Clear;
 )]
 [Alias("cl")]
 [OutputType(typeof(void))]
-public sealed class ClearLine : CoreCommand
+sealed public class ClearLine : CoreCommand
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -73,7 +73,7 @@ public sealed class ClearLine : CoreCommand
     set;
   }
 
-  private protected sealed override void Postprocess()
+  sealed private protected override void Postprocess()
   {
     if (
       ParameterSetName is "Path"

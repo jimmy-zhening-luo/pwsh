@@ -7,7 +7,7 @@ namespace Module.Commands.Test;
 )]
 [Alias("tt")]
 [OutputType(typeof(object))]
-public sealed class TestCommand : CoreCommand
+sealed public class TestCommand : CoreCommand
 {
   [Parameter(
     Position = default,
@@ -30,10 +30,10 @@ public sealed class TestCommand : CoreCommand
     set;
   }
 
-  private protected sealed override void Preprocess()
+  sealed private protected override void Preprocess()
   { }
 
-  private protected sealed override void Process()
+  sealed private protected override void Process()
   {
     foreach (var name in Name)
     {
@@ -41,7 +41,7 @@ public sealed class TestCommand : CoreCommand
     }
   }
 
-  private protected sealed override void Postprocess()
+  sealed private protected override void Postprocess()
   {
     WriteObject($"The greeting was: {Greeting}");
     WriteObject($"The value of 'Switch' is: {Switch}");

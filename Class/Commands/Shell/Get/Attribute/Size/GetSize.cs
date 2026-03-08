@@ -15,7 +15,7 @@ namespace Module.Commands.Shell.Get.Attribute.Size;
   typeof(double),
   ParameterSetName = ["Number"]
 )]
-public sealed class GetSize : CoreCommand
+sealed public class GetSize : CoreCommand
 {
   public enum DiskSizeUnit
   {
@@ -93,7 +93,7 @@ public sealed class GetSize : CoreCommand
     set;
   }
 
-  private protected sealed override void Process()
+  sealed private protected override void Process()
   {
     foreach (var path in Path)
     {

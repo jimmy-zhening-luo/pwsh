@@ -7,7 +7,7 @@ public abstract class WrappedRemoveDirectory() : WrappedCommand(
 {
   public abstract string[] Path { get; set; }
 
-  private protected sealed override object? PipelineInput => Path;
+  sealed private protected override object? PipelineInput => Path;
 
   [Parameter]
   [SupportsWildcards]
@@ -33,7 +33,7 @@ public abstract class WrappedRemoveDirectory() : WrappedCommand(
     set;
   }
 
-  private protected sealed override Dictionary<string, object?> CoercedParameters { get; } = new()
+  sealed private protected override Dictionary<string, object?> CoercedParameters { get; } = new()
   {
     ["Recurse"] = true,
     ["Force"] = true,

@@ -8,7 +8,7 @@ namespace Module.Commands.Pwsh.Help.Verb;
 [Alias("vb")]
 [OutputType(typeof(VerbInfo))]
 [OutputType(typeof(string))]
-public sealed class GetVerb : CoreCommand
+sealed public class GetVerb : CoreCommand
 {
   public enum VerbGroup
   {
@@ -98,7 +98,7 @@ public sealed class GetVerb : CoreCommand
   }
   private readonly HashSet<VerbGroup> groups = [];
 
-  private protected sealed override void Postprocess()
+  sealed private protected override void Postprocess()
   {
     const string GET_VERB = @"Microsoft.PowerShell.Utility\Get-Verb";
 

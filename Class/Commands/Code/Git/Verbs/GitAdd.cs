@@ -6,7 +6,7 @@ namespace Module.Commands.Code.Git.Verbs;
   HelpUri = "https://git-scm.com/docs/git-add"
 )]
 [Alias("ga")]
-public sealed class GitAdd() : GitCommand("add")
+sealed public class GitAdd() : GitCommand("add")
 {
   private const string FlagRenormalize = "--renormalize";
 
@@ -34,7 +34,7 @@ public sealed class GitAdd() : GitCommand("add")
     set;
   }
 
-  private protected sealed override void PreprocessOtherArguments()
+  sealed private protected override void PreprocessOtherArguments()
   {
     if (Renormalize)
     {
@@ -45,5 +45,5 @@ public sealed class GitAdd() : GitCommand("add")
     }
   }
 
-  private protected sealed override List<string> ParseArguments() => [Name];
+  sealed private protected override List<string> ParseArguments() => [Name];
 }

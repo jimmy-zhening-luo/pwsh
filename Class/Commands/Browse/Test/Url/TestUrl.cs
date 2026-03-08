@@ -7,7 +7,7 @@ namespace Module.Commands.Browse.Test.Url;
 )]
 [Alias("tu")]
 [OutputType(typeof(System.Uri))]
-public sealed class TestUrl : CoreCommand
+sealed public class TestUrl : CoreCommand
 {
   [Parameter(
     Mandatory = true,
@@ -45,7 +45,7 @@ public sealed class TestUrl : CoreCommand
   }
   private readonly List<System.Uri> urls = [];
 
-  private protected sealed override void Process()
+  sealed private protected override void Process()
   {
     foreach (var url in Uri)
     {

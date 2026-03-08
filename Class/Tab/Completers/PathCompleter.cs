@@ -1,6 +1,6 @@
 namespace Module.Tab.Completers;
 
-internal sealed class PathCompleter : TCompleter
+sealed internal class PathCompleter : TCompleter
 {
   private record SearchContext(
     System.IO.DirectoryInfo Container,
@@ -174,7 +174,7 @@ internal sealed class PathCompleter : TCompleter
     Description: description
   );
 
-  private protected sealed override IEnumerable<CompletionResultRecord> GenerateCompletion(string wordToComplete)
+  sealed private protected override IEnumerable<CompletionResultRecord> GenerateCompletion(string wordToComplete)
   {
     matched = default;
 

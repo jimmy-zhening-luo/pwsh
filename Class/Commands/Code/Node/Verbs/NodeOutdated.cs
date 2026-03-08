@@ -6,7 +6,7 @@ namespace Module.Commands.Code.Node.Verbs;
   HelpUri = "https://docs.npmjs.com/cli/commands/npm-outdated"
 )]
 [Alias("npo")]
-public sealed class NodeOutdated() : NodeCommand("outdated")
+sealed public class NodeOutdated() : NodeCommand("outdated")
 {
   private const string FlagAll = "--all";
 
@@ -20,7 +20,7 @@ public sealed class NodeOutdated() : NodeCommand("outdated")
     set;
   }
 
-  private protected sealed override void PreprocessOtherArguments()
+  sealed private protected override void PreprocessOtherArguments()
   {
     NoThrow = true;
 

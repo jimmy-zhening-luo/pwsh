@@ -36,7 +36,7 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     System.GC.SuppressFinalize(this);
   }
 
-  protected sealed override void BeginProcessing()
+  sealed protected override void BeginProcessing()
   {
     System.ObjectDisposedException.ThrowIf(Disposed, this);
 
@@ -46,7 +46,7 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     }
   }
 
-  protected sealed override void ProcessRecord()
+  sealed protected override void ProcessRecord()
   {
     System.ObjectDisposedException.ThrowIf(Disposed, this);
 
@@ -56,7 +56,7 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     }
   }
 
-  protected sealed override void EndProcessing()
+  sealed protected override void EndProcessing()
   {
     System.ObjectDisposedException.ThrowIf(Disposed, this);
 
@@ -66,7 +66,7 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     }
   }
 
-  protected sealed override void StopProcessing() => Dispose();
+  sealed protected override void StopProcessing() => Dispose();
 
   private protected virtual void Preprocess()
   { }

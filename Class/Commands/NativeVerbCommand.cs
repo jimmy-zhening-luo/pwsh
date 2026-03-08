@@ -12,7 +12,7 @@ public abstract class NativeVerbCommand(
 
   private protected abstract List<string> NativeCommandVerbArguments();
 
-  private protected sealed override List<string> BuildNativeCommand()
+  sealed private protected override List<string> BuildNativeCommand()
   {
     var arguments = NativeCommandArguments();
 

@@ -115,7 +115,7 @@ public abstract partial class NativeCommand(
   private protected virtual void PreprocessArguments()
   { }
 
-  private protected sealed override void Preprocess()
+  sealed private protected override void Preprocess()
   {
     foreach (var argument in ArgumentList)
     {
@@ -134,7 +134,7 @@ public abstract partial class NativeCommand(
     PreprocessArguments();
   }
 
-  private protected sealed override void Postprocess()
+  sealed private protected override void Postprocess()
   {
     List<string> arguments = BuildNativeCommand();
 

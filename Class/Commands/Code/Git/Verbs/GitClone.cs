@@ -6,7 +6,7 @@ namespace Module.Commands.Code.Git.Verbs;
   HelpUri = "https://git-scm.com/docs/git-clone"
 )]
 [Alias("gitcl")]
-public sealed class GitClone() : GitCommand("clone")
+sealed public class GitClone() : GitCommand("clone")
 {
   [Parameter(
     Mandatory = true,
@@ -43,7 +43,7 @@ public sealed class GitClone() : GitCommand("clone")
     set;
   }
 
-  private protected sealed override void PreprocessOtherArguments()
+  sealed private protected override void PreprocessOtherArguments()
   {
     System.ArgumentException.ThrowIfNullOrEmpty(
       Repository,
@@ -51,7 +51,7 @@ public sealed class GitClone() : GitCommand("clone")
     );
   }
 
-  private protected sealed override List<string> ParseArguments() => [
+  sealed private protected override List<string> ParseArguments() => [
     string.Concat(
       ForceSsh
         ? "git@github.com:"

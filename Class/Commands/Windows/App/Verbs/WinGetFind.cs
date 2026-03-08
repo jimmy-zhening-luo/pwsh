@@ -7,9 +7,9 @@ namespace Module.Commands.Windows.App;
 )]
 [Alias("wgf")]
 [OutputType(typeof(void))]
-public sealed class WinGetFind() : WinGetCommand("search")
+sealed public class WinGetFind() : WinGetCommand("search")
 {
-  private protected sealed override void PreprocessArguments()
+  sealed private protected override void PreprocessArguments()
   {
     if (Arguments is [])
     {

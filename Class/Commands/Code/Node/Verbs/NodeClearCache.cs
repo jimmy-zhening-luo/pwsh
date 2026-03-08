@@ -6,9 +6,9 @@ namespace Module.Commands.Code.Node.Verbs;
   HelpUri = "https://docs.npmjs.com/cli/commands/npm-cache"
 )]
 [Alias("ncc")]
-public sealed class NodeClearCache() : NodeCommand("cache")
+sealed public class NodeClearCache() : NodeCommand("cache")
 {
-  private protected sealed override void PreprocessOtherArguments()
+  sealed private protected override void PreprocessOtherArguments()
   {
     (
       WorkingDirectory,
@@ -35,5 +35,5 @@ public sealed class NodeClearCache() : NodeCommand("cache")
     NativeArguments.Add("--force");
   }
 
-  private protected sealed override List<string> ParseArguments() => ["clean"];
+  sealed private protected override List<string> ParseArguments() => ["clean"];
 }

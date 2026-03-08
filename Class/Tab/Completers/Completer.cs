@@ -1,13 +1,13 @@
 namespace Module.Tab.Completers;
 
-internal sealed class Completer(
+sealed internal class Completer(
   IEnumerable<string> Domain,
   bool Strict,
   CompletionCase Case,
   CompletionResultType CompletionType
 ) : TCompleter(Case, CompletionType)
 {
-  private protected sealed override IEnumerable<CompletionResultRecord> GenerateCompletion(string wordToComplete)
+  sealed private protected override IEnumerable<CompletionResultRecord> GenerateCompletion(string wordToComplete)
   {
     uint index = default;
 

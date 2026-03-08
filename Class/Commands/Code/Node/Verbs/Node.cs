@@ -6,7 +6,7 @@ namespace Module.Commands.Code.Node.Verbs;
   HelpUri = "https://docs.npmjs.com/cli/commands"
 )]
 [Alias("n")]
-public sealed class Node() : NodeCommand(default)
+sealed public class Node() : NodeCommand(default)
 {
   [Parameter(
     Position = default,
@@ -30,7 +30,7 @@ public sealed class Node() : NodeCommand(default)
     set => base.V = value;
   }
 
-  private protected sealed override List<string> ParseArguments()
+  sealed private protected override List<string> ParseArguments()
   {
     if (V && IntrinsicVerb is null)
     {

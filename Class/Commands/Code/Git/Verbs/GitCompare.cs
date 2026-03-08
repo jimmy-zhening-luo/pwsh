@@ -6,7 +6,7 @@ namespace Module.Commands.Code.Git.Verbs;
   HelpUri = "https://git-scm.com/docs/git-diff"
 )]
 [Alias("gd")]
-public sealed class GitCompare() : GitCommand("diff")
+sealed public class GitCompare() : GitCommand("diff")
 {
   [Parameter(
     Position = default,
@@ -20,5 +20,5 @@ public sealed class GitCompare() : GitCommand("diff")
     set;
   } = string.Empty;
 
-  private protected sealed override List<string> ParseArguments() => Name is "" ? [] : [Name];
+  sealed private protected override List<string> ParseArguments() => Name is "" ? [] : [Name];
 }

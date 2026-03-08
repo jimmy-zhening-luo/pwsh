@@ -6,9 +6,9 @@ namespace Module.Commands.Code.Git.Verbs;
   HelpUri = "https://git-scm.com/docs/git-pull"
 )]
 [Alias("gpp")]
-public sealed class GitPullChild : CoreCommand
+sealed public class GitPullChild : CoreCommand
 {
-  private protected sealed override void Postprocess()
+  sealed private protected override void Postprocess()
   {
     List<string> repositories = [];
 

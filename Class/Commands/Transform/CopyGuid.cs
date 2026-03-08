@@ -7,7 +7,7 @@ namespace Module.Commands.Transform;
 )]
 [Alias("gu", "guid")]
 [OutputType(typeof(string))]
-public sealed class CopyGuid : CoreCommand
+sealed public class CopyGuid : CoreCommand
 {
   [Parameter(
     HelpMessage = "Uppercase GUID"
@@ -28,7 +28,7 @@ public sealed class CopyGuid : CoreCommand
     set;
   }
 
-  private protected sealed override void Postprocess()
+  sealed private protected override void Postprocess()
   {
     var guid = System.Guid
       .NewGuid()

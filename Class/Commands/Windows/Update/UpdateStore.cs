@@ -6,9 +6,9 @@ namespace Module.Commands.Windows.Update;
 )]
 [Alias("su")]
 [OutputType(typeof(void))]
-public sealed class UpdateStoreApp() : CoreCommand(true)
+sealed public class UpdateStoreApp() : CoreCommand(true)
 {
-  private protected sealed override void Postprocess()
+  sealed private protected override void Postprocess()
   {
     Client.Start.ShellExecute(
       "ms-windows-store://downloadsandupdates"

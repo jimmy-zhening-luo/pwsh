@@ -8,7 +8,7 @@ namespace Module.Commands.Browse.Test.Host;
 )]
 [Alias("tn")]
 [OutputType(typeof(object))]
-public sealed class TestHost() : WrappedCommand(
+sealed public class TestHost() : WrappedCommand(
   @"NetTCPIP\Test-NetConnection",
   AcceptsPipelineInput: true,
   CommandTypes.Function
@@ -50,7 +50,7 @@ public sealed class TestHost() : WrappedCommand(
     WINRM,
   }
 
-  private protected sealed override object? PipelineInput => ComputerName;
+  sealed private protected override object? PipelineInput => ComputerName;
 
   [Parameter(
     Position = default,
@@ -153,7 +153,7 @@ public sealed class TestHost() : WrappedCommand(
     set;
   }
 
-  private protected sealed override Dictionary<string, object?> CoercedParameters => new()
+  sealed private protected override Dictionary<string, object?> CoercedParameters => new()
   {
     ["Detailed"] = default,
     ["InformationLevel"] = Detailed
@@ -161,7 +161,7 @@ public sealed class TestHost() : WrappedCommand(
       : InformationLevel,
   };
 
-  private protected sealed override void TransformArguments()
+  sealed private protected override void TransformArguments()
   {
     switch (ParameterSetName)
     {
@@ -195,7 +195,7 @@ public sealed class TestHost() : WrappedCommand(
     }
   }
 
-  private protected sealed override void TransformPipelineInput()
+  sealed private protected override void TransformPipelineInput()
   {
     if (ComputerName is "")
     {

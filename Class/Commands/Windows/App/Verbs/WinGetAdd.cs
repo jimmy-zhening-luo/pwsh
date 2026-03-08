@@ -7,9 +7,9 @@ namespace Module.Commands.Windows.App;
 )]
 [Alias("wga")]
 [OutputType(typeof(void))]
-public sealed class WinGetAdd() : WinGetCommand("install")
+sealed public class WinGetAdd() : WinGetCommand("install")
 {
-  private protected sealed override void PreprocessArguments()
+  sealed private protected override void PreprocessArguments()
   {
     if (Arguments is [])
     {

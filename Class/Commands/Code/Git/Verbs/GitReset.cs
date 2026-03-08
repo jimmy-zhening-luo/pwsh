@@ -6,7 +6,7 @@ namespace Module.Commands.Code.Git.Verbs;
   HelpUri = "https://git-scm.com/docs/git-reset"
 )]
 [Alias("gr")]
-public sealed partial class GitReset() : GitCommand("reset")
+sealed public partial class GitReset() : GitCommand("reset")
 {
   private const string FlagHard = "--hard";
 
@@ -70,7 +70,7 @@ public sealed partial class GitReset() : GitCommand("reset")
     set;
   }
 
-  private protected sealed override void PreprocessOtherArguments()
+  sealed private protected override void PreprocessOtherArguments()
   {
     if (
       WorkingDirectory is not ""

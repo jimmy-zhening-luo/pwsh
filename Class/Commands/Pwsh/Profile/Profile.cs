@@ -6,9 +6,9 @@ namespace Module.Commands.Pwsh.Profile;
 )]
 [Alias("op")]
 [OutputType(typeof(void))]
-public sealed class StartProfile() : CoreCommand(true)
+sealed public class StartProfile() : CoreCommand(true)
 {
-  private protected sealed override void Postprocess()
+  sealed private protected override void Postprocess()
   {
     Client.Start.CreateProcess(
       Client.Environment.Known.Application.VSCode,

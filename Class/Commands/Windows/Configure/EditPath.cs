@@ -6,7 +6,7 @@ namespace Module.Commands.Windows.Configure;
 )]
 [Alias("path")]
 [OutputType(typeof(void))]
-public sealed class EditSystemPath() : CoreCommand(true)
+sealed public class EditSystemPath() : CoreCommand(true)
 {
   [Parameter(
     HelpMessage = "Launch Environment Variables control panel as Administrator"
@@ -17,7 +17,7 @@ public sealed class EditSystemPath() : CoreCommand(true)
     set;
   }
 
-  private protected sealed override void Postprocess()
+  sealed private protected override void Postprocess()
   {
     Client.Start.ShellExecute(
       "rundll32.exe",

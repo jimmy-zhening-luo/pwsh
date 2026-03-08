@@ -8,7 +8,7 @@ namespace Module.Commands.Shell.Stop.Task;
 )]
 [Alias("tkilld")]
 [OutputType(typeof(void))]
-public sealed class StopTaskTree : StopTask
+sealed public class StopTaskTree : StopTask
 {
   public StopTaskTree() => base.Descendant = true;
 

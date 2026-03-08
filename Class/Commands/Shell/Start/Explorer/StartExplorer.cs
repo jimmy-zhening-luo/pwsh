@@ -8,7 +8,7 @@ namespace Module.Commands.Shell.Start.Explorer;
 )]
 [Alias("e")]
 [OutputType(typeof(void))]
-public sealed class StartExplorer : WrappedStartExplorer
+sealed public class StartExplorer : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -17,7 +17,7 @@ public sealed class StartExplorer : WrappedStartExplorer
   )]
   [SupportsWildcards]
   [Tab.PathCompletions]
-  public sealed override string[] Path { get; set; } = [];
+  sealed public override string[] Path { get; set; } = [];
 
   [Parameter(
     ParameterSetName = "LiteralPath",
@@ -39,7 +39,7 @@ public sealed class StartExplorer : WrappedStartExplorer
 )]
 [Alias("ex")]
 [OutputType(typeof(void))]
-public sealed class StartExplorerSibling : WrappedStartExplorer
+sealed public class StartExplorerSibling : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -48,9 +48,9 @@ public sealed class StartExplorerSibling : WrappedStartExplorer
   )]
   [SupportsWildcards]
   [Tab.PathCompletions("..")]
-  public sealed override string[] Path { get; set; } = [];
+  sealed public override string[] Path { get; set; } = [];
 
-  private protected sealed override string Location => Pwd("..");
+  sealed private protected override string Location => Pwd("..");
 }
 
 [Cmdlet(
@@ -61,7 +61,7 @@ public sealed class StartExplorerSibling : WrappedStartExplorer
 )]
 [Alias("exx")]
 [OutputType(typeof(void))]
-public sealed class StartExplorerRelative : WrappedStartExplorer
+sealed public class StartExplorerRelative : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -70,9 +70,9 @@ public sealed class StartExplorerRelative : WrappedStartExplorer
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(@"..\..")]
-  public sealed override string[] Path { get; set; } = [];
+  sealed public override string[] Path { get; set; } = [];
 
-  private protected sealed override string Location => Pwd(@"..\..");
+  sealed private protected override string Location => Pwd(@"..\..");
 }
 
 [Cmdlet(
@@ -83,7 +83,7 @@ public sealed class StartExplorerRelative : WrappedStartExplorer
 )]
 [Alias("eh")]
 [OutputType(typeof(void))]
-public sealed class StartExplorerHome : WrappedStartExplorer
+sealed public class StartExplorerHome : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -92,9 +92,9 @@ public sealed class StartExplorerHome : WrappedStartExplorer
   )]
   [SupportsWildcards]
   [Tab.PathCompletions("~")]
-  public sealed override string[] Path { get; set; } = [];
+  sealed public override string[] Path { get; set; } = [];
 
-  private protected sealed override string Location { get; } = Client.Environment.Known.Folder.Home();
+  sealed private protected override string Location { get; } = Client.Environment.Known.Folder.Home();
 }
 
 [Cmdlet(
@@ -105,7 +105,7 @@ public sealed class StartExplorerHome : WrappedStartExplorer
 )]
 [Alias("ec")]
 [OutputType(typeof(void))]
-public sealed class StartExplorerCode : WrappedStartExplorer
+sealed public class StartExplorerCode : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -114,9 +114,9 @@ public sealed class StartExplorerCode : WrappedStartExplorer
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(@"~\code")]
-  public sealed override string[] Path { get; set; } = [];
+  sealed public override string[] Path { get; set; } = [];
 
-  private protected sealed override string Location { get; } = Client.Environment.Known.Folder.Code();
+  sealed private protected override string Location { get; } = Client.Environment.Known.Folder.Code();
 }
 
 [Cmdlet(
@@ -127,7 +127,7 @@ public sealed class StartExplorerCode : WrappedStartExplorer
 )]
 [Alias("e/")]
 [OutputType(typeof(void))]
-public sealed class StartExplorerDrive : WrappedStartExplorer
+sealed public class StartExplorerDrive : WrappedStartExplorer
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -136,7 +136,7 @@ public sealed class StartExplorerDrive : WrappedStartExplorer
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(@"\")]
-  public sealed override string[] Path { get; set; } = [];
+  sealed public override string[] Path { get; set; } = [];
 
-  private protected sealed override string Location => Drive();
+  sealed private protected override string Location => Drive();
 }

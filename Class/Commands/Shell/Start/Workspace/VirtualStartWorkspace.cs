@@ -30,9 +30,9 @@ public abstract class VirtualStartWorkspace() : NativeCommand(true, true)
     set;
   }
 
-  private protected sealed override string CommandPath { get; } = Client.Environment.Known.Application.VSCode;
+  sealed private protected override string CommandPath { get; } = Client.Environment.Known.Application.VSCode;
 
-  private protected sealed override void PreprocessArguments()
+  sealed private protected override void PreprocessArguments()
   {
     switch (Name)
     {
@@ -65,7 +65,7 @@ public abstract class VirtualStartWorkspace() : NativeCommand(true, true)
     }
   }
 
-  private protected sealed override List<string> BuildNativeCommand() => [
+  sealed private protected override List<string> BuildNativeCommand() => [
     InCurrentLocation
     && path is ""
     && (

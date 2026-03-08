@@ -7,7 +7,7 @@ namespace Module.Commands.Pwsh.Help.Alias;
 )]
 [Alias("galc")]
 [OutputType(typeof(AliasInfo))]
-public sealed class GetCommandAlias : CoreCommand
+sealed public class GetCommandAlias : CoreCommand
 {
   [Parameter(
     Position = default
@@ -81,7 +81,7 @@ public sealed class GetCommandAlias : CoreCommand
   }
   private readonly HashSet<string> exclusions = [];
 
-  private protected sealed override void Postprocess()
+  sealed private protected override void Postprocess()
   {
     if (Definition is [])
     {

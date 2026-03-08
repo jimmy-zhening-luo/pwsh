@@ -23,7 +23,7 @@ public abstract class WrappedCommand(
   private protected virtual void TransformPipelineInput()
   { }
 
-  private protected sealed override void Preprocess()
+  sealed private protected override void Preprocess()
   {
     InPipeline = false;
 
@@ -49,7 +49,7 @@ public abstract class WrappedCommand(
     BeginSteppablePipeline();
   }
 
-  private protected sealed override void Process()
+  sealed private protected override void Process()
   {
     if (InPipeline)
     {
@@ -63,7 +63,7 @@ public abstract class WrappedCommand(
     }
   }
 
-  private protected sealed override void Postprocess()
+  sealed private protected override void Postprocess()
   {
     EndSteppablePipeline();
   }

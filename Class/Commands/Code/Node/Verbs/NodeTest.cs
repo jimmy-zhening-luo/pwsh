@@ -6,7 +6,7 @@ namespace Module.Commands.Code.Node.Verbs;
   HelpUri = "https://docs.npmjs.com/cli/commands/npm-test"
 )]
 [Alias("nt")]
-public sealed class NodeTest() : NodeCommand("test")
+sealed public class NodeTest() : NodeCommand("test")
 {
   private const string FlagIgnoreScript = "--ignore-scripts";
 
@@ -22,7 +22,7 @@ public sealed class NodeTest() : NodeCommand("test")
     set;
   }
 
-  private protected sealed override void PreprocessOtherArguments()
+  sealed private protected override void PreprocessOtherArguments()
   {
     if (IgnoreScript && !NativeArguments.Contains(FlagIgnoreScript))
     {

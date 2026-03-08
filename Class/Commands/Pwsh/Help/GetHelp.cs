@@ -7,7 +7,7 @@ namespace Module.Commands.Pwsh.Help;
 )]
 [Alias("m", "man")]
 [OutputType(typeof(object))]
-public sealed class GetHelpOnline : CoreCommand
+sealed public class GetHelpOnline : CoreCommand
 {
   [Parameter(
     Position = default,
@@ -68,7 +68,7 @@ public sealed class GetHelpOnline : CoreCommand
       : urls;
   }
 
-  private protected sealed override void Postprocess()
+  sealed private protected override void Postprocess()
   {
     const string GET_HELP = "Get-Help";
 

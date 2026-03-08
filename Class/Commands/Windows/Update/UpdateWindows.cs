@@ -6,9 +6,9 @@ namespace Module.Commands.Windows.Update;
 )]
 [Alias("wu")]
 [OutputType(typeof(void))]
-public sealed class UpdateWindows() : CoreCommand(true)
+sealed public class UpdateWindows() : CoreCommand(true)
 {
-  private protected sealed override void Postprocess()
+  sealed private protected override void Postprocess()
   {
     Client.Start.ShellExecute(
       "ms-settings:windowsupdate"

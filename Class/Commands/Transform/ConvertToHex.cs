@@ -7,7 +7,7 @@ namespace Module.Commands.Transform;
 )]
 [Alias("hex")]
 [OutputType(typeof(string))]
-public sealed class ConvertToHex : Cmdlet
+sealed public class ConvertToHex : Cmdlet
 {
   [Parameter(
     Mandatory = true,
@@ -30,7 +30,7 @@ public sealed class ConvertToHex : Cmdlet
     set;
   }
 
-  protected sealed override void ProcessRecord()
+  sealed protected override void ProcessRecord()
   {
     foreach (var number in Number)
     {

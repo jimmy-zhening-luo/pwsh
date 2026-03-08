@@ -8,7 +8,7 @@ namespace Module.Commands.Shell.Remove.Directory;
 )]
 [Alias("rd")]
 [OutputType(typeof(void))]
-public sealed class RemoveDirectory : WrappedRemoveDirectory
+sealed public class RemoveDirectory : WrappedRemoveDirectory
 {
   [Parameter(
     ParameterSetName = "Path",
@@ -18,7 +18,7 @@ public sealed class RemoveDirectory : WrappedRemoveDirectory
   )]
   [SupportsWildcards]
   [Tab.PathCompletions]
-  public sealed override required string[] Path { get; set; }
+  sealed public override required string[] Path { get; set; }
 
   [Parameter(
     ParameterSetName = "LiteralPath",

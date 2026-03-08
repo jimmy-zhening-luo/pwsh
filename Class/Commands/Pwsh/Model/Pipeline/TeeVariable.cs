@@ -8,12 +8,12 @@ namespace Module.Commands.Pwsh.Model.Pipeline;
 )]
 [Alias("t")]
 [OutputType(typeof(object))]
-public sealed class TeeVariable() : WrappedCommand(
+sealed public class TeeVariable() : WrappedCommand(
   @"Microsoft.PowerShell.Utility\Tee-Object",
   AcceptsPipelineInput: true
 )
 {
-  private protected sealed override object? PipelineInput => InputObject;
+  sealed private protected override object? PipelineInput => InputObject;
 
   [Parameter(
     ValueFromPipeline = true

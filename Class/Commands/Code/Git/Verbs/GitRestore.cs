@@ -6,9 +6,9 @@ namespace Module.Commands.Code.Git.Verbs;
   HelpUri = "https://git-scm.com/docs/git-reset"
 )]
 [Alias("grp")]
-public sealed class GitRestore() : GitCommand("pull")
+sealed public class GitRestore() : GitCommand("pull")
 {
-  private protected sealed override void PreprocessOtherArguments()
+  sealed private protected override void PreprocessOtherArguments()
   {
     List<string> resetArguments = [.. Arguments];
 

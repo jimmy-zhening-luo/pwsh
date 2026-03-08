@@ -7,5 +7,5 @@ namespace Module.Commands.Windows.App;
 )]
 [Alias("wgr")]
 [OutputType(typeof(void))]
-public sealed class WinGetRemove() : WinGetCommand("uninstall")
+sealed public class WinGetRemove() : WinGetCommand("uninstall")
 { }

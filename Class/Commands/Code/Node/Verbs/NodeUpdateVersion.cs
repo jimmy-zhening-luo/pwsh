@@ -6,7 +6,7 @@ namespace Module.Commands.Code.Node.Verbs;
   HelpUri = "https://docs.npmjs.com/cli/commands/npm-version"
 )]
 [Alias("nu")]
-public sealed class NodeUpdateVersion() : NodeCommand("version")
+sealed public class NodeUpdateVersion() : NodeCommand("version")
 {
   private enum NodeVersion
   {
@@ -82,7 +82,7 @@ public sealed class NodeUpdateVersion() : NodeCommand("version")
   }
   private string version = nameof(NodeVersion.patch);
 
-  private protected sealed override void PreprocessOtherArguments()
+  sealed private protected override void PreprocessOtherArguments()
   {
     System.ArgumentException.ThrowIfNullOrEmpty(
       Version,
@@ -90,5 +90,5 @@ public sealed class NodeUpdateVersion() : NodeCommand("version")
     );
   }
 
-  private protected sealed override List<string> ParseArguments() => [Version];
+  sealed private protected override List<string> ParseArguments() => [Version];
 }
