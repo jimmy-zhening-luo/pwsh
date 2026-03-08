@@ -44,7 +44,7 @@ public abstract class GitCommand(string? IntrinsicVerb) : RemoteNativeVerbComman
     P: true
   );
 
-  private protected sealed override string[] WorkingDirectoryArgument => WorkingDirectory is ""
+  private protected sealed override string[] WorkingDirectoryArguments => WorkingDirectory is ""
     ? []
     : [
         "-C",

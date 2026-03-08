@@ -9,7 +9,7 @@ public abstract class RemoteNativeVerbCommand(
     ItemType: Tab.PathItemType.File
   );
 
-  private protected abstract string[] WorkingDirectoryArgument { get; }
+  private protected abstract string[] WorkingDirectoryArguments { get; }
 
   [Parameter(
     Position = 50,

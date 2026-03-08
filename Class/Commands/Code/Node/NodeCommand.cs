@@ -112,7 +112,7 @@ public abstract class NodeCommand(string? IntrinsicVerb) : RemoteNativeVerbComma
     P: true
   );
 
-  private protected sealed override string[] WorkingDirectoryArgument => WorkingDirectory is ""
+  private protected sealed override string[] WorkingDirectoryArguments => WorkingDirectory is ""
     ? []
     : [
         $"--prefix={Pwd(WorkingDirectory)}",
