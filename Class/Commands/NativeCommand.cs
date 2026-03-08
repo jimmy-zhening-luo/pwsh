@@ -16,6 +16,8 @@ abstract public partial class NativeCommand(bool SkipSsh = default) : CoreComman
 
   abstract private protected string CommandPath { get; }
 
+  abstract private protected List<string> NativeCommandScript { get; }
+
   virtual private protected SwitchBoard Uppercase { get; set; } = new();
 
   [Parameter(
@@ -107,8 +109,6 @@ abstract public partial class NativeCommand(bool SkipSsh = default) : CoreComman
   )]
   static private partial System.Text.RegularExpressions.Regex NativeArgumentRegex();
 
-  abstract private protected List<string> BuildNativeCommand();
-
   virtual private protected void PreprocessArguments()
   { }
 
@@ -136,7 +136,7 @@ abstract public partial class NativeCommand(bool SkipSsh = default) : CoreComman
     List<string> command = [
       "&",
       CommandPath,
-      .. BuildNativeCommand(),
+      .. NativeCommandScript,
     ];
 
     if (D)

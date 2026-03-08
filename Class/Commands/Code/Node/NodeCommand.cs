@@ -112,16 +112,16 @@ abstract public class NodeCommand(string? IntrinsicVerb) : RemoteNativeVerbComma
     P: true
   );
 
+  sealed override private protected string[] NativeCommandBaseArguments { get; } = ["--color=always"];
+
   sealed override private protected string[] WorkingDirectoryArguments => WorkingDirectory is ""
     ? []
     : [
         $"--prefix={Pwd(WorkingDirectory)}",
       ];
 
-  sealed override private protected List<string> NativeCommandBaseArguments()
+  sealed override private protected void PreprocessIntrinsicVerb()
   {
-    List<string> command = ["--color=always"];
-
     switch (IntrinsicVerb)
     {
       case null:
@@ -141,7 +141,10 @@ abstract public class NodeCommand(string? IntrinsicVerb) : RemoteNativeVerbComma
         IntrinsicVerb = exactVerb;
         break;
     }
+  }
 
+  sealed override private protected void PreprocessWorkingDirectory()
+  {
     switch (WorkingDirectory)
     {
       case "":
@@ -156,8 +159,6 @@ abstract public class NodeCommand(string? IntrinsicVerb) : RemoteNativeVerbComma
         WorkingDirectory = string.Empty;
         break;
     }
-
-    return command;
   }
 
   private protected bool IsNodePackage(string path) => System.IO.File.Exists(

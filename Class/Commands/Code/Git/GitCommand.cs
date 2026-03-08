@@ -37,12 +37,19 @@ abstract public class GitCommand(string? IntrinsicVerb) : RemoteNativeVerbComman
     "reset",
   ];
 
+  private bool newable;
+
   sealed override private protected string CommandPath { get; } = Client.Environment.Known.Application.Git;
 
   override private protected SwitchBoard Uppercase { get; set; } = new(
     E: true,
     P: true
   );
+
+  sealed override private protected string[] NativeCommandBaseArguments { get; } = [
+    "-c",
+    "color.ui=always",
+  ];
 
   sealed override private protected string[] WorkingDirectoryArguments => WorkingDirectory is ""
     ? []
@@ -51,9 +58,8 @@ abstract public class GitCommand(string? IntrinsicVerb) : RemoteNativeVerbComman
         WorkingDirectory,
       ];
 
-  sealed override private protected List<string> NativeCommandBaseArguments()
+  sealed override private protected void PreprocessIntrinsicVerb()
   {
-    bool newable = default;
     switch (IntrinsicVerb)
     {
       case null when V:
@@ -85,7 +91,10 @@ abstract public class GitCommand(string? IntrinsicVerb) : RemoteNativeVerbComman
         IntrinsicVerb = exactVerb;
         break;
     }
+  }
 
+  sealed override private protected void PreprocessWorkingDirectory()
+  {
     var pwd = Pwd();
     var repository = ResolveWorkingDirectory(
       WorkingDirectory,
@@ -123,11 +132,6 @@ abstract public class GitCommand(string? IntrinsicVerb) : RemoteNativeVerbComman
     {
       WorkingDirectory = string.Empty;
     }
-
-    return [
-      "-c",
-      "color.ui=always",
-    ];
   }
 
   private protected string ResolveWorkingDirectory(

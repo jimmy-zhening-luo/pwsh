@@ -11,7 +11,19 @@ abstract public class RemoteNativeVerbCommand(
 
   private protected readonly List<string> DeferredVerbArguments = [];
 
+  abstract private protected List<string> NativeCommandBaseArguments { get; }
+
   abstract private protected string[] WorkingDirectoryArguments { get; }
+
+  sealed override private protected List<string> NativeCommandArguments => [
+    .. NativeCommandBaseArguments,
+    .. WorkingDirectoryArguments,
+  ];
+
+  sealed override private protected List<string> NativeCommandVerbArguments => [
+    .. DeferredVerbArguments,
+    .. ParseArguments(),
+  ];
 
   [Parameter(
     Position = 50,
@@ -29,7 +41,9 @@ abstract public class RemoteNativeVerbCommand(
     set;
   } = string.Empty;
 
-  abstract private protected List<string> NativeCommandBaseArguments();
+  abstract private protected void PreprocessIntrinsicVerb();
+
+  abstract private protected void PreprocessWorkingDirectory();
 
   virtual private protected void PreprocessOtherArguments()
   { }
@@ -49,15 +63,7 @@ abstract public class RemoteNativeVerbCommand(
     }
 
     PreprocessOtherArguments();
+    PreprocessIntrinsicVerb();
+    PreprocessWorkingDirectory();
   }
-
-  sealed override private protected List<string> NativeCommandArguments() => [
-    .. NativeCommandBaseArguments(),
-    .. WorkingDirectoryArguments,
-  ];
-
-  sealed override private protected List<string> NativeCommandVerbArguments() => [
-    .. DeferredVerbArguments,
-    .. ParseArguments(),
-  ];
 }
