@@ -1,6 +1,6 @@
 namespace Module.Client.File;
 
-internal static partial class PathString
+static internal partial class PathString
 {
   internal const char Here = '.';
   internal const char Home = '~';
@@ -8,14 +8,14 @@ internal static partial class PathString
   internal const char AltSeparator = '/';
   internal const string SeparatorString = @"\";
 
-  internal static string FullPathLocationRelative(
+  static internal string FullPathLocationRelative(
     string location,
     string path
   ) => System.IO.Path.GetFullPath(
     Normalize(path),
     location
   );
-  internal static string FullPathLocationRelative(
+  static internal string FullPathLocationRelative(
     string location,
     string path,
     bool preserveTrailingSeparator
@@ -27,7 +27,7 @@ internal static partial class PathString
     location
   );
 
-  internal static string Normalize(
+  static internal string Normalize(
     string path,
     bool preserveTrailingSeparator
   ) => preserveTrailingSeparator
@@ -35,7 +35,7 @@ internal static partial class PathString
     : System.IO.Path.TrimEndingDirectorySeparator(
       Normalize(path)
     );
-  internal static string Normalize(string path) => TrimRelativePrefix(
+  static internal string Normalize(string path) => TrimRelativePrefix(
     ExpandHomePrefix(
       DuplicateSeparatorRegex().Replace(
         System.Environment
@@ -54,9 +54,9 @@ internal static partial class PathString
   [System.Text.RegularExpressions.GeneratedRegex(
     @"(?<!^)(?>\\{2,})"
   )]
-  private static partial System.Text.RegularExpressions.Regex DuplicateSeparatorRegex();
+  static private partial System.Text.RegularExpressions.Regex DuplicateSeparatorRegex();
 
-  private static string ExpandHomePrefix(string path) => path switch
+  static private string ExpandHomePrefix(string path) => path switch
   {
     [Home] => Environment.Known.Folder.Home(),
     [
@@ -67,7 +67,7 @@ internal static partial class PathString
     _ => path,
   };
 
-  private static string TrimRelativePrefix(string path) => path switch
+  static private string TrimRelativePrefix(string path) => path switch
   {
     [Here] => string.Empty,
     [

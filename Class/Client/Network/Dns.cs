@@ -1,15 +1,15 @@
 namespace Module.Client.Network;
 
-internal static class Dns
+static internal class Dns
 {
-  internal static bool Resolve(System.Uri uri) => uri is
+  static internal bool Resolve(System.Uri uri) => uri is
   {
     IsAbsoluteUri: true,
     Scheme: "http" or "https",
     Host: var host,
   }
     && Resolve(host);
-  internal static bool Resolve(string host)
+  static internal bool Resolve(string host)
   {
     if (host is "")
     {

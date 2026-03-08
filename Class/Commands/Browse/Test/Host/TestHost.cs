@@ -50,7 +50,7 @@ sealed public class TestHost() : WrappedCommand(
     WINRM,
   }
 
-  sealed private protected override object? PipelineInput => ComputerName;
+  sealed override private protected object? PipelineInput => ComputerName;
 
   [Parameter(
     Position = default,
@@ -74,7 +74,7 @@ sealed public class TestHost() : WrappedCommand(
     typeof(TestHostWellKnownPort),
     Case = Tab.CompletionCase.Lower
   )]
-  public required string CommonTCPPort
+  required public string CommonTCPPort
   {
     private get;
     set;
@@ -138,7 +138,7 @@ sealed public class TestHost() : WrappedCommand(
   [Parameter(
     ParameterSetName = "NetRouteDiagnostics"
   )]
-  public required string ConstrainSourceAddress
+  required public string ConstrainSourceAddress
   {
     private get;
     set;
@@ -153,7 +153,7 @@ sealed public class TestHost() : WrappedCommand(
     set;
   }
 
-  sealed private protected override Dictionary<string, object?> CoercedParameters => new()
+  sealed override private protected Dictionary<string, object?> CoercedParameters => new()
   {
     ["Detailed"] = default,
     ["InformationLevel"] = Detailed
@@ -161,7 +161,7 @@ sealed public class TestHost() : WrappedCommand(
       : InformationLevel,
   };
 
-  sealed private protected override void TransformArguments()
+  sealed override private protected void TransformArguments()
   {
     switch (ParameterSetName)
     {
@@ -195,7 +195,7 @@ sealed public class TestHost() : WrappedCommand(
     }
   }
 
-  sealed private protected override void TransformPipelineInput()
+  sealed override private protected void TransformPipelineInput()
   {
     if (ComputerName is "")
     {

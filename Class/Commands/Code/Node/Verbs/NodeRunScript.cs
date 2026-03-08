@@ -14,11 +14,11 @@ sealed public class NodeRunScript() : NodeCommand("run")
     HelpMessage = "Name of the npm script to run"
   )]
   [ValidateNotNullOrWhiteSpace]
-  public required string Script
+  required public string Script
   {
     private get;
     set;
   }
 
-  sealed private protected override List<string> ParseArguments() => [Script];
+  sealed override private protected List<string> ParseArguments() => [Script];
 }

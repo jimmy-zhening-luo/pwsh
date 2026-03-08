@@ -30,7 +30,7 @@ sealed public class ConvertToHex : Cmdlet
     set;
   }
 
-  sealed protected override void ProcessRecord()
+  sealed override protected void ProcessRecord()
   {
     foreach (var number in Number)
     {

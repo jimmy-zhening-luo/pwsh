@@ -14,7 +14,7 @@ sealed public partial class GitReset() : GitCommand("reset")
     @"^(?=.)(?>HEAD)?(?<Branching>(?>~|\^)?)(?<Step>(?>\d{0,10}))$",
     System.Text.RegularExpressions.RegexOptions.IgnoreCase
   )]
-  private static partial System.Text.RegularExpressions.Regex GitTreeRegex();
+  static private partial System.Text.RegularExpressions.Regex GitTreeRegex();
 
   [Parameter(
     Position = 60,
@@ -70,7 +70,7 @@ sealed public partial class GitReset() : GitCommand("reset")
     set;
   }
 
-  sealed private protected override void PreprocessOtherArguments()
+  sealed override private protected void PreprocessOtherArguments()
   {
     if (
       WorkingDirectory is not ""

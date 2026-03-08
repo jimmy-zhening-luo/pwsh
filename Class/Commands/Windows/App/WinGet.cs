@@ -1,10 +1,10 @@
 namespace Module.Commands.Windows.App;
 
-public abstract class WinGetCommand(string IntrinsicVerb) : NativeVerbCommand(IntrinsicVerb)
+abstract public class WinGetCommand(string IntrinsicVerb) : NativeVerbCommand(IntrinsicVerb)
 {
-  sealed private protected override string CommandPath { get; } = Client.Environment.Known.Application.WinGet;
+  sealed override private protected string CommandPath { get; } = Client.Environment.Known.Application.WinGet;
 
-  sealed private protected override List<string> NativeCommandArguments() => [];
+  sealed override private protected List<string> NativeCommandArguments() => [];
 
   private protected override List<string> NativeCommandVerbArguments() => [];
 }

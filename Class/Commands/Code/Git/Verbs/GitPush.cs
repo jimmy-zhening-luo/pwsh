@@ -8,7 +8,7 @@ namespace Module.Commands.Code.Git.Verbs;
 [Alias("gs")]
 sealed public class GitPush() : GitCommand("push")
 {
-  sealed private protected override void PreprocessOtherArguments()
+  sealed override private protected void PreprocessOtherArguments()
   {
     if (
       WorkingDirectory is not ""

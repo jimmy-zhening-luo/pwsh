@@ -1,6 +1,6 @@
 namespace Module.Commands;
 
-public abstract class NativeVerbCommand(
+abstract public class NativeVerbCommand(
   string? IntrinsicVerb,
   bool CreateProcess = default,
   bool SkipSsh = default
@@ -8,11 +8,11 @@ public abstract class NativeVerbCommand(
 {
   private protected string? IntrinsicVerb { get; set; } = IntrinsicVerb;
 
-  private protected abstract List<string> NativeCommandArguments();
+  abstract private protected List<string> NativeCommandArguments();
 
-  private protected abstract List<string> NativeCommandVerbArguments();
+  abstract private protected List<string> NativeCommandVerbArguments();
 
-  sealed private protected override List<string> BuildNativeCommand()
+  sealed override private protected List<string> BuildNativeCommand()
   {
     var arguments = NativeCommandArguments();
 

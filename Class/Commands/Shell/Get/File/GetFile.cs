@@ -19,7 +19,7 @@ sealed public class GetFile : WrappedGetFile
     "",
     Tab.PathItemType.File
   )]
-  sealed public override string[] Path
+  sealed override public string[] Path
   {
     set => paths = value;
   }
@@ -29,7 +29,7 @@ sealed public class GetFile : WrappedGetFile
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  public required string[] LiteralPath
+  required public string[] LiteralPath
   {
     private get;
     set;
@@ -55,12 +55,12 @@ sealed public class GetFileSibling : WrappedGetFile
     "..",
     Tab.PathItemType.File
   )]
-  sealed public override string[] Path
+  sealed override public string[] Path
   {
     set => paths = value;
   }
 
-  sealed private protected override string Location => Pwd("..");
+  sealed override private protected string Location => Pwd("..");
 }
 
 [Cmdlet(
@@ -82,12 +82,12 @@ sealed public class GetFileRelative : WrappedGetFile
     @"..\..",
     Tab.PathItemType.File
   )]
-  sealed public override string[] Path
+  sealed override public string[] Path
   {
     set => paths = value;
   }
 
-  sealed private protected override string Location => Pwd(@"..\..");
+  sealed override private protected string Location => Pwd(@"..\..");
 }
 
 [Cmdlet(
@@ -109,12 +109,12 @@ sealed public class GetFileHome : WrappedGetFile
     "~",
     Tab.PathItemType.File
   )]
-  sealed public override string[] Path
+  sealed override public string[] Path
   {
     set => paths = value;
   }
 
-  sealed private protected override string Location { get; } = Client.Environment.Known.Folder.Home();
+  sealed override private protected string Location { get; } = Client.Environment.Known.Folder.Home();
 }
 
 [Cmdlet(
@@ -136,12 +136,12 @@ sealed public class GetFileCode : WrappedGetFile
     @"~\code",
     Tab.PathItemType.File
   )]
-  sealed public override string[] Path
+  sealed override public string[] Path
   {
     set => paths = value;
   }
 
-  sealed private protected override string Location { get; } = Client.Environment.Known.Folder.Code();
+  sealed override private protected string Location { get; } = Client.Environment.Known.Folder.Code();
 }
 
 [Cmdlet(
@@ -163,10 +163,10 @@ sealed public class GetFileDrive : WrappedGetFile
     Client.File.PathString.SeparatorString,
     Tab.PathItemType.File
   )]
-  sealed public override string[] Path
+  sealed override public string[] Path
   {
     set => paths = value;
   }
 
-  sealed private protected override string Location => Drive();
+  sealed override private protected string Location => Drive();
 }

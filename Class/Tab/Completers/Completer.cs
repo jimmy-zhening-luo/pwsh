@@ -7,7 +7,7 @@ sealed internal class Completer(
   CompletionResultType CompletionType
 ) : TCompleter(Case, CompletionType)
 {
-  sealed private protected override IEnumerable<CompletionResultRecord> GenerateCompletion(string wordToComplete)
+  sealed override private protected IEnumerable<CompletionResultRecord> GenerateCompletion(string wordToComplete)
   {
     uint index = default;
 

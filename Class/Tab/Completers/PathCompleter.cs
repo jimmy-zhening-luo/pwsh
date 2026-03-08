@@ -39,7 +39,7 @@ sealed internal class PathCompleter : TCompleter
     location is ""
   );
 
-  private static SearchContext ParseLine(
+  static private SearchContext ParseLine(
     string wordToComplete,
     string location,
     bool allowReanchor
@@ -154,7 +154,7 @@ sealed internal class PathCompleter : TCompleter
     );
   }
 
-  private static CompletionResultRecord CreateCompletionRecord(
+  static private CompletionResultRecord CreateCompletionRecord(
     string description,
     string accumulator,
     string filename,
@@ -174,7 +174,7 @@ sealed internal class PathCompleter : TCompleter
     Description: description
   );
 
-  sealed private protected override IEnumerable<CompletionResultRecord> GenerateCompletion(string wordToComplete)
+  sealed override private protected IEnumerable<CompletionResultRecord> GenerateCompletion(string wordToComplete)
   {
     matched = default;
 

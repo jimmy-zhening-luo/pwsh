@@ -30,10 +30,10 @@ sealed public class TestCommand : CoreCommand
     set;
   }
 
-  sealed private protected override void Preprocess()
+  sealed override private protected void Preprocess()
   { }
 
-  sealed private protected override void Process()
+  sealed override private protected void Process()
   {
     foreach (var name in Name)
     {
@@ -41,7 +41,7 @@ sealed public class TestCommand : CoreCommand
     }
   }
 
-  sealed private protected override void Postprocess()
+  sealed override private protected void Postprocess()
   {
     WriteObject($"The greeting was: {Greeting}");
     WriteObject($"The value of 'Switch' is: {Switch}");

@@ -15,7 +15,7 @@ sealed public class StartWorkspace : VirtualStartWorkspace
   )]
   [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions]
-  sealed public override string Path
+  sealed override public string Path
   {
     set => path = value;
   }
@@ -36,12 +36,12 @@ sealed public class StartWorkspaceSibling : VirtualStartWorkspace
   )]
   [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions("..")]
-  sealed public override string Path
+  sealed override public string Path
   {
     set => path = value;
   }
 
-  sealed private protected override string Location => Pwd("..");
+  sealed override private protected string Location => Pwd("..");
 }
 
 [Cmdlet(
@@ -59,12 +59,12 @@ sealed public class StartWorkspaceRelative : VirtualStartWorkspace
   )]
   [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions(@"..\..")]
-  sealed public override string Path
+  sealed override public string Path
   {
     set => path = value;
   }
 
-  sealed private protected override string Location => Pwd(@"..\..");
+  sealed override private protected string Location => Pwd(@"..\..");
 }
 
 [Cmdlet(
@@ -82,12 +82,12 @@ sealed public class StartWorkspaceHome : VirtualStartWorkspace
   )]
   [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions("~")]
-  sealed public override string Path
+  sealed override public string Path
   {
     set => path = value;
   }
 
-  sealed private protected override string Location { get; } = Client.Environment.Known.Folder.Home();
+  sealed override private protected string Location { get; } = Client.Environment.Known.Folder.Home();
 }
 
 [Cmdlet(
@@ -105,12 +105,12 @@ sealed public class StartWorkspaceCode : VirtualStartWorkspace
   )]
   [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions(@"~\code")]
-  sealed public override string Path
+  sealed override public string Path
   {
     set => path = value;
   }
 
-  sealed private protected override string Location { get; } = Client.Environment.Known.Folder.Code();
+  sealed override private protected string Location { get; } = Client.Environment.Known.Folder.Code();
 }
 
 [Cmdlet(
@@ -128,10 +128,10 @@ sealed public class StartWorkspaceDrive : VirtualStartWorkspace
   )]
   [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions(@"\")]
-  sealed public override string Path
+  sealed override public string Path
   {
     set => path = value;
   }
 
-  sealed private protected override string Location => Drive();
+  sealed override private protected string Location => Drive();
 }

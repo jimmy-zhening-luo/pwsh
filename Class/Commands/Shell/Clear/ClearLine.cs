@@ -25,7 +25,7 @@ sealed public class ClearLine : CoreCommand
 
   [Parameter]
   [SupportsWildcards]
-  public required string Filter
+  required public string Filter
   {
     private get;
     set;
@@ -36,7 +36,7 @@ sealed public class ClearLine : CoreCommand
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  public required string[] LiteralPath
+  required public string[] LiteralPath
   {
     private get;
     set;
@@ -44,7 +44,7 @@ sealed public class ClearLine : CoreCommand
 
   [Parameter]
   [SupportsWildcards]
-  public required string[] Include
+  required public string[] Include
   {
     private get;
     set;
@@ -52,7 +52,7 @@ sealed public class ClearLine : CoreCommand
 
   [Parameter]
   [SupportsWildcards]
-  public required string[] Exclude
+  required public string[] Exclude
   {
     private get;
     set;
@@ -67,13 +67,13 @@ sealed public class ClearLine : CoreCommand
   }
 
   [Parameter]
-  public required string Stream
+  required public string Stream
   {
     private get;
     set;
   }
 
-  sealed private protected override void Postprocess()
+  sealed override private protected void Postprocess()
   {
     if (
       ParameterSetName is "Path"

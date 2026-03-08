@@ -1,13 +1,13 @@
 namespace Module.Commands;
 
-public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDisposable
+abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDisposable
 {
   ~CoreCommand()
   {
     Dispose(default);
   }
 
-  private protected virtual string Location => Pwd();
+  virtual private protected string Location => Pwd();
 
   private protected bool InCurrentLocation => Location == Pwd();
 
@@ -36,7 +36,7 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     System.GC.SuppressFinalize(this);
   }
 
-  sealed protected override void BeginProcessing()
+  sealed override protected void BeginProcessing()
   {
     System.ObjectDisposedException.ThrowIf(Disposed, this);
 
@@ -46,7 +46,7 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     }
   }
 
-  sealed protected override void ProcessRecord()
+  sealed override protected void ProcessRecord()
   {
     System.ObjectDisposedException.ThrowIf(Disposed, this);
 
@@ -56,7 +56,7 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     }
   }
 
-  sealed protected override void EndProcessing()
+  sealed override protected void EndProcessing()
   {
     System.ObjectDisposedException.ThrowIf(Disposed, this);
 
@@ -66,15 +66,15 @@ public abstract partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     }
   }
 
-  sealed protected override void StopProcessing() => Dispose();
+  sealed override protected void StopProcessing() => Dispose();
 
-  private protected virtual void Preprocess()
+  virtual private protected void Preprocess()
   { }
 
-  private protected virtual void Process()
+  virtual private protected void Process()
   { }
 
-  private protected virtual void Postprocess()
+  virtual private protected void Postprocess()
   { }
 
   private protected void WriteInformation(object log) => base.WriteInformation(

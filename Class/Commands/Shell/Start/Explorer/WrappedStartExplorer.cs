@@ -1,18 +1,18 @@
 namespace Module.Commands.Shell.Start.Explorer;
 
-public abstract class WrappedStartExplorer() : WrappedCommand(
+abstract public class WrappedStartExplorer() : WrappedCommand(
   @"Microsoft.PowerShell.Management\Invoke-Item",
   AcceptsPipelineInput: true,
   SkipSsh: true
 )
 {
-  public abstract string[] Path { get; set; }
+  abstract public string[] Path { get; set; }
 
-  sealed private protected override object? PipelineInput => Path;
+  sealed override private protected object? PipelineInput => Path;
 
   [Parameter]
   [SupportsWildcards]
-  public required string Filter
+  required public string Filter
   {
     private get;
     set;
@@ -20,7 +20,7 @@ public abstract class WrappedStartExplorer() : WrappedCommand(
 
   [Parameter]
   [SupportsWildcards]
-  public required string[] Include
+  required public string[] Include
   {
     private get;
     set;
@@ -28,13 +28,13 @@ public abstract class WrappedStartExplorer() : WrappedCommand(
 
   [Parameter]
   [SupportsWildcards]
-  public required string[] Exclude
+  required public string[] Exclude
   {
     private get;
     set;
   }
 
-  sealed private protected override void TransformPipelineInput()
+  sealed override private protected void TransformPipelineInput()
   {
     BoundParameters["Path"] = Path = ReanchorPath(Path);
   }

@@ -1,6 +1,6 @@
 namespace Module.Commands.Code.Git;
 
-public abstract class GitCommand(string? IntrinsicVerb) : RemoteNativeVerbCommand(IntrinsicVerb)
+abstract public class GitCommand(string? IntrinsicVerb) : RemoteNativeVerbCommand(IntrinsicVerb)
 {
   sealed private protected class GitVerbCompletionsAttribute() : Tab.CompletionsAttribute([.. Verbs]);
 
@@ -11,7 +11,7 @@ public abstract class GitCommand(string? IntrinsicVerb) : RemoteNativeVerbComman
     init,
   }
 
-  private static readonly HashSet<string> Verbs = [
+  static private readonly HashSet<string> Verbs = [
     "switch",
     "merge",
     "diff",
@@ -37,21 +37,21 @@ public abstract class GitCommand(string? IntrinsicVerb) : RemoteNativeVerbComman
     "reset",
   ];
 
-  sealed private protected override string CommandPath { get; } = Client.Environment.Known.Application.Git;
+  sealed override private protected string CommandPath { get; } = Client.Environment.Known.Application.Git;
 
   private protected override SwitchBoard Uppercase { get; set; } = new(
     E: true,
     P: true
   );
 
-  sealed private protected override string[] WorkingDirectoryArguments => WorkingDirectory is ""
+  sealed override private protected string[] WorkingDirectoryArguments => WorkingDirectory is ""
     ? []
     : [
         "-C",
         WorkingDirectory,
       ];
 
-  sealed private protected override List<string> NativeCommandBaseArguments()
+  sealed override private protected List<string> NativeCommandBaseArguments()
   {
     bool newable = default;
     switch (IntrinsicVerb)

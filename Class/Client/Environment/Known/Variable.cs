@@ -1,7 +1,7 @@
 namespace Module.Client.Environment.Known;
 
-internal static class Variable
+static internal class Variable
 {
-  internal static bool InSsh => ssh ??= Local.Get("SSH_CLIENT") is not "";
-  private static bool? ssh;
+  static internal bool InSsh => ssh ??= Local.Get("SSH_CLIENT") is not "";
+  static private bool? ssh;
 }

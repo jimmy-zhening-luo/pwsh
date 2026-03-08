@@ -1,8 +1,8 @@
 namespace Module.Client;
 
-internal static class Start
+static internal class Start
 {
-  internal static void CreateProcess(
+  static internal void CreateProcess(
     string fileName,
     bool window = default
   ) => System.Diagnostics.Process.Start(
@@ -11,7 +11,7 @@ internal static class Start
       CreateNoWindow = !window,
     }
   );
-  internal static void CreateProcess(
+  static internal void CreateProcess(
     string fileName,
     string argument,
     bool window = default
@@ -20,7 +20,7 @@ internal static class Start
     [argument],
     window
   );
-  internal static void CreateProcess(
+  static internal void CreateProcess(
     string fileName,
     IList<string> arguments,
     bool window = default
@@ -34,13 +34,13 @@ internal static class Start
     }
   );
 
-  internal static void ShellExecute(string fileName) => System.Diagnostics.Process.Start(
+  static internal void ShellExecute(string fileName) => System.Diagnostics.Process.Start(
     new System.Diagnostics.ProcessStartInfo(fileName)
     {
       UseShellExecute = true,
     }
   );
-  internal static void ShellExecute(
+  static internal void ShellExecute(
     string fileName,
     bool administrator,
     bool noWindow = default
@@ -54,7 +54,7 @@ internal static class Start
       CreateNoWindow = noWindow,
     }
   );
-  internal static void ShellExecute(
+  static internal void ShellExecute(
     string fileName,
     string argument,
     bool administrator = default,
@@ -65,7 +65,7 @@ internal static class Start
     administrator,
     noWindow
   );
-  internal static void ShellExecute(
+  static internal void ShellExecute(
     string fileName,
     IList<string> arguments,
     bool administrator = default,

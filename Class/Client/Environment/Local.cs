@@ -1,20 +1,20 @@
 namespace Module.Client.Environment;
 
-internal static class Local
+static internal class Local
 {
-  private static readonly Dictionary<System.Environment.SpecialFolder, string> folders = [];
+  static private readonly Dictionary<System.Environment.SpecialFolder, string> folders = [];
 
-  internal static string Get(string variable) => System.Environment.GetEnvironmentVariable(variable)
+  static internal string Get(string variable) => System.Environment.GetEnvironmentVariable(variable)
     ?? string.Empty;
 
-  internal static string GetFolder(
+  static internal string GetFolder(
     System.Environment.SpecialFolder folder,
     string path
   ) => File.PathString.FullPathLocationRelative(
     GetFolder(folder),
     path
   );
-  internal static string GetFolder(System.Environment.SpecialFolder folder) => folders.TryGetValue(
+  static internal string GetFolder(System.Environment.SpecialFolder folder) => folders.TryGetValue(
     folder,
     out var folderLocation
   )

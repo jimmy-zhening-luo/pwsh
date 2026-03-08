@@ -1,17 +1,17 @@
 namespace Module.Commands.Shell.Remove.Directory;
 
-public abstract class WrappedRemoveDirectory() : WrappedCommand(
+abstract public class WrappedRemoveDirectory() : WrappedCommand(
   @"Microsoft.PowerShell.Management\Remove-Item",
   AcceptsPipelineInput: true
 )
 {
-  public abstract string[] Path { get; set; }
+  abstract public string[] Path { get; set; }
 
-  sealed private protected override object? PipelineInput => Path;
+  sealed override private protected object? PipelineInput => Path;
 
   [Parameter]
   [SupportsWildcards]
-  public required string Filter
+  required public string Filter
   {
     private get;
     set;
@@ -19,7 +19,7 @@ public abstract class WrappedRemoveDirectory() : WrappedCommand(
 
   [Parameter]
   [SupportsWildcards]
-  public required string[] Include
+  required public string[] Include
   {
     private get;
     set;
@@ -27,13 +27,13 @@ public abstract class WrappedRemoveDirectory() : WrappedCommand(
 
   [Parameter]
   [SupportsWildcards]
-  public required string[] Exclude
+  required public string[] Exclude
   {
     private get;
     set;
   }
 
-  sealed private protected override Dictionary<string, object?> CoercedParameters { get; } = new()
+  sealed override private protected Dictionary<string, object?> CoercedParameters { get; } = new()
   {
     ["Recurse"] = true,
     ["Force"] = true,

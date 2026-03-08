@@ -43,7 +43,7 @@ sealed public class GitClone() : GitCommand("clone")
     set;
   }
 
-  sealed private protected override void PreprocessOtherArguments()
+  sealed override private protected void PreprocessOtherArguments()
   {
     System.ArgumentException.ThrowIfNullOrEmpty(
       Repository,
@@ -51,7 +51,7 @@ sealed public class GitClone() : GitCommand("clone")
     );
   }
 
-  sealed private protected override List<string> ParseArguments() => [
+  sealed override private protected List<string> ParseArguments() => [
     string.Concat(
       ForceSsh
         ? "git@github.com:"

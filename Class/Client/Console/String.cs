@@ -1,6 +1,6 @@
 namespace Module.Client.Console;
 
-internal static class String
+static internal class String
 {
   internal const char Space = ' ';
   internal const char SingleQuote = '\'';
@@ -10,7 +10,7 @@ internal static class String
   internal const string EscapedSingleQuote = "''";
   internal const string EscapedDoubleQuote = "\\\"";
 
-  internal static string EscapeSingleQuoted(string text) => text.Contains(Space)
+  static internal string EscapeSingleQuoted(string text) => text.Contains(Space)
     ? string.Concat(
       SingleQuote,
       System.Management.Automation.Language.CodeGeneration.EscapeSingleQuotedStringContent(
@@ -20,7 +20,7 @@ internal static class String
     )
     : text;
 
-  internal static string EscapeDoubleQuoted(string text) => text.Contains(Space)
+  static internal string EscapeDoubleQuoted(string text) => text.Contains(Space)
     ? string.Concat(
       DoubleQuote,
       text.Replace(
@@ -31,7 +31,7 @@ internal static class String
     )
     : text;
 
-  internal static string UnescapeSingleQuoted(string escapedText) => escapedText is
+  static internal string UnescapeSingleQuoted(string escapedText) => escapedText is
   [
     SingleQuote,
     .. var text,
@@ -43,7 +43,7 @@ internal static class String
     )
     : escapedText;
 
-  internal static string UnescapeDoubleQuoted(string escapedText) => escapedText is
+  static internal string UnescapeDoubleQuoted(string escapedText) => escapedText is
   [
     DoubleQuote,
     .. var text,

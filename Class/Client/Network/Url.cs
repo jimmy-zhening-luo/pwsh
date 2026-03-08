@@ -1,6 +1,6 @@
 namespace Module.Client.Network;
 
-internal static class Url
+static internal class Url
 {
   [System.Flags]
   internal enum Scheme
@@ -11,7 +11,7 @@ internal static class Url
     HttpOrFile,
   }
 
-  private static System.Net.Http.HttpClient HttpClient => client ??= new System.Net.Http.HttpClient(
+  static private System.Net.Http.HttpClient HttpClient => client ??= new System.Net.Http.HttpClient(
     new System.Net.Http.SocketsHttpHandler()
     {
       PooledConnectionLifetime = System.TimeSpan.FromMinutes(2),
@@ -21,15 +21,15 @@ internal static class Url
   {
     Timeout = System.TimeSpan.FromMilliseconds(3500),
   };
-  private static System.Net.Http.HttpClient? client;
+  static private System.Net.Http.HttpClient? client;
 
-  internal static bool IsHttp(System.Uri uri) => uri is
+  static internal bool IsHttp(System.Uri uri) => uri is
   {
     IsAbsoluteUri: true,
     Scheme: "http" or "https",
   };
 
-  internal static bool IsFile(System.Uri uri) => uri is
+  static internal bool IsFile(System.Uri uri) => uri is
   {
     IsAbsoluteUri: true,
     Scheme: "file",
@@ -37,18 +37,18 @@ internal static class Url
     LocalPath: not "",
   };
 
-  internal static bool IsHttpOrFile(System.Uri uri) => IsHttp(uri) || IsFile(uri);
+  static internal bool IsHttpOrFile(System.Uri uri) => IsHttp(uri) || IsFile(uri);
 
-  internal static System.Uri? ToAbsoluteHttpUri(string uri) => ToAbsoluteUri(uri);
-  internal static System.Uri? ToAbsoluteHttpUri(System.Uri uri) => ToAbsoluteUri(uri);
+  static internal System.Uri? ToAbsoluteHttpUri(string uri) => ToAbsoluteUri(uri);
+  static internal System.Uri? ToAbsoluteHttpUri(System.Uri uri) => ToAbsoluteUri(uri);
 
-  internal static System.Uri? ToAbsoluteFileUri(string uri) => ToAbsoluteUri(uri, Scheme.File);
-  internal static System.Uri? ToAbsoluteFileUri(System.Uri uri) => ToAbsoluteUri(uri, Scheme.File);
+  static internal System.Uri? ToAbsoluteFileUri(string uri) => ToAbsoluteUri(uri, Scheme.File);
+  static internal System.Uri? ToAbsoluteFileUri(System.Uri uri) => ToAbsoluteUri(uri, Scheme.File);
 
-  internal static System.Uri? ToAbsoluteHttpOrFileUri(string uri) => ToAbsoluteUri(uri, Scheme.HttpOrFile);
-  internal static System.Uri? ToAbsoluteHttpOrFileUri(System.Uri uri) => ToAbsoluteUri(uri, Scheme.HttpOrFile);
+  static internal System.Uri? ToAbsoluteHttpOrFileUri(string uri) => ToAbsoluteUri(uri, Scheme.HttpOrFile);
+  static internal System.Uri? ToAbsoluteHttpOrFileUri(System.Uri uri) => ToAbsoluteUri(uri, Scheme.HttpOrFile);
 
-  internal static System.Uri? ToAbsoluteUri(string uri) => uri is not ""
+  static internal System.Uri? ToAbsoluteUri(string uri) => uri is not ""
     && System.Uri.TryCreate(
         uri,
         System.UriKind.Absolute,
@@ -56,10 +56,10 @@ internal static class Url
       )
     ? ToAbsoluteUri(url)
     : default;
-  internal static System.Uri? ToAbsoluteUri(System.Uri uri) => IsHttp(uri)
+  static internal System.Uri? ToAbsoluteUri(System.Uri uri) => IsHttp(uri)
     ? uri
     : default;
-  internal static System.Uri? ToAbsoluteUri(
+  static internal System.Uri? ToAbsoluteUri(
     string uri,
     Scheme scheme
   ) => uri is not ""
@@ -70,7 +70,7 @@ internal static class Url
     )
     ? ToAbsoluteUri(url, scheme)
     : default;
-  internal static System.Uri? ToAbsoluteUri(
+  static internal System.Uri? ToAbsoluteUri(
     System.Uri uri,
     Scheme scheme
   ) => (scheme & Scheme.Http) is not 0
@@ -80,7 +80,7 @@ internal static class Url
     ? uri
     : default;
 
-  internal static bool TestHttp(System.Uri uri)
+  static internal bool TestHttp(System.Uri uri)
   {
     if (!IsHttp(uri))
     {
@@ -109,11 +109,11 @@ internal static class Url
     }
   }
 
-  internal static bool TestFile(System.Uri uri) => IsFile(uri)
+  static internal bool TestFile(System.Uri uri) => IsFile(uri)
     && System.IO.Path.Exists(uri.LocalPath);
 
-  internal static void Open() => Open(string.Empty);
-  internal static void Open(System.Uri uri)
+  static internal void Open() => Open(string.Empty);
+  static internal void Open(System.Uri uri)
   {
     if (
       IsHttp(uri)
@@ -124,7 +124,7 @@ internal static class Url
       Open(uri.ToString());
     }
   }
-  internal static void Open(string target)
+  static internal void Open(string target)
   {
     if (!Environment.Known.Variable.InSsh)
     {

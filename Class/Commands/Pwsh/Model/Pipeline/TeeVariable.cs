@@ -13,19 +13,19 @@ sealed public class TeeVariable() : WrappedCommand(
   AcceptsPipelineInput: true
 )
 {
-  sealed private protected override object? PipelineInput => InputObject;
+  sealed override private protected object? PipelineInput => InputObject;
 
   [Parameter(
     ValueFromPipeline = true
   )]
-  public required object InputObject { get; set; }
+  required public object InputObject { get; set; }
 
   [Parameter(
     ParameterSetName = "Variable",
     Mandatory = true,
     Position = default
   )]
-  public required string Variable
+  required public string Variable
   {
     private get;
     set;
@@ -36,7 +36,7 @@ sealed public class TeeVariable() : WrappedCommand(
     Mandatory = true
   )]
   [Alias("Path")]
-  public required string FilePath
+  required public string FilePath
   {
     private get;
     set;
@@ -47,7 +47,7 @@ sealed public class TeeVariable() : WrappedCommand(
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  public required string LiteralPath
+  required public string LiteralPath
   {
     private get;
     set;
@@ -70,7 +70,7 @@ sealed public class TeeVariable() : WrappedCommand(
   )]
   [ValidateNotNullOrEmpty]
   [Tab.EnumCompletions(typeof(Client.File.Encoding))]
-  public required string Encoding
+  required public string Encoding
   {
     private get;
     set;

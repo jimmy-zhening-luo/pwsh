@@ -32,7 +32,7 @@ public class StopTask : CoreCommand
   )]
   [AllowEmptyCollection]
   [ValidateRange(ValidateRangeKind.NonNegative)]
-  public required int[] Id
+  required public int[] Id
   {
     private get;
     set;
@@ -47,7 +47,7 @@ public class StopTask : CoreCommand
   )]
   [AllowEmptyCollection]
   [ValidateNotNull]
-  public required System.Diagnostics.Process[] InputObject { get; set; }
+  required public System.Diagnostics.Process[] InputObject { get; set; }
 
   [Parameter(
     HelpMessage = "Stop the entire process tree (the processe and all of its descendants)"
@@ -58,7 +58,7 @@ public class StopTask : CoreCommand
     set;
   }
 
-  private static void KillProcesses(
+  static private void KillProcesses(
     string name,
     bool entireProcessTree = default
   )
@@ -73,14 +73,14 @@ public class StopTask : CoreCommand
     }
   }
 
-  private static void KillProcess(
+  static private void KillProcess(
     int pid,
     bool entireProcessTree = default
   ) => System.Diagnostics.Process
     .GetProcessById(pid)
     .Kill(entireProcessTree);
 
-  sealed private protected override void Process()
+  sealed override private protected void Process()
   {
     if (ParameterSetName is "InputObject")
     {
@@ -91,7 +91,7 @@ public class StopTask : CoreCommand
     }
   }
 
-  sealed private protected override void Postprocess()
+  sealed override private protected void Postprocess()
   {
     switch (ParameterSetName)
     {

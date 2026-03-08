@@ -1,10 +1,10 @@
 namespace Module.Commands.Code.Node;
 
-public abstract class NodeCommand(string? IntrinsicVerb) : RemoteNativeVerbCommand(IntrinsicVerb)
+abstract public class NodeCommand(string? IntrinsicVerb) : RemoteNativeVerbCommand(IntrinsicVerb)
 {
   sealed private protected class NodeVerbCompletionsAttribute() : Tab.CompletionsAttribute([.. Verbs]);
 
-  private static readonly HashSet<string> Verbs = [
+  static private readonly HashSet<string> Verbs = [
     "access",
     "adduser",
     "audit",
@@ -71,7 +71,7 @@ public abstract class NodeCommand(string? IntrinsicVerb) : RemoteNativeVerbComma
     "whoami",
   ];
 
-  private static readonly Dictionary<string, string> Aliases = new()
+  static private readonly Dictionary<string, string> Aliases = new()
   {
     ["issues"] = "bugs",
     ["c"] = "config",
@@ -104,7 +104,7 @@ public abstract class NodeCommand(string? IntrinsicVerb) : RemoteNativeVerbComma
     ["v"] = "view",
   };
 
-  sealed private protected override string CommandPath { get; } = Client.Environment.Known.Application.Npm;
+  sealed override private protected string CommandPath { get; } = Client.Environment.Known.Application.Npm;
 
   private protected override SwitchBoard Uppercase { get; set; } = new(
     D: true,
@@ -112,13 +112,13 @@ public abstract class NodeCommand(string? IntrinsicVerb) : RemoteNativeVerbComma
     P: true
   );
 
-  sealed private protected override string[] WorkingDirectoryArguments => WorkingDirectory is ""
+  sealed override private protected string[] WorkingDirectoryArguments => WorkingDirectory is ""
     ? []
     : [
         $"--prefix={Pwd(WorkingDirectory)}",
       ];
 
-  sealed private protected override List<string> NativeCommandBaseArguments()
+  sealed override private protected List<string> NativeCommandBaseArguments()
   {
     List<string> command = ["--color=always"];
 

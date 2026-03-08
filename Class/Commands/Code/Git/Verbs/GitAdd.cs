@@ -34,7 +34,7 @@ sealed public class GitAdd() : GitCommand("add")
     set;
   }
 
-  sealed private protected override void PreprocessOtherArguments()
+  sealed override private protected void PreprocessOtherArguments()
   {
     if (Renormalize)
     {
@@ -45,5 +45,5 @@ sealed public class GitAdd() : GitCommand("add")
     }
   }
 
-  sealed private protected override List<string> ParseArguments() => [Name];
+  sealed override private protected List<string> ParseArguments() => [Name];
 }

@@ -8,7 +8,7 @@ namespace Module.Commands.Pwsh.History;
 [OutputType(typeof(void))]
 sealed public class StartHistory() : CoreCommand(true)
 {
-  sealed private protected override void Postprocess() => Client.Start.CreateProcess(
+  sealed override private protected void Postprocess() => Client.Start.CreateProcess(
     Client.Environment.Known.Application.VSCode,
     [
       Client.Environment.Known.Folder.AppData(

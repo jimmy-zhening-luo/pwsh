@@ -22,7 +22,7 @@ internal enum CompletionCase
   System.AttributeTargets.Property
   | System.AttributeTargets.Field
 )]
-internal abstract class TCompletionsAttribute(
+abstract internal class TCompletionsAttribute(
   CompletionCase Case = default,
   CompletionResultType CompletionType = CompletionResultType.ParameterValue
 ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
@@ -31,5 +31,5 @@ internal abstract class TCompletionsAttribute(
 
   public CompletionResultType CompletionType { get; init; } = CompletionType;
 
-  public abstract IArgumentCompleter Create();
+  abstract public IArgumentCompleter Create();
 }

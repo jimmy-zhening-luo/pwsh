@@ -14,7 +14,7 @@ internal class PathCompletionsAttribute(
   CompletionCase Case = CompletionCase.Lower
 ) : TCompletionsAttribute(Case)
 {
-  sealed public override Completers.PathCompleter Create() => new(
+  sealed override public Completers.PathCompleter Create() => new(
     Location,
     ItemType,
     Flat,

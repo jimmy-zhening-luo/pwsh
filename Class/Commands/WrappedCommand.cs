@@ -1,15 +1,15 @@
 namespace Module.Commands;
 
-public abstract class WrappedCommand(
+abstract public class WrappedCommand(
   string WrappedCommandName,
   bool AcceptsPipelineInput = default,
   CommandTypes CommandType = CommandTypes.Cmdlet,
   bool SkipSsh = default
 ) : CoreCommand(SkipSsh)
 {
-  private protected virtual Dictionary<string, object?> CoercedParameters { get; } = [];
+  virtual private protected Dictionary<string, object?> CoercedParameters { get; } = [];
 
-  private protected virtual object? PipelineInput { get; }
+  virtual private protected object? PipelineInput { get; }
 
   [System.Diagnostics.CodeAnalysis.MemberNotNullWhen(
     true,
@@ -17,13 +17,13 @@ public abstract class WrappedCommand(
   )]
   private bool InPipeline { get; set; }
 
-  private protected virtual void TransformArguments()
+  virtual private protected void TransformArguments()
   { }
 
-  private protected virtual void TransformPipelineInput()
+  virtual private protected void TransformPipelineInput()
   { }
 
-  sealed private protected override void Preprocess()
+  sealed override private protected void Preprocess()
   {
     InPipeline = false;
 
@@ -49,7 +49,7 @@ public abstract class WrappedCommand(
     BeginSteppablePipeline();
   }
 
-  sealed private protected override void Process()
+  sealed override private protected void Process()
   {
     if (InPipeline)
     {
@@ -63,7 +63,7 @@ public abstract class WrappedCommand(
     }
   }
 
-  sealed private protected override void Postprocess()
+  sealed override private protected void Postprocess()
   {
     EndSteppablePipeline();
   }

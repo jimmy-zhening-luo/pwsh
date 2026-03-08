@@ -98,7 +98,7 @@ sealed public class GetVerb : CoreCommand
   }
   private readonly HashSet<VerbGroup> groups = [];
 
-  sealed private protected override void Postprocess()
+  sealed override private protected void Postprocess()
   {
     const string GET_VERB = @"Microsoft.PowerShell.Utility\Get-Verb";
 

@@ -82,7 +82,7 @@ sealed public class NodeUpdateVersion() : NodeCommand("version")
   }
   private string version = nameof(NodeVersion.patch);
 
-  sealed private protected override void PreprocessOtherArguments()
+  sealed override private protected void PreprocessOtherArguments()
   {
     System.ArgumentException.ThrowIfNullOrEmpty(
       Version,
@@ -90,5 +90,5 @@ sealed public class NodeUpdateVersion() : NodeCommand("version")
     );
   }
 
-  sealed private protected override List<string> ParseArguments() => [Version];
+  sealed override private protected List<string> ParseArguments() => [Version];
 }

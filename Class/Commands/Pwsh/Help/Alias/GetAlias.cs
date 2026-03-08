@@ -81,7 +81,7 @@ sealed public class GetCommandAlias : CoreCommand
   }
   private readonly HashSet<string> exclusions = [];
 
-  sealed private protected override void Postprocess()
+  sealed override private protected void Postprocess()
   {
     if (Definition is [])
     {

@@ -40,7 +40,7 @@ sealed public class GitCommit() : GitCommand("commit")
     set;
   }
 
-  sealed private protected override void PreprocessOtherArguments()
+  sealed override private protected void PreprocessOtherArguments()
   {
     List<string> messageWords = [.. Arguments];
     Arguments.Clear();
@@ -112,7 +112,7 @@ sealed public class GitCommit() : GitCommand("commit")
     }
   }
 
-  sealed private protected override List<string> ParseArguments() => Message is ""
+  sealed override private protected List<string> ParseArguments() => Message is ""
   ? []
   : [
       "-m",

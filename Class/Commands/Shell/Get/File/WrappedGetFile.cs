@@ -1,15 +1,15 @@
 namespace Module.Commands.Shell.Get.File;
 
-public abstract class WrappedGetFile() : WrappedCommand(
+abstract public class WrappedGetFile() : WrappedCommand(
   @"Microsoft.PowerShell.Management\Get-Content"
 )
 {
-  public abstract string[] Path { set; }
+  abstract public string[] Path { set; }
   private protected string[] paths = [];
 
   [Parameter]
   [SupportsWildcards]
-  public required string Filter
+  required public string Filter
   {
     private get;
     set;
@@ -17,7 +17,7 @@ public abstract class WrappedGetFile() : WrappedCommand(
 
   [Parameter]
   [SupportsWildcards]
-  public required string[] Include
+  required public string[] Include
   {
     private get;
     set;
@@ -25,7 +25,7 @@ public abstract class WrappedGetFile() : WrappedCommand(
 
   [Parameter]
   [SupportsWildcards]
-  public required string[] Exclude
+  required public string[] Exclude
   {
     private get;
     set;
@@ -57,14 +57,14 @@ public abstract class WrappedGetFile() : WrappedCommand(
   }
 
   [Parameter]
-  public required string Delimiter
+  required public string Delimiter
   {
     private get;
     set;
   }
 
   [Parameter]
-  public required string Stream
+  required public string Stream
   {
     private get;
     set;
@@ -73,7 +73,7 @@ public abstract class WrappedGetFile() : WrappedCommand(
   [Parameter]
   [ValidateNotNullOrEmpty]
   [Tab.EnumCompletions(typeof(Client.File.Encoding))]
-  public required string Encoding
+  required public string Encoding
   {
     private get;
     set;
@@ -108,7 +108,7 @@ public abstract class WrappedGetFile() : WrappedCommand(
     set;
   }
 
-  sealed private protected override void TransformPipelineInput()
+  sealed override private protected void TransformPipelineInput()
   {
     if (!InCurrentLocation)
     {

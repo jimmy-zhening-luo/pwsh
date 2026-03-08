@@ -1,39 +1,39 @@
 namespace Module.Client.Environment.Known;
 
-internal static class Application
+static internal class Application
 {
-  internal static string VSCode => vscode ??= Folder.LocalAppData(
+  static internal string VSCode => vscode ??= Folder.LocalAppData(
     @"Programs\Microsoft VS Code\bin\code.cmd"
   );
-  private static string? vscode;
+  static private string? vscode;
 
-  internal static string WinGet => winget ??= Folder.LocalAppData(
+  static internal string WinGet => winget ??= Folder.LocalAppData(
     @"Microsoft\WindowsApps\winget.exe"
   );
-  private static string? winget;
+  static private string? winget;
 
-  internal static string Chrome => chrome ??= Folder.ProgramFiles(
+  static internal string Chrome => chrome ??= Folder.ProgramFiles(
     @"Google\Chrome\Application\chrome.exe"
   );
-  private static string? chrome;
+  static private string? chrome;
 
-  internal static string Git => git ??= Folder.ProgramFiles(
+  static internal string Git => git ??= Folder.ProgramFiles(
     @"Git\cmd\git.exe"
   );
-  private static string? git;
+  static private string? git;
 
-  internal static string Node => node ??= Folder.SystemDrive(
+  static internal string Node => node ??= Folder.SystemDrive(
     @"nvm4w\nodejs\node.exe"
   );
-  private static string? node;
+  static private string? node;
 
-  internal static string Npm => npm ??= Folder.SystemDrive(
+  static internal string Npm => npm ??= Folder.SystemDrive(
     @"nvm4w\nodejs\npm.ps1"
   );
-  private static string? npm;
+  static private string? npm;
 
-  internal static string Npx => npx ??= Folder.SystemDrive(
+  static internal string Npx => npx ??= Folder.SystemDrive(
     @"nvm4w\nodejs\npx.ps1"
   );
-  private static string? npx;
+  static private string? npx;
 }

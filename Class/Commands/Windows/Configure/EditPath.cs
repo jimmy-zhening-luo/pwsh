@@ -17,7 +17,7 @@ sealed public class EditSystemPath() : CoreCommand(true)
     set;
   }
 
-  sealed private protected override void Postprocess()
+  sealed override private protected void Postprocess()
   {
     Client.Start.ShellExecute(
       "rundll32.exe",

@@ -1,12 +1,12 @@
 namespace Module;
 
-internal static class Module
+static internal class Module
 {
-  internal static string FullPathCurrentLocationRelative(string path) => Client.File.PathString.FullPathLocationRelative(
+  static internal string FullPathCurrentLocationRelative(string path) => Client.File.PathString.FullPathLocationRelative(
     FullPathCurrentLocationRelative(),
     path
   );
-  internal static string FullPathCurrentLocationRelative()
+  static internal string FullPathCurrentLocationRelative()
   {
     using var ps = PowerShell.Create(
       RunspaceMode.CurrentRunspace

@@ -23,14 +23,14 @@ sealed public class GetDirectory : WrappedGetDirectory
     "",
     Tab.PathItemType.Directory
   )]
-  sealed public override string[] Path { get; set; } = [];
+  sealed override public string[] Path { get; set; } = [];
 
   [Parameter(
     ParameterSetName = "LiteralItems",
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  public required string[] LiteralPath
+  required public string[] LiteralPath
   {
     private get;
     set;
@@ -60,9 +60,9 @@ sealed public class GetDirectorySibling : WrappedGetDirectory
     "..",
     Tab.PathItemType.Directory
   )]
-  sealed public override string[] Path { get; set; } = [];
+  sealed override public string[] Path { get; set; } = [];
 
-  sealed private protected override string Location => Pwd("..");
+  sealed override private protected string Location => Pwd("..");
 }
 
 [Cmdlet(
@@ -88,9 +88,9 @@ sealed public class GetDirectoryRelative : WrappedGetDirectory
     @"..\..",
     Tab.PathItemType.Directory
   )]
-  sealed public override string[] Path { get; set; } = [];
+  sealed override public string[] Path { get; set; } = [];
 
-  sealed private protected override string Location => Pwd(@"..\..");
+  sealed override private protected string Location => Pwd(@"..\..");
 }
 
 [Cmdlet(
@@ -116,9 +116,9 @@ sealed public class GetDirectoryHome : WrappedGetDirectory
     "~",
     Tab.PathItemType.Directory
   )]
-  sealed public override string[] Path { get; set; } = [];
+  sealed override public string[] Path { get; set; } = [];
 
-  sealed private protected override string Location { get; } = Client.Environment.Known.Folder.Home();
+  sealed override private protected string Location { get; } = Client.Environment.Known.Folder.Home();
 }
 
 [Cmdlet(
@@ -144,9 +144,9 @@ sealed public class GetDirectoryCode : WrappedGetDirectory
     @"~\code",
     Tab.PathItemType.Directory
   )]
-  sealed public override string[] Path { get; set; } = [];
+  sealed override public string[] Path { get; set; } = [];
 
-  sealed private protected override string Location { get; } = Client.Environment.Known.Folder.Code();
+  sealed override private protected string Location { get; } = Client.Environment.Known.Folder.Code();
 }
 
 [Cmdlet(
@@ -172,7 +172,7 @@ sealed public class GetDirectoryDrive : WrappedGetDirectory
     Client.File.PathString.SeparatorString,
     Tab.PathItemType.Directory
   )]
-  sealed public override string[] Path { get; set; } = [];
+  sealed override public string[] Path { get; set; } = [];
 
-  sealed private protected override string Location => Drive();
+  sealed override private protected string Location => Drive();
 }

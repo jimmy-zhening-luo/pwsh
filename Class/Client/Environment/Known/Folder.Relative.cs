@@ -1,18 +1,18 @@
 namespace Module.Client.Environment.Known;
 
-internal static partial class Folder
+static internal partial class Folder
 {
-  internal static string SystemDrive(string path) => File.PathString.FullPathLocationRelative(
+  static internal string SystemDrive(string path) => File.PathString.FullPathLocationRelative(
     SystemDrive(),
     path
   );
-  internal static string SystemDrive() => system ??= Windows("..");
-  private static string? system;
+  static internal string SystemDrive() => system ??= Windows("..");
+  static private string? system;
 
-  internal static string Code(string path) => File.PathString.FullPathLocationRelative(
+  static internal string Code(string path) => File.PathString.FullPathLocationRelative(
     Code(),
     path
   );
-  internal static string Code() => code ??= Home("code");
-  private static string? code;
+  static internal string Code() => code ??= Home("code");
+  static private string? code;
 }

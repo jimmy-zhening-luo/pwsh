@@ -28,7 +28,7 @@ sealed public class CopyGuid : CoreCommand
     set;
   }
 
-  sealed private protected override void Postprocess()
+  sealed override private protected void Postprocess()
   {
     var guid = System.Guid
       .NewGuid()

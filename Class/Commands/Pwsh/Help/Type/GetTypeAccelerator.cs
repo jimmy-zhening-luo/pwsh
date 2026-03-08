@@ -9,7 +9,7 @@ namespace Module.Commands.Pwsh.Help.Type;
 [OutputType(typeof(string))]
 sealed public class GetTypeAccelerator : Cmdlet
 {
-  sealed protected override void EndProcessing()
+  sealed override protected void EndProcessing()
   {
     if (
       typeof(PSObject)

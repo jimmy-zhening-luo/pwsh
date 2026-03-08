@@ -22,7 +22,7 @@ sealed public class NodeTest() : NodeCommand("test")
     set;
   }
 
-  sealed private protected override void PreprocessOtherArguments()
+  sealed override private protected void PreprocessOtherArguments()
   {
     if (IgnoreScript && !NativeArguments.Contains(FlagIgnoreScript))
     {

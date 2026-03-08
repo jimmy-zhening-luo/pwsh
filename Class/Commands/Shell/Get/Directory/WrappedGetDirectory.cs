@@ -1,13 +1,13 @@
 namespace Module.Commands.Shell.Get.Directory;
 
-public abstract class WrappedGetDirectory() : WrappedCommand(
+abstract public class WrappedGetDirectory() : WrappedCommand(
   @"Microsoft.PowerShell.Management\Get-ChildItem",
   AcceptsPipelineInput: true
 )
 {
-  public abstract string[] Path { get; set; }
+  abstract public string[] Path { get; set; }
 
-  sealed private protected override object? PipelineInput => Path;
+  sealed override private protected object? PipelineInput => Path;
 
   [Parameter(
     Position = 1
@@ -28,7 +28,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
 
   [Parameter]
   [SupportsWildcards]
-  public required string[] Include
+  required public string[] Include
   {
     private get;
     set;
@@ -36,7 +36,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
 
   [Parameter]
   [SupportsWildcards]
-  public required string[] Exclude
+  required public string[] Exclude
   {
     private get;
     set;
@@ -125,18 +125,18 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
     typeof(System.IO.FileAttributes),
     Case = Tab.CompletionCase.Lower
   )]
-  public required FlagsExpression<System.IO.FileAttributes> Attributes
+  required public FlagsExpression<System.IO.FileAttributes> Attributes
   {
     private get;
     set;
   }
 
-  sealed private protected override Dictionary<string, object?> CoercedParameters => new()
+  sealed override private protected Dictionary<string, object?> CoercedParameters => new()
   {
     ["Filter"] = filter,
   };
 
-  sealed private protected override void TransformPipelineInput()
+  sealed override private protected void TransformPipelineInput()
   {
     if (!InCurrentLocation)
     {

@@ -1,11 +1,11 @@
 namespace Module.Commands.Shell.Start.Workspace;
 
-public abstract class VirtualStartWorkspace() : NativeCommand(true, true)
+abstract public class VirtualStartWorkspace() : NativeCommand(true, true)
 {
   private const string FlagNewWindow = "--new-window";
   private const string FlagReuseWindow = "--reuse-window";
 
-  public abstract string Path { set; }
+  abstract public string Path { set; }
   private protected string path = string.Empty;
 
   [Parameter(Position = 1)]
@@ -30,9 +30,9 @@ public abstract class VirtualStartWorkspace() : NativeCommand(true, true)
     set;
   }
 
-  sealed private protected override string CommandPath { get; } = Client.Environment.Known.Application.VSCode;
+  sealed override private protected string CommandPath { get; } = Client.Environment.Known.Application.VSCode;
 
-  sealed private protected override void PreprocessArguments()
+  sealed override private protected void PreprocessArguments()
   {
     switch (Name)
     {
@@ -65,7 +65,7 @@ public abstract class VirtualStartWorkspace() : NativeCommand(true, true)
     }
   }
 
-  sealed private protected override List<string> BuildNativeCommand() => [
+  sealed override private protected List<string> BuildNativeCommand() => [
     InCurrentLocation
     && path is ""
     && (

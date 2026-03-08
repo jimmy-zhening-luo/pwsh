@@ -15,9 +15,9 @@ sealed public class GetType : CoreCommand
     HelpMessage = "Object to type-check"
   )]
   [ValidateNotNull]
-  public required object InputObject { get; set; }
+  required public object InputObject { get; set; }
 
-  sealed private protected override void Process()
+  sealed override private protected void Process()
   {
     if (InputObject is PSObject inputPsObject)
     {

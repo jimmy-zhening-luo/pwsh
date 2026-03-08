@@ -8,7 +8,7 @@ namespace Module.Commands.Code.Git.Verbs;
 [Alias("gpp")]
 sealed public class GitPullChild : CoreCommand
 {
-  sealed private protected override void Postprocess()
+  sealed override private protected void Postprocess()
   {
     List<string> repositories = [];
 

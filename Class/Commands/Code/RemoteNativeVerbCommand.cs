@@ -1,6 +1,6 @@
 namespace Module.Commands.Code;
 
-public abstract class RemoteNativeVerbCommand(
+abstract public class RemoteNativeVerbCommand(
   string? IntrinsicVerb,
   bool SkipSsh = default
 ) : NativeVerbCommand(IntrinsicVerb, SkipSsh: SkipSsh)
@@ -9,7 +9,7 @@ public abstract class RemoteNativeVerbCommand(
     ItemType: Tab.PathItemType.File
   );
 
-  private protected abstract string[] WorkingDirectoryArguments { get; }
+  abstract private protected string[] WorkingDirectoryArguments { get; }
 
   [Parameter(
     Position = 50,
@@ -29,14 +29,14 @@ public abstract class RemoteNativeVerbCommand(
 
   private protected readonly List<string> DeferredVerbArguments = [];
 
-  private protected abstract List<string> NativeCommandBaseArguments();
+  abstract private protected List<string> NativeCommandBaseArguments();
 
-  private protected virtual void PreprocessOtherArguments()
+  virtual private protected void PreprocessOtherArguments()
   { }
 
-  private protected virtual List<string> ParseArguments() => [];
+  virtual private protected List<string> ParseArguments() => [];
 
-  sealed private protected override void PreprocessArguments()
+  sealed override private protected void PreprocessArguments()
   {
     if (
       WorkingDirectory is not ""
@@ -51,12 +51,12 @@ public abstract class RemoteNativeVerbCommand(
     PreprocessOtherArguments();
   }
 
-  sealed private protected override List<string> NativeCommandArguments() => [
+  sealed override private protected List<string> NativeCommandArguments() => [
     .. NativeCommandBaseArguments(),
     .. WorkingDirectoryArguments,
   ];
 
-  sealed private protected override List<string> NativeCommandVerbArguments() => [
+  sealed override private protected List<string> NativeCommandVerbArguments() => [
     .. DeferredVerbArguments,
     .. ParseArguments(),
   ];

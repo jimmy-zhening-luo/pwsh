@@ -9,7 +9,7 @@ namespace Module.Commands.Windows.App;
 [OutputType(typeof(void))]
 sealed public class WinGetAdd() : WinGetCommand("install")
 {
-  sealed private protected override void PreprocessArguments()
+  sealed override private protected void PreprocessArguments()
   {
     if (Arguments is [])
     {

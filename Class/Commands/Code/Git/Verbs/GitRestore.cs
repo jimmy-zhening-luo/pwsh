@@ -8,7 +8,7 @@ namespace Module.Commands.Code.Git.Verbs;
 [Alias("grp")]
 sealed public class GitRestore() : GitCommand("pull")
 {
-  sealed private protected override void PreprocessOtherArguments()
+  sealed override private protected void PreprocessOtherArguments()
   {
     List<string> resetArguments = [.. Arguments];
 

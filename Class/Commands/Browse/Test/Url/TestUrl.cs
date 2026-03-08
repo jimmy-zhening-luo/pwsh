@@ -45,7 +45,7 @@ sealed public class TestUrl : CoreCommand
   }
   private readonly List<System.Uri> urls = [];
 
-  sealed private protected override void Process()
+  sealed override private protected void Process()
   {
     foreach (var url in Uri)
     {

@@ -34,7 +34,7 @@ sealed public class GetHelpOnline : CoreCommand
     set;
   } = [];
 
-  private static List<System.Uri>? TryExtractHelpLink(System.Collections.ObjectModel.Collection<PSObject> helpContent)
+  static private List<System.Uri>? TryExtractHelpLink(System.Collections.ObjectModel.Collection<PSObject> helpContent)
   {
     if (helpContent is null or [])
     {
@@ -68,7 +68,7 @@ sealed public class GetHelpOnline : CoreCommand
       : urls;
   }
 
-  sealed private protected override void Postprocess()
+  sealed override private protected void Postprocess()
   {
     const string GET_HELP = "Get-Help";
 

@@ -1,6 +1,6 @@
 namespace Module.Commands;
 
-public abstract partial class NativeCommand(
+abstract public partial class NativeCommand(
   bool CreateProcess = default,
   bool SkipSsh = default
 ) : CoreCommand(SkipSsh)
@@ -17,9 +17,9 @@ public abstract partial class NativeCommand(
   private protected readonly List<string> Arguments = [];
   private protected readonly List<string> NativeArguments = [];
 
-  private protected abstract string CommandPath { get; }
+  abstract private protected string CommandPath { get; }
 
-  private protected virtual SwitchBoard Uppercase { get; set; } = new();
+  virtual private protected SwitchBoard Uppercase { get; set; } = new();
 
   [Parameter(
     Position = 100,
@@ -104,18 +104,18 @@ public abstract partial class NativeCommand(
     set;
   }
 
-  private protected static bool IsNativeArgument(string argument) => NativeArgumentRegex().IsMatch(argument);
+  static private protected bool IsNativeArgument(string argument) => NativeArgumentRegex().IsMatch(argument);
   [System.Text.RegularExpressions.GeneratedRegex(
     @"^(?>-(?>[A-Za-z]|(?>(?>-[A-Za-z][A-Za-z\d]*(?>_[A-Za-z\d]+)*)(?>-[A-Za-z\d]+(?>_[A-Za-z\d]+)*)*)))(?>=\S+)?$"
   )]
-  private static partial System.Text.RegularExpressions.Regex NativeArgumentRegex();
+  static private partial System.Text.RegularExpressions.Regex NativeArgumentRegex();
 
-  private protected abstract List<string> BuildNativeCommand();
+  abstract private protected List<string> BuildNativeCommand();
 
-  private protected virtual void PreprocessArguments()
+  virtual private protected void PreprocessArguments()
   { }
 
-  sealed private protected override void Preprocess()
+  sealed override private protected void Preprocess()
   {
     foreach (var argument in ArgumentList)
     {
@@ -134,7 +134,7 @@ public abstract partial class NativeCommand(
     PreprocessArguments();
   }
 
-  sealed private protected override void Postprocess()
+  sealed override private protected void Postprocess()
   {
     List<string> arguments = BuildNativeCommand();
 

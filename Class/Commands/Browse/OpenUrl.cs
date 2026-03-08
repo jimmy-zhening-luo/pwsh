@@ -66,7 +66,7 @@ sealed public class OpenUrl() : CoreCommand(true)
   }
   private readonly List<System.Uri> uris = [];
 
-  sealed private protected override void Process()
+  sealed override private protected void Process()
   {
     foreach (var uri in Uri)
     {
@@ -74,7 +74,7 @@ sealed public class OpenUrl() : CoreCommand(true)
     }
   }
 
-  sealed private protected override void Postprocess()
+  sealed override private protected void Postprocess()
   {
     if (ParameterSetName is "Path")
     {
