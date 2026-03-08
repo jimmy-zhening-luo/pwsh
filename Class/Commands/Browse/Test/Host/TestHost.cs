@@ -83,7 +83,7 @@ public sealed class TestHost() : WrappedCommand(
     Mandatory = true
   )]
   [Alias("RemotePort")]
-  [ValidateRange(1, 65535)]
+  [ValidateRange(ValidateRangeKind.Positive)]
   public ushort Port
   {
     private get;

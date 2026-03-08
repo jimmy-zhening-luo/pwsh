@@ -40,10 +40,7 @@ public abstract class WrappedGetFile() : WrappedCommand(
 
   [Parameter]
   [Alias("First", "Head")]
-  [ValidateRange(
-    0,
-    long.MaxValue
-  )]
+  [ValidateRange(ValidateRangeKind.NonNegative)]
   public long TotalCount
   {
     private get;
@@ -52,7 +49,7 @@ public abstract class WrappedGetFile() : WrappedCommand(
 
   [Parameter]
   [Alias("Last")]
-  [ValidateRange(0, int.MaxValue)]
+  [ValidateRange(ValidateRangeKind.NonNegative)]
   public int Tail
   {
     private get;
