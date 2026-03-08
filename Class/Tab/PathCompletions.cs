@@ -12,7 +12,7 @@ internal class PathCompletionsAttribute(
   PathItemType ItemType = default,
   bool Flat = default,
   CompletionCase Case = CompletionCase.Lower
-) : TCompletionsAttribute
+) : TCompletionsAttribute(Case)
 {
   public sealed override Completers.PathCompleter Create() => new(
     Location,
