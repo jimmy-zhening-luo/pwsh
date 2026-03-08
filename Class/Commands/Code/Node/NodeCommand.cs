@@ -143,6 +143,7 @@ public abstract class NodeCommand(string? IntrinsicVerb) : RemoteNativeVerbComma
 
       case var path when !IsNodePackage(path):
         DeferredVerbArguments.Add(path);
+        WorkingDirectory = string.Empty;
         break;
 
       case var path when Pwd(path) is var fullPath
