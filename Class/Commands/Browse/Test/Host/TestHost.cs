@@ -10,7 +10,8 @@ namespace Module.Commands.Browse.Test.Host;
 [OutputType(typeof(object))]
 public sealed class TestHost() : WrappedCommand(
   @"NetTCPIP\Test-NetConnection",
-  CommandType: CommandTypes.Function
+  "ComputerName",
+  CommandTypes.Function
 )
 {
   public enum TestHostVerbosity
@@ -49,7 +50,10 @@ public sealed class TestHost() : WrappedCommand(
     WINRM,
   }
 
-  [Parameter(Position = default)]
+  [Parameter(
+    Position = default,
+    ValueFromPipeline = true
+  )]
   [Alias(
     "Name",
     "RemoteAddress",
