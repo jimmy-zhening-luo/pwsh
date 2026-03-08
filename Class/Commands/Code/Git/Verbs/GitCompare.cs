@@ -12,6 +12,7 @@ public sealed class GitCompare() : GitCommand("diff")
     Position = default,
     HelpMessage = "File pattern of files to diff, defaulting to '.' (all)"
   )]
+  [ValidateNotNullOrWhiteSpace]
   [PathSpecCompletions]
   public string Name
   {

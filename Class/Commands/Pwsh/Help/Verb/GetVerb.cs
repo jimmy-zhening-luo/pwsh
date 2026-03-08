@@ -53,6 +53,7 @@ public sealed class GetVerb : CoreCommand
     HelpMessage = "Get only the specified verbs or verb patterns"
   )]
   [SupportsWildcards]
+  [ValidateNotNullOrWhiteSpace]
   [Tab.Completions("*")]
   public string[] Verb
   {

@@ -15,8 +15,9 @@ public class StopTask : CoreCommand
     Position = default,
     HelpMessage = "Names of the processes to stop"
   )]
-  [SupportsWildcards]
   [Alias("ProcessName")]
+  [SupportsWildcards]
+  [ValidateNotNullOrWhiteSpace]
   public string[] Name
   {
     private get;
@@ -29,6 +30,8 @@ public class StopTask : CoreCommand
     Position = default,
     HelpMessage = "Process IDs of the processes to stop"
   )]
+  [AllowEmptyCollection]
+  [ValidateRange(ValidateRangeKind.NonNegative)]
   public required int[] Id
   {
     private get;
@@ -42,6 +45,8 @@ public class StopTask : CoreCommand
     ValueFromPipeline = true,
     HelpMessage = "Process objects to stop"
   )]
+  [AllowEmptyCollection]
+  [ValidateNotNull]
   public required System.Diagnostics.Process[] InputObject { get; set; }
 
   [Parameter(

@@ -15,6 +15,7 @@ public sealed class OpenUrl() : CoreCommand(true)
     Position = default,
     HelpMessage = "File path or URL to open, defaulting to the current directory"
   )]
+  [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions]
   public string Path
   {

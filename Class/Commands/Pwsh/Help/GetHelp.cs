@@ -15,6 +15,7 @@ public sealed class GetHelpOnline : CoreCommand
   )]
   [Alias("Command")]
   [SupportsWildcards]
+  [ValidateNotNullOrWhiteSpace]
   public string[] Name
   {
     private get => [topic];

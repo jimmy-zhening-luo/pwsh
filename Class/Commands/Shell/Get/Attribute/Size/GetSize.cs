@@ -61,6 +61,7 @@ public sealed class GetSize : CoreCommand
     ValueFromPipeline = true,
     HelpMessage = "Path of the file or directory of which to get the size"
   )]
+  [ValidateLength(1, int.MaxValue)]
   [Tab.PathCompletions]
   public string[] Path
   {

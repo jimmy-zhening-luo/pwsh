@@ -19,6 +19,7 @@ public sealed class SetDirectory : WrappedSetDirectory
     ValueFromPipeline = true
   )]
   [SupportsWildcards]
+  [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions(
     "",
     Tab.PathItemType.Directory

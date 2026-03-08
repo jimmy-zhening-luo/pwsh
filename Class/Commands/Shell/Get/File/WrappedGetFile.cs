@@ -52,10 +52,7 @@ public abstract class WrappedGetFile() : WrappedCommand(
 
   [Parameter]
   [Alias("Last")]
-  [ValidateRange(
-    0,
-    2147483647
-  )]
+  [ValidateRange(0, int.MaxValue)]
   public int Tail
   {
     private get;

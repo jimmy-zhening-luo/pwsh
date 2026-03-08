@@ -12,6 +12,7 @@ public sealed class Git() : GitCommand(default)
     Position = default,
     HelpMessage = "Git command"
   )]
+  [ValidateNotNullOrWhiteSpace]
   [GitVerbCompletions]
   public string Verb
   {

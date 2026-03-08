@@ -9,6 +9,7 @@ public abstract class VirtualStartWorkspace() : NativeCommand(true, true)
   private protected string path = string.Empty;
 
   [Parameter(Position = 1)]
+  [ValidateNotNullOrWhiteSpace]
   public string Name
   {
     private get;

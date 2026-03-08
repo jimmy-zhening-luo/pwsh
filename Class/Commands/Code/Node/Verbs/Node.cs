@@ -12,6 +12,7 @@ public sealed class Node() : NodeCommand(default)
     Position = default,
     HelpMessage = "npm command"
   )]
+  [ValidateNotNullOrWhiteSpace]
   [NodeVerbCompletions]
   public string Verb
   {

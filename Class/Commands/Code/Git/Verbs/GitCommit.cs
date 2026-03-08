@@ -14,6 +14,7 @@ public sealed class GitCommit() : GitCommand("commit")
     Position = 60,
     HelpMessage = "Commit message, defaulting to 'No message' on an empty commit"
   )]
+  [ValidateNotNullOrWhiteSpace]
   [PathSpecCompletions]
   public string Message
   {

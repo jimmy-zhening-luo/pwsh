@@ -14,6 +14,7 @@ public sealed class GetCommandAlias : CoreCommand
   )]
   [Alias("Command")]
   [SupportsWildcards]
+  [ValidateNotNullOrWhiteSpace]
   [Tab.Completions("*")]
   public string[] Definition
   {
@@ -41,6 +42,7 @@ public sealed class GetCommandAlias : CoreCommand
     HelpMessage = "Specifies the scope for which this cmdlet gets aliases. The acceptable values for this parameter are: Global, Local, Script, and a positive integer relative to the current scope (0 through the number of scopes, where 0 is the current scope and 1 is its parent). Global is the default, which differs from Get-Alias where Local is the default."
   )]
   [SupportsWildcards]
+  [ValidateNotNullOrWhiteSpace]
   [Tab.Completions(
     "global",
     "local",
@@ -60,6 +62,7 @@ public sealed class GetCommandAlias : CoreCommand
     Position = 2
   )]
   [SupportsWildcards]
+  [ValidateNotNullOrWhiteSpace]
   public string[] Exclude
   {
     private get => [.. exclusions];
