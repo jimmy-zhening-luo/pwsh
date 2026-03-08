@@ -2,20 +2,20 @@ namespace Module.Commands;
 
 public abstract class WrappedCommand(
   string WrappedCommandName,
-  string? PipelineInputParameterName = default,
+  bool AcceptsPipelineInput = default,
   CommandTypes CommandType = CommandTypes.Cmdlet,
   bool SkipSsh = default
 ) : CoreCommand(SkipSsh)
 {
   private protected virtual Dictionary<string, object?> CoercedParameters { get; } = [];
 
-  private string? PipelineInputParameterName { get; } = PipelineInputParameterName;
+  private protected virtual object? PipelineInput { get; }
 
   [System.Diagnostics.CodeAnalysis.MemberNotNullWhen(
     true,
-    nameof(PipelineInputParameterName)
+    nameof(PipelineInput)
   )]
-  private bool Piped { get; set; }
+  private bool InPipeline { get; set; }
 
   private protected virtual void TransformArguments()
   { }
@@ -25,53 +25,47 @@ public abstract class WrappedCommand(
 
   private protected sealed override void Preprocess()
   {
+    InPipeline = false;
+
     CoerceParameters();
 
     TransformArguments();
 
-    if (PipelineInputParameterName is null)
+    if (AcceptsPipelineInput && MyInvocation.ExpectingInput)
     {
-      TransformPipelineInput();
-
-      _ = AddCommand(
-        WrappedCommandName,
-        CommandType
-      )
-        .AddParameters(BoundParameters);
-
-      BeginSteppablePipeline();
-    }
-  }
-
-  private protected sealed override void Process()
-  {
-    if (PipelineInputParameterName is null)
-    {
-      ProcessSteppablePipeline();
+      InPipeline = true;
     }
     else
     {
       TransformPipelineInput();
+    }
 
-      ClearCommands();
-      _ = AddCommand(
-        WrappedCommandName,
-        CommandType
-      )
-        .AddParameters(BoundParameters);
+    _ = AddCommand(
+      WrappedCommandName,
+      CommandType
+    )
+      .AddParameters(BoundParameters);
 
-      BeginSteppablePipeline();
+    BeginSteppablePipeline();
+  }
+
+  private protected sealed override void Process()
+  {
+    if (InPipeline)
+    {
+      TransformPipelineInput();
+
+      ProcessSteppablePipeline(PipelineInput);
+    }
+    else
+    {
       ProcessSteppablePipeline();
-      EndSteppablePipeline();
     }
   }
 
   private protected sealed override void Postprocess()
   {
-    if (PipelineInputParameterName is null)
-    {
-      EndSteppablePipeline();
-    }
+    EndSteppablePipeline();
   }
 
   private void CoerceParameters()

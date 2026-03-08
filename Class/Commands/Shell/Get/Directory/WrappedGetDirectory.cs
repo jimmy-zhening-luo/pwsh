@@ -2,10 +2,12 @@ namespace Module.Commands.Shell.Get.Directory;
 
 public abstract class WrappedGetDirectory() : WrappedCommand(
   @"Microsoft.PowerShell.Management\Get-ChildItem",
-  "Path"
+  AcceptsPipelineInput: true
 )
 {
   public abstract string[] Path { get; set; }
+
+  private protected sealed override object? PipelineInput => Path;
 
   [Parameter(
     Position = 1

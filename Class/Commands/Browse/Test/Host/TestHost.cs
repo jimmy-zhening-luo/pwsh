@@ -10,7 +10,7 @@ namespace Module.Commands.Browse.Test.Host;
 [OutputType(typeof(object))]
 public sealed class TestHost() : WrappedCommand(
   @"NetTCPIP\Test-NetConnection",
-  "ComputerName",
+  AcceptsPipelineInput: true,
   CommandTypes.Function
 )
 {
@@ -49,6 +49,8 @@ public sealed class TestHost() : WrappedCommand(
     )]
     WINRM,
   }
+
+  private protected sealed override object? PipelineInput => ComputerName;
 
   [Parameter(
     Position = default,

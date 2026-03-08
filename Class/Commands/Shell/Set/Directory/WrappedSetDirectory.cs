@@ -2,10 +2,12 @@ namespace Module.Commands.Shell.Set.Directory;
 
 public abstract class WrappedSetDirectory() : WrappedCommand(
   @"Microsoft.PowerShell.Management\Set-Location",
-  "Path"
+  AcceptsPipelineInput: true
 )
 {
   public abstract string Path { get; set; }
+
+  private protected sealed override object? PipelineInput => Path;
 
   [Parameter]
   public SwitchParameter PassThru

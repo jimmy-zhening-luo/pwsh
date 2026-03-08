@@ -10,9 +10,11 @@ namespace Module.Commands.Shell.New.Directory;
 [OutputType(typeof(System.IO.DirectoryInfo))]
 public sealed class NewDirectory() : WrappedCommand(
   @"Microsoft.PowerShell.Management\New-Item",
-  "Value"
+  AcceptsPipelineInput: true
 )
 {
+  private protected sealed override object? PipelineInput => Value;
+
   [Parameter(
     ParameterSetName = "pathSet",
     Mandatory = true,
