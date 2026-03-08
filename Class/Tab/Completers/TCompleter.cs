@@ -1,6 +1,6 @@
 namespace Module.Tab.Completers;
 
-internal abstract class TCompleter(
+internal abstract class TCompleter<TDomain>(
   CompletionCase Case,
   CompletionResultType CompletionType
 ) : IArgumentCompleter
@@ -25,6 +25,8 @@ internal abstract class TCompleter(
       )
     )
   );
+
+  private protected abstract IEnumerable<TDomain> GenerateDomain();
 
   private protected abstract IEnumerable<CompletionResultRecord> GenerateCompletion(string wordToComplete);
 

@@ -5,15 +5,17 @@ internal sealed class Completer(
   bool Strict,
   CompletionCase Case,
   CompletionResultType CompletionType
-) : TCompleter(Case, CompletionType)
+) : TCompleter<string>(Case, CompletionType)
 {
+  private protected sealed override IEnumerable<string> GenerateDomain() => Domain;
+
   private protected sealed override IEnumerable<CompletionResultRecord> GenerateCompletion(string wordToComplete)
   {
     uint index = default;
 
     if (wordToComplete is "")
     {
-      foreach (var member in Domain)
+      foreach (var member in GenerateDomain())
       {
         ++index;
         yield return new(member);
@@ -22,7 +24,7 @@ internal sealed class Completer(
       yield break;
     }
 
-    foreach (var member in Domain)
+    foreach (var member in GenerateDomain())
     {
       if (
         member.StartsWith(
@@ -41,7 +43,7 @@ internal sealed class Completer(
       yield break;
     }
 
-    foreach (var member in Domain)
+    foreach (var member in GenerateDomain())
     {
       if (
         member.Length > wordToComplete.Length
