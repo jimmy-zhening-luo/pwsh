@@ -19,7 +19,7 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
 
   [Parameter(Position = 1)]
   [ValidateNotNullOrWhiteSpace]
-  [EnumCompletions(typeof(VSCodeProfile))]
+  [Tab.EnumCompletions(typeof(VSCodeProfile))]
   public string Name
   {
     set
