@@ -1,0 +1,16 @@
+namespace Module.Commands.Shell.Stop.Task;
+
+[Cmdlet(
+  VerbsLifecycle.Stop,
+  "TaskTree",
+  DefaultParameterSetName = "Name",
+  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097058"
+)]
+[Alias("tkilld")]
+[OutputType(typeof(void))]
+public sealed class StopTaskTree : StopTask
+{
+  public StopTaskTree() => descendant = true;
+
+  new private SwitchParameter Descendant { get; set; }
+}

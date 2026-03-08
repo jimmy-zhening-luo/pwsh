@@ -8,7 +8,7 @@ namespace Module.Commands.Shell.Stop.Task;
 )]
 [Alias("tkill")]
 [OutputType(typeof(void))]
-public sealed class StopTask : TaskManager
+public class StopTask : CoreCommand
 {
   [Parameter(
     HelpMessage = "Stop the entire process tree (the processe and all of its descendants)"
@@ -17,23 +17,6 @@ public sealed class StopTask : TaskManager
   {
     set => descendant = value;
   }
-}
-
-[Cmdlet(
-  VerbsLifecycle.Stop,
-  "TaskTree",
-  DefaultParameterSetName = "Name",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097058"
-)]
-[Alias("tkilld")]
-[OutputType(typeof(void))]
-public sealed class StopTaskTree : TaskManager
-{
-  public StopTaskTree() => descendant = true;
-}
-
-public abstract class TaskManager : CoreCommand
-{
   private protected bool descendant;
 
   [Parameter(
