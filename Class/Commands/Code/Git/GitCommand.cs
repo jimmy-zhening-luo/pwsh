@@ -44,7 +44,14 @@ public abstract class GitCommand(string? IntrinsicVerb) : RemoteNativeVerbComman
     P: true
   );
 
-  private protected sealed override List<string> NativeCommandArguments()
+  private protected sealed override string[] WorkingDirectoryArgument => WorkingDirectory is ""
+    ? []
+    : [
+        "-C",
+        WorkingDirectory,
+      ];
+
+  private protected sealed override List<string> NativeCommandBaseArguments()
   {
     bool newable = default;
     switch (IntrinsicVerb)
@@ -112,18 +119,15 @@ public abstract class GitCommand(string? IntrinsicVerb) : RemoteNativeVerbComman
       )
     );
 
-    List<string> command = [
+    if (WorkingDirectory == pwd)
+    {
+      WorkingDirectory = string.Empty;
+    }
+
+    return [
       "-c",
       "color.ui=always",
     ];
-
-    if (WorkingDirectory != pwd)
-    {
-      command.Add("-C");
-      command.Add(WorkingDirectory);
-    }
-
-    return command;
   }
 
   private protected string ResolveWorkingDirectory(

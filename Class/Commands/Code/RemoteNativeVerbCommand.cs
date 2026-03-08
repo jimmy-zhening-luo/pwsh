@@ -9,6 +9,8 @@ public abstract class RemoteNativeVerbCommand(
     ItemType: Tab.PathItemType.File
   );
 
+  private protected abstract string[] WorkingDirectoryArgument { get; }
+
   [Parameter(
     Position = 50,
     ValueFromPipeline = true,
@@ -27,7 +29,14 @@ public abstract class RemoteNativeVerbCommand(
 
   private protected readonly List<string> DeferredVerbArguments = [];
 
+  private protected abstract List<string> NativeCommandBaseArguments();
+
   private protected virtual List<string> ParseArguments() => [];
+
+  private protected sealed override List<string> NativeCommandArguments() => [
+    .. NativeCommandBaseArguments(),
+    .. WorkingDirectoryArguments,
+  ];
 
   private protected sealed override List<string> NativeCommandVerbArguments() => [
     .. DeferredVerbArguments,
