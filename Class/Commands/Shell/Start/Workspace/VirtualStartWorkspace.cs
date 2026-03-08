@@ -107,8 +107,8 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
     {
       Client.File.Handler.Edit(
         path,
-        newWindow,
-        reuseWindow,
+        Window,
+        ReuseWindow,
         ArgumentList
       );
     }
@@ -117,8 +117,8 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
       Client.File.Handler.Edit(
         path,
         profile,
-        newWindow,
-        reuseWindow,
+        Window,
+        ReuseWindow,
         ArgumentList
       );
     }
