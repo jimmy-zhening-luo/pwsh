@@ -19,9 +19,10 @@ internal sealed class PathCompleter : TCompleter
   internal PathCompleter(
     string location,
     PathItemType itemType,
-    bool flat
+    bool flat,
+    CompletionCase Case
   ) : base(
-    default,
+    Case,
     CompletionResultType.ProviderItem
   ) => (
     Location,

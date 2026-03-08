@@ -10,12 +10,14 @@ internal enum PathItemType
 internal class PathCompletionsAttribute(
   string Location = "",
   PathItemType ItemType = default,
-  bool Flat = default
+  bool Flat = default,
+  CompletionCase Case = CompletionCase.Lower
 ) : TCompletionsAttribute
 {
   public sealed override Completers.PathCompleter Create() => new(
     Location,
     ItemType,
-    Flat
+    Flat,
+    Case
   );
 }
