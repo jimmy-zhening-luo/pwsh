@@ -15,6 +15,7 @@ public class StopTask : CoreCommand
   )]
   public SwitchParameter Descendant
   {
+    private protected get => descendant;
     set => descendant = value;
   }
   private protected bool descendant;

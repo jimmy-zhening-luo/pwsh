@@ -10,7 +10,7 @@ namespace Module.Commands.Shell.Stop.Task;
 [OutputType(typeof(void))]
 public sealed class StopTaskTree : StopTask
 {
-  public StopTaskTree() => descendant = true;
+  public StopTaskTree() => base.Descendant = true;
 
   new private SwitchParameter Descendant { get; set; }
 }
