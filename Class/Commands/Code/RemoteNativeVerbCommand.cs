@@ -11,6 +11,7 @@ public abstract class RemoteNativeVerbCommand(
 
   [Parameter(
     Position = 50,
+    ValueFromPipeline = true,
     HelpMessage = "Working directory path"
   )]
   [Tab.PathCompletions(
