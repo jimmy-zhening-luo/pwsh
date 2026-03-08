@@ -8,7 +8,7 @@ namespace Module.Commands.Code.Git.Verbs;
 [Alias("gs")]
 public sealed class GitPush() : GitCommand("push")
 {
-  private protected sealed override void PreprocessArguments()
+  private protected sealed override void PreprocessOtherArguments()
   {
     if (
       WorkingDirectory is not ""
@@ -22,7 +22,10 @@ public sealed class GitPush() : GitCommand("push")
     }
 
     AddCommand("Get-GitRepository")
-      .AddParameter("WorkingDirectory", WorkingDirectory);
+      .AddParameter(
+        "WorkingDirectory",
+        WorkingDirectory
+      );
 
     ProcessSteppablePipeline();
     EndSteppablePipeline();
@@ -30,7 +33,7 @@ public sealed class GitPush() : GitCommand("push")
 
     CheckNativeError(
       "git error when pulling repository prior to pushing",
-      stop: true
+      true
     );
   }
 }

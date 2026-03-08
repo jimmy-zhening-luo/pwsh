@@ -31,7 +31,25 @@ public abstract class RemoteNativeVerbCommand(
 
   private protected abstract List<string> NativeCommandBaseArguments();
 
+  private protected virtual void PreprocessOtherArguments()
+  { }
+
   private protected virtual List<string> ParseArguments() => [];
+
+  private protected sealed override void PreprocessArguments()
+  {
+    if (
+      WorkingDirectory is not ""
+      && IsNativeArgument(WorkingDirectory)
+    )
+    {
+      NativeArguments.Insert(default, WorkingDirectory);
+
+      WorkingDirectory = string.Empty;
+    }
+
+    PreprocessOtherArguments();
+  }
 
   private protected sealed override List<string> NativeCommandArguments() => [
     .. NativeCommandBaseArguments(),

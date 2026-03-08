@@ -20,7 +20,7 @@ public sealed class NodeOutdated() : NodeCommand("outdated")
     set;
   }
 
-  private protected sealed override void PreprocessArguments()
+  private protected sealed override void PreprocessOtherArguments()
   {
     NoThrow = true;
 

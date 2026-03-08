@@ -20,7 +20,10 @@ public sealed class GitPullChild : CoreCommand
     {
       if (
         System.IO.Directory.Exists(
-          System.IO.Path.Combine(directory, ".git")
+          System.IO.Path.Combine(
+            directory,
+            ".git"
+          )
         )
       )
       {
@@ -55,7 +58,12 @@ public sealed class GitPullChild : CoreCommand
         "pull",
       ];
 
-      AddScript(string.Join(Client.Console.String.Space, command));
+      AddScript(
+        string.Join(
+          Client.Console.String.Space,
+          command
+        )
+      );
 
       ProcessSteppablePipeline();
       EndSteppablePipeline();
@@ -63,7 +71,7 @@ public sealed class GitPullChild : CoreCommand
 
       CheckNativeError(
         $"git error when pulling repository {repository}",
-        stop: true
+        true
       );
 
       ++progress;

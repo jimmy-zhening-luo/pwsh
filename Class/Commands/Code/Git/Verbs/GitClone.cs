@@ -43,7 +43,7 @@ public sealed class GitClone() : GitCommand("clone")
     set;
   }
 
-  private protected sealed override void PreprocessArguments()
+  private protected sealed override void PreprocessOtherArguments()
   {
     System.ArgumentException.ThrowIfNullOrEmpty(
       Repository,

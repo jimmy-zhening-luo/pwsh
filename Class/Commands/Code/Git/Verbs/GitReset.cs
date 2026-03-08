@@ -69,7 +69,7 @@ public sealed partial class GitReset() : GitCommand("reset")
     set;
   }
 
-  private protected sealed override void PreprocessArguments()
+  private protected sealed override void PreprocessOtherArguments()
   {
     if (
       WorkingDirectory is not ""
@@ -135,7 +135,7 @@ public sealed partial class GitReset() : GitCommand("reset")
 
       CheckNativeError(
         "git error when staging files for commit",
-        stop: true
+        true
       );
     }
   }

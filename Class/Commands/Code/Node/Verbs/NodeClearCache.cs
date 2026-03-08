@@ -8,7 +8,7 @@ namespace Module.Commands.Code.Node.Verbs;
 [Alias("ncc")]
 public sealed class NodeClearCache() : NodeCommand("cache")
 {
-  private protected sealed override void PreprocessArguments()
+  private protected sealed override void PreprocessOtherArguments()
   {
     (
       WorkingDirectory,

@@ -39,7 +39,7 @@ public sealed class GitCommit() : GitCommand("commit")
     set;
   }
 
-  private protected sealed override void PreprocessArguments()
+  private protected sealed override void PreprocessOtherArguments()
   {
     List<string> messageWords = [.. Arguments];
     Arguments.Clear();
@@ -50,14 +50,7 @@ public sealed class GitCommit() : GitCommand("commit")
       && ResolveWorkingDirectory(WorkingDirectory) is ""
     )
     {
-      if (IsNativeArgument(WorkingDirectory))
-      {
-        NativeArguments.Insert(default, WorkingDirectory);
-      }
-      else
-      {
-        messageWords.Insert(default, WorkingDirectory);
-      }
+      messageWords.Insert(default, WorkingDirectory);
 
       WorkingDirectory = string.Empty;
     }
@@ -97,7 +90,10 @@ public sealed class GitCommit() : GitCommand("commit")
     if (!Staged)
     {
       AddCommand("Add-GitRepository")
-        .AddParameter("WorkingDirectory", WorkingDirectory);
+        .AddParameter(
+          "WorkingDirectory",
+          WorkingDirectory
+        );
 
       ProcessSteppablePipeline();
       EndSteppablePipeline();
@@ -105,7 +101,7 @@ public sealed class GitCommit() : GitCommand("commit")
 
       CheckNativeError(
         "git error when staging files for commit",
-        stop: true
+        true
       );
     }
   }

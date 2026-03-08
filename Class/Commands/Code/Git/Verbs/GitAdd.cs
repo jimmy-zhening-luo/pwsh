@@ -33,15 +33,11 @@ public sealed class GitAdd() : GitCommand("add")
     set;
   }
 
-  private protected sealed override void PreprocessArguments()
+  private protected sealed override void PreprocessOtherArguments()
   {
     if (Renormalize)
     {
-      if (WorkingDirectory == FlagRenormalize)
-      {
-        WorkingDirectory = string.Empty;
-      }
-      else if (!NativeArguments.Contains(FlagRenormalize))
+      if (!NativeArguments.Contains(FlagRenormalize))
       {
         NativeArguments.Add(FlagRenormalize);
       }

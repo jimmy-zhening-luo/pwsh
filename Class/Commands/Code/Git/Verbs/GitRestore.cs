@@ -8,7 +8,7 @@ namespace Module.Commands.Code.Git.Verbs;
 [Alias("grp")]
 public sealed class GitRestore() : GitCommand("pull")
 {
-  private protected sealed override void PreprocessArguments()
+  private protected sealed override void PreprocessOtherArguments()
   {
     List<string> resetArguments = [.. Arguments];
 
@@ -42,7 +42,7 @@ public sealed class GitRestore() : GitCommand("pull")
 
     CheckNativeError(
       "git error when resetting repository.",
-      stop: true
+      true
     );
   }
 }
