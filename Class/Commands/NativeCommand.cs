@@ -27,6 +27,7 @@ public abstract partial class NativeCommand(
     DontShow = true,
     HelpMessage = "Additional arguments"
   )]
+  [ValidateLength(MinLength = 1)]
   [Tab.PathCompletions]
   public string[] ArgumentList
   {
