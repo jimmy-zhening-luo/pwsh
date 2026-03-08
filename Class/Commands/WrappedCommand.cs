@@ -32,15 +32,15 @@ public abstract class WrappedCommand(
     if (PipelineInputParameterName is null)
     {
       TransformPipelineInput();
+
+      _ = AddCommand(
+        WrappedCommandName,
+        CommandType
+      )
+        .AddParameters(BoundParameters);
+
+      BeginSteppablePipeline();
     }
-
-    _ = AddCommand(
-      WrappedCommandName,
-      CommandType
-    )
-      .AddParameters(BoundParameters);
-
-    BeginSteppablePipeline();
   }
 
   private protected sealed override void Process()
@@ -53,14 +53,26 @@ public abstract class WrappedCommand(
     {
       TransformPipelineInput();
 
-      ProcessSteppablePipeline(
-        BoundParameters[PipelineInputParameterName]
-      );
+      ClearCommands();
+      _ = AddCommand(
+        WrappedCommandName,
+        CommandType
+      )
+        .AddParameters(BoundParameters);
+
+      BeginSteppablePipeline();
+      ProcessSteppablePipeline();
+      EndSteppablePipeline();
     }
   }
 
   private protected sealed override void Postprocess()
-  { }
+  {
+    if (PipelineInputParameterName is null)
+    {
+      EndSteppablePipeline();
+    }
+  }
 
   private void CoerceParameters()
   {
