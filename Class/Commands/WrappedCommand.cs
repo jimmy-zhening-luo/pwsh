@@ -66,6 +66,7 @@ public abstract class WrappedCommand(
         && pipelineInput is not null
       )
       {
+        WriteObject("Processing pipeline");
         ProcessSteppablePipeline(pipelineInput);
       }
       else
