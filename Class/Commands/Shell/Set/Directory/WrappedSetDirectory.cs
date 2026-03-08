@@ -1,8 +1,7 @@
 namespace Module.Commands.Shell.Set.Directory;
 
 public abstract class WrappedSetDirectory() : WrappedCommand(
-  @"Microsoft.PowerShell.Management\Set-Location",
-  // "Path"
+  @"Microsoft.PowerShell.Management\Set-Location"
 )
 {
   public abstract string Path { get; set; }
