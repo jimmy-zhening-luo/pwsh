@@ -1,7 +1,6 @@
 namespace Module.Commands;
 
 abstract public partial class NativeCommand(
-  bool CreateProcess = default,
   bool SkipSsh = default
 ) : CoreCommand(SkipSsh)
 {
@@ -136,79 +135,65 @@ abstract public partial class NativeCommand(
 
   sealed override private protected void Postprocess()
   {
-    List<string> arguments = BuildNativeCommand();
+    List<string> command = [
+      "&",
+      CommandPath,
+      .. BuildNativeCommand(),
+    ];
 
     if (D)
     {
-      arguments.Add(Uppercase.D ? "-D" : "-d");
+      command.Add(Uppercase.D ? "-D" : "-d");
     }
     if (E)
     {
-      arguments.Add(Uppercase.E ? "-E" : "-e");
+      command.Add(Uppercase.E ? "-E" : "-e");
     }
     if (I)
     {
-      arguments.Add(Uppercase.I ? "-I" : "-i");
+      command.Add(Uppercase.I ? "-I" : "-i");
     }
     if (O)
     {
-      arguments.Add(Uppercase.O ? "-O" : "-o");
+      command.Add(Uppercase.O ? "-O" : "-o");
     }
     if (P)
     {
-      arguments.Add(Uppercase.P ? "-P" : "-p");
+      command.Add(Uppercase.P ? "-P" : "-p");
     }
     if (V)
     {
-      arguments.Add(Uppercase.V ? "-V" : "-v");
+      command.Add(Uppercase.V ? "-V" : "-v");
     }
 
-    arguments.AddRange(Arguments);
-    arguments.AddRange(NativeArguments);
+    command.AddRange(Arguments);
+    command.AddRange(NativeArguments);
 
-    List<string> escapedArguments = [];
+    List<string> safeCommand = [];
 
-    foreach (var word in arguments)
+    foreach (var word in command)
     {
-      escapedArguments.Add(
+      safeCommand.Add(
         Client.Console.String.EscapeDoubleQuoted(
           word
         )
       );
     }
 
-    if (CreateProcess)
-    {
-      Client.Start.CreateProcess(
-        CommandPath,
-        escapedArguments
-      );
-    }
-    else
-    {
-      List<string> command = [
-        "&",
-        Client.Console.String.EscapeDoubleQuoted(
-          CommandPath
-        ),
-        .. escapedArguments,
-      ];
+    AddScript(
+      string.Join(
+        Client.Console.String.Space,
+        safeCommand
+      )
+    );
 
-      AddScript(
-        string.Join(
-          Client.Console.String.Space,
-          command
-        )
-      );
+    BeginSteppablePipeline();
+    ProcessSteppablePipeline();
+    EndSteppablePipeline();
 
-      BeginSteppablePipeline();
-      ProcessSteppablePipeline();
-      EndSteppablePipeline();
-
-      CheckNativeError(
-        $"{CommandPath} error",
-        !NoThrow
-      );
-    }
+    CheckNativeError(
+      $"{CommandPath} error",
+      !NoThrow
+    );
   }
 }
