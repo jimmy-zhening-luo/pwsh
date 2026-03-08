@@ -13,7 +13,6 @@ public abstract class RemoteNativeVerbCommand(
 
   [Parameter(
     Position = 50,
-    ValueFromPipeline = true,
     HelpMessage = "Working directory path"
   )]
   [Tab.PathCompletions(
@@ -21,7 +20,10 @@ public abstract class RemoteNativeVerbCommand(
     Tab.PathItemType.Directory,
     Flat: true
   )]
-  public string WorkingDirectory { get; set; } = string.Empty;
+  public string WorkingDirectory {
+    private protected get;
+    set;
+  } = string.Empty;
 
   private protected readonly List<string> DeferredVerbArguments = [];
 
