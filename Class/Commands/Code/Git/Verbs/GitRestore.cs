@@ -28,13 +28,17 @@ public sealed class GitRestore() : GitCommand("pull")
 
     AddCommand("Reset-GitRepository")
       .AddParameter(
-        "WorkingDirectory",
-        WorkingDirectory
-      )
-      .AddParameter(
         "ArgumentList",
         resetArgumentsArray
       );
+
+    if (WorkingDirectory is not "")
+    {
+      AddParameter(
+        "WorkingDirectory",
+        WorkingDirectory
+      );
+    }
 
     ProcessSteppablePipeline();
     EndSteppablePipeline();

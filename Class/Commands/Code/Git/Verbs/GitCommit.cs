@@ -91,10 +91,14 @@ public sealed class GitCommit() : GitCommand("commit")
     if (!Staged)
     {
       AddCommand("Add-GitRepository")
-        .AddParameter(
+
+      if (WorkingDirectory is not "")
+      {
+        AddParameter(
           "WorkingDirectory",
           WorkingDirectory
         );
+      }
 
       ProcessSteppablePipeline();
       EndSteppablePipeline();

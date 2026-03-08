@@ -22,10 +22,14 @@ public sealed class GitPush() : GitCommand("push")
     }
 
     AddCommand("Get-GitRepository")
-      .AddParameter(
+
+    if (WorkingDirectory is not "")
+    {
+      AddParameter(
         "WorkingDirectory",
         WorkingDirectory
       );
+    }
 
     ProcessSteppablePipeline();
     EndSteppablePipeline();
