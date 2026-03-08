@@ -13,7 +13,6 @@ public sealed class TestUrl : CoreCommand
     Mandatory = true,
     Position = default,
     ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true,
     ValueFromRemainingArguments = true,
     HelpMessage = "URL to test"
   )]

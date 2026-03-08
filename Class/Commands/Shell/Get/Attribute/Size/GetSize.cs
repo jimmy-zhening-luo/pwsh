@@ -53,14 +53,12 @@ public sealed class GetSize : CoreCommand
   [Parameter(
     ParameterSetName = "String",
     Position = default,
-    ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true
+    ValueFromPipeline = true
   )]
   [Parameter(
     ParameterSetName = "Number",
     Position = default,
     ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true,
     HelpMessage = "Path of the file or directory of which to get the size"
   )]
   [Tab.PathCompletions]

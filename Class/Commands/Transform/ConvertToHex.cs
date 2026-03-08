@@ -13,7 +13,6 @@ public sealed class ConvertToHex : Cmdlet
     Mandatory = true,
     Position = default,
     ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true,
     ValueFromRemainingArguments = true,
     HelpMessage = "Integer(s) to convert to hexadecimal"
   )]

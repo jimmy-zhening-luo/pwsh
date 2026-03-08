@@ -40,7 +40,6 @@ public sealed class OpenUrl() : CoreCommand(true)
     Mandatory = true,
     Position = default,
     ValueFromPipeline = true,
-    ValueFromPipelineByPropertyName = true,
     HelpMessage = "URLs to open"
   )]
   [AllowEmptyCollection]
