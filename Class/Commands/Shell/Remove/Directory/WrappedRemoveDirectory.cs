@@ -5,7 +5,7 @@ public abstract class WrappedRemoveDirectory() : WrappedCommand(
   "Path"
 )
 {
-  public abstract string[] Path { set; }
+  public abstract string[] Path { get; set; }
   private protected string[] paths = [];
 
   [Parameter]

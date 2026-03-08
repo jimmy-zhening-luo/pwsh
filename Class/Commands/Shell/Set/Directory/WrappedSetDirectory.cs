@@ -5,7 +5,7 @@ public abstract class WrappedSetDirectory() : WrappedCommand(
   "Path"
 )
 {
-  public abstract string Path { set; }
+  public abstract string Path { get; set; }
   private protected string path = string.Empty;
 
   [Parameter]

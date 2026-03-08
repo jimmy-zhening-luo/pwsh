@@ -5,7 +5,7 @@ public abstract class VirtualStartWorkspace() : NativeCommand(true, true)
   private const string FlagNewWindow = "--new-window";
   private const string FlagReuseWindow = "--reuse-window";
 
-  public abstract string Path { set; }
+  public abstract string Path { get; set; }
   private protected string path = string.Empty;
 
   [Parameter(Position = 1)]

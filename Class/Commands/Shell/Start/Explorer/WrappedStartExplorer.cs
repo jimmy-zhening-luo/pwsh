@@ -6,7 +6,7 @@ public abstract class WrappedStartExplorer() : WrappedCommand(
   SkipSsh: true
 )
 {
-  public abstract string[] Path { set; }
+  public abstract string[] Path { get; set; }
   private protected string[] paths = [];
 
   [Parameter]
