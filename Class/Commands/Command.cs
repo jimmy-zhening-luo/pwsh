@@ -191,12 +191,10 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
   {
     System.ObjectDisposedException.ThrowIf(Disposed, this);
 
-    WriteDebug("<BEGIN>");
     if (!BlockedBySsh)
     {
       Preprocess();
     }
-    WriteDebug("</BEGIN>");
   }
 
   protected sealed override void ProcessRecord()
@@ -205,10 +203,7 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
 
     if (!BlockedBySsh)
     {
-      WriteDebug("<PROCESS>");
       Process();
-
-      WriteDebug("</PROCESS>");
     }
   }
 
@@ -216,12 +211,10 @@ public abstract class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDi
   {
     System.ObjectDisposedException.ThrowIf(Disposed, this);
 
-    WriteDebug("<END>");
     if (!BlockedBySsh)
     {
       Postprocess();
     }
-    WriteDebug("</END>");
   }
 
   protected sealed override void StopProcessing() => Dispose();
