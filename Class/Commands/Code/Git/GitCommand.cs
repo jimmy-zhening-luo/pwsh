@@ -39,7 +39,7 @@ abstract public class GitCommand(string? IntrinsicVerb) : RemoteNativeVerbComman
 
   sealed override private protected string CommandPath { get; } = Client.Environment.Known.Application.Git;
 
-  private protected override SwitchBoard Uppercase { get; set; } = new(
+  override private protected SwitchBoard Uppercase { get; set; } = new(
     E: true,
     P: true
   );

@@ -6,5 +6,5 @@ abstract public class WinGetCommand(string IntrinsicVerb) : NativeVerbCommand(In
 
   sealed override private protected List<string> NativeCommandArguments() => [];
 
-  private protected override List<string> NativeCommandVerbArguments() => [];
+  override private protected List<string> NativeCommandVerbArguments() => [];
 }

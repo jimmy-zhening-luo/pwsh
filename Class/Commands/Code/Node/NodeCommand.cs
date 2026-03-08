@@ -106,7 +106,7 @@ abstract public class NodeCommand(string? IntrinsicVerb) : RemoteNativeVerbComma
 
   sealed override private protected string CommandPath { get; } = Client.Environment.Known.Application.Npm;
 
-  private protected override SwitchBoard Uppercase { get; set; } = new(
+  override private protected SwitchBoard Uppercase { get; set; } = new(
     D: true,
     E: true,
     P: true
