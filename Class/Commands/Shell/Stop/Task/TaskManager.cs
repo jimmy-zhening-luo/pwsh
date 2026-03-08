@@ -36,11 +36,7 @@ public abstract class TaskManager : CoreCommand
     ValueFromPipeline = true,
     HelpMessage = "Process objects to stop"
   )]
-  public required System.Diagnostics.Process[] InputObject
-  {
-    private get;
-    set;
-  }
+  public required System.Diagnostics.Process[] InputObject { get; set; }
 
   private static void KillProcesses(
     string name,
