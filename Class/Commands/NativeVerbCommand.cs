@@ -11,22 +11,14 @@ abstract public class NativeVerbCommand(
 
   abstract private protected string[] VerbArguments { get; }
 
-  sealed override private protected string[] CommandScript
-  {
-    get
-    {
-      List<string> arguments = [
+  sealed override private protected string[] CommandScript => IntrinsicVerb is null
+    ? [
         .. CommandArguments,
+        .. VerbArguments
+      ]
+    : [
+        .. CommandArguments,
+        IntrinsicVerb,
+        .. VerbArguments
       ];
-
-      if (IntrinsicVerb is not null)
-      {
-        arguments.Add(IntrinsicVerb);
-      }
-
-      arguments.AddRange(VerbArguments);
-
-      return [.. arguments];
-    }
-  }
 }
