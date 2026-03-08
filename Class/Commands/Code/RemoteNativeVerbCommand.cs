@@ -11,7 +11,7 @@ abstract public class RemoteNativeVerbCommand(
 
   private protected readonly List<string> DeferredVerbArguments = [];
 
-  abstract private protected List<string> NativeCommandBaseArguments { get; }
+  abstract private protected string[] NativeCommandBaseArguments { get; }
 
   abstract private protected string[] WorkingDirectoryArguments { get; }
 
