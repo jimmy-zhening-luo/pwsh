@@ -18,7 +18,7 @@ public sealed class RemoveDirectory : WrappedRemoveDirectory
   )]
   [SupportsWildcards]
   [Tab.PathCompletions]
-  public sealed override string[] Path { get; set; } = [];
+  public sealed override required string[] Path { get; set; }
 
   [Parameter(
     ParameterSetName = "LiteralPath",

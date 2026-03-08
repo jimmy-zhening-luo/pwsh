@@ -23,11 +23,7 @@ public sealed class SetDirectory : WrappedSetDirectory
     "",
     Tab.PathItemType.Directory
   )]
-  public sealed override string Path
-  {
-    get => path;
-    set => path = value;
-  }
+  public sealed override string Path { get; set; } = string.Empty;
 
   [Parameter(
     ParameterSetName = "LiteralPath",
@@ -131,11 +127,7 @@ public sealed class SetDirectorySibling : WrappedSetDirectory
     "..",
     Tab.PathItemType.Directory
   )]
-  public sealed override string Path
-  {
-    get => path;
-    set => path = value;
-  }
+  public sealed override string Path { get; set; } = string.Empty;
 
   private protected sealed override string Location => Pwd("..");
 }
@@ -160,11 +152,7 @@ public sealed class SetDirectoryRelative : WrappedSetDirectory
     @"..\..",
     Tab.PathItemType.Directory
   )]
-  public sealed override string Path
-  {
-    get => path;
-    set => path = value;
-  }
+  public sealed override string Path { get; set; } = string.Empty;
 
   private protected sealed override string Location => Pwd(@"..\..");
 }
@@ -189,11 +177,7 @@ public sealed class SetDirectoryHome : WrappedSetDirectory
     "~",
     Tab.PathItemType.Directory
   )]
-  public sealed override string Path
-  {
-    get => path;
-    set => path = value;
-  }
+  public sealed override string Path { get; set; } = string.Empty;
 
   private protected sealed override string Location { get; } = Client.Environment.Known.Folder.Home();
 }
@@ -218,11 +202,7 @@ public sealed class SetDirectoryCode : WrappedSetDirectory
     @"~\code",
     Tab.PathItemType.Directory
   )]
-  public sealed override string Path
-  {
-    get => path;
-    set => path = value;
-  }
+  public sealed override string Path { get; set; } = string.Empty;
 
   private protected sealed override string Location { get; } = Client.Environment.Known.Folder.Code();
 }
@@ -247,11 +227,7 @@ public sealed class SetDrive : WrappedSetDirectory
     Client.File.PathString.SeparatorString,
     Tab.PathItemType.Directory
   )]
-  public sealed override string Path
-  {
-    get => path;
-    set => path = value;
-  }
+  public sealed override string Path { get; set; } = string.Empty;
 
   private protected sealed override string Location => Drive();
 }

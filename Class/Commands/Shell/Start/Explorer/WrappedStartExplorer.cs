@@ -7,7 +7,6 @@ public abstract class WrappedStartExplorer() : WrappedCommand(
 )
 {
   public abstract string[] Path { get; set; }
-  private protected string[] paths = [];
 
   [Parameter]
   [SupportsWildcards]
@@ -35,6 +34,6 @@ public abstract class WrappedStartExplorer() : WrappedCommand(
 
   private protected sealed override void TransformPipelineInput()
   {
-    BoundParameters["Path"] = paths = ReanchorPath(paths);
+    BoundParameters["Path"] = Path = ReanchorPath(Path);
   }
 }
