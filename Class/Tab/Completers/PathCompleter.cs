@@ -174,7 +174,7 @@ internal sealed class PathCompleter : TCompleter<string>
     Description: description
   );
 
-  private protected sealed override IEnumerable<string> GenerateDomain() => new string[];
+  private protected sealed override IEnumerable<string> GenerateDomain() => new string[] { };
 
   private protected sealed override IEnumerable<CompletionResultRecord> GenerateCompletion(string wordToComplete)
   {
