@@ -89,6 +89,20 @@ public sealed class TestHost() : WrappedCommand(
     set;
   }
 
+  [Parameter]
+  public SwitchParameter Detailed
+  {
+    private get;
+    set;
+  }
+
+  [Parameter]
+  public TestHostVerbosity InformationLevel
+  {
+    private get;
+    set;
+  }
+
   [Parameter(
     ParameterSetName = "ICMP"
   )]
@@ -131,20 +145,6 @@ public sealed class TestHost() : WrappedCommand(
     ParameterSetName = "NetRouteDiagnostics"
   )]
   public uint ConstrainInterface
-  {
-    private get;
-    set;
-  }
-
-  [Parameter]
-  public TestHostVerbosity InformationLevel
-  {
-    private get;
-    set;
-  }
-
-  [Parameter]
-  public SwitchParameter Detailed
   {
     private get;
     set;

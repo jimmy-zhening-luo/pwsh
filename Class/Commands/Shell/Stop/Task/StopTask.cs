@@ -11,15 +11,6 @@ namespace Module.Commands.Shell.Stop.Task;
 public class StopTask : CoreCommand
 {
   [Parameter(
-    HelpMessage = "Stop the entire process tree (the processe and all of its descendants)"
-  )]
-  public SwitchParameter Descendant
-  {
-    private protected get;
-    set;
-  }
-
-  [Parameter(
     ParameterSetName = "Name",
     Position = default,
     HelpMessage = "Names of the processes to stop"
@@ -52,6 +43,15 @@ public class StopTask : CoreCommand
     HelpMessage = "Process objects to stop"
   )]
   public required System.Diagnostics.Process[] InputObject { get; set; }
+
+  [Parameter(
+    HelpMessage = "Stop the entire process tree (the processe and all of its descendants)"
+  )]
+  public SwitchParameter Descendant
+  {
+    private protected get;
+    set;
+  }
 
   private static void KillProcesses(
     string name,
