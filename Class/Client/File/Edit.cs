@@ -53,16 +53,17 @@ static internal class Handler
     IList<string> arguments
   ) => Edit(
     path,
-    [
-      .. (
-        newWindow
-          ? ["--new-window"]
-          : reuseWindow
-            ? ["--reuse-window"]
-            : []
-      ),
-      .. arguments,
-    ]
+    newWindow
+      ? [
+          "--new-window",
+          .. arguments,
+        ]
+      : reuseWindow
+        ? [
+            "--reuse-window",
+            .. arguments,
+          ]
+        : arguments
   );
   static void Edit(
     string path,
