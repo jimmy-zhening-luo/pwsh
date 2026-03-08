@@ -21,7 +21,8 @@ public abstract class RemoteNativeVerbCommand(
     Tab.PathItemType.Directory,
     Flat: true
   )]
-  public string WorkingDirectory {
+  public string WorkingDirectory
+  {
     private protected get;
     set;
   } = string.Empty;
