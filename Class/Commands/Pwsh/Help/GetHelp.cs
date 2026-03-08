@@ -26,6 +26,7 @@ public sealed class GetHelpOnline : CoreCommand
   private string topic = string.Empty;
 
   [Parameter]
+  [ValidateNotNullOrWhiteSpace]
   public string[] Parameter
   {
     private get;

@@ -59,6 +59,7 @@ public sealed class TestHost() : WrappedCommand(
     "RemoteAddress",
     "cn"
   )]
+  [ValidateNotNullOrWhiteSpace]
   public string ComputerName { get; set; } = string.Empty;
 
   [Parameter(
