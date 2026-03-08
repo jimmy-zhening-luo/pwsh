@@ -13,6 +13,6 @@ sealed public class StartHistory() : CoreCommand(true)
       @"Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt"
     ),
     "Setting",
-    true
+    Client.File.Handler.EditorWindow.New
   );
 }

@@ -2,6 +2,22 @@ namespace Module.Client.File;
 
 static internal class Handler
 {
+  internal enum EditorProfile
+  {
+    Default,
+    Setting,
+    Svelte,
+    Python,
+    C,
+  }
+
+  internal enum EditorWindow
+  {
+    Any,
+    New,
+    Reuse,
+  }
+
   static internal void Edit() => Edit(string.Empty);
   static internal void Edit(string path) => Start.CreateProcess(
     Environment.Known.Application.VSCode,
@@ -38,55 +54,49 @@ static internal class Handler
   );
   static internal void Edit(
     string path,
-    bool newWindow,
-    bool reuseWindow
+    EditorWindow window
   ) => Edit(
     path,
-    newWindow,
-    reuseWindow,
+    window,
     []
   );
   static internal void Edit(
     string path,
-    bool newWindow,
-    bool reuseWindow,
+    EditorWindow window,
     IList<string> arguments
   ) => Edit(
     path,
-    newWindow
-      ? [
-          "--new-window",
-          .. arguments,
-        ]
-      : reuseWindow
-        ? [
-            "--reuse-window",
-            .. arguments,
-          ]
-        : arguments
+    window switch
+    {
+      EditorWindow.New => [
+        "--new-window",
+        .. arguments,
+      ],
+      EditorWindow.Reuse => [
+        "--reuse-window",
+        .. arguments,
+      ],
+      _ => arguments,
+    }
   );
   static internal void Edit(
     string path,
     string profile,
-    bool newWindow,
-    bool reuseWindow
+    EditorWindow window
   ) => Edit(
     path,
     profile,
-    newWindow,
-    reuseWindow,
+    window,
     []
   );
   static internal void Edit(
     string path,
     string profile,
-    bool newWindow,
-    bool reuseWindow,
+    EditorWindow window,
     IList<string> arguments
   ) => Edit(
     path,
-    newWindow,
-    reuseWindow,
+    window,
     [
       $"--profile={profile}",
       .. arguments,

@@ -2,15 +2,6 @@ namespace Module.Commands.Shell.Start.Workspace;
 
 abstract public class VirtualStartWorkspace() : CoreCommand(true)
 {
-  private enum VSCodeProfile
-  {
-    Default,
-    Setting,
-    Svelte,
-    Python,
-    C,
-  }
-
   private const string FlagNewWindow = "--new-window";
   private const string FlagReuseWindow = "--reuse-window";
 
@@ -19,13 +10,13 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
 
   [Parameter(Position = 1)]
   [ValidateNotNullOrWhiteSpace]
-  [Tab.EnumCompletions(typeof(VSCodeProfile))]
+  [Tab.EnumCompletions(typeof(Client.File.Handler.EditorProfile))]
   public string Name
   {
     set
     {
       List<string> profileNames = [
-        .. System.Enum.GetNames<VSCodeProfile>(),
+        .. System.Enum.GetNames<Client.File.Handler.EditorProfile>(),
       ];
 
       var profileName = profileNames.Find(
@@ -72,15 +63,24 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
   [Parameter]
   public SwitchParameter Window
   {
-    private get;
-    set;
+    private get => window is Client.File.Handler.EditorWindow.New;
+    set => window = Client.File.Handler.EditorWindow.New;
   }
+  private Client.File.Handler.EditorWindow window;
 
   [Parameter]
   public SwitchParameter ReuseWindow
   {
     private get;
     set;
+  }
+
+  sealed override private protected void Preprocess()
+  {
+    if (ReuseWindow && !Window)
+    {
+      window = Client.File.Handler.EditorWindow.Reuse;
+    }
   }
 
   sealed override private protected void Process()
@@ -98,8 +98,7 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
     {
       Client.File.Handler.Edit(
         path,
-        Window,
-        ReuseWindow,
+        window,
         ArgumentList
       );
     }
@@ -108,8 +107,7 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
       Client.File.Handler.Edit(
         path,
         profile,
-        Window,
-        ReuseWindow,
+        window,
         ArgumentList
       );
     }
