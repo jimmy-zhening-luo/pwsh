@@ -83,27 +83,25 @@ public sealed class SetDirectory : WrappedSetDirectory
   {
     switch (ParameterSetName)
     {
-      case "Path" when path is "":
-        path = Pwd("..");
+      case "Path" when Path is "":
+        BoundParameters["Path"] = Path = Pwd("..");
         break;
 
       case "Path":
         return;
 
       case "DriveC":
-        path = "C:";
+        BoundParameters["Path"] = Path = "C:";
         break;
 
       case "DriveD":
-        path = "D:";
+        BoundParameters["Path"] = Path = "D:";
         break;
 
       case "DriveE":
-        path = "E:";
+        BoundParameters["Path"] = Path = "E:";
         break;
     }
-
-    BoundParameters["Path"] = path;
   }
 }
 

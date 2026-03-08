@@ -6,7 +6,6 @@ public abstract class WrappedSetDirectory() : WrappedCommand(
 )
 {
   public abstract string Path { get; set; }
-  private protected string path = string.Empty;
 
   [Parameter]
   public SwitchParameter PassThru
@@ -19,7 +18,7 @@ public abstract class WrappedSetDirectory() : WrappedCommand(
   {
     if (!InCurrentLocation)
     {
-      BoundParameters["Path"] = path = ReanchorPath(path);
+      BoundParameters["Path"] = Path = ReanchorPath(Path);
     }
   }
 }
