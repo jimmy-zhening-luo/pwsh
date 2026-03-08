@@ -27,7 +27,7 @@ public abstract class TaskManager : CoreCommand
   {
     private get;
     set;
-  };
+  }
 
   [Parameter(
     ParameterSetName = "InputObject",
@@ -39,7 +39,7 @@ public abstract class TaskManager : CoreCommand
   {
     private get;
     set;
-  };
+  }
 
   private static void KillProcesses(
     string name,

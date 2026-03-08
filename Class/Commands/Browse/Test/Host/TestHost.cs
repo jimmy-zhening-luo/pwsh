@@ -75,7 +75,7 @@ public sealed class TestHost() : WrappedCommand(
   {
     private get;
     set;
-  };
+  }
 
   [Parameter(
     ParameterSetName = "RemotePort",
