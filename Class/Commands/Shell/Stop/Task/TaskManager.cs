@@ -33,6 +33,7 @@ public abstract class TaskManager : CoreCommand
     ParameterSetName = "InputObject",
     Mandatory = true,
     Position = default,
+    ValueFromPipeline = true,
     HelpMessage = "Process objects to stop"
   )]
   public required System.Diagnostics.Process[] InputObject
@@ -63,18 +64,21 @@ public abstract class TaskManager : CoreCommand
     .GetProcessById(pid)
     .Kill(entireProcessTree);
 
+  private protected sealed override void Process()
+  {
+    if (ParameterSetName is "InputObject")
+    {
+      foreach (var process in InputObject)
+      {
+        process.Kill(descendant);
+      }
+    }
+  }
+
   private protected sealed override void Postprocess()
   {
     switch (ParameterSetName)
     {
-      case "InputObject":
-        foreach (var process in InputObject)
-        {
-          process.Kill(descendant);
-        }
-
-        break;
-
       case "Id":
         foreach (var pid in Id)
         {
@@ -88,7 +92,7 @@ public abstract class TaskManager : CoreCommand
 
         break;
 
-      default:
+      case "Name":
         foreach (var name in Name)
         {
           switch (name)
