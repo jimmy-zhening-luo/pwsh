@@ -104,7 +104,7 @@ public abstract class NodeCommand(string? IntrinsicVerb) : RemoteNativeVerbComma
     ["v"] = "view",
   };
 
-  private protected sealed override string[] CommandPath { get; } = Client.Environment.Known.Application.Npm;
+  private protected sealed override string CommandPath { get; } = Client.Environment.Known.Application.Npm;
 
   private protected override SwitchBoard Uppercase { get; set; } = new(
     D: true,
