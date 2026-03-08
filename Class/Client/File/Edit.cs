@@ -3,9 +3,13 @@ namespace Module.Client.File;
 static internal class Handler
 {
   static void Edit() => Edit(string.Empty);
+  static void Edit(string path) => Start.CreateProcess(
+    Environment.Known.Application.VSCode,
+    path
+  );
   static void Edit(
     string path,
-    IList<string> arguments = []
+    IList<string> arguments
   ) => Start.CreateProcess(
     Environment.Known.Application.VSCode,
     [
@@ -15,8 +19,16 @@ static internal class Handler
   );
   static void Edit(
     string path,
+    string profile
+  ) => Edit(
+    path,
+    profile,
+    []
+  );
+  static void Edit(
+    string path,
     string profile,
-    IList<string> arguments = []
+    IList<string> arguments
   ) => Edit(
     path,
     [
@@ -27,8 +39,18 @@ static internal class Handler
   static void Edit(
     string path,
     bool newWindow,
+    bool reuseWindow
+  ) => Edit(
+    path,
+    newWindow,
+    reuseWindow,
+    []
+  );
+  static void Edit(
+    string path,
+    bool newWindow,
     bool reuseWindow,
-    IList<string> arguments = []
+    IList<string> arguments
   ) => Edit(
     path,
     [
@@ -46,8 +68,20 @@ static internal class Handler
     string path,
     string profile,
     bool newWindow,
+    bool reuseWindow
+  ) => Edit(
+    path,
+    profile,
+    newWindow,
+    reuseWindow,
+    []
+  );
+  static void Edit(
+    string path,
+    string profile,
+    bool newWindow,
     bool reuseWindow,
-    IList<string> arguments = []
+    IList<string> arguments
   ) => Edit(
     path,
     newWindow,
