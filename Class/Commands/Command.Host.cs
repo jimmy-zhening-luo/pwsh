@@ -119,16 +119,7 @@ public partial class CoreCommand
     {
       if (Pipeline is not null)
       {
-        _ = Pipeline.End();
-      }
-
-      CleanPipeline();
-    }
-
-    private void CleanPipeline()
-    {
-      if (Pipeline is not null)
-      {
+        Pipeline.End();
         Pipeline.Clean();
         Pipeline.Dispose();
       }
@@ -142,7 +133,7 @@ public partial class CoreCommand
       {
         if (disposing)
         {
-          CleanPipeline();
+          EndSteppablePipeline();
 
           PS.Dispose();
           powershell = default;
