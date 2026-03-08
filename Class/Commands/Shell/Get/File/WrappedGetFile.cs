@@ -4,7 +4,7 @@ public abstract class WrappedGetFile() : WrappedCommand(
   @"Microsoft.PowerShell.Management\Get-Content"
 )
 {
-  public abstract string[] Path { get; set; }
+  public abstract string[] Path { set; }
   private protected string[] paths = [];
 
   [Parameter]

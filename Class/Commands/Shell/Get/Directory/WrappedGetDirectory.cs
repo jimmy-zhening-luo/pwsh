@@ -6,7 +6,6 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
 )
 {
   public abstract string[] Path { get; set; }
-  private protected string[] paths = [];
 
   [Parameter(
     Position = 1
@@ -139,7 +138,7 @@ public abstract class WrappedGetDirectory() : WrappedCommand(
   {
     if (!InCurrentLocation)
     {
-      BoundParameters["Path"] = paths = ReanchorPath(paths);
+      BoundParameters["Path"] = Path = ReanchorPath(Path);
     }
   }
 }
