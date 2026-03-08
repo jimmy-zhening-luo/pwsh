@@ -2,12 +2,12 @@ namespace Module.Client.File;
 
 static internal class Handler
 {
-  static void Edit() => Edit(string.Empty);
-  static void Edit(string path) => Start.CreateProcess(
+  static internal void Edit() => Edit(string.Empty);
+  static internal void Edit(string path) => Start.CreateProcess(
     Environment.Known.Application.VSCode,
     path
   );
-  static void Edit(
+  static internal void Edit(
     string path,
     IList<string> arguments
   ) => Start.CreateProcess(
@@ -17,7 +17,7 @@ static internal class Handler
       .. arguments,
     ]
   );
-  static void Edit(
+  static internal void Edit(
     string path,
     string profile
   ) => Edit(
@@ -25,7 +25,7 @@ static internal class Handler
     profile,
     []
   );
-  static void Edit(
+  static internal void Edit(
     string path,
     string profile,
     IList<string> arguments
@@ -36,7 +36,7 @@ static internal class Handler
       .. arguments,
     ]
   );
-  static void Edit(
+  static internal void Edit(
     string path,
     bool newWindow,
     bool reuseWindow
@@ -46,7 +46,7 @@ static internal class Handler
     reuseWindow,
     []
   );
-  static void Edit(
+  static internal void Edit(
     string path,
     bool newWindow,
     bool reuseWindow,
@@ -65,7 +65,7 @@ static internal class Handler
           ]
         : arguments
   );
-  static void Edit(
+  static internal void Edit(
     string path,
     string profile,
     bool newWindow,
@@ -77,7 +77,7 @@ static internal class Handler
     reuseWindow,
     []
   );
-  static void Edit(
+  static internal void Edit(
     string path,
     string profile,
     bool newWindow,
