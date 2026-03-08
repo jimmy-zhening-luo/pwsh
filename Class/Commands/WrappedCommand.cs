@@ -29,16 +29,7 @@ public abstract class WrappedCommand(
 
     TransformArguments();
 
-    if (
-      PipelineInputParameterName is not null
-      && !BoundParameters.ContainsKey(
-        PipelineInputParameterName
-      )
-    )
-    {
-      Piped = true;
-    }
-    else
+    if (PipelineInputParameterName is null)
     {
       TransformPipelineInput();
     }
@@ -54,29 +45,17 @@ public abstract class WrappedCommand(
 
   private protected sealed override void Process()
   {
-    if (Piped && BoundParameters.ContainsKey(PipelineInputParameterName))
+    if (PipelineInputParameterName is null)
     {
-      TransformPipelineInput();
-
-      if (
-        BoundParameters.TryGetValue(
-          PipelineInputParameterName,
-          out var pipelineInput
-        )
-        && pipelineInput is not null
-      )
-      {
-        WriteObject("Processing pipeline");
-        ProcessSteppablePipeline(pipelineInput);
-      }
-      else
-      {
-        ProcessSteppablePipeline();
-      }
+      ProcessSteppablePipeline();
     }
     else
     {
-      ProcessSteppablePipeline();
+      TransformPipelineInput();
+
+      ProcessSteppablePipeline(
+        BoundParameters[PipelineInputParameterName]
+      );
     }
   }
 
