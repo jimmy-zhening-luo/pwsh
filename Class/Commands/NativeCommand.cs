@@ -16,7 +16,7 @@ abstract public partial class NativeCommand(bool SkipSsh = default) : CoreComman
 
   abstract private protected string CommandPath { get; }
 
-  abstract private protected string[] NativeCommandScript { get; }
+  abstract private protected string[] CommandScript { get; }
 
   virtual private protected SwitchBoard Uppercase { get; set; } = new();
 
@@ -136,7 +136,7 @@ abstract public partial class NativeCommand(bool SkipSsh = default) : CoreComman
     List<string> command = [
       "&",
       CommandPath,
-      .. NativeCommandScript,
+      .. CommandScript,
     ];
 
     if (D)

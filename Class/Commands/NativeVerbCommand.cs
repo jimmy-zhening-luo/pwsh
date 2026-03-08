@@ -11,7 +11,7 @@ abstract public class NativeVerbCommand(
 
   abstract private protected string[] VerbArguments { get; }
 
-  sealed override private protected string[] NativeCommandScript
+  sealed override private protected string[] CommandScript
   {
     get
     {
