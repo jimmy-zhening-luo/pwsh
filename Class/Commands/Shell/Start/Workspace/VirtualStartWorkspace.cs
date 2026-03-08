@@ -83,15 +83,6 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
     set;
   }
 
-  sealed override private protected void Preprocess()
-  {
-    if (Window || ReuseWindow)
-    {
-      _ = ArgumentList.RemoveAll(a => a is FlagNewWindow);
-      _ = ArgumentList.RemoveAll(a => a is FlagReuseWindow);
-    }
-  }
-
   sealed override private protected void Process()
   {
     path = InCurrentLocation
