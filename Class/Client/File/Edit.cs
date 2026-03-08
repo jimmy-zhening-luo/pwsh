@@ -35,7 +35,7 @@ static internal class Handler
   );
   static internal void Edit(
     string path,
-    string profile
+    EditorProfile profile
   ) => Edit(
     path,
     profile,
@@ -43,14 +43,13 @@ static internal class Handler
   );
   static internal void Edit(
     string path,
-    string profile,
+    EditorProfile profile,
     IList<string> arguments
   ) => Edit(
     path,
-    [
-      $"--profile={profile}",
-      .. arguments,
-    ]
+    profile,
+    default,
+    arguments
   );
   static internal void Edit(
     string path,
@@ -81,7 +80,7 @@ static internal class Handler
   );
   static internal void Edit(
     string path,
-    string profile,
+    EditorProfile profile,
     EditorWindow window
   ) => Edit(
     path,
@@ -91,15 +90,23 @@ static internal class Handler
   );
   static internal void Edit(
     string path,
-    string profile,
+    EditorProfile profile,
     EditorWindow window,
     IList<string> arguments
   ) => Edit(
     path,
     window,
-    [
-      $"--profile={profile}",
-      .. arguments,
-    ]
+    profile switch
+    {
+      EditorProfile.Default => arguments,
+      EditorProfile.C => [
+        $"--profile=C++",
+        .. arguments,
+      ],
+      _ => [
+        $"--profile={profile}",
+        .. arguments,
+      ],
+    }
   );
 }

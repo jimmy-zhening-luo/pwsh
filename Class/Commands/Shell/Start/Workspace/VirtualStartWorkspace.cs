@@ -28,12 +28,7 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
 
       if (profileName is not null)
       {
-        profile = profileName switch
-        {
-          "Default" => string.Empty,
-          "C" => "C++",
-          var pn => pn,
-        };
+        profile = System.Enum.Parse<Client.File.Handler.EditorProfile>(profileName);
 
         return;
       }
@@ -44,7 +39,7 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
       ];
     }
   }
-  private string profile = string.Empty;
+  private Client.File.Handler.EditorProfile profile;
 
   [Parameter(
     Position = 2,
@@ -94,7 +89,7 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
         ? string.Empty
         : ReanchorPath(path);
 
-    if (profile is "")
+    if (profile is default)
     {
       Client.File.Handler.Edit(
         path,

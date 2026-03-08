@@ -12,7 +12,7 @@ sealed public class StartHistory() : CoreCommand(true)
     Client.Environment.Known.Folder.AppData(
       @"Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt"
     ),
-    "Setting",
+    Client.File.Handler.EditorProfile.Setting,
     Client.File.Handler.EditorWindow.New
   );
 }
