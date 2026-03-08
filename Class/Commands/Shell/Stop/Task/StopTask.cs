@@ -15,10 +15,9 @@ public class StopTask : CoreCommand
   )]
   public SwitchParameter Descendant
   {
-    private protected get => descendant;
-    set => descendant = value;
+    private protected get;
+    set;
   }
-  private protected bool descendant;
 
   [Parameter(
     ParameterSetName = "Name",
@@ -82,7 +81,7 @@ public class StopTask : CoreCommand
     {
       foreach (var process in InputObject)
       {
-        process.Kill(descendant);
+        process.Kill(Descendant);
       }
     }
   }
@@ -94,7 +93,7 @@ public class StopTask : CoreCommand
       case "Id":
         foreach (var pid in Id)
         {
-          KillProcess(pid, descendant);
+          KillProcess(pid, Descendant);
         }
 
         break;
@@ -116,11 +115,11 @@ public class StopTask : CoreCommand
               n,
               out int pid
             ):
-              KillProcess(pid, descendant);
+              KillProcess(pid, Descendant);
               break;
 
             default:
-              KillProcesses(name, descendant);
+              KillProcesses(name, Descendant);
               break;
           }
         }
