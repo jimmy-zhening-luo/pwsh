@@ -13,12 +13,7 @@ sealed public class TestCommand : CoreCommand
     Position = default,
     ValueFromPipeline = true
   )]
-  public Collection<string> Name
-  {
-    get => names;
-    init => names = value;
-  }
-  private Collection<string> names = [];
+  public Collection<string> Name { get; init; } = [];
 
   [Parameter(Position = 1)]
   [ValidateNotNullOrWhiteSpace]
