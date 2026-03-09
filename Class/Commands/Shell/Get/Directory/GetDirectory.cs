@@ -1,4 +1,4 @@
-namespace PowerModule.Commands.Shell.Get.Directory;
+namespace PowerModule.Commands.Shell.Read.Directory;
 
 [Cmdlet(
   VerbsCommon.Get,

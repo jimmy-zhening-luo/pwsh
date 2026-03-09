@@ -1,4 +1,4 @@
-namespace PowerModule.Commands.Shell.New;
+namespace PowerModule.Commands.Shell.Create;
 
 [Cmdlet(
   VerbsCommon.New,

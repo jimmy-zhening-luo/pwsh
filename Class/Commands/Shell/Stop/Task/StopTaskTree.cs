@@ -1,4 +1,4 @@
-namespace PowerModule.Commands.Shell.Stop.Task;
+namespace PowerModule.Commands.Shell.Kill.Task;
 
 [Cmdlet(
   VerbsLifecycle.Stop,

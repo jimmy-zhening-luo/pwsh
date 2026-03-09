@@ -1,4 +1,4 @@
-namespace PowerModule.Commands.Shell.Get.File;
+namespace PowerModule.Commands.Shell.Read.File;
 
 [Cmdlet(
   VerbsCommon.Get,

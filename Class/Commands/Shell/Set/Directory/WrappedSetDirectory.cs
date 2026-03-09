@@ -1,4 +1,4 @@
-namespace PowerModule.Commands.Shell.Set.Directory;
+namespace PowerModule.Commands.Shell.Change.Directory;
 
 abstract public class WrappedSetDirectory() : WrappedCommand(
   @"Microsoft.PowerShell.Management\Set-Location",

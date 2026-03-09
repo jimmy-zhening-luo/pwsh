@@ -1,4 +1,4 @@
-namespace PowerModule.Commands.Shell.Set.Directory;
+namespace PowerModule.Commands.Shell.Change.Directory;
 
 [Cmdlet(
   VerbsCommon.Set,

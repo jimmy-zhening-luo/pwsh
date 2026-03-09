@@ -1,4 +1,4 @@
-namespace PowerModule.Commands.Shell.Get.Directory;
+namespace PowerModule.Commands.Shell.Read.Directory;
 
 abstract public class WrappedGetDirectory() : WrappedCommand(
   @"Microsoft.PowerShell.Management\Get-ChildItem",

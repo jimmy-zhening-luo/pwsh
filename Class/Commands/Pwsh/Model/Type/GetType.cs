@@ -6,7 +6,7 @@ namespace PowerModule.Commands.Pwsh.Model;
 )]
 [Alias("ty", "typeof")]
 [OutputType(typeof(System.Reflection.TypeInfo))]
-sealed public class GetType : CoreCommand
+sealed public class GetInputType : CoreCommand
 {
   [Parameter(
     Mandatory = true,
