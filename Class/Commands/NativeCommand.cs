@@ -178,7 +178,7 @@ abstract public partial class NativeCommand(bool SkipSsh = default) : CoreComman
   {
     if (IsNativeArgument(argument))
     {
-      NativeArguments.Add(argument)
+      NativeArguments.Add(argument);
     }
     else
     {
