@@ -26,7 +26,7 @@ sealed public class GitRestore() : GitCommand("pull")
 
     string[] resetArgumentsArray = [.. resetArguments];
 
-    AddCommand("Reset-GitRepository")
+    AddCommand(@"PowerModule\Reset-GitRepository")
       .AddParameter(
         "ArgumentList",
         resetArgumentsArray

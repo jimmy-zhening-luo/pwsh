@@ -21,7 +21,7 @@ sealed public class GitPush() : GitCommand("push")
       WorkingDirectory = string.Empty;
     }
 
-    AddCommand("Get-GitRepository");
+    AddCommand(@"PowerModule\Get-GitRepository");
 
     if (WorkingDirectory is not "")
     {

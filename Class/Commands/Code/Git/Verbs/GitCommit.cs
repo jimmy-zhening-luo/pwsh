@@ -78,7 +78,7 @@ sealed public class GitCommit() : GitCommand("commit")
 
     if (!Staged)
     {
-      AddCommand("Add-GitRepository");
+      AddCommand(@"PowerModule\Add-GitRepository");
 
       if (WorkingDirectory is not "")
       {

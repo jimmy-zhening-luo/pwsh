@@ -118,7 +118,7 @@ sealed public partial class GitReset() : GitCommand("reset")
     {
       NativeArguments.Insert(default, FlagHard);
 
-      AddCommand("Add-GitRepository");
+      AddCommand(@"PowerModule\Add-GitRepository");
 
       if (WorkingDirectory is not "")
       {
