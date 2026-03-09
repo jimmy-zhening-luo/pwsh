@@ -5,7 +5,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <Nullable>enable</Nullable>
-    <NoWarn>$(NoWarn);CA1307;CA1044;</NoWarn>
+    <NoWarn>$(NoWarn);CA1044;</NoWarn>
     <NoWarn>$(NoWarn);</NoWarn>
     <AnalysisMode>All</AnalysisMode>
   </PropertyGroup>
