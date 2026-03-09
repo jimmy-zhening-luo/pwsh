@@ -27,35 +27,33 @@ sealed public partial class GitReset() : GitCommand("reset")
     private get => tree;
     set
     {
-      if (tree is not "")
-      {
-        var treeMatch = GitTreeRegex().Match(tree);
-
-        if (
-          treeMatch.Success
-          && treeMatch.Groups["Step"].Value is var step
-          && (
-            step is ""
-            || int.TryParse(
-              step,
-              out var _
-            )
+      if (
+        GitTreeRegex().Match(
+          tree
+        ) is var treeMatch
+        && treeMatch.Success
+        && treeMatch.Groups["Step"].Value is var step
+        && (
+          step is ""
+          || int.TryParse(
+            step,
+            out var _
           )
         )
-        {
-          var branching = treeMatch.Groups["Branching"].Value is not ""
-          and var b
-            ? b
-            : "~";
+      )
+      {
+        var branching = treeMatch.Groups["Branching"].Value is not ""
+        and var b
+          ? b
+          : "~";
 
-          tree = $"HEAD{branching}{step}";
-        }
-        else
-        {
-          Arguments.Insert(default, tree);
+        tree = $"HEAD{branching}{step}";
+      }
+      else
+      {
+        Arguments.Insert(default, tree);
 
-          tree = string.Empty;
-        }
+        tree = string.Empty;
       }
     }
   }

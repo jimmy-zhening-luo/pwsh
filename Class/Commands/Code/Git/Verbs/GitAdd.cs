@@ -18,12 +18,10 @@ sealed public class GitAdd() : GitCommand("add")
   [PathSpecCompletions]
   public string Name
   {
-    private get => name is ""
-      ? "."
-      : name;
+    private get => name ?? ".";
     set => name = value;
   }
-  private string name = string.Empty;
+  private string? name;
 
   [Parameter(
     HelpMessage = "Equivalent to --renormalize"

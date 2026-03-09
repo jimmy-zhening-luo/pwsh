@@ -15,28 +15,31 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
   {
     set
     {
-      List<string> profileNames = [
-        .. System.Enum.GetNames<Client.File.Handler.EditorProfile>(),
-      ];
-
-      var profileName = profileNames.Find(
-        pn => pn.StartsWith(
-          value,
-          System.StringComparison.OrdinalIgnoreCase
+      if (
+        new List<string>(
+          System.Enum.GetNames<Client.File.Handler.EditorProfile>()
         )
-      );
-
-      if (profileName is not null)
+          .Find(
+            pn => pn.StartsWith(
+              value,
+              System.StringComparison.OrdinalIgnoreCase
+            )
+          ) is { } profileName
+      )
       {
-        profile = System.Enum.Parse<Client.File.Handler.EditorProfile>(profileName);
-
-        return;
+        profile = System.Enum.Parse<Client.File.Handler.EditorProfile>(
+          profileName
+        );
       }
+      else
+      {
+        ArgumentList = [
+          value,
+          .. ArgumentList,
+        ];
 
-      ArgumentList = [
-        value,
-        .. ArgumentList,
-      ];
+        profile = default;
+      }
     }
   }
   private Client.File.Handler.EditorProfile profile;
