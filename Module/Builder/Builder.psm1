@@ -68,14 +68,11 @@ function Update-PSProfile {
         throw "dotnet failed to clean profile project, with exit code: $LASTEXITCODE"
       }
 
-      $DotnetArgument += @(
-        '--force'
-        '--no-incremental'
-      )
-
       if ($Restore) {
         $DotnetArgument += @(
+          '--force'
           '--disable-build-servers'
+          '--no-incremental'
         )
       }
 
