@@ -46,7 +46,7 @@ abstract public class WrappedCommand(
     _ = AddCommand(
       WrappedCommandName,
       CommandType
-    )
+    );
     _ = AddBoundParameters();
 
     BeginSteppablePipeline();
