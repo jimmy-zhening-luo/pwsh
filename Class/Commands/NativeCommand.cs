@@ -174,11 +174,27 @@ abstract public partial class NativeCommand(bool SkipSsh = default) : CoreComman
     );
   }
 
-  private protected void AddCommandArgument(string argument) => IsNativeArgument(argument)
-    ? NativeArguments.Add(argument)
-    : Arguments.Add(argument);
+  private protected void AddCommandArgument(string argument)
+  {
+    if (IsNativeArgument(argument))
+    {
+      NativeArguments.Add(argument)
+    }
+    else
+    {
+      Arguments.Add(argument);
+    }
+  }
 
-  private protected void InsertCommandArgument(string argument) => IsNativeArgument(argument)
-    ? NativeArguments.Insert(default, argument)
-    : Arguments.Insert(default, argument);
+  private protected void InsertCommandArgument(string argument)
+  {
+    if (IsNativeArgument(argument))
+    {
+      NativeArguments.Insert(default, argument);
+    }
+    else
+    {
+      Arguments.Insert(default, argument);
+    }
+  }
 }
