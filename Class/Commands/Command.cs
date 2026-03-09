@@ -179,12 +179,9 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
       reanchoredPaths.Add(ReanchorPath(path));
     }
 
-    if (reanchoredPaths is [])
-    {
-      reanchoredPaths.Add(Location);
-    }
-
-    return [.. reanchoredPaths];
+    return reanchoredPaths is []
+      ? [Location]
+      : [.. reanchoredPaths];
   }
   private protected string ReanchorPath(string path) => Client.File.PathString.FullPathLocationRelative(
     Location,
