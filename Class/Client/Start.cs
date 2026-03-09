@@ -15,10 +15,14 @@ static internal class Start
     string fileName,
     string argument,
     bool window = default
-  ) => CreateProcess(
-    fileName,
-    [argument],
-    window
+  ) => System.Diagnostics.Process.Start(
+    new System.Diagnostics.ProcessStartInfo(
+      fileName,
+      argument
+    )
+    {
+      CreateNoWindow = !window,
+    }
   );
   static internal void CreateProcess(
     string fileName,
@@ -59,11 +63,18 @@ static internal class Start
     string argument,
     bool administrator = default,
     bool noWindow = default
-  ) => ShellExecute(
-    fileName,
-    [argument],
-    administrator,
-    noWindow
+  ) => System.Diagnostics.Process.Start(
+    new System.Diagnostics.ProcessStartInfo(
+      fileName,
+      argument
+    )
+    {
+      UseShellExecute = true,
+      Verb = administrator
+        ? "RunAs"
+        : string.Empty,
+      CreateNoWindow = noWindow,
+    }
   );
   static internal void ShellExecute(
     string fileName,
