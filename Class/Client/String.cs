@@ -1,5 +1,6 @@
 namespace PowerModule.Client;
 
+using StringComparison = System.StringComparison;
 using CultureInfo = System.Globalization.CultureInfo;
 
 static internal class String
@@ -18,7 +19,10 @@ static internal class String
   static internal CultureInfo InvariantCulture => invariantCulture ??= CultureInfo.InvariantCulture;
   static private CultureInfo? invariantCulture;
 
-  static internal string EscapeSingleQuoted(string text) => text.Contains(Space)
+  static internal string EscapeSingleQuoted(string text) => text.Contains(
+      Space,
+      System.StringComparison.Ordinal
+    )
     ? string.Concat(
       SingleQuote,
       System.Management.Automation.Language.CodeGeneration.EscapeSingleQuotedStringContent(
@@ -28,12 +32,16 @@ static internal class String
     )
     : text;
 
-  static internal string EscapeDoubleQuoted(string text) => text.Contains(Space)
+  static internal string EscapeDoubleQuoted(string text) => text.Contains(
+      Space,
+      StringComparison.Ordinal
+    )
     ? string.Concat(
       DoubleQuote,
       text.Replace(
         DoubleQuoteString,
-        EscapedDoubleQuote
+        EscapedDoubleQuote,
+        StringComparison.Ordinal
       ),
       DoubleQuote
     )
@@ -47,7 +55,8 @@ static internal class String
   ]
     ? text.Replace(
       EscapedSingleQuote,
-      SingleQuoteString
+      SingleQuoteString,
+      StringComparison.Ordinal
     )
     : escapedText;
 
@@ -59,7 +68,8 @@ static internal class String
   ]
     ? text.Replace(
       EscapedDoubleQuote,
-      DoubleQuoteString
+      DoubleQuoteString,
+      StringComparison.Ordinal
     )
     : escapedText;
 }

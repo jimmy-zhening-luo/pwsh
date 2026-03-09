@@ -31,7 +31,10 @@ sealed public class GetCommandAlias : CoreCommand
       foreach (var definition in value)
       {
         _ = definitions.Add(
-          definition.Contains('*')
+          definition.Contains(
+            '*',
+            System.StringComparison.Ordinal
+          )
             ? definition
             : definition.Length > 2
               ? $"*{definition}*"

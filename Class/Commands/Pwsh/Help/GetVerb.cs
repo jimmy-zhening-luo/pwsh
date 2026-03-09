@@ -72,7 +72,10 @@ sealed public class GetVerb : CoreCommand
         if (verb is not "")
         {
           _ = verbs.Add(
-            verb.Contains('*')
+            verb.Contains(
+              '*',
+              System.StringComparison.Ordinal
+            )
               ? verb
               : verb.Length > 2
                 ? $"*{verb}*"

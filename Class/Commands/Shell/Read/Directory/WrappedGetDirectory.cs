@@ -28,7 +28,10 @@ abstract public class WrappedGetDirectory() : WrappedCommand(
       filter = value switch
       {
         null or "" => "*",
-        _ when value.Contains('*') => value,
+        _ when value.Contains(
+          '*',
+          global::System.StringComparison.Ordinal
+        ) => value,
         _ => $"{value}*",
       };
     }
