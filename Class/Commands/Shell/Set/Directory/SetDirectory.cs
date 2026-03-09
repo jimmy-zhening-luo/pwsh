@@ -31,47 +31,27 @@ sealed public class SetDirectory : WrappedSetDirectory
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  required public string LiteralPath
-  {
-    private get;
-    set;
-  }
+  required public string LiteralPath { private get; set; }
 
   [Parameter(
     ParameterSetName = "Stack"
   )]
-  required public string Stack
-  {
-    private get;
-    set;
-  }
+  required public string Stack { private get; set; }
 
   [Parameter(
     ParameterSetName = "DriveC"
   )]
-  public SwitchParameter C
-  {
-    private get;
-    set;
-  }
+  public SwitchParameter C { private get; set; }
 
   [Parameter(
     ParameterSetName = "DriveD"
   )]
-  public SwitchParameter D
-  {
-    private get;
-    set;
-  }
+  public SwitchParameter D { private get; set; }
 
   [Parameter(
     ParameterSetName = "DriveE"
   )]
-  public SwitchParameter E
-  {
-    private get;
-    set;
-  }
+  public SwitchParameter E { private get; set; }
 
   sealed override private protected Dictionary<string, object?> CoercedParameters { get; } = new()
   {

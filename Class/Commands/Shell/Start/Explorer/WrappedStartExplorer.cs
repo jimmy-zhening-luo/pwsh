@@ -12,27 +12,15 @@ abstract public class WrappedStartExplorer() : WrappedCommand(
 
   [Parameter]
   [SupportsWildcards]
-  required public string Filter
-  {
-    private get;
-    set;
-  }
+  required public string Filter { private get; set; }
 
   [Parameter]
   [SupportsWildcards]
-  required public string[] Include
-  {
-    private get;
-    set;
-  }
+  required public string[] Include { private get; set; }
 
   [Parameter]
   [SupportsWildcards]
-  required public string[] Exclude
-  {
-    private get;
-    set;
-  }
+  required public string[] Exclude { private get; set; }
 
   sealed override private protected void TransformPipelineInput()
   {

@@ -17,25 +17,13 @@ abstract public class WrappedRemoveDirectory() : WrappedCommand(
 
   [Parameter]
   [SupportsWildcards]
-  required public string Filter
-  {
-    private get;
-    set;
-  }
+  required public string Filter { private get; set; }
 
   [Parameter]
   [SupportsWildcards]
-  required public string[] Include
-  {
-    private get;
-    set;
-  }
+  required public string[] Include { private get; set; }
 
   [Parameter]
   [SupportsWildcards]
-  required public string[] Exclude
-  {
-    private get;
-    set;
-  }
+  required public string[] Exclude { private get; set; }
 }

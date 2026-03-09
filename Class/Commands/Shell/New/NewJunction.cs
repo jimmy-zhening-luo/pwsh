@@ -27,11 +27,7 @@ sealed public class NewJunction() : WrappedCommand(
     Position = default
   )]
   [Tab.PathCompletions]
-  required public string[] Path
-  {
-    private get;
-    set;
-  }
+  required public string[] Path { private get; set; }
 
   [Parameter(
     Mandatory = true,

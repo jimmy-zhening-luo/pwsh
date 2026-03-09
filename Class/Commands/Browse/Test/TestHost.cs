@@ -82,11 +82,7 @@ sealed public class TestHost() : WrappedCommand(
     typeof(TestHostWellKnownPort),
     Case = Tab.CompletionCase.Lower
   )]
-  required public string CommonTCPPort
-  {
-    private get;
-    set;
-  }
+  required public string CommonTCPPort { private get; set; }
 
   [Parameter(
     ParameterSetName = "RemotePort",
@@ -94,72 +90,40 @@ sealed public class TestHost() : WrappedCommand(
   )]
   [Alias("RemotePort")]
   [ValidateRange(ValidateRangeKind.Positive)]
-  public ushort Port
-  {
-    private get;
-    set;
-  }
+  public ushort Port { private get; set; }
 
   [Parameter]
-  public SwitchParameter Detailed
-  {
-    private get;
-    set;
-  }
+  public SwitchParameter Detailed { private get; set; }
 
   [Parameter]
-  public TestHostVerbosity InformationLevel
-  {
-    private get;
-    set;
-  }
+  public TestHostVerbosity InformationLevel { private get; set; }
 
   [Parameter(
     ParameterSetName = "ICMP"
   )]
-  public SwitchParameter TraceRoute
-  {
-    private get;
-    set;
-  }
+  public SwitchParameter TraceRoute { private get; set; }
 
   [Parameter(
     ParameterSetName = "ICMP"
   )]
   [ValidateRange(1, 120)]
-  public int Hops
-  {
-    private get;
-    set;
-  }
+  public int Hops { private get; set; }
 
   [Parameter(
     ParameterSetName = "NetRouteDiagnostics",
     Mandatory = true
   )]
-  public SwitchParameter DiagnoseRouting
-  {
-    private get;
-    set;
-  }
+  public SwitchParameter DiagnoseRouting { private get; set; }
 
   [Parameter(
     ParameterSetName = "NetRouteDiagnostics"
   )]
-  required public string ConstrainSourceAddress
-  {
-    private get;
-    set;
-  }
+  required public string ConstrainSourceAddress { private get; set; }
 
   [Parameter(
     ParameterSetName = "NetRouteDiagnostics"
   )]
-  public uint ConstrainInterface
-  {
-    private get;
-    set;
-  }
+  public uint ConstrainInterface { private get; set; }
 
   sealed override private protected void TransformArguments()
   {

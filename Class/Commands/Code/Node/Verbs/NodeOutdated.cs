@@ -14,11 +14,7 @@ sealed public class NodeOutdated() : NodeCommand("outdated")
     HelpMessage = "In addition to direct dependencies, check for outdated meta-dependencies (--all)"
   )]
   [Alias("a")]
-  public SwitchParameter All
-  {
-    private get;
-    set;
-  }
+  public SwitchParameter All { private get; set; }
 
   sealed override private protected void PreprocessOtherArguments()
   {

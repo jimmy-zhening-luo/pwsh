@@ -25,42 +25,26 @@ sealed public class TeeVariable() : WrappedCommand(
     Mandatory = true,
     Position = default
   )]
-  required public string Variable
-  {
-    private get;
-    set;
-  }
+  required public string Variable { private get; set; }
 
   [Parameter(
     ParameterSetName = "File",
     Mandatory = true
   )]
   [Alias("Path")]
-  required public string FilePath
-  {
-    private get;
-    set;
-  }
+  required public string FilePath { private get; set; }
 
   [Parameter(
     ParameterSetName = "LiteralFile",
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  required public string LiteralPath
-  {
-    private get;
-    set;
-  }
+  required public string LiteralPath { private get; set; }
 
   [Parameter(
     ParameterSetName = "File"
   )]
-  public SwitchParameter Append
-  {
-    private get;
-    set;
-  }
+  public SwitchParameter Append { private get; set; }
 
   [Parameter(
     ParameterSetName = "File"
@@ -70,9 +54,5 @@ sealed public class TeeVariable() : WrappedCommand(
   )]
   [ValidateNotNullOrEmpty]
   [Tab.EnumCompletions(typeof(Client.File.Encoding))]
-  required public string Encoding
-  {
-    private get;
-    set;
-  }
+  required public string Encoding { private get; set; }
 }

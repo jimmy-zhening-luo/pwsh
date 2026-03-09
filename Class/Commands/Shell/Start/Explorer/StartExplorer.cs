@@ -24,11 +24,7 @@ sealed public class StartExplorer : WrappedStartExplorer
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  required public string[] LiteralPath
-  {
-    private get;
-    set;
-  }
+  required public string[] LiteralPath { private get; set; }
 }
 
 [Cmdlet(

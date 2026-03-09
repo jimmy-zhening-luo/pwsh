@@ -25,9 +25,5 @@ sealed public class RemoveDirectory : WrappedRemoveDirectory
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  required public string[] LiteralPath
-  {
-    private get;
-    set;
-  }
+  required public string[] LiteralPath { private get; set; }
 }

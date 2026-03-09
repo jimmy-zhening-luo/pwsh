@@ -18,11 +18,7 @@ public class StopTask : CoreCommand
   [Alias("ProcessName")]
   [SupportsWildcards]
   [ValidateNotNullOrWhiteSpace]
-  public string[] Name
-  {
-    private get;
-    set;
-  } = [];
+  public string[] Name { private get; set; } = [];
 
   [Parameter(
     ParameterSetName = "Id",
@@ -32,11 +28,7 @@ public class StopTask : CoreCommand
   )]
   [AllowEmptyCollection]
   [ValidateRange(ValidateRangeKind.NonNegative)]
-  required public int[] Id
-  {
-    private get;
-    set;
-  }
+  required public int[] Id { private get; set; }
 
   [Parameter(
     ParameterSetName = "InputObject",

@@ -28,11 +28,7 @@ sealed public class GetHelpOnline : CoreCommand
 
   [Parameter]
   [ValidateNotNullOrWhiteSpace]
-  public string[] Parameter
-  {
-    private get;
-    set;
-  } = [];
+  public string[] Parameter { private get; set; } = [];
 
   static private List<System.Uri>? TryExtractHelpLink(System.Collections.ObjectModel.Collection<PSObject> helpContent)
   {
