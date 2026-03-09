@@ -56,8 +56,8 @@ sealed public class NodeUpdateVersion() : NodeCommand("version")
   [ValidateNotNullOrWhiteSpace]
   [Tab.EnumCompletions(
     typeof(NodeVersion),
-    Include: ["from-git"],
-    Exclude: ["prepatch"]
+    Include = ["from-git"],
+    Exclude = ["prepatch"]
   )]
   public string Version
   {

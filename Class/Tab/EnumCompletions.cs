@@ -2,14 +2,18 @@ namespace PowerModule.Tab;
 
 sealed internal class EnumCompletionsAttribute(
   System.Type EnumType,
-  string[]? Include = default,
-  string[]? Exclude = default,
   CompletionCase Case = CompletionCase.Lower
 ) : CompletionsAttribute<System.Type>(
   EnumType,
   Case
 )
 {
+  public System.Type EnumType { get; } = EnumType;
+
+  public string[]? Include { get; init; }
+
+  public string[]? Exclude { get; init; }
+
   sealed override private protected IEnumerable<string> EnumerateDomain(System.Type enumType)
   {
     HashSet<string> exclusions = Exclude is null
