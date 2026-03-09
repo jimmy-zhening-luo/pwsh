@@ -40,7 +40,7 @@ sealed public class GitPullChild : CoreCommand
       "Pull"
     );
 
-    List<string> baseCommand = [
+    string[] baseCommand = [
       "&",
       Client.Console.String.EscapeDoubleQuoted(
         Client.Environment.Known.Application.Git
@@ -52,16 +52,14 @@ sealed public class GitPullChild : CoreCommand
 
     foreach (var repository in repositories)
     {
-      List<string> command = [
-        .. baseCommand,
-        Client.Console.String.EscapeDoubleQuoted(repository),
-        "pull",
-      ];
-
       AddScript(
         string.Join(
           Client.Console.String.Space,
-          command
+          [
+            .. baseCommand,
+            Client.Console.String.EscapeDoubleQuoted(repository),
+            "pull",
+          ]
         )
       );
 
@@ -71,8 +69,7 @@ sealed public class GitPullChild : CoreCommand
       ClearCommands();
 
       CheckNativeError(
-        $"git error when pulling repository {repository}",
-        true
+        $"git error when pulling repository {repository}"
       );
 
       ++progress;
@@ -88,7 +85,7 @@ sealed public class GitPullChild : CoreCommand
       ? string.Empty
       : "ies";
 
-    WriteObject(
+    WriteInformation(
       $"Pulled {progress} of {total} repositor{suffix}."
     );
   }

@@ -30,7 +30,7 @@ sealed public class Node() : NodeCommand(default)
     set => base.V = value;
   }
 
-  sealed override private protected List<string> ParseArguments()
+  sealed override private protected string[] ParseArguments()
   {
     if (V && IntrinsicVerb is null)
     {

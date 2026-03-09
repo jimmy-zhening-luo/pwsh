@@ -48,7 +48,7 @@ abstract public class RemoteNativeVerbCommand(
   virtual private protected void PreprocessOtherArguments()
   { }
 
-  virtual private protected List<string> ParseArguments() => [];
+  virtual private protected IList<string> ParseArguments() => [];
 
   sealed override private protected void PreprocessArguments()
   {

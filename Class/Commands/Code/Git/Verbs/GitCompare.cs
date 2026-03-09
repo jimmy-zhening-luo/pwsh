@@ -16,7 +16,7 @@ sealed public class GitCompare() : GitCommand("diff")
   [PathSpecCompletions]
   public string Name { private get; set; } = string.Empty;
 
-  sealed override private protected List<string> ParseArguments() => Name is ""
+  sealed override private protected string[] ParseArguments() => Name is ""
     ? []
     : [Name];
 }

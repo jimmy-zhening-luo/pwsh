@@ -90,5 +90,5 @@ sealed public class NodeUpdateVersion() : NodeCommand("version")
     );
   }
 
-  sealed override private protected List<string> ParseArguments() => [Version];
+  sealed override private protected string[] ParseArguments() => [Version];
 }

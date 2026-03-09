@@ -35,5 +35,5 @@ sealed public class NodeClearCache() : NodeCommand("cache")
     NativeArguments.Add("--force");
   }
 
-  sealed override private protected List<string> ParseArguments() => ["clean"];
+  sealed override private protected string[] ParseArguments() => ["clean"];
 }
