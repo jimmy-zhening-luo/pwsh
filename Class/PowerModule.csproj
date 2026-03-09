@@ -2,6 +2,10 @@
   <PropertyGroup>
     <AssemblyName>PowerModule</AssemblyName>
     <TargetFramework>net9.0-windows</TargetFramework>
+    <NoLogo>true</NoLogo>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <DebugType>none</DebugType>
   </PropertyGroup>
   <PropertyGroup>
     <Nullable>enable</Nullable>
