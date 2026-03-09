@@ -57,8 +57,8 @@ abstract public class RemoteNativeVerbCommand(
       WorkingDirectory = string.Empty;
     }
 
-    PreprocessOtherArguments();
     PreprocessIntrinsicVerb();
     PreprocessWorkingDirectory();
+    PreprocessOtherArguments();
   }
 }
