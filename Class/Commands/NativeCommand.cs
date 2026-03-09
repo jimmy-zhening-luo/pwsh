@@ -155,9 +155,9 @@ abstract public partial class NativeCommand(
     commandScript.AddRange(Arguments);
     commandScript.AddRange(NativeArguments);
 
-    List<string> safeCommand = [];
+    List<string> safeCommandScript = [];
 
-    foreach (var word in command)
+    foreach (var word in commandScript)
     {
       safeCommandScript.Add(
         Client.String.EscapeDoubleQuoted(
