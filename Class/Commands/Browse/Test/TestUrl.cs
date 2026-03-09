@@ -9,7 +9,7 @@ namespace Module.Commands.Browse.Test;
 [OutputType(typeof(System.Uri))]
 sealed public class TestUrl : CoreCommand
 {
-  static IEnumerable<System.Uri> EnumerateSupportedUri(
+  static private IEnumerable<System.Uri> EnumerateSupportedUri(
     System.Uri[] uris
   )
   {
@@ -33,7 +33,7 @@ sealed public class TestUrl : CoreCommand
     yield break;
   }
 
-  static IEnumerable<System.Uri> EnumerateReachableUri(
+  static private IEnumerable<System.Uri> EnumerateReachableUri(
     IEnumerable<System.Uri> uris
   )
   {
