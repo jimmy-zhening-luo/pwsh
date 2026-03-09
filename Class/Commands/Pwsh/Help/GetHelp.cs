@@ -29,16 +29,14 @@ sealed public class GetHelpOnline : CoreCommand
   [ValidateNotNullOrWhiteSpace]
   public string[] Parameter { private get; set; } = [];
 
-  static private List<System.Uri>? TryExtractHelpLink(System.Collections.ObjectModel.Collection<PSObject> helpContent)
+  static private IEnumerable<System.Uri> TryExtractHelpLink(System.Collections.ObjectModel.Collection<PSObject> helpContent)
   {
-    if (helpContent is null or [])
+    if (helpContent is [])
     {
-      return default;
+      yield break;
     }
 
     dynamic pscustomobject = helpContent[default];
-
-    List<System.Uri> urls = [];
 
     if (
       pscustomobject
@@ -53,14 +51,12 @@ sealed public class GetHelpOnline : CoreCommand
           && Client.Network.Url.ToAbsoluteHttpOrFileUri(helpLink) is { } uri
         )
         {
-          urls.Add(uri);
+          yield return uri;
         }
       }
     }
 
-    return urls is []
-      ? default
-      : urls;
+    yield break;
   }
 
   sealed override private protected void Postprocess()
@@ -106,14 +102,9 @@ sealed public class GetHelpOnline : CoreCommand
 
     if (helpContent is not null)
     {
-      var helpContentLinks = TryExtractHelpLink(helpContent);
-
-      if (helpContentLinks is not null)
+      foreach (var link in TryExtractHelpLink(helpContent))
       {
-        foreach (var link in helpContentLinks)
-        {
-          helpLinks.Add(link);
-        }
+        helpLinks.Add(link);
       }
 
       if (Parameter is not [])
@@ -136,12 +127,9 @@ sealed public class GetHelpOnline : CoreCommand
       );
     }
 
-    if (helpLinks is not [])
+    foreach (var helpLink in helpLinks)
     {
-      foreach (var helpLink in helpLinks)
-      {
-        WriteInformation(helpLink.ToString());
-      }
+      WriteInformation(helpLink.ToString());
     }
 
     if (!Client.Environment.Known.Variable.InSsh)
