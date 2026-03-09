@@ -7,18 +7,18 @@ abstract public class RemoteNativeVerbCommand(
 {
   private protected readonly List<string> DeferredVerbArguments = [];
 
-  abstract private protected string[] CommandBaseArguments
+  abstract private protected IEnumerable<string> CommandBaseArguments
   { get; }
 
-  abstract private protected string[] WorkingDirectoryArguments
+  abstract private protected IEnumerable<string> WorkingDirectoryArguments
   { get; }
 
-  sealed override private protected string[] CommandArguments => [
+  sealed override private protected IEnumerable<string> CommandArguments => [
     .. CommandBaseArguments,
     .. WorkingDirectoryArguments,
   ];
 
-  sealed override private protected string[] VerbArguments => [
+  sealed override private protected IEnumerable<string> VerbArguments => [
     .. DeferredVerbArguments,
     .. ParseArguments(),
   ];

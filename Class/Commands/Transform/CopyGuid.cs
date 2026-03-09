@@ -45,10 +45,7 @@ sealed public class CopyGuid : CoreCommand
     )
       .AddParameter(
         "Value",
-        new string[]
-        {
-          guid,
-        }
+        guid
       )
       .Invoke();
   }

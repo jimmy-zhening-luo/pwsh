@@ -103,7 +103,7 @@ sealed public class GitCommit() : GitCommand("commit")
     }
   }
 
-  sealed override private protected string[] ParseArguments() => Message is ""
+  sealed override private protected IEnumerable<string> ParseArguments() => Message is ""
   ? []
   : [
       "-m",

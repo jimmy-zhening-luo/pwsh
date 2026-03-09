@@ -48,7 +48,7 @@ sealed public class GitClone() : GitCommand("clone")
     );
   }
 
-  sealed override private protected string[] ParseArguments() => [
+  sealed override private protected IEnumerable<string> ParseArguments() => [
     string.Concat(
       ForceSsh
         ? "git@github.com:"

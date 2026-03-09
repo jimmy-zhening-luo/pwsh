@@ -17,5 +17,5 @@ sealed public class NodeRunScript() : NodeCommand("run")
   required public string Script
   { private get; set; }
 
-  sealed override private protected string[] ParseArguments() => [Script];
+  sealed override private protected IEnumerable<string> ParseArguments() => [Script];
 }

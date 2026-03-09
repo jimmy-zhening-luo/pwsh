@@ -31,7 +31,7 @@ sealed public class NodeVerbCommand() : NodeCommand(default)
     set => base.V = value;
   }
 
-  sealed override private protected string[] ParseArguments()
+  sealed override private protected IEnumerable<string> ParseArguments()
   {
     if (V && IntrinsicVerb is null)
     {

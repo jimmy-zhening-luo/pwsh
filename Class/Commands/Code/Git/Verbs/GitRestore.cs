@@ -24,12 +24,10 @@ sealed public class GitRestore() : GitCommand("pull")
       WorkingDirectory = string.Empty;
     }
 
-    string[] resetArgumentsArray = [.. resetArguments];
-
     AddCommand(@"PowerModule\Reset-GitRepository")
       .AddParameter(
         "ArgumentList",
-        resetArgumentsArray
+        resetArguments.ToArray()
       );
 
     if (WorkingDirectory is not "")

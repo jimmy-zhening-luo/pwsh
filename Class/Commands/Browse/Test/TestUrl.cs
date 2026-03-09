@@ -10,7 +10,7 @@ namespace PowerModule.Commands.Browse.Test;
 sealed public class TestUrl : CoreCommand
 {
   static private IEnumerable<System.Uri> EnumerateSupportedUri(
-    System.Uri[] uris
+    IEnumerable<System.Uri> uris
   )
   {
     foreach (var uri in uris)

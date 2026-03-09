@@ -117,10 +117,10 @@ abstract public class NodeCommand(string? IntrinsicVerb) : RemoteNativeVerbComma
     P: true
   );
 
-  sealed override private protected string[] CommandBaseArguments
+  sealed override private protected IEnumerable<string> CommandBaseArguments
   { get; } = ["--color=always"];
 
-  sealed override private protected string[] WorkingDirectoryArguments => WorkingDirectory is ""
+  sealed override private protected IEnumerable<string> WorkingDirectoryArguments => WorkingDirectory is ""
     ? []
     : [
         $"--prefix={Pwd(WorkingDirectory)}",

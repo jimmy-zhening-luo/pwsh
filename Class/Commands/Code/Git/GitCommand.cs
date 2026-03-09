@@ -51,13 +51,13 @@ abstract public class GitCommand(string? IntrinsicVerb) : RemoteNativeVerbComman
     P: true
   );
 
-  sealed override private protected string[] CommandBaseArguments
+  sealed override private protected IEnumerable<string> CommandBaseArguments
   { get; } = [
     "-c",
     "color.ui=always",
   ];
 
-  sealed override private protected string[] WorkingDirectoryArguments => WorkingDirectory is ""
+  sealed override private protected IEnumerable<string> WorkingDirectoryArguments => WorkingDirectory is ""
     ? []
     : [
         "-C",
