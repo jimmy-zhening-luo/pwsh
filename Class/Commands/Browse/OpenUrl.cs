@@ -19,22 +19,9 @@ sealed public class OpenUrl() : CoreCommand(true)
   [Tab.PathCompletions]
   public string Path
   {
-    private get => pathUri?.ToString() ?? string.Empty;
-    set => pathUri = value switch
-    {
-      "" => default,
-      var path when Client.Network.Url.ToAbsoluteHttpUri(path) is { } url => url,
-      var path when Client.Network.Url.ToAbsoluteFileUri(path) is { } fileUri && Client.Network.Url.TestFile(fileUri) => fileUri,
-      var path => System.Uri.TryCreate(
-        path,
-        System.UriKind.Relative,
-        out var relativeUrl
-      )
-        ? relativeUrl
-        : default,
-    };
-  }
-  private System.Uri? pathUri;
+    private get;
+    set;
+  } = string.Empty;
 
   [Parameter(
     ParameterSetName = "Uri",
@@ -45,32 +32,16 @@ sealed public class OpenUrl() : CoreCommand(true)
   )]
   [AllowEmptyCollection]
   [ValidateNotNull]
-  public System.Uri[] Uri
-  {
-    get => [.. uris];
-    set
-    {
-      uris.Clear();
-
-      foreach (var uri in value)
-      {
-        if (
-          Client.Network.Url.IsHttp(uri)
-          || Client.Network.Url.TestFile(uri)
-        )
-        {
-          uris.Add(uri);
-        }
-      }
-    }
-  }
-  private readonly List<System.Uri> uris = [];
+  public required System.Uri[] Uri { get; set; }
 
   sealed override private protected void Process()
   {
     foreach (var uri in Uri)
     {
-      Client.Network.Url.Open(uri);
+      if (Client.Network.Url.IsHttpOrFile(uri))
+      {
+        Client.Network.Url.Open(uri);
+      }
     }
   }
 
@@ -78,19 +49,22 @@ sealed public class OpenUrl() : CoreCommand(true)
   {
     if (ParameterSetName is "Path")
     {
-      switch (pathUri)
+      switch (Path)
       {
-        case null:
+        case "":
           Client.Network.Url.Open();
           break;
 
-        case { IsAbsoluteUri: true }:
-          Client.Network.Url.Open(pathUri);
+        case var path when Client.Network.Url.ToAbsoluteHttpUri(path) is { } url:
+          Client.Network.Url.Open(url);
           break;
 
-        case { OriginalString: var s }
-          when Client.Network.Url.ToAbsoluteHttpUri(
-            $"http://{s}"
+        case var path when Client.Network.Url.ToAbsoluteFileUri(path) is { } fileUri && Client.Network.Url.TestFile(fileUri):
+          Client.Network.Url.Open(fileUri);
+          break;
+
+        case var path when Client.Network.Url.ToAbsoluteHttpUri(
+            $"http://{path}"
           ) is { } url
           && Client.Network.Dns.Resolve(url)
           && Client.Network.Url.TestHttp(url):
