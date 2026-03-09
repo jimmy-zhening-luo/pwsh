@@ -25,7 +25,7 @@ static internal class Handler
   );
   static internal void Edit(
     string path,
-    IList<string> arguments
+    IEnumerable<string> arguments
   ) => Start.CreateProcess(
     Environment.Known.Application.VSCode,
     [
@@ -44,7 +44,7 @@ static internal class Handler
   static internal void Edit(
     string path,
     EditorProfile profile,
-    IList<string> arguments
+    IEnumerable<string> arguments
   ) => Edit(
     path,
     profile,
@@ -62,7 +62,7 @@ static internal class Handler
   static internal void Edit(
     string path,
     EditorWindow window,
-    IList<string> arguments
+    IEnumerable<string> arguments
   ) => Edit(
     path,
     window switch
@@ -92,7 +92,7 @@ static internal class Handler
     string path,
     EditorProfile profile,
     EditorWindow window,
-    IList<string> arguments
+    IEnumerable<string> arguments
   ) => Edit(
     path,
     window,
