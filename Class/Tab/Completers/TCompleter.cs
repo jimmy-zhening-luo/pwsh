@@ -20,7 +20,7 @@ abstract internal class TCompleter(
     System.Collections.IDictionary fakeBoundParameters
   ) => WrapArgumentCompletionResult(
     GenerateCompletion(
-      Client.Console.String.UnescapeSingleQuoted(
+      Client.String.UnescapeSingleQuoted(
         wordToComplete
       )
     )
@@ -41,7 +41,7 @@ abstract internal class TCompleter(
       };
 
       yield return new(
-        Client.Console.String.EscapeSingleQuoted(casedResult),
+        Client.String.EscapeSingleQuoted(casedResult),
         completion.DisplayName ?? casedResult,
         completion.CompletionType ?? CompletionType,
         completion.Description ?? result

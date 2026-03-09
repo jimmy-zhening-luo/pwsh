@@ -1,4 +1,4 @@
-namespace PowerModule.Client.Console;
+namespace PowerModule.Client;
 
 using CultureInfo = System.Globalization.CultureInfo;
 

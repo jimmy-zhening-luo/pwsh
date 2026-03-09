@@ -32,7 +32,7 @@ sealed public class ConvertToHex : Cmdlet
     {
       var hex = number.ToString(
         "X",
-        Client.Console.String.InvariantCulture
+        Client.String.InvariantCulture
       );
 
       WriteObject(

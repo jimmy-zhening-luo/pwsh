@@ -168,7 +168,7 @@ abstract public partial class NativeCommand(bool SkipSsh = default) : CoreComman
     foreach (var word in command)
     {
       safeCommand.Add(
-        Client.Console.String.EscapeDoubleQuoted(
+        Client.String.EscapeDoubleQuoted(
           word
         )
       );
@@ -176,7 +176,7 @@ abstract public partial class NativeCommand(bool SkipSsh = default) : CoreComman
 
     AddScript(
       string.Join(
-        Client.Console.String.Space,
+        Client.String.Space,
         safeCommand
       )
     );

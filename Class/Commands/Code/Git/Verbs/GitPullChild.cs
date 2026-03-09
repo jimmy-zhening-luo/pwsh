@@ -36,14 +36,14 @@ sealed public class GitPullChild : CoreCommand
   {
     ushort progress = default;
 
-    string baseCommand = $"& {Client.Console.String.EscapeDoubleQuoted(
+    string baseCommand = $"& {Client.String.EscapeDoubleQuoted(
       Client.Environment.Known.Application.Git
     )} -c color.ui=always -C";
 
     foreach (var repository in EnumerateRepository())
     {
       AddScript(
-        $"{baseCommand} {Client.Console.String.EscapeDoubleQuoted(
+        $"{baseCommand} {Client.String.EscapeDoubleQuoted(
           repository
         )} pull"
       );
