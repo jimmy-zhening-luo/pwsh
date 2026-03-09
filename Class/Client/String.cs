@@ -20,13 +20,19 @@ static internal class String
   static private CultureInfo? invariantCulture;
 
   static internal string EscapeSingleQuoted(string text) => text.Contains(
-      Space,
-      System.StringComparison.Ordinal
-    )
+    Space,
+    System.StringComparison.Ordinal
+  )
+  || text.Contains(
+    SingleQuote,
+    System.StringComparison.Ordinal
+  )
     ? string.Concat(
       SingleQuote,
-      System.Management.Automation.Language.CodeGeneration.EscapeSingleQuotedStringContent(
-        text
+      text.Replace(
+        SingleQuoteString,
+        EscapedSingleQuote,
+        StringComparison.Ordinal
       ),
       SingleQuote
     )
