@@ -12,16 +12,19 @@ static internal class Url
   }
 
   static private System.Net.Http.HttpClient HttpClient => client ??= new System.Net.Http.HttpClient(
-    new System.Net.Http.SocketsHttpHandler()
-    {
-      PooledConnectionLifetime = System.TimeSpan.FromMinutes(2),
-      ConnectTimeout = System.TimeSpan.FromMilliseconds(3000),
-    }
+    HttpHandler
   )
   {
     Timeout = System.TimeSpan.FromMilliseconds(3500),
   };
   static private System.Net.Http.HttpClient? client;
+
+  static internal System.Net.Http.SocketsHttpHandler HttpHandler => handler ??= new System.Net.Http.SocketsHttpHandler()
+  {
+    PooledConnectionLifetime = System.TimeSpan.FromMinutes(2),
+    ConnectTimeout = System.TimeSpan.FromMilliseconds(3000),
+  };
+  static private System.Net.Http.SocketsHttpHandler? handler;
 
   static internal bool IsHttp(System.Uri uri) => uri is
   {
