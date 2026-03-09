@@ -21,7 +21,7 @@ sealed public partial class GitReset() : GitCommand("reset")
     HelpMessage = "Tree spec to which to revert given as '[HEAD]([~]|^)[n]', defaulting to HEAD. If only the number index is given, branching defaults to '~'. If only branching is given, the index defaults to 0 (HEAD)."
   )]
   [ValidateNotNullOrWhiteSpace]
-  [PathSpecCompletions]
+  [Tab.PathCompletions(ItemType: Tab.PathItemType.File)]
   public string Tree
   {
     private get => tree;

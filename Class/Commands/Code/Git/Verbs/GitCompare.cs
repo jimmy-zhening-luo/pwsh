@@ -13,7 +13,7 @@ sealed public class GitCompare() : GitCommand("diff")
     HelpMessage = "File pattern of files to diff, defaulting to '.' (all)"
   )]
   [ValidateNotNullOrWhiteSpace]
-  [PathSpecCompletions]
+  [Tab.PathCompletions(ItemType: Tab.PathItemType.File)]
   public string Name { private get; set; } = string.Empty;
 
   sealed override private protected string[] ParseArguments() => Name is ""

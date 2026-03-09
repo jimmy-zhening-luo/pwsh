@@ -5,10 +5,6 @@ abstract public class RemoteNativeVerbCommand(
   bool SkipSsh = default
 ) : NativeVerbCommand(IntrinsicVerb, SkipSsh)
 {
-  sealed internal class PathSpecCompletionsAttribute() : Tab.PathCompletionsAttribute(
-    ItemType: Tab.PathItemType.File
-  );
-
   private protected readonly List<string> DeferredVerbArguments = [];
 
   abstract private protected string[] CommandBaseArguments { get; }
@@ -33,7 +29,7 @@ abstract public class RemoteNativeVerbCommand(
   [Tab.PathCompletions(
     @"~\code",
     Tab.PathItemType.Directory,
-    Flat: true
+    Flat = true
   )]
   public string WorkingDirectory
   {

@@ -7,13 +7,18 @@ internal enum PathItemType
   Directory,
 }
 
-internal class PathCompletionsAttribute(
+sealed internal class PathCompletionsAttribute(
   string Location = "",
-  PathItemType ItemType = default,
-  bool Flat = default,
-  CompletionCase Case = CompletionCase.Lower
+  PathItemType ItemType = PathItemType.Any,
+ CompletionCase Case = CompletionCase.Lower
 ) : TCompletionsAttribute(Case)
 {
+  public string Location { get; } = Location;
+
+  public PathItemType ItemType { get; } = ItemType;
+
+  public bool Flat { get; init; }
+
   sealed override public Completers.PathCompleter Create() => new(
     Location,
     ItemType,

@@ -15,7 +15,7 @@ sealed public class GitCommit() : GitCommand("commit")
     HelpMessage = "Commit message, defaulting to 'No message' on an empty commit"
   )]
   [ValidateNotNullOrWhiteSpace]
-  [PathSpecCompletions]
+  [Tab.PathCompletions(ItemType: Tab.PathItemType.File)]
   public string Message { private get; set; } = string.Empty;
 
   [Parameter(
