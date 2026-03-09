@@ -129,6 +129,8 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     }
   }
 
+  private protected PowerShell AddStatement() => PSHost.AddStatement();
+
   private protected PowerShell AddCommand(
     string command,
     CommandTypes commandType = CommandTypes.Cmdlet
@@ -150,8 +152,6 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
 
   private protected PowerShell AddParameters(System.Collections.IList parameters) => PSHost.AddParameters(parameters);
   private protected PowerShell AddParameters(System.Collections.IDictionary parameters) => PSHost.AddParameters(parameters);
-
-  private protected PowerShell AddStatement() => PSHost.AddStatement();
 
   private protected PowerShell AddScript(string script) => PSHost.AddScript(script);
 

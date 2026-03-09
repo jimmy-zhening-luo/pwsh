@@ -49,6 +49,8 @@ public partial class CoreCommand
       System.GC.SuppressFinalize(this);
     }
 
+    internal PowerShell AddStatement() => PS.AddStatement();
+
     internal PowerShell AddCommand(CommandInfo command) => PS.AddCommand(command);
 
     internal PowerShell AddParameter(string parameterName) => PS.AddParameter(parameterName);
@@ -62,8 +64,6 @@ public partial class CoreCommand
 
     internal PowerShell AddParameters(System.Collections.IList parameters) => PS.AddParameters(parameters);
     internal PowerShell AddParameters(System.Collections.IDictionary parameters) => PS.AddParameters(parameters);
-
-    internal PowerShell AddStatement() => PS.AddStatement();
 
     internal PowerShell AddScript(string script) => PS.AddScript(script);
 
