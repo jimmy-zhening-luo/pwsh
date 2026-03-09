@@ -172,8 +172,8 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
 
   private protected PowerShell AddScript(string script) => PSHost.AddScript(script);
 
-  private protected System.Collections.ObjectModel.Collection<PSObject> InvokePowerShell() => PSHost.InvokePowerShell();
-  private protected System.Collections.ObjectModel.Collection<T> InvokePowerShell<T>() => PSHost.InvokePowerShell<T>();
+  private protected Collection<PSObject> InvokePowerShell() => PSHost.InvokePowerShell();
+  private protected Collection<T> InvokePowerShell<T>() => PSHost.InvokePowerShell<T>();
 
   private protected void ClearCommands() => PSHost.ClearCommands();
 

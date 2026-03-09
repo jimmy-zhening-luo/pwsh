@@ -67,8 +67,8 @@ public partial class CoreCommand
 
     internal PowerShell AddScript(string script) => PS.AddScript(script);
 
-    internal System.Collections.ObjectModel.Collection<PSObject> InvokePowerShell() => PS.Invoke();
-    internal System.Collections.ObjectModel.Collection<T> InvokePowerShell<T>() => PS.Invoke<T>();
+    internal Collection<PSObject> InvokePowerShell() => PS.Invoke();
+    internal Collection<T> InvokePowerShell<T>() => PS.Invoke<T>();
 
     internal void ClearCommands() => PS.Commands.Clear();
 

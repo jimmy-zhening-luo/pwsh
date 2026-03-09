@@ -29,7 +29,7 @@ sealed public class GetHelpOnline : CoreCommand
   [ValidateNotNullOrWhiteSpace]
   public string[] Parameter { private get; set; } = [];
 
-  static private IEnumerable<System.Uri> TryExtractHelpLink(System.Collections.ObjectModel.Collection<PSObject> helpContent)
+  static private IEnumerable<System.Uri> TryExtractHelpLink(Collection<PSObject> helpContent)
   {
     if (helpContent is [])
     {
