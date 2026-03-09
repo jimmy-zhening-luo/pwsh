@@ -6,7 +6,7 @@ namespace PowerModule.Commands.Code.Node.Verbs;
   HelpUri = "https://docs.npmjs.com/cli/commands"
 )]
 [Alias("n")]
-sealed public class Node() : NodeCommand(default)
+sealed public class NodeVerbCommand() : NodeCommand(default)
 {
   new private SwitchParameter V { get; set; }
 

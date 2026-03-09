@@ -6,7 +6,7 @@ namespace PowerModule.Commands.Code.Git.Verbs;
   HelpUri = "https://git-scm.com/docs"
 )]
 [Alias("g")]
-sealed public class Git() : GitCommand(default)
+sealed public class GitVerbCommand() : GitCommand(default)
 {
   new private SwitchParameter V { get; set; }
 
