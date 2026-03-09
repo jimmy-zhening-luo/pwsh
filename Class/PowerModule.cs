@@ -1,6 +1,6 @@
-namespace Module;
+namespace PowerModule;
 
-static internal class Module
+static internal class PowerModule
 {
   static internal string FullPathCurrentLocationRelative(string path) => Client.File.PathString.FullPathLocationRelative(
     FullPathCurrentLocationRelative(),

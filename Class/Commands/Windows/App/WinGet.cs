@@ -1,4 +1,4 @@
-namespace Module.Commands.Windows.App;
+namespace PowerModule.Commands.Windows.App;
 
 abstract public class WinGetCommand(string IntrinsicVerb) : NativeVerbCommand(IntrinsicVerb)
 {

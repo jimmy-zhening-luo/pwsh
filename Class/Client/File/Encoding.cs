@@ -1,4 +1,4 @@
-namespace Module.Client.File;
+namespace PowerModule.Client.File;
 
 internal enum Encoding
 {

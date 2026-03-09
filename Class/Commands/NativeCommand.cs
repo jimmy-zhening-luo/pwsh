@@ -1,4 +1,4 @@
-namespace Module.Commands;
+namespace PowerModule.Commands;
 
 abstract public partial class NativeCommand(bool SkipSsh = default) : CoreCommand(SkipSsh)
 {

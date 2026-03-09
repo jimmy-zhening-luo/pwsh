@@ -1,4 +1,4 @@
-namespace Module.Client.Console;
+namespace PowerModule.Client.Console;
 
 static internal class String
 {

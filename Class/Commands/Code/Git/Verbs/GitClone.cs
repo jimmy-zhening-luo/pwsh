@@ -1,4 +1,4 @@
-namespace Module.Commands.Code.Git.Verbs;
+namespace PowerModule.Commands.Code.Git.Verbs;
 
 [Cmdlet(
   VerbsData.Import,

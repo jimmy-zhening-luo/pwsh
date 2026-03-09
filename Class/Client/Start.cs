@@ -1,4 +1,4 @@
-namespace Module.Client;
+namespace PowerModule.Client;
 
 static internal class Start
 {

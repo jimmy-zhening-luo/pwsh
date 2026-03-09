@@ -1,4 +1,4 @@
-namespace Module.Commands.Browse;
+namespace PowerModule.Commands.Browse;
 
 [Cmdlet(
   VerbsCommon.Open,

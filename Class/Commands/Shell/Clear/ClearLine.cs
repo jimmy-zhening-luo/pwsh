@@ -1,4 +1,4 @@
-namespace Module.Commands.Shell.Clear;
+namespace PowerModule.Commands.Shell.Clear;
 
 [Cmdlet(
   VerbsCommon.Clear,

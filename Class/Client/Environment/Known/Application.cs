@@ -1,4 +1,4 @@
-namespace Module.Client.Environment.Known;
+namespace PowerModule.Client.Environment.Known;
 
 static internal class Application
 {

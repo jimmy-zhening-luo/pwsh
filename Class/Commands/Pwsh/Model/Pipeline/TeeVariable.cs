@@ -1,4 +1,4 @@
-namespace Module.Commands.Pwsh.Model.Pipeline;
+namespace PowerModule.Commands.Pwsh.Model.Pipeline;
 
 [Cmdlet(
   "Tee",

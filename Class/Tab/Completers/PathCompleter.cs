@@ -1,4 +1,4 @@
-namespace Module.Tab.Completers;
+namespace PowerModule.Tab.Completers;
 
 sealed internal class PathCompleter : TCompleter
 {
@@ -33,7 +33,7 @@ sealed internal class PathCompleter : TCompleter
     Client.File.PathString.Normalize(location) is var normalPath
     && System.IO.Path.IsPathFullyQualified(normalPath)
       ? normalPath
-      : Module.FullPathCurrentLocationRelative(normalPath),
+      : PowerModule.FullPathCurrentLocationRelative(normalPath),
     itemType,
     flat,
     location is ""

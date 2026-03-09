@@ -1,4 +1,4 @@
-namespace Module.Commands;
+namespace PowerModule.Commands;
 
 public partial class CoreCommand
 {

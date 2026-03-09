@@ -1,4 +1,4 @@
-namespace Module.Tab.Completers;
+namespace PowerModule.Tab.Completers;
 
 sealed internal class Completer(
   IEnumerable<string> Domain,

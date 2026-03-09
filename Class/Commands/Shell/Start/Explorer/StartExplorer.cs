@@ -1,4 +1,4 @@
-namespace Module.Commands.Shell.Start.Explorer;
+namespace PowerModule.Commands.Shell.Start.Explorer;
 
 [Cmdlet(
   VerbsLifecycle.Start,

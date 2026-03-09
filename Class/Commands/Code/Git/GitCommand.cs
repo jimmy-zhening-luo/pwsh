@@ -1,4 +1,4 @@
-namespace Module.Commands.Code.Git;
+namespace PowerModule.Commands.Code.Git;
 
 abstract public class GitCommand(string? IntrinsicVerb) : RemoteNativeVerbCommand(IntrinsicVerb)
 {

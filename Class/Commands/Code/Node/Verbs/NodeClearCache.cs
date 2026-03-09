@@ -1,4 +1,4 @@
-namespace Module.Commands.Code.Node.Verbs;
+namespace PowerModule.Commands.Code.Node.Verbs;
 
 [Cmdlet(
   VerbsCommon.Clear,

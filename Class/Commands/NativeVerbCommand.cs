@@ -1,4 +1,4 @@
-namespace Module.Commands;
+namespace PowerModule.Commands;
 
 abstract public class NativeVerbCommand(
   string? IntrinsicVerb,

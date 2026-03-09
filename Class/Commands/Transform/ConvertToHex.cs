@@ -1,4 +1,4 @@
-namespace Module.Commands.Transform;
+namespace PowerModule.Commands.Transform;
 
 [Cmdlet(
   VerbsData.ConvertTo,

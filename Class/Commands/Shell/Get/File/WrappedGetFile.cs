@@ -1,4 +1,4 @@
-namespace Module.Commands.Shell.Get.File;
+namespace PowerModule.Commands.Shell.Get.File;
 
 abstract public class WrappedGetFile() : WrappedCommand(
   @"Microsoft.PowerShell.Management\Get-Content"

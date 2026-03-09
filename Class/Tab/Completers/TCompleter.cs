@@ -1,4 +1,4 @@
-namespace Module.Tab.Completers;
+namespace PowerModule.Tab.Completers;
 
 abstract internal class TCompleter(
   CompletionCase Case,

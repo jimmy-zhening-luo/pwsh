@@ -1,4 +1,4 @@
-namespace Module.Commands.Code.Node;
+namespace PowerModule.Commands.Code.Node;
 
 abstract public class NodeCommand(string? IntrinsicVerb) : RemoteNativeVerbCommand(IntrinsicVerb)
 {

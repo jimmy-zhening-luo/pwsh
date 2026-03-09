@@ -1,4 +1,4 @@
-namespace Module.Client.Network;
+namespace PowerModule.Client.Network;
 
 static internal class Dns
 {

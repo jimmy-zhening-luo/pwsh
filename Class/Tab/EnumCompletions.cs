@@ -1,4 +1,4 @@
-namespace Module.Tab;
+namespace PowerModule.Tab;
 
 sealed internal class EnumCompletionsAttribute(
   System.Type EnumType,

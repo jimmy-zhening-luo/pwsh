@@ -1,4 +1,4 @@
-namespace Module.Tab;
+namespace PowerModule.Tab;
 
 internal enum PathItemType
 {

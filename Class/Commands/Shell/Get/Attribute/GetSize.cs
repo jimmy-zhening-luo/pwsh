@@ -1,4 +1,4 @@
-namespace Module.Commands.Shell.Get.Attribute;
+namespace PowerModule.Commands.Shell.Get.Attribute;
 
 [Cmdlet(
   VerbsCommon.Get,

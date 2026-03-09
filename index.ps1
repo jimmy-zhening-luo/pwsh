@@ -24,8 +24,8 @@ $Global:PSDefaultParameterValues = @{
 ) | Remove-Alias -Force
 
 & {
-  $DIST = "$PSScriptRoot\Class\bin\Release\net9.0-windows\Module.dll"
-  $ASSEMBLY = "$PSScriptRoot\Module\Module\Module.dll"
+  $DIST = "$PSScriptRoot\Class\bin\Release\net9.0-windows\PowerModule.dll"
+  $ASSEMBLY = "$PSScriptRoot\Module\PowerModule\PowerModule.dll"
 
   if (Test-Path -LiteralPath $DIST -PathType Leaf) {
     if (
@@ -51,7 +51,7 @@ $Global:PSDefaultParameterValues = @{
     }
   }
   else {
-    Write-Warning -Message 'Module assembly is not built.'
+    Write-Warning -Message 'PowerModule assembly is not built.'
   }
 }
 

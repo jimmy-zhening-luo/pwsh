@@ -1,4 +1,4 @@
-namespace Module.Tab;
+namespace PowerModule.Tab;
 
 internal class CompletionsAttribute(params string[] Domain) : CompletionsAttribute<string[]>(Domain)
 {

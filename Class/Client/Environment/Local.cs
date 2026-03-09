@@ -1,4 +1,4 @@
-namespace Module.Client.Environment;
+namespace PowerModule.Client.Environment;
 
 static internal class Local
 {

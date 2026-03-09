@@ -1,5 +1,5 @@
 @{
-  RootModule           = 'Module.dll'
+  RootModule           = 'PowerModule.dll'
   ModuleVersion        = '3.0.0.0'
   CompatiblePSEditions = @('Desktop', 'Core')
   GUID                 = '0d6f7f29-9175-410d-bd89-622ad5926f29'

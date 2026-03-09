@@ -1,4 +1,4 @@
-namespace Module.Commands.Pwsh.Model;
+namespace PowerModule.Commands.Pwsh.Model;
 
 [Cmdlet(
   VerbsCommon.Get,

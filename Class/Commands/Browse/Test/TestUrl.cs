@@ -1,4 +1,4 @@
-namespace Module.Commands.Browse.Test;
+namespace PowerModule.Commands.Browse.Test;
 
 [Cmdlet(
   VerbsDiagnostic.Test,

@@ -1,5 +1,5 @@
 <Solution>
   <Folder Name="/Class/">
-    <Project Path="Class/Module.csproj"/>
+    <Project Path="Class/PowerModule.csproj"/>
   </Folder>
 </Solution>
