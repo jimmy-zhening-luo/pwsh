@@ -18,7 +18,6 @@ sealed public class GetHelpOnline : CoreCommand
   [ValidateNotNullOrWhiteSpace]
   public string[] Name
   {
-    private get => [topic];
     set => topic = string.Join(
       '_',
       value
