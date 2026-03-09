@@ -21,11 +21,11 @@ static internal class String
 
   static internal string EscapeSingleQuoted(string text) => text.Contains(
     Space,
-    System.StringComparison.Ordinal
+    StringComparison.Ordinal
   )
   || text.Contains(
     SingleQuote,
-    System.StringComparison.Ordinal
+    StringComparison.Ordinal
   )
     ? string.Concat(
       SingleQuote,
