@@ -1,6 +1,9 @@
 namespace PowerModule.Commands;
 
-abstract public partial class NativeCommand(bool SkipSsh = default) : CoreCommand(SkipSsh)
+abstract public partial class NativeCommand(
+  string? IntrinsicVerb,
+  bool SkipSsh = default
+) : CoreCommand(SkipSsh)
 {
   sealed private protected record SwitchBoard(
     bool D = default,
@@ -17,7 +20,10 @@ abstract public partial class NativeCommand(bool SkipSsh = default) : CoreComman
   abstract private protected string CommandPath
   { get; }
 
-  abstract private protected IEnumerable<string> CommandScript
+  abstract private protected IEnumerable<string> CommandArguments
+  { get; }
+
+  abstract private protected IEnumerable<string> VerbArguments
   { get; }
 
   virtual private protected SwitchBoard Uppercase
@@ -82,6 +88,9 @@ abstract public partial class NativeCommand(bool SkipSsh = default) : CoreComman
   public SwitchParameter P
   { private protected get; set; }
 
+  private protected string? IntrinsicVerb
+  { get; set; } = IntrinsicVerb;
+
   static private protected bool IsNativeArgument(string argument) => NativeArgumentRegex().IsMatch(argument);
   [System.Text.RegularExpressions.GeneratedRegex(
     @"^(?>-(?>[A-Za-z]|(?>(?>-[A-Za-z][A-Za-z\d]*(?>_[A-Za-z\d]+)*)(?>-[A-Za-z\d]+(?>_[A-Za-z\d]+)*)*)))(?>=\S+)?$"
@@ -108,8 +117,15 @@ abstract public partial class NativeCommand(bool SkipSsh = default) : CoreComman
     List<string> command = [
       "&",
       CommandPath,
-      .. CommandScript,
+      .. CommandArguments,
     ];
+
+    if (IntrinsicVerb is not null)
+    {
+      command.Add(IntrinsicVerb);
+    }
+
+    command.AddRange(VerbArguments);
 
     if (D)
     {

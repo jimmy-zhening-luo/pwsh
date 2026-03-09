@@ -1,6 +1,6 @@
 namespace PowerModule.Commands.Windows.App;
 
-abstract public class WinGetCommand(string IntrinsicVerb) : NativeVerbCommand(IntrinsicVerb)
+abstract public class WinGetCommand(string IntrinsicVerb) : NativeCommand(IntrinsicVerb)
 {
   sealed override private protected string CommandPath
   { get; } = Client.Environment.Known.Application.WinGet;

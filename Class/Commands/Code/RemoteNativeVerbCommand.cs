@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Code;
 abstract public class RemoteNativeVerbCommand(
   string? IntrinsicVerb,
   bool SkipSsh = default
-) : NativeVerbCommand(IntrinsicVerb, SkipSsh)
+) : NativeCommand(IntrinsicVerb, SkipSsh)
 {
   private protected readonly List<string> DeferredVerbArguments = [];
 
