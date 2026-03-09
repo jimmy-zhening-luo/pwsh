@@ -19,7 +19,7 @@ sealed public class GitClone() : GitCommand("clone")
     private get => remote;
     set
     {
-      remote = value.Split(
+      remote = value?.Split(
         Client.File.PathString.AltSeparator,
         System.StringSplitOptions.RemoveEmptyEntries
         | System.StringSplitOptions.TrimEntries

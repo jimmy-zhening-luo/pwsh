@@ -6,7 +6,7 @@ public partial class CoreCommand
   {
     ~PowerShellHost()
     {
-      Dispose(default);
+      Dispose(false);
     }
 
     internal bool HadErrors => PS.HadErrors;
@@ -135,7 +135,7 @@ public partial class CoreCommand
         {
           EndSteppablePipeline();
 
-          PS.Dispose();
+          powershell.Dispose();
           powershell = default;
         }
 

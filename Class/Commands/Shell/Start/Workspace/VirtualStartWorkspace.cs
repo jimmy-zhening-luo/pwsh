@@ -2,9 +2,6 @@ namespace PowerModule.Commands.Shell.Start.Workspace;
 
 abstract public class VirtualStartWorkspace() : CoreCommand(true)
 {
-  private const string FlagNewWindow = "--new-window";
-  private const string FlagReuseWindow = "--reuse-window";
-
   abstract public string Path { private protected get; set; }
 
   [Parameter(Position = 1)]

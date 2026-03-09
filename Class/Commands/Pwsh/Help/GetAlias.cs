@@ -23,6 +23,11 @@ sealed public class GetCommandAlias : CoreCommand
     {
       definitions.Clear();
 
+      if (value is null)
+      {
+        return;
+      }
+
       foreach (var definition in value)
       {
         _ = definitions.Add(
@@ -59,23 +64,7 @@ sealed public class GetCommandAlias : CoreCommand
   )]
   [SupportsWildcards]
   [ValidateNotNullOrWhiteSpace]
-  public string[] Exclude
-  {
-    private get => [.. exclusions];
-    set
-    {
-      exclusions.Clear();
-
-      foreach (var exclusion in value)
-      {
-        if (exclusion is not "")
-        {
-          _ = exclusions.Add(exclusion);
-        }
-      }
-    }
-  }
-  private readonly HashSet<string> exclusions = [];
+  public string[] Exclude { private get; set; } = [];
 
   sealed override private protected void Postprocess()
   {

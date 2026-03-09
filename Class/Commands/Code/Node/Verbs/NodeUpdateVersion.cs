@@ -65,9 +65,9 @@ sealed public class NodeUpdateVersion() : NodeCommand("version")
     set => version = value switch
     {
       "" => nameof(NodeVersion.patch),
-      var v when v.Equals("from-git", System.StringComparison.OrdinalIgnoreCase) => "from-git",
-      var v when System.Enum.TryParse<NodeVersion>(
-        v,
+      _ when value.Equals("from-git", System.StringComparison.OrdinalIgnoreCase) => "from-git",
+      _ when System.Enum.TryParse<NodeVersion>(
+        value,
         true,
         out var named
       ) => named.ToString(),

@@ -24,9 +24,12 @@ abstract public class WrappedGetDirectory() : WrappedCommand(
     private get => filter;
     set
     {
-      filter = value.Contains('*')
-        ? value
-        : $"{value}*";
+      filter = value switch
+      {
+        null or "" => "*",
+        _ when value.Contains('*') => value,
+        _ => $"{value}*",
+      };
     }
   }
   private string filter = string.Empty;

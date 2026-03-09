@@ -4,7 +4,7 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
 {
   ~CoreCommand()
   {
-    Dispose(default);
+    Dispose(false);
   }
 
   virtual private protected string Location => Pwd();
@@ -34,6 +34,23 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     Dispose(true);
 
     System.GC.SuppressFinalize(this);
+  }
+
+  virtual protected void Dispose(bool disposing)
+  {
+    if (!Disposed)
+    {
+      if (disposing)
+      {
+        if (pshost is not null)
+        {
+          pshost.Dispose();
+          pshost = default;
+        }
+      }
+
+      Disposed = true;
+    }
   }
 
   sealed override protected void BeginProcessing()
@@ -216,21 +233,4 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
   } type
     ? name ?? type.ToString()
     : string.Empty;
-
-  private void Dispose(bool disposing)
-  {
-    if (!Disposed)
-    {
-      if (disposing)
-      {
-        if (pshost is not null)
-        {
-          PSHost.Dispose();
-          pshost = default;
-        }
-      }
-
-      Disposed = true;
-    }
-  }
 }

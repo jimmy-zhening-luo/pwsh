@@ -62,6 +62,11 @@ sealed public class GetVerb : CoreCommand
     {
       verbs.Clear();
 
+      if (value is null)
+      {
+        return;
+      }
+
       foreach (var verb in value)
       {
         if (verb is not "")
@@ -83,20 +88,8 @@ sealed public class GetVerb : CoreCommand
     Position = 1,
     HelpMessage = "Get only the specified verb groups"
   )]
-  public VerbGroup[] Group
-  {
-    private get => [.. groups];
-    set
-    {
-      groups.Clear();
-
-      foreach (var group in value)
-      {
-        _ = groups.Add(group);
-      }
-    }
-  }
-  private readonly HashSet<VerbGroup> groups = [];
+  [ValidateNotNullOrEmpty]
+  public VerbGroup[] Group { private get; set; } = [];
 
   sealed override private protected void Postprocess()
   {
