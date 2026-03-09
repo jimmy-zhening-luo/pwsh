@@ -8,12 +8,10 @@ namespace Module.Commands.Code.Git.Verbs;
 [Alias("gpp")]
 sealed public class GitPullChild : CoreCommand
 {
-  sealed override private protected void Postprocess()
+  static private IEnumerable<string> EnumerateRepository()
   {
-    List<string> repositories = [];
-
     foreach (
-      var directory in System.IO.Directory.GetDirectories(
+      var directory in System.IO.Directory.EnumerateDirectories(
         Client.Environment.Known.Folder.Code()
       )
     )
@@ -27,40 +25,27 @@ sealed public class GitPullChild : CoreCommand
         )
       )
       {
-        repositories.Add(directory);
+        yield return directory;
       }
     }
 
-    var total = repositories.Count;
-    int progress = default;
+    yield break;
+  }
 
-    WriteProgress(
-      total,
-      progress,
-      "Pull"
-    );
+  sealed override private protected void Postprocess()
+  {
+    ushort progress = default;
 
-    string[] baseCommand = [
-      "&",
-      Client.Console.String.EscapeDoubleQuoted(
-        Client.Environment.Known.Application.Git
-      ),
-      "-c",
-      "color.ui=always",
-      "-C",
-    ];
+    string baseCommand = $"& {Client.Console.String.EscapeDoubleQuoted(
+      Client.Environment.Known.Application.Git
+    )} -c color.ui=always -C";
 
-    foreach (var repository in repositories)
+    foreach (var repository in EnumerateRepository())
     {
       AddScript(
-        string.Join(
-          Client.Console.String.Space,
-          [
-            .. baseCommand,
-            Client.Console.String.EscapeDoubleQuoted(repository),
-            "pull",
-          ]
-        )
+        $"{baseCommand} {Client.Console.String.EscapeDoubleQuoted(
+          repository
+        )} pull"
       );
 
       BeginSteppablePipeline();
@@ -73,20 +58,14 @@ sealed public class GitPullChild : CoreCommand
       );
 
       ++progress;
-
-      WriteProgress(
-        total,
-        progress,
-        "Pull"
-      );
     }
 
-    var suffix = total is 1
+    var suffix = progress is 1
       ? string.Empty
       : "ies";
 
     WriteInformation(
-      $"Pulled {progress} of {total} repositor{suffix}."
+      $"Pulled {progress} repositor{suffix}."
     );
   }
 }
