@@ -70,11 +70,12 @@ function Update-PSProfile {
 
       $DotnetArgument += @(
         '--force'
-        '--disable-build-servers'
+        '--no-incremental'
       )
+
       if ($Restore) {
         $DotnetArgument += @(
-          '--no-incremental'
+          '--disable-build-servers'
         )
       }
 
