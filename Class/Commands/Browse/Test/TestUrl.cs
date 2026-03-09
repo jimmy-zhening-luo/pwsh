@@ -32,7 +32,7 @@ sealed public class TestUrl : CoreCommand
   }
 
   static IEnumerable<System.Uri> EnumerateReachableUri(
-    System.Uri[] uris
+    IEnumerable<System.Uri> uris
   )
   {
     foreach (var uri in uris)
@@ -59,15 +59,17 @@ sealed public class TestUrl : CoreCommand
   )]
   [AllowEmptyCollection]
   [ValidateNotNull]
-  public System.Uri[] Uri
-  {
-    get => [.. uris];
-    set => uris = EnumerateSupportedUri(value);
-  }
-  private IEnumerable<System.Uri> uris = [];
+  public required System.Uri[] Uri { get; set; }
 
   sealed override private protected void Process()
   {
-    WriteObject(uris, true);
+    WriteObject(
+      EnumerateReachableUri(
+        EnumerateSupportedUri(
+          Uri
+        )
+      ),
+      true
+    );
   }
 }
