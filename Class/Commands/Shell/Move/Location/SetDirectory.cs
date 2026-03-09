@@ -72,15 +72,15 @@ sealed public class SetDirectory : WrappedSetDirectory
     switch (ParameterSetName)
     {
       case "DriveC":
-        SetBoundParameters("Path", "C:");
+        SetBoundParameter("Path", "C:");
         break;
 
       case "DriveD":
-        SetBoundParameters("Path", "D:");
+        SetBoundParameter("Path", "D:");
         break;
 
       case "DriveE":
-        SetBoundParameters("Path", "E:");
+        SetBoundParameter("Path", "E:");
         break;
     }
   }
