@@ -27,7 +27,7 @@ sealed public class GitRestore() : GitCommand("pull")
     AddCommand(@"PowerModule\Reset-GitRepository")
       .AddParameter(
         "ArgumentList",
-        resetArguments.ToArray()
+        new Collection<string>(resetArguments)
       );
 
     if (WorkingDirectory is not "")
