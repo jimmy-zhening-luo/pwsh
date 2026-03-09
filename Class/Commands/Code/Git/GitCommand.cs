@@ -1,6 +1,6 @@
 namespace PowerModule.Commands.Code.Git;
 
-abstract public class GitCommand(string? IntrinsicVerb) : RemoteNativeVerbCommand(IntrinsicVerb)
+abstract public class GitCommand(string? IntrinsicVerb) : CodeNativeCommand(IntrinsicVerb)
 {
   sealed private protected class GitVerbCompletionsAttribute() : Tab.CompletionsAttribute<HashSet<string>>(Verbs)
   {

@@ -1,6 +1,6 @@
 namespace PowerModule.Commands.Code.Node;
 
-abstract public class NodeCommand(string? IntrinsicVerb) : RemoteNativeVerbCommand(IntrinsicVerb)
+abstract public class NodeCommand(string? IntrinsicVerb) : CodeNativeCommand(IntrinsicVerb)
 {
   sealed private protected class NodeVerbCompletionsAttribute() : Tab.CompletionsAttribute<HashSet<string>>(Verbs)
   {

@@ -1,6 +1,6 @@
 namespace PowerModule.Commands.Code;
 
-abstract public class RemoteNativeVerbCommand(
+abstract public class CodeNativeCommand(
   string? IntrinsicVerb,
   bool SkipSsh = default
 ) : NativeCommand(IntrinsicVerb, SkipSsh)
