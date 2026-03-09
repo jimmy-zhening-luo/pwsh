@@ -2,4 +2,7 @@
   <Folder Name="/Class/">
     <Project Path="Class/PowerModule.csproj"/>
   </Folder>
+  <Folder Name="/ClientPeer/">
+    <Project Path="ClientPeer/ClientPeer.csproj"/>
+  </Folder>
 </Solution>

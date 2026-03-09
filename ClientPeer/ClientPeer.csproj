@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>ClientPeer</AssemblyName>
+    <TargetFramework>net9.0-windows</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Nullable>enable</Nullable>
+    <NoWarn>$(NoWarn);CA1044;</NoWarn>
+    <NoWarn>$(NoWarn);</NoWarn>
+    <AnalysisMode>All</AnalysisMode>
+  </PropertyGroup>
+  <ItemGroup>
+    <Using Include="System.Collections.Generic"/>
+  </ItemGroup>
+</Project>
