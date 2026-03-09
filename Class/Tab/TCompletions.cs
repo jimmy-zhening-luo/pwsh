@@ -27,9 +27,11 @@ abstract internal class TCompletionsAttribute(
   CompletionResultType CompletionType = CompletionResultType.ParameterValue
 ) : ArgumentCompleterAttribute, IArgumentCompleterFactory
 {
-  public CompletionCase Case { get; init; } = Case;
+  public CompletionCase Case
+  { get; init; } = Case;
 
-  public CompletionResultType CompletionType { get; init; } = CompletionType;
+  public CompletionResultType CompletionType
+  { get; init; } = CompletionType;
 
   abstract public IArgumentCompleter Create();
 }

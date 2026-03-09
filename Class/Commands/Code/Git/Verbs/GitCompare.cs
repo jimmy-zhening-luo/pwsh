@@ -14,7 +14,8 @@ sealed public class GitCompare() : GitCommand("diff")
   )]
   [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions(ItemType: Tab.PathItemType.File)]
-  public string Name { private get; set; } = string.Empty;
+  public string Name
+  { private get; set; } = string.Empty;
 
   sealed override private protected string[] ParseArguments() => Name is ""
     ? []

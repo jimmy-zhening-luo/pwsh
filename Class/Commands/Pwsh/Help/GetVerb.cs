@@ -89,7 +89,8 @@ sealed public class GetVerb : CoreCommand
     HelpMessage = "Get only the specified verb groups"
   )]
   [ValidateNotNullOrEmpty]
-  public VerbGroup[] Group { private get; set; } = [];
+  public VerbGroup[] Group
+  { private get; set; } = [];
 
   sealed override private protected void Postprocess()
   {

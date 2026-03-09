@@ -29,7 +29,8 @@ sealed public class GetFile : WrappedGetFile
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  required public string[] LiteralPath { private get; set; }
+  required public string[] LiteralPath
+  { private get; set; }
 }
 
 [Cmdlet(
@@ -110,7 +111,8 @@ sealed public class GetFileHome : WrappedGetFile
     set => paths = value;
   }
 
-  sealed override private protected string Location { get; } = Client.Environment.Known.Folder.Home();
+  sealed override private protected string Location
+  { get; } = Client.Environment.Known.Folder.Home();
 }
 
 [Cmdlet(
@@ -137,7 +139,8 @@ sealed public class GetFileCode : WrappedGetFile
     set => paths = value;
   }
 
-  sealed override private protected string Location { get; } = Client.Environment.Known.Folder.Code();
+  sealed override private protected string Location
+  { get; } = Client.Environment.Known.Folder.Code();
 }
 
 [Cmdlet(

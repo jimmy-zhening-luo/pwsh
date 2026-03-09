@@ -14,11 +14,14 @@ abstract public partial class NativeCommand(bool SkipSsh = default) : CoreComman
   private protected readonly List<string> Arguments = [];
   private protected readonly List<string> NativeArguments = [];
 
-  abstract private protected string CommandPath { get; }
+  abstract private protected string CommandPath
+  { get; }
 
-  abstract private protected string[] CommandScript { get; }
+  abstract private protected string[] CommandScript
+  { get; }
 
-  virtual private protected SwitchBoard Uppercase { get; set; } = new();
+  virtual private protected SwitchBoard Uppercase
+  { get; set; } = new();
 
   [Parameter(
     Position = 100,
@@ -28,7 +31,8 @@ abstract public partial class NativeCommand(bool SkipSsh = default) : CoreComman
   )]
   [ValidateLength(1, int.MaxValue)]
   [Tab.PathCompletions]
-  public Collection<string> ArgumentList { private get; init; } = [];
+  public Collection<string> ArgumentList
+  { private get; init; } = [];
 
   [Parameter(
     HelpMessage = "When execution results in a non-zero exit code, warn and continue instead of terminating execution"

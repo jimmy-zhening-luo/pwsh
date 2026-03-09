@@ -42,14 +42,17 @@ abstract public class GitCommand(string? IntrinsicVerb) : RemoteNativeVerbComman
 
   private bool newable;
 
-  sealed override private protected string CommandPath { get; } = Client.Environment.Known.Application.Git;
+  sealed override private protected string CommandPath
+  { get; } = Client.Environment.Known.Application.Git;
 
-  override private protected SwitchBoard Uppercase { get; set; } = new(
+  override private protected SwitchBoard Uppercase
+  { get; set; } = new(
     E: true,
     P: true
   );
 
-  sealed override private protected string[] CommandBaseArguments { get; } = [
+  sealed override private protected string[] CommandBaseArguments
+  { get; } = [
     "-c",
     "color.ui=always",
   ];

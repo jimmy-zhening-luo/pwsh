@@ -5,7 +5,8 @@ abstract public class WrappedGetDirectory() : WrappedCommand(
   AcceptsPipelineInput: true
 )
 {
-  abstract public string[] Path { get; set; }
+  abstract public string[] Path
+  { get; set; }
 
   sealed override private protected object? PipelineInput => Path;
 
@@ -36,56 +37,69 @@ abstract public class WrappedGetDirectory() : WrappedCommand(
 
   [Parameter]
   [SupportsWildcards]
-  required public string[] Include { private get; set; }
+  required public string[] Include
+  { private get; set; }
 
   [Parameter]
   [SupportsWildcards]
-  required public string[] Exclude { private get; set; }
+  required public string[] Exclude
+  { private get; set; }
 
   [Parameter]
   [Alias("s", "r")]
-  public SwitchParameter Recurse { private get; set; }
+  public SwitchParameter Recurse
+  { private get; set; }
 
   [Parameter]
   [Alias("de")]
-  public uint Depth { private get; set; }
+  public uint Depth
+  { private get; set; }
 
   [Parameter]
   [Alias("f")]
-  public SwitchParameter Force { private get; set; }
+  public SwitchParameter Force
+  { private get; set; }
 
   [Parameter]
-  public SwitchParameter Name { private get; set; }
+  public SwitchParameter Name
+  { private get; set; }
 
   [Parameter]
   [Alias("ad", "d")]
-  public SwitchParameter Directory { private get; set; }
+  public SwitchParameter Directory
+  { private get; set; }
 
   [Parameter]
   [Alias("af", "fi")]
-  public SwitchParameter File { private get; set; }
+  public SwitchParameter File
+  { private get; set; }
 
   [Parameter]
   [Alias("ah", "h")]
-  public SwitchParameter Hidden { private get; set; }
+  public SwitchParameter Hidden
+  { private get; set; }
 
   [Parameter]
   [Alias("as")]
-  public SwitchParameter System { private get; set; }
+  public SwitchParameter System
+  { private get; set; }
 
   [Parameter]
   [Alias("ar")]
-  public SwitchParameter ReadOnly { private get; set; }
+  public SwitchParameter ReadOnly
+  { private get; set; }
 
   [Parameter]
-  public SwitchParameter FollowSymlink { private get; set; }
+  public SwitchParameter FollowSymlink
+  { private get; set; }
 
   [Parameter]
   [Tab.EnumCompletions(
     typeof(System.IO.FileAttributes),
     Tab.CompletionCase.Lower
   )]
-  required public FlagsExpression<System.IO.FileAttributes> Attributes { private get; set; }
+  required public FlagsExpression<System.IO.FileAttributes> Attributes
+  { private get; set; }
 
   sealed override private protected void TransformPipelineInput()
   {

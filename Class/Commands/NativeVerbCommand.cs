@@ -5,11 +5,14 @@ abstract public class NativeVerbCommand(
   bool SkipSsh = default
 ) : NativeCommand(SkipSsh)
 {
-  private protected string? IntrinsicVerb { get; set; } = IntrinsicVerb;
+  private protected string? IntrinsicVerb
+  { get; set; } = IntrinsicVerb;
 
-  abstract private protected string[] CommandArguments { get; }
+  abstract private protected string[] CommandArguments
+  { get; }
 
-  abstract private protected string[] VerbArguments { get; }
+  abstract private protected string[] VerbArguments
+  { get; }
 
   sealed override private protected string[] CommandScript => IntrinsicVerb is null
     ? [

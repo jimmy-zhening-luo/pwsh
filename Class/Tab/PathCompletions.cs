@@ -13,11 +13,14 @@ sealed internal class PathCompletionsAttribute(
  CompletionCase Case = CompletionCase.Lower
 ) : TCompletionsAttribute(Case)
 {
-  public string Location { get; } = Location;
+  public string Location
+  { get; } = Location;
 
-  public PathItemType ItemType { get; } = ItemType;
+  public PathItemType ItemType
+  { get; } = ItemType;
 
-  public bool Flat { get; init; }
+  public bool Flat
+  { get; init; }
 
   sealed override public Completers.PathCompleter Create() => new(
     Location,

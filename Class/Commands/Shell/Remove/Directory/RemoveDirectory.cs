@@ -18,12 +18,14 @@ sealed public class RemoveDirectory : WrappedRemoveDirectory
   )]
   [SupportsWildcards]
   [Tab.PathCompletions]
-  required sealed override public string[] Path { get; set; }
+  required sealed override public string[] Path
+  { get; set; }
 
   [Parameter(
     ParameterSetName = "LiteralPath",
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  required public string[] LiteralPath { private get; set; }
+  required public string[] LiteralPath
+  { private get; set; }
 }

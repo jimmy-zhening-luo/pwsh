@@ -63,7 +63,8 @@ sealed public class TestUrl : CoreCommand
   )]
   [AllowEmptyCollection]
   [ValidateNotNull]
-  public required System.Uri[] Uri { get; set; }
+  public required System.Uri[] Uri
+  { get; set; }
 
   sealed override private protected void Process()
   {

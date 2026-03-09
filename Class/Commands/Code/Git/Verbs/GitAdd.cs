@@ -26,7 +26,8 @@ sealed public class GitAdd() : GitCommand("add")
   [Parameter(
     HelpMessage = "Equivalent to --renormalize"
   )]
-  public SwitchParameter Renormalize { private get; set; }
+  public SwitchParameter Renormalize
+  { private get; set; }
 
   sealed override private protected void PreprocessOtherArguments()
   {

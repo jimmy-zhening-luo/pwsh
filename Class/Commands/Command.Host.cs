@@ -40,7 +40,8 @@ public partial class CoreCommand
       default,
       nameof(powershell)
     )]
-    private bool Disposed { get; set; }
+    private bool Disposed
+    { get; set; }
 
     public void Dispose()
     {

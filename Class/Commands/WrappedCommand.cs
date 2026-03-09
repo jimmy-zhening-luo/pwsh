@@ -7,15 +7,18 @@ abstract public class WrappedCommand(
   bool SkipSsh = default
 ) : CoreCommand(SkipSsh)
 {
-  virtual private protected object? PipelineInput { get; }
+  virtual private protected object? PipelineInput
+  { get; }
 
-  virtual private protected Dictionary<string, object?> CoercedParameters { get; } = [];
+  virtual private protected Dictionary<string, object?> CoercedParameters
+  { get; } = [];
 
   [System.Diagnostics.CodeAnalysis.MemberNotNullWhen(
     true,
     nameof(PipelineInput)
   )]
-  private bool InPipeline { get; set; }
+  private bool InPipeline
+  { get; set; }
 
   virtual private protected void TransformArguments()
   { }

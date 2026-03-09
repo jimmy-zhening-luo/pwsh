@@ -57,14 +57,16 @@ sealed public class GetCommandAlias : CoreCommand
     "2",
     "3"
   )]
-  public string Scope { private get; set; } = "Global";
+  public string Scope
+  { private get; set; } = "Global";
 
   [Parameter(
     Position = 2
   )]
   [SupportsWildcards]
   [ValidateNotNullOrWhiteSpace]
-  public string[] Exclude { private get; set; } = [];
+  public string[] Exclude
+  { private get; set; } = [];
 
   sealed override private protected void Postprocess()
   {

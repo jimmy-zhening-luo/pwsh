@@ -15,7 +15,8 @@ sealed public class NewDirectory() : WrappedCommand(
 {
   sealed override private protected object? PipelineInput => Value;
 
-  sealed override private protected Dictionary<string, object?> CoercedParameters { get; } = new()
+  sealed override private protected Dictionary<string, object?> CoercedParameters
+  { get; } = new()
   {
     ["ItemType"] = "Directory",
   };
@@ -30,20 +31,24 @@ sealed public class NewDirectory() : WrappedCommand(
     Position = default
   )]
   [Tab.PathCompletions]
-  required public string[] Path { private get; set; }
+  required public string[] Path
+  { private get; set; }
 
   [Parameter(
     ParameterSetName = "nameSet",
     Mandatory = true
   )]
-  required public string Name { private get; set; }
+  required public string Name
+  { private get; set; }
 
   [Parameter(ValueFromPipeline = true)]
   [Alias("Target")]
   [Tab.PathCompletions]
-  required public object Value { get; set; }
+  required public object Value
+  { get; set; }
 
   [Parameter]
   [Alias("f")]
-  public SwitchParameter Force { private get; set; }
+  public SwitchParameter Force
+  { private get; set; }
 }

@@ -5,12 +5,14 @@ abstract public class WrappedSetDirectory() : WrappedCommand(
   AcceptsPipelineInput: true
 )
 {
-  abstract public string Path { get; set; }
+  abstract public string Path
+  { get; set; }
 
   sealed override private protected object? PipelineInput => Path;
 
   [Parameter]
-  public SwitchParameter PassThru { private get; set; }
+  public SwitchParameter PassThru
+  { private get; set; }
 
   sealed override private protected void TransformPipelineInput()
   {

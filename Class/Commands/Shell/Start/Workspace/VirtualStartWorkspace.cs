@@ -2,7 +2,8 @@ namespace PowerModule.Commands.Shell.Start.Workspace;
 
 abstract public class VirtualStartWorkspace() : CoreCommand(true)
 {
-  abstract public string Path { private protected get; set; }
+  abstract public string Path
+  { private protected get; set; }
 
   [Parameter(Position = 1)]
   [ValidateNotNullOrWhiteSpace]
@@ -48,7 +49,8 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
   )]
   [ValidateLength(1, int.MaxValue)]
   [Tab.PathCompletions]
-  public string[] ArgumentList { private get; set; } = [];
+  public string[] ArgumentList
+  { private get; set; } = [];
 
   [Parameter]
   public SwitchParameter Window
@@ -59,7 +61,8 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
   private Client.File.Handler.EditorWindow window;
 
   [Parameter]
-  public SwitchParameter ReuseWindow { private get; set; }
+  public SwitchParameter ReuseWindow
+  { private get; set; }
 
   sealed override private protected void Preprocess()
   {

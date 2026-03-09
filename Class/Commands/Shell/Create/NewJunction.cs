@@ -15,7 +15,8 @@ sealed public class NewJunction() : WrappedCommand(
 {
   sealed override private protected object? PipelineInput => Value;
 
-  sealed override private protected Dictionary<string, object?> CoercedParameters { get; } = new()
+  sealed override private protected Dictionary<string, object?> CoercedParameters
+  { get; } = new()
   {
     ["ItemType"] = "Junction",
     ["Force"] = true,
@@ -27,7 +28,8 @@ sealed public class NewJunction() : WrappedCommand(
     Position = default
   )]
   [Tab.PathCompletions]
-  required public string[] Path { private get; set; }
+  required public string[] Path
+  { private get; set; }
 
   [Parameter(
     Mandatory = true,
@@ -36,5 +38,6 @@ sealed public class NewJunction() : WrappedCommand(
   )]
   [Alias("Target")]
   [Tab.PathCompletions]
-  required public object Value { get; set; }
+  required public object Value
+  { get; set; }
 }

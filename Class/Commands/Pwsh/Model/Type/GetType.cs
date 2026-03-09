@@ -15,7 +15,8 @@ sealed public class GetInputType : CoreCommand
     HelpMessage = "Object to type-check"
   )]
   [ValidateNotNull]
-  required public object InputObject { get; set; }
+  required public object InputObject
+  { get; set; }
 
   sealed override private protected void Process()
   {

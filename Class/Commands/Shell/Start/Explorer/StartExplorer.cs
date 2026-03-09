@@ -17,14 +17,16 @@ sealed public class StartExplorer : WrappedStartExplorer
   )]
   [SupportsWildcards]
   [Tab.PathCompletions]
-  sealed override public string[] Path { get; set; } = [];
+  sealed override public string[] Path
+  { get; set; } = [];
 
   [Parameter(
     ParameterSetName = "LiteralPath",
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  required public string[] LiteralPath { private get; set; }
+  required public string[] LiteralPath
+  { private get; set; }
 }
 
 [Cmdlet(
@@ -44,7 +46,8 @@ sealed public class StartExplorerSibling : WrappedStartExplorer
   )]
   [SupportsWildcards]
   [Tab.PathCompletions("..")]
-  sealed override public string[] Path { get; set; } = [];
+  sealed override public string[] Path
+  { get; set; } = [];
 
   sealed override private protected string Location => Pwd("..");
 }
@@ -66,7 +69,8 @@ sealed public class StartExplorerRelative : WrappedStartExplorer
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(@"..\..")]
-  sealed override public string[] Path { get; set; } = [];
+  sealed override public string[] Path
+  { get; set; } = [];
 
   sealed override private protected string Location => Pwd(@"..\..");
 }
@@ -88,9 +92,11 @@ sealed public class StartExplorerHome : WrappedStartExplorer
   )]
   [SupportsWildcards]
   [Tab.PathCompletions("~")]
-  sealed override public string[] Path { get; set; } = [];
+  sealed override public string[] Path
+  { get; set; } = [];
 
-  sealed override private protected string Location { get; } = Client.Environment.Known.Folder.Home();
+  sealed override private protected string Location
+  { get; } = Client.Environment.Known.Folder.Home();
 }
 
 [Cmdlet(
@@ -110,9 +116,11 @@ sealed public class StartExplorerCode : WrappedStartExplorer
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(@"~\code")]
-  sealed override public string[] Path { get; set; } = [];
+  sealed override public string[] Path
+  { get; set; } = [];
 
-  sealed override private protected string Location { get; } = Client.Environment.Known.Folder.Code();
+  sealed override private protected string Location
+  { get; } = Client.Environment.Known.Folder.Code();
 }
 
 [Cmdlet(
@@ -132,7 +140,8 @@ sealed public class StartExplorerDrive : WrappedStartExplorer
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(@"\")]
-  sealed override public string[] Path { get; set; } = [];
+  sealed override public string[] Path
+  { get; set; } = [];
 
   sealed override private protected string Location => Drive();
 }

@@ -13,14 +13,17 @@ sealed public class TestCommand : CoreCommand
     Position = default,
     ValueFromPipeline = true
   )]
-  public Collection<string> Name { get; init; } = [];
+  public Collection<string> Name
+  { get; init; } = [];
 
   [Parameter(Position = 1)]
   [ValidateNotNullOrWhiteSpace]
-  public string Greeting { private get; set; } = "Hello";
+  public string Greeting
+  { private get; set; } = "Hello";
 
   [Parameter]
-  public SwitchParameter Switch { private get; set; }
+  public SwitchParameter Switch
+  { private get; set; }
 
   sealed override private protected void Preprocess()
   { }

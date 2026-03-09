@@ -5,11 +5,13 @@ abstract public class WrappedRemoveDirectory() : WrappedCommand(
   AcceptsPipelineInput: true
 )
 {
-  abstract public string[] Path { get; set; }
+  abstract public string[] Path
+  { get; set; }
 
   sealed override private protected object? PipelineInput => Path;
 
-  sealed override private protected Dictionary<string, object?> CoercedParameters { get; } = new()
+  sealed override private protected Dictionary<string, object?> CoercedParameters
+  { get; } = new()
   {
     ["Recurse"] = true,
     ["Force"] = true,
@@ -17,13 +19,16 @@ abstract public class WrappedRemoveDirectory() : WrappedCommand(
 
   [Parameter]
   [SupportsWildcards]
-  required public string Filter { private get; set; }
+  required public string Filter
+  { private get; set; }
 
   [Parameter]
   [SupportsWildcards]
-  required public string[] Include { private get; set; }
+  required public string[] Include
+  { private get; set; }
 
   [Parameter]
   [SupportsWildcards]
-  required public string[] Exclude { private get; set; }
+  required public string[] Exclude
+  { private get; set; }
 }

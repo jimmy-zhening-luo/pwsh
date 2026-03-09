@@ -17,7 +17,8 @@ sealed public class OpenUrl() : CoreCommand(true)
   )]
   [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions]
-  public string Path { private get; set; } = string.Empty;
+  public string Path
+  { private get; set; } = string.Empty;
 
   [Parameter(
     ParameterSetName = "Uri",
@@ -28,7 +29,8 @@ sealed public class OpenUrl() : CoreCommand(true)
   )]
   [AllowEmptyCollection]
   [ValidateNotNull]
-  public required System.Uri[] Uri { get; set; }
+  public required System.Uri[] Uri
+  { get; set; }
 
   sealed override private protected void Process()
   {

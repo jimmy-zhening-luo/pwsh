@@ -27,7 +27,8 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
   }
   private PowerShellHost? pshost;
 
-  private bool Disposed { get; set; }
+  private bool Disposed
+  { get; set; }
 
   public void Dispose()
   {

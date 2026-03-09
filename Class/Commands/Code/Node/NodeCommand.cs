@@ -107,15 +107,18 @@ abstract public class NodeCommand(string? IntrinsicVerb) : RemoteNativeVerbComma
     ["v"] = "view",
   };
 
-  sealed override private protected string CommandPath { get; } = Client.Environment.Known.Application.Npm;
+  sealed override private protected string CommandPath
+  { get; } = Client.Environment.Known.Application.Npm;
 
-  override private protected SwitchBoard Uppercase { get; set; } = new(
+  override private protected SwitchBoard Uppercase
+  { get; set; } = new(
     D: true,
     E: true,
     P: true
   );
 
-  sealed override private protected string[] CommandBaseArguments { get; } = ["--color=always"];
+  sealed override private protected string[] CommandBaseArguments
+  { get; } = ["--color=always"];
 
   sealed override private protected string[] WorkingDirectoryArguments => WorkingDirectory is ""
     ? []

@@ -18,13 +18,15 @@ sealed public class ConvertToHex : Cmdlet
   )]
   [AllowEmptyCollection]
   [ValidateRange(ValidateRangeKind.NonNegative)]
-  public long[] Number { get; set; } = [];
+  public long[] Number
+  { get; set; } = [];
 
   [Parameter(
     HelpMessage = "Output hexadecimal letters in lowercase"
   )]
   [Alias("Case")]
-  public SwitchParameter Lowercase { private get; set; }
+  public SwitchParameter Lowercase
+  { private get; set; }
 
   sealed override protected void ProcessRecord()
   {

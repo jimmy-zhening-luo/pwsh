@@ -8,11 +8,14 @@ sealed internal class EnumCompletionsAttribute(
   Case
 )
 {
-  public System.Type EnumType { get; } = EnumType;
+  public System.Type EnumType
+  { get; } = EnumType;
 
-  public string[]? Include { get; init; }
+  public string[]? Include
+  { get; init; }
 
-  public string[]? Exclude { get; init; }
+  public string[]? Exclude
+  { get; init; }
 
   sealed override private protected IEnumerable<string> EnumerateDomain(System.Type enumType)
   {

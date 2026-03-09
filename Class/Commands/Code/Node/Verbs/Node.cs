@@ -8,7 +8,8 @@ namespace PowerModule.Commands.Code.Node.Verbs;
 [Alias("n")]
 sealed public class NodeVerbCommand() : NodeCommand(default)
 {
-  new private SwitchParameter V { get; set; }
+  new private SwitchParameter V
+  { get; set; }
 
   [Parameter(
     Position = default,

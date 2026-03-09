@@ -16,17 +16,20 @@ sealed public class GitCommit() : GitCommand("commit")
   )]
   [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions(ItemType: Tab.PathItemType.File)]
-  public string Message { private get; set; } = string.Empty;
+  public string Message
+  { private get; set; } = string.Empty;
 
   [Parameter(
     HelpMessage = "Only commit files that are already staged"
   )]
-  public SwitchParameter Staged { private get; set; }
+  public SwitchParameter Staged
+  { private get; set; }
 
   [Parameter(
     HelpMessage = "Allow commit with no changes, equivalent to --allow-empty"
   )]
-  public SwitchParameter AllowEmpty { private get; set; }
+  public SwitchParameter AllowEmpty
+  { private get; set; }
 
   sealed override private protected void PreprocessOtherArguments()
   {

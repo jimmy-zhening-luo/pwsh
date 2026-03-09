@@ -18,7 +18,8 @@ public class StopTask : CoreCommand
   [Alias("ProcessName")]
   [SupportsWildcards]
   [ValidateNotNullOrWhiteSpace]
-  public string[] Name { private get; set; } = [];
+  public string[] Name
+  { private get; set; } = [];
 
   [Parameter(
     ParameterSetName = "Id",
@@ -28,7 +29,8 @@ public class StopTask : CoreCommand
   )]
   [AllowEmptyCollection]
   [ValidateRange(ValidateRangeKind.NonNegative)]
-  required public int[] Id { private get; set; }
+  required public int[] Id
+  { private get; set; }
 
   [Parameter(
     ParameterSetName = "InputObject",
@@ -39,7 +41,8 @@ public class StopTask : CoreCommand
   )]
   [AllowEmptyCollection]
   [ValidateNotNull]
-  required public System.Diagnostics.Process[] InputObject { get; set; }
+  required public System.Diagnostics.Process[] InputObject
+  { get; set; }
 
   [Parameter(
     HelpMessage = "Stop the entire process tree (the processe and all of its descendants)"
