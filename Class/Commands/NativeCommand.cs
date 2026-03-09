@@ -166,7 +166,7 @@ abstract public partial class NativeCommand(
       );
     }
 
-    AddScript(
+    _ = AddScript(
       string.Join(
         Client.String.Space,
         safeCommandScript

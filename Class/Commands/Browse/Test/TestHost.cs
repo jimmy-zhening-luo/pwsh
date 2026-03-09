@@ -84,7 +84,7 @@ sealed public class TestHost() : WrappedCommand(
     Tab.CompletionCase.Lower
   )]
   required public string CommonTCPPort
-  { private get; set; }
+  { private get; init; }
 
   [Parameter(
     ParameterSetName = "RemotePort",
@@ -93,7 +93,7 @@ sealed public class TestHost() : WrappedCommand(
   [Alias("RemotePort")]
   [ValidateRange(ValidateRangeKind.Positive)]
   public ushort Port
-  { private get; set; }
+  { private get; init; }
 
   [Parameter]
   public SwitchParameter Detailed
@@ -140,20 +140,23 @@ sealed public class TestHost() : WrappedCommand(
     switch (ParameterSetName)
     {
       case "RemotePort":
-        BoundParameters["Port"] = (int)Port;
+        SetBoundParameter(
+          "Port",
+          (int)Port
+        );
         break;
 
       case "CommonTCPPort":
         switch (CommonTCPPort)
         {
-          case var port when ushort.TryParse(port, out var numericPort):
-            _ = BoundParameters.Remove("CommonTCPPort");
-            (
-              CommonTCPPort,
-              BoundParameters["Port"]
-            ) = (
-              string.Empty,
-              (int)(Port = numericPort)
+          case var port when ushort.TryParse(
+            port,
+            out var numericPort
+          ):
+            RemoveBoundParameter("CommonTCPPort");
+            SetBoundParameter(
+              "Port",
+              (int)numericPort
             );
             break;
 
@@ -162,7 +165,10 @@ sealed public class TestHost() : WrappedCommand(
             true,
             out var commonPort
           ):
-            BoundParameters["CommonTCPPort"] = commonPort.ToString();
+            SetBoundParameter(
+              "CommonTCPPort",
+              commonPort.ToString()
+            );
             break;
         }
         break;
@@ -173,7 +179,10 @@ sealed public class TestHost() : WrappedCommand(
   {
     if (ComputerName is "")
     {
-      BoundParameters["ComputerName"] = "google.com";
+      SetBoundParameter(
+        "ComputerName",
+        "google.com"
+      );
     }
   }
 }

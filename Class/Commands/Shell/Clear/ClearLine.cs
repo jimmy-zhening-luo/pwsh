@@ -63,10 +63,10 @@ sealed public class ClearLine : CoreCommand
     }
     else
     {
-      AddCommand(
+      _ = AddCommand(
         @"Microsoft.PowerShell.Management\Clear-Content"
-      )
-        .AddParameters(BoundParameters);
+      );
+      _ = AddBoundParameters();
 
       BeginSteppablePipeline();
       ProcessSteppablePipeline();

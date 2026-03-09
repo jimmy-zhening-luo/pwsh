@@ -81,11 +81,11 @@ sealed public class GitCommit() : GitCommand("commit")
 
     if (!Staged)
     {
-      AddCommand(@"PowerModule\Add-GitRepository");
+      _ = AddCommand(@"PowerModule\Add-GitRepository");
 
       if (WorkingDirectory is not "")
       {
-        AddParameter(
+        _ = AddParameter(
           "WorkingDirectory",
           WorkingDirectory
         );

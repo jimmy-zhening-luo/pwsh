@@ -74,7 +74,10 @@ abstract public class WrappedGetFile() : WrappedCommand(
   {
     if (!InCurrentLocation)
     {
-      BoundParameters["Path"] = paths = ReanchorPath(paths);
+      SetBoundParameter(
+        "Path",
+        ReanchorPath(paths)
+      );
     }
   }
 }

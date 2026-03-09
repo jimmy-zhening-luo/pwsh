@@ -105,7 +105,10 @@ abstract public class WrappedGetDirectory() : WrappedCommand(
   {
     if (!InCurrentLocation)
     {
-      BoundParameters["Path"] = ReanchorPath(Path);
+      SetBoundParameter(
+        "Path",
+        ReanchorPath(Path)
+      );
     }
   }
 }

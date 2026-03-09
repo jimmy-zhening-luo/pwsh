@@ -11,8 +11,6 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
 
   private protected bool InCurrentLocation => Location == Pwd();
 
-  private protected Dictionary<string, object> BoundParameters => MyInvocation.BoundParameters;
-
   private bool BlockedBySsh => SkipSsh
     && Client.Environment.Known.Variable.InSsh;
 
@@ -147,6 +145,37 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     }
   }
 
+  private protected void SetBoundParameter(
+    string parameter,
+    object? value
+  )
+  {
+    switch (value)
+    {
+      case null or false:
+        RemoveBoundParameter(parameter);
+        break;
+
+      case true:
+        SwitchBoundParameter(parameter);
+        break;
+
+      default:
+        MyInvocation.BoundParameters[parameter] = value;
+        break;
+    }
+  }
+
+  private protected void SwitchBoundParameter(string parameter)
+  {
+    MyInvocation.BoundParameters[parameter] = SwitchParameter.Present;
+  }
+
+  private protected void RemoveBoundParameter(string parameter)
+  {
+    _ = MyInvocation.BoundParameters.Remove(parameter);
+  }
+
   private protected PowerShell AddStatement() => PSHost.AddStatement();
 
   private protected PowerShell AddCommand(
@@ -170,6 +199,8 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
 
   private protected PowerShell AddParameters(System.Collections.IList parameters) => PSHost.AddParameters(parameters);
   private protected PowerShell AddParameters(System.Collections.IDictionary parameters) => PSHost.AddParameters(parameters);
+
+  private protected PowerShell AddBoundParameters() => PSHost.AddParameters(MyInvocation.BoundParameters);
 
   private protected PowerShell AddScript(string script) => PSHost.AddScript(script);
 

@@ -47,7 +47,7 @@ abstract public class WrappedCommand(
       WrappedCommandName,
       CommandType
     )
-      .AddParameters(BoundParameters);
+    _ = AddBoundParameters();
 
     BeginSteppablePipeline();
   }
@@ -69,37 +69,6 @@ abstract public class WrappedCommand(
   sealed override private protected void Postprocess()
   {
     EndSteppablePipeline();
-  }
-
-  private protected void SetBoundParameter(
-    string parameter,
-    object? value
-  )
-  {
-    switch (value)
-    {
-      case null or false:
-        RemoveBoundParameters(parameter);
-        break;
-
-      case true:
-        SwitchBoundParameters(parameter);
-        break;
-
-      default:
-        BoundParameters[parameter] = value;
-        break;
-    }
-  }
-
-  private protected void SwitchBoundParameter(string parameter)
-  {
-    BoundParameters[parameter] = SwitchParameter.Present;
-  }
-
-  private protected void RemoveBoundParameter(string parameter)
-  {
-    _ = BoundParameters.Remove(parameter);
   }
 
   private void CoerceParameters()

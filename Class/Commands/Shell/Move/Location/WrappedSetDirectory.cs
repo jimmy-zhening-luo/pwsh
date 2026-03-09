@@ -23,12 +23,18 @@ abstract public class WrappedSetDirectory() : WrappedCommand(
         && Path is ""
       )
       {
-        BoundParameters["Path"] = Pwd("..");
+        SetBoundParameter(
+          "Path",
+          Pwd("..")
+        );
       }
     }
     else
     {
-      BoundParameters["Path"] = ReanchorPath(Path);
+      SetBoundParameter(
+        "Path",
+        ReanchorPath(Path)
+      );
     }
   }
 }

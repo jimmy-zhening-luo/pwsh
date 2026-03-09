@@ -24,7 +24,7 @@ sealed public class GitRestore() : GitCommand("pull")
       WorkingDirectory = string.Empty;
     }
 
-    AddCommand(@"PowerModule\Reset-GitRepository")
+    _ = AddCommand(@"PowerModule\Reset-GitRepository")
       .AddParameter(
         "ArgumentList",
         new Collection<string>(resetArguments)
@@ -32,7 +32,7 @@ sealed public class GitRestore() : GitCommand("pull")
 
     if (WorkingDirectory is not "")
     {
-      AddParameter(
+      _ = AddParameter(
         "WorkingDirectory",
         WorkingDirectory
       );

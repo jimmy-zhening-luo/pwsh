@@ -146,7 +146,7 @@ sealed public class GetHelpOnline : CoreCommand
       {
         ClearCommands();
 
-        AddCommand(GET_HELP)
+        _ = AddCommand(GET_HELP)
           .AddParameter(
             "Name",
             topic

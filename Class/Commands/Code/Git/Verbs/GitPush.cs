@@ -21,11 +21,11 @@ sealed public class GitPush() : GitCommand("push")
       WorkingDirectory = string.Empty;
     }
 
-    AddCommand(@"PowerModule\Get-GitRepository");
+    _ = AddCommand(@"PowerModule\Get-GitRepository");
 
     if (WorkingDirectory is not "")
     {
-      AddParameter(
+      _ = AddParameter(
         "WorkingDirectory",
         WorkingDirectory
       );

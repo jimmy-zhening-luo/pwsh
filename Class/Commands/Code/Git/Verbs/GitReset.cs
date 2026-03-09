@@ -119,11 +119,11 @@ sealed public partial class GitReset() : GitCommand("reset")
     {
       NativeArguments.Insert(default, FlagHard);
 
-      AddCommand(@"PowerModule\Add-GitRepository");
+      _ = AddCommand(@"PowerModule\Add-GitRepository");
 
       if (WorkingDirectory is not "")
       {
-        AddParameter(
+        _ = AddParameter(
           "WorkingDirectory",
           WorkingDirectory
         );

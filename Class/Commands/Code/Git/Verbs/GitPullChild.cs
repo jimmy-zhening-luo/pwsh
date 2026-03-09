@@ -42,7 +42,7 @@ sealed public class GitPullChild : CoreCommand
 
     foreach (var repository in EnumerateRepository())
     {
-      AddScript(
+      _ = AddScript(
         $"{baseCommand} {Client.String.EscapeDoubleQuoted(
           repository
         )} pull"
