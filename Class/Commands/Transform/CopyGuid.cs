@@ -28,7 +28,7 @@ sealed public class CopyGuid : CoreCommand
 
     if (Uppercase)
     {
-      guid = guid.ToUpper();
+      guid = guid.ToUpperInvariant();
     }
 
     if (!Silent)

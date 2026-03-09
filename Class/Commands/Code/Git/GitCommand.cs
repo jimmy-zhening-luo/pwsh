@@ -85,7 +85,7 @@ abstract public class GitCommand(string? IntrinsicVerb) : RemoteNativeVerbComman
         break;
 
       case var verb when Verbs.TryGetValue(
-        verb.ToLower(),
+        verb.ToLowerInvariant(),
         out var exactVerb
       ):
         IntrinsicVerb = exactVerb;

@@ -128,14 +128,14 @@ abstract public class NodeCommand(string? IntrinsicVerb) : RemoteNativeVerbComma
         break;
 
       case var verb when Aliases.TryGetValue(
-        verb.ToLower(),
+        verb.ToLowerInvariant(),
         out var alias
       ):
         IntrinsicVerb = alias;
         break;
 
       case var verb when Verbs.TryGetValue(
-        verb.ToLower(),
+        verb.ToLowerInvariant(),
         out var exactVerb
       ):
         IntrinsicVerb = exactVerb;

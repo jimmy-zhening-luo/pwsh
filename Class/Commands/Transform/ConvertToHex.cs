@@ -34,7 +34,7 @@ sealed public class ConvertToHex : Cmdlet
 
       WriteObject(
         Lowercase
-          ? hex.ToLower()
+          ? hex.ToLowerInvariant()
           : hex
       );
     }
