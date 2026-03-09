@@ -8,8 +8,8 @@ static internal class String
   internal const char Space = ' ';
   internal const char SingleQuote = '\'';
   internal const char DoubleQuote = '"';
-  internal const string SingleQuoteString = "'";
-  internal const string DoubleQuoteString = "\"";
+  internal const string StringSingleQuote = "'";
+  internal const string StringDoubleQuote = "\"";
   internal const string EscapedSingleQuote = "''";
   internal const string EscapedDoubleQuote = "\\\"";
 
@@ -30,7 +30,7 @@ static internal class String
     ? string.Concat(
       SingleQuote,
       text.Replace(
-        SingleQuoteString,
+        StringSingleQuote,
         EscapedSingleQuote,
         StringComparison.Ordinal
       ),
@@ -45,7 +45,7 @@ static internal class String
     ? string.Concat(
       DoubleQuote,
       text.Replace(
-        DoubleQuoteString,
+        StringDoubleQuote,
         EscapedDoubleQuote,
         StringComparison.Ordinal
       ),
@@ -61,7 +61,7 @@ static internal class String
   ]
     ? text.Replace(
       EscapedSingleQuote,
-      SingleQuoteString,
+      StringSingleQuote,
       StringComparison.Ordinal
     )
     : escapedText;
@@ -74,7 +74,7 @@ static internal class String
   ]
     ? text.Replace(
       EscapedDoubleQuote,
-      DoubleQuoteString,
+      StringDoubleQuote,
       StringComparison.Ordinal
     )
     : escapedText;
