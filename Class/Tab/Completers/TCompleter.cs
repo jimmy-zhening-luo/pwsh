@@ -47,6 +47,7 @@ abstract internal class TCompleter(
         completion.Description ?? result
       );
     }
+
     yield break;
   }
 }

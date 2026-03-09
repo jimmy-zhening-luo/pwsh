@@ -29,6 +29,8 @@ sealed public class TestUrl : CoreCommand
         yield return httpUri;
       }
     }
+
+    yield break;
   }
 
   static IEnumerable<System.Uri> EnumerateReachableUri(
@@ -48,6 +50,8 @@ sealed public class TestUrl : CoreCommand
         yield return uri;
       }
     }
+
+    yield break;
   }
 
   [Parameter(
