@@ -17,16 +17,16 @@ sealed public class StartExplorer : WrappedStartExplorer
   )]
   [SupportsWildcards]
   [Tab.PathCompletions]
-  sealed override public string[] Path
-  { get; set; } = [];
+  sealed override public Collection<string> Path
+  { get; init; } = [];
 
   [Parameter(
     ParameterSetName = "LiteralPath",
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  required public string[] LiteralPath
-  { private get; set; }
+  required public Collection<string> LiteralPath
+  { private get; init; }
 }
 
 [Cmdlet(
@@ -46,8 +46,8 @@ sealed public class StartExplorerSibling : WrappedStartExplorer
   )]
   [SupportsWildcards]
   [Tab.PathCompletions("..")]
-  sealed override public string[] Path
-  { get; set; } = [];
+  sealed override public Collection<string> Path
+  { get; init; } = [];
 
   sealed override private protected string Location => Pwd("..");
 }
@@ -69,8 +69,8 @@ sealed public class StartExplorerRelative : WrappedStartExplorer
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(@"..\..")]
-  sealed override public string[] Path
-  { get; set; } = [];
+  sealed override public Collection<string> Path
+  { get; init; } = [];
 
   sealed override private protected string Location => Pwd(@"..\..");
 }
@@ -92,8 +92,8 @@ sealed public class StartExplorerHome : WrappedStartExplorer
   )]
   [SupportsWildcards]
   [Tab.PathCompletions("~")]
-  sealed override public string[] Path
-  { get; set; } = [];
+  sealed override public Collection<string> Path
+  { get; init; } = [];
 
   sealed override private protected string Location
   { get; } = Client.Environment.Known.Folder.Home();
@@ -116,8 +116,8 @@ sealed public class StartExplorerCode : WrappedStartExplorer
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(@"~\code")]
-  sealed override public string[] Path
-  { get; set; } = [];
+  sealed override public Collection<string> Path
+  { get; init; } = [];
 
   sealed override private protected string Location
   { get; } = Client.Environment.Known.Folder.Code();
@@ -140,8 +140,8 @@ sealed public class StartExplorerDrive : WrappedStartExplorer
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(@"\")]
-  sealed override public string[] Path
-  { get; set; } = [];
+  sealed override public Collection<string> Path
+  { get; init; } = [];
 
   sealed override private protected string Location => Drive();
 }

@@ -2,6 +2,8 @@ namespace PowerModule.Commands.Shell.Start.Workspace;
 
 abstract public class VirtualStartWorkspace() : CoreCommand(true)
 {
+  private Client.File.Handler.EditorProfile profile;
+
   abstract public string Path
   { private protected get; set; }
 
@@ -9,37 +11,7 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
   [ValidateNotNullOrWhiteSpace]
   [Tab.EnumCompletions(typeof(Client.File.Handler.EditorProfile))]
   public string Name
-  {
-    set
-    {
-      if (
-        new List<string>(
-          System.Enum.GetNames<Client.File.Handler.EditorProfile>()
-        )
-          .Find(
-            pn => pn.StartsWith(
-              value,
-              System.StringComparison.OrdinalIgnoreCase
-            )
-          ) is { } profileName
-      )
-      {
-        profile = System.Enum.Parse<Client.File.Handler.EditorProfile>(
-          profileName
-        );
-      }
-      else
-      {
-        ArgumentList = [
-          value,
-          .. ArgumentList,
-        ];
-
-        profile = default;
-      }
-    }
-  }
-  private Client.File.Handler.EditorProfile profile;
+  { private get; init; } = string.Empty;
 
   [Parameter(
     Position = 2,
@@ -49,8 +21,8 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
   )]
   [ValidateLength(1, int.MaxValue)]
   [Tab.PathCompletions]
-  public string[] ArgumentList
-  { private get; set; } = [];
+  public Collection<string> ArgumentList
+  { private get; init; } = [];
 
   [Parameter]
   public SwitchParameter Window
@@ -69,6 +41,30 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
     if (ReuseWindow && !Window)
     {
       window = Client.File.Handler.EditorWindow.Reuse;
+    }
+
+    if (Name is not "")
+    {
+      if (
+        new List<string>(
+          System.Enum.GetNames<Client.File.Handler.EditorProfile>()
+        )
+          .Find(
+            pn => pn.StartsWith(
+              Name,
+              System.StringComparison.OrdinalIgnoreCase
+            )
+          ) is { } profileName
+        )
+      {
+        profile = System.Enum.Parse<Client.File.Handler.EditorProfile>(
+          profileName
+        );
+      }
+      else
+      {
+        ArgumentList.Insert(default, Name);
+      }
     }
   }
 

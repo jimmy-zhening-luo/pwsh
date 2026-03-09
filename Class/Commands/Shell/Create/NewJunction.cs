@@ -28,8 +28,8 @@ sealed public class NewJunction() : WrappedCommand(
     Position = default
   )]
   [Tab.PathCompletions]
-  required public string[] Path
-  { private get; set; }
+  required public Collection<string> Path
+  { private get; init; }
 
   [Parameter(
     Mandatory = true,

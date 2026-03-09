@@ -28,7 +28,7 @@ abstract public class WrappedSetDirectory() : WrappedCommand(
     }
     else
     {
-      BoundParameters["Path"] = Path = ReanchorPath(Path);
+      BoundParameters["Path"] = ReanchorPath(Path);
     }
   }
 }

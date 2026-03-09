@@ -5,8 +5,8 @@ abstract public class WrappedGetDirectory() : WrappedCommand(
   AcceptsPipelineInput: true
 )
 {
-  abstract public string[] Path
-  { get; set; }
+  abstract public Collection<string> Path
+  { get; init; }
 
   sealed override private protected object? PipelineInput => Path;
 
@@ -37,13 +37,13 @@ abstract public class WrappedGetDirectory() : WrappedCommand(
 
   [Parameter]
   [SupportsWildcards]
-  required public string[] Include
-  { private get; set; }
+  required public Collection<string> Include
+  { private get; init; }
 
   [Parameter]
   [SupportsWildcards]
-  required public string[] Exclude
-  { private get; set; }
+  required public Collection<string> Exclude
+  { private get; init; }
 
   [Parameter]
   [Alias("s", "r")]
@@ -105,7 +105,7 @@ abstract public class WrappedGetDirectory() : WrappedCommand(
   {
     if (!InCurrentLocation)
     {
-      BoundParameters["Path"] = Path = ReanchorPath(Path);
+      BoundParameters["Path"] = ReanchorPath(Path);
     }
   }
 }

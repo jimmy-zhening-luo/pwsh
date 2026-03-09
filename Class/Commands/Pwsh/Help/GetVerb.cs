@@ -55,10 +55,10 @@ sealed public class GetVerb : CoreCommand
   [SupportsWildcards]
   [ValidateNotNullOrWhiteSpace]
   [Tab.Completions("*")]
-  public string[] Verb
+  public Collection<string> Verb
   {
     private get => [.. verbs];
-    set
+    init
     {
       verbs.Clear();
 
@@ -89,8 +89,8 @@ sealed public class GetVerb : CoreCommand
     HelpMessage = "Get only the specified verb groups"
   )]
   [ValidateNotNullOrEmpty]
-  public VerbGroup[] Group
-  { private get; set; } = [];
+  public Collection<VerbGroup> Group
+  { private get; init; } = [];
 
   sealed override private protected void Postprocess()
   {

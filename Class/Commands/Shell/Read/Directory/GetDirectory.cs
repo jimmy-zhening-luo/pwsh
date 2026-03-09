@@ -23,16 +23,16 @@ sealed public class GetDirectory : WrappedGetDirectory
     "",
     Tab.PathItemType.Directory
   )]
-  sealed override public string[] Path
-  { get; set; } = [];
+  sealed override public Collection<string> Path
+  { get; init; } = [];
 
   [Parameter(
     ParameterSetName = "LiteralItems",
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  required public string[] LiteralPath
-  { private get; set; }
+  required public Collection<string> LiteralPath
+  { private get; init; }
 }
 
 [Cmdlet(
@@ -58,8 +58,8 @@ sealed public class GetDirectorySibling : WrappedGetDirectory
     "..",
     Tab.PathItemType.Directory
   )]
-  sealed override public string[] Path
-  { get; set; } = [];
+  sealed override public Collection<string> Path
+  { get; init; } = [];
 
   sealed override private protected string Location => Pwd("..");
 }
@@ -87,8 +87,8 @@ sealed public class GetDirectoryRelative : WrappedGetDirectory
     @"..\..",
     Tab.PathItemType.Directory
   )]
-  sealed override public string[] Path
-  { get; set; } = [];
+  sealed override public Collection<string> Path
+  { get; init; } = [];
 
   sealed override private protected string Location => Pwd(@"..\..");
 }
@@ -116,8 +116,8 @@ sealed public class GetDirectoryHome : WrappedGetDirectory
     "~",
     Tab.PathItemType.Directory
   )]
-  sealed override public string[] Path
-  { get; set; } = [];
+  sealed override public Collection<string> Path
+  { get; init; } = [];
 
   sealed override private protected string Location
   { get; } = Client.Environment.Known.Folder.Home();
@@ -146,8 +146,8 @@ sealed public class GetDirectoryCode : WrappedGetDirectory
     @"~\code",
     Tab.PathItemType.Directory
   )]
-  sealed override public string[] Path
-  { get; set; } = [];
+  sealed override public Collection<string> Path
+  { get; init; } = [];
 
   sealed override private protected string Location
   { get; } = Client.Environment.Known.Folder.Code();
@@ -176,8 +176,8 @@ sealed public class GetDirectoryDrive : WrappedGetDirectory
     Client.File.PathString.SeparatorString,
     Tab.PathItemType.Directory
   )]
-  sealed override public string[] Path
-  { get; set; } = [];
+  sealed override public Collection<string> Path
+  { get; init; } = [];
 
   sealed override private protected string Location => Drive();
 }

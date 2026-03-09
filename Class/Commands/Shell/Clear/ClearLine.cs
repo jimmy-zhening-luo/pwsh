@@ -30,18 +30,18 @@ sealed public class ClearLine : CoreCommand
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  required public string[] LiteralPath
-  { private get; set; }
+  required public Collection<string> LiteralPath
+  { private get; init; }
 
   [Parameter]
   [SupportsWildcards]
-  required public string[] Include
-  { private get; set; }
+  required public Collection<string> Include
+  { private get; init; }
 
   [Parameter]
   [SupportsWildcards]
-  required public string[] Exclude
-  { private get; set; }
+  required public Collection<string> Exclude
+  { private get; init; }
 
   [Parameter]
   [Alias("f")]

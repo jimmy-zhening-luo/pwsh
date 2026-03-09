@@ -19,9 +19,9 @@ sealed public class GetFile : WrappedGetFile
     "",
     Tab.PathItemType.File
   )]
-  sealed override public string[] Path
+  sealed override public Collection<string> Path
   {
-    set => paths = value;
+    init => paths = value;
   }
 
   [Parameter(
@@ -29,8 +29,8 @@ sealed public class GetFile : WrappedGetFile
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  required public string[] LiteralPath
-  { private get; set; }
+  required public Collection<string> LiteralPath
+  { private get; init; }
 }
 
 [Cmdlet(
@@ -52,9 +52,9 @@ sealed public class GetFileSibling : WrappedGetFile
     "..",
     Tab.PathItemType.File
   )]
-  sealed override public string[] Path
+  sealed override public Collection<string> Path
   {
-    set => paths = value;
+    init => paths = value;
   }
 
   sealed override private protected string Location => Pwd("..");
@@ -79,9 +79,9 @@ sealed public class GetFileRelative : WrappedGetFile
     @"..\..",
     Tab.PathItemType.File
   )]
-  sealed override public string[] Path
+  sealed override public Collection<string> Path
   {
-    set => paths = value;
+    init => paths = value;
   }
 
   sealed override private protected string Location => Pwd(@"..\..");
@@ -106,9 +106,9 @@ sealed public class GetFileHome : WrappedGetFile
     "~",
     Tab.PathItemType.File
   )]
-  sealed override public string[] Path
+  sealed override public Collection<string> Path
   {
-    set => paths = value;
+    init => paths = value;
   }
 
   sealed override private protected string Location
@@ -134,9 +134,9 @@ sealed public class GetFileCode : WrappedGetFile
     @"~\code",
     Tab.PathItemType.File
   )]
-  sealed override public string[] Path
+  sealed override public Collection<string> Path
   {
-    set => paths = value;
+    init => paths = value;
   }
 
   sealed override private protected string Location
@@ -162,9 +162,9 @@ sealed public class GetFileDrive : WrappedGetFile
     Client.File.PathString.SeparatorString,
     Tab.PathItemType.File
   )]
-  sealed override public string[] Path
+  sealed override public Collection<string> Path
   {
-    set => paths = value;
+    init => paths = value;
   }
 
   sealed override private protected string Location => Drive();

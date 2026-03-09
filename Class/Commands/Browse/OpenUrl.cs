@@ -29,8 +29,8 @@ sealed public class OpenUrl() : CoreCommand(true)
   )]
   [AllowEmptyCollection]
   [ValidateNotNull]
-  public required System.Uri[] Uri
-  { get; set; }
+  required public Collection<System.Uri> Uri
+  { get; init; }
 
   sealed override private protected void Process()
   {

@@ -16,9 +16,9 @@ sealed public class GetHelpOnline : CoreCommand
   [Alias("Command")]
   [SupportsWildcards]
   [ValidateNotNullOrWhiteSpace]
-  public string[] Name
+  public Collection<string> Name
   {
-    set => topic = string.Join(
+    init => topic = string.Join(
       '_',
       value
     );
@@ -27,8 +27,8 @@ sealed public class GetHelpOnline : CoreCommand
 
   [Parameter]
   [ValidateNotNullOrWhiteSpace]
-  public string[] Parameter
-  { private get; set; } = [];
+  public Collection<string> Parameter
+  { private get; init; } = [];
 
   static private IEnumerable<System.Uri> TryExtractHelpLink(Collection<PSObject> helpContent)
   {

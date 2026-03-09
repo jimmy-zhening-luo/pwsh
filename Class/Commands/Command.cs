@@ -188,7 +188,7 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
 
   private protected void EndSteppablePipeline() => PSHost.EndSteppablePipeline();
 
-  private protected string[] ReanchorPath(IEnumerable<string> paths)
+  private protected Collection<string> ReanchorPath(IEnumerable<string> paths)
   {
     List<string> reanchoredPaths = [];
 
