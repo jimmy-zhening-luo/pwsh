@@ -78,14 +78,14 @@ sealed public class GetSize : CoreCommand
     HelpMessage = "Unit in which to return the size"
   )]
   public DiskSizeUnit Unit
-  { private get; set; } = DiskSizeUnit.kb;
+  { private get; init; } = DiskSizeUnit.kb;
 
   [Parameter(
     ParameterSetName = "Number",
     HelpMessage = "If specified, returns the size as the number of bytes instead of a formatted string"
   )]
   public SwitchParameter Number
-  { private get; set; }
+  { private get; init; }
 
   sealed override private protected void Process()
   {

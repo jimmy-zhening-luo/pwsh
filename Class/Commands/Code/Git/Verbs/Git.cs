@@ -8,7 +8,7 @@ namespace PowerModule.Commands.Code.Git.Verbs;
 [Alias("g")]
 sealed public class GitVerbCommand() : GitCommand(default)
 {
-  new private SwitchParameter V
+  new public SwitchParameter V
   { get; set; }
 
   [Parameter(

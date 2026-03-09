@@ -11,7 +11,7 @@ abstract public class WrappedGetFile() : WrappedCommand(
   [Parameter]
   [SupportsWildcards]
   required public string Filter
-  { private get; set; }
+  { private get; init; }
 
   [Parameter]
   [SupportsWildcards]
@@ -25,50 +25,50 @@ abstract public class WrappedGetFile() : WrappedCommand(
 
   [Parameter]
   public long ReadCount
-  { private get; set; }
+  { private get; init; }
 
   [Parameter]
   [Alias("First", "Head")]
   [ValidateRange(ValidateRangeKind.NonNegative)]
   public long TotalCount
-  { private get; set; }
+  { private get; init; }
 
   [Parameter]
   [Alias("Last")]
   [ValidateRange(ValidateRangeKind.NonNegative)]
   public int Tail
-  { private get; set; }
+  { private get; init; }
 
   [Parameter]
   required public string Delimiter
-  { private get; set; }
+  { private get; init; }
 
   [Parameter]
   required public string Stream
-  { private get; set; }
+  { private get; init; }
 
   [Parameter]
   [ValidateNotNullOrEmpty]
   [Tab.EnumCompletions(typeof(Client.File.Encoding))]
   required public string Encoding
-  { private get; set; }
+  { private get; init; }
 
   [Parameter]
   [Alias("f")]
   public SwitchParameter Force
-  { private get; set; }
+  { private get; init; }
 
   [Parameter]
   public SwitchParameter AsByteStream
-  { private get; set; }
+  { private get; init; }
 
   [Parameter]
   public SwitchParameter Raw
-  { private get; set; }
+  { private get; init; }
 
   [Parameter]
   public SwitchParameter Wait
-  { private get; set; }
+  { private get; init; }
 
   sealed override private protected void TransformPipelineInput()
   {

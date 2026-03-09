@@ -71,7 +71,7 @@ sealed public class TestHost() : WrappedCommand(
   )]
   [ValidateNotNullOrWhiteSpace]
   public string ComputerName
-  { get; set; } = string.Empty;
+  { get; init; } = string.Empty;
 
   [Parameter(
     ParameterSetName = "CommonTCPPort",
@@ -97,43 +97,43 @@ sealed public class TestHost() : WrappedCommand(
 
   [Parameter]
   public SwitchParameter Detailed
-  { private get; set; }
+  { private get; init; }
 
   [Parameter]
   public TestHostVerbosity InformationLevel
-  { private get; set; }
+  { private get; init; }
 
   [Parameter(
     ParameterSetName = "ICMP"
   )]
   public SwitchParameter TraceRoute
-  { private get; set; }
+  { private get; init; }
 
   [Parameter(
     ParameterSetName = "ICMP"
   )]
   [ValidateRange(1, 120)]
   public int Hops
-  { private get; set; }
+  { private get; init; }
 
   [Parameter(
     ParameterSetName = "NetRouteDiagnostics",
     Mandatory = true
   )]
   public SwitchParameter DiagnoseRouting
-  { private get; set; }
+  { private get; init; }
 
   [Parameter(
     ParameterSetName = "NetRouteDiagnostics"
   )]
   required public string ConstrainSourceAddress
-  { private get; set; }
+  { private get; init; }
 
   [Parameter(
     ParameterSetName = "NetRouteDiagnostics"
   )]
   public uint ConstrainInterface
-  { private get; set; }
+  { private get; init; }
 
   sealed override private protected void TransformArguments()
   {
@@ -162,7 +162,7 @@ sealed public class TestHost() : WrappedCommand(
             true,
             out var commonPort
           ):
-            BoundParameters["CommonTCPPort"] = CommonTCPPort = commonPort.ToString();
+            BoundParameters["CommonTCPPort"] = commonPort.ToString();
             break;
         }
         break;
@@ -173,7 +173,7 @@ sealed public class TestHost() : WrappedCommand(
   {
     if (ComputerName is "")
     {
-      BoundParameters["ComputerName"] = ComputerName = "google.com";
+      BoundParameters["ComputerName"] = "google.com";
     }
   }
 }

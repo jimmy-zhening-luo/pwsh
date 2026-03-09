@@ -21,7 +21,7 @@ abstract public partial class NativeCommand(bool SkipSsh = default) : CoreComman
   { get; }
 
   virtual private protected SwitchBoard Uppercase
-  { get; set; } = new();
+  { get; init; } = new();
 
   [Parameter(
     Position = 100,
@@ -38,70 +38,49 @@ abstract public partial class NativeCommand(bool SkipSsh = default) : CoreComman
     HelpMessage = "When execution results in a non-zero exit code, warn and continue instead of terminating execution"
   )]
   public SwitchParameter NoThrow
-  {
-    private protected get;
-    set;
-  }
+  { private protected get; set; }
 
   [Parameter(
     DontShow = true,
     HelpMessage = "Pass -v flag as argument"
   )]
   public SwitchParameter V
-  {
-    private protected get;
-    set;
-  }
+  { private protected get; set; }
 
   [Parameter(
     DontShow = true,
     HelpMessage = "Pass -d flag as argument"
   )]
   public SwitchParameter D
-  {
-    private protected get;
-    set;
-  }
+  { private protected get; set; }
 
   [Parameter(
     DontShow = true,
     HelpMessage = "Pass -e flag as argument"
   )]
   public SwitchParameter E
-  {
-    private protected get;
-    set;
-  }
+  { private protected get; set; }
 
   [Parameter(
     DontShow = true,
     HelpMessage = "Pass -i flag as argument"
   )]
   public SwitchParameter I
-  {
-    private protected get;
-    set;
-  }
+  { private protected get; set; }
 
   [Parameter(
     DontShow = true,
     HelpMessage = "Pass -o flag as argument"
   )]
   public SwitchParameter O
-  {
-    private protected get;
-    set;
-  }
+  { private protected get; set; }
 
   [Parameter(
     DontShow = true,
     HelpMessage = "Pass -p flag as argument"
   )]
   public SwitchParameter P
-  {
-    private protected get;
-    set;
-  }
+  { private protected get; set; }
 
   static private protected bool IsNativeArgument(string argument) => NativeArgumentRegex().IsMatch(argument);
   [System.Text.RegularExpressions.GeneratedRegex(

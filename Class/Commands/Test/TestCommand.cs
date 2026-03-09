@@ -19,11 +19,11 @@ sealed public class TestCommand : CoreCommand
   [Parameter(Position = 1)]
   [ValidateNotNullOrWhiteSpace]
   public string Greeting
-  { private get; set; } = "Hello";
+  { private get; init; } = "Hello";
 
   [Parameter]
   public SwitchParameter Switch
-  { private get; set; }
+  { private get; init; }
 
   sealed override private protected void Preprocess()
   { }

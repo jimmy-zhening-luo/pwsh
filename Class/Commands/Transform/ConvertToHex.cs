@@ -26,7 +26,7 @@ sealed public class ConvertToHex : Cmdlet
   )]
   [Alias("Case")]
   public SwitchParameter Lowercase
-  { private get; set; }
+  { private get; init; }
 
   sealed override protected void ProcessRecord()
   {

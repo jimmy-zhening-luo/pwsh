@@ -111,7 +111,7 @@ abstract public class NodeCommand(string? IntrinsicVerb) : RemoteNativeVerbComma
   { get; } = Client.Environment.Known.Application.Npm;
 
   override private protected SwitchBoard Uppercase
-  { get; set; } = new(
+  { get; init; } = new(
     D: true,
     E: true,
     P: true

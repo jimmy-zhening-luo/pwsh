@@ -23,13 +23,13 @@ sealed public class GitCommit() : GitCommand("commit")
     HelpMessage = "Only commit files that are already staged"
   )]
   public SwitchParameter Staged
-  { private get; set; }
+  { private get; init; }
 
   [Parameter(
     HelpMessage = "Allow commit with no changes, equivalent to --allow-empty"
   )]
   public SwitchParameter AllowEmpty
-  { private get; set; }
+  { private get; init; }
 
   sealed override private protected void PreprocessOtherArguments()
   {

@@ -39,5 +39,5 @@ sealed public class NewJunction() : WrappedCommand(
   [Alias("Target")]
   [Tab.PathCompletions]
   required public object Value
-  { get; set; }
+  { get; init; }
 }

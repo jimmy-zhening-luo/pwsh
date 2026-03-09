@@ -18,12 +18,12 @@ sealed public class ClearLine : CoreCommand
   [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions]
   public string Path
-  { private get; set; } = string.Empty;
+  { private get; init; } = string.Empty;
 
   [Parameter]
   [SupportsWildcards]
   required public string Filter
-  { private get; set; }
+  { private get; init; }
 
   [Parameter(
     ParameterSetName = "LiteralPath",
@@ -46,11 +46,11 @@ sealed public class ClearLine : CoreCommand
   [Parameter]
   [Alias("f")]
   public SwitchParameter Force
-  { private get; set; }
+  { private get; init; }
 
   [Parameter]
   required public string Stream
-  { private get; set; }
+  { private get; init; }
 
   sealed override private protected void Postprocess()
   {

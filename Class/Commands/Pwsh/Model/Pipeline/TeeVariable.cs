@@ -19,7 +19,7 @@ sealed public class TeeVariable() : WrappedCommand(
     ValueFromPipeline = true
   )]
   required public object InputObject
-  { get; set; }
+  { get; init; }
 
   [Parameter(
     ParameterSetName = "Variable",
@@ -27,7 +27,7 @@ sealed public class TeeVariable() : WrappedCommand(
     Position = default
   )]
   required public string Variable
-  { private get; set; }
+  { private get; init; }
 
   [Parameter(
     ParameterSetName = "File",
@@ -35,7 +35,7 @@ sealed public class TeeVariable() : WrappedCommand(
   )]
   [Alias("Path")]
   required public string FilePath
-  { private get; set; }
+  { private get; init; }
 
   [Parameter(
     ParameterSetName = "LiteralFile",
@@ -43,13 +43,13 @@ sealed public class TeeVariable() : WrappedCommand(
   )]
   [Alias("PSPath", "LP")]
   required public string LiteralPath
-  { private get; set; }
+  { private get; init; }
 
   [Parameter(
     ParameterSetName = "File"
   )]
   public SwitchParameter Append
-  { private get; set; }
+  { private get; init; }
 
   [Parameter(
     ParameterSetName = "File"
@@ -60,5 +60,5 @@ sealed public class TeeVariable() : WrappedCommand(
   [ValidateNotNullOrEmpty]
   [Tab.EnumCompletions(typeof(Client.File.Encoding))]
   required public string Encoding
-  { private get; set; }
+  { private get; init; }
 }

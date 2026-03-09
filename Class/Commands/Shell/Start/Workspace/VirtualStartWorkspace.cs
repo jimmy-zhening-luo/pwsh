@@ -5,7 +5,7 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
   private Client.File.Handler.EditorProfile profile;
 
   abstract public string Path
-  { private protected get; set; }
+  { private protected get; init; }
 
   [Parameter(Position = 1)]
   [ValidateNotNullOrWhiteSpace]
@@ -34,7 +34,7 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
 
   [Parameter]
   public SwitchParameter ReuseWindow
-  { private get; set; }
+  { private get; init; }
 
   sealed override private protected void Preprocess()
   {

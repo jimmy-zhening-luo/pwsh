@@ -12,7 +12,7 @@ sealed public class EditSystemPath() : CoreCommand(true)
     HelpMessage = "Launch Environment Variables control panel as Administrator"
   )]
   public SwitchParameter Administrator
-  { private get; set; }
+  { private get; init; }
 
   sealed override private protected void Postprocess()
   {

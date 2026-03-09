@@ -34,10 +34,7 @@ abstract public class RemoteNativeVerbCommand(
     Flat = true
   )]
   public string WorkingDirectory
-  {
-    private protected get;
-    set;
-  } = string.Empty;
+  { private protected get; set; } = string.Empty;
 
   abstract private protected void PreprocessIntrinsicVerb();
 

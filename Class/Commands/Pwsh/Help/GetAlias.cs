@@ -58,7 +58,7 @@ sealed public class GetCommandAlias : CoreCommand
     "3"
   )]
   public string Scope
-  { private get; set; } = "Global";
+  { private get; init; } = "Global";
 
   [Parameter(
     Position = 2

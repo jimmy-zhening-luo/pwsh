@@ -16,7 +16,7 @@ sealed public class GetInputType : CoreCommand
   )]
   [ValidateNotNull]
   required public object InputObject
-  { get; set; }
+  { get; init; }
 
   sealed override private protected void Process()
   {

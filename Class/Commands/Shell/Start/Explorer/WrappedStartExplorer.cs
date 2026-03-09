@@ -14,7 +14,7 @@ abstract public class WrappedStartExplorer() : WrappedCommand(
   [Parameter]
   [SupportsWildcards]
   required public string Filter
-  { private get; set; }
+  { private get; init; }
 
   [Parameter]
   [SupportsWildcards]

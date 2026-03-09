@@ -63,7 +63,7 @@ sealed public partial class GitReset() : GitCommand("reset")
     HelpMessage = "Perform a non-destructive reset, equivalent to [--hard=false]"
   )]
   public SwitchParameter Soft
-  { private get; set; }
+  { private get; init; }
 
   sealed override private protected void PreprocessOtherArguments()
   {

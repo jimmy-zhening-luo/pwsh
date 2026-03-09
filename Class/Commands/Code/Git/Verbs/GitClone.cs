@@ -38,7 +38,7 @@ sealed public class GitClone() : GitCommand("clone")
   )]
   [Alias("ssh")]
   public SwitchParameter ForceSsh
-  { private get; set; }
+  { private get; init; }
 
   sealed override private protected void PreprocessOtherArguments()
   {

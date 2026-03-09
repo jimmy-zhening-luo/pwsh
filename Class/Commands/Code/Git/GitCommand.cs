@@ -46,7 +46,7 @@ abstract public class GitCommand(string? IntrinsicVerb) : RemoteNativeVerbComman
   { get; } = Client.Environment.Known.Application.Git;
 
   override private protected SwitchBoard Uppercase
-  { get; set; } = new(
+  { get; init; } = new(
     E: true,
     P: true
   );

@@ -18,7 +18,7 @@ sealed public class OpenUrl() : CoreCommand(true)
   [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions]
   public string Path
-  { private get; set; } = string.Empty;
+  { private get; init; } = string.Empty;
 
   [Parameter(
     ParameterSetName = "Uri",

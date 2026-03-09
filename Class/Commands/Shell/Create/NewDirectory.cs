@@ -39,16 +39,16 @@ sealed public class NewDirectory() : WrappedCommand(
     Mandatory = true
   )]
   required public string Name
-  { private get; set; }
+  { private get; init; }
 
   [Parameter(ValueFromPipeline = true)]
   [Alias("Target")]
   [Tab.PathCompletions]
   required public object Value
-  { get; set; }
+  { get; init; }
 
   [Parameter]
   [Alias("f")]
   public SwitchParameter Force
-  { private get; set; }
+  { private get; init; }
 }

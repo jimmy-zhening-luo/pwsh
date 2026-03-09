@@ -15,7 +15,7 @@ sealed public class NodeRunScript() : NodeCommand("run")
   )]
   [ValidateNotNullOrWhiteSpace]
   required public string Script
-  { private get; set; }
+  { private get; init; }
 
   sealed override private protected IEnumerable<string> ParseArguments() => [Script];
 }

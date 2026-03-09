@@ -48,10 +48,7 @@ public class StopTask : CoreCommand
     HelpMessage = "Stop the entire process tree (the processe and all of its descendants)"
   )]
   public SwitchParameter Descendant
-  {
-    private protected get;
-    set;
-  }
+  { private protected get; init; }
 
   static private void KillProcesses(
     string name,

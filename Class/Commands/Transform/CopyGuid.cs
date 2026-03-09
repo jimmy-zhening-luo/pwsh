@@ -14,13 +14,13 @@ sealed public class CopyGuid : CoreCommand
   )]
   [Alias("Case")]
   public SwitchParameter Uppercase
-  { private get; set; }
+  { private get; init; }
 
   [Parameter(
     HelpMessage = "Only copy GUID to clipboard, omit console output"
   )]
   public SwitchParameter Silent
-  { private get; set; }
+  { private get; init; }
 
   sealed override private protected void Postprocess()
   {

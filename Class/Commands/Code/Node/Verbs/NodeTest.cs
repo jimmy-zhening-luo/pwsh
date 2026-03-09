@@ -10,7 +10,7 @@ sealed public class NodeTest() : NodeCommand("test")
 {
   private const string FlagIgnoreScript = "--ignore-scripts";
 
-  new private SwitchParameter I
+  new public SwitchParameter I
   { get; set; }
 
   [Parameter(
@@ -18,7 +18,7 @@ sealed public class NodeTest() : NodeCommand("test")
   )]
   [Alias("i")]
   public SwitchParameter IgnoreScript
-  { private get; set; }
+  { private get; init; }
 
   sealed override private protected void PreprocessOtherArguments()
   {

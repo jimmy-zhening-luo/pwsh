@@ -6,13 +6,13 @@ abstract public class WrappedSetDirectory() : WrappedCommand(
 )
 {
   abstract public string Path
-  { get; set; }
+  { get; init; }
 
   sealed override private protected object? PipelineInput => Path;
 
   [Parameter]
   public SwitchParameter PassThru
-  { private get; set; }
+  { private get; init; }
 
   sealed override private protected void TransformPipelineInput()
   {
@@ -23,7 +23,7 @@ abstract public class WrappedSetDirectory() : WrappedCommand(
         && Path is ""
       )
       {
-        BoundParameters["Path"] = Path = Pwd("..");
+        BoundParameters["Path"] = Pwd("..");
       }
     }
     else

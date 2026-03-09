@@ -15,7 +15,7 @@ sealed public class NodeOutdated() : NodeCommand("outdated")
   )]
   [Alias("a")]
   public SwitchParameter All
-  { private get; set; }
+  { private get; init; }
 
   sealed override private protected void PreprocessOtherArguments()
   {
