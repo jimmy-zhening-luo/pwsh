@@ -1,5 +1,7 @@
 namespace PowerModule.Client.Console;
 
+using CultureInfo = System.Globalization.CultureInfo;
+
 static internal class String
 {
   internal const char Space = ' ';
@@ -9,6 +11,12 @@ static internal class String
   internal const string DoubleQuoteString = "\"";
   internal const string EscapedSingleQuote = "''";
   internal const string EscapedDoubleQuote = "\\\"";
+
+  static internal CultureInfo CurrentCulture => currentCulture ??= CultureInfo.InvariantCulture;
+  static private CultureInfo? currentCulture;
+
+  static internal CultureInfo InvariantCulture => invariantCulture ??= CultureInfo.InvariantCulture;
+  static private CultureInfo? invariantCulture;
 
   static internal string EscapeSingleQuoted(string text) => text.Contains(Space)
     ? string.Concat(
