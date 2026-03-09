@@ -9,6 +9,47 @@ namespace Module.Commands.Browse.Test;
 [OutputType(typeof(System.Uri))]
 sealed public class TestUrl : CoreCommand
 {
+  static IEnumerable<System.Uri> EnumerateSupportedUri(
+    System.Uri[] uris
+  )
+  {
+    foreach (var uri in uris)
+    {
+      if (Client.Network.Url.IsHttpOrFile(uri))
+      {
+        yield return uri;
+      }
+      else if (
+        !uri.IsAbsoluteUri
+        && Client.Network.Url.ToAbsoluteHttpUri(
+          $"http://{uri.OriginalString}"
+        ) is { } httpUri
+      )
+      {
+        yield return httpUri;
+      }
+    }
+  }
+
+  static IEnumerable<System.Uri> EnumerateReachableUri(
+    System.Uri[] uris
+  )
+  {
+    foreach (var uri in uris)
+    {
+      if (
+        Client.Network.Url.IsFile(uri)
+        && System.IO.Path.Exists(uri.LocalPath)
+        || Client.Network.Url.IsHttp(uri)
+        && Client.Network.Dns.Resolve(uri)
+        && Client.Network.Url.TestHttp(uri)
+      )
+      {
+        yield return uri;
+      }
+    }
+  }
+
   [Parameter(
     Mandatory = true,
     Position = default,
@@ -20,45 +61,13 @@ sealed public class TestUrl : CoreCommand
   [ValidateNotNull]
   public System.Uri[] Uri
   {
-    get => [.. urls];
-    set
-    {
-      urls.Clear();
-
-      foreach (var uri in value)
-      {
-        if (Client.Network.Url.IsHttpOrFile(uri))
-        {
-          urls.Add(uri);
-        }
-        else if (
-          !uri.IsAbsoluteUri
-          && Client.Network.Url.ToAbsoluteHttpUri(
-            $"http://{uri.OriginalString}"
-          ) is { } httpUri
-        )
-        {
-          urls.Add(httpUri);
-        }
-      }
-    }
+    get => [.. uris];
+    set => uris = EnumerateSupportedUri(value);
   }
-  private readonly List<System.Uri> urls = [];
+  private IEnumerable<System.Uri> uris = [];
 
   sealed override private protected void Process()
   {
-    foreach (var url in Uri)
-    {
-      if (
-        Client.Network.Url.IsFile(url)
-        && System.IO.Path.Exists(url.LocalPath)
-        || Client.Network.Url.IsHttp(url)
-        && Client.Network.Dns.Resolve(url)
-        && Client.Network.Url.TestHttp(url)
-      )
-      {
-        WriteObject(url);
-      }
-    }
+    WriteObject(uris, true);
   }
 }
