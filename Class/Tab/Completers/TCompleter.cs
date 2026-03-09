@@ -35,8 +35,12 @@ abstract internal class TCompleter(
       var result = completion.Result;
       var casedResult = Case switch
       {
-        CompletionCase.Upper => result.ToUpperInvariant(),
-        CompletionCase.Lower => result.ToLowerInvariant(),
+        CompletionCase.Upper => result.ToUpper(
+          Client.String.CurrentCulture
+        ),
+        CompletionCase.Lower => result.ToLower(
+          Client.String.CurrentCulture
+        ),
         _ => result,
       };
 

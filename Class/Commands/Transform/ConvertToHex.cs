@@ -37,7 +37,9 @@ sealed public class ConvertToHex : Cmdlet
 
       WriteObject(
         Lowercase
-          ? hex.ToLowerInvariant()
+          ? hex.ToLower(
+            Client.String.InvariantCulture
+          )
           : hex
       );
     }

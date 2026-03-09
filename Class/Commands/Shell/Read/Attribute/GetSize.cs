@@ -133,7 +133,14 @@ sealed public class GetSize : CoreCommand
           );
 
           WriteObject(
-            $"{System.Math.Round(scaledSize, 3)} {Unit.ToString().ToUpperInvariant()}"
+            $"{System.Math.Round(
+              scaledSize,
+              3
+            )} {Unit
+              .ToString()
+              .ToUpper(
+                Client.String.CurrentCulture
+            )}"
           );
           break;
       }
