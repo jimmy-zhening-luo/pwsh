@@ -18,8 +18,8 @@ sealed public class ConvertToHex : Cmdlet
   )]
   [AllowEmptyCollection]
   [ValidateRange(ValidateRangeKind.NonNegative)]
-  public long[] Number
-  { get; set; } = [];
+  public Collection<long> Number
+  { get; init; } = [];
 
   [Parameter(
     HelpMessage = "Output hexadecimal letters in lowercase"
