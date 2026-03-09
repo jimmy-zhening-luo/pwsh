@@ -71,29 +71,50 @@ abstract public class WrappedCommand(
     EndSteppablePipeline();
   }
 
+  private protected void SetBoundParameter(
+    string parameter,
+    object? value
+  )
+  {
+    switch (value)
+    {
+      case null or false:
+        RemoveBoundParameters(parameter);
+        break;
+
+      case true:
+        SwitchBoundParameters(parameter);
+        break;
+
+      default:
+        BoundParameters[parameter] = value;
+        break;
+    }
+  }
+
+  private protected void SwitchBoundParameter(string parameter)
+  {
+    BoundParameters[parameter] = SwitchParameter.Present;
+  }
+
+  private protected void RemoveBoundParameter(string parameter)
+  {
+    _ = BoundParameters.Remove(parameter);
+  }
+
   private void CoerceParameters()
   {
     foreach (
       (
-        var key,
+        var parameter,
         var value
       ) in CoercedParameters
     )
     {
-      switch (value)
-      {
-        case null or false or "":
-          _ = BoundParameters.Remove(key);
-          break;
-
-        case true:
-          BoundParameters[key] = SwitchParameter.Present;
-          break;
-
-        default:
-          BoundParameters[key] = value;
-          break;
-      }
+      SetBoundParameter(
+        parameter,
+        value
+      );
     }
   }
 }
