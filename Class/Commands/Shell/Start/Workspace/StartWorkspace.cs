@@ -15,10 +15,7 @@ sealed public class StartWorkspace : VirtualStartWorkspace
   )]
   [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions]
-  sealed override public string Path
-  {
-    set => path = value;
-  }
+  sealed override public string Path { private protected get; set; } = string.Empty;
 }
 
 [Cmdlet(
@@ -36,10 +33,7 @@ sealed public class StartWorkspaceSibling : VirtualStartWorkspace
   )]
   [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions("..")]
-  sealed override public string Path
-  {
-    set => path = value;
-  }
+  sealed override public string Path { private protected get; set; } = string.Empty;
 
   sealed override private protected string Location => Pwd("..");
 }
@@ -59,10 +53,7 @@ sealed public class StartWorkspaceRelative : VirtualStartWorkspace
   )]
   [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions(@"..\..")]
-  sealed override public string Path
-  {
-    set => path = value;
-  }
+  sealed override public string Path { private protected get; set; } = string.Empty;
 
   sealed override private protected string Location => Pwd(@"..\..");
 }
@@ -82,10 +73,7 @@ sealed public class StartWorkspaceHome : VirtualStartWorkspace
   )]
   [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions("~")]
-  sealed override public string Path
-  {
-    set => path = value;
-  }
+  sealed override public string Path { private protected get; set; } = string.Empty;
 
   sealed override private protected string Location { get; } = Client.Environment.Known.Folder.Home();
 }
@@ -105,10 +93,7 @@ sealed public class StartWorkspaceCode : VirtualStartWorkspace
   )]
   [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions(@"~\code")]
-  sealed override public string Path
-  {
-    set => path = value;
-  }
+  sealed override public string Path { private protected get; set; } = string.Empty;
 
   sealed override private protected string Location { get; } = Client.Environment.Known.Folder.Code();
 }
@@ -128,10 +113,7 @@ sealed public class StartWorkspaceDrive : VirtualStartWorkspace
   )]
   [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions(@"\")]
-  sealed override public string Path
-  {
-    set => path = value;
-  }
+  sealed override public string Path { private protected get; set; } = string.Empty;
 
   sealed override private protected string Location => Drive();
 }

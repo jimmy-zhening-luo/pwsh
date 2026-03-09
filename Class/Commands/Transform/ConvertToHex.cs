@@ -30,7 +30,10 @@ sealed public class ConvertToHex : Cmdlet
   {
     foreach (var number in Number)
     {
-      var hex = number.ToString("X");
+      var hex = number.ToString(
+        "X",
+        Client.Console.String.InvariantCulture
+      );
 
       WriteObject(
         Lowercase

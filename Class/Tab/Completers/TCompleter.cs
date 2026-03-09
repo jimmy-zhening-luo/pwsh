@@ -5,7 +5,7 @@ abstract internal class TCompleter(
   CompletionResultType CompletionType
 ) : IArgumentCompleter
 {
-  private protected record CompletionResultRecord(
+  sealed private protected record CompletionResultRecord(
     string Result,
     string? DisplayName = default,
     string? Description = default,

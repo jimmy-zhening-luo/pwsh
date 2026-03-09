@@ -2,7 +2,7 @@ namespace PowerModule.Commands;
 
 public partial class CoreCommand
 {
-  private class PowerShellHost : System.IDisposable
+  sealed private class PowerShellHost : System.IDisposable
   {
     ~PowerShellHost()
     {

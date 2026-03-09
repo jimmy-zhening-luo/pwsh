@@ -5,8 +5,7 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
   private const string FlagNewWindow = "--new-window";
   private const string FlagReuseWindow = "--reuse-window";
 
-  abstract public string Path { set; }
-  private protected string path = string.Empty;
+  abstract public string Path { private protected get; set; }
 
   [Parameter(Position = 1)]
   [ValidateNotNullOrWhiteSpace]
@@ -75,13 +74,13 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
 
   sealed override private protected void Process() => Client.File.Handler.Edit(
     InCurrentLocation
-      && path is ""
+      && Path is ""
       && (
         Pwd() == Client.Environment.Known.Folder.Code()
         || Pwd() == Client.Environment.Known.Folder.Home()
       )
         ? string.Empty
-        : ReanchorPath(path),
+        : ReanchorPath(Path),
     profile,
     window,
     ArgumentList

@@ -2,7 +2,7 @@ namespace PowerModule.Commands;
 
 abstract public partial class NativeCommand(bool SkipSsh = default) : CoreCommand(SkipSsh)
 {
-  private protected record SwitchBoard(
+  sealed private protected record SwitchBoard(
     bool D = default,
     bool E = default,
     bool I = default,
