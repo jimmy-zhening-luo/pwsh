@@ -1,4 +1,4 @@
-namespace PowerModule.Commands.Shell.Change.Directory;
+namespace PowerModule.Commands.Shell.Move.Location;
 
 [Cmdlet(
   VerbsCommon.Set,
