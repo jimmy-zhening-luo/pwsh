@@ -60,7 +60,6 @@ function Update-PSProfile {
       $DotnetArgument = @(
         "$PROFILE_REPO_ROOT\Class.slnx"
         '--configuration=Release'
-        '--nologo'
       )
 
       & $DOTNET clean @DotnetArgument --verbosity=quiet
