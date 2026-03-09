@@ -2,6 +2,11 @@
   <PropertyGroup>
     <AssemblyName>ClientPeer</AssemblyName>
     <TargetFramework>net9.0-windows</TargetFramework>
+    <BaseOutputPath>../Build</BaseOutputPath>
+    <NoLogo>true</NoLogo>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <DebugType>none</DebugType>
   </PropertyGroup>
   <PropertyGroup>
     <Nullable>enable</Nullable>
