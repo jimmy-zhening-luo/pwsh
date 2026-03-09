@@ -8,13 +8,13 @@ abstract public class NativeVerbCommand(
   private protected string? IntrinsicVerb
   { get; set; } = IntrinsicVerb;
 
-  abstract private protected string[] CommandArguments
+  abstract private protected IEnumerable<string> CommandArguments
   { get; }
 
-  abstract private protected string[] VerbArguments
+  abstract private protected IEnumerable<string> VerbArguments
   { get; }
 
-  sealed override private protected string[] CommandScript => IntrinsicVerb is null
+  sealed override private protected IEnumerable<string> CommandScript => IntrinsicVerb is null
     ? [
         .. CommandArguments,
         .. VerbArguments

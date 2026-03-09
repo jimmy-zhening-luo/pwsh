@@ -17,7 +17,7 @@ abstract public partial class NativeCommand(bool SkipSsh = default) : CoreComman
   abstract private protected string CommandPath
   { get; }
 
-  abstract private protected string[] CommandScript
+  abstract private protected IEnumerable<string> CommandScript
   { get; }
 
   virtual private protected SwitchBoard Uppercase
