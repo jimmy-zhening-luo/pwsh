@@ -114,7 +114,7 @@ abstract public partial class NativeCommand(
 
   sealed override private protected void Postprocess()
   {
-    List<string> command = [
+    List<string> commandScript = [
       "&",
       CommandPath,
       .. CommandArguments,
@@ -122,44 +122,44 @@ abstract public partial class NativeCommand(
 
     if (IntrinsicVerb is not null)
     {
-      command.Add(IntrinsicVerb);
+      commandScript.Add(IntrinsicVerb);
     }
 
-    command.AddRange(VerbArguments);
+    commandScript.AddRange(VerbArguments);
 
     if (D)
     {
-      command.Add(Uppercase.D ? "-D" : "-d");
+      commandScript.Add(Uppercase.D ? "-D" : "-d");
     }
     if (E)
     {
-      command.Add(Uppercase.E ? "-E" : "-e");
+      commandScript.Add(Uppercase.E ? "-E" : "-e");
     }
     if (I)
     {
-      command.Add(Uppercase.I ? "-I" : "-i");
+      commandScript.Add(Uppercase.I ? "-I" : "-i");
     }
     if (O)
     {
-      command.Add(Uppercase.O ? "-O" : "-o");
+      commandScript.Add(Uppercase.O ? "-O" : "-o");
     }
     if (P)
     {
-      command.Add(Uppercase.P ? "-P" : "-p");
+      commandScript.Add(Uppercase.P ? "-P" : "-p");
     }
     if (V)
     {
-      command.Add(Uppercase.V ? "-V" : "-v");
+      commandScript.Add(Uppercase.V ? "-V" : "-v");
     }
 
-    command.AddRange(Arguments);
-    command.AddRange(NativeArguments);
+    commandScript.AddRange(Arguments);
+    commandScript.AddRange(NativeArguments);
 
     List<string> safeCommand = [];
 
     foreach (var word in command)
     {
-      safeCommand.Add(
+      safeCommandScript.Add(
         Client.String.EscapeDoubleQuoted(
           word
         )
@@ -169,7 +169,7 @@ abstract public partial class NativeCommand(
     AddScript(
       string.Join(
         Client.String.Space,
-        safeCommand
+        safeCommandScript
       )
     );
 
