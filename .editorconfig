@@ -26,4 +26,3 @@ indent_style = unset
 indent_size = 4
 
 [*.cs]
-dotnet_diagnostic.CA1822.severity = error
