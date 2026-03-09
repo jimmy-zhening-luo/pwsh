@@ -2,10 +2,6 @@ namespace PowerModule;
 
 static internal class PowerModule
 {
-  static internal string FullPathCurrentLocationRelative(string path) => Client.File.PathString.FullPathLocationRelative(
-    FullPathCurrentLocationRelative(),
-    path
-  );
   static internal string FullPathCurrentLocationRelative()
   {
     using var ps = PowerShell.Create(

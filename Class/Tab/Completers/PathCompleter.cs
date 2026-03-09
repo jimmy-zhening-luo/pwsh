@@ -33,7 +33,10 @@ sealed internal class PathCompleter : TCompleter
     Client.File.PathString.Normalize(location) is var normalPath
     && System.IO.Path.IsPathFullyQualified(normalPath)
       ? normalPath
-      : PowerModule.FullPathCurrentLocationRelative(normalPath),
+      : Client.File.PathString.FullPathLocationRelative(
+      PowerModule.FullPathCurrentLocationRelative(),
+      normalPath
+    ),
     itemType,
     flat,
     location is ""
