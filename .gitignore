@@ -50,7 +50,7 @@ node_modules/
 
 
 #region @configure
-Release/
+Build/
 Bin/
 Obj/
 bin/
