@@ -1,6 +1,6 @@
 namespace Module.Tab;
 
-internal class EnumCompletionsAttribute(
+sealed internal class EnumCompletionsAttribute(
   System.Type EnumType,
   string[]? Include = default,
   string[]? Exclude = default,
