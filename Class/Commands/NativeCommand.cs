@@ -28,7 +28,7 @@ abstract public partial class NativeCommand(bool SkipSsh = default) : CoreComman
   )]
   [ValidateLength(1, int.MaxValue)]
   [Tab.PathCompletions]
-  public string[] ArgumentList { private get; set; } = [];
+  public Collection<string> ArgumentList { private get; init; } = [];
 
   [Parameter(
     HelpMessage = "When execution results in a non-zero exit code, warn and continue instead of terminating execution"
@@ -122,7 +122,7 @@ abstract public partial class NativeCommand(bool SkipSsh = default) : CoreComman
       }
     }
 
-    ArgumentList = [];
+    ArgumentList.Clear();
 
     PreprocessArguments();
   }
