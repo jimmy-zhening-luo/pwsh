@@ -19,6 +19,7 @@ sealed public class TestCommand : CoreCommand
     init => names = value;
   }
   private Collection<string> names = [];
+
   [Parameter(Position = 1)]
   [ValidateNotNullOrWhiteSpace]
   public string Greeting { private get; set; } = "Hello";
