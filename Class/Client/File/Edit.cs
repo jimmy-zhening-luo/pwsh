@@ -97,10 +97,6 @@ static internal class Handler
     profile switch
     {
       EditorProfile.Default => arguments,
-      EditorProfile.C => [
-        $"--profile=C++",
-        .. arguments,
-      ],
       _ => [
         $"--profile={profile}",
         .. arguments,
