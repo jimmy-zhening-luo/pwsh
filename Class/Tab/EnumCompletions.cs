@@ -23,7 +23,7 @@ sealed internal class EnumCompletionsAttribute(
 
     if (Exclude is null or [])
     {
-      foreach (var name in names he)
+      foreach (var name in names)
       {
         yield return name;
       }
