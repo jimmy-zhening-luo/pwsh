@@ -11,7 +11,7 @@ sealed internal class PathCompletionsAttribute(
   string Location = "",
   PathItemType ItemType = PathItemType.Any,
  CompletionCase Case = CompletionCase.Lower
-) : Factory.TCompletionsAttribute(Case)
+) : Factory.TCompleterFactory(Case)
 {
   public string Location
   { get; } = Location;
