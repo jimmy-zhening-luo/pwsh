@@ -1,16 +1,43 @@
 namespace PowerModule.Tab.Completers.Intrinsics;
 
-internal interface ICompleter
+internal interface ICompleter : IArgumentCompleter
 {
-  private protected CompletionCase Case
-  { get; set; }
+  internal CompletionCase Case
+  { get; init; }
 
-  private protected CompletionResultType CompletionType
-  { get; set; }
+  internal CompletionResultType CompletionType
+  { get; init; }
+
+  new public IEnumerable<CompletionResult> CompleteArgument(
+    string commandName,
+    string parameterName,
+    string wordToComplete,
+    System.Management.Automation.Language.CommandAst commandAst,
+    System.Collections.IDictionary fakeBoundParameters
+  ) => WrapArgumentCompletionResult(
+    GenerateCompletion(
+      Client.String.UnescapeSingleQuoted(
+        wordToComplete
+      )
+    )
+  );
+  IEnumerable<CompletionResult> IArgumentCompleter.CompleteArgument(
+    string commandName,
+    string parameterName,
+    string wordToComplete,
+    System.Management.Automation.Language.CommandAst commandAst,
+    System.Collections.IDictionary fakeBoundParameters
+  ) => CompleteArgument(
+    commandName,
+    parameterName,
+    wordToComplete,
+    commandAst,
+    fakeBoundParameters
+  );
 
   private protected IEnumerable<CompletionResultRecord> GenerateCompletion(string wordToComplete);
 
-  virtual private protected IEnumerable<CompletionResult> WrapArgumentCompletionResult(IEnumerable<CompletionResultRecord> completions)
+  private IEnumerable<CompletionResult> WrapArgumentCompletionResult(IEnumerable<CompletionResultRecord> completions)
   {
     foreach (var completion in completions)
     {
