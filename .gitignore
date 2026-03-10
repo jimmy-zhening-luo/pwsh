@@ -51,9 +51,6 @@ node_modules/
 
 #region @configure
 Build/
-Bin/
-Obj/
-bin/
 obj/
 *.dll
 #endregion
