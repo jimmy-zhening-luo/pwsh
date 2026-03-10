@@ -1,6 +1,6 @@
 namespace PowerModule.Tab.Completers.Intrinsics;
 
-internal interface ICompleter : IArgumentCompleter
+interface ICompleter : IArgumentCompleter
 {
   sealed private protected record CompletionResultRecord(
     string Result,
@@ -15,7 +15,7 @@ internal interface ICompleter : IArgumentCompleter
   internal CompletionResultType CompletionType
   { get; init; }
 
-  new public IEnumerable<CompletionResult> CompleteArgument(
+  new IEnumerable<CompletionResult> CompleteArgument(
     string commandName,
     string parameterName,
     string wordToComplete,
@@ -44,7 +44,7 @@ internal interface ICompleter : IArgumentCompleter
 
   private protected IEnumerable<CompletionResultRecord> GenerateCompletion(string wordToComplete);
 
-  IEnumerable<CompletionResult> WrapArgumentCompletionResult(IEnumerable<CompletionResultRecord> completions)
+  private IEnumerable<CompletionResult> WrapArgumentCompletionResult(IEnumerable<CompletionResultRecord> completions)
   {
     foreach (var completion in completions)
     {

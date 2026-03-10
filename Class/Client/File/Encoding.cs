@@ -1,6 +1,6 @@
 namespace PowerModule.Client.File;
 
-internal enum Encoding
+enum Encoding
 {
   [System.ComponentModel.Description(
     "The encoding for the current culture's ANSI code page"

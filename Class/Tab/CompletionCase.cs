@@ -1,6 +1,6 @@
 namespace PowerModule.Tab;
 
-internal enum CompletionCase
+enum CompletionCase
 {
   Preserve,
   Lower,

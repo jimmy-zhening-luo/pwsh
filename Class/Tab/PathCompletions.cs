@@ -1,6 +1,6 @@
 namespace PowerModule.Tab;
 
-internal enum PathItemType
+enum PathItemType
 {
   Any,
   File,
