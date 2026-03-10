@@ -2,7 +2,7 @@ namespace PowerModule.Tab.Completers.Intrinsics;
 
 internal interface ICompleter : IArgumentCompleter
 {
-  private protected record struct CompletionResultRecord(
+  private protected record CompletionResultRecord(
     string Result,
     string? DisplayName = default,
     string? Description = default,
