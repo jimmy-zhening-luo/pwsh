@@ -108,7 +108,7 @@ abstract public class NodeCommand(string? IntrinsicVerb) : CodeNativeCommand(Int
   { get; } = Client.Environment.Known.Application.Npm;
 
   override private protected SwitchBoard Uppercase
-  { get; init; } = new(
+  { get; } = new(
     D: true,
     E: true,
     P: true

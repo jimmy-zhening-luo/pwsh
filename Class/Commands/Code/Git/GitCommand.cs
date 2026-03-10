@@ -43,7 +43,7 @@ abstract public class GitCommand(string? IntrinsicVerb) : CodeNativeCommand(Intr
   { get; } = Client.Environment.Known.Application.Git;
 
   override private protected SwitchBoard Uppercase
-  { get; init; } = new(
+  { get; } = new(
     E: true,
     P: true
   );
