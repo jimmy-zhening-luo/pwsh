@@ -2,7 +2,7 @@ namespace PowerModule;
 
 static internal class PowerModule
 {
-  static internal string FullPathCurrentLocationRelative()
+  static internal string GetPowerShellHostLocation()
   {
     using var ps = PowerShell.Create(
       RunspaceMode.CurrentRunspace

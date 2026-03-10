@@ -34,7 +34,7 @@ sealed internal class PathCompleter : Intrinsics.TCompleter
     && System.IO.Path.IsPathFullyQualified(normalPath)
       ? normalPath
       : Client.File.PathString.FullPathLocationRelative(
-      PowerModule.FullPathCurrentLocationRelative(),
+      PowerModule.GetPowerShellHostLocation(),
       normalPath
     ),
     itemType,
