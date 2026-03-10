@@ -5,4 +5,7 @@
     <ArtifactsPath>$(MSBuildThisFileDirectory)Build/artifacts/</ArtifactsPath>
     <BaseOutputPath>$(MSBuildThisFileDirectory)Build/bin/</BaseOutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <DebugType>none</DebugType>
+  </PropertyGroup>
 </Project>
