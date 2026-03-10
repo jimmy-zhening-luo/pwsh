@@ -10,6 +10,6 @@ abstract internal class TCompleter(
   public CompletionResultType CompletionType
   { get; init; } = CompletionType;
 
-  abstract private protected IEnumerable<CompletionResultRecord> GenerateCompletion(string wordToComplete);
-  IEnumerable<CompletionResultRecord> ICompleter.GenerateCompletion(string wordToComplete) => GenerateCompletion(wordToComplete);
+  abstract private protected IEnumerable<ICompleter.CompletionResultRecord> GenerateCompletion(string wordToComplete);
+  IEnumerable<ICompleter.CompletionResultRecord> ICompleter.GenerateCompletion(string wordToComplete) => GenerateCompletion(wordToComplete);
 }
