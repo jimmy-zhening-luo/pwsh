@@ -2,18 +2,18 @@ namespace PowerModule.Client.File;
 
 static internal class Handler
 {
-  internal enum EditorProfile
-  {
-    Default,
-    Setting,
-    Svelte,
-  }
-
   internal enum EditorWindow
   {
     Any,
     New,
     Reuse,
+  }
+
+  internal enum EditorProfile
+  {
+    Default,
+    Setting,
+    Svelte,
   }
 
   static internal void Edit() => Edit(string.Empty);
