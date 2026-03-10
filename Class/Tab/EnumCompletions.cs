@@ -30,7 +30,7 @@ sealed class EnumCompletionsAttribute(
     }
     else
     {
-      HashSet<string> exclusions = new(Exclude);
+      HashSet<string> exclusions = [.. Exclude];
 
       foreach (var name in names)
       {

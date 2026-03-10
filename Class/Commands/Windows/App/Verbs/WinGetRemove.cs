@@ -1,4 +1,4 @@
-namespace PowerModule.Commands.Windows.App;
+namespace PowerModule.Commands.Windows.App.Verbs;
 
 [Cmdlet(
   VerbsCommon.Remove,
