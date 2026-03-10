@@ -14,10 +14,10 @@ static class String
   internal const string EscapedDoubleQuote = "\\\"";
 
   static internal CultureInfo CurrentCulture => currentCulture ??= CultureInfo.InvariantCulture;
-  static private CultureInfo? currentCulture;
+  static CultureInfo? currentCulture;
 
   static internal CultureInfo InvariantCulture => invariantCulture ??= CultureInfo.InvariantCulture;
-  static private CultureInfo? invariantCulture;
+  static CultureInfo? invariantCulture;
 
   static internal string EscapeSingleQuoted(string text) => text.Contains(
     Space,

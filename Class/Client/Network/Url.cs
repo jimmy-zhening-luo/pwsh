@@ -11,20 +11,20 @@ static class Url
     HttpOrFile,
   }
 
-  static private System.Net.Http.HttpClient HttpClient => client ??= new System.Net.Http.HttpClient(
+  static System.Net.Http.HttpClient HttpClient => client ??= new System.Net.Http.HttpClient(
     HttpHandler
   )
   {
     Timeout = System.TimeSpan.FromMilliseconds(3500),
   };
-  static private System.Net.Http.HttpClient? client;
+  static System.Net.Http.HttpClient? client;
 
   static internal System.Net.Http.SocketsHttpHandler HttpHandler => handler ??= new System.Net.Http.SocketsHttpHandler()
   {
     PooledConnectionLifetime = System.TimeSpan.FromMinutes(2),
     ConnectTimeout = System.TimeSpan.FromMilliseconds(3000),
   };
-  static private System.Net.Http.SocketsHttpHandler? handler;
+  static System.Net.Http.SocketsHttpHandler? handler;
 
   static internal bool IsHttp(System.Uri uri) => uri is
   {

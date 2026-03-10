@@ -2,7 +2,7 @@ namespace PowerModule.Client.Environment;
 
 static partial class Folder
 {
-  static private readonly Dictionary<System.Environment.SpecialFolder, string> folders = [];
+  static readonly Dictionary<System.Environment.SpecialFolder, string> folders = [];
 
   static internal string GetFolder(
     System.Environment.SpecialFolder folder,

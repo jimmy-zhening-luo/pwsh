@@ -7,12 +7,12 @@ partial class Folder
     path
   );
   static internal string SystemDrive() => system ??= Windows("..");
-  static private string? system;
+  static string? system;
 
   static internal string Code(string path) => File.PathString.GetFullPathLocal(
     Code(),
     path
   );
   static internal string Code() => code ??= Home("code");
-  static private string? code;
+  static string? code;
 }

@@ -56,7 +56,7 @@ static partial class PathString
   )]
   static private partial System.Text.RegularExpressions.Regex DuplicateSeparatorRegex();
 
-  static private string ExpandHomePrefix(string path) => path switch
+  static string ExpandHomePrefix(string path) => path switch
   {
     [Home] => Environment.Folder.Home(),
     [
@@ -67,7 +67,7 @@ static partial class PathString
     _ => path,
   };
 
-  static private string TrimRelativePrefix(string path) => path switch
+  static string TrimRelativePrefix(string path) => path switch
   {
     [Here] => string.Empty,
     [

@@ -6,5 +6,5 @@ static class Variable
     ?? string.Empty;
 
   static internal bool InSsh => ssh ??= Get("SSH_CLIENT") is not "";
-  static private bool? ssh;
+  static bool? ssh;
 }
