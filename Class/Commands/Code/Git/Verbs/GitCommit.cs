@@ -8,7 +8,7 @@ namespace PowerModule.Commands.Code.Git.Verbs;
 [Alias("gm")]
 sealed public class GitCommit() : GitCommand("commit")
 {
-  private const string FlagAllowEmpty = "--allow-empty";
+  const string FlagAllowEmpty = "--allow-empty";
 
   [Parameter(
     Position = 60,

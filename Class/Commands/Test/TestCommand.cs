@@ -42,5 +42,5 @@ sealed public class TestCommand : CoreCommand
     WriteObject($"The value of 'Switch' is: {Switch}");
   }
 
-  private string Greet(string name) => $"{Greeting}, {name}!";
+  string Greet(string name) => $"{Greeting}, {name}!";
 }

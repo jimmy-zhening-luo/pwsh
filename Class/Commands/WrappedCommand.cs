@@ -17,7 +17,7 @@ abstract public class WrappedCommand(
     true,
     nameof(PipelineInput)
   )]
-  private bool InPipeline
+  bool InPipeline
   { get; set; }
 
   virtual private protected void TransformArguments()
@@ -71,7 +71,7 @@ abstract public class WrappedCommand(
     EndSteppablePipeline();
   }
 
-  private void CoerceParameters()
+  void CoerceParameters()
   {
     foreach (
       (

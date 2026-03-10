@@ -2,7 +2,7 @@ namespace PowerModule.Commands.Shell.Start.Workspace;
 
 abstract public class VirtualStartWorkspace() : CoreCommand(true)
 {
-  private Client.File.Handler.EditorProfile profile;
+  Client.File.Handler.EditorProfile profile;
 
   abstract public string Path
   { private protected get; init; }
@@ -30,7 +30,7 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
     private get => window is Client.File.Handler.EditorWindow.New;
     set => window = Client.File.Handler.EditorWindow.New;
   }
-  private Client.File.Handler.EditorWindow window;
+  Client.File.Handler.EditorWindow window;
 
   [Parameter]
   public SwitchParameter ReuseWindow

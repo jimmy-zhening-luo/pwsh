@@ -85,7 +85,7 @@ sealed public class GetVerb : CoreCommand
       }
     }
   }
-  private readonly HashSet<string> verbs = [];
+  readonly HashSet<string> verbs = [];
 
   [Parameter(
     Position = 1,

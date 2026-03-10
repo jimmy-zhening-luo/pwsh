@@ -2,7 +2,7 @@ namespace PowerModule.Tab.Completers;
 
 sealed class PathCompleter : Intrinsics.TCompleter
 {
-  sealed private record SearchContext(
+  sealed record SearchContext(
     System.IO.DirectoryInfo Container,
     string Filter,
     System.IO.EnumerationOptions Options,

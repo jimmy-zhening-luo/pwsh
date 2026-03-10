@@ -8,7 +8,7 @@ namespace PowerModule.Commands.Code.Git.Verbs;
 [Alias("ga")]
 sealed public class GitAdd() : GitCommand("add")
 {
-  private const string FlagRenormalize = "--renormalize";
+  const string FlagRenormalize = "--renormalize";
 
   [Parameter(
     Position = default,
@@ -21,7 +21,7 @@ sealed public class GitAdd() : GitCommand("add")
     private get => name ?? ".";
     set => name = value;
   }
-  private string? name;
+  string? name;
 
   [Parameter(
     HelpMessage = "Equivalent to --renormalize"

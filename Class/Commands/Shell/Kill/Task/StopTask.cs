@@ -50,7 +50,7 @@ public class StopTask : CoreCommand
   public SwitchParameter Descendant
   { private protected get; init; }
 
-  static private void KillProcesses(
+  static void KillProcesses(
     string name,
     bool entireProcessTree = default
   )
@@ -65,7 +65,7 @@ public class StopTask : CoreCommand
     }
   }
 
-  static private void KillProcess(
+  static void KillProcess(
     int pid,
     bool entireProcessTree = default
   ) => System.Diagnostics.Process

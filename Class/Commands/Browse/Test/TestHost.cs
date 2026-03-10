@@ -27,7 +27,7 @@ sealed public class TestHost() : WrappedCommand(
     detailed,
   }
 
-  private enum TestHostWellKnownPort
+  enum TestHostWellKnownPort
   {
     [System.ComponentModel.Description(
       "Hypertext Transfer Protocol (HTTP)"

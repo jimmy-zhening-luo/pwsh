@@ -8,7 +8,7 @@ namespace PowerModule.Commands.Code.Git.Verbs;
 [Alias("gpp")]
 sealed public class GitPullChild : CoreCommand
 {
-  static private IEnumerable<string> EnumerateRepository()
+  static IEnumerable<string> EnumerateRepository()
   {
     foreach (
       var directory in System.IO.Directory.EnumerateDirectories(

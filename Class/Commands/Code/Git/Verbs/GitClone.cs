@@ -31,7 +31,7 @@ sealed public class GitClone() : GitCommand("clone")
       };
     }
   }
-  private string remote = string.Empty;
+  string remote = string.Empty;
 
   [Parameter(
     HelpMessage = "Use git@github.com remote protocol instead of HTTPS"

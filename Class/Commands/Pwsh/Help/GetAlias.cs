@@ -43,7 +43,7 @@ sealed public class GetCommandAlias : CoreCommand
       }
     }
   }
-  private readonly HashSet<string> definitions = [];
+  readonly HashSet<string> definitions = [];
 
   [Parameter(
     Position = 1,

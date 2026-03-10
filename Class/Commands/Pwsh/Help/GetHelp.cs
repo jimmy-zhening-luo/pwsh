@@ -23,14 +23,14 @@ sealed public class GetHelpOnline : CoreCommand
       value
     );
   }
-  private string topic = string.Empty;
+  string topic = string.Empty;
 
   [Parameter]
   [ValidateNotNullOrWhiteSpace]
   public Collection<string> Parameter
   { private get; init; } = [];
 
-  static private IEnumerable<System.Uri> TryExtractHelpLink(Collection<PSObject> helpContent)
+  static IEnumerable<System.Uri> TryExtractHelpLink(Collection<PSObject> helpContent)
   {
     if (helpContent is [])
     {

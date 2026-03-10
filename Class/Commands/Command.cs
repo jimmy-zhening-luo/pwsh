@@ -11,10 +11,10 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
 
   private protected bool InCurrentLocation => Location == Pwd();
 
-  private bool BlockedBySsh => SkipSsh
+  bool BlockedBySsh => SkipSsh
     && Client.Environment.Variable.InSsh;
 
-  private PowerShellHost PSHost
+  PowerShellHost PSHost
   {
     get
     {
@@ -23,9 +23,9 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
       return pshost ??= new();
     }
   }
-  private PowerShellHost? pshost;
+  PowerShellHost? pshost;
 
-  private bool Disposed
+  bool Disposed
   { get; set; }
 
   public void Dispose()
@@ -259,7 +259,7 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     path
   );
 
-  private string GetName() => GetType() is
+  string GetName() => GetType() is
   {
     FullName: var name
   } type

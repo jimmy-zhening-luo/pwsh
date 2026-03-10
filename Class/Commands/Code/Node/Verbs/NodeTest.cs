@@ -8,7 +8,7 @@ namespace PowerModule.Commands.Code.Node.Verbs;
 [Alias("nt")]
 sealed public class NodeTest() : NodeCommand("test")
 {
-  private const string FlagIgnoreScript = "--ignore-scripts";
+  const string FlagIgnoreScript = "--ignore-scripts";
 
   new public SwitchParameter I
   { get; set; }

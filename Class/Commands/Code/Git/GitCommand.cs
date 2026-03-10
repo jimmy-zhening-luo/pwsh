@@ -4,14 +4,14 @@ abstract public class GitCommand(string? IntrinsicVerb) : CodeNativeCommand(Intr
 {
   sealed private protected class GitVerbCompletionsAttribute() : Tab.CompletionsAttribute<HashSet<string>>(Verbs);
 
-  private enum NewableVerb
+  enum NewableVerb
   {
     clone,
     config,
     init,
   }
 
-  static private readonly HashSet<string> Verbs = [
+  static readonly HashSet<string> Verbs = [
     "switch",
     "merge",
     "diff",
@@ -37,7 +37,7 @@ abstract public class GitCommand(string? IntrinsicVerb) : CodeNativeCommand(Intr
     "reset",
   ];
 
-  private bool newable;
+  bool newable;
 
   sealed override private protected string CommandPath
   { get; } = Client.Environment.Application.Git;

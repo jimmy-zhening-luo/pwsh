@@ -70,7 +70,7 @@ sealed public class GetSize : CoreCommand
       : paths;
     init => paths = value;
   }
-  private Collection<string> paths = [];
+  Collection<string> paths = [];
 
   [Parameter(
     ParameterSetName = "String",

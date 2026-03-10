@@ -8,7 +8,7 @@ namespace PowerModule.Commands.Code.Node.Verbs;
 [Alias("nu")]
 sealed public class NodeUpdateVersion() : NodeCommand("version")
 {
-  private enum NodeVersion
+  enum NodeVersion
   {
     [System.ComponentModel.Description(
       "Increment patch version (default)"
@@ -81,7 +81,7 @@ sealed public class NodeUpdateVersion() : NodeCommand("version")
       _ => string.Empty,
     };
   }
-  private string version = nameof(NodeVersion.patch);
+  string version = nameof(NodeVersion.patch);
 
   sealed override private protected void PreprocessOtherArguments()
   {

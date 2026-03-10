@@ -36,7 +36,7 @@ abstract public class WrappedGetDirectory() : WrappedCommand(
       };
     }
   }
-  private string filter = string.Empty;
+  string filter = string.Empty;
 
   [Parameter]
   [SupportsWildcards]

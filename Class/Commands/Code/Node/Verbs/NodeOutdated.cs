@@ -8,7 +8,7 @@ namespace PowerModule.Commands.Code.Node.Verbs;
 [Alias("npo")]
 sealed public class NodeOutdated() : NodeCommand("outdated")
 {
-  private const string FlagAll = "--all";
+  const string FlagAll = "--all";
 
   [Parameter(
     HelpMessage = "In addition to direct dependencies, check for outdated meta-dependencies (--all)"

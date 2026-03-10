@@ -4,7 +4,7 @@ abstract public class NodeCommand(string? IntrinsicVerb) : CodeNativeCommand(Int
 {
   sealed private protected class NodeVerbCompletionsAttribute() : Tab.CompletionsAttribute<HashSet<string>>(Verbs);
 
-  static private readonly HashSet<string> Verbs = [
+  static readonly HashSet<string> Verbs = [
     "access",
     "adduser",
     "audit",
@@ -71,7 +71,7 @@ abstract public class NodeCommand(string? IntrinsicVerb) : CodeNativeCommand(Int
     "whoami",
   ];
 
-  static private readonly Dictionary<string, string> Aliases = new()
+  static readonly Dictionary<string, string> Aliases = new()
   {
     ["issues"] = "bugs",
     ["c"] = "config",

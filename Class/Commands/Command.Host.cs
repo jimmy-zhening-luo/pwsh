@@ -2,7 +2,7 @@ namespace PowerModule.Commands;
 
 partial class CoreCommand
 {
-  sealed private class PowerShellHost : System.IDisposable
+  sealed class PowerShellHost : System.IDisposable
   {
     ~PowerShellHost()
     {
@@ -11,7 +11,7 @@ partial class CoreCommand
 
     internal bool HadErrors => PS.HadErrors;
 
-    private PowerShell PS
+    PowerShell PS
     {
       get
       {
@@ -20,11 +20,11 @@ partial class CoreCommand
         return powershell;
       }
     }
-    private PowerShell? powershell = PowerShell.Create(
+    PowerShell? powershell = PowerShell.Create(
       RunspaceMode.CurrentRunspace
     );
 
-    private SteppablePipeline? Pipeline
+    SteppablePipeline? Pipeline
     {
       get
       {
@@ -34,13 +34,13 @@ partial class CoreCommand
       }
       set => pipeline = value;
     }
-    private SteppablePipeline? pipeline;
+    SteppablePipeline? pipeline;
 
     [System.Diagnostics.CodeAnalysis.MemberNotNullWhen(
       default,
       nameof(powershell)
     )]
-    private bool Disposed
+    bool Disposed
     { get; set; }
 
     public void Dispose()
@@ -128,7 +128,7 @@ partial class CoreCommand
       Pipeline = default;
     }
 
-    private void Dispose(bool disposing)
+    void Dispose(bool disposing)
     {
       if (!Disposed)
       {

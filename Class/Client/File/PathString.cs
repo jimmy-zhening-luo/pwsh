@@ -54,7 +54,7 @@ static partial class PathString
   [System.Text.RegularExpressions.GeneratedRegex(
     @"(?<!^)(?>\\{2,})"
   )]
-  static private partial System.Text.RegularExpressions.Regex DuplicateSeparatorRegex();
+  static partial System.Text.RegularExpressions.Regex DuplicateSeparatorRegex();
 
   static string ExpandHomePrefix(string path) => path switch
   {

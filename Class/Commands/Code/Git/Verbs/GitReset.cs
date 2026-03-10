@@ -8,13 +8,13 @@ namespace PowerModule.Commands.Code.Git.Verbs;
 [Alias("gr")]
 sealed public partial class GitReset() : GitCommand("reset")
 {
-  private const string FlagHard = "--hard";
+  const string FlagHard = "--hard";
 
   [System.Text.RegularExpressions.GeneratedRegex(
     @"^(?=.)(?>HEAD)?(?<Branching>(?>~|\^)?)(?<Step>(?>\d{0,10}))$",
     System.Text.RegularExpressions.RegexOptions.IgnoreCase
   )]
-  static private partial System.Text.RegularExpressions.Regex GitTreeRegex();
+  static partial System.Text.RegularExpressions.Regex GitTreeRegex();
 
   [Parameter(
     Position = 60,
@@ -57,7 +57,7 @@ sealed public partial class GitReset() : GitCommand("reset")
       }
     }
   }
-  private string tree = string.Empty;
+  string tree = string.Empty;
 
   [Parameter(
     HelpMessage = "Perform a non-destructive reset, equivalent to [--hard=false]"

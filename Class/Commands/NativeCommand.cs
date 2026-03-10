@@ -95,7 +95,7 @@ abstract public partial class NativeCommand(
   [System.Text.RegularExpressions.GeneratedRegex(
     @"^(?>-(?>[A-Za-z]|(?>(?>-[A-Za-z][A-Za-z\d]*(?>_[A-Za-z\d]+)*)(?>-[A-Za-z\d]+(?>_[A-Za-z\d]+)*)*)))(?>=\S+)?$"
   )]
-  static private partial System.Text.RegularExpressions.Regex NativeArgumentRegex();
+  static partial System.Text.RegularExpressions.Regex NativeArgumentRegex();
 
   virtual private protected void PreprocessArguments()
   { }

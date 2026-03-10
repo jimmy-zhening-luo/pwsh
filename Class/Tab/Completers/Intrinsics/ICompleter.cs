@@ -44,7 +44,7 @@ internal interface ICompleter : IArgumentCompleter
 
   private protected IEnumerable<CompletionResultRecord> GenerateCompletion(string wordToComplete);
 
-  private IEnumerable<CompletionResult> WrapArgumentCompletionResult(IEnumerable<CompletionResultRecord> completions)
+  IEnumerable<CompletionResult> WrapArgumentCompletionResult(IEnumerable<CompletionResultRecord> completions)
   {
     foreach (var completion in completions)
     {
