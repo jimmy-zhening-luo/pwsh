@@ -19,30 +19,34 @@ sealed internal class EnumCompletionsAttribute(
 
   sealed override private protected IEnumerable<string> EnumerateDomain(System.Type enumType)
   {
-    HashSet<string> exclusions = Exclude is null
-      ? new()
-      : new(Exclude);
+    var names = System.Enum.GetNames(enumType);
 
-    foreach (
-      var name in System.Enum.GetNames(
-        enumType
-      )
-    )
+    if (Exclude is null or [])
     {
-      if (!exclusions.Contains(name))
+      foreach (var name in names he)
       {
         yield return name;
       }
     }
-
-    if (Include is null)
+    else
     {
-      yield break;
+      HashSet<string> exclusions = new(Exclude);
+
+      foreach (var name in names)
+      {
+        if (!exclusions.Contains(name))
+        {
+          yield return name;
+        }
+      }
     }
 
-    foreach (var inclusion in Include)
+    if (Include is not null)
     {
-      yield return inclusion;
+      foreach (var inclusion in Include)
+      {
+        yield return inclusion;
+      }
     }
 
     yield break;
