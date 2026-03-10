@@ -4,15 +4,10 @@
     <AssemblyName>ClientPeer</AssemblyName>
     <TargetFramework>net9.0-windows</TargetFramework>
     <BaseOutputPath>../Build/bin</BaseOutputPath>
-    <BaseIntermediateOutputPath>../Build/obj</BaseIntermediateOutputPath>
-    <MSBuildProjectExtensionsPath>../Build/obj</MSBuildProjectExtensionsPath>
     <NoLogo>true</NoLogo>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <DebugType>none</DebugType>
-    <BaseOutputPath>../Build/bin</BaseOutputPath>
-    <BaseIntermediateOutputPath>../Build/obj</BaseIntermediateOutputPath>
-    <MSBuildProjectExtensionsPath>../Build/obj</MSBuildProjectExtensionsPath>
   </PropertyGroup>
   <PropertyGroup>
     <Nullable>enable</Nullable>

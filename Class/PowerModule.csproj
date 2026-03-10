@@ -4,8 +4,6 @@
     <AssemblyName>PowerModule</AssemblyName>
     <TargetFramework>net9.0-windows</TargetFramework>
     <BaseOutputPath>../Build/bin</BaseOutputPath>
-    <BaseIntermediateOutputPath>../Build/obj</BaseIntermediateOutputPath>
-    <MSBuildProjectExtensionsPath>../Build/obj</MSBuildProjectExtensionsPath>
     <NoLogo>true</NoLogo>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
