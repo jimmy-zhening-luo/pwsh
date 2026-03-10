@@ -146,8 +146,6 @@ sealed public class GetSize : CoreCommand
           );
           break;
       }
-
-
     }
   }
 }
