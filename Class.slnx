@@ -5,8 +5,4 @@
     <Project Path="Class/PowerModule.csproj" DisplayName="Module">
     </Project>
   </Folder>
-  <Folder Name="/ClientPeer/">
-    <Project Path="ClientPeer/ClientPeer.csproj" DisplayName="Client">
-    </Project>
-  </Folder>
 </Solution>
