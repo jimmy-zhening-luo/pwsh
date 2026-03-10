@@ -5,7 +5,7 @@ abstract public partial class NativeCommand(
   bool SkipSsh = default
 ) : CoreCommand(SkipSsh)
 {
-  sealed private protected record struct SwitchBoard(
+  private protected record struct SwitchBoard(
     bool D = default,
     bool E = default,
     bool I = default,
