@@ -2,10 +2,7 @@ namespace PowerModule.Commands.Code.Node;
 
 abstract public class NodeCommand(string? IntrinsicVerb) : CodeNativeCommand(IntrinsicVerb)
 {
-  sealed private protected class NodeVerbCompletionsAttribute() : Tab.CompletionsAttribute<HashSet<string>>(Verbs)
-  {
-    sealed override private protected IEnumerable<string> EnumerateDomain(HashSet<string> domain) => domain;
-  }
+  sealed private protected class NodeVerbCompletionsAttribute() : Tab.CompletionsAttribute<HashSet<string>>(Verbs);
 
   static private readonly HashSet<string> Verbs = [
     "access",

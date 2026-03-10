@@ -2,10 +2,7 @@ namespace PowerModule.Commands.Code.Git;
 
 abstract public class GitCommand(string? IntrinsicVerb) : CodeNativeCommand(IntrinsicVerb)
 {
-  sealed private protected class GitVerbCompletionsAttribute() : Tab.CompletionsAttribute<HashSet<string>>(Verbs)
-  {
-    sealed override private protected IEnumerable<string> EnumerateDomain(HashSet<string> domain) => domain;
-  }
+  sealed private protected class GitVerbCompletionsAttribute() : Tab.CompletionsAttribute<HashSet<string>>(Verbs);
 
   private enum NewableVerb
   {
