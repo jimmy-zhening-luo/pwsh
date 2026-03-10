@@ -144,6 +144,8 @@ dotnet_diagnostic.IDE0072.severity = none
 #endpart
 
 #part IDE0160-1
+dotnet_diagnostic.IDE0160.severity = none
+dotnet_diagnostic.IDE0161.severity = none
 csharp_style_namespace_declarations = file_scoped # file_scoped | block_scoped
 #endpart
 
