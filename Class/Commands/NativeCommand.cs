@@ -27,7 +27,7 @@ abstract public partial class NativeCommand(
   { get; }
 
   virtual private protected SwitchBoard Uppercase
-  { get; init; } = new();
+  { get; }
 
   [Parameter(
     Position = 100,
