@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>ClientPeer</AssemblyName>
@@ -9,6 +10,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <DebugType>none</DebugType>
+    <BaseOutputPath>../Build/bin</BaseOutputPath>
+    <BaseIntermediateOutputPath>../Build/obj</BaseIntermediateOutputPath>
+    <MSBuildProjectExtensionsPath>../Build/obj</MSBuildProjectExtensionsPath>
   </PropertyGroup>
   <PropertyGroup>
     <Nullable>enable</Nullable>
