@@ -143,17 +143,15 @@ sealed class PathCompleter : Intrinsics.TCompleter
       }
     }
 
-    return (
-      new(
-        new(searchPath),
-        lineRemaining + "*",
-        new()
-        {
-          IgnoreInaccessible = default,
-          AttributesToSkip = System.IO.FileAttributes.NotContentIndexed,
-        },
-        lineCaptured
-      )
+    return new(
+      new(searchPath),
+      lineRemaining + "*",
+      new()
+      {
+        IgnoreInaccessible = default,
+        AttributesToSkip = System.IO.FileAttributes.NotContentIndexed,
+      },
+      lineCaptured
     );
   }
 
@@ -224,7 +222,7 @@ sealed class PathCompleter : Intrinsics.TCompleter
 
         break;
 
-      default:
+      case PathItemType.Any:
         foreach (
           var directory in Directories(
             searchContext,
@@ -244,6 +242,9 @@ sealed class PathCompleter : Intrinsics.TCompleter
           yield return file;
         }
 
+        break;
+
+      default:
         break;
     }
 
@@ -326,6 +327,9 @@ sealed class PathCompleter : Intrinsics.TCompleter
 
         case (_, 0):
           deferredItems.Add(item);
+          break;
+
+        default:
           break;
       }
     }

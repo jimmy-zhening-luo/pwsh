@@ -66,10 +66,7 @@ abstract public class WrappedCommand(
     }
   }
 
-  sealed override private protected void Postprocess()
-  {
-    EndSteppablePipeline();
-  }
+  sealed override private protected void Postprocess() => EndSteppablePipeline();
 
   void CoerceParameters()
   {

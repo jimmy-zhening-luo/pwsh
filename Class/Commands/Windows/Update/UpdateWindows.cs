@@ -8,10 +8,7 @@ namespace PowerModule.Commands.Windows.Update;
 [OutputType(typeof(void))]
 sealed public class UpdateWindows() : CoreCommand(true)
 {
-  sealed override private protected void Postprocess()
-  {
-    Client.Start.ShellExecute(
-      "ms-settings:windowsupdate"
-    );
-  }
+  sealed override private protected void Postprocess() => Client.Start.ShellExecute(
+    "ms-settings:windowsupdate"
+  );
 }

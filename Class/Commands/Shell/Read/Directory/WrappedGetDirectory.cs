@@ -23,18 +23,15 @@ abstract public class WrappedGetDirectory() : WrappedCommand(
   public string Filter
   {
     private get => filter;
-    set
+    set => filter = value switch
     {
-      filter = value switch
-      {
-        null or "" => "*",
-        _ when value.Contains(
-          '*',
-          global::System.StringComparison.Ordinal
-        ) => value,
-        _ => $"{value}*",
-      };
-    }
+      null or "" => "*",
+      _ when value.Contains(
+        '*',
+        global::System.StringComparison.Ordinal
+      ) => value,
+      _ => $"{value}*",
+    };
   }
   string filter = string.Empty;
 

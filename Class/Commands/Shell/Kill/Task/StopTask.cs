@@ -110,7 +110,7 @@ public class StopTask : CoreCommand
 
             case var n when int.TryParse(
               n,
-              out int pid
+              out var pid
             ):
               KillProcess(pid, Descendant);
               break;
@@ -121,6 +121,9 @@ public class StopTask : CoreCommand
           }
         }
 
+        break;
+
+      default:
         break;
     }
   }

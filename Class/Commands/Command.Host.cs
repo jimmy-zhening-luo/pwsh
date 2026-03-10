@@ -120,7 +120,7 @@ partial class CoreCommand
     {
       if (Pipeline is not null)
       {
-        Pipeline.End();
+        _ = Pipeline.End();
         Pipeline.Clean();
         Pipeline.Dispose();
       }

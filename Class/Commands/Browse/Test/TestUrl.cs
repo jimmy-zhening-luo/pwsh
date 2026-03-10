@@ -66,15 +66,12 @@ sealed public class TestUrl : CoreCommand
   required public Collection<System.Uri> Uri
   { get; init; }
 
-  sealed override private protected void Process()
-  {
-    WriteObject(
-      EnumerateReachableUri(
-        EnumerateSupportedUri(
-          Uri
-        )
-      ),
-      true
-    );
-  }
+  sealed override private protected void Process() => WriteObject(
+    EnumerateReachableUri(
+      EnumerateSupportedUri(
+        Uri
+      )
+    ),
+    true
+  );
 }

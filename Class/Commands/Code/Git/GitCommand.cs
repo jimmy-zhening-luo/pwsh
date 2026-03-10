@@ -95,6 +95,9 @@ abstract public class GitCommand(string? IntrinsicVerb) : CodeNativeCommand(Intr
       ):
         IntrinsicVerb = exactVerb;
         break;
+
+      default:
+        break;
     }
   }
 

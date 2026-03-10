@@ -17,19 +17,16 @@ sealed public class GitClone() : GitCommand("clone")
   public string Repository
   {
     private get => remote;
-    set
+    set => remote = value?.Split(
+      Client.File.PathString.AltSeparator,
+      System.StringSplitOptions.RemoveEmptyEntries
+      | System.StringSplitOptions.TrimEntries
+    ) switch
     {
-      remote = value?.Split(
-        Client.File.PathString.AltSeparator,
-        System.StringSplitOptions.RemoveEmptyEntries
-        | System.StringSplitOptions.TrimEntries
-      ) switch
-      {
-        [string org, string repo] => $"{org}/{repo}",
-        [string repo] => $"jimmy-zhening-luo/{repo}",
-        _ => string.Empty
-      };
-    }
+      [string org, string repo] => $"{org}/{repo}",
+      [string repo] => $"jimmy-zhening-luo/{repo}",
+      _ => string.Empty
+    };
   }
   string remote = string.Empty;
 
@@ -40,13 +37,10 @@ sealed public class GitClone() : GitCommand("clone")
   public SwitchParameter ForceSsh
   { private get; init; }
 
-  sealed override private protected void PreprocessOtherArguments()
-  {
-    System.ArgumentException.ThrowIfNullOrEmpty(
-      Repository,
-      nameof(Repository)
-    );
-  }
+  sealed override private protected void PreprocessOtherArguments() => System.ArgumentException.ThrowIfNullOrEmpty(
+    Repository,
+    nameof(Repository)
+  );
 
   sealed override private protected IEnumerable<string> ParseArguments() => [
     string.Concat(

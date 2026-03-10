@@ -45,14 +45,16 @@ sealed public class GetHelpOnline : CoreCommand
         ?.navigationLink is IEnumerable<object> links
     )
     {
-      foreach (dynamic link in links)
+      foreach (var link in links)
       {
+        dynamic navigationLink = link;
+
         if (
-          link?.Uri?.ToString() is string helpLink
-          && Client.Network.Url.ToAbsoluteHttpOrFileUri(helpLink) is { } uri
+          navigationLink?.Uri?.ToString() is string uri
+          && Client.Network.Url.ToAbsoluteHttpOrFileUri(uri) is { } url
         )
         {
-          yield return uri;
+          yield return url;
         }
       }
     }

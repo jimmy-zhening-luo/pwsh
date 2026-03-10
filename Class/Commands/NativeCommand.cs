@@ -131,22 +131,27 @@ abstract public partial class NativeCommand(
     {
       commandScript.Add(Uppercase.D ? "-D" : "-d");
     }
+
     if (E)
     {
       commandScript.Add(Uppercase.E ? "-E" : "-e");
     }
+
     if (I)
     {
       commandScript.Add(Uppercase.I ? "-I" : "-i");
     }
+
     if (O)
     {
       commandScript.Add(Uppercase.O ? "-O" : "-o");
     }
+
     if (P)
     {
       commandScript.Add(Uppercase.P ? "-P" : "-p");
     }
+
     if (V)
     {
       commandScript.Add(Uppercase.V ? "-V" : "-v");

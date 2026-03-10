@@ -170,7 +170,14 @@ sealed public class TestHost() : WrappedCommand(
               commonPort.ToString()
             );
             break;
+
+          default:
+            break;
         }
+
+        break;
+
+      default:
         break;
     }
   }

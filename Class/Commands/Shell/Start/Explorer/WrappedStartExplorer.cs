@@ -26,11 +26,8 @@ abstract public class WrappedStartExplorer() : WrappedCommand(
   required public Collection<string> Exclude
   { private get; init; }
 
-  sealed override private protected void TransformPipelineInput()
-  {
-    SetBoundParameter(
-      "Path",
-      ReanchorPath(Path)
-    );
-  }
+  sealed override private protected void TransformPipelineInput() => SetBoundParameter(
+    "Path",
+    ReanchorPath(Path)
+  );
 }

@@ -68,6 +68,9 @@ sealed public class OpenUrl() : CoreCommand(true)
           && Client.Network.Url.TestHttp(url):
           Client.Network.Url.Open(url);
           break;
+
+        default:
+          break;
       }
     }
   }

@@ -147,6 +147,9 @@ abstract public class NodeCommand(string? IntrinsicVerb) : CodeNativeCommand(Int
       ):
         IntrinsicVerb = exactVerb;
         break;
+
+      default:
+        break;
     }
   }
 
@@ -164,6 +167,9 @@ abstract public class NodeCommand(string? IntrinsicVerb) : CodeNativeCommand(Int
 
       case var path when Pwd(path) == Pwd():
         WorkingDirectory = string.Empty;
+        break;
+
+      default:
         break;
     }
   }

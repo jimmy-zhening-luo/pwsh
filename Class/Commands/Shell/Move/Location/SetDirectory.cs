@@ -82,6 +82,9 @@ sealed public class SetDirectory : WrappedSetDirectory
       case "DriveE":
         SetBoundParameter("Path", "E:");
         break;
+
+      default:
+        break;
     }
   }
 }

@@ -8,10 +8,7 @@ namespace PowerModule.Commands.Windows.Update;
 [OutputType(typeof(void))]
 sealed public class UpdateStoreApp() : CoreCommand(true)
 {
-  sealed override private protected void Postprocess()
-  {
-    Client.Start.ShellExecute(
-      "ms-windows-store://downloadsandupdates"
-    );
-  }
+  sealed override private protected void Postprocess() => Client.Start.ShellExecute(
+    "ms-windows-store://downloadsandupdates"
+  );
 }

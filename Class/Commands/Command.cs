@@ -166,15 +166,9 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     }
   }
 
-  private protected void SwitchBoundParameter(string parameter)
-  {
-    MyInvocation.BoundParameters[parameter] = SwitchParameter.Present;
-  }
+  private protected void SwitchBoundParameter(string parameter) => MyInvocation.BoundParameters[parameter] = SwitchParameter.Present;
 
-  private protected void RemoveBoundParameter(string parameter)
-  {
-    _ = MyInvocation.BoundParameters.Remove(parameter);
-  }
+  private protected void RemoveBoundParameter(string parameter) => MyInvocation.BoundParameters.Remove(parameter);
 
   private protected PowerShell AddStatement() => PSHost.AddStatement();
 
