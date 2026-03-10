@@ -1,9 +1,6 @@
 namespace PowerModule.Tab.Completers.Intrinsics;
 
-internal interface ICompleter(
-  CompletionCase Case,
-  CompletionResultType CompletionType
-) : IArgumentCompleter
+internal interface ICompleter
 {
   private protected CompletionCase Case
   { get; set; }

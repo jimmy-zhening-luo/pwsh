@@ -5,13 +5,6 @@ abstract internal class TCompleter(
   CompletionResultType CompletionType
 ) : IArgumentCompleter
 {
-  sealed private protected record CompletionResultRecord(
-    string Result,
-    string? DisplayName = default,
-    string? Description = default,
-    CompletionResultType? CompletionType = default
-  );
-
   public IEnumerable<CompletionResult> CompleteArgument(
     string commandName,
     string parameterName,
