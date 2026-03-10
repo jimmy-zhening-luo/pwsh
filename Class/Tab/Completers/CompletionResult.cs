@@ -1,4 +1,4 @@
-namespace PowerModule.Tab.Completers.Intrinsics;
+namespace PowerModule.Tab.Completers;
 
 sealed internal record CompletionResultRecord(
   string Result,
