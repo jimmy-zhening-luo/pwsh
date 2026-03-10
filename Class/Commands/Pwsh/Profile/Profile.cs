@@ -9,6 +9,6 @@ namespace PowerModule.Commands.Pwsh.Profile;
 sealed public class StartProfile() : CoreCommand(true)
 {
   sealed override private protected void Postprocess() => Client.File.Handler.Edit(
-    Client.Environment.Known.Folder.Code("pwsh")
+    Client.Environment.Folder.Code("pwsh")
   );
 }

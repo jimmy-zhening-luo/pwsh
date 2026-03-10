@@ -58,12 +58,12 @@ static internal partial class PathString
 
   static private string ExpandHomePrefix(string path) => path switch
   {
-    [Home] => Environment.Known.Folder.Home(),
+    [Home] => Environment.Folder.Home(),
     [
       Home,
       Separator,
       .. var subpath,
-    ] => Environment.Known.Folder.Home(subpath),
+    ] => Environment.Folder.Home(subpath),
     _ => path,
   };
 

@@ -1,11 +1,8 @@
 namespace PowerModule.Client.Environment;
 
-static internal class Local
+static internal partial class Folder
 {
   static private readonly Dictionary<System.Environment.SpecialFolder, string> folders = [];
-
-  static internal string Get(string variable) => System.Environment.GetEnvironmentVariable(variable)
-    ?? string.Empty;
 
   static internal string GetFolder(
     System.Environment.SpecialFolder folder,

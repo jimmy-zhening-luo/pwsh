@@ -18,14 +18,14 @@ static internal class Handler
 
   static internal void Edit() => Edit(string.Empty);
   static internal void Edit(string path) => Start.CreateProcess(
-    Environment.Known.Application.VSCode,
+    Environment.Application.VSCode,
     path
   );
   static internal void Edit(
     string path,
     IEnumerable<string> arguments
   ) => Start.CreateProcess(
-    Environment.Known.Application.VSCode,
+    Environment.Application.VSCode,
     [
       path,
       .. arguments,

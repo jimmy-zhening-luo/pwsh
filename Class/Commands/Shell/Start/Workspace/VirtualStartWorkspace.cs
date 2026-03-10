@@ -72,8 +72,8 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
     InCurrentLocation
       && Path is ""
       && (
-        Pwd() == Client.Environment.Known.Folder.Code()
-        || Pwd() == Client.Environment.Known.Folder.Home()
+        Pwd() == Client.Environment.Folder.Code()
+        || Pwd() == Client.Environment.Folder.Home()
       )
         ? string.Empty
         : ReanchorPath(Path),

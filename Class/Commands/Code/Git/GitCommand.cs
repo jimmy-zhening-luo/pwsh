@@ -40,7 +40,7 @@ abstract public class GitCommand(string? IntrinsicVerb) : CodeNativeCommand(Intr
   private bool newable;
 
   sealed override private protected string CommandPath
-  { get; } = Client.Environment.Known.Application.Git;
+  { get; } = Client.Environment.Application.Git;
 
   override private protected SwitchBoard Uppercase
   { get; } = new(
@@ -153,12 +153,12 @@ abstract public class GitCommand(string? IntrinsicVerb) : CodeNativeCommand(Intr
     ? Pwd(path)
     : System.IO.Directory.Exists(
       System.IO.Path.Combine(
-        Client.Environment.Known.Folder.Code(path),
+        Client.Environment.Folder.Code(path),
         newable
           ? string.Empty
           : ".git"
       )
     )
-      ? Client.Environment.Known.Folder.Code(path)
+      ? Client.Environment.Folder.Code(path)
       : string.Empty;
 }

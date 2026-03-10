@@ -12,7 +12,7 @@ sealed public class GitPullChild : CoreCommand
   {
     foreach (
       var directory in System.IO.Directory.EnumerateDirectories(
-        Client.Environment.Known.Folder.Code()
+        Client.Environment.Folder.Code()
       )
     )
     {
@@ -37,7 +37,7 @@ sealed public class GitPullChild : CoreCommand
     ushort progress = default;
 
     string baseCommand = $"& {Client.String.EscapeDoubleQuoted(
-      Client.Environment.Known.Application.Git
+      Client.Environment.Application.Git
     )} -c color.ui=always -C";
 
     foreach (var repository in EnumerateRepository())

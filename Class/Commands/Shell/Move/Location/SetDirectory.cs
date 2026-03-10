@@ -162,7 +162,7 @@ sealed public class SetDirectoryHome : WrappedSetDirectory
   { get; init; } = string.Empty;
 
   sealed override private protected string Location
-  { get; } = Client.Environment.Known.Folder.Home();
+  { get; } = Client.Environment.Folder.Home();
 }
 
 [Cmdlet(
@@ -189,7 +189,7 @@ sealed public class SetDirectoryCode : WrappedSetDirectory
   { get; init; } = string.Empty;
 
   sealed override private protected string Location
-  { get; } = Client.Environment.Known.Folder.Code();
+  { get; } = Client.Environment.Folder.Code();
 }
 
 [Cmdlet(

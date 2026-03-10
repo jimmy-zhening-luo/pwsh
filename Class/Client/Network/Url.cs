@@ -129,10 +129,10 @@ static internal class Url
   }
   static internal void Open(string target)
   {
-    if (!Environment.Known.Variable.InSsh)
+    if (!Environment.Variable.InSsh)
     {
       Start.ShellExecute(
-        Environment.Known.Application.Chrome,
+        Environment.Application.Chrome,
         target
       );
     }

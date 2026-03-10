@@ -105,7 +105,7 @@ abstract public class NodeCommand(string? IntrinsicVerb) : CodeNativeCommand(Int
   };
 
   sealed override private protected string CommandPath
-  { get; } = Client.Environment.Known.Application.Npm;
+  { get; } = Client.Environment.Application.Npm;
 
   override private protected SwitchBoard Uppercase
   { get; } = new(

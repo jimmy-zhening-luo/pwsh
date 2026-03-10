@@ -12,7 +12,7 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
   private protected bool InCurrentLocation => Location == Pwd();
 
   private bool BlockedBySsh => SkipSsh
-    && Client.Environment.Known.Variable.InSsh;
+    && Client.Environment.Variable.InSsh;
 
   private PowerShellHost PSHost
   {

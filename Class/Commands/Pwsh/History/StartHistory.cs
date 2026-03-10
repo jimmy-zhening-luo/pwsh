@@ -9,7 +9,7 @@ namespace PowerModule.Commands.Pwsh.History;
 sealed public class StartHistory() : CoreCommand(true)
 {
   sealed override private protected void Postprocess() => Client.File.Handler.Edit(
-    Client.Environment.Known.Folder.AppData(
+    Client.Environment.Folder.AppData(
       @"Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt"
     ),
     Client.File.Handler.EditorProfile.Setting,

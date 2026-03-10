@@ -133,7 +133,7 @@ sealed public class GetHelpOnline : CoreCommand
       WriteInformation(helpLink.ToString());
     }
 
-    if (!Client.Environment.Known.Variable.InSsh)
+    if (!Client.Environment.Variable.InSsh)
     {
       if (helpLinks is not [])
       {

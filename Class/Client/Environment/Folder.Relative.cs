@@ -1,4 +1,4 @@
-namespace PowerModule.Client.Environment.Known;
+namespace PowerModule.Client.Environment;
 
 static internal partial class Folder
 {

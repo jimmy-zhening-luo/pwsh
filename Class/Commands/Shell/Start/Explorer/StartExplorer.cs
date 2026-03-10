@@ -96,7 +96,7 @@ sealed public class StartExplorerHome : WrappedStartExplorer
   { get; init; } = [];
 
   sealed override private protected string Location
-  { get; } = Client.Environment.Known.Folder.Home();
+  { get; } = Client.Environment.Folder.Home();
 }
 
 [Cmdlet(
@@ -120,7 +120,7 @@ sealed public class StartExplorerCode : WrappedStartExplorer
   { get; init; } = [];
 
   sealed override private protected string Location
-  { get; } = Client.Environment.Known.Folder.Code();
+  { get; } = Client.Environment.Folder.Code();
 }
 
 [Cmdlet(
