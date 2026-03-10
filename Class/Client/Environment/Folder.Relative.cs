@@ -1,6 +1,6 @@
 namespace PowerModule.Client.Environment;
 
-static internal partial class Folder
+partial class Folder
 {
   static internal string SystemDrive(string path) => File.PathString.GetFullPathLocal(
     SystemDrive(),

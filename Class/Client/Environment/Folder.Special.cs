@@ -2,7 +2,7 @@ namespace PowerModule.Client.Environment;
 
 using EnvironmentFolder = System.Environment.SpecialFolder;
 
-static internal partial class Folder
+partial class Folder
 {
   static internal string Windows() => GetFolder(EnvironmentFolder.Windows);
   static internal string Windows(string path) => GetFolder(
