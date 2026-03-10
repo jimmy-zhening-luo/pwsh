@@ -24,7 +24,7 @@ $Global:PSDefaultParameterValues = @{
 ) | Remove-Alias -Force
 
 & {
-  $DIST = "$PSScriptRoot\Build\bin\Release\net9.0-windows\PowerModule.dll"
+  $DIST = "$PSScriptRoot\Build\bin\release\PowerModule.dll"
   $ASSEMBLY = "$PSScriptRoot\Module\PowerModule\PowerModule.dll"
 
   if (Test-Path -LiteralPath $DIST -PathType Leaf) {
