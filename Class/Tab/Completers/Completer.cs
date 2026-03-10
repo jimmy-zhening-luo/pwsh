@@ -1,6 +1,6 @@
 namespace PowerModule.Tab.Completers;
 
-sealed internal class Completer(
+sealed class Completer(
   IEnumerable<string> Domain,
   bool Strict,
   CompletionCase Case,

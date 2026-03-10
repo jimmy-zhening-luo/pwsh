@@ -1,6 +1,6 @@
 namespace PowerModule.Client.Network;
 
-static internal class Dns
+static class Dns
 {
   static internal bool Resolve(System.Uri uri) => uri is
   {

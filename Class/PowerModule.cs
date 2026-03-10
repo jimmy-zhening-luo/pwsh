@@ -1,6 +1,6 @@
 namespace PowerModule;
 
-static internal class PowerModule
+static class PowerModule
 {
   static internal string GetPowerShellHostLocation()
   {

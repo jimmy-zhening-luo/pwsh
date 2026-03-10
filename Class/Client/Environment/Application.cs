@@ -1,6 +1,6 @@
 namespace PowerModule.Client.Environment;
 
-static internal class Application
+static class Application
 {
   static internal string Chrome => chrome ??= Folder.ProgramFiles(
     @"Google\Chrome\Application\chrome.exe"

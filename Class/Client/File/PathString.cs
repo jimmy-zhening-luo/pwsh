@@ -1,6 +1,6 @@
 namespace PowerModule.Client.File;
 
-static internal partial class PathString
+static partial class PathString
 {
   internal const char Here = '.';
   internal const char Home = '~';

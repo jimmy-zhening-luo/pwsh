@@ -7,7 +7,7 @@ internal enum PathItemType
   Directory,
 }
 
-sealed internal class PathCompletionsAttribute(
+sealed class PathCompletionsAttribute(
   string Location = "",
   PathItemType ItemType = PathItemType.Any,
  CompletionCase Case = CompletionCase.Lower

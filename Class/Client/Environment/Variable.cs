@@ -1,6 +1,6 @@
 namespace PowerModule.Client.Environment;
 
-static internal class Variable
+static class Variable
 {
   static internal string Get(string variable) => System.Environment.GetEnvironmentVariable(variable)
     ?? string.Empty;

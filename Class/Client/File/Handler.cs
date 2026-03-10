@@ -1,6 +1,6 @@
 namespace PowerModule.Client.File;
 
-static internal class Handler
+static class Handler
 {
   internal enum EditorWindow
   {

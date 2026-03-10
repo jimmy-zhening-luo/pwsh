@@ -1,6 +1,6 @@
 namespace PowerModule.Client;
 
-static internal class Start
+static class Start
 {
   static internal void CreateProcess(
     string fileName,

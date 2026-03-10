@@ -1,6 +1,6 @@
 namespace PowerModule.Tab.Factory;
 
-abstract internal class CompleterFactory<TDomain>(
+abstract class CompleterFactory<TDomain>(
   TDomain Domain,
   CompletionCase Case = default
 ) : TCompleterFactory(Case)

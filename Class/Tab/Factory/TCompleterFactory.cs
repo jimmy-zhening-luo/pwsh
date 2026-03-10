@@ -4,7 +4,7 @@ namespace PowerModule.Tab.Factory;
   System.AttributeTargets.Property
   | System.AttributeTargets.Field
 )]
-abstract internal class TCompleterFactory(
+abstract class TCompleterFactory(
   CompletionCase Case = default,
   CompletionResultType CompletionType = CompletionResultType.ParameterValue
 ) : ArgumentCompleterAttribute, IArgumentCompleterFactory

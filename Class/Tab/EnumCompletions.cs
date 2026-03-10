@@ -1,6 +1,6 @@
 namespace PowerModule.Tab;
 
-sealed internal class EnumCompletionsAttribute(
+sealed class EnumCompletionsAttribute(
   System.Type EnumType,
   CompletionCase Case = CompletionCase.Lower
 ) : Factory.CompleterFactory<System.Type>(

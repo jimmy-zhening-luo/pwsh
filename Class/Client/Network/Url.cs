@@ -1,6 +1,6 @@
 namespace PowerModule.Client.Network;
 
-static internal class Url
+static class Url
 {
   [System.Flags]
   internal enum Scheme
