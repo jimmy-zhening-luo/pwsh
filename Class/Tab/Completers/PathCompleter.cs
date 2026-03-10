@@ -9,12 +9,12 @@ sealed class PathCompleter : Intrinsics.TCompleter
     string Accumulator
   );
 
-  private readonly string Location;
-  private readonly PathItemType ItemType;
-  private readonly bool Flat;
-  private readonly bool AllowReanchor;
+  readonly string Location;
+  readonly PathItemType ItemType;
+  readonly bool Flat;
+  readonly bool AllowReanchor;
 
-  private bool matched;
+  bool matched;
 
   internal PathCompleter(
     string location,
@@ -42,7 +42,7 @@ sealed class PathCompleter : Intrinsics.TCompleter
     location is ""
   );
 
-  static private SearchContext ParseLine(
+  static SearchContext ParseLine(
     string wordToComplete,
     string location,
     bool allowReanchor
@@ -157,7 +157,7 @@ sealed class PathCompleter : Intrinsics.TCompleter
     );
   }
 
-  static private Intrinsics.ICompleter.CompletionResultRecord CreateCompletionRecord(
+  static Intrinsics.ICompleter.CompletionResultRecord CreateCompletionRecord(
     string description,
     string accumulator,
     string filename,
@@ -274,7 +274,7 @@ sealed class PathCompleter : Intrinsics.TCompleter
     yield break;
   }
 
-  private IEnumerable<Intrinsics.ICompleter.CompletionResultRecord> Directories(
+  IEnumerable<Intrinsics.ICompleter.CompletionResultRecord> Directories(
     SearchContext searchContext,
     bool trailingSeparator = default
   ) => EnumerateResults(
@@ -286,7 +286,7 @@ sealed class PathCompleter : Intrinsics.TCompleter
     trailingSeparator
   );
 
-  private IEnumerable<Intrinsics.ICompleter.CompletionResultRecord> Files(
+  IEnumerable<Intrinsics.ICompleter.CompletionResultRecord> Files(
     SearchContext searchContext
   ) => EnumerateResults(
     searchContext.Container.EnumerateFiles(
@@ -296,7 +296,7 @@ sealed class PathCompleter : Intrinsics.TCompleter
     searchContext.Accumulator
   );
 
-  private IEnumerable<Intrinsics.ICompleter.CompletionResultRecord> EnumerateResults(
+  IEnumerable<Intrinsics.ICompleter.CompletionResultRecord> EnumerateResults(
     IEnumerable<System.IO.FileSystemInfo> items,
     string accumulator,
     bool trailingSeparator = default
