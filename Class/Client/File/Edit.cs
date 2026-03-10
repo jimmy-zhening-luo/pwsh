@@ -7,8 +7,6 @@ static internal class Handler
     Default,
     Setting,
     Svelte,
-    Python,
-    C,
   }
 
   internal enum EditorWindow
