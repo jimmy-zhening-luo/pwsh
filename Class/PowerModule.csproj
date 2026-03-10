@@ -10,7 +10,7 @@
     <TargetFramework>net9.0-windows</TargetFramework>
   </PropertyGroup>
   <PropertyGroup>
-    <BaseOutputPath>../Build/bin</BaseOutputPath>
+    <BaseOutputPath>../Build/bin/</BaseOutputPath>
     <NoLogo>true</NoLogo>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
