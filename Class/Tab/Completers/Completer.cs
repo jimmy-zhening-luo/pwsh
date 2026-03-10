@@ -5,7 +5,7 @@ sealed internal class Completer(
   bool Strict,
   CompletionCase Case,
   CompletionResultType CompletionType
-) : TCompleter(Case, CompletionType)
+) : Intrinsics.TCompleter(Case, CompletionType)
 {
   sealed override private protected IEnumerable<CompletionResultRecord> GenerateCompletion(string wordToComplete)
   {

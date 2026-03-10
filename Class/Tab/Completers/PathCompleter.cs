@@ -1,6 +1,6 @@
 namespace PowerModule.Tab.Completers;
 
-sealed internal class PathCompleter : TCompleter
+sealed internal class PathCompleter : Intrinsics.TCompleter
 {
   sealed private record SearchContext(
     System.IO.DirectoryInfo Container,
