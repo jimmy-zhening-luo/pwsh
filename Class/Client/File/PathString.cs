@@ -8,14 +8,14 @@ static internal partial class PathString
   internal const char AltSeparator = '/';
   internal const string SeparatorString = @"\";
 
-  static internal string FullPathLocationRelative(
+  static internal string GetFullPathLocal(
     string location,
     string path
   ) => System.IO.Path.GetFullPath(
     Normalize(path),
     location
   );
-  static internal string FullPathLocationRelative(
+  static internal string GetFullPathLocal(
     string location,
     string path,
     bool preserveTrailingSeparator

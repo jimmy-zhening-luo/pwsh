@@ -33,7 +33,7 @@ sealed internal class PathCompleter : Intrinsics.TCompleter
     Client.File.PathString.Normalize(location) is var normalPath
     && System.IO.Path.IsPathFullyQualified(normalPath)
       ? normalPath
-      : Client.File.PathString.FullPathLocationRelative(
+      : Client.File.PathString.GetFullPathLocal(
       PowerModule.GetPowerShellHostLocation(),
       normalPath
     ),
@@ -88,7 +88,7 @@ sealed internal class PathCompleter : Intrinsics.TCompleter
         }
         else
         {
-          var fullPathCaptured = Client.File.PathString.FullPathLocationRelative(
+          var fullPathCaptured = Client.File.PathString.GetFullPathLocal(
             location,
             buffer
           );
@@ -262,7 +262,7 @@ sealed internal class PathCompleter : Intrinsics.TCompleter
     if (matched || searchContext.Accumulator is not "")
     {
       yield return CreateCompletionRecord(
-        Client.File.PathString.FullPathLocationRelative(
+        Client.File.PathString.GetFullPathLocal(
           searchContext.Container.FullName,
           ".."
         ),
