@@ -10,7 +10,7 @@ sealed internal class CompletionsAttribute(params string[] Domain) : Completions
 abstract internal class CompletionsAttribute<TDomain>(
   TDomain Domain,
   CompletionCase Case = default
-) : TCompletionsAttribute(Case)
+) : Factory.TCompletionsAttribute(Case)
 {
   public bool Strict
   { get; init; }
