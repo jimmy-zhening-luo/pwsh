@@ -71,7 +71,7 @@ sealed public class GitCommit() : GitCommand("commit")
       && NativeArguments.Contains(FlagAllowEmpty)
     )
     {
-      messageWords.AddLast("No message");
+      messageWords.Add("No message");
     }
 
     Message = string.Join(
