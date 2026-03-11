@@ -3,7 +3,7 @@ namespace PowerModule.Tab;
 sealed class EnumCompletionsAttribute(
   System.Type EnumType,
   CompletionCase Case = CompletionCase.Lower
-) : Factory.CompleterFactory<System.Type>(
+) : Factory.SetCompleterFactory<System.Type>(
   EnumType,
   Case
 )
