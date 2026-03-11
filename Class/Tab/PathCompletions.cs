@@ -2,12 +2,11 @@ namespace PowerModule.Tab;
 
 sealed class PathCompletionsAttribute(
   string Location = "",
-  PathItemType ItemType = PathItemType.Any,
-  CompletionCase Case = CompletionCase.Lower
+  PathItemType ItemType = default
 ) : Factory.Intrinsics.TCompleterFactory
 {
   sealed override public CompletionCase Case
-  { get; } = Case;
+  { get; init; } = CompletionCase.Lower;
 
   public string Location
   { get; } = Location;

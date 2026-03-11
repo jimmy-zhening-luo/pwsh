@@ -81,7 +81,7 @@ sealed public class TestHost() : WrappedCommand(
   [ValidateNotNullOrWhiteSpace]
   [Tab.EnumCompletions(
     typeof(WellKnownPort),
-    Tab.CompletionCase.Lower
+    Case = Tab.CompletionCase.Lower
   )]
   required public string CommonTCPPort
   { private get; init; }

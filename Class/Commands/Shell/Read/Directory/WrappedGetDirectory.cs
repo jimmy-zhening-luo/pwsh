@@ -120,7 +120,7 @@ abstract public class WrappedGetDirectory() : WrappedCommand(
   [Parameter]
   [Tab.EnumCompletions(
     typeof(System.IO.FileAttributes),
-    Tab.CompletionCase.Lower
+    Case = Tab.CompletionCase.Lower
   )]
   required public FlagsExpression<System.IO.FileAttributes> Attributes
   {
