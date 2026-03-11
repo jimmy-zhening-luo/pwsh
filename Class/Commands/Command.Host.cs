@@ -116,14 +116,14 @@ partial class CoreCommand
 
     internal void EndSteppablePipeline()
     {
-      if (Pipeline is not null)
+      if (pipeline is not null)
       {
-        _ = Pipeline.End();
-        Pipeline.Clean();
-        Pipeline.Dispose();
+        _ = pipeline.End();
+        pipeline.Clean();
+        pipeline.Dispose();
       }
 
-      Pipeline = default;
+      pipeline = default;
     }
 
     void Dispose(bool disposing)
