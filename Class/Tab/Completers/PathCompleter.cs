@@ -22,8 +22,8 @@ sealed class PathCompleter : Intrinsics.TCompleter
     bool flat,
     CompletionCase Case
   ) : base(
-    Case,
-    CompletionResultType.ProviderItem
+    CompletionResultType.ProviderItem,
+    Case
   ) => (
     Location,
     ItemType,
