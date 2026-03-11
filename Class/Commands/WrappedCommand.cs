@@ -7,6 +7,8 @@ abstract public class WrappedCommand(
   bool SkipSsh = default
 ) : CoreCommand(SkipSsh)
 {
+  private protected object? sink;
+
   virtual private protected object? PipelineInput
   { get; }
 
@@ -67,6 +69,8 @@ abstract public class WrappedCommand(
   }
 
   sealed override private protected void Postprocess() => EndSteppablePipeline();
+
+  private protected void Bind() => sink = default;
 
   void CoerceParameters()
   {
