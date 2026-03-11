@@ -50,7 +50,7 @@ sealed public class TestHost() : WrappedCommand(
     WINRM,
   }
 
-  sealed override private protected object? PipelineInput => ComputerName;
+  sealed override private protected string PipelineInput => ComputerName;
 
   sealed override private protected Dictionary<string, object?> CoercedParameters => new()
   {

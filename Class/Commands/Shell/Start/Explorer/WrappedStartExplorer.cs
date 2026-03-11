@@ -9,7 +9,7 @@ abstract public class WrappedStartExplorer() : WrappedCommand(
   abstract public Collection<string> Path
   { get; init; }
 
-  sealed override private protected Collection<string>? PipelineInput => Path;
+  sealed override private protected Collection<string> PipelineInput => Path;
 
   [Parameter]
   [SupportsWildcards]
