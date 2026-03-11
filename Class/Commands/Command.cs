@@ -147,6 +147,8 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     }
   }
 
+  private protected void Discard() => sink = default;
+
   private protected void SetBoundParameter(
     string parameter,
     object? value
