@@ -10,8 +10,6 @@
     <TargetFramework>net9.0-windows</TargetFramework>
   </PropertyGroup>
   <PropertyGroup>
-    <Nullable>enable</Nullable>
-    <AnalysisMode>All</AnalysisMode>
     <NoWarn>$(NoWarn);CA1044;</NoWarn>
   </PropertyGroup>
   <ItemGroup>
