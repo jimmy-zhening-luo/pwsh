@@ -60,7 +60,9 @@ interface ICompleter : IArgumentCompleter
       };
 
       yield return new(
-        Client.StringInput.EscapeSingleQuoted(casedResult),
+        Client.StringInput.EscapeSingleQuoted(
+          casedResult
+        ),
         completion.DisplayName ?? casedResult,
         CompletionType,
         completion.Description ?? result
