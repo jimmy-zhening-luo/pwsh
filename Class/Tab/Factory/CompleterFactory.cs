@@ -5,6 +5,9 @@ abstract class CompleterFactory<TDomain>(
   CompletionCase Case = default
 ) : Intrinsics.TCompleterFactory(Case)
 {
+  public CompletionResultType CompletionType
+  { get; init; } = CompletionType;
+
   public bool Strict
   { get; init; }
 
