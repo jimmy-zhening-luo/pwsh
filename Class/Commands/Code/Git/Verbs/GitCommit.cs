@@ -59,7 +59,7 @@ sealed public class GitCommit() : GitCommand("commit")
 
     if (AllowEmpty && Arguments.Count is 0)
     {
-      Arguments.Add("No message");
+      Arguments.AddLast("No message");
     }
 
     Message = string.Join(
