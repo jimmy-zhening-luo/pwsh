@@ -241,15 +241,15 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     ? (T)value
     : default;
 
-  private protected string Pwd() => SessionState.Path.CurrentLocation.Path;
-  private protected string Pwd(string path) => Client.File.PathString.GetFullPathLocal(
-    SessionState.Path.CurrentLocation.Path,
-    path
-  );
-
   private protected string Drive() => SessionState.Drive.Current.Root;
   private protected string Drive(string path) => Client.File.PathString.GetFullPathLocal(
     SessionState.Drive.Current.Root,
+    path
+  );
+
+  private protected string Pwd() => SessionState.Path.CurrentLocation.Path;
+  private protected string Pwd(string path) => Client.File.PathString.GetFullPathLocal(
+    SessionState.Path.CurrentLocation.Path,
     path
   );
 
