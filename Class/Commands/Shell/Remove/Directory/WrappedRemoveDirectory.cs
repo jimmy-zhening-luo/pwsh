@@ -21,20 +21,20 @@ abstract public class WrappedRemoveDirectory() : WrappedCommand(
   [SupportsWildcards]
   required public string Filter
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter]
   [SupportsWildcards]
   required public Collection<string> Include
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter]
   [SupportsWildcards]
   required public Collection<string> Exclude
   {
-    init => Bind();
+    init => Discard();
   }
 }

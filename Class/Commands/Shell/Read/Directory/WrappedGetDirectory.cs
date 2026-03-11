@@ -39,82 +39,82 @@ abstract public class WrappedGetDirectory() : WrappedCommand(
   [SupportsWildcards]
   required public Collection<string> Include
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter]
   [SupportsWildcards]
   required public Collection<string> Exclude
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter]
   [Alias("s", "r")]
   public SwitchParameter Recurse
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter]
   [Alias("de")]
   public uint Depth
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter]
   [Alias("f")]
   public SwitchParameter Force
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter]
   public SwitchParameter Name
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter]
   [Alias("ad", "d")]
   public SwitchParameter Directory
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter]
   [Alias("af", "fi")]
   public SwitchParameter File
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter]
   [Alias("ah", "h")]
   public SwitchParameter Hidden
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter]
   [Alias("as")]
   public SwitchParameter System
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter]
   [Alias("ar")]
   public SwitchParameter ReadOnly
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter]
   public SwitchParameter FollowSymlink
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter]
@@ -124,7 +124,7 @@ abstract public class WrappedGetDirectory() : WrappedCommand(
   )]
   required public FlagsExpression<System.IO.FileAttributes> Attributes
   {
-    init => Bind();
+    init => Discard();
   }
 
   sealed override private protected void TransformPipelineInput()

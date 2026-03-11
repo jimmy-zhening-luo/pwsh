@@ -27,7 +27,7 @@ sealed public class StartExplorer : WrappedStartExplorer
   [Alias("PSPath", "LP")]
   required public Collection<string> LiteralPath
   {
-    init => Bind();
+    init => Discard();
   }
 }
 

@@ -68,7 +68,7 @@ abstract public class WrappedCommand(
 
   sealed override private protected void Postprocess() => EndSteppablePipeline();
 
-  private protected void Bind() => sink = default;
+  private protected void Discard() => sink = default;
 
   void CoerceParameters()
   {

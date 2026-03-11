@@ -30,7 +30,7 @@ sealed public class NewJunction() : WrappedCommand(
   [Tab.PathCompletions]
   required public Collection<string> Path
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter(

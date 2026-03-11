@@ -33,7 +33,7 @@ sealed public class NewDirectory() : WrappedCommand(
   [Tab.PathCompletions]
   required public Collection<string> Path
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter(
@@ -42,7 +42,7 @@ sealed public class NewDirectory() : WrappedCommand(
   )]
   required public string Name
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter(ValueFromPipeline = true)]
@@ -55,6 +55,6 @@ sealed public class NewDirectory() : WrappedCommand(
   [Alias("f")]
   public SwitchParameter Force
   {
-    init => Bind();
+    init => Discard();
   }
 }

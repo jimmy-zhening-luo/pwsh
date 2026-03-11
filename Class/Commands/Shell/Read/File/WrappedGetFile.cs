@@ -12,27 +12,27 @@ abstract public class WrappedGetFile() : WrappedCommand(
   [SupportsWildcards]
   required public string Filter
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter]
   [SupportsWildcards]
   required public Collection<string> Include
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter]
   [SupportsWildcards]
   required public Collection<string> Exclude
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter]
   public long ReadCount
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter]
@@ -40,7 +40,7 @@ abstract public class WrappedGetFile() : WrappedCommand(
   [ValidateRange(ValidateRangeKind.NonNegative)]
   public long TotalCount
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter]
@@ -48,19 +48,19 @@ abstract public class WrappedGetFile() : WrappedCommand(
   [ValidateRange(ValidateRangeKind.NonNegative)]
   public int Tail
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter]
   required public string Delimiter
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter]
   required public string Stream
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter]
@@ -68,32 +68,32 @@ abstract public class WrappedGetFile() : WrappedCommand(
   [Tab.EnumCompletions(typeof(Client.File.Encoding))]
   required public string Encoding
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter]
   [Alias("f")]
   public SwitchParameter Force
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter]
   public SwitchParameter AsByteStream
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter]
   public SwitchParameter Raw
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter]
   public SwitchParameter Wait
   {
-    init => Bind();
+    init => Discard();
   }
 
   sealed override private protected void TransformPipelineInput()

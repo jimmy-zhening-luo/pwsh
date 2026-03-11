@@ -13,7 +13,7 @@ abstract public class WrappedSetDirectory() : WrappedCommand(
   [Parameter]
   public SwitchParameter PassThru
   {
-    init => Bind();
+    init => Discard();
   }
 
   sealed override private protected void TransformPipelineInput()

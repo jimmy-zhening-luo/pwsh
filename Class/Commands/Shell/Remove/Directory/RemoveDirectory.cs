@@ -28,6 +28,6 @@ sealed public class RemoveDirectory : WrappedRemoveDirectory
   [Alias("PSPath", "LP")]
   required public Collection<string> LiteralPath
   {
-    init => Bind();
+    init => Discard();
   }
 }

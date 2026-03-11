@@ -28,7 +28,7 @@ sealed public class TeeVariable() : WrappedCommand(
   )]
   required public string Variable
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter(
@@ -38,7 +38,7 @@ sealed public class TeeVariable() : WrappedCommand(
   [Alias("Path")]
   required public string FilePath
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter(
@@ -48,7 +48,7 @@ sealed public class TeeVariable() : WrappedCommand(
   [Alias("PSPath", "LP")]
   required public string LiteralPath
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter(
@@ -56,7 +56,7 @@ sealed public class TeeVariable() : WrappedCommand(
   )]
   public SwitchParameter Append
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter(
@@ -69,6 +69,6 @@ sealed public class TeeVariable() : WrappedCommand(
   [Tab.EnumCompletions(typeof(Client.File.Encoding))]
   required public string Encoding
   {
-    init => Bind();
+    init => Discard();
   }
 }

@@ -108,7 +108,7 @@ sealed public class TestHost() : WrappedCommand(
   )]
   public SwitchParameter TraceRoute
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter(
@@ -117,7 +117,7 @@ sealed public class TestHost() : WrappedCommand(
   [ValidateRange(1, 120)]
   public int Hops
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter(
@@ -126,7 +126,7 @@ sealed public class TestHost() : WrappedCommand(
   )]
   public SwitchParameter DiagnoseRouting
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter(
@@ -134,7 +134,7 @@ sealed public class TestHost() : WrappedCommand(
   )]
   required public string ConstrainSourceAddress
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter(
@@ -142,7 +142,7 @@ sealed public class TestHost() : WrappedCommand(
   )]
   public uint ConstrainInterface
   {
-    init => Bind();
+    init => Discard();
   }
 
   sealed override private protected void TransformArguments()

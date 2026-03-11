@@ -34,7 +34,7 @@ sealed public class SetDirectory : WrappedSetDirectory
   [Alias("PSPath", "LP")]
   required public string LiteralPath
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter(
@@ -42,7 +42,7 @@ sealed public class SetDirectory : WrappedSetDirectory
   )]
   required public string Stack
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter(
@@ -50,7 +50,7 @@ sealed public class SetDirectory : WrappedSetDirectory
   )]
   public SwitchParameter C
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter(
@@ -58,7 +58,7 @@ sealed public class SetDirectory : WrappedSetDirectory
   )]
   public SwitchParameter D
   {
-    init => Bind();
+    init => Discard();
   }
 
   [Parameter(
@@ -66,7 +66,7 @@ sealed public class SetDirectory : WrappedSetDirectory
   )]
   public SwitchParameter E
   {
-    init => Bind();
+    init => Discard();
   }
 
   sealed override private protected Dictionary<string, object?> CoercedParameters
