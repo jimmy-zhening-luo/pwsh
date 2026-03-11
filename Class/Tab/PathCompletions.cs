@@ -1,18 +1,14 @@
 namespace PowerModule.Tab;
 
-enum PathItemType
-{
-  Any,
-  File,
-  Directory,
-}
-
 sealed class PathCompletionsAttribute(
   string Location = "",
   PathItemType ItemType = PathItemType.Any,
   CompletionCase Case = CompletionCase.Lower
-) : Factory.Intrinsics.TCompleterFactory(Case)
+) : Factory.Intrinsics.TCompleterFactory
 {
+  sealed override public CompletionCase Case
+  { get; init; } = Case;
+
   public string Location
   { get; } = Location;
 

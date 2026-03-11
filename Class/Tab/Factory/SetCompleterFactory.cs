@@ -1,9 +1,6 @@
 namespace PowerModule.Tab.Factory;
 
-abstract class SetCompleterFactory<TDomain>(
-  TDomain Domain,
-  CompletionCase Case = default
-) : Intrinsics.TCompleterFactory(Case)
+abstract class SetCompleterFactory<TDomain>(TDomain Domain) : Intrinsics.TCompleterFactory
 {
   public CompletionResultType CompletionType
   { get; init; } = CompletionResultType.ParameterValue;

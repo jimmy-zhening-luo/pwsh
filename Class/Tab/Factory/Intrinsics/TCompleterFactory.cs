@@ -4,10 +4,10 @@ namespace PowerModule.Tab.Factory.Intrinsics;
   System.AttributeTargets.Property
   | System.AttributeTargets.Field
 )]
-abstract class TCompleterFactory(CompletionCase Case = default) : ArgumentCompleterAttribute, ICompleterFactory
+abstract class TCompleterFactory : ArgumentCompleterAttribute, ICompleterFactory
 {
-  public CompletionCase Case
-  { get; init; } = Case;
+  virtual public CompletionCase Case
+  { get; init; }
 
   abstract public Completers.Intrinsics.ICompleter Create();
 }
