@@ -1,10 +1,10 @@
 namespace PowerModule.Tab.Completers;
 
 sealed class Completer(
-  IEnumerable<string> Domain,
-  bool Strict,
+  CompletionResultType CompletionType,
   CompletionCase Case,
-  CompletionResultType CompletionType
+  IEnumerable<string> Domain,
+  bool Strict
 ) : Intrinsics.TCompleter(CompletionType, Case)
 {
   sealed override private protected IEnumerable<Intrinsics.ICompleter.CompletionResultRecord> GenerateCompletion(string wordToComplete)

@@ -17,10 +17,10 @@ sealed class PathCompleter : Intrinsics.TCompleter
   bool matched;
 
   internal PathCompleter(
+    CompletionCase Case,
     string location,
     PathItemType itemType,
-    bool flat,
-    CompletionCase Case
+    bool flat
   ) : base(
     CompletionResultType.ProviderItem,
     Case

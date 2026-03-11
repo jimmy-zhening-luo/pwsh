@@ -23,9 +23,9 @@ sealed class PathCompletionsAttribute(
   { get; init; }
 
   sealed override public Completers.PathCompleter Create() => new(
+    Case,
     Location,
     ItemType,
-    Flat,
-    Case
+    Flat
   );
 }

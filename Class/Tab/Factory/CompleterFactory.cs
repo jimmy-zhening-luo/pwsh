@@ -14,9 +14,9 @@ abstract class CompleterFactory<TDomain>(
   abstract private protected IEnumerable<string> EnumerateDomain(TDomain domain);
 
   sealed override public Completers.Completer Create() => new(
-    EnumerateDomain(Domain),
-    Strict,
+    CompletionType,
     Case,
-    CompletionType
+    EnumerateDomain(Domain),
+    Strict
   );
 }
