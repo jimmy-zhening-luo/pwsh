@@ -19,14 +19,7 @@ static class StringInput
   static internal CultureInfo InvariantCulture => invariantCulture ??= CultureInfo.InvariantCulture;
   static CultureInfo? invariantCulture;
 
-  static internal string EscapeSingleQuoted(string text) => text.Contains(
-    Space,
-    StringComparison.Ordinal
-  )
-  || text.Contains(
-    SingleQuote,
-    StringComparison.Ordinal
-  )
+  static internal string EscapeSingleQuoted(string text) => IsUnsafe(text)
     ? string.Concat(
       SingleQuote,
       text.Replace(
@@ -38,10 +31,7 @@ static class StringInput
     )
     : text;
 
-  static internal string EscapeDoubleQuoted(string text) => text.Contains(
-      Space,
-      StringComparison.Ordinal
-    )
+  static internal string EscapeDoubleQuoted(string text) => IsUnsafe(text)
     ? string.Concat(
       DoubleQuote,
       text.Replace(
@@ -78,4 +68,17 @@ static class StringInput
       StringComparison.Ordinal
     )
     : escapedText;
+
+  static bool IsUnsafe(string text) => text.Contains(
+    Space,
+    StringComparison.Ordinal
+  )
+  || text.Contains(
+    SingleQuote,
+    StringComparison.Ordinal
+  )
+  || text.Contains(
+    DoubleQuote,
+    StringComparison.Ordinal
+  );
 }
