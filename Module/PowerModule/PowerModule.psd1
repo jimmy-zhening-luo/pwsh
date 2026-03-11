@@ -2,7 +2,7 @@
   RootModule           = 'PowerModule.dll'
   ModuleVersion        = '3.0.0.0'
   CompatiblePSEditions = @('Desktop', 'Core')
-  GUID                 = '0d6f7f29-9175-410d-bd89-622ad5926f29'
+  GUID                 = '1af8158b-1120-4da8-9f20-664173671c6c'
   Author               = 'Jimmy Zhening Luo'
   CompanyName          = 'Jimmy Zhening Luo'
   Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
