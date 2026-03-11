@@ -10,7 +10,7 @@ enum PathItemType
 sealed class PathCompletionsAttribute(
   string Location = "",
   PathItemType ItemType = PathItemType.Any,
- CompletionCase Case = CompletionCase.Lower
+  CompletionCase Case = CompletionCase.Lower
 ) : Factory.Intrinsics.TCompleterFactory(Case)
 {
   public string Location
