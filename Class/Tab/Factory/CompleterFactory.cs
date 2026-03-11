@@ -10,7 +10,7 @@ abstract class CompleterFactory<TDomain>(
 
   abstract private protected IEnumerable<string> EnumerateDomain(TDomain domain);
 
-  sealed override public Completers.Completer Create() => new(
+  sealed override public Completers.SetCompleter Create() => new(
     CompletionType,
     Case,
     EnumerateDomain(Domain)
