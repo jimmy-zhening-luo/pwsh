@@ -8,7 +8,7 @@ sealed class Completer(
 {
   sealed override private protected IEnumerable<Intrinsics.ICompleter.CompletionResultRecord> GenerateCompletion(string wordToComplete)
   {
-    uint index = default;
+    uint startingCount = default;
 
     foreach (var member in Domain)
     {
@@ -19,29 +19,29 @@ sealed class Completer(
         )
       )
       {
-        ++index;
+        ++startingCount;
+
         yield return new(member);
       }
     }
 
-    if (index is not 1)
+    if (startingCount is 1)
     {
-      yield break;
-    }
+      var wordSize = wordToComplete.Length;
 
-    foreach (var member in Domain)
-    {
-      if (
-        member.Length > wordToComplete.Length
-        && member.IndexOf(
-          wordToComplete,
-          1,
-          System.StringComparison.OrdinalIgnoreCase
-        ) > 0
-      )
+      foreach (var member in Domain)
       {
-        ++index;
-        yield return new(member);
+        if (
+          member.Length > wordSize
+          && member.IndexOf(
+            wordToComplete,
+            1,
+            System.StringComparison.OrdinalIgnoreCase
+          ) > 0
+        )
+        {
+          yield return new(member);
+        }
       }
     }
 
