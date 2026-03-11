@@ -14,7 +14,7 @@ sealed public class TestHost() : WrappedCommand(
   CommandTypes.Function
 )
 {
-  public enum TestHostVerbosity
+  public enum Verbosity
   {
     [System.ComponentModel.Description(
       "Display only whether or not the host is reachable (Default)"
@@ -27,7 +27,7 @@ sealed public class TestHost() : WrappedCommand(
     detailed,
   }
 
-  enum TestHostWellKnownPort
+  enum WellKnownPort
   {
     [System.ComponentModel.Description(
       "Hypertext Transfer Protocol (HTTP)"
@@ -56,7 +56,7 @@ sealed public class TestHost() : WrappedCommand(
   {
     ["Detailed"] = default,
     ["InformationLevel"] = Detailed
-      ? TestHostVerbosity.detailed
+      ? Verbosity.detailed
       : InformationLevel,
   };
 
@@ -80,7 +80,7 @@ sealed public class TestHost() : WrappedCommand(
   )]
   [ValidateNotNullOrWhiteSpace]
   [Tab.EnumCompletions(
-    typeof(TestHostWellKnownPort),
+    typeof(WellKnownPort),
     Tab.CompletionCase.Lower
   )]
   required public string CommonTCPPort
@@ -100,7 +100,7 @@ sealed public class TestHost() : WrappedCommand(
   { private get; init; }
 
   [Parameter]
-  public TestHostVerbosity InformationLevel
+  public Verbosity InformationLevel
   { private get; init; }
 
   [Parameter(
@@ -170,7 +170,7 @@ sealed public class TestHost() : WrappedCommand(
             );
             break;
 
-          case var port when System.Enum.TryParse<TestHostWellKnownPort>(
+          case var port when System.Enum.TryParse<WellKnownPort>(
             port,
             true,
             out var commonPort
