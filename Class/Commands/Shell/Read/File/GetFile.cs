@@ -161,7 +161,7 @@ sealed public class GetFileDrive : WrappedGetFile
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(
-    Client.File.PathString.SeparatorString,
+    Client.File.PathString.StringSeparator,
     Tab.PathItemType.File
   )]
   sealed override public Collection<string> Path

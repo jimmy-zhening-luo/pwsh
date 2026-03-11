@@ -175,7 +175,7 @@ sealed public class GetDirectoryDrive : WrappedGetDirectory
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(
-    Client.File.PathString.SeparatorString,
+    Client.File.PathString.StringSeparator,
     Tab.PathItemType.Directory
   )]
   sealed override public Collection<string> Path

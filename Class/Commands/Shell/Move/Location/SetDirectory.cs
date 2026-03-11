@@ -222,7 +222,7 @@ sealed public class SetDrive : WrappedSetDirectory
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(
-    Client.File.PathString.SeparatorString,
+    Client.File.PathString.StringSeparator,
     Tab.PathItemType.Directory
   )]
   sealed override public string Path

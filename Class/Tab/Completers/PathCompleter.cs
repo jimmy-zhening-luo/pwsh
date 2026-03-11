@@ -165,7 +165,7 @@ sealed class PathCompleter : Intrinsics.TCompleter
       accumulator,
       filename,
       trailingSeparator
-        ? Client.File.PathString.SeparatorString
+        ? Client.File.PathString.StringSeparator
         : string.Empty
     )
       .Replace(
@@ -253,10 +253,10 @@ sealed class PathCompleter : Intrinsics.TCompleter
       yield return CreateCompletionRecord(
         System.IO.Path.Join(
           searchContext.Container.FullName,
-          Client.File.PathString.SeparatorString
+          Client.File.PathString.StringSeparator
         ),
         searchContext.Accumulator,
-        Client.File.PathString.SeparatorString
+        Client.File.PathString.StringSeparator
       );
     }
 
