@@ -117,11 +117,7 @@ abstract public class NodeCommand(string? IntrinsicVerb) : CodeNativeCommand(Int
   sealed override private protected IEnumerable<string> CommandBaseArguments
   { get; } = ["--color=always"];
 
-  sealed override private protected IEnumerable<string> WorkingDirectoryArguments => WorkingDirectory is ""
-    ? []
-    : [
-        $"--prefix={Pwd(WorkingDirectory)}",
-      ];
+  sealed override private protected IEnumerable<string> WorkingDirectoryArguments => [$"--prefix={Pwd(WorkingDirectory)}"];
 
   sealed override private protected void PreprocessIntrinsicVerb()
   {
@@ -158,13 +154,6 @@ abstract public class NodeCommand(string? IntrinsicVerb) : CodeNativeCommand(Int
     switch (WorkingDirectory)
     {
       case "":
-        break;
-
-      case var path when !IsNodePackage(path):
-        (DeferredVerbArgument, WorkingDirectory) = (
-          WorkingDirectory,
-          string.Empty
-        );
         break;
 
       case var path when Pwd(path) == Pwd():

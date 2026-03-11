@@ -13,10 +13,12 @@ abstract public class CodeNativeCommand(
   abstract private protected IEnumerable<string> WorkingDirectoryArguments
   { get; }
 
-  sealed override private protected IEnumerable<string> CommandArguments => [
-    .. CommandBaseArguments,
-    .. WorkingDirectoryArguments,
-  ];
+  sealed override private protected IEnumerable<string> CommandArguments => WorkingDirectory is ""
+    ? CommandBaseArguments
+    : [
+        .. CommandBaseArguments,
+        .. WorkingDirectoryArguments,
+      ];
 
   sealed override private protected IEnumerable<string> VerbArguments => DeferredVerbArgument is null
     ? ParseArguments()

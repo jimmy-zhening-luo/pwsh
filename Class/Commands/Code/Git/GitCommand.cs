@@ -54,12 +54,10 @@ abstract public class GitCommand(string? IntrinsicVerb) : CodeNativeCommand(Intr
     "color.ui=always",
   ];
 
-  sealed override private protected IEnumerable<string> WorkingDirectoryArguments => WorkingDirectory is ""
-    ? []
-    : [
-        "-C",
-        WorkingDirectory,
-      ];
+  sealed override private protected IEnumerable<string> WorkingDirectoryArguments => [
+    "-C",
+    WorkingDirectory,
+  ];
 
   sealed override private protected void PreprocessIntrinsicVerb()
   {
