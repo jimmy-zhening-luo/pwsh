@@ -103,8 +103,8 @@ static class Url
     }
   }
 
-  static System.Uri? TryParse(string uri) => System.Uri.TryCreate(
-    uri,
+  static System.Uri? TryParse(string uriString) => System.Uri.TryCreate(
+    uriString,
     System.UriKind.Absolute,
     out var uri
   )
