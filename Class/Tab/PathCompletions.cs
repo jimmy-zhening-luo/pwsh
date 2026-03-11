@@ -7,7 +7,7 @@ sealed class PathCompletionsAttribute(
 ) : Factory.Intrinsics.TCompleterFactory
 {
   sealed override public CompletionCase Case
-  { get; init; } = Case;
+  { get; } = Case;
 
   public string Location
   { get; } = Location;

@@ -6,7 +6,7 @@ sealed class EnumCompletionsAttribute(
 ) : Factory.SetCompleterFactory<System.Type>(EnumType)
 {
   sealed override public CompletionCase Case
-  { get; init; } = Case;
+  { get; } = Case;
 
   public System.Type EnumType
   { get; } = EnumType;
