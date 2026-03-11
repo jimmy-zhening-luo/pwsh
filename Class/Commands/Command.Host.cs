@@ -9,8 +9,6 @@ partial class CoreCommand
       Dispose(false);
     }
 
-    internal bool HadErrors => PS.HadErrors;
-
     PowerShell PS
     {
       get
