@@ -1,7 +1,7 @@
 <?xml-model href="https://raw.githubusercontent.com/microsoft/vs-solutionpersistence/refs/heads/main/src/Microsoft.VisualStudio.SolutionPersistence/Serializer/Xml/Slnx.xsd"?>
 <Solution>
   <Folder Name="/Class/">
-    <Project Path="Class/PowerModule.csproj" DisplayName="Module">
+    <Project Path="Class/PowerModule.csproj">
     </Project>
   </Folder>
 </Solution>
