@@ -33,7 +33,10 @@ sealed public class GitCommit() : GitCommand("commit")
 
   sealed override private protected void PreprocessOtherArguments()
   {
-    List<string> messageWords = [];
+    if (Message is not "")
+    {
+      InsertArgument(Message);
+    }
 
     if (
       WorkingDirectory is not ""
@@ -41,43 +44,29 @@ sealed public class GitCommit() : GitCommand("commit")
       && ResolveWorkingDirectory(WorkingDirectory) is ""
     )
     {
-      messageWords.Add(WorkingDirectory);
-
+      Arguments.AddFirst(WorkingDirectory);
       WorkingDirectory = string.Empty;
     }
 
-    if (Message is not "")
+    if (NativeArguments.Contains(FlagAllowEmpty))
     {
-      if (IsNativeArgument(Message))
-      {
-        NativeArguments.AddFirst(Message);
-      }
-      else
-      {
-        messageWords.Add(Message);
-      }
+      AllowEmpty = true;
     }
-
-    messageWords.AddRange(Arguments);
-    Arguments.Clear();
-
-    if (AllowEmpty && !NativeArguments.Contains(FlagAllowEmpty))
+    else if (AllowEmpty)
     {
       NativeArguments.AddLast(FlagAllowEmpty);
     }
 
-    if (
-      messageWords is []
-      && NativeArguments.Contains(FlagAllowEmpty)
-    )
+    if (AllowEmpty && Arguments.Count is 0)
     {
-      messageWords.Add("No message");
+      Arguments.Add("No message");
     }
 
     Message = string.Join(
       Client.StringInput.Space,
-      messageWords
+      Arguments
     );
+    Arguments.Clear();
 
     System.ArgumentException.ThrowIfNullOrEmpty(
       Message,
