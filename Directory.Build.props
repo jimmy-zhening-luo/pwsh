@@ -8,4 +8,8 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <DebugType>none</DebugType>
   </PropertyGroup>
+  <PropertyGroup>
+    <Nullable>enable</Nullable>
+    <AnalysisMode>All</AnalysisMode>
+  </PropertyGroup>
 </Project>
