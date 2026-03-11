@@ -132,7 +132,7 @@ abstract public class NodeCommand(string? IntrinsicVerb) : CodeNativeCommand(Int
 
       case var verb when Aliases.TryGetValue(
         verb.ToLower(
-          Client.String.CurrentCulture
+          Client.StringInput.CurrentCulture
         ),
         out var alias
       ):
@@ -141,7 +141,7 @@ abstract public class NodeCommand(string? IntrinsicVerb) : CodeNativeCommand(Int
 
       case var verb when Verbs.TryGetValue(
         verb.ToLower(
-          Client.String.CurrentCulture
+          Client.StringInput.CurrentCulture
         ),
         out var exactVerb
       ):

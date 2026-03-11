@@ -23,7 +23,7 @@ interface ICompleter : IArgumentCompleter
     System.Collections.IDictionary fakeBoundParameters
   ) => WrapArgumentCompletionResult(
     GenerateCompletion(
-      Client.String.UnescapeSingleQuoted(
+      Client.StringInput.UnescapeSingleQuoted(
         wordToComplete
       )
     )
@@ -52,16 +52,16 @@ interface ICompleter : IArgumentCompleter
       var casedResult = Case switch
       {
         CompletionCase.Upper => result.ToUpper(
-          Client.String.CurrentCulture
+          Client.StringInput.CurrentCulture
         ),
         CompletionCase.Lower => result.ToLower(
-          Client.String.CurrentCulture
+          Client.StringInput.CurrentCulture
         ),
         _ => result,
       };
 
       yield return new(
-        Client.String.EscapeSingleQuoted(casedResult),
+        Client.StringInput.EscapeSingleQuoted(casedResult),
         completion.DisplayName ?? casedResult,
         completion.CompletionType ?? CompletionType,
         completion.Description ?? result

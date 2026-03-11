@@ -34,13 +34,13 @@ sealed public class ConvertToHex : Cmdlet
     {
       var hex = number.ToString(
         "X",
-        Client.String.InvariantCulture
+        Client.StringInput.InvariantCulture
       );
 
       WriteObject(
         Lowercase
           ? hex.ToLower(
-            Client.String.InvariantCulture
+            Client.StringInput.InvariantCulture
           )
           : hex
       );

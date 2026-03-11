@@ -72,7 +72,7 @@ sealed public class GitCommit() : GitCommand("commit")
       messageWords.Add("No message");
     }
 
-    Message = string.Join(Client.String.Space, messageWords);
+    Message = string.Join(Client.StringInput.Space, messageWords);
 
     System.ArgumentException.ThrowIfNullOrEmpty(
       Message,

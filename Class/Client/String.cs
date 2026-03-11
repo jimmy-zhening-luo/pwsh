@@ -3,7 +3,7 @@ namespace PowerModule.Client;
 using StringComparison = System.StringComparison;
 using CultureInfo = System.Globalization.CultureInfo;
 
-static class String
+static class StringInput
 {
   internal const char Space = ' ';
   internal const char SingleQuote = '\'';

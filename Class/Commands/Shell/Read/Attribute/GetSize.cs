@@ -141,7 +141,7 @@ sealed public class GetSize : CoreCommand
             )} {Unit
               .ToString()
               .ToUpper(
-                Client.String.CurrentCulture
+                Client.StringInput.CurrentCulture
             )}"
           );
           break;

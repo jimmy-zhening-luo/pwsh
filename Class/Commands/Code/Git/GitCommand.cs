@@ -89,7 +89,7 @@ abstract public class GitCommand(string? IntrinsicVerb) : CodeNativeCommand(Intr
 
       case var verb when Verbs.TryGetValue(
         verb.ToLower(
-          Client.String.CurrentCulture
+          Client.StringInput.CurrentCulture
         ),
         out var exactVerb
       ):
@@ -126,7 +126,7 @@ abstract public class GitCommand(string? IntrinsicVerb) : CodeNativeCommand(Intr
     System.ArgumentException.ThrowIfNullOrEmpty(
       WorkingDirectory,
       string.Join(
-        Client.String.Space,
+        Client.StringInput.Space,
         [
           nameof(WorkingDirectory),
           newable

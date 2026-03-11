@@ -165,7 +165,7 @@ abstract public partial class NativeCommand(
     foreach (var word in commandScript)
     {
       safeCommandScript.Add(
-        Client.String.EscapeDoubleQuoted(
+        Client.StringInput.EscapeDoubleQuoted(
           word
         )
       );
@@ -173,7 +173,7 @@ abstract public partial class NativeCommand(
 
     _ = AddScript(
       string.Join(
-        Client.String.Space,
+        Client.StringInput.Space,
         safeCommandScript
       )
     );
