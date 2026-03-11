@@ -2,10 +2,10 @@ namespace PowerModule.Tab.Factory.Intrinsics;
 
 interface ICompleterFactory : IArgumentCompleterFactory
 {
-  CompletionResultType CompletionType
+  CompletionCase Case
   { get; init; }
 
-  CompletionCase Case
+  CompletionResultType CompletionType
   { get; init; }
 
   new Completers.Intrinsics.ICompleter Create();
