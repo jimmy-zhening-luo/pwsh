@@ -1,4 +1,4 @@
-namespace PowerModule.Tab.Factory;
+namespace PowerModule.Tab.Factory.Intrinsics;
 
 [System.AttributeUsage(
   System.AttributeTargets.Property
