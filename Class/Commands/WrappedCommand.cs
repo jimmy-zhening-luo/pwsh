@@ -30,8 +30,6 @@ abstract public class WrappedCommand(
 
   sealed override private protected void Preprocess()
   {
-    InPipeline = false;
-
     CoerceParameters();
 
     TransformArguments();
