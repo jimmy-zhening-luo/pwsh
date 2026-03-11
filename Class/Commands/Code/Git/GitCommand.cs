@@ -113,9 +113,10 @@ abstract public class GitCommand(string? IntrinsicVerb) : CodeNativeCommand(Intr
     {
       if (WorkingDirectory is not "")
       {
-        DeferredVerbArguments.Insert(default, WorkingDirectory);
-
-        WorkingDirectory = string.Empty;
+        (DeferredVerbArgument, WorkingDirectory) = (
+          WorkingDirectory,
+          string.Empty
+        );
       }
 
       repository = ResolveWorkingDirectory(pwd, newable);

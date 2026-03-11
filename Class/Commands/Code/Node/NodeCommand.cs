@@ -160,12 +160,17 @@ abstract public class NodeCommand(string? IntrinsicVerb) : CodeNativeCommand(Int
       case "":
         break;
 
-      case var path when !IsNodePackage(path):
-        DeferredVerbArguments.Add(path);
-        WorkingDirectory = string.Empty;
+      case _ when !IsNodePackage(
+        WorkingDirectory
+      ):
+
+        (DeferredVerbArgument, WorkingDirectory) = (
+          WorkingDirectory,
+          string.Empty
+        );
         break;
 
-      case var path when Pwd(path) == Pwd():
+      case _ when Pwd(WorkingDirectory) == Pwd():
         WorkingDirectory = string.Empty;
         break;
 

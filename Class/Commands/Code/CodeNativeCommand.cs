@@ -5,7 +5,7 @@ abstract public class CodeNativeCommand(
   bool SkipSsh = default
 ) : NativeCommand(IntrinsicVerb, SkipSsh)
 {
-  private protected readonly List<string> DeferredVerbArguments = [];
+  private protected string? DeferredVerbArgument;
 
   abstract private protected IEnumerable<string> CommandBaseArguments
   { get; }
@@ -18,10 +18,12 @@ abstract public class CodeNativeCommand(
     .. WorkingDirectoryArguments,
   ];
 
-  sealed override private protected IEnumerable<string> VerbArguments => [
-    .. DeferredVerbArguments,
-    .. ParseArguments(),
-  ];
+  sealed override private protected IEnumerable<string> VerbArguments => DeferredVerbArgument is null
+    ? ParseArguments()
+    : [
+        DeferredVerbArgument,
+        .. ParseArguments(),
+      ];
 
   [Parameter(
     Position = 50,
