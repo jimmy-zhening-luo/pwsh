@@ -23,7 +23,9 @@ sealed public class ClearLine : CoreCommand
   [Parameter]
   [SupportsWildcards]
   required public string Filter
-  { private get; init; }
+  {
+    init => sink = default;
+  }
 
   [Parameter(
     ParameterSetName = "LiteralPath",
@@ -31,26 +33,36 @@ sealed public class ClearLine : CoreCommand
   )]
   [Alias("PSPath", "LP")]
   required public Collection<string> LiteralPath
-  { private get; init; }
+  {
+    init => sink = default;
+  }
 
   [Parameter]
   [SupportsWildcards]
   required public Collection<string> Include
-  { private get; init; }
+  {
+    init => sink = default;
+  }
 
   [Parameter]
   [SupportsWildcards]
   required public Collection<string> Exclude
-  { private get; init; }
+  {
+    init => sink = default;
+  }
 
   [Parameter]
   [Alias("f")]
   public SwitchParameter Force
-  { private get; init; }
+  {
+    init => sink = default;
+  }
 
   [Parameter]
   required public string Stream
-  { private get; init; }
+  {
+    init => sink = default;
+  }
 
   sealed override private protected void Postprocess()
   {
