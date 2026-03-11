@@ -8,7 +8,7 @@ static class Dns
     Scheme: "http" or "https",
     Host: var host,
   }
-    && Resolve(host);
+  && Resolve(host);
   static internal bool Resolve(string host)
   {
     if (host is "")
