@@ -10,17 +10,6 @@ sealed class Completer(
   {
     uint index = default;
 
-    if (wordToComplete is "")
-    {
-      foreach (var member in Domain)
-      {
-        ++index;
-        yield return new(member);
-      }
-
-      yield break;
-    }
-
     foreach (var member in Domain)
     {
       if (
