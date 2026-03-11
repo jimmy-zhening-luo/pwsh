@@ -5,8 +5,7 @@ interface ICompleter : IArgumentCompleter
   sealed private protected record CompletionResultRecord(
     string Result,
     string? DisplayName = default,
-    string? Description = default,
-    CompletionResultType? CompletionType = default
+    string? Description = default
   );
 
   internal CompletionResultType CompletionType
@@ -63,7 +62,7 @@ interface ICompleter : IArgumentCompleter
       yield return new(
         Client.StringInput.EscapeSingleQuoted(casedResult),
         completion.DisplayName ?? casedResult,
-        completion.CompletionType ?? CompletionType,
+        CompletionType,
         completion.Description ?? result
       );
     }
