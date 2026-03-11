@@ -3,7 +3,7 @@ namespace PowerModule.Tab.Factory;
 abstract class CompleterFactory<TDomain>(
   TDomain Domain,
   CompletionCase Case = default
-) : TCompleterFactory(Case)
+) : Intrinsics.TCompleterFactory(Case)
 {
   public bool Strict
   { get; init; }
