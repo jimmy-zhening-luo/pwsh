@@ -14,8 +14,8 @@ abstract public partial class NativeCommand(
     bool V = default
   );
 
-  private protected readonly List<string> Arguments = [];
-  private protected readonly List<string> NativeArguments = [];
+  private protected readonly LinkedList<string> Arguments = [];
+  private protected readonly LinkedList<string> NativeArguments = [];
 
   abstract private protected string CommandPath
   { get; }
@@ -190,11 +190,11 @@ abstract public partial class NativeCommand(
   {
     if (IsNativeArgument(argument))
     {
-      NativeArguments.Add(argument);
+      NativeArguments.AddLast(argument);
     }
     else
     {
-      Arguments.Add(argument);
+      Arguments.AddLast(argument);
     }
   }
 
@@ -202,11 +202,11 @@ abstract public partial class NativeCommand(
   {
     if (IsNativeArgument(argument))
     {
-      NativeArguments.Insert(default, argument);
+      NativeArguments.AddFirst(argument);
     }
     else
     {
-      Arguments.Insert(default, argument);
+      Arguments.AddFirst(argument);
     }
   }
 }

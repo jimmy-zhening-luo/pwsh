@@ -32,7 +32,7 @@ sealed public class NodeClearCache() : NodeCommand("cache")
 
     Arguments.Clear();
     NativeArguments.Clear();
-    NativeArguments.Add("--force");
+    NativeArguments.AddLast("--force");
   }
 
   sealed override private protected IEnumerable<string> ParseArguments() => ["clean"];

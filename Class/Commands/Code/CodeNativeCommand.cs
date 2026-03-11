@@ -54,7 +54,7 @@ abstract public class CodeNativeCommand(
       && IsNativeArgument(WorkingDirectory)
     )
     {
-      NativeArguments.Insert(default, WorkingDirectory);
+      NativeArguments.AddFirst(WorkingDirectory);
 
       WorkingDirectory = string.Empty;
     }

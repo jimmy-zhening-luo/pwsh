@@ -50,7 +50,7 @@ sealed public class GitCommit() : GitCommand("commit")
     {
       if (IsNativeArgument(Message))
       {
-        NativeArguments.Insert(default, Message);
+        NativeArguments.AddFirst(Message);
       }
       else
       {
@@ -63,7 +63,7 @@ sealed public class GitCommit() : GitCommand("commit")
 
     if (AllowEmpty && !NativeArguments.Contains(FlagAllowEmpty))
     {
-      NativeArguments.Add(FlagAllowEmpty);
+      NativeArguments.AddLast(FlagAllowEmpty);
     }
 
     if (

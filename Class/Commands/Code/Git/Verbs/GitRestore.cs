@@ -10,25 +10,23 @@ sealed public class GitRestore() : GitCommand("pull")
 {
   sealed override private protected void PreprocessOtherArguments()
   {
-    List<string> resetArguments = [.. Arguments];
-
-    Arguments.Clear();
-
     if (
       WorkingDirectory is not ""
       && ResolveWorkingDirectory(Pwd()) is not ""
       && ResolveWorkingDirectory(WorkingDirectory) is ""
     )
     {
-      resetArguments.Insert(default, WorkingDirectory);
+      Arguments.AddFirst(WorkingDirectory);
       WorkingDirectory = string.Empty;
     }
 
     _ = AddCommand(@"PowerModule\Reset-GitRepository")
       .AddParameter(
         "ArgumentList",
-        new Collection<string>(resetArguments)
+        new Collection<string>(Arguments)
       );
+
+    Arguments.Clear();
 
     if (WorkingDirectory is not "")
     {

@@ -35,7 +35,7 @@ sealed public class GitAdd() : GitCommand("add")
     {
       if (!NativeArguments.Contains(FlagRenormalize))
       {
-        NativeArguments.Add(FlagRenormalize);
+        NativeArguments.AddLast(FlagRenormalize);
       }
     }
   }
