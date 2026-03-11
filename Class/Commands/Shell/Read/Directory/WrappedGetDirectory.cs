@@ -8,7 +8,7 @@ abstract public class WrappedGetDirectory() : WrappedCommand(
   abstract public Collection<string> Path
   { get; init; }
 
-  sealed override private protected object? PipelineInput => Path;
+  sealed override private protected Collection<string> PipelineInput => Path;
 
   sealed override private protected Dictionary<string, object?> CoercedParameters => new()
   {

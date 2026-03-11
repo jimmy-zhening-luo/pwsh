@@ -13,7 +13,7 @@ sealed public class TeeVariable() : WrappedCommand(
   AcceptsPipelineInput: true
 )
 {
-  sealed override private protected object? PipelineInput => InputObject;
+  sealed override private protected object PipelineInput => InputObject;
 
   [Parameter(
     ValueFromPipeline = true

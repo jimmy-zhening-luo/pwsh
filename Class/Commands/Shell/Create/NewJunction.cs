@@ -13,7 +13,7 @@ sealed public class NewJunction() : WrappedCommand(
   AcceptsPipelineInput: true
 )
 {
-  sealed override private protected object? PipelineInput => Value;
+  sealed override private protected object PipelineInput => Value;
 
   sealed override private protected Dictionary<string, object?> CoercedParameters
   { get; } = new()
