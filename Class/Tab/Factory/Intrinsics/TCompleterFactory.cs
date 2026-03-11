@@ -7,7 +7,7 @@ namespace PowerModule.Tab.Factory.Intrinsics;
 abstract class TCompleterFactory(
   CompletionCase Case = default,
   CompletionResultType CompletionType = CompletionResultType.ParameterValue
-) : ArgumentCompleterAttribute, IArgumentCompleterFactory
+) : ArgumentCompleterAttribute, ICompleterFactory
 {
   public CompletionCase Case
   { get; init; } = Case;
@@ -16,6 +16,4 @@ abstract class TCompleterFactory(
   { get; init; } = CompletionType;
 
   abstract public Completers.Intrinsics.ICompleter Create();
-  IArgumentCompleter IArgumentCompleterFactory.Create()
-    => Create();
 }
