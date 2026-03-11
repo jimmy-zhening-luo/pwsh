@@ -107,8 +107,6 @@ abstract public partial class NativeCommand(
       AddArgument(argument);
     }
 
-    ArgumentList.Clear();
-
     PreprocessArguments();
   }
 
