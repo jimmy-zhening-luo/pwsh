@@ -27,7 +27,7 @@ abstract public class WrappedSetDirectory() : WrappedCommand(
       {
         SetBoundParameter(
           "Path",
-          Pwd("..")
+          Parent()
         );
       }
     }

@@ -253,10 +253,7 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     path
   );
 
-  private protected string Parent() => Client.File.PathString.GetFullPathLocal(
-    SessionState.Path.CurrentLocation.Path,
-    ".."
-  );
+  private protected string Parent() => Pwd(Client.File.PathString.Parent);
   private protected string Parent(string path) => Client.File.PathString.GetFullPathLocal(
     Parent(),
     path

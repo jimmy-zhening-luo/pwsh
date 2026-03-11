@@ -6,7 +6,9 @@ static partial class PathString
   internal const char Home = '~';
   internal const char Separator = '\\';
   internal const char AltSeparator = '/';
-  internal const string SeparatorString = @"\";
+  internal const string StringSeparator = @"\";
+  internal const string Parent = "..";
+  internal const string ParentParent = @"..\..";
 
   static internal string GetFullPathLocal(
     string location,
@@ -46,7 +48,7 @@ static partial class PathString
             AltSeparator,
             Separator
           ),
-        SeparatorString
+        StringSeparator
       )
     )
   );

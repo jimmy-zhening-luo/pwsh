@@ -51,7 +51,7 @@ sealed public class GetFileSibling : WrappedGetFile
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(
-    "..",
+    Client.File.PathString.Parent,
     Tab.PathItemType.File
   )]
   sealed override public Collection<string> Path
@@ -59,7 +59,7 @@ sealed public class GetFileSibling : WrappedGetFile
     init => paths = value;
   }
 
-  sealed override private protected string Location => Pwd("..");
+  sealed override private protected string Location => Parent();
 }
 
 [Cmdlet(
@@ -78,7 +78,7 @@ sealed public class GetFileRelative : WrappedGetFile
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(
-    @"..\..",
+    Client.File.PathString.ParentParent,
     Tab.PathItemType.File
   )]
   sealed override public Collection<string> Path
@@ -86,7 +86,7 @@ sealed public class GetFileRelative : WrappedGetFile
     init => paths = value;
   }
 
-  sealed override private protected string Location => Pwd(@"..\..");
+  sealed override private protected string Location => Pwd(Client.File.PathString.ParentParent);
 }
 
 [Cmdlet(

@@ -6,7 +6,7 @@ partial class Folder
     SystemDrive(),
     path
   );
-  static internal string SystemDrive() => system ??= Windows("..");
+  static internal string SystemDrive() => system ??= Windows(File.PathString.Parent);
   static string? system;
 
   static internal string Code(string path) => File.PathString.GetFullPathLocal(

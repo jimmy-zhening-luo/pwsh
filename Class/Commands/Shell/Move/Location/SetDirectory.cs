@@ -116,13 +116,13 @@ sealed public class SetDirectorySibling : WrappedSetDirectory
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(
-    "..",
+    Client.File.PathString.Parent,
     Tab.PathItemType.Directory
   )]
   sealed override public string Path
   { get; init; } = string.Empty;
 
-  sealed override private protected string Location => Pwd("..");
+  sealed override private protected string Location => Parent();
 }
 
 [Cmdlet(
@@ -142,13 +142,13 @@ sealed public class SetDirectoryRelative : WrappedSetDirectory
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(
-    @"..\..",
+    Client.File.PathString.ParentParent,
     Tab.PathItemType.Directory
   )]
   sealed override public string Path
   { get; init; } = string.Empty;
 
-  sealed override private protected string Location => Pwd(@"..\..");
+  sealed override private protected string Location => Pwd(Client.File.PathString.ParentParent);
 }
 
 [Cmdlet(

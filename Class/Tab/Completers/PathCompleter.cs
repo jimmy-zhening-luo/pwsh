@@ -265,7 +265,7 @@ sealed class PathCompleter : Intrinsics.TCompleter
       yield return CreateCompletionRecord(
         Client.File.PathString.GetFullPathLocal(
           searchContext.Container.FullName,
-          ".."
+          Client.File.PathString.Parent
         ),
         searchContext.Accumulator,
         @"..\"

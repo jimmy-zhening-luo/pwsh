@@ -47,11 +47,11 @@ sealed public class StartExplorerSibling : WrappedStartExplorer
     ValueFromPipeline = true
   )]
   [SupportsWildcards]
-  [Tab.PathCompletions("..")]
+  [Tab.PathCompletions(Client.File.PathString.Parent)]
   sealed override public Collection<string> Path
   { get; init; } = [];
 
-  sealed override private protected string Location => Pwd("..");
+  sealed override private protected string Location => Parent();
 }
 
 [Cmdlet(
@@ -70,11 +70,11 @@ sealed public class StartExplorerRelative : WrappedStartExplorer
     ValueFromPipeline = true
   )]
   [SupportsWildcards]
-  [Tab.PathCompletions(@"..\..")]
+  [Tab.PathCompletions(Client.File.PathString.ParentParent)]
   sealed override public Collection<string> Path
   { get; init; } = [];
 
-  sealed override private protected string Location => Pwd(@"..\..");
+  sealed override private protected string Location => Pwd(Client.File.PathString.ParentParent);
 }
 
 [Cmdlet(

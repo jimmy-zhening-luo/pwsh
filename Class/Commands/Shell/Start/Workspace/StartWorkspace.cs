@@ -33,11 +33,11 @@ sealed public class StartWorkspaceSibling : VirtualStartWorkspace
     Position = default
   )]
   [ValidateNotNullOrWhiteSpace]
-  [Tab.PathCompletions("..")]
+  [Tab.PathCompletions(Client.File.PathString.Parent)]
   sealed override public string Path
   { private protected get; init; } = string.Empty;
 
-  sealed override private protected string Location => Pwd("..");
+  sealed override private protected string Location => Parent();
 }
 
 [Cmdlet(
@@ -54,11 +54,11 @@ sealed public class StartWorkspaceRelative : VirtualStartWorkspace
     Position = default
   )]
   [ValidateNotNullOrWhiteSpace]
-  [Tab.PathCompletions(@"..\..")]
+  [Tab.PathCompletions(Client.File.PathString.ParentParent)]
   sealed override public string Path
   { private protected get; init; } = string.Empty;
 
-  sealed override private protected string Location => Pwd(@"..\..");
+  sealed override private protected string Location => Pwd(Client.File.PathString.ParentParent);
 }
 
 [Cmdlet(
