@@ -7,8 +7,6 @@ abstract public class WrappedCommand(
   bool SkipSsh = default
 ) : CoreCommand(SkipSsh)
 {
-  private protected object? sink;
-
   virtual private protected object? PipelineInput
   { get; }
 

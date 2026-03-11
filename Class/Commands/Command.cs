@@ -2,6 +2,8 @@ namespace PowerModule.Commands;
 
 abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDisposable
 {
+  private protected object? sink;
+
   ~CoreCommand()
   {
     Dispose(false);
