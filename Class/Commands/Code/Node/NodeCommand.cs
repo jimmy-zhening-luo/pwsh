@@ -151,17 +151,12 @@ abstract public class NodeCommand(string? IntrinsicVerb) : CodeNativeCommand(Int
 
   sealed override private protected void PreprocessWorkingDirectory()
   {
-    switch (WorkingDirectory)
+    if (
+      WorkingDirectory is not ""
+      && Pwd(WorkingDirectory) == Pwd()
+    )
     {
-      case "":
-        break;
-
-      case var path when Pwd(path) == Pwd():
-        WorkingDirectory = string.Empty;
-        break;
-
-      default:
-        break;
+      WorkingDirectory = string.Empty;
     }
   }
 
