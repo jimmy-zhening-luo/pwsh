@@ -8,15 +8,11 @@ abstract class CompleterFactory<TDomain>(
   public CompletionResultType CompletionType
   { get; init; } = CompletionResultType.ParameterValue;
 
-  public bool Strict
-  { get; init; }
-
   abstract private protected IEnumerable<string> EnumerateDomain(TDomain domain);
 
   sealed override public Completers.Completer Create() => new(
     CompletionType,
     Case,
-    EnumerateDomain(Domain),
-    Strict
+    EnumerateDomain(Domain)
   );
 }

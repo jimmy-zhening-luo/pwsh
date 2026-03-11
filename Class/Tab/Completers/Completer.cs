@@ -3,8 +3,7 @@ namespace PowerModule.Tab.Completers;
 sealed class Completer(
   CompletionResultType CompletionType,
   CompletionCase Case,
-  IEnumerable<string> Domain,
-  bool Strict
+  IEnumerable<string> Domain
 ) : Intrinsics.TCompleter(CompletionType, Case)
 {
   sealed override private protected IEnumerable<Intrinsics.ICompleter.CompletionResultRecord> GenerateCompletion(string wordToComplete)
@@ -36,7 +35,7 @@ sealed class Completer(
       }
     }
 
-    if (Strict || index is not 1)
+    if (index is not 1)
     {
       yield break;
     }
