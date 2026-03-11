@@ -15,5 +15,7 @@ abstract class TCompleterFactory(
   public CompletionResultType CompletionType
   { get; init; } = CompletionType;
 
-  abstract public IArgumentCompleter Create();
+  abstract public Completers.Intrinsics.ICompleter Create();
+  IArgumentCompleter IArgumentCompleterFactory.Create()
+    => Create();
 }
