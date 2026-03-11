@@ -16,7 +16,7 @@ sealed public class GitPush() : GitCommand("push")
       && ResolveWorkingDirectory(WorkingDirectory) is ""
     )
     {
-      Arguments.AddFirst(WorkingDirectory);
+      _ = Arguments.AddFirst(WorkingDirectory);
 
       WorkingDirectory = string.Empty;
     }

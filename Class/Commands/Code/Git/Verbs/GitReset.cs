@@ -51,7 +51,7 @@ sealed public partial class GitReset() : GitCommand("reset")
       }
       else
       {
-        Arguments.AddFirst(tree);
+        _ = Arguments.AddFirst(tree);
 
         tree = string.Empty;
       }
@@ -97,12 +97,12 @@ sealed public partial class GitReset() : GitCommand("reset")
         }
         else
         {
-          Arguments.AddFirst(WorkingDirectory);
+          _ = Arguments.AddFirst(WorkingDirectory);
         }
       }
       else
       {
-        Arguments.AddFirst(WorkingDirectory);
+        _ = Arguments.AddFirst(WorkingDirectory);
       }
 
       WorkingDirectory = string.Empty;
@@ -110,12 +110,12 @@ sealed public partial class GitReset() : GitCommand("reset")
 
     if (Tree is not "")
     {
-      Arguments.AddFirst(Tree);
+      _ = Arguments.AddFirst(Tree);
     }
 
     if (!Soft)
     {
-      NativeArguments.AddFirst(FlagHard);
+      _ = NativeArguments.AddFirst(FlagHard);
 
       _ = AddCommand(@"PowerModule\Add-GitRepository");
 

@@ -24,7 +24,7 @@ sealed public class NodeTest() : NodeCommand("test")
   {
     if (IgnoreScript && !NativeArguments.Contains(FlagIgnoreScript))
     {
-      NativeArguments.AddFirst(FlagIgnoreScript);
+      _ = NativeArguments.AddFirst(FlagIgnoreScript);
     }
   }
 }

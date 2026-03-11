@@ -23,7 +23,7 @@ sealed public class NodeOutdated() : NodeCommand("outdated")
 
     if (All && !NativeArguments.Contains(FlagAll))
     {
-      NativeArguments.AddFirst(FlagAll);
+      _ = NativeArguments.AddFirst(FlagAll);
     }
   }
 }

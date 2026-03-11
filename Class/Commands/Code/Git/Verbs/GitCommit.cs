@@ -44,7 +44,7 @@ sealed public class GitCommit() : GitCommand("commit")
       && ResolveWorkingDirectory(WorkingDirectory) is ""
     )
     {
-      Arguments.AddFirst(WorkingDirectory);
+      _ = Arguments.AddFirst(WorkingDirectory);
       WorkingDirectory = string.Empty;
     }
 
@@ -54,12 +54,12 @@ sealed public class GitCommit() : GitCommand("commit")
     }
     else if (AllowEmpty)
     {
-      NativeArguments.AddLast(FlagAllowEmpty);
+      _ = NativeArguments.AddLast(FlagAllowEmpty);
     }
 
     if (AllowEmpty && Arguments.Count is 0)
     {
-      Arguments.AddLast("No message");
+      _ = Arguments.AddLast("No message");
     }
 
     Message = string.Join(
