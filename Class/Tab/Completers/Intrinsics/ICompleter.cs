@@ -9,10 +9,10 @@ interface ICompleter : IArgumentCompleter
     CompletionResultType? CompletionType = default
   );
 
-  internal CompletionCase Case
+  internal CompletionResultType CompletionType
   { get; init; }
 
-  internal CompletionResultType CompletionType
+  internal CompletionCase Case
   { get; init; }
 
   new IEnumerable<CompletionResult> CompleteArgument(
