@@ -11,64 +11,90 @@ abstract public class WrappedGetFile() : WrappedCommand(
   [Parameter]
   [SupportsWildcards]
   required public string Filter
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter]
   [SupportsWildcards]
   required public Collection<string> Include
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter]
   [SupportsWildcards]
   required public Collection<string> Exclude
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter]
   public long ReadCount
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter]
   [Alias("First", "Head")]
   [ValidateRange(ValidateRangeKind.NonNegative)]
   public long TotalCount
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter]
   [Alias("Last")]
   [ValidateRange(ValidateRangeKind.NonNegative)]
   public int Tail
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter]
   required public string Delimiter
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter]
   required public string Stream
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter]
   [ValidateNotNullOrEmpty]
   [Tab.EnumCompletions(typeof(Client.File.Encoding))]
   required public string Encoding
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter]
   [Alias("f")]
   public SwitchParameter Force
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter]
   public SwitchParameter AsByteStream
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter]
   public SwitchParameter Raw
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter]
   public SwitchParameter Wait
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   sealed override private protected void TransformPipelineInput()
   {

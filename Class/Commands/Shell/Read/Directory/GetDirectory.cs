@@ -32,7 +32,9 @@ sealed public class GetDirectory : WrappedGetDirectory
   )]
   [Alias("PSPath", "LP")]
   required public Collection<string> LiteralPath
-  { private get; init; }
+  {
+    init => Bind();
+  }
 }
 
 [Cmdlet(

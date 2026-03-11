@@ -29,7 +29,9 @@ sealed public class NewJunction() : WrappedCommand(
   )]
   [Tab.PathCompletions]
   required public Collection<string> Path
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter(
     Mandatory = true,

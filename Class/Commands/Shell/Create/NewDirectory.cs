@@ -32,14 +32,18 @@ sealed public class NewDirectory() : WrappedCommand(
   )]
   [Tab.PathCompletions]
   required public Collection<string> Path
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter(
     ParameterSetName = "nameSet",
     Mandatory = true
   )]
   required public string Name
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter(ValueFromPipeline = true)]
   [Alias("Target")]
@@ -50,5 +54,7 @@ sealed public class NewDirectory() : WrappedCommand(
   [Parameter]
   [Alias("f")]
   public SwitchParameter Force
-  { private get; init; }
+  {
+    init => Bind();
+  }
 }

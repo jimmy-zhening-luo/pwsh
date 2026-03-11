@@ -38,60 +38,84 @@ abstract public class WrappedGetDirectory() : WrappedCommand(
   [Parameter]
   [SupportsWildcards]
   required public Collection<string> Include
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter]
   [SupportsWildcards]
   required public Collection<string> Exclude
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter]
   [Alias("s", "r")]
   public SwitchParameter Recurse
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter]
   [Alias("de")]
   public uint Depth
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter]
   [Alias("f")]
   public SwitchParameter Force
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter]
   public SwitchParameter Name
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter]
   [Alias("ad", "d")]
   public SwitchParameter Directory
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter]
   [Alias("af", "fi")]
   public SwitchParameter File
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter]
   [Alias("ah", "h")]
   public SwitchParameter Hidden
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter]
   [Alias("as")]
   public SwitchParameter System
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter]
   [Alias("ar")]
   public SwitchParameter ReadOnly
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter]
   public SwitchParameter FollowSymlink
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter]
   [Tab.EnumCompletions(
@@ -99,7 +123,9 @@ abstract public class WrappedGetDirectory() : WrappedCommand(
     Tab.CompletionCase.Lower
   )]
   required public FlagsExpression<System.IO.FileAttributes> Attributes
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   sealed override private protected void TransformPipelineInput()
   {

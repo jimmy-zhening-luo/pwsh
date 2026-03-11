@@ -14,17 +14,23 @@ abstract public class WrappedStartExplorer() : WrappedCommand(
   [Parameter]
   [SupportsWildcards]
   required public string Filter
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter]
   [SupportsWildcards]
   required public Collection<string> Include
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter]
   [SupportsWildcards]
   required public Collection<string> Exclude
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   sealed override private protected void TransformPipelineInput() => SetBoundParameter(
     "Path",

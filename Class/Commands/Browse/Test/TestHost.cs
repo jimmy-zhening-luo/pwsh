@@ -107,33 +107,43 @@ sealed public class TestHost() : WrappedCommand(
     ParameterSetName = "ICMP"
   )]
   public SwitchParameter TraceRoute
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter(
     ParameterSetName = "ICMP"
   )]
   [ValidateRange(1, 120)]
   public int Hops
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter(
     ParameterSetName = "NetRouteDiagnostics",
     Mandatory = true
   )]
   public SwitchParameter DiagnoseRouting
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter(
     ParameterSetName = "NetRouteDiagnostics"
   )]
   required public string ConstrainSourceAddress
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   [Parameter(
     ParameterSetName = "NetRouteDiagnostics"
   )]
   public uint ConstrainInterface
-  { private get; init; }
+  {
+    init => Bind();
+  }
 
   sealed override private protected void TransformArguments()
   {
