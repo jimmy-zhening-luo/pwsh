@@ -42,6 +42,8 @@ sealed public class GitPullChild : CoreCommand
 
     foreach (var repository in EnumerateRepository())
     {
+      ClearCommands();
+
       _ = AddScript(
         $"{baseCommand} {Client.StringInput.EscapeDoubleQuoted(
           repository
@@ -51,7 +53,6 @@ sealed public class GitPullChild : CoreCommand
       BeginSteppablePipeline();
       ProcessSteppablePipeline();
       EndSteppablePipeline();
-      ClearCommands();
 
       CheckNativeError(
         $"git error when pulling repository {repository}"
