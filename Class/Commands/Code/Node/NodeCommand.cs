@@ -126,7 +126,7 @@ abstract public class NodeCommand(string? IntrinsicVerb) : CodeNativeCommand(Int
       case null:
         break;
 
-      case var verb when Aliases.TryGetValue(
+      case { } verb when Aliases.TryGetValue(
         verb.ToLower(
           Client.StringInput.CurrentCulture
         ),
@@ -135,7 +135,7 @@ abstract public class NodeCommand(string? IntrinsicVerb) : CodeNativeCommand(Int
         IntrinsicVerb = alias;
         break;
 
-      case var verb when Verbs.TryGetValue(
+      case { } verb when Verbs.TryGetValue(
         verb.ToLower(
           Client.StringInput.CurrentCulture
         ),
