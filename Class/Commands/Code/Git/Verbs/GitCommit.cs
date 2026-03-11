@@ -20,15 +20,15 @@ sealed public class GitCommit() : GitCommand("commit")
   { private get; set; } = string.Empty;
 
   [Parameter(
-    HelpMessage = "Only commit files that are already staged"
-  )]
-  public SwitchParameter Staged
-  { private get; init; }
-
-  [Parameter(
     HelpMessage = "Allow commit with no changes, equivalent to --allow-empty"
   )]
   public SwitchParameter AllowEmpty
+  { private get; set; }
+
+  [Parameter(
+    HelpMessage = "Only commit files that are already staged"
+  )]
+  public SwitchParameter Staged
   { private get; init; }
 
   sealed override private protected void PreprocessOtherArguments()
