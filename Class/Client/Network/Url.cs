@@ -2,15 +2,6 @@ namespace PowerModule.Client.Network;
 
 static class Url
 {
-  [System.Flags]
-  internal enum Scheme
-  {
-    None,
-    Http,
-    File,
-    HttpOrFile,
-  }
-
   static System.Net.Http.HttpClient HttpClient => client ??= new System.Net.Http.HttpClient(
     HttpHandler
   )
@@ -42,44 +33,18 @@ static class Url
 
   static internal bool IsHttpOrFile(System.Uri uri) => IsHttp(uri) || IsFile(uri);
 
-  static internal System.Uri? ToAbsoluteHttpUri(string uri) => ToAbsoluteUri(uri);
-  static internal System.Uri? ToAbsoluteHttpUri(System.Uri uri) => ToAbsoluteUri(uri);
-
-  static internal System.Uri? ToAbsoluteFileUri(string uri) => ToAbsoluteUri(uri, Scheme.File);
-  static internal System.Uri? ToAbsoluteFileUri(System.Uri uri) => ToAbsoluteUri(uri, Scheme.File);
-
-  static internal System.Uri? ToAbsoluteHttpOrFileUri(string uri) => ToAbsoluteUri(uri, Scheme.HttpOrFile);
-  static internal System.Uri? ToAbsoluteHttpOrFileUri(System.Uri uri) => ToAbsoluteUri(uri, Scheme.HttpOrFile);
-
-  static internal System.Uri? ToAbsoluteUri(string uri) => uri is not ""
-    && System.Uri.TryCreate(
-        uri,
-        System.UriKind.Absolute,
-        out var url
-      )
-    ? ToAbsoluteUri(url)
-    : default;
-  static internal System.Uri? ToAbsoluteUri(System.Uri uri) => IsHttp(uri)
+  static internal System.Uri? ToAbsoluteHttpUri(string uriString) => TryParse(uriString) is { } uri
+  && IsHttp(uri)
     ? uri
     : default;
-  static internal System.Uri? ToAbsoluteUri(
-    string uri,
-    Scheme scheme
-  ) => uri is not ""
-    && System.Uri.TryCreate(
-      uri,
-      System.UriKind.Absolute,
-      out var url
-    )
-    ? ToAbsoluteUri(url, scheme)
+
+  static internal System.Uri? ToAbsoluteFileUri(string uriString) => TryParse(uriString) is { } uri
+  && IsFile(uri)
+    ? uri
     : default;
-  static internal System.Uri? ToAbsoluteUri(
-    System.Uri uri,
-    Scheme scheme
-  ) => (scheme & Scheme.Http) is not 0
-    && IsHttp(uri)
-    || (scheme & Scheme.File) is not 0
-    && IsFile(uri)
+
+  static internal System.Uri? ToAbsoluteHttpOrFileUri(string uriString) => TryParse(uriString) is { } uri
+  && IsHttpOrFile(uri)
     ? uri
     : default;
 
@@ -137,4 +102,12 @@ static class Url
       );
     }
   }
+
+  static System.Uri? TryParse(string uri) => System.Uri.TryCreate(
+    uri,
+    System.UriKind.Absolute,
+    out var uri
+  )
+    ? uri
+    : default;
 }
