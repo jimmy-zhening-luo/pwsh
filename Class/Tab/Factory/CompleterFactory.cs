@@ -6,7 +6,7 @@ abstract class CompleterFactory<TDomain>(
 ) : Intrinsics.TCompleterFactory(Case)
 {
   public CompletionResultType CompletionType
-  { get; init; } = CompletionType;
+  { get; init; } = CompletionResultType.ParameterValue;
 
   public bool Strict
   { get; init; }
