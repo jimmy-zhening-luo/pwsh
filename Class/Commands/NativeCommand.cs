@@ -176,7 +176,7 @@ abstract public partial class NativeCommand(
       safeCommandScript
     );
 
-    WriteInformation(safeCommandScriptString);
+    WriteDebug(safeCommandScriptString);
 
     _ = AddScript(safeCommandScriptString);
 
