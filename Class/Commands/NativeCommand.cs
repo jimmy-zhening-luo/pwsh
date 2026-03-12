@@ -32,6 +32,7 @@ abstract public partial class NativeCommand(
   [Parameter(
     Position = 100,
     ValueFromRemainingArguments = true,
+    DontShow = true,
     HelpMessage = "Additional arguments"
   )]
   [ValidateLength(1, int.MaxValue)]
