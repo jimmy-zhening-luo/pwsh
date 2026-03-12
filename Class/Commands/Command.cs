@@ -236,7 +236,7 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
       }
     }
 
-    return paths;
+    return ref paths;
   }
   private protected string ReanchorPath(string path) => Client.File.PathString.GetFullPathLocal(
     Location,
