@@ -104,7 +104,16 @@ abstract public partial class NativeCommand(
   {
     foreach (var argument in ArgumentList)
     {
-      AddArgument(argument);
+      foreach (
+        var delimitedArgument in argument.Split(
+          ' ',
+          System.StringSplitOptions.TrimEntries
+            && System.StringSplitOptions.RemoveEmptyEntries
+        )
+      )
+      {
+        AddArgument(delimitedArgument);
+      }
     }
 
     PreprocessArguments();
