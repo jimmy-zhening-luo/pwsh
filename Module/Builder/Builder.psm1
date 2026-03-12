@@ -64,7 +64,7 @@ function Update-PSProfile {
 
       if ($Restore) {
         & $DOTNET clean @DotnetArgument --verbosity=quiet
-  
+
         if ($LASTEXITCODE -notin 0, 1) {
           throw "dotnet failed to clean profile project, with exit code: $LASTEXITCODE"
         }
