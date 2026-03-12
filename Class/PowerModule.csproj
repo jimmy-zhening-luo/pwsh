@@ -10,7 +10,7 @@
     <TargetFramework>net9.0-windows</TargetFramework>
   </PropertyGroup>
   <PropertyGroup>
-    <NoWarn>$(NoWarn);CA1044;</NoWarn>
+    <NoWarn>$(NoWarn);CA1044;CA1819;</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="PowerShellStandard.Library" Version="5.1.1.0" PrivateAssets="All"/>
