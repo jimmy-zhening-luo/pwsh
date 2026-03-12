@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Windows.App.Verbs;
 [Cmdlet(
   VerbsCommon.Remove,
   "WinGetApp",
-  HelpUri = "https://learn.microsoft.com/en-us/windows/package-manager/winget/uninstall"
+  HelpUri = $"{WinGetHelpLink}uninstall"
 )]
 [Alias("wgr")]
 [OutputType(typeof(void))]

@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Windows.App.Verbs;
 [Cmdlet(
   VerbsCommon.Find,
   "WinGetApp",
-  HelpUri = "https://learn.microsoft.com/en-us/windows/package-manager/winget/search"
+  HelpUri = $"{WinGetHelpLink}search"
 )]
 [Alias("wgf")]
 [OutputType(typeof(void))]

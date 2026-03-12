@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Windows.App.Verbs;
 [Cmdlet(
   VerbsCommon.Add,
   "WinGetApp",
-  HelpUri = "https://learn.microsoft.com/en-us/windows/package-manager/winget/upgrade"
+  HelpUri = $"{WinGetHelpLink}upgrade"
 )]
 [Alias("wga")]
 [OutputType(typeof(void))]
