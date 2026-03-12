@@ -54,6 +54,7 @@ sealed public class TestUrl : CoreCommand
     yield break;
   }
 
+  [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1819: Properties should not return arrays", Justification = "PowerShell: Required to bind parameter values from remaining arguments as a list of values.")]
   [Parameter(
     Mandatory = true,
     Position = default,
@@ -63,7 +64,7 @@ sealed public class TestUrl : CoreCommand
   )]
   [AllowEmptyCollection]
   [ValidateNotNull]
-  required public Collection<System.Uri> Uri
+  required public System.Uri[] Uri
   { get; init; }
 
   sealed override private protected void Process() => WriteObject(

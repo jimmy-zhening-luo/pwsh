@@ -9,6 +9,7 @@ namespace PowerModule.Commands.Pwsh.Help;
 [OutputType(typeof(object))]
 sealed public class GetHelpOnline : CoreCommand
 {
+  [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1819: Properties should not return arrays", Justification = "PowerShell: Required to bind parameter values from remaining arguments as a list of values.")]
   [Parameter(
     Position = default,
     ValueFromRemainingArguments = true
@@ -16,7 +17,7 @@ sealed public class GetHelpOnline : CoreCommand
   [Alias("Command")]
   [SupportsWildcards]
   [ValidateNotNullOrWhiteSpace]
-  public Collection<string> Name
+  public string[] Name
   {
     init => topic = string.Join(
       '_',
