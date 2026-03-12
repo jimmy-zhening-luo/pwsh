@@ -59,16 +59,17 @@ sealed public class OpenUrl() : CoreCommand(true)
 
           break;
 
-        case var path when Client.Network.Url.ToAbsoluteFileUri(path) is { } fileUri && Client.Network.Url.TestFile(fileUri):
+        case var path when Client.Network.Url.ToAbsoluteFileUri(path) is { } fileUri
+        && Client.Network.Url.TestFile(fileUri):
           Client.Network.Url.Open(fileUri);
 
           break;
 
         case var path when Client.Network.Url.ToAbsoluteHttpUri(
             $"http://{path}"
-          ) is { } url
-          && Client.Network.Dns.Resolve(url)
-          && Client.Network.Url.TestHttp(url):
+        ) is { } url
+        && Client.Network.Dns.Resolve(url)
+        && Client.Network.Url.TestHttp(url):
           Client.Network.Url.Open(url);
 
           break;
