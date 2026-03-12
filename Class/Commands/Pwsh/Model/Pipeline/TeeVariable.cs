@@ -44,7 +44,7 @@ sealed public class TeeVariable() : WrappedCommand(
     ParameterSetName = "LiteralFile",
     Mandatory = true
   )]
-  [Alias("PSPath", "LP")]
+  [Alias(StandardAlias.PSPath, StandardAlias.LP)]
   required public string LiteralPath
   {
     init => Discard();

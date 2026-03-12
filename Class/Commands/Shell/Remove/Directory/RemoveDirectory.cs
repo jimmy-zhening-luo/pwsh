@@ -25,7 +25,7 @@ sealed public class RemoveDirectory : WrappedRemoveDirectory
     ParameterSetName = StandardParameter.LiteralPath,
     Mandatory = true
   )]
-  [Alias("PSPath", "LP")]
+  [Alias(StandardAlias.PSPath, StandardAlias.LP)]
   required public string[] LiteralPath
   {
     init => Discard();
