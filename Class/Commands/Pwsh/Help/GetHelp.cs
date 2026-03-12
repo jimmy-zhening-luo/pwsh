@@ -71,7 +71,7 @@ sealed public class GetHelpOnline : CoreCommand
       WriteObject(
         AddCommand(GET_HELP)
           .AddParameter(
-            "Name",
+            StandardParameter.Name,
             GET_HELP
           )
           .Invoke(),
@@ -83,7 +83,7 @@ sealed public class GetHelpOnline : CoreCommand
 
     var helpContent = AddCommand(GET_HELP)
       .AddParameter(
-        "Name",
+        StandardParameter.Name,
         topic
       )
       .AddParameter(
@@ -150,7 +150,7 @@ sealed public class GetHelpOnline : CoreCommand
 
         _ = AddCommand(GET_HELP)
           .AddParameter(
-            "Name",
+            StandardParameter.Name,
             topic
           )
           .AddParameter(

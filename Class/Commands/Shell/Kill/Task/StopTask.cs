@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Shell.Kill.Task;
 [Cmdlet(
   VerbsLifecycle.Stop,
   "Task",
-  DefaultParameterSetName = "Name",
+  DefaultParameterSetName = StandardParameter.Name,
   HelpUri = $"{HelpLink}2097058"
 )]
 [Alias("tkill")]
@@ -11,7 +11,7 @@ namespace PowerModule.Commands.Shell.Kill.Task;
 public class StopTask : CoreCommand
 {
   [Parameter(
-    ParameterSetName = "Name",
+    ParameterSetName = StandardParameter.Name,
     Position = default,
     HelpMessage = "Names of the processes to stop"
   )]
@@ -95,12 +95,12 @@ public class StopTask : CoreCommand
 
         break;
 
-      case "Name" when Name is []:
+      case StandardParameter.Name when Name is []:
         KillProcesses("explorer");
 
         break;
 
-      case "Name":
+      case StandardParameter.Name:
         foreach (var name in Name)
         {
           switch (name)

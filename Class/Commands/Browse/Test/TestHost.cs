@@ -42,7 +42,7 @@ sealed public class TestHost() : WrappedCommand(
     ValueFromPipeline = true
   )]
   [Alias(
-    "Name",
+    StandardParameter.Name,
     "RemoteAddress",
     "cn"
   )]
