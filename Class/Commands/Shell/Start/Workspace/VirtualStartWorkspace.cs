@@ -73,13 +73,13 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
 
   sealed override private protected void Process() => Client.File.Handler.Edit(
     InCurrentLocation
-      && Path is ""
-      && (
-        Pwd() == Client.Environment.Folder.Code()
-        || Pwd() == Client.Environment.Folder.Home()
-      )
-        ? string.Empty
-        : ReanchorPath(Path),
+    && Path is ""
+    && (
+      Pwd() == Client.Environment.Folder.Code()
+      || Pwd() == Client.Environment.Folder.Home()
+    )
+      ? string.Empty
+      : ReanchorPath(Path),
     profile,
     window,
     arguments

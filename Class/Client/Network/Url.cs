@@ -78,7 +78,7 @@ static class Url
   }
 
   static internal bool TestFile(System.Uri uri) => IsFile(uri)
-    && System.IO.Path.Exists(uri.LocalPath);
+  && System.IO.Path.Exists(uri.LocalPath);
 
   static internal void Open() => Open(string.Empty);
   static internal void Open(System.Uri uri)
