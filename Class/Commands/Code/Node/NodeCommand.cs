@@ -130,6 +130,7 @@ abstract public class NodeCommand(string? IntrinsicVerb) : CodeNativeCommand(Int
         out var alias
       ):
         IntrinsicVerb = alias;
+
         break;
 
       case { } verb when Verbs.TryGetValue(
@@ -139,6 +140,7 @@ abstract public class NodeCommand(string? IntrinsicVerb) : CodeNativeCommand(Int
         out var exactVerb
       ):
         IntrinsicVerb = exactVerb;
+
         break;
 
       default:
@@ -148,13 +150,26 @@ abstract public class NodeCommand(string? IntrinsicVerb) : CodeNativeCommand(Int
 
   sealed override private protected void PreprocessWorkingDirectory()
   {
-    if (
-      WorkingDirectory is not ""
-      && Pwd(WorkingDirectory) == Pwd()
-    )
+    switch (WorkingDirectory)
     {
-      WorkingDirectory = string.Empty;
-    }
+      case { } path when !IsNodePackage(path):
+        (
+          DeferredVerbArgument,
+          WorkingDirectory
+        ) = (
+          WorkingDirectory,
+          string.Empty
+        );
+
+        break;
+
+      case { } path when Pwd(path) == Pwd():
+        WorkingDirectory = string.Empty;
+
+        break;
+
+      default:
+        break;
   }
 
   private protected bool IsNodePackage(string path) => System.IO.File.Exists(
