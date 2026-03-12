@@ -24,7 +24,7 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
   [Tab.PathCompletions]
   public string[] ArgumentList
   {
-    init => arguments = [.. value];
+    init => arguments = new(value);
   }
   LinkedList<string> arguments = [];
 
