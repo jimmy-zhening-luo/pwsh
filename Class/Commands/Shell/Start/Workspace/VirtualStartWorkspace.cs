@@ -79,7 +79,7 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
         || Pwd() == Client.Environment.Folder.Home()
       )
         ? string.Empty
-        : ReanchorPath(ref Path),
+        : ReanchorPath(Path),
     profile,
     window,
     arguments
