@@ -104,8 +104,6 @@ abstract public partial class NativeCommand(
   {
     foreach (var argument in ArgumentList)
     {
-      WriteDebug(argument);
-
       AddLast(argument);
     }
 
