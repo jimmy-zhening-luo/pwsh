@@ -61,8 +61,8 @@ abstract public class CodeNativeCommand(
       WorkingDirectory = string.Empty;
     }
 
+    PreprocessOtherArguments();
     PreprocessIntrinsicVerb();
     PreprocessWorkingDirectory();
-    PreprocessOtherArguments();
   }
 }
