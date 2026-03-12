@@ -20,13 +20,15 @@ sealed public class GitRestore() : GitCommand("pull")
       WorkingDirectory = string.Empty;
     }
 
+    string[] arguments = new(Arguments.Count);
+    Arguments.CopyTo(arguments, 0);
+    Arguments.Clear();
+
     _ = AddCommand(@"PowerModule\Reset-GitRepository")
       .AddParameter(
         "ArgumentList",
-        new string[](Arguments)
+        arguments
       );
-
-    Arguments.Clear();
 
     if (WorkingDirectory is not "")
     {
