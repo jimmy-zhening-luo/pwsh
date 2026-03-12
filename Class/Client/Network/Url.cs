@@ -20,13 +20,13 @@ static class Url
   static internal bool IsHttp(System.Uri uri) => uri is
   {
     IsAbsoluteUri: true,
-    Scheme: "http" or "https",
+    Scheme: Scheme.Http or Scheme.Https,
   };
 
   static internal bool IsFile(System.Uri uri) => uri is
   {
     IsAbsoluteUri: true,
-    Scheme: "file",
+    Scheme: Scheme.File,
     IsFile: true,
     LocalPath: not "",
   };

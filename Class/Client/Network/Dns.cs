@@ -5,7 +5,7 @@ static class Dns
   static internal bool Resolve(System.Uri uri) => uri is
   {
     IsAbsoluteUri: true,
-    Scheme: "http" or "https",
+    Scheme: Scheme.Http or Scheme.Https,
     Host: var host,
   }
   && Resolve(host);
