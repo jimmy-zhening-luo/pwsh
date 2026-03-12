@@ -21,7 +21,7 @@ sealed public class StartExplorer : WrappedStartExplorer
   { get; init; } = [];
 
   [Parameter(
-    ParameterSetName = "LiteralPath",
+    ParameterSetName = StandardParameter.LiteralPath,
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]

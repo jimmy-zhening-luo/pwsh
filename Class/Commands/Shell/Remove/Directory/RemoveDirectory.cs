@@ -22,7 +22,7 @@ sealed public class RemoveDirectory : WrappedRemoveDirectory
   { get; init; }
 
   [Parameter(
-    ParameterSetName = "LiteralPath",
+    ParameterSetName = StandardParameter.LiteralPath,
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]

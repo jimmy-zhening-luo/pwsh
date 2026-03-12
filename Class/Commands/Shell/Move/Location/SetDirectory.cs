@@ -28,7 +28,7 @@ sealed public class SetDirectory : WrappedSetDirectory
   { get; init; } = string.Empty;
 
   [Parameter(
-    ParameterSetName = "LiteralPath",
+    ParameterSetName = StandardParameter.LiteralPath,
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]

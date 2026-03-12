@@ -25,7 +25,7 @@ sealed public class GetFile : WrappedGetFile
   }
 
   [Parameter(
-    ParameterSetName = "LiteralPath",
+    ParameterSetName = StandardParameter.LiteralPath,
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]

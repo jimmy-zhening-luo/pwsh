@@ -28,7 +28,7 @@ sealed public class ClearLine : CoreCommand
   }
 
   [Parameter(
-    ParameterSetName = "LiteralPath",
+    ParameterSetName = StandardParameter.LiteralPath,
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
