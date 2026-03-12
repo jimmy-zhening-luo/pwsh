@@ -222,7 +222,7 @@ sealed class PathCompleter : Intrinsics.TCompleter
 
         break;
 
-      default:
+      case PathItemType.Any:
         foreach (
           var directory in Directories(
             searchContext,
@@ -242,6 +242,9 @@ sealed class PathCompleter : Intrinsics.TCompleter
           yield return file;
         }
 
+        break;
+
+      default:
         break;
     }
 
