@@ -10,7 +10,6 @@ namespace PowerModule.Commands.Browse.Test;
 [OutputType(typeof(object))]
 sealed public class TestHost() : WrappedCommand(
   @"NetTCPIP\Test-NetConnection",
-  AcceptsPipelineInput: true,
   CommandTypes.Function
 )
 {
@@ -50,7 +49,7 @@ sealed public class TestHost() : WrappedCommand(
     WINRM,
   }
 
-  sealed override private protected string PipelineInput => ComputerName;
+  sealed override private protected PipelineInputSource PipelineInput => () => ComputerName;
 
   sealed override private protected Dictionary<string, object?> CoercedParameters => new()
   {

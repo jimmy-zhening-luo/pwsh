@@ -1,14 +1,13 @@
 namespace PowerModule.Commands.Shell.Read.Directory;
 
 abstract public class WrappedGetDirectory() : WrappedCommand(
-  @"Microsoft.PowerShell.Management\Get-ChildItem",
-  AcceptsPipelineInput: true
+  @"Microsoft.PowerShell.Management\Get-ChildItem"
 )
 {
   abstract public string[] Path
   { get; init; }
 
-  sealed override private protected string[] PipelineInput => Path;
+  sealed override private protected PipelineInputSource PipelineInput => () => Path;
 
   sealed override private protected Dictionary<string, object?> CoercedParameters => new()
   {

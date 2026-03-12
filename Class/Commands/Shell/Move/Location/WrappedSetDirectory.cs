@@ -1,14 +1,13 @@
 namespace PowerModule.Commands.Shell.Move.Location;
 
 abstract public class WrappedSetDirectory() : WrappedCommand(
-  @"Microsoft.PowerShell.Management\Set-Location",
-  AcceptsPipelineInput: true
+  @"Microsoft.PowerShell.Management\Set-Location"
 )
 {
   abstract public string Path
   { get; init; }
 
-  sealed override private protected string PipelineInput => Path;
+  sealed override private protected PipelineInputSource PipelineInput => () => Path;
 
   [Parameter]
   public SwitchParameter PassThru
