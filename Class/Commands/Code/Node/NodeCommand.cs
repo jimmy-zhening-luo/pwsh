@@ -170,6 +170,7 @@ abstract public class NodeCommand(string? IntrinsicVerb) : CodeNativeCommand(Int
 
       default:
         break;
+    }
   }
 
   private protected bool IsNodePackage(string path) => System.IO.File.Exists(
