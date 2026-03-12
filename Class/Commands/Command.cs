@@ -9,9 +9,11 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     Dispose(false);
   }
 
-  virtual private protected string Location => Pwd();
+  private protected delegate string Localizer();
+  virtual private protected Localizer? Location
+  { get; }
 
-  private protected bool InCurrentLocation => Location == Pwd();
+  private protected bool InCurrentLocation => Location is null;
 
   bool BlockedBySsh => SkipSsh
     && Client.Environment.Variable.InSsh;
@@ -224,7 +226,7 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
   {
     if (paths is [])
     {
-      return [Location];
+      return [(Location ?? Pwd)()];
     }
 
     List<string> reanchoredPaths = [];
@@ -239,7 +241,7 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     return [.. reanchoredPaths];
   }
   private protected string ReanchorPath(string path) => Client.File.PathString.GetFullPathLocal(
-    Location,
+    (Location ?? Pwd)(),
     path
   );
 

@@ -59,7 +59,7 @@ sealed public class GetFileSibling : WrappedGetFile
     init => paths = value;
   }
 
-  sealed override private protected string Location => Parent();
+  sealed override private protected Localizer Location => Parent;
 }
 
 [Cmdlet(
@@ -86,7 +86,7 @@ sealed public class GetFileRelative : WrappedGetFile
     init => paths = value;
   }
 
-  sealed override private protected string Location => Pwd(Client.File.PathString.ParentParent);
+  sealed override private protected Localizer Location => () => Pwd(Client.File.PathString.ParentParent);
 }
 
 [Cmdlet(
@@ -113,8 +113,8 @@ sealed public class GetFileHome : WrappedGetFile
     init => paths = value;
   }
 
-  sealed override private protected string Location
-  { get; } = Client.Environment.Folder.Home();
+  sealed override private protected Localizer Location
+  { get; } = Client.Environment.Folder.Home;
 }
 
 [Cmdlet(
@@ -141,8 +141,8 @@ sealed public class GetFileCode : WrappedGetFile
     init => paths = value;
   }
 
-  sealed override private protected string Location
-  { get; } = Client.Environment.Folder.Code();
+  sealed override private protected Localizer Location
+  { get; } = Client.Environment.Folder.Code;
 }
 
 [Cmdlet(
@@ -169,5 +169,5 @@ sealed public class GetFileDrive : WrappedGetFile
     init => paths = value;
   }
 
-  sealed override private protected string Location => Drive();
+  sealed override private protected Localizer Location => Drive;
 }

@@ -125,7 +125,7 @@ sealed public class SetDirectorySibling : WrappedSetDirectory
   sealed override public string Path
   { get; init; } = string.Empty;
 
-  sealed override private protected string Location => Parent();
+  sealed override private protected Localizer Location => Parent;
 }
 
 [Cmdlet(
@@ -151,7 +151,7 @@ sealed public class SetDirectoryRelative : WrappedSetDirectory
   sealed override public string Path
   { get; init; } = string.Empty;
 
-  sealed override private protected string Location => Pwd(Client.File.PathString.ParentParent);
+  sealed override private protected Localizer Location => () => Pwd(Client.File.PathString.ParentParent);
 }
 
 [Cmdlet(
@@ -177,8 +177,8 @@ sealed public class SetDirectoryHome : WrappedSetDirectory
   sealed override public string Path
   { get; init; } = string.Empty;
 
-  sealed override private protected string Location
-  { get; } = Client.Environment.Folder.Home();
+  sealed override private protected Localizer Location
+  { get; } = Client.Environment.Folder.Home;
 }
 
 [Cmdlet(
@@ -204,8 +204,8 @@ sealed public class SetDirectoryCode : WrappedSetDirectory
   sealed override public string Path
   { get; init; } = string.Empty;
 
-  sealed override private protected string Location
-  { get; } = Client.Environment.Folder.Code();
+  sealed override private protected Localizer Location
+  { get; } = Client.Environment.Folder.Code;
 }
 
 [Cmdlet(
@@ -231,5 +231,5 @@ sealed public class SetDrive : WrappedSetDirectory
   sealed override public string Path
   { get; init; } = string.Empty;
 
-  sealed override private protected string Location => Drive();
+  sealed override private protected Localizer Location => Drive;
 }

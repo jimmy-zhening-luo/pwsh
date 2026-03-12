@@ -63,7 +63,7 @@ sealed public class GetDirectorySibling : WrappedGetDirectory
   sealed override public string[] Path
   { get; init; } = [];
 
-  sealed override private protected string Location => Parent();
+  sealed override private protected Localizer Location => Parent;
 }
 
 [Cmdlet(
@@ -92,7 +92,7 @@ sealed public class GetDirectoryRelative : WrappedGetDirectory
   sealed override public string[] Path
   { get; init; } = [];
 
-  sealed override private protected string Location => Pwd(Client.File.PathString.ParentParent);
+  sealed override private protected Localizer Location => () => Pwd(Client.File.PathString.ParentParent);
 }
 
 [Cmdlet(
@@ -121,8 +121,8 @@ sealed public class GetDirectoryHome : WrappedGetDirectory
   sealed override public string[] Path
   { get; init; } = [];
 
-  sealed override private protected string Location
-  { get; } = Client.Environment.Folder.Home();
+  sealed override private protected Localizer Location
+  { get; } = Client.Environment.Folder.Home;
 }
 
 [Cmdlet(
@@ -151,8 +151,8 @@ sealed public class GetDirectoryCode : WrappedGetDirectory
   sealed override public string[] Path
   { get; init; } = [];
 
-  sealed override private protected string Location
-  { get; } = Client.Environment.Folder.Code();
+  sealed override private protected Localizer Location
+  { get; } = Client.Environment.Folder.Code;
 }
 
 [Cmdlet(
@@ -181,5 +181,5 @@ sealed public class GetDirectoryDrive : WrappedGetDirectory
   sealed override public string[] Path
   { get; init; } = [];
 
-  sealed override private protected string Location => Drive();
+  sealed override private protected Localizer Location => Drive;
 }
