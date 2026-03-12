@@ -22,10 +22,8 @@ static class StringInput
   static internal string EscapeSingleQuoted(string text) => IsUnsafe(text)
     ? string.Concat(
       SingleQuote,
-      text.Replace(
-        StringSingleQuote,
-        EscapedSingleQuote,
-        StringComparison.Ordinal
+      System.Management.Automation.Language.CodeGeneration.EscapeSingleQuotedStringContent(
+        text
       ),
       SingleQuote
     )
