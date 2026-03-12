@@ -123,9 +123,6 @@ abstract public class NodeCommand(string? IntrinsicVerb) : CodeNativeCommand(Int
   {
     switch (IntrinsicVerb)
     {
-      case null:
-        break;
-
       case { } verb when Aliases.TryGetValue(
         verb.ToLower(
           Client.StringInput.CurrentCulture
