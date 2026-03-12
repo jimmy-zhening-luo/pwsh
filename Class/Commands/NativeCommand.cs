@@ -36,7 +36,7 @@ abstract public partial class NativeCommand(
   )]
   [ValidateLength(1, int.MaxValue)]
   [Tab.PathCompletions]
-  public Collection<string> ArgumentList
+  public string[] ArgumentList
   { private get; init; } = [];
 
   [Parameter(
