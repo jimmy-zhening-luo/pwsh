@@ -20,7 +20,7 @@ sealed public class GitRestore() : GitCommand("pull")
       WorkingDirectory = string.Empty;
     }
 
-    string[] arguments = new(Arguments.Count);
+    string[] arguments = new [5];
     Arguments.CopyTo(arguments, 0);
     Arguments.Clear();
 
