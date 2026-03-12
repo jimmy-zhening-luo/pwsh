@@ -62,13 +62,13 @@ function Update-PSProfile {
         '--configuration=Release'
       )
 
-      & $DOTNET clean @DotnetArgument --verbosity=quiet
-
-      if ($LASTEXITCODE -notin 0, 1) {
-        throw "dotnet failed to clean profile project, with exit code: $LASTEXITCODE"
-      }
-
       if ($Restore) {
+        & $DOTNET clean @DotnetArgument --verbosity=quiet
+  
+        if ($LASTEXITCODE -notin 0, 1) {
+          throw "dotnet failed to clean profile project, with exit code: $LASTEXITCODE"
+        }
+
         $DotnetArgument += @(
           '--force'
           '--disable-build-servers'
