@@ -35,7 +35,7 @@ sealed public class NodeVerbCommand() : NodeCommand(default)
   {
     if (V && IntrinsicVerb is null)
     {
-      V = false;
+      V = default;
 
       return ["-v"];
     }
