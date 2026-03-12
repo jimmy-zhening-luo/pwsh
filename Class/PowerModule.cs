@@ -16,7 +16,10 @@ static class PowerModule
       .BaseObject
       .ToString();
 
-    System.ArgumentException.ThrowIfNullOrEmpty(currentLocation, nameof(currentLocation));
+    System.ArgumentException.ThrowIfNullOrEmpty(
+      currentLocation,
+      "PowerShell host current location"
+    );
 
     return currentLocation;
   }
