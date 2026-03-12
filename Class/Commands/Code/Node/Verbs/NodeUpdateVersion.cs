@@ -85,7 +85,7 @@ sealed public class NodeUpdateVersion() : NodeCommand("version")
 
   sealed override private protected void PreprocessOtherArguments() => System.ArgumentException.ThrowIfNullOrEmpty(
     Version,
-    $"{nameof(Version)} -> SemanticVersion | NodeVersion"
+    $"{nameof(Version)} is neither SemanticVersion nor NodeVersion"
   );
 
   sealed override private protected IEnumerable<string> ParseArguments() => [Version];
