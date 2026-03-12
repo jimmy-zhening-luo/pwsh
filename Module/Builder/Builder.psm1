@@ -71,10 +71,11 @@ function Update-PSProfile {
 
         $DotnetArgument += @(
           '--no-incremental'
+          '--disable-build-servers'
         )
       }
 
-      & $DOTNET build @DotnetArgument --force --disable-build-servers
+      & $DOTNET build @DotnetArgument --force
 
       if ($LASTEXITCODE -notin 0, 1) {
         throw "dotnet failed to build profile project, with exit code: $LASTEXITCODE"
