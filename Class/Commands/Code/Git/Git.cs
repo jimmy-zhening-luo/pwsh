@@ -1,43 +1,8 @@
 namespace PowerModule.Commands.Code.Git;
 
-abstract public class GitCommand(string? IntrinsicVerb) : CodeNativeCommand(IntrinsicVerb)
+abstract public partial class GitCommand(string? IntrinsicVerb) : CodeNativeCommand(IntrinsicVerb)
 {
-  sealed private protected class GitVerbCompletionsAttribute() : Tab.CompletionsAttribute<HashSet<string>>(Verbs);
-
-  enum NewableVerb
-  {
-    clone,
-    config,
-    init,
-  }
-
   private protected const string GitHelpLink = "https://git-scm.com/docs";
-
-  static readonly HashSet<string> Verbs = [
-    "switch",
-    "merge",
-    "diff",
-    "stash",
-    "tag",
-    "config",
-    "remote",
-    "submodule",
-    "fetch",
-    "checkout",
-    "branch",
-    "rm",
-    "mv",
-    "ls-files",
-    "ls-tree",
-    "init",
-    "status",
-    "clone",
-    "pull",
-    "add",
-    "commit",
-    "push",
-    "reset",
-  ];
 
   bool newable;
 
