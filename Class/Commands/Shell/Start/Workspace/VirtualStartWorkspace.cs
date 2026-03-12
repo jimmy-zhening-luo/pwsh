@@ -13,6 +13,7 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
   public string Name
   { private get; init; } = string.Empty;
 
+  [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1819: Properties should not return arrays", Justification = "PowerShell: Required to bind parameter values from remaining arguments as a list of values.")]
   [Parameter(
     Position = 2,
     ValueFromRemainingArguments = true,
@@ -22,7 +23,10 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
   [ValidateLength(1, int.MaxValue)]
   [Tab.PathCompletions]
   public string[] ArgumentList
-  { private get; init; } = [];
+  {
+    init => arguments = [.. value];
+  }
+  LinkedList<string> arguments = [];
 
   [Parameter]
   public SwitchParameter Window
@@ -63,7 +67,7 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
       }
       else
       {
-        ArgumentList.Insert(default, Name);
+        _ = arguments.AddFirst(Name);
       }
     }
   }
@@ -79,6 +83,6 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
         : ReanchorPath(Path),
     profile,
     window,
-    ArgumentList
+    arguments
   );
 }
