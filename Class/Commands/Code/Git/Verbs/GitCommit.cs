@@ -35,7 +35,7 @@ sealed public class GitCommit() : GitCommand("commit")
   {
     if (Message is not "")
     {
-      InsertArgument(Message);
+      AddFirst(Message);
     }
 
     if (

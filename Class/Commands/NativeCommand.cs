@@ -106,7 +106,7 @@ abstract public partial class NativeCommand(
     {
       WriteDebug(argument);
 
-      AddArgument(argument);
+      AddLast(argument);
     }
 
     PreprocessArguments();
@@ -190,11 +190,11 @@ abstract public partial class NativeCommand(
     );
   }
 
-  private protected void AddArgument(string argument) => _ = IsNativeArgument(argument)
-    ? NativeArguments.AddLast(argument)
-    : Arguments.AddLast(argument);
-
-  private protected void InsertArgument(string argument) => _ = IsNativeArgument(argument)
+  private protected void AddFirst(string argument) => _ = IsNativeArgument(argument)
     ? NativeArguments.AddFirst(argument)
     : Arguments.AddFirst(argument);
+
+  private protected void AddLast(string argument) => _ = IsNativeArgument(argument)
+    ? NativeArguments.AddLast(argument)
+    : Arguments.AddLast(argument);
 }
