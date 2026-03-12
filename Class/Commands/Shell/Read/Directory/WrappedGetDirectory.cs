@@ -133,7 +133,7 @@ abstract public class WrappedGetDirectory() : WrappedCommand(
     {
       SetBoundParameter(
         "Path",
-        ReanchorPath(Path)
+        ReanchorPath(ref Path)
       );
     }
   }

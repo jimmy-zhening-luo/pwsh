@@ -34,6 +34,6 @@ abstract public class WrappedStartExplorer() : WrappedCommand(
 
   sealed override private protected void TransformPipelineInput() => SetBoundParameter(
     "Path",
-    ReanchorPath(Path)
+    ReanchorPath(ref Path)
   );
 }

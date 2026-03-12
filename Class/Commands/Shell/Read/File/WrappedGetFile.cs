@@ -102,7 +102,7 @@ abstract public class WrappedGetFile() : WrappedCommand(
     {
       SetBoundParameter(
         "Path",
-        ReanchorPath(paths)
+        ReanchorPath(ref paths)
       );
     }
   }
