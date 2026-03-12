@@ -220,18 +220,23 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
 
   private protected void EndSteppablePipeline() => PSHost.EndSteppablePipeline();
 
-  private protected string[] ReanchorPath(IEnumerable<string> paths)
+  private protected ref string[] ReanchorPath(ref string[] paths)
   {
-    List<string> reanchoredPaths = [];
-
-    foreach (var path in paths)
+    if (paths is [])
     {
-      reanchoredPaths.Add(ReanchorPath(path));
+      System.Array.Resize(paths, 1);
+
+      paths[0] = Location;
+    }
+    else
+    {
+      for (var i = 0; i < paths.Length; ++i)
+      {
+        paths[i] = ReanchorPath(paths[i]);
+      }
     }
 
-    return reanchoredPaths is []
-      ? [Location]
-      : [.. reanchoredPaths];
+    return paths;
   }
   private protected string ReanchorPath(string path) => Client.File.PathString.GetFullPathLocal(
     Location,
