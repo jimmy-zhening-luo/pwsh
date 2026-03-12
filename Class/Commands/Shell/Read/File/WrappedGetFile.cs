@@ -4,9 +4,9 @@ abstract public class WrappedGetFile() : WrappedCommand(
   @"Microsoft.PowerShell.Management\Get-Content"
 )
 {
-  abstract public Collection<string> Path
+  abstract public string[] Path
   { init; }
-  private protected Collection<string> paths = [];
+  private protected string[] paths = [];
 
   [Parameter]
   [SupportsWildcards]
@@ -17,14 +17,14 @@ abstract public class WrappedGetFile() : WrappedCommand(
 
   [Parameter]
   [SupportsWildcards]
-  required public Collection<string> Include
+  required public string[] Include
   {
     init => Discard();
   }
 
   [Parameter]
   [SupportsWildcards]
-  required public Collection<string> Exclude
+  required public string[] Exclude
   {
     init => Discard();
   }

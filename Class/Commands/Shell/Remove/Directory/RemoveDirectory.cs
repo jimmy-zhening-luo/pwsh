@@ -18,7 +18,7 @@ sealed public class RemoveDirectory : WrappedRemoveDirectory
   )]
   [SupportsWildcards]
   [Tab.PathCompletions]
-  required sealed override public Collection<string> Path
+  required sealed override public string[] Path
   { get; init; }
 
   [Parameter(
@@ -26,7 +26,7 @@ sealed public class RemoveDirectory : WrappedRemoveDirectory
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  required public Collection<string> LiteralPath
+  required public string[] LiteralPath
   {
     init => Discard();
   }

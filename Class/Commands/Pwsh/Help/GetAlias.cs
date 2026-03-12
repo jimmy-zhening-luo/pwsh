@@ -16,7 +16,7 @@ sealed public class GetCommandAlias : CoreCommand
   [SupportsWildcards]
   [ValidateNotNullOrWhiteSpace]
   [Tab.Completions("*")]
-  public Collection<string> Definition
+  public string[] Definition
   {
     private get => [.. definitions];
     init
@@ -68,7 +68,7 @@ sealed public class GetCommandAlias : CoreCommand
   )]
   [SupportsWildcards]
   [ValidateNotNullOrWhiteSpace]
-  public Collection<string> Exclude
+  public string[] Exclude
   { private get; init; } = [];
 
   sealed override private protected void Postprocess()

@@ -31,7 +31,7 @@ sealed public class NewDirectory() : WrappedCommand(
     Position = default
   )]
   [Tab.PathCompletions]
-  required public Collection<string> Path
+  required public string[] Path
   {
     init => Discard();
   }

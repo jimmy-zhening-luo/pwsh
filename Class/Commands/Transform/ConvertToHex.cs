@@ -9,11 +9,6 @@ namespace PowerModule.Commands.Transform;
 [OutputType(typeof(string))]
 sealed public class ConvertToHex : Cmdlet
 {
-  [System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "Microsoft.Performance",
-    "CA1819: Properties should not return arrays",
-    Justification = "PowerShell: Required to bind parameter values from remaining arguments as a list of values."
-  )]
   [Parameter(
     Mandatory = true,
     Position = default,

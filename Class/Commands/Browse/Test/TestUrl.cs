@@ -54,11 +54,6 @@ sealed public class TestUrl : CoreCommand
     yield break;
   }
 
-  [System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "Microsoft.Performance",
-    "CA1819: Properties should not return arrays",
-    Justification = "PowerShell: Required to bind parameter values from remaining arguments as a list of values."
-  )]
   [Parameter(
     Mandatory = true,
     Position = default,

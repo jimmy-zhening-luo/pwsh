@@ -63,14 +63,14 @@ sealed public class GetSize : CoreCommand
   )]
   [ValidateLength(1, int.MaxValue)]
   [Tab.PathCompletions]
-  public Collection<string> Path
+  public string[] Path
   {
     get => paths is []
       ? [""]
       : paths;
     init => paths = value;
   }
-  Collection<string> paths = [];
+  string[] paths = [];
 
   [Parameter(
     ParameterSetName = "String",

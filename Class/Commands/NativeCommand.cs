@@ -29,11 +29,6 @@ abstract public partial class NativeCommand(
   virtual private protected SwitchBoard Uppercase
   { get; }
 
-  [System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "Microsoft.Performance",
-    "CA1819: Properties should not return arrays",
-    Justification = "PowerShell: Required to bind parameter values from remaining arguments as a list of values."
-  )]
   [Parameter(
     Position = 100,
     ValueFromRemainingArguments = true,

@@ -6,10 +6,10 @@ abstract public class WrappedStartExplorer() : WrappedCommand(
   SkipSsh: true
 )
 {
-  abstract public Collection<string> Path
+  abstract public string[] Path
   { get; init; }
 
-  sealed override private protected Collection<string> PipelineInput => Path;
+  sealed override private protected string[] PipelineInput => Path;
 
   [Parameter]
   [SupportsWildcards]
@@ -20,14 +20,14 @@ abstract public class WrappedStartExplorer() : WrappedCommand(
 
   [Parameter]
   [SupportsWildcards]
-  required public Collection<string> Include
+  required public string[] Include
   {
     init => Discard();
   }
 
   [Parameter]
   [SupportsWildcards]
-  required public Collection<string> Exclude
+  required public string[] Exclude
   {
     init => Discard();
   }

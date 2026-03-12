@@ -23,7 +23,7 @@ sealed public class GetDirectory : WrappedGetDirectory
     "",
     Tab.PathItemType.Directory
   )]
-  sealed override public Collection<string> Path
+  sealed override public string[] Path
   { get; init; } = [];
 
   [Parameter(
@@ -31,7 +31,7 @@ sealed public class GetDirectory : WrappedGetDirectory
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  required public Collection<string> LiteralPath
+  required public string[] LiteralPath
   {
     init => Discard();
   }
@@ -60,7 +60,7 @@ sealed public class GetDirectorySibling : WrappedGetDirectory
     Client.File.PathString.Parent,
     Tab.PathItemType.Directory
   )]
-  sealed override public Collection<string> Path
+  sealed override public string[] Path
   { get; init; } = [];
 
   sealed override private protected string Location => Parent();
@@ -89,7 +89,7 @@ sealed public class GetDirectoryRelative : WrappedGetDirectory
     Client.File.PathString.ParentParent,
     Tab.PathItemType.Directory
   )]
-  sealed override public Collection<string> Path
+  sealed override public string[] Path
   { get; init; } = [];
 
   sealed override private protected string Location => Pwd(Client.File.PathString.ParentParent);
@@ -118,7 +118,7 @@ sealed public class GetDirectoryHome : WrappedGetDirectory
     "~",
     Tab.PathItemType.Directory
   )]
-  sealed override public Collection<string> Path
+  sealed override public string[] Path
   { get; init; } = [];
 
   sealed override private protected string Location
@@ -148,7 +148,7 @@ sealed public class GetDirectoryCode : WrappedGetDirectory
     @"~\code",
     Tab.PathItemType.Directory
   )]
-  sealed override public Collection<string> Path
+  sealed override public string[] Path
   { get; init; } = [];
 
   sealed override private protected string Location
@@ -178,7 +178,7 @@ sealed public class GetDirectoryDrive : WrappedGetDirectory
     Client.File.PathString.StringSeparator,
     Tab.PathItemType.Directory
   )]
-  sealed override public Collection<string> Path
+  sealed override public string[] Path
   { get; init; } = [];
 
   sealed override private protected string Location => Drive();

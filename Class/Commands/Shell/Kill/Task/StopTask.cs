@@ -18,7 +18,7 @@ public class StopTask : CoreCommand
   [Alias("ProcessName")]
   [SupportsWildcards]
   [ValidateNotNullOrWhiteSpace]
-  public Collection<string> Name
+  public string[] Name
   { private get; init; } = [];
 
   [Parameter(
@@ -29,7 +29,7 @@ public class StopTask : CoreCommand
   )]
   [AllowEmptyCollection]
   [ValidateRange(ValidateRangeKind.NonNegative)]
-  required public Collection<int> Id
+  required public int[] Id
   { private get; init; }
 
   [Parameter(
@@ -41,7 +41,7 @@ public class StopTask : CoreCommand
   )]
   [AllowEmptyCollection]
   [ValidateNotNull]
-  required public Collection<System.Diagnostics.Process> InputObject
+  required public System.Diagnostics.Process[] InputObject
   { get; init; }
 
   [Parameter(

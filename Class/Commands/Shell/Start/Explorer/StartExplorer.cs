@@ -17,7 +17,7 @@ sealed public class StartExplorer : WrappedStartExplorer
   )]
   [SupportsWildcards]
   [Tab.PathCompletions]
-  sealed override public Collection<string> Path
+  sealed override public string[] Path
   { get; init; } = [];
 
   [Parameter(
@@ -25,7 +25,7 @@ sealed public class StartExplorer : WrappedStartExplorer
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  required public Collection<string> LiteralPath
+  required public string[] LiteralPath
   {
     init => Discard();
   }
@@ -48,7 +48,7 @@ sealed public class StartExplorerSibling : WrappedStartExplorer
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(Client.File.PathString.Parent)]
-  sealed override public Collection<string> Path
+  sealed override public string[] Path
   { get; init; } = [];
 
   sealed override private protected string Location => Parent();
@@ -71,7 +71,7 @@ sealed public class StartExplorerRelative : WrappedStartExplorer
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(Client.File.PathString.ParentParent)]
-  sealed override public Collection<string> Path
+  sealed override public string[] Path
   { get; init; } = [];
 
   sealed override private protected string Location => Pwd(Client.File.PathString.ParentParent);
@@ -94,7 +94,7 @@ sealed public class StartExplorerHome : WrappedStartExplorer
   )]
   [SupportsWildcards]
   [Tab.PathCompletions("~")]
-  sealed override public Collection<string> Path
+  sealed override public string[] Path
   { get; init; } = [];
 
   sealed override private protected string Location
@@ -118,7 +118,7 @@ sealed public class StartExplorerCode : WrappedStartExplorer
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(@"~\code")]
-  sealed override public Collection<string> Path
+  sealed override public string[] Path
   { get; init; } = [];
 
   sealed override private protected string Location
@@ -142,7 +142,7 @@ sealed public class StartExplorerDrive : WrappedStartExplorer
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(@"\")]
-  sealed override public Collection<string> Path
+  sealed override public string[] Path
   { get; init; } = [];
 
   sealed override private protected string Location => Drive();

@@ -32,21 +32,21 @@ sealed public class ClearLine : CoreCommand
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  required public Collection<string> LiteralPath
+  required public string[] LiteralPath
   {
     init => Discard();
   }
 
   [Parameter]
   [SupportsWildcards]
-  required public Collection<string> Include
+  required public string[] Include
   {
     init => Discard();
   }
 
   [Parameter]
   [SupportsWildcards]
-  required public Collection<string> Exclude
+  required public string[] Exclude
   {
     init => Discard();
   }

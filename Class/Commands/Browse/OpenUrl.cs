@@ -29,7 +29,7 @@ sealed public class OpenUrl() : CoreCommand(true)
   )]
   [AllowEmptyCollection]
   [ValidateNotNull]
-  required public Collection<System.Uri> Uri
+  required public System.Uri[] Uri
   { get; init; }
 
   sealed override private protected void Process()

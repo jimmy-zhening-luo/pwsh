@@ -13,11 +13,6 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
   public string Name
   { private get; init; } = string.Empty;
 
-  [System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "Microsoft.Performance",
-    "CA1819: Properties should not return arrays",
-    Justification = "PowerShell: Required to bind parameter values from remaining arguments as a list of values."
-  )]
   [Parameter(
     Position = 2,
     ValueFromRemainingArguments = true,

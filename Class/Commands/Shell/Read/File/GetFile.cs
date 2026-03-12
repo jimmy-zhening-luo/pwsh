@@ -19,7 +19,7 @@ sealed public class GetFile : WrappedGetFile
     "",
     Tab.PathItemType.File
   )]
-  sealed override public Collection<string> Path
+  sealed override public string[] Path
   {
     init => paths = value;
   }
@@ -29,7 +29,7 @@ sealed public class GetFile : WrappedGetFile
     Mandatory = true
   )]
   [Alias("PSPath", "LP")]
-  required public Collection<string> LiteralPath
+  required public string[] LiteralPath
   {
     init => Discard();
   }
@@ -54,7 +54,7 @@ sealed public class GetFileSibling : WrappedGetFile
     Client.File.PathString.Parent,
     Tab.PathItemType.File
   )]
-  sealed override public Collection<string> Path
+  sealed override public string[] Path
   {
     init => paths = value;
   }
@@ -81,7 +81,7 @@ sealed public class GetFileRelative : WrappedGetFile
     Client.File.PathString.ParentParent,
     Tab.PathItemType.File
   )]
-  sealed override public Collection<string> Path
+  sealed override public string[] Path
   {
     init => paths = value;
   }
@@ -108,7 +108,7 @@ sealed public class GetFileHome : WrappedGetFile
     "~",
     Tab.PathItemType.File
   )]
-  sealed override public Collection<string> Path
+  sealed override public string[] Path
   {
     init => paths = value;
   }
@@ -136,7 +136,7 @@ sealed public class GetFileCode : WrappedGetFile
     @"~\code",
     Tab.PathItemType.File
   )]
-  sealed override public Collection<string> Path
+  sealed override public string[] Path
   {
     init => paths = value;
   }
@@ -164,7 +164,7 @@ sealed public class GetFileDrive : WrappedGetFile
     Client.File.PathString.StringSeparator,
     Tab.PathItemType.File
   )]
-  sealed override public Collection<string> Path
+  sealed override public string[] Path
   {
     init => paths = value;
   }
