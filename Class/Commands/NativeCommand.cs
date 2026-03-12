@@ -112,7 +112,7 @@ abstract public partial class NativeCommand(
 
   sealed override private protected void Postprocess()
   {
-    List<string> commandScript = [
+    List<string> command = [
       "&",
       CommandPath,
       .. CommandArguments,
@@ -120,63 +120,63 @@ abstract public partial class NativeCommand(
 
     if (IntrinsicVerb is not null)
     {
-      commandScript.Add(IntrinsicVerb);
+      command.Add(IntrinsicVerb);
     }
 
-    commandScript.AddRange(VerbArguments);
+    command.AddRange(VerbArguments);
 
     if (D)
     {
-      commandScript.Add(Uppercase.D ? "-D" : "-d");
+      command.Add(Uppercase.D ? "-D" : "-d");
     }
 
     if (E)
     {
-      commandScript.Add(Uppercase.E ? "-E" : "-e");
+      command.Add(Uppercase.E ? "-E" : "-e");
     }
 
     if (I)
     {
-      commandScript.Add(Uppercase.I ? "-I" : "-i");
+      command.Add(Uppercase.I ? "-I" : "-i");
     }
 
     if (O)
     {
-      commandScript.Add(Uppercase.O ? "-O" : "-o");
+      command.Add(Uppercase.O ? "-O" : "-o");
     }
 
     if (P)
     {
-      commandScript.Add(Uppercase.P ? "-P" : "-p");
+      command.Add(Uppercase.P ? "-P" : "-p");
     }
 
     if (V)
     {
-      commandScript.Add(Uppercase.V ? "-V" : "-v");
+      command.Add(Uppercase.V ? "-V" : "-v");
     }
 
-    commandScript.AddRange(Arguments);
-    commandScript.AddRange(NativeArguments);
+    command.AddRange(Arguments);
+    command.AddRange(NativeArguments);
 
-    List<string> safeCommandScript = [];
+    List<string> escapedCommand = [];
 
-    foreach (var word in commandScript)
+    foreach (var word in command)
     {
-      safeCommandScript.Add(
+      escapedCommand.Add(
         Client.StringInput.EscapeDoubleQuoted(
           word
         )
       );
     }
 
-    var safeCommandScriptString = string.Join(
+    var commandScript = string.Join(
       Client.StringInput.Space,
-      safeCommandScript
+      escapedCommand
     );
 
-    WriteDebug(safeCommandScriptString);
+    WriteDebug(commandScript);
 
-    _ = AddScript(safeCommandScriptString);
+    _ = AddScript(commandScript);
 
     BeginSteppablePipeline();
     ProcessSteppablePipeline();
