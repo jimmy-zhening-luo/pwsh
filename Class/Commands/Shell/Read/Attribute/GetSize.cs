@@ -127,7 +127,7 @@ sealed public class GetSize : CoreCommand
         ParameterSetName is "Number"
           ? bytes
           : $"{System.Math.Round(
-              (double)bytes / (1L << ((int)Unit * 10)),
+              (double)((double)bytes / (1L << ((int)Unit * 10))),
               3
             )} {Unit
               .ToString()
