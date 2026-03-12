@@ -21,7 +21,7 @@ sealed public class GitRestore() : GitCommand("pull")
     }
 
     var arguments = new string[Arguments.Count];
-    Arguments.CopyTo(arguments, 0);
+    Arguments.CopyTo(arguments, default);
     Arguments.Clear();
 
     _ = AddCommand(@"PowerModule\Reset-GitRepository")
