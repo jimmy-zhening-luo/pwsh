@@ -169,12 +169,14 @@ abstract public partial class NativeCommand(
       );
     }
 
-    _ = AddScript(
-      string.Join(
-        Client.StringInput.Space,
-        safeCommandScript
-      )
+    var safeCommandScriptString = string.Join(
+      Client.StringInput.Space,
+      safeCommandScript
     );
+
+    WriteInformation(safeCommandScriptString);
+
+    _ = AddScript(safeCommandScriptString);
 
     BeginSteppablePipeline();
     ProcessSteppablePipeline();
