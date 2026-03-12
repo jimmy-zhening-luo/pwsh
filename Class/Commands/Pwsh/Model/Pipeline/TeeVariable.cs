@@ -4,7 +4,7 @@ namespace PowerModule.Commands.Pwsh.Model.Pipeline;
   "Tee",
   "Variable",
   DefaultParameterSetName = "Variable",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097034"
+  HelpUri = $"{HelpLink}2097034"
 )]
 [Alias("t")]
 [OutputType(typeof(object))]
@@ -34,7 +34,7 @@ sealed public class TeeVariable() : WrappedCommand(
     ParameterSetName = "File",
     Mandatory = true
   )]
-  [Alias("Path")]
+  [Alias(StandardParameter.Path)]
   required public string FilePath
   {
     init => Discard();

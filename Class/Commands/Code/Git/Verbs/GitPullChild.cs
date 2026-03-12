@@ -2,8 +2,7 @@ namespace PowerModule.Commands.Code.Git.Verbs;
 
 [Cmdlet(
   VerbsCommon.Get,
-  "ChildGitRepository",
-  HelpUri = "https://git-scm.com/docs/git-pull"
+  "ChildGitRepository"
 )]
 [Alias("gpp")]
 sealed public class GitPullChild : CoreCommand

@@ -4,6 +4,8 @@ abstract public class NodeCommand(string? IntrinsicVerb) : CodeNativeCommand(Int
 {
   sealed private protected class NodeVerbCompletionsAttribute() : Tab.CompletionsAttribute<HashSet<string>>(Verbs);
 
+  private protected const string NpmHelpLink = "https://docs.npmjs.com/cli/commands";
+
   static readonly HashSet<string> Verbs = [
     "access",
     "adduser",

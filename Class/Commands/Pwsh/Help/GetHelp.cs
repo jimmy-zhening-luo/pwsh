@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Pwsh.Help;
 [Cmdlet(
   VerbsCommon.Get,
   "HelpOnline",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096483"
+  HelpUri = $"{HelpLink}2096483"
 )]
 [Alias("m", "man")]
 [OutputType(typeof(object))]

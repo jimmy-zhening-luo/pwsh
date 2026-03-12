@@ -3,8 +3,8 @@ namespace PowerModule.Commands.Shell.Move.Location;
 [Cmdlet(
   VerbsCommon.Set,
   "Directory",
-  DefaultParameterSetName = "Path",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
+  DefaultParameterSetName = StandardParameter.Path,
+  HelpUri = $"{HelpLink}2097049"
 )]
 [Alias("c")]
 [OutputType(
@@ -14,7 +14,7 @@ namespace PowerModule.Commands.Shell.Move.Location;
 sealed public class SetDirectory : WrappedSetDirectory
 {
   [Parameter(
-    ParameterSetName = "Path",
+    ParameterSetName = StandardParameter.Path,
     Position = default,
     ValueFromPipeline = true
   )]
@@ -82,17 +82,17 @@ sealed public class SetDirectory : WrappedSetDirectory
     switch (ParameterSetName)
     {
       case "DriveC":
-        SetBoundParameter("Path", "C:");
+        SetBoundParameter(StandardParameter.Path, "C:");
 
         break;
 
       case "DriveD":
-        SetBoundParameter("Path", "D:");
+        SetBoundParameter(StandardParameter.Path, "D:");
 
         break;
 
       case "DriveE":
-        SetBoundParameter("Path", "E:");
+        SetBoundParameter(StandardParameter.Path, "E:");
 
         break;
 
@@ -105,15 +105,15 @@ sealed public class SetDirectory : WrappedSetDirectory
 [Cmdlet(
   VerbsCommon.Set,
   "DirectorySibling",
-  DefaultParameterSetName = "Path",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
+  DefaultParameterSetName = StandardParameter.Path,
+  HelpUri = $"{HelpLink}2097049"
 )]
 [Alias("cx")]
 [OutputType(typeof(PathInfo))]
 sealed public class SetDirectorySibling : WrappedSetDirectory
 {
   [Parameter(
-    ParameterSetName = "Path",
+    ParameterSetName = StandardParameter.Path,
     Position = default,
     ValueFromPipeline = true
   )]
@@ -131,15 +131,15 @@ sealed public class SetDirectorySibling : WrappedSetDirectory
 [Cmdlet(
   VerbsCommon.Set,
   "DirectoryRelative",
-  DefaultParameterSetName = "Path",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
+  DefaultParameterSetName = StandardParameter.Path,
+  HelpUri = $"{HelpLink}2097049"
 )]
 [Alias("cxx")]
 [OutputType(typeof(PathInfo))]
 sealed public class SetDirectoryRelative : WrappedSetDirectory
 {
   [Parameter(
-    ParameterSetName = "Path",
+    ParameterSetName = StandardParameter.Path,
     Position = default,
     ValueFromPipeline = true
   )]
@@ -157,15 +157,15 @@ sealed public class SetDirectoryRelative : WrappedSetDirectory
 [Cmdlet(
   VerbsCommon.Set,
   "DirectoryHome",
-  DefaultParameterSetName = "Path",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
+  DefaultParameterSetName = StandardParameter.Path,
+  HelpUri = $"{HelpLink}2097049"
 )]
 [Alias("ch")]
 [OutputType(typeof(PathInfo))]
 sealed public class SetDirectoryHome : WrappedSetDirectory
 {
   [Parameter(
-    ParameterSetName = "Path",
+    ParameterSetName = StandardParameter.Path,
     Position = default,
     ValueFromPipeline = true
   )]
@@ -184,15 +184,15 @@ sealed public class SetDirectoryHome : WrappedSetDirectory
 [Cmdlet(
   VerbsCommon.Set,
   "DirectoryCode",
-  DefaultParameterSetName = "Path",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
+  DefaultParameterSetName = StandardParameter.Path,
+  HelpUri = $"{HelpLink}2097049"
 )]
 [Alias("cc")]
 [OutputType(typeof(PathInfo))]
 sealed public class SetDirectoryCode : WrappedSetDirectory
 {
   [Parameter(
-    ParameterSetName = "Path",
+    ParameterSetName = StandardParameter.Path,
     Position = default,
     ValueFromPipeline = true
   )]
@@ -211,15 +211,15 @@ sealed public class SetDirectoryCode : WrappedSetDirectory
 [Cmdlet(
   VerbsCommon.Set,
   "Drive",
-  DefaultParameterSetName = "Path",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097049"
+  DefaultParameterSetName = StandardParameter.Path,
+  HelpUri = $"{HelpLink}2097049"
 )]
 [Alias("c/")]
 [OutputType(typeof(PathInfo))]
 sealed public class SetDrive : WrappedSetDirectory
 {
   [Parameter(
-    ParameterSetName = "Path",
+    ParameterSetName = StandardParameter.Path,
     Position = default,
     ValueFromPipeline = true
   )]

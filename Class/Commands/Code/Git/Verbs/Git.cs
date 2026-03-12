@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Code.Git.Verbs;
 [Cmdlet(
   VerbsLifecycle.Invoke,
   "Git",
-  HelpUri = "https://git-scm.com/docs"
+  HelpUri = GitHelpLink
 )]
 [Alias("g")]
 sealed public class GitVerbCommand() : GitCommand(default)

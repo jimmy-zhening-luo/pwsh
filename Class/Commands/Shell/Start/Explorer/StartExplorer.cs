@@ -3,15 +3,15 @@ namespace PowerModule.Commands.Shell.Start.Explorer;
 [Cmdlet(
   VerbsLifecycle.Start,
   "Explorer",
-  DefaultParameterSetName = "Path",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096590"
+  DefaultParameterSetName = StandardParameter.Path,
+  HelpUri = $"{HelpLink}2096590"
 )]
 [Alias("e")]
 [OutputType(typeof(void))]
 sealed public class StartExplorer : WrappedStartExplorer
 {
   [Parameter(
-    ParameterSetName = "Path",
+    ParameterSetName = StandardParameter.Path,
     Position = default,
     ValueFromPipeline = true
   )]
@@ -34,15 +34,15 @@ sealed public class StartExplorer : WrappedStartExplorer
 [Cmdlet(
   VerbsLifecycle.Start,
   "ExplorerSibling",
-  DefaultParameterSetName = "Path",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096590"
+  DefaultParameterSetName = StandardParameter.Path,
+  HelpUri = $"{HelpLink}2096590"
 )]
 [Alias("ex")]
 [OutputType(typeof(void))]
 sealed public class StartExplorerSibling : WrappedStartExplorer
 {
   [Parameter(
-    ParameterSetName = "Path",
+    ParameterSetName = StandardParameter.Path,
     Position = default,
     ValueFromPipeline = true
   )]
@@ -57,15 +57,15 @@ sealed public class StartExplorerSibling : WrappedStartExplorer
 [Cmdlet(
   VerbsLifecycle.Start,
   "ExplorerRelative",
-  DefaultParameterSetName = "Path",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096590"
+  DefaultParameterSetName = StandardParameter.Path,
+  HelpUri = $"{HelpLink}2096590"
 )]
 [Alias("exx")]
 [OutputType(typeof(void))]
 sealed public class StartExplorerRelative : WrappedStartExplorer
 {
   [Parameter(
-    ParameterSetName = "Path",
+    ParameterSetName = StandardParameter.Path,
     Position = default,
     ValueFromPipeline = true
   )]
@@ -80,15 +80,15 @@ sealed public class StartExplorerRelative : WrappedStartExplorer
 [Cmdlet(
   VerbsLifecycle.Start,
   "ExplorerHome",
-  DefaultParameterSetName = "Path",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096590"
+  DefaultParameterSetName = StandardParameter.Path,
+  HelpUri = $"{HelpLink}2096590"
 )]
 [Alias("eh")]
 [OutputType(typeof(void))]
 sealed public class StartExplorerHome : WrappedStartExplorer
 {
   [Parameter(
-    ParameterSetName = "Path",
+    ParameterSetName = StandardParameter.Path,
     Position = default,
     ValueFromPipeline = true
   )]
@@ -104,15 +104,15 @@ sealed public class StartExplorerHome : WrappedStartExplorer
 [Cmdlet(
   VerbsLifecycle.Start,
   "ExplorerCode",
-  DefaultParameterSetName = "Path",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096590"
+  DefaultParameterSetName = StandardParameter.Path,
+  HelpUri = $"{HelpLink}2096590"
 )]
 [Alias("ec")]
 [OutputType(typeof(void))]
 sealed public class StartExplorerCode : WrappedStartExplorer
 {
   [Parameter(
-    ParameterSetName = "Path",
+    ParameterSetName = StandardParameter.Path,
     Position = default,
     ValueFromPipeline = true
   )]
@@ -128,15 +128,15 @@ sealed public class StartExplorerCode : WrappedStartExplorer
 [Cmdlet(
   VerbsLifecycle.Start,
   "ExplorerDrive",
-  DefaultParameterSetName = "Path",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096590"
+  DefaultParameterSetName = StandardParameter.Path,
+  HelpUri = $"{HelpLink}2096590"
 )]
 [Alias("e/")]
 [OutputType(typeof(void))]
 sealed public class StartExplorerDrive : WrappedStartExplorer
 {
   [Parameter(
-    ParameterSetName = "Path",
+    ParameterSetName = StandardParameter.Path,
     Position = default,
     ValueFromPipeline = true
   )]

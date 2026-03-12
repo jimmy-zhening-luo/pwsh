@@ -131,7 +131,7 @@ abstract public class WrappedGetDirectory() : WrappedCommand(
     if (!InCurrentLocation)
     {
       SetBoundParameter(
-        "Path",
+        StandardParameter.Path,
         ReanchorPath(Path)
       );
     }

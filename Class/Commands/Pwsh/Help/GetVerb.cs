@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Pwsh.Help;
 [Cmdlet(
   VerbsCommon.Get,
   "VerbList",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097026"
+  HelpUri = $"{HelpLink}2097026"
 )]
 [Alias("vb")]
 [OutputType(typeof(VerbInfo))]

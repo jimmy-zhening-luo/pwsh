@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Shell.Start.Workspace;
 [Cmdlet(
   VerbsLifecycle.Start,
   "Workspace",
-  DefaultParameterSetName = "Path",
+  DefaultParameterSetName = StandardParameter.Path,
   HelpUri = "https://code.visualstudio.com/docs/configure/command-line#_core-cli-options"
 )]
 [Alias("i")]
@@ -22,7 +22,7 @@ sealed public class StartWorkspace : VirtualStartWorkspace
 [Cmdlet(
   VerbsLifecycle.Start,
   "WorkspaceSibling",
-  DefaultParameterSetName = "Path",
+  DefaultParameterSetName = StandardParameter.Path,
   HelpUri = "https://code.visualstudio.com/docs/configure/command-line#_core-cli-options"
 )]
 [Alias("ix")]
@@ -43,7 +43,7 @@ sealed public class StartWorkspaceSibling : VirtualStartWorkspace
 [Cmdlet(
   VerbsLifecycle.Start,
   "WorkspaceRelative",
-  DefaultParameterSetName = "Path",
+  DefaultParameterSetName = StandardParameter.Path,
   HelpUri = "https://code.visualstudio.com/docs/configure/command-line#_core-cli-options"
 )]
 [Alias("ixx")]
@@ -64,7 +64,7 @@ sealed public class StartWorkspaceRelative : VirtualStartWorkspace
 [Cmdlet(
   VerbsLifecycle.Start,
   "WorkspaceHome",
-  DefaultParameterSetName = "Path",
+  DefaultParameterSetName = StandardParameter.Path,
   HelpUri = "https://code.visualstudio.com/docs/configure/command-line#_core-cli-options"
 )]
 [Alias("ih")]
@@ -86,7 +86,7 @@ sealed public class StartWorkspaceHome : VirtualStartWorkspace
 [Cmdlet(
   VerbsLifecycle.Start,
   "WorkspaceCode",
-  DefaultParameterSetName = "Path",
+  DefaultParameterSetName = StandardParameter.Path,
   HelpUri = "https://code.visualstudio.com/docs/configure/command-line#_core-cli-options"
 )]
 [Alias("ic")]
@@ -108,7 +108,7 @@ sealed public class StartWorkspaceCode : VirtualStartWorkspace
 [Cmdlet(
   VerbsLifecycle.Start,
   "WorkspaceDrive",
-  DefaultParameterSetName = "Path",
+  DefaultParameterSetName = StandardParameter.Path,
   HelpUri = "https://code.visualstudio.com/docs/configure/command-line#_core-cli-options"
 )]
 [Alias("i/")]

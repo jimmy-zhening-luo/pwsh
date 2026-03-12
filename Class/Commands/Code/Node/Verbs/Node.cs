@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Code.Node.Verbs;
 [Cmdlet(
   VerbsLifecycle.Invoke,
   "Npm",
-  HelpUri = "https://docs.npmjs.com/cli/commands"
+  HelpUri = NpmHelpLink
 )]
 [Alias("n")]
 sealed public class NodeVerbCommand() : NodeCommand(default)

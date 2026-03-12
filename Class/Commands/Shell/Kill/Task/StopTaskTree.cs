@@ -4,7 +4,7 @@ namespace PowerModule.Commands.Shell.Kill.Task;
   VerbsLifecycle.Stop,
   "TaskTree",
   DefaultParameterSetName = "Name",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097058"
+  HelpUri = $"{HelpLink}2097058"
 )]
 [Alias("tkilld")]
 [OutputType(typeof(void))]

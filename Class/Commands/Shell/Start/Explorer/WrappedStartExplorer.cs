@@ -32,7 +32,7 @@ abstract public class WrappedStartExplorer() : WrappedCommand(
   }
 
   sealed override private protected void TransformPipelineInput() => SetBoundParameter(
-    "Path",
+    StandardParameter.Path,
     ReanchorPath(Path)
   );
 }

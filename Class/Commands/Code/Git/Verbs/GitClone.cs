@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Code.Git.Verbs;
 [Cmdlet(
   VerbsData.Import,
   "GitRepository",
-  HelpUri = "https://git-scm.com/docs/git-clone"
+  HelpUri = $"{GitHelpLink}/git-clone"
 )]
 [Alias("gitcl")]
 sealed public class GitClone() : GitCommand("clone")

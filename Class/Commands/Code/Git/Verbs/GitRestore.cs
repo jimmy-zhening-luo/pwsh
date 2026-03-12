@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Code.Git.Verbs;
 [Cmdlet(
   VerbsData.Restore,
   "GitRepository",
-  HelpUri = "https://git-scm.com/docs/git-reset"
+  HelpUri = $"{GitHelpLink}/git-reset"
 )]
 [Alias("grp")]
 sealed public class GitRestore() : GitCommand("pull")

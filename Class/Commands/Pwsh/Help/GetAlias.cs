@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Pwsh.Help;
 [Cmdlet(
   VerbsCommon.Get,
   "CommandAlias",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096702"
+  HelpUri = $"{HelpLink}2096702"
 )]
 [Alias("galc")]
 [OutputType(typeof(AliasInfo))]

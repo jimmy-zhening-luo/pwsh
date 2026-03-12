@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Code.Node.Verbs;
 [Cmdlet(
   VerbsDiagnostic.Test,
   "NodePackage",
-  HelpUri = "https://docs.npmjs.com/cli/commands/npm-test"
+  HelpUri = $"{NpmHelpLink}/npm-test"
 )]
 [Alias("nt")]
 sealed public class NodeTest() : NodeCommand("test")

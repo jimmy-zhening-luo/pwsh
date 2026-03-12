@@ -11,6 +11,8 @@ abstract public class GitCommand(string? IntrinsicVerb) : CodeNativeCommand(Intr
     init,
   }
 
+  private protected const string GitHelpLink = "https://git-scm.com/docs";
+
   static readonly HashSet<string> Verbs = [
     "switch",
     "merge",

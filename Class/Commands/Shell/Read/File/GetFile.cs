@@ -3,15 +3,15 @@ namespace PowerModule.Commands.Shell.Read.File;
 [Cmdlet(
   VerbsCommon.Get,
   "File",
-  DefaultParameterSetName = "Path",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096490"
+  DefaultParameterSetName = StandardParameter.Path,
+  HelpUri = $"{HelpLink}2096490"
 )]
 [Alias("p")]
 [OutputType(typeof(string))]
 sealed public class GetFile : WrappedGetFile
 {
   [Parameter(
-    ParameterSetName = "Path",
+    ParameterSetName = StandardParameter.Path,
     Position = default
   )]
   [SupportsWildcards]
@@ -38,15 +38,15 @@ sealed public class GetFile : WrappedGetFile
 [Cmdlet(
   VerbsCommon.Get,
   "FileSibling",
-  DefaultParameterSetName = "Path",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096490"
+  DefaultParameterSetName = StandardParameter.Path,
+  HelpUri = $"{HelpLink}2096490"
 )]
 [Alias("px")]
 [OutputType(typeof(string))]
 sealed public class GetFileSibling : WrappedGetFile
 {
   [Parameter(
-    ParameterSetName = "Path",
+    ParameterSetName = StandardParameter.Path,
     Position = default
   )]
   [SupportsWildcards]
@@ -65,15 +65,15 @@ sealed public class GetFileSibling : WrappedGetFile
 [Cmdlet(
   VerbsCommon.Get,
   "FileRelative",
-  DefaultParameterSetName = "Path",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096490"
+  DefaultParameterSetName = StandardParameter.Path,
+  HelpUri = $"{HelpLink}2096490"
 )]
 [Alias("pxx")]
 [OutputType(typeof(string))]
 sealed public class GetFileRelative : WrappedGetFile
 {
   [Parameter(
-    ParameterSetName = "Path",
+    ParameterSetName = StandardParameter.Path,
     Position = default
   )]
   [SupportsWildcards]
@@ -92,15 +92,15 @@ sealed public class GetFileRelative : WrappedGetFile
 [Cmdlet(
   VerbsCommon.Get,
   "FileHome",
-  DefaultParameterSetName = "Path",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096490"
+  DefaultParameterSetName = StandardParameter.Path,
+  HelpUri = $"{HelpLink}2096490"
 )]
 [Alias("ph")]
 [OutputType(typeof(string))]
 sealed public class GetFileHome : WrappedGetFile
 {
   [Parameter(
-    ParameterSetName = "Path",
+    ParameterSetName = StandardParameter.Path,
     Position = default
   )]
   [SupportsWildcards]
@@ -120,15 +120,15 @@ sealed public class GetFileHome : WrappedGetFile
 [Cmdlet(
   VerbsCommon.Get,
   "FileCode",
-  DefaultParameterSetName = "Path",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096490"
+  DefaultParameterSetName = StandardParameter.Path,
+  HelpUri = $"{HelpLink}2096490"
 )]
 [Alias("pc")]
 [OutputType(typeof(string))]
 sealed public class GetFileCode : WrappedGetFile
 {
   [Parameter(
-    ParameterSetName = "Path",
+    ParameterSetName = StandardParameter.Path,
     Position = default
   )]
   [SupportsWildcards]
@@ -148,15 +148,15 @@ sealed public class GetFileCode : WrappedGetFile
 [Cmdlet(
   VerbsCommon.Get,
   "FileDrive",
-  DefaultParameterSetName = "Path",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096490"
+  DefaultParameterSetName = StandardParameter.Path,
+  HelpUri = $"{HelpLink}2096490"
 )]
 [Alias("p/")]
 [OutputType(typeof(string))]
 sealed public class GetFileDrive : WrappedGetFile
 {
   [Parameter(
-    ParameterSetName = "Path",
+    ParameterSetName = StandardParameter.Path,
     Position = default
   )]
   [SupportsWildcards]

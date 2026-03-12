@@ -4,7 +4,7 @@ namespace PowerModule.Commands.Shell.Kill.Task;
   VerbsLifecycle.Stop,
   "Task",
   DefaultParameterSetName = "Name",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097058"
+  HelpUri = $"{HelpLink}2097058"
 )]
 [Alias("tkill")]
 [OutputType(typeof(void))]

@@ -4,7 +4,7 @@ namespace PowerModule.Commands.Shell.Read.Attribute;
   VerbsCommon.Get,
   "Size",
   DefaultParameterSetName = "String",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096492"
+  HelpUri = $"{HelpLink}2096492"
 )]
 [Alias("sz", "size")]
 [OutputType(

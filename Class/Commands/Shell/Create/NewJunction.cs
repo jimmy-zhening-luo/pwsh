@@ -4,7 +4,7 @@ namespace PowerModule.Commands.Shell.Create;
   VerbsCommon.New,
   "Junction",
   DefaultParameterSetName = "pathSet",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096592"
+  HelpUri = $"{HelpLink}2096592"
 )]
 [Alias("mj")]
 [OutputType(typeof(System.IO.DirectoryInfo))]

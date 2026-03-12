@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Code.Node.Verbs;
 [Cmdlet(
   VerbsData.Compare,
   "NodeModule",
-  HelpUri = "https://docs.npmjs.com/cli/commands/npm-outdated"
+  HelpUri = $"{NpmHelpLink}/npm-outdated"
 )]
 [Alias("npo")]
 sealed public class NodeOutdated() : NodeCommand("outdated")

@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Transform;
 [Cmdlet(
   VerbsCommon.Copy,
   "Guid",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097130"
+  HelpUri = $"{HelpLink}2097130"
 )]
 [Alias("gu", "guid")]
 [OutputType(typeof(string))]

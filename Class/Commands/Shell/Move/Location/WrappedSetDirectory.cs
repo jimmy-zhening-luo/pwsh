@@ -20,12 +20,12 @@ abstract public class WrappedSetDirectory() : WrappedCommand(
     if (InCurrentLocation)
     {
       if (
-        ParameterSetName is "Path"
+        ParameterSetName is StandardParameter.Path
         && Path is ""
       )
       {
         SetBoundParameter(
-          "Path",
+          StandardParameter.Path,
           Parent()
         );
       }
@@ -33,7 +33,7 @@ abstract public class WrappedSetDirectory() : WrappedCommand(
     else
     {
       SetBoundParameter(
-        "Path",
+        StandardParameter.Path,
         ReanchorPath(Path)
       );
     }

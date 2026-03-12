@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Code.Node.Verbs;
 [Cmdlet(
   VerbsCommon.Clear,
   "NodeModuleCache",
-  HelpUri = "https://docs.npmjs.com/cli/commands/npm-cache"
+  HelpUri = $"{NpmHelpLink}/npm-cache"
 )]
 [Alias("ncc")]
 sealed public class NodeClearCache() : NodeCommand("cache")

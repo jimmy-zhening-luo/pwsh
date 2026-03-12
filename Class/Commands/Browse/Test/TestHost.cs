@@ -4,7 +4,7 @@ namespace PowerModule.Commands.Browse.Test;
   VerbsDiagnostic.Test,
   "Host",
   DefaultParameterSetName = "ICMP",
-  HelpUri = "https://learn.microsoft.com/powershell/module/nettcpip/test-netconnection"
+  HelpUri = $"https://learn.microsoft.com/powershell/module/nettcpip/test-netconnection"
 )]
 [Alias("tn")]
 [OutputType(typeof(object))]

@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Browse;
 [Cmdlet(
   VerbsCommon.Open,
   "Url",
-  DefaultParameterSetName = "Path",
+  DefaultParameterSetName = StandardParameter.Path,
   HelpUri = "https://www.chromium.org/developers/how-tos/run-chromium-with-flags/"
 )]
 [Alias("o", "open")]
@@ -11,7 +11,7 @@ namespace PowerModule.Commands.Browse;
 sealed public class OpenUrl() : CoreCommand(true)
 {
   [Parameter(
-    ParameterSetName = "Path",
+    ParameterSetName = StandardParameter.Path,
     Position = default,
     HelpMessage = "File path or URL to open, defaulting to the current directory"
   )]
@@ -45,7 +45,7 @@ sealed public class OpenUrl() : CoreCommand(true)
 
   sealed override private protected void Postprocess()
   {
-    if (ParameterSetName is "Path")
+    if (ParameterSetName is StandardParameter.Path)
     {
       switch (Path)
       {

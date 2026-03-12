@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Code.Node.Verbs;
 [Cmdlet(
   VerbsCommon.Step,
   "NodePackageVersion",
-  HelpUri = "https://docs.npmjs.com/cli/commands/npm-version"
+  HelpUri = $"{NpmHelpLink}/npm-version"
 )]
 [Alias("nu")]
 sealed public class NodeUpdateVersion() : NodeCommand("version")

@@ -4,7 +4,7 @@ namespace PowerModule.Commands.Shell.Read.Directory;
   VerbsCommon.Get,
   "Directory",
   DefaultParameterSetName = "Items",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096492"
+  HelpUri = $"{HelpLink}2096492"
 )]
 [Alias("l")]
 [OutputType(
@@ -41,7 +41,7 @@ sealed public class GetDirectory : WrappedGetDirectory
   VerbsCommon.Get,
   "DirectorySibling",
   DefaultParameterSetName = "Items",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096492"
+  HelpUri = $"{HelpLink}2096492"
 )]
 [Alias("lx")]
 [OutputType(
@@ -70,7 +70,7 @@ sealed public class GetDirectorySibling : WrappedGetDirectory
   VerbsCommon.Get,
   "DirectoryRelative",
   DefaultParameterSetName = "Items",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096492"
+  HelpUri = $"{HelpLink}2096492"
 )]
 [Alias("lxx")]
 [OutputType(
@@ -99,7 +99,7 @@ sealed public class GetDirectoryRelative : WrappedGetDirectory
   VerbsCommon.Get,
   "DirectoryHome",
   DefaultParameterSetName = "Items",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096492"
+  HelpUri = $"{HelpLink}2096492"
 )]
 [Alias("lh")]
 [OutputType(
@@ -129,7 +129,7 @@ sealed public class GetDirectoryHome : WrappedGetDirectory
   VerbsCommon.Get,
   "DirectoryCode",
   DefaultParameterSetName = "Items",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096492"
+  HelpUri = $"{HelpLink}2096492"
 )]
 [Alias("lc")]
 [OutputType(
@@ -159,7 +159,7 @@ sealed public class GetDirectoryCode : WrappedGetDirectory
   VerbsCommon.Get,
   "DirectoryDrive",
   DefaultParameterSetName = "Items",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2096492"
+  HelpUri = $"{HelpLink}2096492"
 )]
 [Alias("l/")]
 [OutputType(

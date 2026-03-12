@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Code.Node.Verbs;
 [Cmdlet(
   VerbsLifecycle.Invoke,
   "NodePackageScript",
-  HelpUri = "https://docs.npmjs.com/cli/commands/npm-run"
+  HelpUri = $"{NpmHelpLink}/npm-run"
 )]
 [Alias("nr")]
 sealed public class NodeRunScript() : NodeCommand("run")

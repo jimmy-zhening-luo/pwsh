@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Code.Git.Verbs;
 [Cmdlet(
   VerbsCommon.Push,
   "GitRepository",
-  HelpUri = "https://git-scm.com/docs/git-push"
+  HelpUri = $"{GitHelpLink}/git-push"
 )]
 [Alias("gs")]
 sealed public class GitPush() : GitCommand("push")

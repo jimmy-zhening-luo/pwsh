@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Code.Git.Verbs;
 [Cmdlet(
   VerbsData.Compare,
   "GitRepository",
-  HelpUri = "https://git-scm.com/docs/git-diff"
+  HelpUri = $"{GitHelpLink}/git-diff"
 )]
 [Alias("gd")]
 sealed public class GitCompare() : GitCommand("diff")

@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Browse.Test;
 [Cmdlet(
   VerbsDiagnostic.Test,
   "Url",
-  HelpUri = "https://go.microsoft.com/fwlink/?LinkID=2097126"
+  HelpUri = $"{HelpLink}2097126"
 )]
 [Alias("tu")]
 [OutputType(typeof(System.Uri))]
