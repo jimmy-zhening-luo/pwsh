@@ -123,29 +123,18 @@ sealed public class GetSize : CoreCommand
         bytes = new System.IO.FileInfo(fullPath).Length;
       }
 
-      switch (ParameterSetName)
-      {
-        case "Number":
-          WriteObject(bytes);
-          break;
-
-        default:
-          var scaledSize = (double)bytes / (
-            1L << ((int)Unit * 10)
-          );
-
-          WriteObject(
-            $"{System.Math.Round(
-              scaledSize,
+      WriteObject(
+        ParameterSetName is "Number"
+          ? bytes
+          : $"{System.Math.Round(
+              (double)bytes / (1L << ((int)Unit * 10)),
               3
             )} {Unit
               .ToString()
               .ToUpper(
                 Client.StringInput.CurrentCulture
             )}"
-          );
-          break;
-      }
+      );
     }
   }
 }

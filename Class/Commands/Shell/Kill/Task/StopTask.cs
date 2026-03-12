@@ -113,10 +113,12 @@ public class StopTask : CoreCommand
               out var pid
             ):
               KillProcess(pid, Descendant);
+
               break;
 
             default:
               KillProcesses(name, Descendant);
+
               break;
           }
         }

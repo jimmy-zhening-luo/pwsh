@@ -158,14 +158,17 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     {
       case null or false:
         RemoveBoundParameter(parameter);
+
         break;
 
       case true:
         SwitchBoundParameter(parameter);
+
         break;
 
       default:
         MyInvocation.BoundParameters[parameter] = value;
+
         break;
     }
   }

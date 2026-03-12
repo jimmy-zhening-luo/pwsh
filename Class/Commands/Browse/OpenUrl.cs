@@ -51,14 +51,17 @@ sealed public class OpenUrl() : CoreCommand(true)
       {
         case "":
           Client.Network.Url.Open();
+
           break;
 
         case var path when Client.Network.Url.ToAbsoluteHttpUri(path) is { } url:
           Client.Network.Url.Open(url);
+
           break;
 
         case var path when Client.Network.Url.ToAbsoluteFileUri(path) is { } fileUri && Client.Network.Url.TestFile(fileUri):
           Client.Network.Url.Open(fileUri);
+
           break;
 
         case var path when Client.Network.Url.ToAbsoluteHttpUri(
@@ -67,6 +70,7 @@ sealed public class OpenUrl() : CoreCommand(true)
           && Client.Network.Dns.Resolve(url)
           && Client.Network.Url.TestHttp(url):
           Client.Network.Url.Open(url);
+
           break;
 
         default:

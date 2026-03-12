@@ -83,14 +83,17 @@ sealed public class SetDirectory : WrappedSetDirectory
     {
       case "DriveC":
         SetBoundParameter("Path", "C:");
+
         break;
 
       case "DriveD":
         SetBoundParameter("Path", "D:");
+
         break;
 
       case "DriveE":
         SetBoundParameter("Path", "E:");
+
         break;
 
       default:

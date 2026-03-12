@@ -154,6 +154,7 @@ sealed public class TestHost() : WrappedCommand(
           "Port",
           (int)Port
         );
+
         break;
 
       case "CommonTCPPort":
@@ -168,6 +169,7 @@ sealed public class TestHost() : WrappedCommand(
               "Port",
               (int)numericPort
             );
+
             break;
 
           case var port when System.Enum.TryParse<WellKnownPort>(
@@ -179,6 +181,7 @@ sealed public class TestHost() : WrappedCommand(
               "CommonTCPPort",
               commonPort.ToString()
             );
+
             break;
 
           default:

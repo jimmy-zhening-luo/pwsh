@@ -65,10 +65,12 @@ abstract public class GitCommand(string? IntrinsicVerb) : CodeNativeCommand(Intr
     {
       case null when V:
         newable = true;
+
         break;
 
       case null:
         IntrinsicVerb = "status";
+
         break;
 
       case var verb when System.Enum.TryParse<NewableVerb>(
@@ -83,6 +85,7 @@ abstract public class GitCommand(string? IntrinsicVerb) : CodeNativeCommand(Intr
           true,
           newableVerb.ToString()
         );
+
         break;
 
       case var verb when Verbs.TryGetValue(
@@ -92,6 +95,7 @@ abstract public class GitCommand(string? IntrinsicVerb) : CodeNativeCommand(Intr
         out var exactVerb
       ):
         IntrinsicVerb = exactVerb;
+
         break;
 
       default:

@@ -323,10 +323,12 @@ sealed class PathCompleter : Intrinsics.TCompleter
             item.Name,
             trailingSeparator
           );
+
           break;
 
         case (_, 0):
           deferredItems.Add(item);
+
           break;
 
         default:
