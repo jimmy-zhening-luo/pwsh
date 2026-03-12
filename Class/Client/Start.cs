@@ -2,6 +2,8 @@ namespace PowerModule.Client;
 
 static class Start
 {
+  const string RunAsAdministrator = "RunAs";
+
   static internal void CreateProcess(
     string fileName,
     bool window = default
@@ -53,7 +55,7 @@ static class Start
     {
       UseShellExecute = true,
       Verb = administrator
-        ? "RunAs"
+        ? RunAsAdministrator
         : string.Empty,
       CreateNoWindow = noWindow,
     }
@@ -71,7 +73,7 @@ static class Start
     {
       UseShellExecute = true,
       Verb = administrator
-        ? "RunAs"
+        ? RunAsAdministrator
         : string.Empty,
       CreateNoWindow = noWindow,
     }
@@ -89,7 +91,7 @@ static class Start
     {
       UseShellExecute = true,
       Verb = administrator
-        ? "RunAs"
+        ? RunAsAdministrator
         : string.Empty,
       CreateNoWindow = noWindow,
     }
