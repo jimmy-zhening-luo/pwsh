@@ -10,11 +10,7 @@ sealed public class GitRestore() : GitCommand("pull")
 {
   sealed override private protected void PreprocessOtherArguments()
   {
-    if (
-      WorkingDirectory is not ""
-      && IsWorkingDirectory(Pwd())
-      && !IsWorkingDirectory(WorkingDirectory)
-    )
+    if (HasThrowawayWorkingDirectory())
     {
       _ = Arguments.AddFirst(WorkingDirectory);
       WorkingDirectory = string.Empty;

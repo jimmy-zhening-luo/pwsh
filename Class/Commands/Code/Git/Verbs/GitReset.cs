@@ -67,11 +67,7 @@ sealed public partial class GitReset() : GitCommand("reset")
 
   sealed override private protected void PreprocessOtherArguments()
   {
-    if (
-      WorkingDirectory is not ""
-      && IsWorkingDirectory(Pwd())
-      && !IsWorkingDirectory(WorkingDirectory)
-    )
+    if (HasThrowawayWorkingDirectory())
     {
       if (Tree is "")
       {

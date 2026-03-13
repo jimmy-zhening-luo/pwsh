@@ -38,11 +38,7 @@ sealed public class GitCommit() : GitCommand("commit")
       AddFirst(Message);
     }
 
-    if (
-      WorkingDirectory is not ""
-      && IsWorkingDirectory(Pwd())
-      && !IsWorkingDirectory(WorkingDirectory)
-    )
+    if (HasThrowawayWorkingDirectory())
     {
       _ = Arguments.AddFirst(WorkingDirectory);
       WorkingDirectory = string.Empty;

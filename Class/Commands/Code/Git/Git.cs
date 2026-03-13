@@ -107,39 +107,6 @@ abstract public partial class GitCommand(string? IntrinsicVerb) : CodeNativeComm
     }
   }
 
-  private protected bool IsWorkingDirectory(
-    string path,
-    bool newable = default
-  ) => IsWorkingDirectoryLocal(
-    path,
-    newable
-  )
-  || IsWorkingDirectoryRemote(
-    path,
-    newable
-  );
-
-  private protected bool IsWorkingDirectoryLocal(
-    string path,
-    bool newable = default
-  ) => System.IO.Directory.Exists(
-    GetWorkingDirectoryTestPath(
-      path,
-      newable
-    )
-  );
-
-  private protected bool IsWorkingDirectoryRemote(
-    string path,
-    bool newable = default
-  ) => System.IO.Directory.Exists(
-    GetWorkingDirectoryTestPath(
-      path,
-      newable,
-      true
-    )
-  );
-
   private protected string ResolveWorkingDirectory(
     string path,
     bool newable = default
@@ -155,7 +122,34 @@ abstract public partial class GitCommand(string? IntrinsicVerb) : CodeNativeComm
       ? Client.Environment.Folder.Code(path)
       : string.Empty;
 
-  private string GetWorkingDirectoryTestPath(
+  private protected bool HasThrowawayWorkingDirectory() => WorkingDirectory is not ""
+  && IsWorkingDirectoryLocal(Pwd())
+  && !IsWorkingDirectoryLocal(WorkingDirectory)
+  && !IsWorkingDirectoryRemote(WorkingDirectory);
+
+  private protected bool IsWorkingDirectoryLocal(
+    string path,
+    bool newable = default
+  ) => System.IO.Directory.Exists(
+    GetFullWorkingDirectoryTestPath(
+      path,
+      newable
+    )
+  );
+
+  private protected bool IsWorkingDirectoryRemote(
+    string path,
+    bool newable = default
+  ) => System.IO.Directory.Exists(
+    GetFullWorkingDirectoryTestPath(
+      path,
+      newable,
+      true
+    )
+  );
+
+  private string GetFullWorkingDirectoryTestPath(
+    string path,
     bool newable,
     bool remote = default
   ) => System.IO.Path.Combine(
