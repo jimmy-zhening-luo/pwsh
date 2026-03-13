@@ -16,36 +16,21 @@ sealed class EnumCompletionsAttribute(System.Type EnumType) : Factory.SetComplet
 
   sealed override private protected IEnumerable<string> EnumerateDomain(System.Type enumType)
   {
-    var names = System.Enum.GetNames(enumType);
+    HashSet<string> names = [.. System.Enum.GetNames(enumType)];
 
-    if (Exclude is null or [])
+    if (Exclude is not null or [])
     {
-      foreach (var name in names)
-      {
-        yield return name;
-      }
-    }
-    else
-    {
-      HashSet<string> exclusions = [.. Exclude];
-
-      foreach (var name in names)
-      {
-        if (!exclusions.Contains(name))
-        {
-          yield return name;
-        }
-      }
+      names.ExceptWith(Exclude);
     }
 
     if (Include is not null)
     {
       foreach (var inclusion in Include)
       {
-        yield return inclusion;
+        _ = names.Add(inclusion);
       }
     }
 
-    yield break;
+    return names;
   }
 }
