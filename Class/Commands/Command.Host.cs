@@ -61,8 +61,7 @@ partial class CoreCommand
       value
     );
 
-    internal PowerShell AddParameters(System.Collections.IList parameters) => PS.AddParameters(parameters);
-    internal PowerShell AddParameters(System.Collections.IDictionary parameters) => PS.AddParameters(parameters);
+    internal PowerShell AddParameters(Dictionary<string, object> parameters) => PS.AddParameters(parameters);
 
     internal PowerShell AddScript(string script) => PS.AddScript(script);
 
