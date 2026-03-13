@@ -13,8 +13,9 @@ abstract public class CodeNativeCommand(
 {
   private protected string? DeferredVerbArgument;
 
-  sealed override private protected Localizer? Location
-  { get; set; }
+  sealed override private protected Localizer? Location => location;
+  private protected Localizer? WorkingDirectoryLocation
+  { set; get; }
 
   sealed override private protected IEnumerable<string> CommandArguments => WorkingDirectory is ""
   || Pwd(WorkingDirectory) == Pwd()
