@@ -222,7 +222,7 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
 
   private protected void EndSteppablePipeline() => PSHost.EndSteppablePipeline();
 
-  private protected string[] ReanchorPath(IList<string> paths)
+  private protected string[] ReanchorPath(string[] paths)
   {
     if (paths is [])
     {
