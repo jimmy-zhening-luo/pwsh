@@ -6,7 +6,6 @@ interface ICompleter : IArgumentCompleter
 {
   sealed private protected record Completion(
     string Result,
-    string? DisplayName = default,
     string? Description = default
   );
 
@@ -65,7 +64,7 @@ interface ICompleter : IArgumentCompleter
         Client.StringInput.EscapeSingleQuoted(
           casedResult
         ),
-        completion.DisplayName ?? casedResult,
+        casedResult,
         CompletionType,
         completion.Description ?? result
       );

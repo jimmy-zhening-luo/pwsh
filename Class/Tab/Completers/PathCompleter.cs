@@ -176,7 +176,7 @@ sealed class PathCompleter : Intrinsics.Completer
         Client.File.PathString.Separator,
         Client.File.PathString.AltSeparator
       ),
-    Description: description
+    description
   );
 
   sealed override private protected IEnumerable<Intrinsics.ICompleter.Completion> GenerateCompletion(string wordToComplete)
