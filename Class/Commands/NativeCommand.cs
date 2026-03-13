@@ -190,28 +190,22 @@ abstract public partial class NativeCommand(
 
   virtual private protected void ClearArguments()
   {
-    ClearFlags();
-    ClearArgumentList();
-  }
+    (
+      D,
+      E,
+      I,
+      O,
+      P,
+      V
+    ) = (
+      default,
+      default,
+      default,
+      default,
+      default,
+      default
+    );
 
-  private protected void ClearFlags() => (
-    D,
-    E,
-    I,
-    O,
-    P,
-    V
-  ) = (
-    default,
-    default,
-    default,
-    default,
-    default,
-    default
-  );
-
-  private protected void ClearArgumentList()
-  {
     Arguments.Clear();
     NativeArguments.Clear();
   }
