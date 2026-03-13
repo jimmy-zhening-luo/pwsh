@@ -6,7 +6,7 @@ sealed class SetCompleter(
   ICollection<string> Domain
 ) : Intrinsics.Completer(CompletionType, Case)
 {
-  sealed override private protected IEnumerable<Intrinsics.ICompleter.CompletionResultRecord> GenerateCompletion(string wordToComplete)
+  sealed override private protected IEnumerable<Intrinsics.ICompleter.Completion> GenerateCompletion(string wordToComplete)
   {
     foreach (var member in Domain)
     {
