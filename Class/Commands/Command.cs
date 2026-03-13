@@ -9,7 +9,7 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     Dispose(false);
   }
 
-  private protected delegate string Localizer(string path = "");
+  private protected delegate string Localizer(string path);
   virtual private protected Localizer? Location
   { get; }
 
@@ -223,7 +223,7 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
   {
     if (paths is [])
     {
-      return [(Location ?? Pwd)()];
+      return [(Location ?? Pwd)(string.Empty)];
     }
 
     List<string> reanchoredPaths = [];
