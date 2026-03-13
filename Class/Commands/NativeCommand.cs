@@ -3,6 +3,7 @@ namespace PowerModule.Commands;
 abstract public partial class NativeCommand(
   string CommandPath,
   string? IntrinsicVerb,
+  string[]? CommandBaseArguments = default,
   bool SkipSsh = default
 ) : CoreCommand(SkipSsh)
 {
@@ -18,11 +19,11 @@ abstract public partial class NativeCommand(
   private protected readonly LinkedList<string> Arguments = [];
   private protected readonly LinkedList<string> NativeArguments = [];
 
-  abstract private protected string[] CommandArguments
-  { get; }
-
   abstract private protected string[] VerbArguments
   { get; }
+
+  virtual private protected string[] CommandRuntimeArguments
+  { get; } = [];
 
   virtual private protected SwitchBoard Uppercase
   { get; }
@@ -113,8 +114,17 @@ abstract public partial class NativeCommand(
     List<string> command = [
       "&",
       CommandPath,
-      .. CommandArguments,
     ];
+
+    if (CommandBaseArguments is not null)
+    {
+      command.AddRange(CommandBaseArguments);
+    }
+
+    if (CommandRuntimeArguments is not null)
+    {
+      command.AddRange(CommandRuntimeArguments);
+    }
 
     if (IntrinsicVerb is not null)
     {

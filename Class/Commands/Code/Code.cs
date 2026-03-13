@@ -4,11 +4,12 @@ abstract public class NativeCodeCommand(
   string CommandPath,
   string? IntrinsicVerb,
   string[] CommandBaseArguments,
-  string? WorkingDirectoryParameterName,
+  string? WorkingDirectoryParameterName = default,
   string? WorkingDirectoryPrefix = default
 ) : NativeCommand(
   CommandPath,
-  IntrinsicVerb
+  IntrinsicVerb,
+  CommandBaseArguments
 )
 {
   private protected string? DeferredVerbArgument;
@@ -17,10 +18,7 @@ abstract public class NativeCodeCommand(
   private protected Localizer? WorkingDirectoryLocation
   { set; get; }
 
-  sealed override private protected string[] CommandArguments => [
-    .. CommandBaseArguments,
-    .. ResolveWorkingDirectoryArguments(),
-  ];
+  sealed override private protected string[] CommandRuntimeArguments => ResolveWorkingDirectoryArguments();
 
   sealed override private protected string[] VerbArguments => DeferredVerbArgument is null
     ? ParseArguments()

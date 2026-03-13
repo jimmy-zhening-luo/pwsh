@@ -4,8 +4,7 @@ abstract public partial class Npm(string? IntrinsicVerb) : NativeCodeCommand(
   Client.Environment.Application.Npm,
   IntrinsicVerb,
   ["--color=always"],
-  default,
-  "--prefix="
+  WorkingDirectoryPrefix: "--prefix="
 )
 {
   private protected const string NpmHelpLink = "https://docs.npmjs.com/cli/commands";
