@@ -2,13 +2,12 @@ namespace PowerModule.Commands;
 
 abstract public class WrappedCommand(
   string WrappedCommandName,
+  string? PipelineInput = default,
   CommandTypes CommandType = CommandTypes.Cmdlet,
   bool SkipSsh = default
 ) : CoreCommand(SkipSsh)
 {
-  private protected delegate object PipelineInputSource();
-  virtual private protected PipelineInputSource? PipelineInput
-  { get; }
+  readonly string? PipelineInput = PipelineInput;
 
   virtual private protected Dictionary<string, object?> CoercedParameters
   { get; } = [];
@@ -56,9 +55,21 @@ abstract public class WrappedCommand(
     {
       TransformPipelineInput();
 
-      ProcessSteppablePipeline(
-        PipelineInput()
-      );
+      if (
+        MyInvocation.BoundParameters.TryGetValue(
+          PipelineInput,
+          out var pipelineInput
+        )
+      )
+      {
+        ProcessSteppablePipeline(
+          pipelineInput
+        );
+      }
+      else
+      {
+        ProcessSteppablePipeline();
+      }
     }
     else
     {

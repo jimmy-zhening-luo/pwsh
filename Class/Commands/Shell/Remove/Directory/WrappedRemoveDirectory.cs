@@ -1,13 +1,12 @@
 namespace PowerModule.Commands.Shell.Remove.Directory;
 
 abstract public class WrappedRemoveDirectory() : WrappedCommand(
-  @"Microsoft.PowerShell.Management\Remove-Item"
+  @"Microsoft.PowerShell.Management\Remove-Item",
+  StandardParameter.Path
 )
 {
   abstract public string[] Path
   { get; init; }
-
-  sealed override private protected PipelineInputSource PipelineInput => () => Path;
 
   sealed override private protected Dictionary<string, object?> CoercedParameters
   { get; } = new()

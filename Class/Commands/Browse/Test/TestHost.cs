@@ -10,7 +10,8 @@ namespace PowerModule.Commands.Browse.Test;
 [OutputType(typeof(object))]
 sealed public class TestHost() : WrappedCommand(
   @"NetTCPIP\Test-NetConnection",
-  CommandType: CommandTypes.Function
+  "ComputerName",
+  CommandTypes.Function
 )
 {
   public enum Verbosity
@@ -26,8 +27,6 @@ sealed public class TestHost() : WrappedCommand(
     SMB,
     WINRM,
   }
-
-  sealed override private protected PipelineInputSource PipelineInput => () => ComputerName;
 
   sealed override private protected Dictionary<string, object?> CoercedParameters => new()
   {

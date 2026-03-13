@@ -2,13 +2,13 @@ namespace PowerModule.Commands.Shell.Start.Explorer;
 
 abstract public class WrappedStartExplorer() : WrappedCommand(
   @"Microsoft.PowerShell.Management\Invoke-Item",
+  StandardParameter.Path,
   SkipSsh: true
 )
 {
   abstract public string[] Path
   { get; init; }
 
-  sealed override private protected PipelineInputSource PipelineInput => () => Path;
 
   [Parameter]
   [SupportsWildcards]
