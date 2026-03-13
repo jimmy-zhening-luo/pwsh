@@ -38,10 +38,10 @@ sealed public class GitCommit() : Git("commit")
       AddFirst(Message);
     }
 
-    if (DeferredVerbArgument is not "")
+    if (DeferredVerbArgument is not null)
     {
       _ = Arguments.AddFirst(DeferredVerbArgument);
-      DeferredVerbArgument = string.Empty;
+      DeferredVerbArgument = default;
     }
 
     if (NativeArguments.Contains(FlagAllowEmpty))

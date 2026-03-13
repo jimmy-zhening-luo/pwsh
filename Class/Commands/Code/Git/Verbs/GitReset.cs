@@ -67,7 +67,7 @@ sealed public partial class GitReset() : Git("reset")
 
   sealed override private protected void PreprocessOtherArguments()
   {
-    if (DeferredVerbArgument is not "")
+    if (DeferredVerbArgument is not null)
     {
       if (Tree is "")
       {
@@ -103,7 +103,7 @@ sealed public partial class GitReset() : Git("reset")
         _ = Arguments.AddFirst(DeferredVerbArgument);
       }
 
-      DeferredVerbArgument = string.Empty;
+      DeferredVerbArgument = default;
     }
 
     if (Tree is not "")

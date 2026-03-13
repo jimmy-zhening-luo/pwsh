@@ -10,10 +10,10 @@ sealed public class GitPush() : Git("push")
 {
   sealed override private protected void PreprocessOtherArguments()
   {
-    if (DeferredVerbArgument is not "")
+    if (DeferredVerbArgument is not null)
     {
       _ = Arguments.AddFirst(DeferredVerbArgument);
-      DeferredVerbArgument = string.Empty;
+      DeferredVerbArgument = default;
     }
 
     _ = AddCommand(@"PowerModule\Get-GitRepository");

@@ -10,10 +10,10 @@ sealed public class GitRestore() : Git("pull")
 {
   sealed override private protected void PreprocessOtherArguments()
   {
-    if (DeferredVerbArgument is not "")
+    if (DeferredVerbArgument is not null)
     {
       _ = Arguments.AddFirst(DeferredVerbArgument);
-      DeferredVerbArgument = string.Empty;
+      DeferredVerbArgument = default;
     }
 
     var arguments = new string[Arguments.Count];
