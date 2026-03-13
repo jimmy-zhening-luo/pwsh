@@ -54,11 +54,6 @@ public class StopTask : CoreCommand
   public SwitchParameter Descendant
   { private protected get; init; }
 
-  static void IsTerminalChild(
-    SystemProcess process,
-    bool entireProcessTree = default
-  ) => process.Parent.ProcessName is Terminal;
-
   static void KillProcess(
     int pid,
     bool entireProcessTree = default
@@ -96,10 +91,10 @@ public class StopTask : CoreCommand
   {
     if (ParameterSetName is "InputObject")
     {
-      foreach (var process in InputObject)
-      {
-        process.Kill(Descendant);
-      }
+      KillProcesses(
+        processes,
+        Descendant
+      );
     }
   }
 
@@ -110,7 +105,10 @@ public class StopTask : CoreCommand
       case "Id":
         foreach (var pid in Id)
         {
-          KillProcess(pid, Descendant);
+          KillProcess(
+            pid,
+            Descendant
+          );
         }
 
         break;
@@ -132,12 +130,18 @@ public class StopTask : CoreCommand
               n,
               out var pid
             ):
-              KillProcess(pid, Descendant);
+              KillProcess(
+                pid,
+                Descendant
+              );
 
               break;
 
             default:
-              KillProcesses(name, Descendant);
+              KillProcesses(
+                name,
+                Descendant
+            );
 
               break;
           }
