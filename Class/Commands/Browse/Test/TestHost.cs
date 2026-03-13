@@ -10,7 +10,7 @@ namespace PowerModule.Commands.Browse.Test;
 [OutputType(typeof(object))]
 sealed public class TestHost() : WrappedCommand(
   @"NetTCPIP\Test-NetConnection",
-  CommandTypes.Function
+  CommandType: CommandTypes.Function
 )
 {
   public enum Verbosity
