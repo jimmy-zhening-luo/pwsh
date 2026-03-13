@@ -6,7 +6,7 @@ namespace PowerModule.Commands.Code.Git.Verbs;
   HelpUri = $"{GitHelpLink}/git-add"
 )]
 [Alias("ga")]
-sealed public class GitAdd() : GitCommand("add")
+sealed public class GitAdd() : Git("add")
 {
   const string FlagRenormalize = "--renormalize";
 

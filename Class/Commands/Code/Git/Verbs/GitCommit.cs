@@ -6,7 +6,7 @@ namespace PowerModule.Commands.Code.Git.Verbs;
   HelpUri = $"{GitHelpLink}/git-commit"
 )]
 [Alias("gm")]
-sealed public class GitCommit() : GitCommand("commit")
+sealed public class GitCommit() : Git("commit")
 {
   const string FlagAllowEmpty = "--allow-empty";
 

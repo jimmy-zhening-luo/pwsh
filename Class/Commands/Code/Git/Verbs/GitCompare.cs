@@ -6,7 +6,7 @@ namespace PowerModule.Commands.Code.Git.Verbs;
   HelpUri = $"{GitHelpLink}/git-diff"
 )]
 [Alias("gd")]
-sealed public class GitCompare() : GitCommand("diff")
+sealed public class GitCompare() : Git("diff")
 {
   [Parameter(
     Position = default,

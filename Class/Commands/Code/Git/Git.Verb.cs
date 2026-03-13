@@ -1,6 +1,6 @@
 namespace PowerModule.Commands.Code.Git;
 
-partial class GitCommand
+partial class Git
 {
   sealed private protected class GitVerbCompletionsAttribute() : Tab.CompletionsAttribute<HashSet<string>>(Verbs);
 

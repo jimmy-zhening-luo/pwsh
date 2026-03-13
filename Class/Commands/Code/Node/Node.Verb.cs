@@ -1,6 +1,6 @@
 namespace PowerModule.Commands.Code.Node;
 
-partial class NodeCommand
+partial class Node
 {
   sealed private protected class NodeVerbCompletionsAttribute() : Tab.CompletionsAttribute<HashSet<string>>(Verbs);
 

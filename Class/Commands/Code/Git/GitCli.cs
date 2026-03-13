@@ -6,7 +6,7 @@ namespace PowerModule.Commands.Code.Git;
   HelpUri = GitHelpLink
 )]
 [Alias("g")]
-sealed public class GitCli() : GitCommand(default)
+sealed public class GitCli() : Git(default)
 {
   new public SwitchParameter V
   { get; set; }

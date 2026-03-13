@@ -6,7 +6,7 @@ namespace PowerModule.Commands.Code.Node.Verbs;
   HelpUri = $"{NpmHelpLink}/npm-cache"
 )]
 [Alias("ncc")]
-sealed public class NodeClearCache() : NodeCommand("cache")
+sealed public class NodeClearCache() : Node("cache")
 {
   sealed override private protected void PreprocessOtherArguments()
   {

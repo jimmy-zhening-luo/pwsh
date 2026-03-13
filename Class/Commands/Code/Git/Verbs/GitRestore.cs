@@ -6,7 +6,7 @@ namespace PowerModule.Commands.Code.Git.Verbs;
   HelpUri = $"{GitHelpLink}/git-reset"
 )]
 [Alias("grp")]
-sealed public class GitRestore() : GitCommand("pull")
+sealed public class GitRestore() : Git("pull")
 {
   sealed override private protected void PreprocessOtherArguments()
   {

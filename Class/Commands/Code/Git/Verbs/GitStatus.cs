@@ -6,5 +6,5 @@ namespace PowerModule.Commands.Code.Git.Verbs;
   HelpUri = $"{GitHelpLink}/git-status"
 )]
 [Alias("gg")]
-sealed public class GitStatus() : GitCommand("status")
+sealed public class GitStatus() : Git("status")
 { }

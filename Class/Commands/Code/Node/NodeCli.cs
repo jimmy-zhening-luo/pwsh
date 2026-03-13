@@ -6,7 +6,7 @@ namespace PowerModule.Commands.Code.Node;
   HelpUri = NpmHelpLink
 )]
 [Alias("n")]
-sealed public class NodeCli() : NodeCommand(default)
+sealed public class NodeCli() : Node(default)
 {
   new public SwitchParameter V
   { get; set; }

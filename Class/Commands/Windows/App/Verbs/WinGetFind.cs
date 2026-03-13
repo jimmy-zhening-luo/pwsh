@@ -7,7 +7,7 @@ namespace PowerModule.Commands.Windows.App.Verbs;
 )]
 [Alias("wgf")]
 [OutputType(typeof(void))]
-sealed public class WinGetFind() : WinGetCommand("search")
+sealed public class WinGetFind() : WinGet("search")
 {
   sealed override private protected void PreprocessArguments()
   {

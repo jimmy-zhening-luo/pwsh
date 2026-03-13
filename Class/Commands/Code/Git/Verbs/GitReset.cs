@@ -6,7 +6,7 @@ namespace PowerModule.Commands.Code.Git.Verbs;
   HelpUri = $"{GitHelpLink}/git-reset"
 )]
 [Alias("gr")]
-sealed public partial class GitReset() : GitCommand("reset")
+sealed public partial class GitReset() : Git("reset")
 {
   const string FlagHard = "--hard";
 

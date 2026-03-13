@@ -1,6 +1,6 @@
 namespace PowerModule.Commands.Windows.App;
 
-abstract public class WinGetCommand(string IntrinsicVerb) : NativeCommand(
+abstract public class WinGet(string IntrinsicVerb) : NativeCommand(
   Client.Environment.Application.WinGet,
   IntrinsicVerb
 )

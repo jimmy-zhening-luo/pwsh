@@ -6,7 +6,7 @@ namespace PowerModule.Commands.Code.Git.Verbs;
   HelpUri = $"{GitHelpLink}/git-push"
 )]
 [Alias("gs")]
-sealed public class GitPush() : GitCommand("push")
+sealed public class GitPush() : Git("push")
 {
   sealed override private protected void PreprocessOtherArguments()
   {

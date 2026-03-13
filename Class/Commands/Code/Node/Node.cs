@@ -1,6 +1,6 @@
 namespace PowerModule.Commands.Code.Node;
 
-abstract public partial class NodeCommand(string? IntrinsicVerb) : CodeNativeCommand(
+abstract public partial class Node(string? IntrinsicVerb) : CodeNativeCommand(
   Client.Environment.Application.Npm,
   ["--color=always"],
   default,

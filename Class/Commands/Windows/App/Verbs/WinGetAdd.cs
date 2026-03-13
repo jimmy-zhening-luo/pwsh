@@ -7,7 +7,7 @@ namespace PowerModule.Commands.Windows.App.Verbs;
 )]
 [Alias("wga")]
 [OutputType(typeof(void))]
-sealed public class WinGetAdd() : WinGetCommand("install")
+sealed public class WinGetAdd() : WinGet("install")
 {
   sealed override private protected void PreprocessArguments()
   {

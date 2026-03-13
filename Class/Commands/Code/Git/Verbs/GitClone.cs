@@ -6,7 +6,7 @@ namespace PowerModule.Commands.Code.Git.Verbs;
   HelpUri = $"{GitHelpLink}/git-clone"
 )]
 [Alias("gitcl")]
-sealed public class GitClone() : GitCommand("clone")
+sealed public class GitClone() : Git("clone")
 {
   [Parameter(
     Mandatory = true,

@@ -1,6 +1,6 @@
 namespace PowerModule.Commands.Code.Git;
 
-abstract public partial class GitCommand(string? IntrinsicVerb) : CodeNativeCommand(
+abstract public partial class Git(string? IntrinsicVerb) : CodeNativeCommand(
   Client.Environment.Application.Git,
   [
     "-c",

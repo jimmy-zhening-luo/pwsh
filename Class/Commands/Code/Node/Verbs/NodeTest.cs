@@ -6,7 +6,7 @@ namespace PowerModule.Commands.Code.Node.Verbs;
   HelpUri = $"{NpmHelpLink}/npm-test"
 )]
 [Alias("nt")]
-sealed public class NodeTest() : NodeCommand("test")
+sealed public class NodeTest() : Node("test")
 {
   const string FlagIgnoreScript = "--ignore-scripts";
 
