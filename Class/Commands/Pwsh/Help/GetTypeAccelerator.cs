@@ -25,7 +25,9 @@ sealed public class GetTypeAccelerator : Cmdlet
         ?.GetValue(default) is System.Collections.IDictionary typeAccelerators
     )
     {
-      SortedSet<string> uniqueTypes = new(System.StringComparer.OrdinalIgnoreCase);
+      SortedSet<string> uniqueTypes = new(
+        System.StringComparer.OrdinalIgnoreCase
+      );
 
       foreach (string type in typeAccelerators.Keys)
       {
