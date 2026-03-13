@@ -118,7 +118,7 @@ abstract public partial class Git(string? IntrinsicVerb) : NativeCodeCommand(
   && !IsWorkingDirectoryLocal(WorkingDirectory)
   && !IsWorkingDirectoryRemote(WorkingDirectory);
 
-  private protected bool IsWorkingDirectoryLocal(
+  private bool IsWorkingDirectoryLocal(
     string path,
     bool newable = default
   ) => System.IO.Directory.Exists(
@@ -128,7 +128,7 @@ abstract public partial class Git(string? IntrinsicVerb) : NativeCodeCommand(
     )
   );
 
-  private protected bool IsWorkingDirectoryRemote(
+  private bool IsWorkingDirectoryRemote(
     string path,
     bool newable = default
   ) => System.IO.Directory.Exists(
