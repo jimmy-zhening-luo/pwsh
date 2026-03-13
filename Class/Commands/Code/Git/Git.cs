@@ -67,60 +67,47 @@ abstract public partial class GitCommand(string? IntrinsicVerb) : CodeNativeComm
 
   sealed override private protected void PreprocessWorkingDirectory()
   {
-    var pwd = Pwd();
-    var repository = ResolveWorkingDirectory(
-      WorkingDirectory,
-      newable
-    );
-
-    if (repository is "")
+    switch (WorkingDirectory)
     {
-      if (WorkingDirectory is not "")
-      {
-        (DeferredVerbArgument, WorkingDirectory) = (
-          WorkingDirectory,
+      case "" when !newable
+      && !IsWorkingDirectoryLocal(Pwd()):
+        throw new System.IO.DirectoryNotFoundException(
+          "The current directory is not a git repository."
+        );
+
+      case "":
+      case var path when IsWorkingDirectoryLocal(
+        path,
+        newable
+      ):
+        break;
+
+      case var path when IsWorkingDirectoryRemote(
+        path,
+        newable
+      ):
+        WorkingDirectoryLocation = Client.Environment.Folder.Code;
+
+        break;
+
+      case var path when newable
+      || IsWorkingDirectoryLocal(Pwd()):
+        (
+          DeferredVerbArgument,
+          WorkingDirectory
+        ) = (
+          path,
           string.Empty
         );
-      }
 
-      repository = ResolveWorkingDirectory(pwd, newable);
-    }
+        break;
 
-    WorkingDirectory = repository;
-
-    System.ArgumentException.ThrowIfNullOrEmpty(
-      WorkingDirectory,
-      string.Join(
-        Client.StringInput.Space,
-        [
-          nameof(WorkingDirectory),
-          newable
-            ? "is not a directory path"
-            : "is not a git repository",
-        ]
-      )
-    );
-
-    if (WorkingDirectory == pwd)
-    {
-      WorkingDirectory = string.Empty;
+      default:
+        throw new System.IO.DirectoryNotFoundException(
+          "The provided working directory is not a git repository, and the current directory is not a git repository."
+        );
     }
   }
-
-  private protected string ResolveWorkingDirectory(
-    string path,
-    bool newable = default
-  ) => IsWorkingDirectoryLocal(
-    path,
-    newable
-  )
-    ? Pwd(path)
-    : IsWorkingDirectoryRemote(
-      path,
-      newable
-    )
-      ? Client.Environment.Folder.Code(path)
-      : string.Empty;
 
   private protected bool HasThrowawayWorkingDirectory() => WorkingDirectory is not ""
   && IsWorkingDirectoryLocal(Pwd())
