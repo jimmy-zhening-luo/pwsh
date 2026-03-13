@@ -70,8 +70,8 @@ abstract public class CodeNativeCommand(
   private protected IEnumerable<string> GetWorkingDirectory()
   {
     var workingDirectoryArgument = string.Concat(
-      WorkingDirectoryPrefix ?? string.Empty
-      Pwd(WorkingDirectory),
+      WorkingDirectoryPrefix ?? string.Empty,
+      Pwd(WorkingDirectory)
     );
 
     return WorkingDirectoryParameterName is null
