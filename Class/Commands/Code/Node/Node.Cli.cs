@@ -1,29 +1,29 @@
-namespace PowerModule.Commands.Code.Git.Verbs;
+namespace PowerModule.Commands.Code.Node;
 
 [Cmdlet(
   VerbsLifecycle.Invoke,
-  "Git",
-  HelpUri = GitHelpLink
+  "Npm",
+  HelpUri = NpmHelpLink
 )]
-[Alias("g")]
-sealed public class GitVerbCommand() : GitCommand(default)
+[Alias("n")]
+sealed public class NodeCli() : NodeCommand(default)
 {
   new public SwitchParameter V
   { get; set; }
 
   [Parameter(
     Position = default,
-    HelpMessage = "Git command"
+    HelpMessage = "npm command"
   )]
   [ValidateNotNullOrWhiteSpace]
-  [GitVerbCompletions]
+  [NodeVerbCompletions]
   public string Verb
   {
     set => IntrinsicVerb = value;
   }
 
   [Parameter(
-    HelpMessage = "Show git version if no command is specified. Otherwise, pass the -v flag as argument."
+    HelpMessage = "Show npm version if no command is specified. Otherwise, pass the -v flag as argument."
   )]
   [Alias("v")]
   public SwitchParameter Version
