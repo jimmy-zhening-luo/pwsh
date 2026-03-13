@@ -3,7 +3,7 @@ namespace PowerModule.Tab;
 sealed class PathCompletionsAttribute(
   string Location = "",
   PathItemType ItemType = default
-) : Factory.Intrinsics.TCompleterFactory
+) : Factory.Intrinsics.CompleterFactory
 {
   sealed override public CompletionCase Case
   { get; init; } = CompletionCase.Lower;
