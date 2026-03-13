@@ -18,7 +18,7 @@ abstract public class CodeNativeCommand(
     ? CommandBaseArguments
     : [
         .. CommandBaseArguments,
-        .. GetWorkingDirectory(),
+        .. ResolveWorkingDirectoryArguments(),
       ];
 
   sealed override private protected IEnumerable<string> VerbArguments => DeferredVerbArgument is null
@@ -67,7 +67,7 @@ abstract public class CodeNativeCommand(
     PreprocessWorkingDirectory();
   }
 
-  private protected IEnumerable<string> GetWorkingDirectory()
+  private protected IEnumerable<string> ResolveWorkingDirectoryArguments()
   {
     var workingDirectoryArgument = string.Concat(
       WorkingDirectoryPrefix ?? string.Empty,
