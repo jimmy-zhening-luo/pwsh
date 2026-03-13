@@ -42,7 +42,7 @@ sealed public class GitClone() : Git("clone")
     nameof(Repository)
   );
 
-  sealed override private protected IEnumerable<string> ParseArguments() => [
+  sealed override private protected IList<string> ParseArguments() => [
     string.Concat(
       ForceSsh
         ? "git@github.com:"

@@ -2,7 +2,7 @@ namespace PowerModule.Commands.Code;
 
 abstract public class NativeCodeCommand(
   string CommandPath,
-  IEnumerable<string> CommandBaseArguments,
+  IList<string> CommandBaseArguments,
   string? WorkingDirectoryParameterName,
   string? WorkingDirectoryPrefix,
   string? IntrinsicVerb
@@ -17,12 +17,12 @@ abstract public class NativeCodeCommand(
   private protected Localizer? WorkingDirectoryLocation
   { set; get; }
 
-  sealed override private protected IEnumerable<string> CommandArguments => [
+  sealed override private protected IList<string> CommandArguments => [
     .. CommandBaseArguments,
     .. ResolveWorkingDirectoryArguments(),
   ];
 
-  sealed override private protected IEnumerable<string> VerbArguments => DeferredVerbArgument is null
+  sealed override private protected IList<string> VerbArguments => DeferredVerbArgument is null
     ? ParseArguments()
     : [
         DeferredVerbArgument,
@@ -49,7 +49,7 @@ abstract public class NativeCodeCommand(
   virtual private protected void PreprocessOtherArguments()
   { }
 
-  virtual private protected IEnumerable<string> ParseArguments() => [];
+  virtual private protected IList<string> ParseArguments() => [];
 
   sealed override private protected void ClearArguments()
   {
@@ -75,7 +75,7 @@ abstract public class NativeCodeCommand(
     PreprocessOtherArguments();
   }
 
-  IEnumerable<string> ResolveWorkingDirectoryArguments()
+  IList<string> ResolveWorkingDirectoryArguments()
   {
     if (ReanchorPath(WorkingDirectory) == Pwd())
     {

@@ -18,10 +18,10 @@ abstract public partial class NativeCommand(
   private protected readonly LinkedList<string> Arguments = [];
   private protected readonly LinkedList<string> NativeArguments = [];
 
-  abstract private protected IEnumerable<string> CommandArguments
+  abstract private protected IList<string> CommandArguments
   { get; }
 
-  abstract private protected IEnumerable<string> VerbArguments
+  abstract private protected IList<string> VerbArguments
   { get; }
 
   virtual private protected SwitchBoard Uppercase
