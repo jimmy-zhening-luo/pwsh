@@ -17,8 +17,7 @@ abstract public partial class Git(string? IntrinsicVerb) : NativeCodeCommand(
 {
   private protected const string GitHelpLink = "https://git-scm.com/docs";
 
-  bool Newable
-  { set; get; }
+  bool newable;
 
   override private protected SwitchBoard Uppercase
   { get; } = new(
@@ -31,7 +30,7 @@ abstract public partial class Git(string? IntrinsicVerb) : NativeCodeCommand(
     switch (IntrinsicVerb)
     {
       case null when V:
-        Newable = true;
+        newable = true;
 
         break;
 
@@ -46,7 +45,7 @@ abstract public partial class Git(string? IntrinsicVerb) : NativeCodeCommand(
         out var newableVerb
       ):
         (
-          Newable,
+          newable,
           IntrinsicVerb
         ) = (
           true,
@@ -74,7 +73,7 @@ abstract public partial class Git(string? IntrinsicVerb) : NativeCodeCommand(
   {
     switch (WorkingDirectory)
     {
-      case "" when !Newable
+      case "" when !newable
       && !IsWorkingDirectoryLocal(Pwd()):
         throw new System.IO.DirectoryNotFoundException(
           "The current directory is not a git repository."
@@ -83,19 +82,19 @@ abstract public partial class Git(string? IntrinsicVerb) : NativeCodeCommand(
       case "":
       case var path when IsWorkingDirectoryLocal(
         path,
-        Newable
+        newable
       ):
         break;
 
       case var path when IsWorkingDirectoryRemote(
         path,
-        Newable
+        newable
       ):
         WorkingDirectoryLocation = Client.Environment.Folder.Code;
 
         break;
 
-      case var path when Newable
+      case var path when newable
       || IsWorkingDirectoryLocal(Pwd()):
         (
           DeferredVerbArgument,
