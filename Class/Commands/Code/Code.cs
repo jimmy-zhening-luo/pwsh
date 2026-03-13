@@ -75,7 +75,7 @@ abstract public class NativeCodeCommand(
     PreprocessOtherArguments();
   }
 
-  private IEnumerable<string> ResolveWorkingDirectoryArguments()
+  IEnumerable<string> ResolveWorkingDirectoryArguments()
   {
     if (ReanchorPath(WorkingDirectory) == Pwd())
     {

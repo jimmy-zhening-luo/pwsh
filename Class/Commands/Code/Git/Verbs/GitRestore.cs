@@ -16,7 +16,7 @@ sealed public class GitRestore() : Git("pull")
       @"PowerModule\Reset-GitRepository"
     );
 
-    AddBoundParameters();
+    _ = AddBoundParameters();
 
     BeginSteppablePipeline();
     ProcessSteppablePipeline();
