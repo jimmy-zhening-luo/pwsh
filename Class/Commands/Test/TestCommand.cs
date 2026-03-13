@@ -40,6 +40,9 @@ sealed public class TestCommand : CoreCommand
   {
     WriteObject($"The greeting was: {Greeting}");
     WriteObject($"The value of 'Switch' is: {Switch}");
+    WriteObject(
+      System.Diagnostics.Process.GetCurrentProcess()
+    );
   }
 
   string Greet(string name) => $"{Greeting}, {name}!";
