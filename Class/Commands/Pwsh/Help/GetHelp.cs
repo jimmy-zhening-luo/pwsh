@@ -30,36 +30,36 @@ sealed public class GetHelpOnline : CoreCommand
   public string[] Parameter
   { private get; init; } = [];
 
-  static IEnumerable<System.Uri> TryExtractHelpLink(Collection<PSObject> helpContent)
+  static List<System.Uri> TryExtractHelpLink(Collection<PSObject> helpContent)
   {
-    if (helpContent is [])
-    {
-      yield break;
-    }
+    List<System.Uri> helpLinks = [];
 
-    dynamic pscustomobject = helpContent[default];
-
-    if (
-      pscustomobject
-        ?.relatedLinks
-        ?.navigationLink is IEnumerable<object> links
-    )
+    if (helpContent is [_])
     {
-      foreach (var link in links)
+      dynamic pscustomobject = helpContent[default];
+
+      if (
+        pscustomobject
+          ?.relatedLinks
+          ?.navigationLink is IEnumerable<object> links
+      )
       {
-        dynamic navigationLink = link;
-
-        if (
-          navigationLink?.Uri?.ToString() is string uri
-          && Client.Network.Url.ToAbsoluteHttpOrFileUri(uri) is { } url
-        )
+        foreach (var link in links)
         {
-          yield return url;
+          dynamic navigationLink = link;
+
+          if (
+            navigationLink?.Uri?.ToString() is string uri
+            && Client.Network.Url.ToAbsoluteHttpOrFileUri(uri) is { } url
+          )
+          {
+            helpLinks.Add(url);
+          }
         }
       }
     }
 
-    yield break;
+    return helpLinks;
   }
 
   sealed override private protected void Postprocess()
@@ -105,10 +105,11 @@ sealed public class GetHelpOnline : CoreCommand
 
     if (helpContent is not null)
     {
-      foreach (var link in TryExtractHelpLink(helpContent))
-      {
-        helpLinks.Add(link);
-      }
+      helpLinks.AddRange(
+        TryExtractHelpLink(
+          helpContent
+        )
+      );
 
       if (Parameter is not [])
       {
