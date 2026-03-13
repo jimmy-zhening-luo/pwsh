@@ -12,8 +12,6 @@ using SystemProcess = System.Diagnostics.Process;
 [OutputType(typeof(void))]
 public class StopTask : CoreCommand
 {
-  const string Terminal = "WindowsTerminal";
-
   [Parameter(
     ParameterSetName = StandardParameter.Name,
     Position = default,
@@ -92,7 +90,7 @@ public class StopTask : CoreCommand
     if (ParameterSetName is "InputObject")
     {
       KillProcesses(
-        processes,
+        InputObject,
         Descendant
       );
     }
