@@ -77,21 +77,23 @@ abstract public class NativeCodeCommand(
 
   IEnumerable<string> ResolveWorkingDirectoryArguments()
   {
-    if (ReanchorPath(WorkingDirectory) == Pwd())
+    var fullWorkingDirectory = ReanchorPath(WorkingDirectory);
+
+    if (fullWorkingDirectory == Pwd())
     {
-      return [];
+      yield break;
     }
 
-    var workingDirectoryArgument = string.Concat(
+    if (WorkingDirectoryParameterName is not null)
+    {
+      yield return WorkingDirectoryParameterName;
+    }
+
+    yield return string.Concat(
       WorkingDirectoryPrefix ?? string.Empty,
-      ReanchorPath(WorkingDirectory)
+      fullWorkingDirectory
     );
 
-    return WorkingDirectoryParameterName is null
-      ? [workingDirectoryArgument]
-      : [
-          WorkingDirectoryParameterName,
-          workingDirectoryArgument,
-        ];
+    yield break;
   }
 }
