@@ -13,7 +13,7 @@ abstract public class CodeNativeCommand(
 {
   private protected string? DeferredVerbArgument;
 
-  sealed override private protected Localizer? Location => location;
+  sealed override private protected Localizer? Location => WorkingDirectoryLocation;
   private protected Localizer? WorkingDirectoryLocation
   { set; get; }
 
