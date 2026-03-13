@@ -186,6 +186,34 @@ abstract public partial class NativeCommand(
     );
   }
 
+  virtual private protected void ClearArguments()
+  {
+    ClearFlags();
+    ClearArgumentList();
+  }
+
+  private protected void ClearFlags() => (
+    D,
+    E,
+    I,
+    O,
+    P,
+    V
+  ) = (
+    default,
+    default,
+    default,
+    default,
+    default,
+    default
+  );
+
+  private protected void ClearArgumentList()
+  {
+    Arguments.Clear();
+    NativeArguments.Clear();
+  }
+
   private protected void AddFirst(string argument) => _ = IsNativeArgument(argument)
     ? NativeArguments.AddFirst(argument)
     : Arguments.AddFirst(argument);

@@ -51,6 +51,13 @@ abstract public class NativeCodeCommand(
 
   virtual private protected IEnumerable<string> ParseArguments() => [];
 
+  sealed override private protected void ClearArguments()
+  {
+    DeferredVerbArgument = default;
+
+    base.ClearArguments();
+  }
+
   sealed override private protected void PreprocessArguments()
   {
     if (

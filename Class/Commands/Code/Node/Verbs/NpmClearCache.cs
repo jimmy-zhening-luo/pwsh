@@ -10,31 +10,11 @@ sealed public class NpmClearCache() : Npm("cache")
 {
   sealed override private protected void PreprocessOtherArguments()
   {
-    (
-      WorkingDirectory,
-      DeferredVerbArgument,
-      NoThrow,
-      D,
-      E,
-      I,
-      O,
-      P,
-      V
-    ) = (
-      string.Empty,
-      default,
-      default,
-      default,
-      default,
-      default,
-      default,
-      default,
-      default
-    );
+    WorkingDirectory = string.Empty;
 
-    Arguments.Clear();
-    NativeArguments.Clear();
-    _ = NativeArguments.AddLast("--force");
+    ClearArguments();
+
+    AddLast("--force");
   }
 
   sealed override private protected IEnumerable<string> ParseArguments() => ["clean"];

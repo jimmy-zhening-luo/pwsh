@@ -10,29 +10,10 @@ sealed public class GitRestore() : Git("pull")
 {
   sealed override private protected void PreprocessOtherArguments()
   {
-    if (DeferredVerbArgument is not null)
-    {
-      _ = Arguments.AddFirst(DeferredVerbArgument);
-      DeferredVerbArgument = default;
-    }
-
-    var arguments = new string[Arguments.Count];
-    Arguments.CopyTo(arguments, default);
-    Arguments.Clear();
+    ClearArguments();
 
     _ = AddCommand(@"PowerModule\Reset-GitRepository")
-      .AddParameter(
-        "ArgumentList",
-        arguments
-      );
-
-    if (WorkingDirectory is not "")
-    {
-      _ = AddParameter(
-        "WorkingDirectory",
-        WorkingDirectory
-      );
-    }
+      .AddBoundParameters();
 
     BeginSteppablePipeline();
     ProcessSteppablePipeline();
