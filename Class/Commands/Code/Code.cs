@@ -2,10 +2,10 @@ namespace PowerModule.Commands.Code;
 
 abstract public class NativeCodeCommand(
   string CommandPath,
+  string? IntrinsicVerb,
   string[] CommandBaseArguments,
   string? WorkingDirectoryParameterName,
-  string? WorkingDirectoryPrefix,
-  string? IntrinsicVerb
+  string? WorkingDirectoryPrefix = default
 ) : NativeCommand(
   CommandPath,
   IntrinsicVerb

@@ -6,13 +6,12 @@ namespace PowerModule.Commands.Code.Git;
 )]
 abstract public partial class Git(string? IntrinsicVerb) : NativeCodeCommand(
   Client.Environment.Application.Git,
+  IntrinsicVerb,
   [
     "-c",
     "color.ui=always",
   ],
-  "-C",
-  default,
-  IntrinsicVerb
+  "-C"
 )
 {
   private protected const string GitHelpLink = "https://git-scm.com/docs";
