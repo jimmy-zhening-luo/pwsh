@@ -9,15 +9,17 @@ namespace PowerModule.Commands.Browse.Test;
 [OutputType(typeof(System.Uri))]
 sealed public class TestUrl : CoreCommand
 {
-  static IEnumerable<System.Uri> EnumerateSupportedUri(
-    IEnumerable<System.Uri> uris
+  static List<System.Uri> FilterSupportedUri(
+    System.Uri[] uris
   )
   {
+    List<System.Uri> supportedUris = [];
+
     foreach (var uri in uris)
     {
       if (Client.Network.Url.IsHttpOrFile(uri))
       {
-        yield return uri;
+        supportedUris.Add(uri);
       }
       else if (
         !uri.IsAbsoluteUri
@@ -26,17 +28,19 @@ sealed public class TestUrl : CoreCommand
         ) is { } httpUri
       )
       {
-        yield return httpUri;
+        supportedUris.Add(httpUri);
       }
     }
 
-    yield break;
+    return supportedUris;
   }
 
-  static IEnumerable<System.Uri> EnumerateReachableUri(
-    IEnumerable<System.Uri> uris
+  static List<System.Uri> FilterReachableUri(
+    List<System.Uri> uris
   )
   {
+    List<System.Uri> reachableUris = [];
+
     foreach (var uri in uris)
     {
       if (
@@ -47,11 +51,11 @@ sealed public class TestUrl : CoreCommand
         && Client.Network.Url.TestHttp(uri)
       )
       {
-        yield return uri;
+        reachableUris.Add(uri);
       }
     }
 
-    yield break;
+    return reachableUris;
   }
 
   [Parameter(
@@ -67,8 +71,8 @@ sealed public class TestUrl : CoreCommand
   { get; init; }
 
   sealed override private protected void Process() => WriteObject(
-    EnumerateReachableUri(
-      EnumerateSupportedUri(
+    FilterReachableUri(
+      FilterSupportedUri(
         Uri
       )
     ),
