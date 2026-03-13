@@ -1,6 +1,6 @@
 namespace PowerModule.Commands.Shell.Kill.Task;
 
-using Process = System.Diagnostics.Process;
+using SystemProcess = System.Diagnostics.Process;
 
 [Cmdlet(
   VerbsLifecycle.Stop,
@@ -41,28 +41,28 @@ public class StopTask : CoreCommand
     Mandatory = true,
     Position = default,
     ValueFromPipeline = true,
-    HelpMessage = "Process objects to stop"
+    HelpMessage = "Process items to stop"
   )]
   [AllowEmptyCollection]
   [ValidateNotNull]
-  required public Process[] InputObject
+  required public SystemProcess[] InputObject
   { get; init; }
 
   [Parameter(
-    HelpMessage = "Stop the entire process tree (the processe and all of its descendants)"
+    HelpMessage = "Stop the entire process tree (the processes and all of their descendants)"
   )]
   public SwitchParameter Descendant
   { private protected get; init; }
 
   static void IsTerminalChild(
-    Process process,
+    SystemProcess process,
     bool entireProcessTree = default
   ) => process.Parent.ProcessName is Terminal;
 
   static void KillProcess(
     int pid,
     bool entireProcessTree = default
-  ) => Process
+  ) => SystemProcess
     .GetProcessById(pid)
     .Kill(entireProcessTree);
 
@@ -72,7 +72,7 @@ public class StopTask : CoreCommand
   )
   {
     foreach (
-      var process in Process.GetProcessesByName(
+      var process in SystemProcess.GetProcessesByName(
         name
       )
     )
@@ -82,7 +82,7 @@ public class StopTask : CoreCommand
   }
 
   static void KillProcesses(
-    Process[] processes,
+    SystemProcess[] processes,
     bool entireProcessTree = default
   )
   {
