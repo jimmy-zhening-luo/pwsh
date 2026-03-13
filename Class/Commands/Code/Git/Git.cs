@@ -1,13 +1,13 @@
 namespace PowerModule.Commands.Code.Git;
 
-abstract public partial class GitCommand(string? IntrinsicVerb) : CodeNativeCommand(IntrinsicVerb)
+abstract public partial class GitCommand(string? IntrinsicVerb) : CodeNativeCommand(
+  Client.Environment.Application.Git,
+  IntrinsicVerb
+)
 {
   private protected const string GitHelpLink = "https://git-scm.com/docs";
 
   bool newable;
-
-  sealed override private protected string CommandPath
-  { get; } = Client.Environment.Application.Git;
 
   override private protected SwitchBoard Uppercase
   { get; } = new(

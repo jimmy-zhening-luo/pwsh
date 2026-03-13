@@ -1,9 +1,14 @@
 namespace PowerModule.Commands.Code;
 
 abstract public class CodeNativeCommand(
+  string CommandPath,
   string? IntrinsicVerb,
   bool SkipSsh = default
-) : NativeCommand(IntrinsicVerb, SkipSsh)
+) : NativeCommand(
+  CommandPath,
+  IntrinsicVerb,
+  SkipSsh
+)
 {
   private protected string? DeferredVerbArgument;
 

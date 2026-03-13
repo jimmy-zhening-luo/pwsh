@@ -1,6 +1,7 @@
 namespace PowerModule.Commands;
 
 abstract public partial class NativeCommand(
+  string CommandPath,
   string? IntrinsicVerb,
   bool SkipSsh = default
 ) : CoreCommand(SkipSsh)
@@ -16,9 +17,6 @@ abstract public partial class NativeCommand(
 
   private protected readonly LinkedList<string> Arguments = [];
   private protected readonly LinkedList<string> NativeArguments = [];
-
-  abstract private protected string CommandPath
-  { get; }
 
   abstract private protected IEnumerable<string> CommandArguments
   { get; }

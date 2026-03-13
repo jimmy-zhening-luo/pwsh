@@ -1,11 +1,10 @@
 namespace PowerModule.Commands.Code.Node;
 
-abstract public partial class NodeCommand(string? IntrinsicVerb) : CodeNativeCommand(IntrinsicVerb)
+abstract public partial class NodeCommand(string? IntrinsicVerb) : CodeNativeCommand(
+  Client.Environment.Application.Npm,
+  IntrinsicVerb)
 {
   private protected const string NpmHelpLink = "https://docs.npmjs.com/cli/commands";
-
-  sealed override private protected string CommandPath
-  { get; } = Client.Environment.Application.Npm;
 
   override private protected SwitchBoard Uppercase
   { get; } = new(
