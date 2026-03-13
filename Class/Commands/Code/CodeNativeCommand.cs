@@ -2,6 +2,7 @@ namespace PowerModule.Commands.Code;
 
 abstract public class CodeNativeCommand(
   string CommandPath,
+  IEnumerable<string> CommandBaseArguments,
   string? IntrinsicVerb,
   bool SkipSsh = default
 ) : NativeCommand(
@@ -11,9 +12,6 @@ abstract public class CodeNativeCommand(
 )
 {
   private protected string? DeferredVerbArgument;
-
-  abstract private protected IEnumerable<string> CommandBaseArguments
-  { get; }
 
   abstract private protected IEnumerable<string> WorkingDirectoryArguments
   { get; }

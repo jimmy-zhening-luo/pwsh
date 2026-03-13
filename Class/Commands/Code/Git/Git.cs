@@ -2,6 +2,10 @@ namespace PowerModule.Commands.Code.Git;
 
 abstract public partial class GitCommand(string? IntrinsicVerb) : CodeNativeCommand(
   Client.Environment.Application.Git,
+  [
+    "-c",
+    "color.ui=always",
+  ],
   IntrinsicVerb
 )
 {
@@ -14,12 +18,6 @@ abstract public partial class GitCommand(string? IntrinsicVerb) : CodeNativeComm
     E: true,
     P: true
   );
-
-  sealed override private protected IEnumerable<string> CommandBaseArguments
-  { get; } = [
-    "-c",
-    "color.ui=always",
-  ];
 
   sealed override private protected IEnumerable<string> WorkingDirectoryArguments => [
     "-C",

@@ -2,7 +2,9 @@ namespace PowerModule.Commands.Code.Node;
 
 abstract public partial class NodeCommand(string? IntrinsicVerb) : CodeNativeCommand(
   Client.Environment.Application.Npm,
-  IntrinsicVerb)
+  ["--color=always"],
+  IntrinsicVerb
+)
 {
   private protected const string NpmHelpLink = "https://docs.npmjs.com/cli/commands";
 
@@ -12,9 +14,6 @@ abstract public partial class NodeCommand(string? IntrinsicVerb) : CodeNativeCom
     E: true,
     P: true
   );
-
-  sealed override private protected IEnumerable<string> CommandBaseArguments
-  { get; } = ["--color=always"];
 
   sealed override private protected IEnumerable<string> WorkingDirectoryArguments => [$"--prefix={Pwd(WorkingDirectory)}"];
 
