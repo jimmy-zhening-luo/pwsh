@@ -5,8 +5,8 @@ sealed class CompletionsAttribute(params string[] Domain) : CompletionsAttribute
   public string[] Domain
   { get; } = Domain;
 }
-abstract class CompletionsAttribute<TEnumerable>(
-  TEnumerable Domain) : Factory.SetCompleterFactory<TEnumerable>(Domain) where TEnumerable : ICollection<string>
+abstract class CompletionsAttribute<TCollection>(
+  TCollection Domain) : Factory.SetCompleterFactory<TCollection>(Domain) where TCollection : ICollection<string>
 {
-  sealed override private protected ICollection<string> EvaluateDomain(TEnumerable Domain) => Domain;
+  sealed override private protected ICollection<string> EvaluateDomain(TCollection Domain) => Domain;
 }

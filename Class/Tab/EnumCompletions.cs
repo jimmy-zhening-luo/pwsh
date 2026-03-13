@@ -39,8 +39,6 @@ sealed class EnumCompletionsAttribute(System.Type EnumType) : Factory.SetComplet
       }
     }
 
-
-
     if (Include is not null)
     {
       domain.AddRange(Include);
