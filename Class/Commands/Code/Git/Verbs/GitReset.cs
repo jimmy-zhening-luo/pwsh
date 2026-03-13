@@ -67,11 +67,13 @@ sealed public partial class GitReset() : Git("reset")
 
   sealed override private protected void PreprocessOtherArguments()
   {
-    if (HasThrowawayWorkingDirectory())
+    if (DeferredVerbArgument is not "")
     {
       if (Tree is "")
       {
-        var treeMatch = GitTreeRegex().Match(WorkingDirectory);
+        var treeMatch = GitTreeRegex().Match(
+          DeferredVerbArgument
+        );
 
         if (
           treeMatch.Success
@@ -93,15 +95,15 @@ sealed public partial class GitReset() : Git("reset")
         }
         else
         {
-          _ = Arguments.AddFirst(WorkingDirectory);
+          _ = Arguments.AddFirst(DeferredVerbArgument);
         }
       }
       else
       {
-        _ = Arguments.AddFirst(WorkingDirectory);
+        _ = Arguments.AddFirst(DeferredVerbArgument);
       }
 
-      WorkingDirectory = string.Empty;
+      DeferredVerbArgument = string.Empty;
     }
 
     if (Tree is not "")

@@ -113,11 +113,6 @@ abstract public partial class Git(string? IntrinsicVerb) : NativeCodeCommand(
     }
   }
 
-  private protected bool HasThrowawayWorkingDirectory() => WorkingDirectory is not ""
-  && IsWorkingDirectoryLocal(Pwd())
-  && !IsWorkingDirectoryLocal(WorkingDirectory)
-  && !IsWorkingDirectoryRemote(WorkingDirectory);
-
   private bool IsWorkingDirectoryLocal(
     string path,
     bool newable = default

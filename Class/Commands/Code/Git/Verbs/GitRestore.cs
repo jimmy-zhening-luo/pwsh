@@ -10,10 +10,10 @@ sealed public class GitRestore() : Git("pull")
 {
   sealed override private protected void PreprocessOtherArguments()
   {
-    if (HasThrowawayWorkingDirectory())
+    if (DeferredVerbArgument is not "")
     {
-      _ = Arguments.AddFirst(WorkingDirectory);
-      WorkingDirectory = string.Empty;
+      _ = Arguments.AddFirst(DeferredVerbArgument);
+      DeferredVerbArgument = string.Empty;
     }
 
     var arguments = new string[Arguments.Count];

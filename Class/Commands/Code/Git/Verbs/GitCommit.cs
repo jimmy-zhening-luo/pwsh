@@ -38,10 +38,10 @@ sealed public class GitCommit() : Git("commit")
       AddFirst(Message);
     }
 
-    if (HasThrowawayWorkingDirectory())
+    if (DeferredVerbArgument is not "")
     {
-      _ = Arguments.AddFirst(WorkingDirectory);
-      WorkingDirectory = string.Empty;
+      _ = Arguments.AddFirst(DeferredVerbArgument);
+      DeferredVerbArgument = string.Empty;
     }
 
     if (NativeArguments.Contains(FlagAllowEmpty))
