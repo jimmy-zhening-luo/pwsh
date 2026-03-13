@@ -94,10 +94,8 @@ sealed public class GitCommit() : Git("commit")
     }
   }
 
-  sealed override private protected IEnumerable<string> ParseArguments() => Message is ""
-  ? []
-  : [
-      "-m",
-      Message
-    ];
+  sealed override private protected IEnumerable<string> ParseArguments() => [
+    "-m",
+    Message,
+  ];
 }
