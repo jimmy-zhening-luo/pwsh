@@ -8,8 +8,8 @@ namespace PowerModule.Commands.Code.Node;
 [Alias("n")]
 sealed public class NpmCli() : Npm(default)
 {
-  new public SwitchParameter V
-  { get; set; }
+  new internal SwitchParameter V
+  { get; }
 
   [Parameter(
     Position = default,

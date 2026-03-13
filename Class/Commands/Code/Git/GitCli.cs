@@ -8,8 +8,8 @@ namespace PowerModule.Commands.Code.Git;
 [Alias("g")]
 sealed public class GitCli() : Git(default)
 {
-  new public SwitchParameter V
-  { get; set; }
+  new internal SwitchParameter V
+  { get; }
 
   [Parameter(
     Position = default,
