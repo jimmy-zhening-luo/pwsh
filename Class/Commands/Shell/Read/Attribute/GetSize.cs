@@ -3,13 +3,12 @@ namespace PowerModule.Commands.Shell.Read.Attribute;
 [Cmdlet(
   VerbsCommon.Get,
   "Size",
-  DefaultParameterSetName = "String",
-  HelpUri = $"{HelpLink}2096492"
+  DefaultParameterSetName = "Unit"
 )]
 [Alias("sz", "size")]
 [OutputType(
   typeof(string),
-  ParameterSetName = ["String"]
+  ParameterSetName = ["Unit"]
 )]
 [OutputType(
   typeof(double),
@@ -28,7 +27,7 @@ sealed public class GetSize : CoreCommand
   }
 
   [Parameter(
-    ParameterSetName = "String",
+    ParameterSetName = "Unit",
     Position = default,
     ValueFromPipeline = true
   )]
@@ -50,16 +49,16 @@ sealed public class GetSize : CoreCommand
   string[] paths = [];
 
   [Parameter(
-    ParameterSetName = "String",
+    ParameterSetName = "Unit",
     Position = 1,
-    HelpMessage = "Unit in which to return the size"
+    HelpMessage = "Get the size as the specified unit"
   )]
   public DiskSizeUnit Unit
   { private get; init; } = DiskSizeUnit.kb;
 
   [Parameter(
     ParameterSetName = "Number",
-    HelpMessage = "If specified, returns the size as the number of bytes instead of a formatted string"
+    HelpMessage = "Get the size as total byte count"
   )]
   public SwitchParameter Number
   { private get; init; }
