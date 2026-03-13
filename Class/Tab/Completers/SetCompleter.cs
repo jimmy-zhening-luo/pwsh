@@ -4,7 +4,7 @@ sealed class SetCompleter(
   CompletionResultType CompletionType,
   CompletionCase Case,
   ICollection<string> Domain
-) : Intrinsics.TCompleter(CompletionType, Case)
+) : Intrinsics.Completer(CompletionType, Case)
 {
   sealed override private protected IEnumerable<Intrinsics.ICompleter.CompletionResultRecord> GenerateCompletion(string wordToComplete)
   {
