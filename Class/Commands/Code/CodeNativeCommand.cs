@@ -17,6 +17,7 @@ abstract public class CodeNativeCommand(
   { get; }
 
   sealed override private protected IEnumerable<string> CommandArguments => WorkingDirectory is ""
+  || Pwd(WorkingDirectory) == Pwd()
     ? CommandBaseArguments
     : [
         .. CommandBaseArguments,
