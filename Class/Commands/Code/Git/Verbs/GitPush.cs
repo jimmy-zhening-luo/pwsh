@@ -12,8 +12,8 @@ sealed public class GitPush() : GitCommand("push")
   {
     if (
       WorkingDirectory is not ""
-      && ResolveWorkingDirectory(Pwd()) is not ""
-      && ResolveWorkingDirectory(WorkingDirectory) is ""
+      && IsWorkingDirectory(Pwd())
+      && !IsWorkingDirectory(WorkingDirectory)
     )
     {
       _ = Arguments.AddFirst(WorkingDirectory);

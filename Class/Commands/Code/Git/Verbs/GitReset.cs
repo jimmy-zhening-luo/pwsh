@@ -69,8 +69,8 @@ sealed public partial class GitReset() : GitCommand("reset")
   {
     if (
       WorkingDirectory is not ""
-      && ResolveWorkingDirectory(Pwd()) is not ""
-      && ResolveWorkingDirectory(WorkingDirectory) is ""
+      && IsWorkingDirectory(Pwd())
+      && !IsWorkingDirectory(WorkingDirectory)
     )
     {
       if (Tree is "")

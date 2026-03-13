@@ -6,6 +6,8 @@ abstract public partial class GitCommand(string? IntrinsicVerb) : CodeNativeComm
     "-c",
     "color.ui=always",
   ],
+  "-C",
+  default,
   IntrinsicVerb
 )
 {
@@ -18,11 +20,6 @@ abstract public partial class GitCommand(string? IntrinsicVerb) : CodeNativeComm
     E: true,
     P: true
   );
-
-  sealed override private protected IEnumerable<string> WorkingDirectoryArguments => [
-    "-C",
-    WorkingDirectory,
-  ];
 
   sealed override private protected void PreprocessIntrinsicVerb()
   {
@@ -110,6 +107,18 @@ abstract public partial class GitCommand(string? IntrinsicVerb) : CodeNativeComm
     }
   }
 
+  private protected bool IsWorkingDirectory(
+    string path,
+    bool newable = default
+  ) => IsWorkingDirectoryLocal(
+    path,
+    newable
+  )
+  || IsWorkingDirectoryRemote(
+    path,
+    newable
+  );
+
   private protected bool IsWorkingDirectoryLocal(
     string path,
     bool newable = default
@@ -147,7 +156,6 @@ abstract public partial class GitCommand(string? IntrinsicVerb) : CodeNativeComm
       : string.Empty;
 
   private string GetWorkingDirectoryTestPath(
-    string path,
     bool newable,
     bool remote = default
   ) => System.IO.Path.Combine(

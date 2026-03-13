@@ -3,6 +3,8 @@ namespace PowerModule.Commands.Code.Node;
 abstract public partial class NodeCommand(string? IntrinsicVerb) : CodeNativeCommand(
   Client.Environment.Application.Npm,
   ["--color=always"],
+  default,
+  "--prefix=",
   IntrinsicVerb
 )
 {
@@ -14,8 +16,6 @@ abstract public partial class NodeCommand(string? IntrinsicVerb) : CodeNativeCom
     E: true,
     P: true
   );
-
-  sealed override private protected IEnumerable<string> WorkingDirectoryArguments => [$"--prefix={Pwd(WorkingDirectory)}"];
 
   sealed override private protected void PreprocessIntrinsicVerb()
   {

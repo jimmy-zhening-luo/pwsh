@@ -3,6 +3,8 @@ namespace PowerModule.Commands.Code;
 abstract public class CodeNativeCommand(
   string CommandPath,
   IEnumerable<string> CommandBaseArguments,
+  string? WorkingDirectoryParameterName,
+  string? WorkingDirectoryPrefix,
   string? IntrinsicVerb
 ) : NativeCommand(
   CommandPath,
@@ -11,15 +13,12 @@ abstract public class CodeNativeCommand(
 {
   private protected string? DeferredVerbArgument;
 
-  abstract private protected IEnumerable<string> WorkingDirectoryArguments
-  { get; }
-
   sealed override private protected IEnumerable<string> CommandArguments => WorkingDirectory is ""
   || Pwd(WorkingDirectory) == Pwd()
     ? CommandBaseArguments
     : [
         .. CommandBaseArguments,
-        .. WorkingDirectoryArguments,
+        .. GetWorkingDirectory(),
       ];
 
   sealed override private protected IEnumerable<string> VerbArguments => DeferredVerbArgument is null
@@ -66,5 +65,20 @@ abstract public class CodeNativeCommand(
     PreprocessOtherArguments();
     PreprocessIntrinsicVerb();
     PreprocessWorkingDirectory();
+  }
+
+  private protected IEnumerable<string> GetWorkingDirectory()
+  {
+    var workingDirectoryArgument = string.Concat(
+      WorkingDirectoryPrefix ?? string.Empty
+      Pwd(WorkingDirectory),
+    );
+
+    return WorkingDirectoryParameterName is null
+      ? [workingDirectoryArgument]
+      : [
+          WorkingDirectoryParameterName,
+          workingDirectoryArgument,
+        ];
   }
 }
