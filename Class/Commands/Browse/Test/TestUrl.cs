@@ -9,9 +9,7 @@ namespace PowerModule.Commands.Browse.Test;
 [OutputType(typeof(System.Uri))]
 sealed public class TestUrl : CoreCommand
 {
-  static List<System.Uri> FilterSupportedUri(
-    System.Uri[] uris
-  )
+  static List<System.Uri> FilterSupportedUri(System.Uri[] uris)
   {
     List<System.Uri> supportedUris = [];
 
@@ -35,9 +33,7 @@ sealed public class TestUrl : CoreCommand
     return supportedUris;
   }
 
-  static List<System.Uri> FilterReachableUri(
-    List<System.Uri> uris
-  )
+  static List<System.Uri> FilterReachableUri(List<System.Uri> uris)
   {
     List<System.Uri> reachableUris = [];
 
