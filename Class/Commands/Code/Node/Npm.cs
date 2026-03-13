@@ -19,25 +19,25 @@ abstract public partial class Npm(string? IntrinsicVerb) : NativeCodeCommand(
 
   sealed override private protected void PreprocessIntrinsicVerb()
   {
-    switch (IntrinsicVerb)
+    switch (
+      IntrinsicVerb?.ToLower(
+        Client.StringInput.InvariantCulture
+      )
+    )
     {
-      case { } verb when Aliases.TryGetValue(
-        verb.ToLower(
-          Client.StringInput.InvariantCulture
-        ),
-        out var alias
-      ):
-        IntrinsicVerb = alias;
-
-        break;
-
       case { } verb when Verbs.TryGetValue(
-        verb.ToLower(
-          Client.StringInput.InvariantCulture
-        ),
+        verb,
         out var exactVerb
       ):
         IntrinsicVerb = exactVerb;
+
+        break;
+
+      case { } verb when Aliases.TryGetValue(
+        verb,
+        out var alias
+      ):
+        IntrinsicVerb = alias;
 
         break;
 
