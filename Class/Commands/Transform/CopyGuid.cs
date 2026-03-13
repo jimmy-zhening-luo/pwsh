@@ -10,16 +10,10 @@ namespace PowerModule.Commands.Transform;
 sealed public class CopyGuid : CoreCommand
 {
   [Parameter(
-    HelpMessage = "Uppercase GUID"
+    HelpMessage = "Get Guid in uppercase"
   )]
   [Alias("Case")]
   public SwitchParameter Uppercase
-  { private get; init; }
-
-  [Parameter(
-    HelpMessage = "Only copy GUID to clipboard, omit console output"
-  )]
-  public SwitchParameter Silent
   { private get; init; }
 
   sealed override private protected void Postprocess()
@@ -31,14 +25,11 @@ sealed public class CopyGuid : CoreCommand
     if (Uppercase)
     {
       guid = guid.ToUpper(
-        Client.StringInput.CurrentCulture
+        Client.StringInput.InvariantCulture
       );
     }
 
-    if (!Silent)
-    {
-      WriteObject(guid);
-    }
+    WriteObject(guid);
 
     _ = AddCommand(
       @"Microsoft.PowerShell.Management\Set-Clipboard"
