@@ -23,7 +23,7 @@ static class Handler
   );
   static internal void Edit(
     string path,
-    IList<string> arguments
+    string[] arguments
   ) => Start.CreateProcess(
     Environment.Application.VSCode,
     [
@@ -42,7 +42,7 @@ static class Handler
   static internal void Edit(
     string path,
     EditorProfile profile,
-    IList<string> arguments
+    string[] arguments
   ) => Edit(
     path,
     profile,
@@ -60,7 +60,7 @@ static class Handler
   static internal void Edit(
     string path,
     EditorWindow window,
-    IList<string> arguments
+    string[] arguments
   ) => Edit(
     path,
     window switch
@@ -90,7 +90,7 @@ static class Handler
     string path,
     EditorProfile profile,
     EditorWindow window,
-    IList<string> arguments
+    string[] arguments
   ) => Edit(
     path,
     window,
