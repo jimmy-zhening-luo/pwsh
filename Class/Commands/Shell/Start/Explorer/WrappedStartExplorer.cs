@@ -9,7 +9,6 @@ abstract public class WrappedStartExplorer() : WrappedCommand(
   abstract public string[] Path
   { get; init; }
 
-
   [Parameter]
   [SupportsWildcards]
   required public string Filter
