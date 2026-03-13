@@ -119,29 +119,24 @@ public class StopTask : CoreCommand
       case StandardParameter.Name:
         foreach (var name in Name)
         {
-          switch (name)
-          {
-            case "":
-              break;
-
-            case var n when int.TryParse(
+          if (
+            int.TryParse(
               n,
               out var pid
-            ):
-              KillProcess(
-                pid,
-                Descendant
-              );
-
-              break;
-
-            default:
-              KillProcesses(
-                name,
-                Descendant
+            )
+          )
+          {
+            KillProcess(
+              pid,
+              Descendant
             );
-
-              break;
+          }
+          else
+          {
+            KillProcesses(
+              name,
+              Descendant
+            );
           }
         }
 
