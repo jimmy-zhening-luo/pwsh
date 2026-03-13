@@ -121,7 +121,7 @@ public class StopTask : CoreCommand
         {
           if (
             int.TryParse(
-              n,
+              name,
               out var pid
             )
           )
