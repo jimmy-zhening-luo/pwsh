@@ -78,7 +78,9 @@ sealed public class GetCommandAlias : CoreCommand
       _ = definitions.Add("*");
     }
 
-    SortedDictionary<string, AliasInfo> commandAliasDictionary = [];
+    SortedDictionary<string, AliasInfo> commandAliasDictionary = new(
+      System.StringComparer.OrdinalIgnoreCase
+    );
 
     _ = AddCommand(
       @"Microsoft.PowerShell.Utility\Get-Alias"
@@ -105,17 +107,10 @@ sealed public class GetCommandAlias : CoreCommand
         aliasInfo.Name
       );
 
-      if (
-        !commandAliasDictionary.ContainsKey(
-          key
-        )
-      )
-      {
-        commandAliasDictionary.Add(
-          key,
-          aliasInfo
-        );
-      }
+      _ = commandAliasDictionary.TryAdd(
+        key,
+        aliasInfo
+      );
     }
 
     if (commandAliasDictionary.Count is not 0)

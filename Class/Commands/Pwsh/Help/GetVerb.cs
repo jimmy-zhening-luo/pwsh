@@ -123,17 +123,10 @@ sealed public class GetVerb : CoreCommand
 
       foreach (var verbObject in InvokePowerShell<VerbInfo>())
       {
-        if (
-          !verbDictionary.ContainsKey(
-            verbObject.Verb
-          )
-        )
-        {
-          verbDictionary.Add(
-            verbObject.Verb,
-            verbObject
-          );
-        }
+        _ = verbDictionary.TryAdd(
+          verbObject.Verb,
+          verbObject
+        );
       }
 
       if (verbDictionary.Count is not 0)

@@ -25,7 +25,7 @@ sealed public class GetTypeAccelerator : Cmdlet
         ?.GetValue(default) is System.Collections.IDictionary typeAccelerators
     )
     {
-      HashSet<string> uniqueTypes = new(System.StringComparer.OrdinalIgnoreCase);
+      SortedSet<string> uniqueTypes = new(System.StringComparer.OrdinalIgnoreCase);
 
       foreach (string type in typeAccelerators.Keys)
       {
@@ -33,10 +33,7 @@ sealed public class GetTypeAccelerator : Cmdlet
       }
 
       WriteObject(
-        new SortedSet<string>(
-          uniqueTypes,
-          System.StringComparer.OrdinalIgnoreCase
-        ),
+        uniqueTypes,
         true
       );
     }
