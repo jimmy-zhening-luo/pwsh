@@ -1,5 +1,7 @@
 namespace PowerModule.Commands.Shell.Kill.Task;
 
+using Process = System.Diagnostics.Process;
+
 [Cmdlet(
   VerbsLifecycle.Stop,
   "Task",
@@ -10,6 +12,8 @@ namespace PowerModule.Commands.Shell.Kill.Task;
 [OutputType(typeof(void))]
 public class StopTask : CoreCommand
 {
+  const string Terminal = "WindowsTerminal";
+
   [Parameter(
     ParameterSetName = StandardParameter.Name,
     Position = default,
@@ -41,7 +45,7 @@ public class StopTask : CoreCommand
   )]
   [AllowEmptyCollection]
   [ValidateNotNull]
-  required public System.Diagnostics.Process[] InputObject
+  required public Process[] InputObject
   { get; init; }
 
   [Parameter(
@@ -50,10 +54,15 @@ public class StopTask : CoreCommand
   public SwitchParameter Descendant
   { private protected get; init; }
 
+  static void IsTerminalChild(
+    Process process,
+    bool entireProcessTree = default
+  ) => process.Parent.ProcessName is Terminal;
+
   static void KillProcess(
     int pid,
     bool entireProcessTree = default
-  ) => System.Diagnostics.Process
+  ) => Process
     .GetProcessById(pid)
     .Kill(entireProcessTree);
 
@@ -63,10 +72,21 @@ public class StopTask : CoreCommand
   )
   {
     foreach (
-      var process in System.Diagnostics.Process.GetProcessesByName(
+      var process in Process.GetProcessesByName(
         name
       )
     )
+    {
+      process.Kill(entireProcessTree);
+    }
+  }
+
+  static void KillProcesses(
+    Process[] processes,
+    bool entireProcessTree = default
+  )
+  {
+    foreach (var process in processes)
     {
       process.Kill(entireProcessTree);
     }
