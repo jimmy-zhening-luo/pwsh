@@ -55,21 +55,9 @@ abstract public class WrappedCommand(
     {
       TransformPipelineInput();
 
-      if (
-        MyInvocation.BoundParameters.TryGetValue(
-          PipelineInput,
-          out var pipelineInput
-        )
-      )
-      {
-        ProcessSteppablePipeline(
-          pipelineInput
-        );
-      }
-      else
-      {
-        ProcessSteppablePipeline();
-      }
+      ProcessSteppablePipeline(
+        MyInvocation.BoundParameters[PipelineInput]
+      );
     }
     else
     {
