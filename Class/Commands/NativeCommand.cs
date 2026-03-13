@@ -36,7 +36,7 @@ abstract public partial class NativeCommand(
   [ValidateLength(1, int.MaxValue)]
   [Tab.PathCompletions]
   public string[] ArgumentList
-  { private get; init; } = [];q by
+  { private get; init; } = [];
 
   [Parameter(
     HelpMessage = "If an error is encountered, warn and continue instead of terminating execution"
