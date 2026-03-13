@@ -13,7 +13,7 @@ sealed public class OpenUrl() : CoreCommand(true)
   [Parameter(
     ParameterSetName = StandardParameter.Path,
     Position = default,
-    HelpMessage = "File path or URL to open, defaulting to the current directory"
+    HelpMessage = "File path or URL to open"
   )]
   [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions]

@@ -14,7 +14,7 @@ sealed public class ConvertToHex : Cmdlet
     Position = default,
     ValueFromPipeline = true,
     ValueFromRemainingArguments = true,
-    HelpMessage = "Integer(s) to convert to hexadecimal"
+    HelpMessage = "Integers to convert"
   )]
   [AllowEmptyCollection]
   [ValidateRange(ValidateRangeKind.NonNegative)]
@@ -22,7 +22,7 @@ sealed public class ConvertToHex : Cmdlet
   { get; init; }
 
   [Parameter(
-    HelpMessage = "Output hexadecimal letters in lowercase"
+    HelpMessage = "Output in lowercase"
   )]
   [Alias("Case")]
   public SwitchParameter Lowercase

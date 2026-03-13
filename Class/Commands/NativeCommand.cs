@@ -39,7 +39,7 @@ abstract public partial class NativeCommand(
   { private get; init; } = [];
 
   [Parameter(
-    HelpMessage = "When execution results in a non-zero exit code, warn and continue instead of terminating execution"
+    HelpMessage = "If an error is encountered, warn and continue instead of terminating execution"
   )]
   public SwitchParameter NoThrow
   { private protected get; set; }
