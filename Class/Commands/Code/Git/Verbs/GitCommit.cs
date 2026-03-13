@@ -71,7 +71,9 @@ sealed public class GitCommit() : Git("commit")
 
     if (!Staged)
     {
-      _ = AddCommand(@"PowerModule\Add-GitRepository");
+      _ = AddCommand(
+        @"PowerModule\Add-GitRepository"
+      );
 
       if (WorkingDirectory is not "")
       {
@@ -84,7 +86,6 @@ sealed public class GitCommit() : Git("commit")
       BeginSteppablePipeline();
       ProcessSteppablePipeline();
       EndSteppablePipeline();
-      ClearCommands();
 
       CheckNativeError(
         "git error when staging files for commit",

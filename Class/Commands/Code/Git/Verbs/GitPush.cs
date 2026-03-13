@@ -16,7 +16,9 @@ sealed public class GitPush() : Git("push")
       DeferredVerbArgument = default;
     }
 
-    _ = AddCommand(@"PowerModule\Get-GitRepository");
+    _ = AddCommand(
+      @"PowerModule\Get-GitRepository"
+    );
 
     if (WorkingDirectory is not "")
     {
@@ -29,7 +31,6 @@ sealed public class GitPush() : Git("push")
     BeginSteppablePipeline();
     ProcessSteppablePipeline();
     EndSteppablePipeline();
-    ClearCommands();
 
     CheckNativeError(
       "git error when pulling repository prior to pushing",

@@ -174,6 +174,8 @@ abstract public partial class NativeCommand(
 
     WriteDebug(commandScript);
 
+    ClearCommands();
+
     _ = AddScript(commandScript);
 
     BeginSteppablePipeline();

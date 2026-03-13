@@ -90,7 +90,9 @@ sealed public partial class GitReset() : Git("reset")
     {
       _ = NativeArguments.AddFirst(FlagHard);
 
-      _ = AddCommand(@"PowerModule\Add-GitRepository");
+      _ = AddCommand(
+        @"PowerModule\Add-GitRepository"
+      );
 
       if (WorkingDirectory is not "")
       {
@@ -103,7 +105,6 @@ sealed public partial class GitReset() : Git("reset")
       BeginSteppablePipeline();
       ProcessSteppablePipeline();
       EndSteppablePipeline();
-      ClearCommands();
 
       CheckNativeError(
         "git error when staging files for commit",
