@@ -71,32 +71,7 @@ sealed public partial class GitReset() : Git("reset")
     {
       if (Tree is "")
       {
-        var treeMatch = GitTreeRegex().Match(
-          DeferredVerbArgument
-        );
-
-        if (
-          treeMatch.Success
-          && treeMatch.Groups["Step"].Value is var step
-          && (
-            step is ""
-            || int.TryParse(
-              step,
-              out var _
-            )
-          )
-        )
-        {
-          var branching = treeMatch.Groups["Branching"].Value is not "" and var b
-            ? b
-            : "~";
-
-          tree = $"HEAD{branching}{step}";
-        }
-        else
-        {
-          _ = Arguments.AddFirst(DeferredVerbArgument);
-        }
+        Tree = DeferredVerbArgument;
       }
       else
       {
