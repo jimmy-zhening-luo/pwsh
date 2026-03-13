@@ -3,7 +3,7 @@ namespace PowerModule.Tab.Completers;
 sealed class SetCompleter(
   CompletionResultType CompletionType,
   CompletionCase Case,
-  IEnumerable<string> Domain
+  ICollection<string> Domain
 ) : Intrinsics.TCompleter(CompletionType, Case)
 {
   sealed override private protected IEnumerable<Intrinsics.ICompleter.CompletionResultRecord> GenerateCompletion(string wordToComplete)

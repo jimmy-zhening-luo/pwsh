@@ -5,11 +5,11 @@ abstract class SetCompleterFactory<TDomain>(TDomain Domain) : Intrinsics.TComple
   public CompletionResultType CompletionType
   { get; init; } = CompletionResultType.ParameterValue;
 
-  abstract private protected IEnumerable<string> EnumerateDomain(TDomain domain);
+  abstract private protected ICollection<string> EvaluateDomain(TDomain domain);
 
   sealed override public Completers.SetCompleter Create() => new(
     CompletionType,
     Case,
-    EnumerateDomain(Domain)
+    EvaluateDomain(Domain)
   );
 }

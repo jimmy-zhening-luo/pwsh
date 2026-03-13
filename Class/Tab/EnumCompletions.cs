@@ -14,7 +14,7 @@ sealed class EnumCompletionsAttribute(System.Type EnumType) : Factory.SetComplet
   public string[]? Exclude
   { get; init; }
 
-  sealed override private protected IEnumerable<string> EnumerateDomain(System.Type enumType)
+  sealed override private protected ICollection<string> EvaluateDomain(System.Type enumType)
   {
     HashSet<string> names = [.. System.Enum.GetNames(enumType)];
 
