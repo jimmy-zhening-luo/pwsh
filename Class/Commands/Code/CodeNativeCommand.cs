@@ -3,12 +3,10 @@ namespace PowerModule.Commands.Code;
 abstract public class CodeNativeCommand(
   string CommandPath,
   IEnumerable<string> CommandBaseArguments,
-  string? IntrinsicVerb,
-  bool SkipSsh = default
+  string? IntrinsicVerb
 ) : NativeCommand(
   CommandPath,
-  IntrinsicVerb,
-  SkipSsh
+  IntrinsicVerb
 )
 {
   private protected string? DeferredVerbArgument;
