@@ -7,8 +7,10 @@ namespace PowerModule.Commands.Code.Git.Verbs;
 [Alias("gpp")]
 sealed public class GitPullChild : CoreCommand
 {
-  static IEnumerable<string> EnumerateRepository()
+  static List<string> ListRepositories()
   {
+    List<string> repositories = [];
+
     foreach (
       var directory in System.IO.Directory.EnumerateDirectories(
         Client.Environment.Folder.Code()
@@ -24,11 +26,11 @@ sealed public class GitPullChild : CoreCommand
         )
       )
       {
-        yield return directory;
+        repositories.Add(directory);
       }
     }
 
-    yield break;
+    return repositories;
   }
 
   sealed override private protected void Postprocess()
@@ -39,7 +41,7 @@ sealed public class GitPullChild : CoreCommand
       Client.Environment.Application.Git
     )} -c color.ui=always -C";
 
-    foreach (var repository in EnumerateRepository())
+    foreach (var repository in ListRepositories())
     {
       ClearCommands();
 
