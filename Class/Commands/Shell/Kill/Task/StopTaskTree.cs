@@ -12,6 +12,6 @@ sealed public class StopTaskTree : StopTask
 {
   public StopTaskTree() => base.Descendant = true;
 
-  new public SwitchParameter Descendant
-  { get; init; }
+  new internal SwitchParameter Descendant
+  { get; }
 }

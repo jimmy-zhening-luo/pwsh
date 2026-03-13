@@ -46,8 +46,8 @@ sealed public class NpmUpdateVersion() : Npm("version")
     premajor,
   }
 
-  new public SwitchParameter V
-  { get; set; }
+  new internal SwitchParameter V
+  { get; }
 
   [Parameter(
     Position = default,
