@@ -30,8 +30,12 @@ sealed class PathCompleter : Intrinsics.Completer
     Flat,
     AllowReanchor
   ) = (
-    Client.File.PathString.Normalize(location) is var normalPath
-    && System.IO.Path.IsPathFullyQualified(normalPath)
+    Client.File.PathString.Normalize(
+      location
+    ) is var normalPath
+    && System.IO.Path.IsPathFullyQualified(
+      normalPath
+    )
       ? normalPath
       : Client.File.PathString.GetFullPathLocal(
       PowerModule.GetPowerShellHostLocation(),
