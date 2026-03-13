@@ -5,6 +5,7 @@ using static Client.File.Handler;
 abstract public class VirtualStartWorkspace() : CoreCommand(true)
 {
   EditorProfile profile;
+  string? argument;
 
   abstract public string Path
   { private protected get; init; }
@@ -24,10 +25,7 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
   [ValidateLength(1, int.MaxValue)]
   [Tab.PathCompletions]
   public string[] ArgumentList
-  {
-    init => arguments = new(value);
-  }
-  LinkedList<string> arguments = [];
+  { private get; init; } = [];
 
   [Parameter]
   public SwitchParameter Window
@@ -68,7 +66,7 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
       }
       else
       {
-        _ = arguments.AddFirst(Name);
+        argument = Name;
       }
     }
   }
@@ -84,6 +82,11 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
       : ReanchorPath(Path),
     profile,
     window,
-    arguments
+    argument is null
+      ? ArgumentList
+      : [
+          argument,
+          .. ArgumentList,
+        ]
   );
 }
