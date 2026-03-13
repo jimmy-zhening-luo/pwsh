@@ -12,6 +12,7 @@ sealed public class NodeClearCache() : NodeCommand("cache")
   {
     (
       WorkingDirectory,
+      DeferredVerbArgument,
       NoThrow,
       D,
       E,
@@ -21,6 +22,7 @@ sealed public class NodeClearCache() : NodeCommand("cache")
       V
     ) = (
       string.Empty,
+      default,
       default,
       default,
       default,
