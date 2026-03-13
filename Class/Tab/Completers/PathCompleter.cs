@@ -155,7 +155,7 @@ sealed class PathCompleter : Intrinsics.Completer
     );
   }
 
-  static Intrinsics.ICompleter.CompletionResultRecord CreateCompletionRecord(
+  static Intrinsics.ICompleter.Completion CreateCompletionRecord(
     string description,
     string accumulator,
     string filename,
@@ -175,7 +175,7 @@ sealed class PathCompleter : Intrinsics.Completer
     Description: description
   );
 
-  sealed override private protected IEnumerable<Intrinsics.ICompleter.CompletionResultRecord> GenerateCompletion(string wordToComplete)
+  sealed override private protected IEnumerable<Intrinsics.ICompleter.Completion> GenerateCompletion(string wordToComplete)
   {
     matched = default;
 
@@ -275,7 +275,7 @@ sealed class PathCompleter : Intrinsics.Completer
     yield break;
   }
 
-  IEnumerable<Intrinsics.ICompleter.CompletionResultRecord> Directories(
+  IEnumerable<Intrinsics.ICompleter.Completion> Directories(
     SearchContext searchContext,
     bool trailingSeparator = default
   ) => EnumerateResults(
@@ -287,7 +287,7 @@ sealed class PathCompleter : Intrinsics.Completer
     trailingSeparator
   );
 
-  IEnumerable<Intrinsics.ICompleter.CompletionResultRecord> Files(
+  IEnumerable<Intrinsics.ICompleter.Completion> Files(
     SearchContext searchContext
   ) => EnumerateResults(
     searchContext.Container.EnumerateFiles(
@@ -297,7 +297,7 @@ sealed class PathCompleter : Intrinsics.Completer
     searchContext.Accumulator
   );
 
-  IEnumerable<Intrinsics.ICompleter.CompletionResultRecord> EnumerateResults(
+  IEnumerable<Intrinsics.ICompleter.Completion> EnumerateResults(
     IEnumerable<System.IO.FileSystemInfo> items,
     string accumulator,
     bool trailingSeparator = default

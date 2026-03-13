@@ -1,8 +1,10 @@
 namespace PowerModule.Tab.Completers.Intrinsics;
 
+using CommandAst = System.Management.Automation.Language.CommandAst;
+
 interface ICompleter : IArgumentCompleter
 {
-  sealed private protected record CompletionResultRecord(
+  sealed private protected record Completion(
     string Result,
     string? DisplayName = default,
     string? Description = default
@@ -18,7 +20,7 @@ interface ICompleter : IArgumentCompleter
     string commandName,
     string parameterName,
     string wordToComplete,
-    System.Management.Automation.Language.CommandAst commandAst,
+    CommandAst commandAst,
     System.Collections.IDictionary fakeBoundParameters
   ) => WrapArgumentCompletionResult(
     GenerateCompletion(
@@ -31,7 +33,7 @@ interface ICompleter : IArgumentCompleter
     string commandName,
     string parameterName,
     string wordToComplete,
-    System.Management.Automation.Language.CommandAst commandAst,
+    CommandAst commandAst,
     System.Collections.IDictionary fakeBoundParameters
   ) => CompleteArgument(
     commandName,
@@ -41,9 +43,9 @@ interface ICompleter : IArgumentCompleter
     fakeBoundParameters
   );
 
-  private protected IEnumerable<CompletionResultRecord> GenerateCompletion(string wordToComplete);
+  private protected IEnumerable<Completion> GenerateCompletion(string wordToComplete);
 
-  private IEnumerable<CompletionResult> WrapArgumentCompletionResult(IEnumerable<CompletionResultRecord> completions)
+  private IEnumerable<CompletionResult> WrapArgumentCompletionResult(IEnumerable<Completion> completions)
   {
     foreach (var completion in completions)
     {

@@ -11,6 +11,6 @@ abstract class Completer(
   public CompletionCase Case
   { get; init; } = Case;
 
-  abstract private protected IEnumerable<ICompleter.CompletionResultRecord> GenerateCompletion(string wordToComplete);
-  IEnumerable<ICompleter.CompletionResultRecord> ICompleter.GenerateCompletion(string wordToComplete) => GenerateCompletion(wordToComplete);
+  abstract private protected IEnumerable<ICompleter.Completion> GenerateCompletion(string wordToComplete);
+  IEnumerable<ICompleter.Completion> ICompleter.GenerateCompletion(string wordToComplete) => GenerateCompletion(wordToComplete);
 }
