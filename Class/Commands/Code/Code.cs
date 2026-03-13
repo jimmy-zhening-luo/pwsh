@@ -64,8 +64,8 @@ abstract public class NativeCodeCommand(
     }
 
     PreprocessIntrinsicVerb();
-    PreprocessOtherArguments();
     PreprocessWorkingDirectory();
+    PreprocessOtherArguments();
   }
 
   private IEnumerable<string> ResolveWorkingDirectoryArguments()
