@@ -48,33 +48,22 @@ abstract public partial class NodeCommand(string? IntrinsicVerb) : CodeNativeCom
 
   sealed override private protected void PreprocessWorkingDirectory()
   {
-    switch (WorkingDirectory)
+    if (
+      !System.IO.File.Exists(
+        System.IO.Path.Combine(
+          Pwd(WorkingDirectory),
+          "package.json"
+        )
+      )
+    )
     {
-      case { } path when !IsNodePackage(path):
-        (
-          DeferredVerbArgument,
-          WorkingDirectory
-        ) = (
-          WorkingDirectory,
-          string.Empty
-        );
-
-        break;
-
-      case { } path when Pwd(path) == Pwd():
-        WorkingDirectory = string.Empty;
-
-        break;
-
-      default:
-        break;
+      (
+        DeferredVerbArgument,
+        WorkingDirectory
+      ) = (
+        WorkingDirectory,
+        string.Empty
+      );
     }
   }
-
-  private protected bool IsNodePackage(string path) => System.IO.File.Exists(
-    System.IO.Path.Combine(
-      Pwd(path),
-      "package.json"
-    )
-  );
 }
