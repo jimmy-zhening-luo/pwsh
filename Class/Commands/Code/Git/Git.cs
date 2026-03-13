@@ -110,6 +110,27 @@ abstract public partial class GitCommand(string? IntrinsicVerb) : CodeNativeComm
     }
   }
 
+  private protected bool IsWorkingDirectoryLocal(
+    string path,
+    bool newable = default
+  ) => System.IO.Directory.Exists(
+    GetWorkingDirectoryTestPath(
+      path,
+      newable
+    )
+  );
+
+  private protected bool IsWorkingDirectoryRemote(
+    string path,
+    bool newable = default
+  ) => System.IO.Directory.Exists(
+    GetWorkingDirectoryTestPath(
+      path,
+      newable,
+      true
+    )
+  );
+
   private protected string ResolveWorkingDirectory(
     string path,
     bool newable = default
@@ -132,4 +153,17 @@ abstract public partial class GitCommand(string? IntrinsicVerb) : CodeNativeComm
     )
       ? Client.Environment.Folder.Code(path)
       : string.Empty;
+
+  private string GetWorkingDirectoryTestPath(
+    string path,
+    bool newable,
+    bool remote = default
+  ) => System.IO.Path.Combine(
+    remote
+      ? Client.Environment.Folder.Code(path)
+      : Pwd(path),
+    newable
+      ? string.Empty
+      : ".git"
+  );
 }
