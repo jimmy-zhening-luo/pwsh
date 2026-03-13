@@ -1,15 +1,17 @@
 namespace PowerModule.Commands.Shell.Start.Workspace;
 
+using static Client.File.Handler;
+
 abstract public class VirtualStartWorkspace() : CoreCommand(true)
 {
-  Client.File.Handler.EditorProfile profile;
+  EditorProfile profile;
 
   abstract public string Path
   { private protected get; init; }
 
   [Parameter(Position = 1)]
   [ValidateNotNullOrWhiteSpace]
-  [Tab.EnumCompletions(typeof(Client.File.Handler.EditorProfile))]
+  [Tab.EnumCompletions(typeof(EditorProfile))]
   public string Name
   { private get; init; } = string.Empty;
 
@@ -30,10 +32,10 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
   [Parameter]
   public SwitchParameter Window
   {
-    private get => window is Client.File.Handler.EditorWindow.New;
-    set => window = Client.File.Handler.EditorWindow.New;
+    private get => window is EditorWindow.New;
+    set => window = EditorWindow.New;
   }
-  Client.File.Handler.EditorWindow window;
+  EditorWindow window;
 
   [Parameter]
   public SwitchParameter ReuseWindow
@@ -43,14 +45,14 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
   {
     if (ReuseWindow && !Window)
     {
-      window = Client.File.Handler.EditorWindow.Reuse;
+      window = EditorWindow.Reuse;
     }
 
     if (Name is not "")
     {
       if (
         new List<string>(
-          System.Enum.GetNames<Client.File.Handler.EditorProfile>()
+          System.Enum.GetNames<EditorProfile>()
         )
           .Find(
             pn => pn.StartsWith(
@@ -60,7 +62,7 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
           ) is { } profileName
         )
       {
-        profile = System.Enum.Parse<Client.File.Handler.EditorProfile>(
+        profile = System.Enum.Parse<EditorProfile>(
           profileName
         );
       }
@@ -71,7 +73,7 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
     }
   }
 
-  sealed override private protected void Process() => Client.File.Handler.Edit(
+  sealed override private protected void Process() => Edit(
     InCurrentLocation
     && Path is ""
     && (
