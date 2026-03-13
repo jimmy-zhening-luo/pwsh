@@ -92,7 +92,7 @@ sealed public class GetDirectoryRelative : WrappedGetDirectory
   sealed override public string[] Path
   { get; init; } = [];
 
-  sealed override private protected Localizer Location => () => Pwd(Client.File.PathString.ParentParent);
+  sealed override private protected Localizer Location => ParentParent;
 }
 
 [Cmdlet(

@@ -9,7 +9,7 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     Dispose(false);
   }
 
-  private protected delegate string Localizer();
+  private protected delegate string Localizer(string path = "");
   virtual private protected Localizer? Location
   { get; }
 
@@ -237,8 +237,9 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
 
     return [.. reanchoredPaths];
   }
-  private protected string ReanchorPath(string path) => Client.File.PathString.GetFullPathLocal(
-    (Location ?? Pwd)(),
+  private protected string ReanchorPath(string path) => (
+    Location ?? Pwd
+  )(
     path
   );
 
@@ -267,6 +268,12 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
   private protected string Parent() => Pwd(Client.File.PathString.Parent);
   private protected string Parent(string path) => Client.File.PathString.GetFullPathLocal(
     Parent(),
+    path
+  );
+
+  private protected string ParentParent() => Pwd(Client.File.PathString.ParentParent);
+  private protected string ParentParent(string path) => Client.File.PathString.GetFullPathLocal(
+    ParentParent(),
     path
   );
 

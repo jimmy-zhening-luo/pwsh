@@ -58,7 +58,7 @@ sealed public class StartWorkspaceRelative : VirtualStartWorkspace
   sealed override public string Path
   { private protected get; init; } = string.Empty;
 
-  sealed override private protected Localizer Location => () => Pwd(Client.File.PathString.ParentParent);
+  sealed override private protected Localizer Location => ParentParent;
 }
 
 [Cmdlet(
