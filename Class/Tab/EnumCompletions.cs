@@ -18,17 +18,14 @@ sealed class EnumCompletionsAttribute(System.Type EnumType) : Factory.SetComplet
   {
     HashSet<string> names = [.. System.Enum.GetNames(enumType)];
 
-    if (Exclude is not null or [])
+    if (Exclude is not null)
     {
       names.ExceptWith(Exclude);
     }
 
     if (Include is not null)
     {
-      foreach (var inclusion in Include)
-      {
-        _ = names.Add(inclusion);
-      }
+      names.UnionWith(Include);
     }
 
     return names;
