@@ -23,7 +23,7 @@ abstract public partial class Npm(string? IntrinsicVerb) : NativeCodeCommand(
     {
       case { } verb when Aliases.TryGetValue(
         verb.ToLower(
-          Client.StringInput.CurrentCulture
+          Client.StringInput.InvariantCulture
         ),
         out var alias
       ):
@@ -33,7 +33,7 @@ abstract public partial class Npm(string? IntrinsicVerb) : NativeCodeCommand(
 
       case { } verb when Verbs.TryGetValue(
         verb.ToLower(
-          Client.StringInput.CurrentCulture
+          Client.StringInput.InvariantCulture
         ),
         out var exactVerb
       ):

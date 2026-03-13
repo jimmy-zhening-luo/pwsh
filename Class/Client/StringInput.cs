@@ -13,7 +13,7 @@ static class StringInput
   internal const string EscapedSingleQuote = "''";
   internal const string EscapedDoubleQuote = "\\\"";
 
-  static internal CultureInfo CurrentCulture => currentCulture ??= CultureInfo.InvariantCulture;
+  static internal CultureInfo CurrentCulture => currentCulture ??= CultureInfo.CurrentCulture;
   static CultureInfo? currentCulture;
 
   static internal CultureInfo InvariantCulture => invariantCulture ??= CultureInfo.InvariantCulture;

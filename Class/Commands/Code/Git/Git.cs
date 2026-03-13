@@ -56,7 +56,7 @@ abstract public partial class Git(string? IntrinsicVerb) : NativeCodeCommand(
 
       case var verb when Verbs.TryGetValue(
         verb.ToLower(
-          Client.StringInput.CurrentCulture
+          Client.StringInput.InvariantCulture
         ),
         out var exactVerb
       ):
