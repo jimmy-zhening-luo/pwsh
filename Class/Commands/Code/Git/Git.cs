@@ -134,22 +134,14 @@ abstract public partial class GitCommand(string? IntrinsicVerb) : CodeNativeComm
   private protected string ResolveWorkingDirectory(
     string path,
     bool newable = default
-  ) => System.IO.Directory.Exists(
-    System.IO.Path.Combine(
-      Pwd(path),
-      newable
-        ? string.Empty
-        : ".git"
-    )
+  ) => IsWorkingDirectoryLocal(
+    path,
+    newable
   )
     ? Pwd(path)
-    : System.IO.Directory.Exists(
-      System.IO.Path.Combine(
-        Client.Environment.Folder.Code(path),
-        newable
-          ? string.Empty
-          : ".git"
-      )
+    : IsWorkingDirectoryRemote(
+      path,
+      newable
     )
       ? Client.Environment.Folder.Code(path)
       : string.Empty;
