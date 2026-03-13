@@ -17,13 +17,10 @@ abstract public class CodeNativeCommand(
   private protected Localizer? WorkingDirectoryLocation
   { set; get; }
 
-  sealed override private protected IEnumerable<string> CommandArguments => WorkingDirectory is ""
-  || Pwd(WorkingDirectory) == Pwd()
-    ? CommandBaseArguments
-    : [
-        .. CommandBaseArguments,
-        .. ResolveWorkingDirectoryArguments(),
-      ];
+  sealed override private protected IEnumerable<string> CommandArguments => [
+    .. CommandBaseArguments,
+    .. ResolveWorkingDirectoryArguments(),
+  ];
 
   sealed override private protected IEnumerable<string> VerbArguments => DeferredVerbArgument is null
     ? ParseArguments()
@@ -71,11 +68,16 @@ abstract public class CodeNativeCommand(
     PreprocessWorkingDirectory();
   }
 
-  private protected IEnumerable<string> ResolveWorkingDirectoryArguments()
+  private IEnumerable<string> ResolveWorkingDirectoryArguments()
   {
+    if (ReanchorPath(WorkingDirectory) == Pwd())
+    {
+      return [];
+    }
+
     var workingDirectoryArgument = string.Concat(
       WorkingDirectoryPrefix ?? string.Empty,
-      Pwd(WorkingDirectory)
+      ReanchorPath(WorkingDirectory)
     );
 
     return WorkingDirectoryParameterName is null
