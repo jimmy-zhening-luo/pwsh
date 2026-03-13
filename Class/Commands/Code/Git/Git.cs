@@ -4,7 +4,7 @@ namespace PowerModule.Commands.Code.Git;
   "Microsoft.Naming",
   "CA1724: Type names should not match namespaces"
 )]
-abstract public partial class Git(string? IntrinsicVerb) : CodeNativeCommand(
+abstract public partial class Git(string? IntrinsicVerb) : NativeCodeCommand(
   Client.Environment.Application.Git,
   [
     "-c",

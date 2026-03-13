@@ -6,7 +6,7 @@ namespace PowerModule.Commands.Code.Node.Verbs;
   HelpUri = $"{NpmHelpLink}/npm-run"
 )]
 [Alias("nr")]
-sealed public class NodeRunScript() : Node("run")
+sealed public class NpmRunScript() : Npm("run")
 {
   [Parameter(
     Mandatory = true,

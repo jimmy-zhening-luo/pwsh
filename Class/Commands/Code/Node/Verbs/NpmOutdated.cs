@@ -6,7 +6,7 @@ namespace PowerModule.Commands.Code.Node.Verbs;
   HelpUri = $"{NpmHelpLink}/npm-outdated"
 )]
 [Alias("npo")]
-sealed public class NodeOutdated() : Node("outdated")
+sealed public class NpmOutdated() : Npm("outdated")
 {
   const string FlagAll = "--all";
 

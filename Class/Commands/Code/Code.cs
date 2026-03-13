@@ -1,6 +1,6 @@
 namespace PowerModule.Commands.Code;
 
-abstract public class CodeNativeCommand(
+abstract public class NativeCodeCommand(
   string CommandPath,
   IEnumerable<string> CommandBaseArguments,
   string? WorkingDirectoryParameterName,

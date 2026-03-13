@@ -1,8 +1,8 @@
 namespace PowerModule.Commands.Code.Node;
 
-partial class Node
+partial class Npm
 {
-  sealed private protected class NodeVerbCompletionsAttribute() : Tab.CompletionsAttribute<HashSet<string>>(Verbs);
+  sealed private protected class NpmVerbCompletionsAttribute() : Tab.CompletionsAttribute<HashSet<string>>(Verbs);
 
   static readonly HashSet<string> Verbs = [
     "access",

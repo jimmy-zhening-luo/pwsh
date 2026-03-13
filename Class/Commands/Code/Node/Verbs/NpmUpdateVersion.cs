@@ -6,7 +6,7 @@ namespace PowerModule.Commands.Code.Node.Verbs;
   HelpUri = $"{NpmHelpLink}/npm-version"
 )]
 [Alias("nu")]
-sealed public class NodeUpdateVersion() : Node("version")
+sealed public class NpmUpdateVersion() : Npm("version")
 {
   enum NodeVersion
   {

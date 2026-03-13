@@ -6,7 +6,7 @@ namespace PowerModule.Commands.Code.Node;
   HelpUri = NpmHelpLink
 )]
 [Alias("n")]
-sealed public class NodeCli() : Node(default)
+sealed public class NpmCli() : Npm(default)
 {
   new public SwitchParameter V
   { get; set; }
@@ -16,7 +16,7 @@ sealed public class NodeCli() : Node(default)
     HelpMessage = "npm command"
   )]
   [ValidateNotNullOrWhiteSpace]
-  [NodeVerbCompletions]
+  [NpmVerbCompletions]
   public string Verb
   {
     set => IntrinsicVerb = value;

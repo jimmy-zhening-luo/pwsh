@@ -1,10 +1,6 @@
 namespace PowerModule.Commands.Code.Node;
 
-[System.Diagnostics.CodeAnalysis.SuppressMessage(
-  "Microsoft.Naming",
-  "CA1724: Type names should not match namespaces"
-)]
-abstract public partial class Node(string? IntrinsicVerb) : CodeNativeCommand(
+abstract public partial class Npm(string? IntrinsicVerb) : NativeCodeCommand(
   Client.Environment.Application.Npm,
   ["--color=always"],
   default,
