@@ -69,14 +69,17 @@ public class StopTask : CoreCommand
     bool entireProcessTree = default
   )
   {
-    foreach (
-      var process in SystemProcess.GetProcessesByName(
-        name
-      )
-    )
+    SystemProcess[]? processes = SystemProcess.GetProcessesByName(
+      name
+    );
+
+    foreach (var process in processes)
     {
       process.Kill(entireProcessTree);
+      process.Dispose();
     }
+
+    processes = null;
   }
 
   static void KillProcesses(
