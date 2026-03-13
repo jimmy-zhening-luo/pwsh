@@ -55,9 +55,14 @@ public class StopTask : CoreCommand
   static void KillProcess(
     int pid,
     bool entireProcessTree = default
-  ) => SystemProcess
-    .GetProcessById(pid)
-    .Kill(entireProcessTree);
+  )
+  {
+    using var process = SystemProcess.GetProcessById(
+      pid
+    );
+
+    process.Kill(entireProcessTree);
+  }
 
   static void KillProcesses(
     string name,
