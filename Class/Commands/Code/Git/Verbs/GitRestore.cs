@@ -13,7 +13,8 @@ sealed public class GitRestore() : Git("pull")
     ClearArguments();
 
     _ = AddCommand(@"PowerModule\Reset-GitRepository")
-      .AddBoundParameters();
+
+    AddBoundParameters();
 
     BeginSteppablePipeline();
     ProcessSteppablePipeline();
