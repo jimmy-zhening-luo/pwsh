@@ -91,7 +91,7 @@ abstract public partial class NativeCommand(
 
   static private protected bool IsNativeArgument(string argument) => NativeArgumentRegex().IsMatch(argument);
   [System.Text.RegularExpressions.GeneratedRegex(
-    @"^(?>-(?>[A-Za-z]|(?>-[^\W_]+(?>[-_][^\W_]+)*)))(?>=(?>""(?>\\\S|[ \S-[\\""]])*""|[^\s""]+))?$"
+    @"^-(?>[A-Za-z]|(?>-[^\W_]+(?>[-_][^\W_]+)*))(?>=(?>""(?>\\\S|[ \S-[\\""]])*""|[^\s""]+))?$"
   )]
   static private partial System.Text.RegularExpressions.Regex NativeArgumentRegex();
 
