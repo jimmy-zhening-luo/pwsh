@@ -41,7 +41,7 @@ sealed public class GetHelpOnline : CoreCommand
       if (
         pscustomobject
           ?.relatedLinks
-          ?.navigationLink is IEnumerable<object> links
+          ?.navigationLink is object[] links
       )
       {
         foreach (var link in links)
