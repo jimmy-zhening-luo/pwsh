@@ -50,6 +50,13 @@ public class StopTask : CoreCommand
   public SwitchParameter Descendant
   { private protected get; init; }
 
+  static void KillProcess(
+    int pid,
+    bool entireProcessTree = default
+  ) => System.Diagnostics.Process
+    .GetProcessById(pid)
+    .Kill(entireProcessTree);
+
   static void KillProcesses(
     string name,
     bool entireProcessTree = default
@@ -64,13 +71,6 @@ public class StopTask : CoreCommand
       process.Kill(entireProcessTree);
     }
   }
-
-  static void KillProcess(
-    int pid,
-    bool entireProcessTree = default
-  ) => System.Diagnostics.Process
-    .GetProcessById(pid)
-    .Kill(entireProcessTree);
 
   sealed override private protected void Process()
   {
