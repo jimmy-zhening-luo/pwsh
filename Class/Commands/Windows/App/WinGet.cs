@@ -7,9 +7,9 @@ abstract public class WinGet(string IntrinsicVerb) : NativeCommand(
 {
   private protected const string WinGetHelpLink = "https://learn.microsoft.com/en-us/windows/package-manager/winget/";
 
-  sealed override private protected IList<string> CommandArguments
+  sealed override private protected string[] CommandArguments
   { get; } = [];
 
-  override private protected IList<string> VerbArguments
+  override private protected string[] VerbArguments
   { get; } = [];
 }

@@ -94,7 +94,7 @@ sealed public class GitCommit() : Git("commit")
     }
   }
 
-  sealed override private protected IList<string> ParseArguments() => [
+  sealed override private protected string[] ParseArguments() => [
     "-m",
     Message,
   ];

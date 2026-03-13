@@ -88,5 +88,5 @@ sealed public class NpmUpdateVersion() : Npm("version")
     $"{nameof(Version)} is neither SemanticVersion nor NodeVersion"
   );
 
-  sealed override private protected IList<string> ParseArguments() => [Version];
+  sealed override private protected string[] ParseArguments() => [Version];
 }

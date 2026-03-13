@@ -40,5 +40,5 @@ sealed public class GitAdd() : Git("add")
     }
   }
 
-  sealed override private protected IList<string> ParseArguments() => [Name];
+  sealed override private protected string[] ParseArguments() => [Name];
 }

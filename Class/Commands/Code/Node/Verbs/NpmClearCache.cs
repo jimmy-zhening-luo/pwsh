@@ -17,5 +17,5 @@ sealed public class NpmClearCache() : Npm("cache")
     AddLast("--force");
   }
 
-  sealed override private protected IList<string> ParseArguments() => ["clean"];
+  sealed override private protected string[] ParseArguments() => ["clean"];
 }
