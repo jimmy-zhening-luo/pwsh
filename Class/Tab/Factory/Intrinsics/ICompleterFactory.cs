@@ -2,7 +2,7 @@ namespace PowerModule.Tab.Factory.Intrinsics;
 
 interface ICompleterFactory : IArgumentCompleterFactory
 {
-  CompletionCase Case
+  CompletionCase Casing
   { get; init; }
 
   new Completers.Intrinsics.ICompleter Create();

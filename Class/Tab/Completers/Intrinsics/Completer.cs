@@ -8,7 +8,7 @@ abstract class Completer(
   public CompletionResultType CompletionType
   { get; init; } = CompletionType;
 
-  public CompletionCase Case
+  public CompletionCase Casing
   { get; init; } = Case;
 
   abstract private protected IEnumerable<ICompleter.Completion> GenerateCompletion(string wordToComplete);

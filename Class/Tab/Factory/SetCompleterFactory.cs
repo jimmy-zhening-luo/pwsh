@@ -9,7 +9,7 @@ abstract class SetCompleterFactory<TDomain>(TDomain Domain) : Intrinsics.Complet
 
   sealed override public Completers.SetCompleter Create() => new(
     CompletionType,
-    Case,
+    Casing,
     EvaluateDomain(Domain)
   );
 }

@@ -6,7 +6,7 @@ namespace PowerModule.Tab.Factory.Intrinsics;
 )]
 abstract class CompleterFactory : ArgumentCompleterAttribute, ICompleterFactory
 {
-  virtual public CompletionCase Case
+  virtual public CompletionCase Casing
   { get; init; }
 
   abstract public Completers.Intrinsics.ICompleter Create();

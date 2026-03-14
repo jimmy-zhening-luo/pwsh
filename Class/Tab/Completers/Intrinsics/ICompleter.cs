@@ -12,7 +12,7 @@ interface ICompleter : IArgumentCompleter
   internal CompletionResultType CompletionType
   { get; init; }
 
-  internal CompletionCase Case
+  internal CompletionCase Casing
   { get; init; }
 
   new IEnumerable<CompletionResult> CompleteArgument(
@@ -49,7 +49,7 @@ interface ICompleter : IArgumentCompleter
     foreach (var completion in completions)
     {
       var result = completion.Result;
-      var casedResult = Case switch
+      var casedResult = Casing switch
       {
         CompletionCase.Upper => result.ToUpper(
           Client.StringInput.CurrentCulture

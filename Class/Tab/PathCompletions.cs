@@ -5,7 +5,7 @@ sealed class PathCompletionsAttribute(
   PathItemType ItemType = default
 ) : Factory.Intrinsics.CompleterFactory
 {
-  sealed override public CompletionCase Case
+  sealed override public CompletionCase Casing
   { get; init; } = CompletionCase.Lower;
 
   public string Location
@@ -18,7 +18,7 @@ sealed class PathCompletionsAttribute(
   { get; init; }
 
   sealed override public Completers.PathCompleter Create() => new(
-    Case,
+    Casing,
     Location,
     ItemType,
     Flat
