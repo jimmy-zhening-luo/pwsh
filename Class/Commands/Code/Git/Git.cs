@@ -18,13 +18,17 @@ abstract public partial class Git(string? IntrinsicVerb) : NativeCodeCommand(
 
   bool newable;
 
+  sealed override private protected string WorkingDirectoryArtifactSubpath => newable
+    ? string.Empty
+    : ".git";
+
   override private protected SwitchBoard Uppercase
   { get; } = new(
     E: true,
     P: true
   );
 
-  sealed override private protected void PreprocessIntrinsicVerb()
+  sealed override private protected void CanonicalizeVerb()
   {
     switch (IntrinsicVerb)
     {
@@ -64,46 +68,6 @@ abstract public partial class Git(string? IntrinsicVerb) : NativeCodeCommand(
         break;
 
       default:
-        break;
-    }
-  }
-
-  sealed override private protected void PreprocessWorkingDirectory()
-  {
-    switch (WorkingDirectory)
-    {
-      case "":
-      case var path when System.IO.Path.Exists(
-        System.IO.Path.Combine(
-          Pwd(path),
-          newable
-            ? string.Empty
-            : ".git"
-        )
-      ):
-        break;
-
-      case var path when System.IO.Path.Exists(
-        System.IO.Path.Combine(
-          Client.Environment.Folder.Code(path),
-          newable
-            ? string.Empty
-            : ".git"
-        )
-      ):
-        WorkingDirectoryLocation = Client.Environment.Folder.Code;
-
-        break;
-
-      default:
-        (
-          DeferredVerbArgument,
-          WorkingDirectory
-        ) = (
-          WorkingDirectory,
-          string.Empty
-        );
-
         break;
     }
   }

@@ -9,6 +9,9 @@ abstract public partial class Npm(string? IntrinsicVerb) : NativeCodeCommand(
 {
   private protected const string NpmHelpLink = "https://docs.npmjs.com/cli/commands";
 
+  sealed override private protected string WorkingDirectoryArtifactSubpath
+  { get; } = "package.json";
+
   override private protected SwitchBoard Uppercase
   { get; } = new(
     D: true,
@@ -16,7 +19,7 @@ abstract public partial class Npm(string? IntrinsicVerb) : NativeCodeCommand(
     P: true
   );
 
-  sealed override private protected void PreprocessIntrinsicVerb()
+  sealed override private protected void CanonicalizeVerb()
   {
     switch (
       IntrinsicVerb?.ToLower(
@@ -42,27 +45,6 @@ abstract public partial class Npm(string? IntrinsicVerb) : NativeCodeCommand(
 
       default:
         break;
-    }
-  }
-
-  sealed override private protected void PreprocessWorkingDirectory()
-  {
-    if (
-      !System.IO.Path.Exists(
-        System.IO.Path.Combine(
-          Pwd(WorkingDirectory),
-          "package.json"
-        )
-      )
-    )
-    {
-      (
-        DeferredVerbArgument,
-        WorkingDirectory
-      ) = (
-        WorkingDirectory,
-        string.Empty
-      );
     }
   }
 }

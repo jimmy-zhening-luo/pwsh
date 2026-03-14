@@ -14,9 +14,11 @@ abstract public class NativeCodeCommand(
 {
   private protected string? DeferredVerbArgument;
 
-  sealed override private protected Localizer? Location => WorkingDirectoryLocation;
-  private protected Localizer? WorkingDirectoryLocation
-  { set; get; }
+  abstract private protected string WorkingDirectoryArtifactSubpath
+  { get; }
+
+  sealed override private protected Localizer? Location => location;
+  Localizer? location;
 
   [Parameter(
     Position = 50,
@@ -31,9 +33,7 @@ abstract public class NativeCodeCommand(
   public string WorkingDirectory
   { private protected get; set; } = string.Empty;
 
-  abstract private protected void PreprocessIntrinsicVerb();
-
-  abstract private protected void PreprocessWorkingDirectory();
+  abstract private protected void CanonicalizeVerb();
 
   virtual private protected void PreprocessOtherArguments()
   { }
@@ -69,18 +69,50 @@ abstract public class NativeCodeCommand(
 
   sealed override private protected void PreprocessArguments()
   {
-    if (
-      WorkingDirectory is not ""
-      && IsNativeArgument(WorkingDirectory)
-    )
-    {
-      _ = NativeArguments.AddFirst(WorkingDirectory);
+    CanonicalizeVerb();
 
-      WorkingDirectory = string.Empty;
+    switch (WorkingDirectory)
+    {
+      case "":
+        break;
+
+      case var arg when IsNativeArgument(arg):
+        _ = NativeArguments.AddFirst(arg);
+
+        WorkingDirectory = string.Empty;
+
+        break;
+
+      case var path when System.IO.Path.Exists(
+        System.IO.Path.Combine(
+          Pwd(path),
+          WorkingDirectoryArtifactSubpath
+        )
+      ):
+        break;
+
+      case var path when System.IO.Path.Exists(
+        System.IO.Path.Combine(
+          Client.Environment.Folder.Code(path),
+          WorkingDirectoryArtifactSubpath
+        )
+      ):
+        location = Client.Environment.Folder.Code;
+
+        break;
+
+      default:
+        (
+          DeferredVerbArgument,
+          WorkingDirectory
+        ) = (
+          WorkingDirectory,
+          string.Empty
+        );
+
+        break;
     }
 
-    PreprocessIntrinsicVerb();
-    PreprocessWorkingDirectory();
     PreprocessOtherArguments();
   }
 
