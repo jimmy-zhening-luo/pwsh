@@ -5,8 +5,7 @@ abstract public class WrappedGetFile() : WrappedCommand(
 )
 {
   abstract public string[] Path
-  { init; }
-  private protected string[] paths = [];
+  { private protected get; init; }
 
   [Parameter]
   [SupportsWildcards]
@@ -102,7 +101,7 @@ abstract public class WrappedGetFile() : WrappedCommand(
     {
       SetBoundParameter(
         StandardParameter.Path,
-        ReanchorPath(paths)
+        ReanchorPath(Path)
       );
     }
   }

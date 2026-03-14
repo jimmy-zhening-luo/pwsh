@@ -20,9 +20,7 @@ sealed public class GetFile : WrappedGetFile
     Tab.PathItemType.File
   )]
   sealed override public string[] Path
-  {
-    init => paths = value;
-  }
+  { private protected get; init; } = [];
 
   [Parameter(
     ParameterSetName = StandardParameter.LiteralPath,
@@ -55,9 +53,7 @@ sealed public class GetFileSibling : WrappedGetFile
     Tab.PathItemType.File
   )]
   sealed override public string[] Path
-  {
-    init => paths = value;
-  }
+  { private protected get; init; } = [];
 
   sealed override private protected Localizer Location => Parent;
 }
@@ -82,9 +78,7 @@ sealed public class GetFileRelative : WrappedGetFile
     Tab.PathItemType.File
   )]
   sealed override public string[] Path
-  {
-    init => paths = value;
-  }
+  { private protected get; init; } = [];
 
   sealed override private protected Localizer Location => ParentParent;
 }
@@ -109,9 +103,7 @@ sealed public class GetFileHome : WrappedGetFile
     Tab.PathItemType.File
   )]
   sealed override public string[] Path
-  {
-    init => paths = value;
-  }
+  { private protected get; init; } = [];
 
   sealed override private protected Localizer Location
   { get; } = Client.Environment.Folder.Home;
@@ -137,9 +129,7 @@ sealed public class GetFileCode : WrappedGetFile
     Tab.PathItemType.File
   )]
   sealed override public string[] Path
-  {
-    init => paths = value;
-  }
+  { private protected get; init; } = [];
 
   sealed override private protected Localizer Location
   { get; } = Client.Environment.Folder.Code;
@@ -165,9 +155,7 @@ sealed public class GetFileDrive : WrappedGetFile
     Tab.PathItemType.File
   )]
   sealed override public string[] Path
-  {
-    init => paths = value;
-  }
+  { private protected get; init; } = [];
 
   sealed override private protected Localizer Location => Drive;
 }
