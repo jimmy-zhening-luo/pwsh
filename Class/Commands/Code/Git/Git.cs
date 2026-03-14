@@ -72,12 +72,6 @@ abstract public partial class Git(string? IntrinsicVerb) : NativeCodeCommand(
   {
     switch (WorkingDirectory)
     {
-      case "" when !newable
-      && !IsWorkingDirectoryLocal(Pwd()):
-        throw new System.IO.DirectoryNotFoundException(
-          "The current directory is not a git repository."
-        );
-
       case "":
       case var path when IsWorkingDirectoryLocal(
         path,
@@ -93,22 +87,16 @@ abstract public partial class Git(string? IntrinsicVerb) : NativeCodeCommand(
 
         break;
 
-      case var path when newable
-      || IsWorkingDirectoryLocal(Pwd()):
+      default:
         (
           DeferredVerbArgument,
           WorkingDirectory
         ) = (
-          path,
+          WorkingDirectory,
           string.Empty
         );
 
         break;
-
-      default:
-        throw new System.IO.DirectoryNotFoundException(
-          "The provided working directory is not a git repository, and the current directory is not a git repository."
-        );
     }
   }
 
