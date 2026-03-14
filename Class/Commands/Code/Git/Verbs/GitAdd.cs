@@ -19,7 +19,7 @@ sealed public class GitAdd() : Git("add")
   public string Name
   {
     private get => name ?? ".";
-    set => name = value;
+    init => name = value;
   }
   string? name;
 

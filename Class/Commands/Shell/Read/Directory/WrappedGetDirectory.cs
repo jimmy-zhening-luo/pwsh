@@ -21,7 +21,7 @@ abstract public class WrappedGetDirectory() : WrappedCommand(
   public string Filter
   {
     private get => filter;
-    set => filter = value switch
+    init => filter = value switch
     {
       null or "" => "*",
       _ when value.Contains(

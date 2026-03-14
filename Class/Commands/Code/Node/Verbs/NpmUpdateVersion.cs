@@ -36,7 +36,7 @@ sealed public class NpmUpdateVersion() : Npm("version")
   public string Version
   {
     private get => version;
-    set => version = value switch
+    init => version = value switch
     {
       "" => nameof(NodeVersion.patch),
       _ when value.Equals("from-git", System.StringComparison.OrdinalIgnoreCase) => "from-git",

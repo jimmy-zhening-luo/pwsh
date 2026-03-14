@@ -17,7 +17,7 @@ sealed public class GitClone() : Git("clone")
   public string Repository
   {
     private get => remote;
-    set => remote = value?.Split(
+    init => remote = value?.Split(
       Client.File.PathString.AltSeparator,
       System.StringSplitOptions.RemoveEmptyEntries
       | System.StringSplitOptions.TrimEntries
