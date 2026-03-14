@@ -12,7 +12,7 @@
   VariablesToExport    = @()
   AliasesToExport      = @(
     'clb'
-    'fe'
+    'f'
     'k'
     'key'
     'psk'

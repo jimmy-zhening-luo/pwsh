@@ -1,5 +1,5 @@
 New-Alias clb Clear-RecycleBin
-New-Alias fe ForEach-Object
+New-Alias f ForEach-Object
 New-Alias k Get-Member
 New-Alias key Get-Member
 New-Alias psk Get-PSReadLineKeyHandler
