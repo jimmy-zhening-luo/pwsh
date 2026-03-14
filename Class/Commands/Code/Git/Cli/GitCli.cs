@@ -19,7 +19,7 @@ sealed public class GitCli() : Git(default)
   [GitVerbCompletions]
   public string Verb
   {
-    init => IntrinsicVerb = value!.ToLower(
+    init => IntrinsicVerb = value.ToLower(
       Client.StringInput.InvariantCulture
     );
   }
