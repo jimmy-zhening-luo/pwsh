@@ -48,7 +48,7 @@ abstract public partial class Npm(string? IntrinsicVerb) : NativeCodeCommand(
   sealed override private protected void PreprocessWorkingDirectory()
   {
     if (
-      !System.IO.File.Exists(
+      !System.IO.Path.Exists(
         System.IO.Path.Combine(
           Pwd(WorkingDirectory),
           "package.json"

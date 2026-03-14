@@ -73,15 +73,23 @@ abstract public partial class Git(string? IntrinsicVerb) : NativeCodeCommand(
     switch (WorkingDirectory)
     {
       case "":
-      case var path when IsWorkingDirectoryLocal(
-        path,
-        newable
+      case var path when System.IO.Path.Exists(
+        System.IO.Path.Combine(
+          Pwd(path),
+          newable
+            ? string.Empty
+            : ".git"
+        )
       ):
         break;
 
-      case var path when IsWorkingDirectoryRemote(
-        path,
-        newable
+      case var path when System.IO.Path.Exists(
+        System.IO.Path.Combine(
+          Client.Environment.Folder.Code(path),
+          newable
+            ? string.Empty
+            : ".git"
+        )
       ):
         WorkingDirectoryLocation = Client.Environment.Folder.Code;
 
@@ -99,38 +107,4 @@ abstract public partial class Git(string? IntrinsicVerb) : NativeCodeCommand(
         break;
     }
   }
-
-  bool IsWorkingDirectoryLocal(
-    string path,
-    bool newable = default
-  ) => System.IO.Directory.Exists(
-    GetFullWorkingDirectoryTestPath(
-      path,
-      newable
-    )
-  );
-
-  bool IsWorkingDirectoryRemote(
-    string path,
-    bool newable = default
-  ) => System.IO.Directory.Exists(
-    GetFullWorkingDirectoryTestPath(
-      path,
-      newable,
-      true
-    )
-  );
-
-  string GetFullWorkingDirectoryTestPath(
-    string path,
-    bool newable,
-    bool remote = default
-  ) => System.IO.Path.Combine(
-    remote
-      ? Client.Environment.Folder.Code(path)
-      : Pwd(path),
-    newable
-      ? string.Empty
-      : ".git"
-  );
 }
