@@ -4,6 +4,8 @@ namespace PowerModule.Commands.Shell.Kill.Task;
   VerbsLifecycle.Stop,
   "TaskTree",
   DefaultParameterSetName = StandardParameter.Name,
+  SupportsShouldProcess = true,
+  ConfirmImpact = ConfirmImpact.Medium,
   HelpUri = $"{HelpLink}2097058"
 )]
 [Alias("tkilld")]

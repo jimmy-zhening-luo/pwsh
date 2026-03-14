@@ -6,6 +6,8 @@ using SystemProcess = System.Diagnostics.Process;
   VerbsLifecycle.Stop,
   "Task",
   DefaultParameterSetName = StandardParameter.Name,
+  SupportsShouldProcess = true,
+  ConfirmImpact = ConfirmImpact.Medium,
   HelpUri = $"{HelpLink}2097058"
 )]
 [Alias("tkill")]
@@ -80,25 +82,22 @@ public class StopTask : CoreCommand
     }
   }
 
-  static void KillProcesses(
-    SystemProcess[] processes,
-    bool entireProcessTree = default
-  )
-  {
-    foreach (var process in processes)
-    {
-      process.Kill(entireProcessTree);
-    }
-  }
-
   sealed override private protected void Process()
   {
     if (ParameterSetName is "InputObject")
     {
-      KillProcesses(
-        InputObject,
-        Descendant
-      );
+      foreach (var process in InputObject)
+      {
+        if (
+          ShouldProcess(
+            $"{process.ProcessName} : {process.Id} (Descendants: {Descendant})",
+            "Stop process"
+          )
+        )
+        {
+          process.Kill(Descendant);
+        }
+      }
     }
   }
 
@@ -109,16 +108,32 @@ public class StopTask : CoreCommand
       case "Id":
         foreach (var pid in Id)
         {
-          KillProcess(
-            pid,
-            Descendant
-          );
+          if (
+            ShouldProcess(
+              $"PID: {pid} (Descendants: {Descendant})",
+              "Stop process"
+            )
+          )
+          {
+            KillProcess(
+              pid,
+              Descendant
+            );
+          }
         }
 
         break;
 
       case StandardParameter.Name when Name is []:
-        KillProcesses("explorer");
+        if (
+          ShouldProcess(
+            "explorer",
+            "Stop processes by name"
+          )
+        )
+        {
+          KillProcesses("explorer");
+        }
 
         break;
 
@@ -132,17 +147,33 @@ public class StopTask : CoreCommand
             )
           )
           {
-            KillProcess(
-              pid,
-              Descendant
-            );
+            if (
+              ShouldProcess(
+                $"PID: {pid} (Descendants: {Descendant})",
+                "Stop process"
+              )
+            )
+            {
+              KillProcess(
+                pid,
+                Descendant
+              );
+            }
           }
           else
           {
-            KillProcesses(
-              name,
-              Descendant
-            );
+            if (
+              ShouldProcess(
+                $"{name} (Descendants: {Descendant})",
+                "Stop processes by name"
+              )
+            )
+            {
+              KillProcesses(
+                name,
+                Descendant
+              );
+            }
           }
         }
 
