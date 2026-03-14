@@ -4,6 +4,8 @@ namespace PowerModule.Commands.Shell.Start.Explorer;
   VerbsLifecycle.Start,
   "Explorer",
   DefaultParameterSetName = StandardParameter.Path,
+  SupportsShouldProcess = true,
+  ConfirmImpact = ConfirmImpact.Medium,
   HelpUri = $"{HelpLink}2096590"
 )]
 [Alias("e")]
@@ -35,6 +37,8 @@ sealed public class StartExplorer : WrappedStartExplorer
   VerbsLifecycle.Start,
   "ExplorerSibling",
   DefaultParameterSetName = StandardParameter.Path,
+  SupportsShouldProcess = true,
+  ConfirmImpact = ConfirmImpact.Medium,
   HelpUri = $"{HelpLink}2096590"
 )]
 [Alias("ex")]
@@ -58,6 +62,8 @@ sealed public class StartExplorerSibling : WrappedStartExplorer
   VerbsLifecycle.Start,
   "ExplorerRelative",
   DefaultParameterSetName = StandardParameter.Path,
+  SupportsShouldProcess = true,
+  ConfirmImpact = ConfirmImpact.Medium,
   HelpUri = $"{HelpLink}2096590"
 )]
 [Alias("exx")]
@@ -81,6 +87,8 @@ sealed public class StartExplorerRelative : WrappedStartExplorer
   VerbsLifecycle.Start,
   "ExplorerHome",
   DefaultParameterSetName = StandardParameter.Path,
+  SupportsShouldProcess = true,
+  ConfirmImpact = ConfirmImpact.Medium,
   HelpUri = $"{HelpLink}2096590"
 )]
 [Alias("eh")]
@@ -105,6 +113,8 @@ sealed public class StartExplorerHome : WrappedStartExplorer
   VerbsLifecycle.Start,
   "ExplorerCode",
   DefaultParameterSetName = StandardParameter.Path,
+  SupportsShouldProcess = true,
+  ConfirmImpact = ConfirmImpact.Medium,
   HelpUri = $"{HelpLink}2096590"
 )]
 [Alias("ec")]
@@ -129,6 +139,8 @@ sealed public class StartExplorerCode : WrappedStartExplorer
   VerbsLifecycle.Start,
   "ExplorerDrive",
   DefaultParameterSetName = StandardParameter.Path,
+  SupportsShouldProcess = true,
+  ConfirmImpact = ConfirmImpact.Medium,
   HelpUri = $"{HelpLink}2096590"
 )]
 [Alias("e/")]

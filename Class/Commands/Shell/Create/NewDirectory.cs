@@ -4,6 +4,8 @@ namespace PowerModule.Commands.Shell.Create;
   VerbsCommon.New,
   "Directory",
   DefaultParameterSetName = "pathSet",
+  SupportsShouldProcess = true,
+  ConfirmImpact = ConfirmImpact.Medium,
   HelpUri = $"{HelpLink}2096592"
 )]
 [Alias("mk")]

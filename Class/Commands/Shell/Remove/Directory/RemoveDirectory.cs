@@ -4,6 +4,8 @@ namespace PowerModule.Commands.Shell.Remove.Directory;
   VerbsCommon.Remove,
   "Directory",
   DefaultParameterSetName = StandardParameter.Path,
+  SupportsShouldProcess = true,
+  ConfirmImpact = ConfirmImpact.Medium,
   HelpUri = $"{HelpLink}2097103"
 )]
 [Alias("rd")]
