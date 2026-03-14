@@ -69,7 +69,7 @@ public class StopTask : CoreCommand
     bool entireProcessTree = default
   )
   {
-    SystemProcess[]? processes = SystemProcess.GetProcessesByName(
+    var processes = SystemProcess.GetProcessesByName(
       name
     );
 
@@ -78,8 +78,6 @@ public class StopTask : CoreCommand
       process.Kill(entireProcessTree);
       process.Dispose();
     }
-
-    processes = null;
   }
 
   static void KillProcesses(

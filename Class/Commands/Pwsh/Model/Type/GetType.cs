@@ -18,15 +18,12 @@ sealed public class GetInputType : CoreCommand
   required public object InputObject
   { get; init; }
 
-  sealed override private protected void Process()
-  {
-    WriteObject(
-      (
-        InputObject is PSObject inputPsObject
-          ? inputPsObject.BaseObject
-          : InputObject
-      )
-        .GetType()
-    );
-  }
+  sealed override private protected void Process() => WriteObject(
+    (
+      InputObject is PSObject inputPsObject
+        ? inputPsObject.BaseObject
+        : InputObject
+    )
+      .GetType()
+  );
 }
