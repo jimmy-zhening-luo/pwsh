@@ -25,7 +25,8 @@ sealed public class GetInputType : CoreCommand
         InputObject is PSObject inputPsObject
           ? inputPsObject.BaseObject
           : InputObject
-      ).GetType()
+      )
+        .GetType()
     );
   }
 }
