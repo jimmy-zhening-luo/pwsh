@@ -4,7 +4,7 @@ static class Handler
 {
   internal enum EditorWindow
   {
-    Any,
+    Default,
     New,
     Reuse,
   }
