@@ -20,31 +20,5 @@ abstract public partial class Npm(string? IntrinsicVerb) : NativeCodeCommand(
   );
 
   sealed override private protected void CanonicalizeVerb()
-  {
-    switch (
-      IntrinsicVerb?.ToLower(
-        Client.StringInput.InvariantCulture
-      )
-    )
-    {
-      case { } verb when Verbs.TryGetValue(
-        verb,
-        out var exactVerb
-      ):
-        IntrinsicVerb = exactVerb;
-
-        break;
-
-      case { } verb when Aliases.TryGetValue(
-        verb,
-        out var alias
-      ):
-        IntrinsicVerb = alias;
-
-        break;
-
-      default:
-        break;
-    }
-  }
+  { }
 }

@@ -19,7 +19,9 @@ sealed public class NpmCli() : Npm(default)
   [NpmVerbCompletions]
   public string Verb
   {
-    set => IntrinsicVerb = value;
+    init => IntrinsicVerb = value.ToLower(
+      Client.StringInput.InvariantCulture
+    );
   }
 
   [Parameter(
@@ -28,6 +30,6 @@ sealed public class NpmCli() : Npm(default)
   [Alias("v")]
   public SwitchParameter Version
   {
-    set => base.V = value;
+    init => base.V = value;
   }
 }

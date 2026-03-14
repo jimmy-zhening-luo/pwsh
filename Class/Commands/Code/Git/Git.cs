@@ -44,7 +44,7 @@ abstract public partial class Git(string? IntrinsicVerb) : NativeCodeCommand(
 
       case var verb when System.Enum.TryParse<NewableVerb>(
         verb,
-        true,
+        default,
         out var newableVerb
       ):
         (
@@ -54,16 +54,6 @@ abstract public partial class Git(string? IntrinsicVerb) : NativeCodeCommand(
           true,
           newableVerb.ToString()
         );
-
-        break;
-
-      case var verb when Verbs.TryGetValue(
-        verb.ToLower(
-          Client.StringInput.InvariantCulture
-        ),
-        out var exactVerb
-      ):
-        IntrinsicVerb = exactVerb;
 
         break;
 
