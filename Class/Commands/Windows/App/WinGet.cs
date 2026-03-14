@@ -6,7 +6,4 @@ abstract public class WinGet(string IntrinsicVerb) : NativeCommand(
 )
 {
   private protected const string WinGetHelpLink = "https://learn.microsoft.com/en-us/windows/package-manager/winget/";
-
-  override private protected string[] VerbArguments
-  { get; } = [];
 }

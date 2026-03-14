@@ -3,7 +3,7 @@ namespace PowerModule.Commands;
 abstract public partial class NativeCommand(
   string CommandPath,
   string? IntrinsicVerb,
-  string[]? CommandBaseArguments = default,
+  string[]? CommandArgumentBase = default,
   bool SkipSsh = default
 ) : CoreCommand(SkipSsh)
 {
@@ -18,12 +18,6 @@ abstract public partial class NativeCommand(
 
   private protected readonly LinkedList<string> Arguments = [];
   private protected readonly LinkedList<string> NativeArguments = [];
-
-  abstract private protected string[] VerbArguments
-  { get; }
-
-  virtual private protected string[] CommandRuntimeArguments
-  { get; } = [];
 
   virtual private protected SwitchBoard Uppercase
   { get; }
@@ -99,6 +93,10 @@ abstract public partial class NativeCommand(
   virtual private protected void PreprocessArguments()
   { }
 
+  virtual private protected string[] ParseRuntimeCommandArguments() => [];
+
+  virtual private protected string[] ParseRuntimeVerbArguments() => [];
+
   sealed override private protected void Preprocess()
   {
     foreach (var argument in ArgumentList)
@@ -116,22 +114,27 @@ abstract public partial class NativeCommand(
       CommandPath,
     ];
 
-    if (CommandBaseArguments is not null)
+    if (CommandArgumentBase is not null)
     {
-      command.AddRange(CommandBaseArguments);
+      command.AddRange(
+        CommandArgumentBase
+      );
     }
 
-    if (CommandRuntimeArguments is not null)
-    {
-      command.AddRange(CommandRuntimeArguments);
-    }
+    command.AddRange(
+      ParseRuntimeCommandArguments()
+    );
 
     if (IntrinsicVerb is not null)
     {
-      command.Add(IntrinsicVerb);
+      command.Add(
+        IntrinsicVerb
+      );
     }
 
-    command.AddRange(VerbArguments);
+    command.AddRange(
+      ParseRuntimeVerbArguments()
+    );
 
     if (D)
     {

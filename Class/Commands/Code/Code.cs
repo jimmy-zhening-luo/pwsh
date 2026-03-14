@@ -18,15 +18,6 @@ abstract public class NativeCodeCommand(
   private protected Localizer? WorkingDirectoryLocation
   { set; get; }
 
-  sealed override private protected string[] CommandRuntimeArguments => ResolveWorkingDirectoryArguments();
-
-  sealed override private protected string[] VerbArguments => DeferredVerbArgument is null
-    ? ParseArguments()
-    : [
-        DeferredVerbArgument,
-        .. ParseArguments(),
-      ];
-
   [Parameter(
     Position = 50,
     HelpMessage = "Working directory path"
@@ -49,12 +40,32 @@ abstract public class NativeCodeCommand(
 
   virtual private protected string[] ParseArguments() => [];
 
-  sealed override private protected void ClearArguments()
+  sealed override private protected string[] ParseRuntimeCommandArguments()
   {
-    DeferredVerbArgument = default;
+    if (ReanchorPath(WorkingDirectory) == Pwd())
+    {
+      return [];
+    }
 
-    base.ClearArguments();
+    var workingDirectoryArgument = string.Concat(
+      WorkingDirectoryPrefix ?? string.Empty,
+      ReanchorPath(WorkingDirectory)
+    );
+
+    return WorkingDirectoryParameterName is null
+      ? [workingDirectoryArgument]
+      : [
+          WorkingDirectoryParameterName,
+          workingDirectoryArgument,
+        ];
   }
+
+  sealed override private protected string[] ParseRuntimeVerbArguments() => DeferredVerbArgument is null
+    ? ParseArguments()
+    : [
+        DeferredVerbArgument,
+        .. ParseArguments(),
+      ];
 
   sealed override private protected void PreprocessArguments()
   {
@@ -73,23 +84,10 @@ abstract public class NativeCodeCommand(
     PreprocessOtherArguments();
   }
 
-  string[] ResolveWorkingDirectoryArguments()
+  sealed override private protected void ClearArguments()
   {
-    if (ReanchorPath(WorkingDirectory) == Pwd())
-    {
-      return [];
-    }
+    DeferredVerbArgument = default;
 
-    var workingDirectoryArgument = string.Concat(
-      WorkingDirectoryPrefix ?? string.Empty,
-      ReanchorPath(WorkingDirectory)
-    );
-
-    return WorkingDirectoryParameterName is null
-      ? [workingDirectoryArgument]
-      : [
-          WorkingDirectoryParameterName,
-          workingDirectoryArgument,
-        ];
+    base.ClearArguments();
   }
 }
