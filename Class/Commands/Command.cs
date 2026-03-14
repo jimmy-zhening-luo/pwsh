@@ -29,6 +29,11 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
   }
   PowerShellHost? pshost;
 
+  virtual private protected bool SupportsShouldProcess => supportsShouldProcess ??= MyInvocation.MyCommand.Parameters.ContainsKey(
+    "WhatIf"
+  );
+  bool? supportsShouldProcess;
+
   bool Disposed
   { get; set; }
 

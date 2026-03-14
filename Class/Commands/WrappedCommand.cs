@@ -12,6 +12,9 @@ abstract public class WrappedCommand(
   virtual private protected Dictionary<string, object?> CoercedParameters
   { get; } = [];
 
+  sealed override private protected bool SupportsShouldProcess
+  { get; }
+
   [System.Diagnostics.CodeAnalysis.MemberNotNullWhen(
     true,
     nameof(PipelineInput)
