@@ -23,22 +23,24 @@ $Global:PSDefaultParameterValues = @{
 ) | Remove-Alias -Force
 
 & {
-  $DIST = "$PSScriptRoot\Build\bin\release\PowerModule.dll"
-  $ASSEMBLY = "$PSScriptRoot\Module\PowerModule\PowerModule.dll"
+  $MODULE = 'PowerModule'
+  $SOURCE = "$PSScriptRoot\Class"
+  $BUILD = "$PSScriptRoot\Build\bin\release\$MODULE.dll"
+  $INSTALL = "$HOME\Documents\PowerShell\Modules\$MODULE"
 
-  if (Test-Path -LiteralPath $DIST -PathType Leaf) {
+  if (Test-Path -LiteralPath $BUILD -PathType Leaf) {
     if (
       -not (
-        Test-Path -LiteralPath $ASSEMBLY -PathType Leaf
+        Test-Path -LiteralPath $INSTALL\$MODULE.dll -PathType Leaf
       ) -or (
         (
-          Get-ItemPropertyValue -LiteralPath $ASSEMBLY -Name LastWriteTime
+          Get-ItemPropertyValue -LiteralPath $INSTALL\$MODULE.dll -Name LastWriteTime
         ) -ne (
-          Get-ItemPropertyValue -LiteralPath $DIST -Name LastWriteTime
+          Get-ItemPropertyValue -LiteralPath $BUILD -Name LastWriteTime
         ) -and (
-          Get-FileHash -LiteralPath $ASSEMBLY -Algorithm MD5
+          Get-FileHash -LiteralPath $INSTALL\$MODULE.dll -Algorithm MD5
         ).Hash -ne (
-          Get-FileHash -LiteralPath $DIST -Algorithm MD5
+          Get-FileHash -LiteralPath $BUILD -Algorithm MD5
         ).Hash
       )
     ) {
@@ -46,7 +48,8 @@ $Global:PSDefaultParameterValues = @{
         Where-Object -Property Id -NE -Value $PID |
         ForEach-Object -MemberName Kill -ArgumentList $true
 
-      Copy-Item -LiteralPath $DIST -Destination $ASSEMBLY -Force -ErrorAction Continue
+      Copy-Item -LiteralPath $BUILD -Destination $INSTALL -Force -ErrorAction Continue
+      Copy-Item -LiteralPath $SOURCE\$MODULE.psd1 -Destination $INSTALL -Force -ErrorAction Continue
     }
   }
   else {
