@@ -53,7 +53,7 @@ $Global:PSDefaultParameterValues = @{
           Test-Path -LiteralPath $INSTALL -PathType Container
         )
       ) {
-        New-Item -LiteralPath $INSTALL -ItemType Directory -ErrorAction Continue
+        New-Item -Path $INSTALL -ItemType Directory -ErrorAction Continue
       }
 
       Copy-Item -LiteralPath $BUILD -Destination $INSTALL -Force -ErrorAction Continue
