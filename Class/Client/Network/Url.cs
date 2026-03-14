@@ -33,17 +33,17 @@ static class Url
 
   static internal bool IsHttpOrFile(System.Uri uri) => IsHttp(uri) || IsFile(uri);
 
-  static internal System.Uri? ToAbsoluteHttpUri(string uriString) => TryParse(uriString) is { } uri
+  static internal System.Uri? ToAbsoluteHttpUri(string input) => TryParse(input) is { } uri
   && IsHttp(uri)
     ? uri
     : default;
 
-  static internal System.Uri? ToAbsoluteFileUri(string uriString) => TryParse(uriString) is { } uri
+  static internal System.Uri? ToAbsoluteFileUri(string input) => TryParse(input) is { } uri
   && IsFile(uri)
     ? uri
     : default;
 
-  static internal System.Uri? ToAbsoluteHttpOrFileUri(string uriString) => TryParse(uriString) is { } uri
+  static internal System.Uri? ToAbsoluteHttpOrFileUri(string input) => TryParse(input) is { } uri
   && IsHttpOrFile(uri)
     ? uri
     : default;
