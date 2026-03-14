@@ -185,4 +185,5 @@ csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimenta
 
 #region Quality
 dotnet_code_quality.CA1062.excluded_type_names_with_derived_types = CoreCommand
+dotnet_code_quality.CA1819.excluded_type_names_with_derived_types = CoreCommand
 #endregion
