@@ -37,12 +37,12 @@ sealed public class GitClone() : Git("clone")
   public SwitchParameter ForceSsh
   { private get; init; }
 
-  sealed override private protected void PreprocessOtherArguments() => System.ArgumentException.ThrowIfNullOrEmpty(
+  sealed override private protected void FinishSetup() => System.ArgumentException.ThrowIfNullOrEmpty(
     Repository,
     nameof(Repository)
   );
 
-  sealed override private protected string[] ParseArguments() => [
+  sealed override private protected string[] GetVerbBaseArguments() => [
     string.Concat(
       ForceSsh
         ? "git@github.com:"

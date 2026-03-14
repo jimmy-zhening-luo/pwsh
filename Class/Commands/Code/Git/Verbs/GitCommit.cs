@@ -31,7 +31,7 @@ sealed public class GitCommit() : Git("commit")
   public SwitchParameter Staged
   { private get; init; }
 
-  sealed override private protected void PreprocessOtherArguments()
+  sealed override private protected void FinishSetup()
   {
     if (Message is not "")
     {
@@ -94,7 +94,7 @@ sealed public class GitCommit() : Git("commit")
     }
   }
 
-  sealed override private protected string[] ParseArguments() => [
+  sealed override private protected string[] GetVerbBaseArguments() => [
     "-m",
     Message,
   ];

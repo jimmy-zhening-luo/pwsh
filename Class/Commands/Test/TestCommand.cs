@@ -25,9 +25,6 @@ sealed public class TestCommand : CoreCommand
   public SwitchParameter Switch
   { private get; init; }
 
-  sealed override private protected void Preprocess()
-  { }
-
   sealed override private protected void Process()
   {
     foreach (var name in Name)

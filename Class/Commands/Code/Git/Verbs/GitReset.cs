@@ -65,7 +65,7 @@ sealed public partial class GitReset() : Git("reset")
   public SwitchParameter Soft
   { private get; init; }
 
-  sealed override private protected void PreprocessOtherArguments()
+  sealed override private protected void FinishSetup()
   {
     if (DeferredVerbArgument is not null)
     {

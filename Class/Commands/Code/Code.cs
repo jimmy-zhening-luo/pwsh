@@ -35,39 +35,12 @@ abstract public class NativeCodeCommand(
 
   abstract private protected void CanonicalizeVerb();
 
-  virtual private protected void PreprocessOtherArguments()
+  virtual private protected void FinishSetup()
   { }
 
-  virtual private protected string[] ParseArguments() => [];
+  virtual private protected string[] GetVerbBaseArguments() => [];
 
-  sealed override private protected string[] ParseRuntimeCommandArguments()
-  {
-    if (ReanchorPath(WorkingDirectory) == Pwd())
-    {
-      return [];
-    }
-
-    var workingDirectoryArgument = string.Concat(
-      WorkingDirectoryPrefix ?? string.Empty,
-      ReanchorPath(WorkingDirectory)
-    );
-
-    return WorkingDirectoryParameterName is null
-      ? [workingDirectoryArgument]
-      : [
-          WorkingDirectoryParameterName,
-          workingDirectoryArgument,
-        ];
-  }
-
-  sealed override private protected string[] ParseRuntimeVerbArguments() => DeferredVerbArgument is null
-    ? ParseArguments()
-    : [
-        DeferredVerbArgument,
-        .. ParseArguments(),
-      ];
-
-  sealed override private protected void PreprocessArguments()
+  sealed override private protected void Setup()
   {
     CanonicalizeVerb();
 
@@ -113,8 +86,35 @@ abstract public class NativeCodeCommand(
         break;
     }
 
-    PreprocessOtherArguments();
+    FinishSetup();
   }
+
+  sealed override private protected string[] GetCommandRuntimeArguments()
+  {
+    if (ReanchorPath(WorkingDirectory) == Pwd())
+    {
+      return [];
+    }
+
+    var workingDirectoryArgument = string.Concat(
+      WorkingDirectoryPrefix ?? string.Empty,
+      ReanchorPath(WorkingDirectory)
+    );
+
+    return WorkingDirectoryParameterName is null
+      ? [workingDirectoryArgument]
+      : [
+          WorkingDirectoryParameterName,
+          workingDirectoryArgument,
+        ];
+  }
+
+  sealed override private protected string[] GetVerbRuntimeArguments() => DeferredVerbArgument is null
+    ? GetVerbBaseArguments()
+    : [
+        DeferredVerbArgument,
+        .. GetVerbBaseArguments(),
+      ];
 
   sealed override private protected void ClearArguments()
   {

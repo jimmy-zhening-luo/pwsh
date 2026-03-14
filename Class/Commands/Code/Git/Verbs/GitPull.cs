@@ -6,5 +6,4 @@ namespace PowerModule.Commands.Code.Git.Verbs;
   HelpUri = $"{GitHelpLink}/git-pull"
 )]
 [Alias("gp")]
-sealed public class GitPull() : Git("pull")
-{ }
+sealed public class GitPull() : Git("pull");

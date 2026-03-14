@@ -7,5 +7,4 @@ namespace PowerModule.Commands.Windows.App.Verbs;
 )]
 [Alias("wgr")]
 [OutputType(typeof(void))]
-sealed public class WinGetRemove() : WinGet("uninstall")
-{ }
+sealed public class WinGetRemove() : WinGet("uninstall");

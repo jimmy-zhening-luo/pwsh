@@ -8,7 +8,7 @@ namespace PowerModule.Commands.Code.Git.Verbs;
 [Alias("grp")]
 sealed public class GitRestore() : Git("pull")
 {
-  sealed override private protected void PreprocessOtherArguments()
+  sealed override private protected void FinishSetup()
   {
     ClearArguments();
 

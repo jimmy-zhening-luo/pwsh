@@ -17,5 +17,5 @@ sealed public class NpmRunScript() : Npm("run")
   required public string Script
   { private get; init; }
 
-  sealed override private protected string[] ParseArguments() => [Script];
+  sealed override private protected string[] GetVerbBaseArguments() => [Script];
 }

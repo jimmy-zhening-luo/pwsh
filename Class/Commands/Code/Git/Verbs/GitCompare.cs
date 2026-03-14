@@ -17,7 +17,7 @@ sealed public class GitCompare() : Git("diff")
   public string Name
   { private get; init; } = string.Empty;
 
-  sealed override private protected string[] ParseArguments() => Name is ""
+  sealed override private protected string[] GetVerbBaseArguments() => Name is ""
     ? []
     : [Name];
 }

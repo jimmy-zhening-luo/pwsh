@@ -56,10 +56,10 @@ sealed public class NpmUpdateVersion() : Npm("version")
   }
   string version = nameof(NodeVersion.patch);
 
-  sealed override private protected void PreprocessOtherArguments() => System.ArgumentException.ThrowIfNullOrEmpty(
+  sealed override private protected void FinishSetup() => System.ArgumentException.ThrowIfNullOrEmpty(
     Version,
     $"{nameof(Version)} is neither SemanticVersion nor NodeVersion"
   );
 
-  sealed override private protected string[] ParseArguments() => [Version];
+  sealed override private protected string[] GetVerbBaseArguments() => [Version];
 }

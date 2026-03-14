@@ -9,7 +9,7 @@ namespace PowerModule.Commands.Windows.App.Verbs;
 [OutputType(typeof(void))]
 sealed public class WinGetAdd() : WinGet("install")
 {
-  sealed override private protected void PreprocessArguments()
+  sealed override private protected void Setup()
   {
     if (Arguments.Count is 0)
     {

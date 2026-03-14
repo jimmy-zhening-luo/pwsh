@@ -20,7 +20,7 @@ sealed public class NpmTest() : Npm("test")
   public SwitchParameter IgnoreScript
   { private get; init; }
 
-  sealed override private protected void PreprocessOtherArguments()
+  sealed override private protected void FinishSetup()
   {
     if (IgnoreScript && !NativeArguments.Contains(FlagIgnoreScript))
     {

@@ -90,12 +90,12 @@ abstract public partial class NativeCommand(
   )]
   static private partial System.Text.RegularExpressions.Regex NativeArgumentRegex();
 
-  virtual private protected void PreprocessArguments()
+  virtual private protected void Setup()
   { }
 
-  virtual private protected string[] ParseRuntimeCommandArguments() => [];
+  virtual private protected string[] GetCommandRuntimeArguments() => [];
 
-  virtual private protected string[] ParseRuntimeVerbArguments() => [];
+  virtual private protected string[] GetVerbRuntimeArguments() => [];
 
   sealed override private protected void Preprocess()
   {
@@ -104,7 +104,7 @@ abstract public partial class NativeCommand(
       AddLast(argument);
     }
 
-    PreprocessArguments();
+    Setup();
   }
 
   sealed override private protected void Postprocess()
@@ -122,7 +122,7 @@ abstract public partial class NativeCommand(
     }
 
     command.AddRange(
-      ParseRuntimeCommandArguments()
+      GetCommandRuntimeArguments()
     );
 
     if (IntrinsicVerb is not null)
@@ -133,7 +133,7 @@ abstract public partial class NativeCommand(
     }
 
     command.AddRange(
-      ParseRuntimeVerbArguments()
+      GetVerbRuntimeArguments()
     );
 
     if (D)

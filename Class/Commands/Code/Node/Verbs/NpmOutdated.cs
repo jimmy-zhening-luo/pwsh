@@ -17,7 +17,7 @@ sealed public class NpmOutdated() : Npm("outdated")
   public SwitchParameter All
   { private get; init; }
 
-  sealed override private protected void PreprocessOtherArguments()
+  sealed override private protected void FinishSetup()
   {
     NoThrow = true;
 

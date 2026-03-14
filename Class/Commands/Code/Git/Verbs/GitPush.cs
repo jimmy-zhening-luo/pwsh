@@ -8,7 +8,7 @@ namespace PowerModule.Commands.Code.Git.Verbs;
 [Alias("gs")]
 sealed public class GitPush() : Git("push")
 {
-  sealed override private protected void PreprocessOtherArguments()
+  sealed override private protected void FinishSetup()
   {
     if (DeferredVerbArgument is not null)
     {

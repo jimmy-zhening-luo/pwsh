@@ -29,7 +29,7 @@ sealed public class GitAdd() : Git("add")
   public SwitchParameter Renormalize
   { private get; init; }
 
-  sealed override private protected void PreprocessOtherArguments()
+  sealed override private protected void FinishSetup()
   {
     if (Renormalize)
     {
@@ -40,5 +40,5 @@ sealed public class GitAdd() : Git("add")
     }
   }
 
-  sealed override private protected string[] ParseArguments() => [Name];
+  sealed override private protected string[] GetVerbBaseArguments() => [Name];
 }
