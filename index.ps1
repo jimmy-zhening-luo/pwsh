@@ -48,6 +48,14 @@ $Global:PSDefaultParameterValues = @{
         Where-Object -Property Id -NE -Value $PID |
         ForEach-Object -MemberName Kill -ArgumentList $true
 
+      if (
+        -not (
+          Test-Path -LiteralPath $INSTALL -PathType Container
+        )
+      ) {
+        New-Item -LiteralPath $INSTALL -ItemType Directory -ErrorAction Continue
+      }
+
       Copy-Item -LiteralPath $BUILD -Destination $INSTALL -Force -ErrorAction Continue
       Copy-Item -LiteralPath $SOURCE\$MODULE.psd1 -Destination $INSTALL -Force -ErrorAction Continue
     }
