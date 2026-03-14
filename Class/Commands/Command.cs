@@ -2,7 +2,7 @@ namespace PowerModule.Commands;
 
 abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDisposable
 {
-  private protected object? sink;
+  object? sink;
 
   ~CoreCommand()
   {
@@ -49,6 +49,11 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
         {
           pshost.Dispose();
           pshost = default;
+        }
+
+        if (sink is not null)
+        {
+          sink = null;
         }
       }
 
