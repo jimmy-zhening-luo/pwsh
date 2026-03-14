@@ -5,7 +5,7 @@ namespace PowerModule.Commands.Pwsh.Help;
   "HelpOnline",
   HelpUri = $"{HelpLink}2096483"
 )]
-[Alias("m", "man")]
+[Alias("m")]
 [OutputType(typeof(object))]
 sealed public class GetHelpOnline : CoreCommand
 {

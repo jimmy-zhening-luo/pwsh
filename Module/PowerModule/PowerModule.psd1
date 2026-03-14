@@ -141,7 +141,6 @@
     'op'
     'oc'
     'm'
-    'man'
     'galc'
     'vb'
     'types'
