@@ -20,14 +20,6 @@ sealed public class TestHost() : WrappedCommand(
     detailed,
   }
 
-  enum WellKnownPort
-  {
-    HTTP = -4,
-    RDP,
-    SMB,
-    WINRM,
-  }
-
   sealed override private protected Dictionary<string, object?> CoercedParameters => new()
   {
     ["Detailed"] = default,
@@ -55,9 +47,11 @@ sealed public class TestHost() : WrappedCommand(
     Position = 1
   )]
   [ValidateNotNullOrWhiteSpace]
-  [Tab.EnumCompletions(
-    typeof(WellKnownPort),
-    Case = Tab.CompletionCase.Lower
+  [Tab.Completions(
+    "http",
+    "rdp",
+    "smb",
+    "winrm"
   )]
   required public string CommonTCPPort
   { private get; init; }
@@ -133,36 +127,15 @@ sealed public class TestHost() : WrappedCommand(
 
         break;
 
-      case "CommonTCPPort":
-        switch (CommonTCPPort)
-        {
-          case var port when ushort.TryParse(
-            port,
-            out var numericPort
-          ):
-            RemoveBoundParameter("CommonTCPPort");
-            SetBoundParameter(
-              "Port",
-              (int)numericPort
-            );
-
-            break;
-
-          case var port when System.Enum.TryParse<WellKnownPort>(
-            port,
-            true,
-            out var commonPort
-          ):
-            SetBoundParameter(
-              "CommonTCPPort",
-              commonPort.ToString()
-            );
-
-            break;
-
-          default:
-            break;
-        }
+      case "CommonTCPPort" when ushort.TryParse(
+        CommonTCPPort,
+        out var numericPort
+      ):
+        RemoveBoundParameter("CommonTCPPort");
+        SetBoundParameter(
+          "Port",
+          (int)numericPort
+        );
 
         break;
 
