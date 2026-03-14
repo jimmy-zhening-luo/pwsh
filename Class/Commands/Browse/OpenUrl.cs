@@ -34,11 +34,14 @@ sealed public class OpenUrl() : CoreCommand(true)
 
   sealed override private protected void Process()
   {
-    foreach (var uri in Uri)
+    if (ParameterSetName is StandardParameter.Uri)
     {
-      if (Client.Network.Url.IsHttpOrFile(uri))
+      foreach (var uri in Uri)
       {
-        Client.Network.Url.Open(uri);
+        if (Client.Network.Url.IsHttpOrFile(uri))
+        {
+          Client.Network.Url.Open(uri);
+        }
       }
     }
   }
