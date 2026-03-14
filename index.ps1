@@ -24,11 +24,11 @@ $Global:PSDefaultParameterValues = @{
 
 & {
   $MODULE = 'PowerModule'
-  $SOURCE = "$PSScriptRoot\Class"
   $BUILD = "$PSScriptRoot\Build\bin\release\$MODULE.dll"
-  $INSTALL = "$HOME\Documents\PowerShell\Modules\$MODULE"
 
   if (Test-Path -LiteralPath $BUILD -PathType Leaf) {
+    $INSTALL = "$HOME\Documents\PowerShell\Modules\$MODULE"
+
     if (
       -not (
         Test-Path -LiteralPath $INSTALL\$MODULE.dll -PathType Leaf
@@ -57,7 +57,7 @@ $Global:PSDefaultParameterValues = @{
       }
 
       Copy-Item -LiteralPath $BUILD -Destination $INSTALL -Force -ErrorAction Continue
-      Copy-Item -LiteralPath $SOURCE\$MODULE.psd1 -Destination $INSTALL -Force -ErrorAction Continue
+      Copy-Item -LiteralPath $PSScriptRoot\Class\$MODULE.psd1 -Destination $INSTALL -Force -ErrorAction Continue
     }
   }
   else {
