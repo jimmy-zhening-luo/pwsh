@@ -1,7 +1,7 @@
 namespace PowerModule.Client;
 
-using StringComparison = System.StringComparison;
 using CultureInfo = System.Globalization.CultureInfo;
+using StringComparison = System.StringComparison;
 
 static class StringInput
 {
