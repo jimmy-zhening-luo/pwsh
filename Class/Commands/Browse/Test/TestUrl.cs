@@ -9,51 +9,6 @@ namespace PowerModule.Commands.Browse.Test;
 [OutputType(typeof(System.Uri))]
 sealed public class TestUrl : CoreCommand
 {
-  static List<System.Uri> FilterSupportedUri(System.Uri[] uris)
-  {
-    List<System.Uri> supportedUris = [];
-
-    foreach (var uri in uris)
-    {
-      if (Client.Network.Url.IsHttpOrFile(uri))
-      {
-        supportedUris.Add(uri);
-      }
-      else if (
-        !uri.IsAbsoluteUri
-        && Client.Network.Url.ToAbsoluteHttpUri(
-          $"http://{uri.OriginalString}"
-        ) is { } httpUri
-      )
-      {
-        supportedUris.Add(httpUri);
-      }
-    }
-
-    return supportedUris;
-  }
-
-  static List<System.Uri> FilterReachableUri(List<System.Uri> uris)
-  {
-    List<System.Uri> reachableUris = [];
-
-    foreach (var uri in uris)
-    {
-      if (
-        Client.Network.Url.IsFile(uri)
-        && System.IO.Path.Exists(uri.LocalPath)
-        || Client.Network.Url.IsHttp(uri)
-        && Client.Network.Dns.Resolve(uri)
-        && Client.Network.Url.TestHttp(uri)
-      )
-      {
-        reachableUris.Add(uri);
-      }
-    }
-
-    return reachableUris;
-  }
-
   [Parameter(
     Mandatory = true,
     Position = default,
@@ -66,12 +21,42 @@ sealed public class TestUrl : CoreCommand
   required public System.Uri[] Uri
   { get; init; }
 
-  sealed override private protected void Process() => WriteObject(
-    FilterReachableUri(
-      FilterSupportedUri(
-        Uri
-      )
-    ),
-    true
-  );
+  sealed override private protected void Process()
+  {
+    foreach (var uri in Uri)
+    {
+      switch (uri.Scheme)
+      {
+        case Client.Network.Scheme.File:
+          if (System.IO.Path.Exists(uri.LocalPath))
+          {
+            WriteObject(uri);
+          }
+
+          break;
+
+        case Client.Network.Scheme.Http:
+        case Client.Network.Scheme.Https:
+          var testUri = uri.IsAbsoluteUri
+            ? uri
+            : Client.Network.Url.ToAbsoluteHttpUri(
+              $"http://{uri.OriginalString}"
+            );
+
+          if (
+            testUri is not null
+            && Client.Network.Dns.Resolve(testUri)
+            && Client.Network.Url.TestHttp(testUri)
+          )
+          {
+            WriteObject(testUri);
+          }
+
+          break;
+
+        default:
+          break;
+      }
+    }
+  }
 }
