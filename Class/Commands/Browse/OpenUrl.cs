@@ -21,7 +21,7 @@ sealed public class OpenUrl() : CoreCommand(true)
   { private get; init; } = string.Empty;
 
   [Parameter(
-    ParameterSetName = "Uri",
+    ParameterSetName = StandardParameter.Uri,
     Mandatory = true,
     Position = default,
     ValueFromPipeline = true,

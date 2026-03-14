@@ -7,6 +7,7 @@ partial class CoreCommand
     internal const string Path = "Path";
     internal const string LiteralPath = "LiteralPath";
     internal const string Name = "Name";
+    internal const string Uri = "Uri";
   }
 
   static private protected class StandardAlias
