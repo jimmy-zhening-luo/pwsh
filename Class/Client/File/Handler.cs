@@ -16,9 +16,9 @@ static class Handler
   static internal HashSet<string> EditorProfile = new(
     System.StringComparer.OrdinalIgnoreCase
   ) {
-    DefaultEditorProfile,
     EditorProfileSetting,
     EditorProfileSvelte,
+    DefaultEditorProfile,
   };
 
   static internal void Edit() => Edit(string.Empty);
