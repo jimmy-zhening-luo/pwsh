@@ -1,24 +1,24 @@
 namespace PowerModule.Client.File;
 
-static class Handler
+static class Editor
 {
-  internal enum EditorWindow
+  internal enum Window
   {
     Default,
     New,
     Reuse,
   }
 
-  internal const string DefaultEditorProfile = "Default";
-  internal const string EditorProfileSetting = "Setting";
-  internal const string EditorProfileSvelte = "Svelte";
+  internal const string DefaultProfile = "Default";
+  internal const string ProfileSetting = "Setting";
+  internal const string ProfileSvelte = "Svelte";
 
   static internal HashSet<string> EditorProfile = new(
     System.StringComparer.OrdinalIgnoreCase
   ) {
-    EditorProfileSetting,
-    EditorProfileSvelte,
-    DefaultEditorProfile,
+    ProfileSetting,
+    ProfileSvelte,
+    DefaultProfile,
   };
 
   static internal void Edit() => Edit(string.Empty);
@@ -56,7 +56,7 @@ static class Handler
   );
   static internal void Edit(
     string path,
-    EditorWindow window
+    Window window
   ) => Edit(
     path,
     window,
@@ -64,17 +64,17 @@ static class Handler
   );
   static internal void Edit(
     string path,
-    EditorWindow window,
+    Window window,
     string[] arguments
   ) => Edit(
     path,
     window switch
     {
-      EditorWindow.New => [
+      Window.New => [
         "--new-window",
         .. arguments,
       ],
-      EditorWindow.Reuse => [
+      Window.Reuse => [
         "--reuse-window",
         .. arguments,
       ],
@@ -84,7 +84,7 @@ static class Handler
   static internal void Edit(
     string path,
     string profile,
-    EditorWindow window
+    Window window
   ) => Edit(
     path,
     profile,
@@ -94,7 +94,7 @@ static class Handler
   static internal void Edit(
     string path,
     string profile,
-    EditorWindow window,
+    Window window,
     string[] arguments
   ) => Edit(
     path,
@@ -103,7 +103,7 @@ static class Handler
       profile,
       out var exactProfile
     )
-    && exactProfile is not DefaultEditorProfile
+    && exactProfile is not DefaultProfile
       ? [
           $"--profile={exactProfile}",
           .. arguments,

@@ -8,11 +8,11 @@ namespace PowerModule.Commands.Pwsh.History;
 [OutputType(typeof(void))]
 sealed public class StartHistory() : CoreCommand(true)
 {
-  sealed override private protected void Postprocess() => Client.File.Handler.Edit(
+  sealed override private protected void Postprocess() => Client.File.Editor.Edit(
     Client.Environment.Folder.AppData(
       @"Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt"
     ),
-    Client.File.Handler.EditorProfileSetting,
-    Client.File.Handler.EditorWindow.New
+    Client.File.Editor.ProfileSetting,
+    Client.File.Editor.Window.New
   );
 }

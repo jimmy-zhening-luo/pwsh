@@ -1,13 +1,11 @@
 namespace PowerModule.Commands.Shell.Start.Workspace;
 
-using static Client.File.Handler;
-
 abstract public class VirtualStartWorkspace() : CoreCommand(true)
 {
   sealed class EditorProfileCompletionsAttribute : Tab.CompletionsAttribute<HashSet<string>>
   {
     internal EditorProfileCompletionsAttribute() : base(
-      EditorProfile
+      Client.File.Editor.EditorProfile
     ) => Casing = Tab.CompletionCase.Lower;
   }
 
@@ -37,10 +35,10 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
   [Parameter]
   public SwitchParameter Window
   {
-    private get => window is EditorWindow.New;
-    set => window = EditorWindow.New;
+    private get => window is Client.File.Editor.Window.New;
+    set => window = Client.File.Editor.Window.New;
   }
-  EditorWindow window;
+  Client.File.Editor.Window window;
 
   [Parameter]
   public SwitchParameter ReuseWindow
@@ -50,13 +48,15 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
   {
     if (ReuseWindow && !Window)
     {
-      window = EditorWindow.Reuse;
+      window = Client.File.Editor.Window.Reuse;
     }
 
     if (Name is not "")
     {
       if (
-        new List<string>(EditorProfile).Find(
+        new List<string>(
+           Client.File.Editor.EditorProfile
+        ).Find(
           pn => pn.StartsWith(
             Name,
             System.StringComparison.OrdinalIgnoreCase
@@ -73,7 +73,7 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
     }
   }
 
-  sealed override private protected void Process() => Edit(
+  sealed override private protected void Process() => Client.File.Editor.Edit(
     InCurrentLocation
     && Path is ""
     && (
