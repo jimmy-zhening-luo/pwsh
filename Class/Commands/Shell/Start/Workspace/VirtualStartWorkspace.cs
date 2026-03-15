@@ -4,7 +4,12 @@ using static Client.File.Handler;
 
 abstract public class VirtualStartWorkspace() : CoreCommand(true)
 {
-  sealed class EditorProfileCompletionsAttribute() : Tab.CompletionsAttribute<HashSet<string>>(EditorProfile);
+  sealed class EditorProfileCompletionsAttribute : Tab.CompletionsAttribute<HashSet<string>>
+  {
+    internal EditorProfileCompletionsAttribute() : base(
+      EditorProfile
+    ) => Casing = Tab.CompletionCase.Lower;
+  }
 
   string profile = string.Empty;
   string? argument;
