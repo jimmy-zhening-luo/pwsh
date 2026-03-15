@@ -4,12 +4,12 @@ partial class Git
 {
   sealed private protected class GitVerbCompletionsAttribute() : Tab.CompletionsAttribute<HashSet<string>>(Verbs);
 
-  enum NewableVerb
-  {
-    clone,
-    config,
-    init,
-  }
+
+  static readonly HashSet<string> NewableVerb = [
+    "switch",
+    "merge",
+    "diff",
+  ];
 
   static readonly HashSet<string> Verbs = [
     "switch",

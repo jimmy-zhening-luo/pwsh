@@ -42,17 +42,13 @@ abstract public partial class Git(string? IntrinsicVerb) : NativeCodeCommand(
 
         break;
 
-      case var verb when System.Enum.TryParse<NewableVerb>(
-        verb,
-        default,
-        out var newableVerb
-      ):
+      case var verb when NewableVerb.Contains(verb):
         (
           newable,
           IntrinsicVerb
         ) = (
           true,
-          newableVerb.ToString()
+          verb
         );
 
         break;
