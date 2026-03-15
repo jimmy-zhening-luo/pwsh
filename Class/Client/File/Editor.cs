@@ -13,7 +13,7 @@ static class Editor
   internal const string ProfileSetting = "Setting";
   internal const string ProfileSvelte = "Svelte";
 
-  static internal HashSet<string> EditorProfile = new(
+  static internal HashSet<string> Profile = new(
     System.StringComparer.OrdinalIgnoreCase
   ) {
     ProfileSetting,
@@ -99,7 +99,7 @@ static class Editor
   ) => Edit(
     path,
     window,
-    EditorProfile.TryGetValue(
+    Profile.TryGetValue(
       profile,
       out var exactProfile
     )

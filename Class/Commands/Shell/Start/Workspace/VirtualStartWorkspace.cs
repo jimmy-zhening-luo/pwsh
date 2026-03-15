@@ -5,7 +5,7 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
   sealed class EditorProfileCompletionsAttribute : Tab.CompletionsAttribute<HashSet<string>>
   {
     internal EditorProfileCompletionsAttribute() : base(
-      Client.File.Editor.EditorProfile
+      Client.File.Editor.Profile
     ) => Casing = Tab.CompletionCase.Lower;
   }
 
@@ -55,7 +55,7 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
     {
       if (
         new List<string>(
-           Client.File.Editor.EditorProfile
+           Client.File.Editor.Profile
         ).Find(
           pn => pn.StartsWith(
             Name,
