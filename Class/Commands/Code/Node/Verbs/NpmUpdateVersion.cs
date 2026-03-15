@@ -8,16 +8,20 @@ namespace PowerModule.Commands.Code.Node.Verbs;
 [Alias("nu")]
 sealed public class NpmUpdateVersion() : Npm("version")
 {
-  enum NodeVersion
-  {
-    patch,
-    minor,
-    major,
-    prerelease,
-    prepatch,
-    preminor,
-    premajor,
-  }
+  sealed class NpmVersionCompletionsAttribute() : Tab.CompletionsAttribute<HashSet<string>>(NodePackageVersion);
+
+  const string DefaultNodePackageVersion = "patch";
+
+  static readonly HashSet<string> NodePackageVersion = [
+    DefaultNodePackageVersion,
+    "minor",
+    "major",
+    "prerelease",
+    "preminor",
+    "premajor",
+    "prepatch",
+    "from-git",
+  ];
 
   new internal SwitchParameter V
   { get; }
@@ -28,33 +32,31 @@ sealed public class NpmUpdateVersion() : Npm("version")
   )]
   [Alias("v")]
   [ValidateNotNullOrWhiteSpace]
-  [Tab.EnumCompletions(
-    typeof(NodeVersion),
-    Include = ["from-git"],
-    Exclude = ["prepatch"]
-  )]
+  [NpmVersionCompletions]
   public string Version
   {
     private get => version;
-    init => version = value switch
+    init => version = value.ToLower(
+      Client.StringInput.InvariantCulture
+    ) switch
     {
-      "" => nameof(NodeVersion.patch),
-      _ when value.Equals("from-git", System.StringComparison.OrdinalIgnoreCase) => "from-git",
-      _ when System.Enum.TryParse<NodeVersion>(
-        value,
-        true,
-        out var named
-      ) => named.ToString(),
-      var v when SemanticVersion.TryParse(
-        v is ['v' or 'V', .. var num]
-          ? num
-          : v,
+      "" => DefaultNodePackageVersion,
+      var version when NodePackageVersion.Contains(
+        version
+      ) => version,
+      var version when SemanticVersion.TryParse(
+        version is [
+          'v',
+          .. var numericPart,
+        ]
+          ? numericPart
+          : version,
         out var semver
       ) => semver.ToString(),
       _ => string.Empty,
     };
   }
-  string version = nameof(NodeVersion.patch);
+  string version = DefaultNodePackageVersion;
 
   sealed override private protected void FinishSetup() => System.ArgumentException.ThrowIfNullOrEmpty(
     Version,
