@@ -4,7 +4,6 @@ partial class Git
 {
   sealed private protected class GitVerbCompletionsAttribute() : Tab.CompletionsAttribute<HashSet<string>>(Verbs);
 
-
   static readonly HashSet<string> NewableVerb = [
     "switch",
     "merge",

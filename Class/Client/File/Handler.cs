@@ -9,12 +9,17 @@ static class Handler
     Reuse,
   }
 
-  internal enum EditorProfile
-  {
-    Default,
-    Setting,
-    Svelte,
-  }
+  internal const string DefaultEditorProfile = "Default";
+  internal const string EditorProfileSetting = "Setting";
+  internal const string EditorProfileSvelte = "Svelte";
+
+  static internal HashSet<string> EditorProfile = new(
+    System.StringComparer.OrdinalIgnoreCase
+  ) {
+    DefaultEditorProfile,
+    EditorProfileSetting,
+    EditorProfileSvelte,
+  };
 
   static internal void Edit() => Edit(string.Empty);
   static internal void Edit(string path) => Start.CreateProcess(
@@ -33,7 +38,7 @@ static class Handler
   );
   static internal void Edit(
     string path,
-    EditorProfile profile
+    string profile
   ) => Edit(
     path,
     profile,
@@ -41,7 +46,7 @@ static class Handler
   );
   static internal void Edit(
     string path,
-    EditorProfile profile,
+    string profile,
     string[] arguments
   ) => Edit(
     path,
@@ -78,7 +83,7 @@ static class Handler
   );
   static internal void Edit(
     string path,
-    EditorProfile profile,
+    string profile,
     EditorWindow window
   ) => Edit(
     path,
@@ -88,19 +93,21 @@ static class Handler
   );
   static internal void Edit(
     string path,
-    EditorProfile profile,
+    string profile,
     EditorWindow window,
     string[] arguments
   ) => Edit(
     path,
     window,
-    profile switch
-    {
-      EditorProfile.Default => arguments,
-      _ => [
-        $"--profile={profile}",
-        .. arguments,
-      ],
-    }
+    EditorProfile.TryGetValue(
+      profile,
+      out var exactProfile
+    )
+    && exactProfile is not DefaultEditorProfile
+      ? [
+          $"--profile={exactProfile}",
+          .. arguments,
+        ]
+      : arguments
   );
 }

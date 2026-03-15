@@ -4,7 +4,9 @@ using static Client.File.Handler;
 
 abstract public class VirtualStartWorkspace() : CoreCommand(true)
 {
-  EditorProfile profile;
+  sealed class EditorProfileCompletionsAttribute() : Tab.CompletionsAttribute<HashSet<string>>(EditorProfile);
+
+  string profile = string.Empty;
   string? argument;
 
   abstract public string Path
@@ -12,7 +14,7 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
 
   [Parameter(Position = 1)]
   [ValidateNotNullOrWhiteSpace]
-  [Tab.EnumCompletions(typeof(EditorProfile))]
+  [EditorProfileCompletions]
   public string Name
   { private get; init; } = string.Empty;
 
@@ -49,20 +51,15 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
     if (Name is not "")
     {
       if (
-        new List<string>(
-          System.Enum.GetNames<EditorProfile>()
-        )
-          .Find(
-            pn => pn.StartsWith(
-              Name,
-              System.StringComparison.OrdinalIgnoreCase
-            )
-          ) is { } profileName
-        )
+        new List<string>(EditorProfile).Find(
+          pn => pn.StartsWith(
+            Name,
+            System.StringComparison.OrdinalIgnoreCase
+          )
+        ) is { } profileName
+      )
       {
-        profile = System.Enum.Parse<EditorProfile>(
-          profileName
-        );
+        profile = profileName;
       }
       else
       {
