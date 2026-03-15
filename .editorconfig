@@ -185,6 +185,5 @@ csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimenta
 
 #region Quality
 dotnet_code_quality.CA1062.excluded_type_names_with_derived_types = CoreCommand
-dotnet_code_quality.CA1062.null_check_validation_methods = M:PowerModule.Client.StringInput.IsUnsafe(System.String)|M:PowerModule.Client.Network.Url.IsFile(System.Uri)|M:PowerModule.Client.Network.Url.IsHttp(System.Uri)
 dotnet_code_quality.CA1822.api_surface = internal, private
 #endregion
