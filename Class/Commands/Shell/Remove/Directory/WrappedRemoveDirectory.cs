@@ -19,20 +19,20 @@ abstract public class WrappedRemoveDirectory() : WrappedCommand(
   [SupportsWildcards]
   required public string Filter
   {
-    init => Discard();
+    init => _ = value;
   }
 
   [Parameter]
   [SupportsWildcards]
   required public string[] Include
   {
-    init => Discard();
+    init => _ = value;
   }
 
   [Parameter]
   [SupportsWildcards]
   required public string[] Exclude
   {
-    init => Discard();
+    init => _ = value;
   }
 }

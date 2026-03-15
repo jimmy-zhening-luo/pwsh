@@ -29,7 +29,7 @@ sealed public class StartExplorer : WrappedStartExplorer
   [Alias(StandardAlias.PSPath, StandardAlias.LP)]
   required public string[] LiteralPath
   {
-    init => Discard();
+    init => _ = value;
   }
 }
 

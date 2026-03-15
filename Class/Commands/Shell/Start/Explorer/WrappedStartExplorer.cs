@@ -13,21 +13,21 @@ abstract public class WrappedStartExplorer() : WrappedCommand(
   [SupportsWildcards]
   required public string Filter
   {
-    init => Discard();
+    init => _ = value;
   }
 
   [Parameter]
   [SupportsWildcards]
   required public string[] Include
   {
-    init => Discard();
+    init => _ = value;
   }
 
   [Parameter]
   [SupportsWildcards]
   required public string[] Exclude
   {
-    init => Discard();
+    init => _ = value;
   }
 
   sealed override private protected void TransformPipelineInput() => SetBoundParameter(

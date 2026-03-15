@@ -24,7 +24,7 @@ sealed public class ClearLine : CoreCommand
   [SupportsWildcards]
   required public string Filter
   {
-    init => Discard();
+    init => _ = value;
   }
 
   [Parameter(
@@ -34,34 +34,34 @@ sealed public class ClearLine : CoreCommand
   [Alias(StandardAlias.PSPath, StandardAlias.LP)]
   required public string[] LiteralPath
   {
-    init => Discard();
+    init => _ = value;
   }
 
   [Parameter]
   [SupportsWildcards]
   required public string[] Include
   {
-    init => Discard();
+    init => _ = value;
   }
 
   [Parameter]
   [SupportsWildcards]
   required public string[] Exclude
   {
-    init => Discard();
+    init => _ = value;
   }
 
   [Parameter]
   [Alias("f")]
   public SwitchParameter Force
   {
-    init => Discard();
+    init => _ = value;
   }
 
   [Parameter]
   required public string Stream
   {
-    init => Discard();
+    init => _ = value;
   }
 
   sealed override private protected void Postprocess()

@@ -33,7 +33,7 @@ sealed public class GetDirectory : WrappedGetDirectory
   [Alias(StandardAlias.PSPath, StandardAlias.LP)]
   required public string[] LiteralPath
   {
-    init => Discard();
+    init => _ = value;
   }
 }
 
