@@ -28,8 +28,6 @@ function Update-PSProfile {
   )
 
   if ($Restore) {
-    Remove-Item -LiteralPath $PROFILE_REPO_ROOT\Build -Recurse -Force
-
     & $GIT @GitArgument add .
     & $GIT @GitArgument reset --hard
 
