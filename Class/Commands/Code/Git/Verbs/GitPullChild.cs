@@ -37,9 +37,7 @@ sealed public class GitPullChild : CoreCommand
   {
     ushort progress = default;
 
-    var baseCommand = $"& {Client.StringInput.EscapeDoubleQuoted(
-      Client.Environment.Application.Git
-    )} -c color.ui=always -C";
+    var baseCommand = "git -c color.ui=always -C";
 
     foreach (var repository in ListRepositories())
     {
