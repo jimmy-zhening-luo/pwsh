@@ -13,6 +13,7 @@ sealed public class TestCommand : CoreCommand
     Position = default,
     ValueFromPipeline = true
   )]
+  [AllowEmptyCollection]
   [ValidateNotNullOrWhiteSpace]
   public string[] Name
   { get; init; } = [];
