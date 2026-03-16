@@ -27,7 +27,7 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
     DontShow = true,
     HelpMessage = "Additional arguments"
   )]
-  [ValidateLength(1, int.MaxValue)]
+  [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions]
   public string[] ArgumentList
   { private get; init; } = [];
