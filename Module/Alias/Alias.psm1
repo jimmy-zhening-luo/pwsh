@@ -7,11 +7,9 @@ New-Alias mc Measure-Command
 New-Alias ct Measure-Object
 New-Alias count Measure-Object
 New-Alias touch New-Item
-New-Alias remsv Remove-Service
 New-Alias restart Restart-Computer
 New-Alias ^ Select-Object
 New-Alias s Select-Object
-New-Alias sesv Set-Service
 New-Alias z Sort-Object
 New-Alias upman Update-Help
 New-Alias w Where-Object
