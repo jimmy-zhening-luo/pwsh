@@ -13,10 +13,8 @@ function Build-PSProfile {
 function Update-PSProfile {
   [Alias('up')]
   param(
-    [Parameter()]
     [switch]$Build,
 
-    [Parameter()]
     [switch]$Restore
   )
 
