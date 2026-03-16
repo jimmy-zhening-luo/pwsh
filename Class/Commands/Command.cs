@@ -98,7 +98,7 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
   private protected void WriteInformation(object log) => base.WriteInformation(
     new InformationRecord(
       log,
-      GetName()
+      string.Empty
     )
   );
 
@@ -272,11 +272,4 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     ParentParent(),
     path
   );
-
-  string GetName() => GetType() is
-  {
-    FullName: var name
-  } type
-    ? name ?? type.ToString()
-    : string.Empty;
 }
