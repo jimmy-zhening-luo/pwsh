@@ -11,19 +11,4 @@ static class Application
     @"Programs\Microsoft VS Code\bin\code.cmd"
   );
   static string? vscode;
-
-  static internal string WinGet => winget ??= Folder.LocalAppData(
-    @"Microsoft\WindowsApps\winget.exe"
-  );
-  static string? winget;
-
-  static internal string Git => git ??= Folder.ProgramFiles(
-    @"Git\cmd\git.exe"
-  );
-  static string? git;
-
-  static internal string Npm => npm ??= Folder.SystemDrive(
-    @"nvm4w\nodejs\npm.ps1"
-  );
-  static string? npm;
 }

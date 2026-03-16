@@ -1,7 +1,7 @@
 namespace PowerModule.Commands.Code.Node;
 
 abstract public partial class Npm(string? IntrinsicVerb) : NativeCodeCommand(
-  Client.Environment.Application.Npm,
+  "npm",
   IntrinsicVerb,
   ["--color=always"],
   WorkingDirectoryPrefix: "--prefix="
