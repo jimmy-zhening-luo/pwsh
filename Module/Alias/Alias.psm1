@@ -11,7 +11,6 @@ New-Alias restart Restart-Computer
 New-Alias ^ Select-Object
 New-Alias s Select-Object
 New-Alias z Sort-Object
-New-Alias upman Update-Help
 New-Alias w Where-Object
 New-Alias wg $env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe
 New-Alias nx npx.ps1
