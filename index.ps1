@@ -46,7 +46,7 @@ $PSDefaultParameterValues = @{
     ) {
       Get-Process -Name pwsh -ErrorAction SilentlyContinue |
         Where-Object -Property Id -NE -Value $PID |
-        ForEach-Object -MemberName Kill -ArgumentList $true
+        ForEach-Object -MemberName Kill -ArgumentList $True
 
       if (
         -not (

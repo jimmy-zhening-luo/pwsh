@@ -77,6 +77,6 @@ function Update-PSProfile {
   }
   finally {
     Get-Process -Name dotnet -ErrorAction SilentlyContinue |
-      ForEach-Object -MemberName Kill -ArgumentList $true
+      ForEach-Object -MemberName Kill -ArgumentList $True
   }
 }
