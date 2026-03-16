@@ -1,6 +1,6 @@
 $Env:PSModulePath += "$PSScriptRoot\Module;"
-$Global:InformationPreference = 'Continue'
-$Global:PSDefaultParameterValues = @{
+$InformationPreference = 'Continue'
+$PSDefaultParameterValues = @{
   'Clear-RecycleBin:Force'   = $True
   'Format-Table:Wrap'        = $True
   'Get-AppxPackage:AllUsers' = $True
