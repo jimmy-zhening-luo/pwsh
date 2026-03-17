@@ -41,6 +41,12 @@ static class StringInput
     )
     : text;
 
+  static internal string Unescape(string escapedText) => UnescapeDoubleQuoted(
+    UnescapeSingleQuoted(
+      escapedText
+    )
+  );
+
   static internal string UnescapeSingleQuoted(string escapedText) => escapedText is
   [
     SingleQuote,

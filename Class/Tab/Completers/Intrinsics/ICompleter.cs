@@ -23,7 +23,7 @@ interface ICompleter : IArgumentCompleter
     System.Collections.IDictionary fakeBoundParameters
   ) => WrapArgumentCompletionResult(
     GenerateCompletion(
-      Client.StringInput.UnescapeSingleQuoted(
+      Client.StringInput.Unescape(
         wordToComplete
       )
     )
