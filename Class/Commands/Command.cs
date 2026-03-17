@@ -131,9 +131,9 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
   )
   {
     if (
-      PSVariable<int>(
+      SessionState.PSVariable.GetValue(
         "LASTEXITCODE"
-      ) is not (0 or 1)
+      ) is not (null or 0 or 1)
     )
     {
       if (stop)
@@ -238,16 +238,6 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
   )(
     path
   );
-
-  private protected object? PSVariable(string name) => SessionState.PSVariable.GetValue(
-    name,
-    default
-  );
-  private protected T? PSVariable<T>(string name) => SessionState.PSVariable.GetValue(
-    name
-  ) is { } value
-    ? (T)value
-    : default;
 
   private protected string Drive() => SessionState.Drive.Current.Root;
   private protected string Drive(string path) => Client.File.PathString.GetFullPathLocal(
