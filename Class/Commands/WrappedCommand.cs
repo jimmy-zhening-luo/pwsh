@@ -27,9 +27,20 @@ abstract public class WrappedCommand(
 
   sealed override private protected void Preprocess()
   {
-    CoerceParameters();
-
     TransformArguments();
+
+    foreach (
+      (
+        var parameter,
+        var value
+      ) in CoercedParameters
+    )
+    {
+      SetBoundParameter(
+        parameter,
+        value
+      );
+    }
 
     if (PipelineInput is not null && MyInvocation.ExpectingInput)
     {
@@ -66,20 +77,4 @@ abstract public class WrappedCommand(
   }
 
   sealed override private protected void Postprocess() => EndSteppablePipeline();
-
-  void CoerceParameters()
-  {
-    foreach (
-      (
-        var parameter,
-        var value
-      ) in CoercedParameters
-    )
-    {
-      SetBoundParameter(
-        parameter,
-        value
-      );
-    }
-  }
 }
