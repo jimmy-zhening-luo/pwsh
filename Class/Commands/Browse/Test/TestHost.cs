@@ -14,6 +14,8 @@ sealed public class TestHost() : WrappedCommand(
   CommandTypes.Function
 )
 {
+  const string CommonPortParameterName = "CommonTCPPort";
+
   public enum Verbosity
   {
     quiet,
@@ -42,7 +44,7 @@ sealed public class TestHost() : WrappedCommand(
   { get; init; } = string.Empty;
 
   [Parameter(
-    ParameterSetName = "CommonTCPPort",
+    ParameterSetName = CommonPortParameterName,
     Mandatory = true,
     Position = 1
   )]
@@ -62,7 +64,7 @@ sealed public class TestHost() : WrappedCommand(
   )]
   [Alias("RemotePort")]
   [ValidateRange(ValidateRangeKind.Positive)]
-  public ushort Port
+  public int Port
   { private get; init; }
 
   [Parameter]
@@ -117,30 +119,19 @@ sealed public class TestHost() : WrappedCommand(
 
   sealed override private protected void TransformParameters()
   {
-    switch (ParameterSetName)
-    {
-      case "RemotePort":
-        SetBoundParameter(
-          "Port",
-          (int)Port
-        );
-
-        break;
-
-      case "CommonTCPPort" when ushort.TryParse(
+    if (
+      ParameterSetName is CommonPortParameterName
+      && ushort.TryParse(
         CommonTCPPort,
         out var numericPort
-      ):
-        RemoveBoundParameter("CommonTCPPort");
-        SetBoundParameter(
-          "Port",
-          (int)numericPort
-        );
-
-        break;
-
-      default:
-        break;
+      )
+    )
+    {
+      RemoveBoundParameter(CommonPortParameterName);
+      SetBoundParameter(
+        "Port",
+        (int)numericPort
+      );
     }
   }
 
