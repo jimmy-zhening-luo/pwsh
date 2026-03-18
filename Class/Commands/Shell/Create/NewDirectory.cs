@@ -40,6 +40,8 @@ sealed public class NewDirectory() : WrappedCommand(
     ParameterSetName = "nameSet",
     Mandatory = true
   )]
+  [AllowNull]
+  [AllowEmptyString]
   required public string Name
   {
     init => _ = value;
