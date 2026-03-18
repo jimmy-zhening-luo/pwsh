@@ -20,7 +20,6 @@ abstract public class WrappedGetDirectory() : WrappedCommand(
   [ValidateNotNullOrEmpty]
   public string Filter
   {
-    private get => filter;
     init => filter = value switch
     {
       null or "" => "*",
