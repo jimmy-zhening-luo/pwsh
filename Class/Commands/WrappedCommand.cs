@@ -19,7 +19,7 @@ abstract public class WrappedCommand(
   bool InPipeline
   { get; set; }
 
-  virtual private protected void TransformArguments()
+  virtual private protected void TransformParameters()
   { }
 
   virtual private protected void TransformPipelineInput()
@@ -27,7 +27,7 @@ abstract public class WrappedCommand(
 
   sealed override private protected void Preprocess()
   {
-    TransformArguments();
+    TransformParameters();
 
     foreach (
       (

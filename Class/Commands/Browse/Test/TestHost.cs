@@ -115,7 +115,7 @@ sealed public class TestHost() : WrappedCommand(
     init => _ = value;
   }
 
-  sealed override private protected void TransformArguments()
+  sealed override private protected void TransformParameters()
   {
     switch (ParameterSetName)
     {

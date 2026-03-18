@@ -77,7 +77,7 @@ sealed public class SetDirectory : WrappedSetDirectory
     ["E"] = default,
   };
 
-  sealed override private protected void TransformArguments()
+  sealed override private protected void TransformParameters()
   {
     switch (ParameterSetName)
     {
