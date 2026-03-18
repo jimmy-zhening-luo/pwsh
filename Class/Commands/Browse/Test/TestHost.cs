@@ -10,7 +10,6 @@ namespace PowerModule.Commands.Browse.Test;
 [OutputType(typeof(object))]
 sealed public class TestHost() : WrappedCommand(
   @"NetTCPIP\Test-NetConnection",
-  "ComputerName",
   CommandTypes.Function
 )
 {
@@ -21,6 +20,11 @@ sealed public class TestHost() : WrappedCommand(
     quiet,
     detailed,
   }
+
+  sealed override private protected PipelineInputSource PipelineInput => () => (
+    "ComputerName",
+    ComputerName
+  );
 
   sealed override private protected Dictionary<string, object?> CoercedParameters => new()
   {
@@ -41,7 +45,11 @@ sealed public class TestHost() : WrappedCommand(
   )]
   [ValidateNotNullOrWhiteSpace]
   public string ComputerName
-  { get; init; } = string.Empty;
+  {
+    get => computerName ?? "google.com";
+    set => computerName = value;
+  }
+  string? computerName;
 
   [Parameter(
     ParameterSetName = CommonPortParameterName,
@@ -131,17 +139,6 @@ sealed public class TestHost() : WrappedCommand(
       SetBoundParameter(
         "Port",
         (int)numericPort
-      );
-    }
-  }
-
-  sealed override private protected void TransformPipelineInput()
-  {
-    if (ComputerName is "")
-    {
-      SetBoundParameter(
-        "ComputerName",
-        "google.com"
       );
     }
   }

@@ -9,10 +9,14 @@ namespace PowerModule.Commands.Pwsh.Model.Pipeline;
 [Alias("t")]
 [OutputType(typeof(object))]
 sealed public class TeeVariable() : WrappedCommand(
-  @"Microsoft.PowerShell.Utility\Tee-Object",
-  "InputObject"
+  @"Microsoft.PowerShell.Utility\Tee-Object"
 )
 {
+  sealed override private protected PipelineInputSource PipelineInput => () => (
+    "InputObject",
+    InputObject
+  );
+
   [Parameter(
     ValueFromPipeline = true
   )]

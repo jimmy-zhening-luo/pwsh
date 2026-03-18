@@ -25,7 +25,7 @@ sealed public class SetDirectory : WrappedSetDirectory
     Tab.PathItemType.Directory
   )]
   sealed override public string Path
-  { get; init; } = string.Empty;
+  { get; set; } = string.Empty;
 
   [Parameter(
     ParameterSetName = StandardParameter.LiteralPath,
@@ -123,7 +123,7 @@ sealed public class SetDirectorySibling : WrappedSetDirectory
     Tab.PathItemType.Directory
   )]
   sealed override public string Path
-  { get; init; } = string.Empty;
+  { get; set; } = string.Empty;
 
   sealed override private protected Localizer Location => Parent;
 }
@@ -149,7 +149,7 @@ sealed public class SetDirectoryRelative : WrappedSetDirectory
     Tab.PathItemType.Directory
   )]
   sealed override public string Path
-  { get; init; } = string.Empty;
+  { get; set; } = string.Empty;
 
   sealed override private protected Localizer Location => ParentParent;
 }
@@ -175,7 +175,7 @@ sealed public class SetDirectoryHome : WrappedSetDirectory
     Tab.PathItemType.Directory
   )]
   sealed override public string Path
-  { get; init; } = string.Empty;
+  { get; set; } = string.Empty;
 
   sealed override private protected Localizer Location
   { get; } = Client.Environment.Folder.Home;
@@ -202,7 +202,7 @@ sealed public class SetDirectoryCode : WrappedSetDirectory
     Tab.PathItemType.Directory
   )]
   sealed override public string Path
-  { get; init; } = string.Empty;
+  { get; set; } = string.Empty;
 
   sealed override private protected Localizer Location
   { get; } = Client.Environment.Folder.Code;
@@ -229,7 +229,7 @@ sealed public class SetDrive : WrappedSetDirectory
     Tab.PathItemType.Directory
   )]
   sealed override public string Path
-  { get; init; } = string.Empty;
+  { get; set; } = string.Empty;
 
   sealed override private protected Localizer Location => Drive;
 }

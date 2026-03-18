@@ -35,7 +35,7 @@ sealed public class CopyGuid : CoreCommand
       @"Microsoft.PowerShell.Management\Set-Clipboard"
     )
       .AddParameter(
-        "Value",
+        StandardParameter.Value,
         guid
       )
       .Invoke();

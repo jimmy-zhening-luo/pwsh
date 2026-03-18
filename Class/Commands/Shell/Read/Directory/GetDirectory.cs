@@ -24,7 +24,7 @@ sealed public class GetDirectory : WrappedGetDirectory
     Tab.PathItemType.Directory
   )]
   sealed override public string[] Path
-  { get; init; } = [];
+  { get; set; } = [];
 
   [Parameter(
     ParameterSetName = "LiteralItems",
@@ -61,7 +61,7 @@ sealed public class GetDirectorySibling : WrappedGetDirectory
     Tab.PathItemType.Directory
   )]
   sealed override public string[] Path
-  { get; init; } = [];
+  { get; set; } = [];
 
   sealed override private protected Localizer Location => Parent;
 }
@@ -90,7 +90,7 @@ sealed public class GetDirectoryRelative : WrappedGetDirectory
     Tab.PathItemType.Directory
   )]
   sealed override public string[] Path
-  { get; init; } = [];
+  { get; set; } = [];
 
   sealed override private protected Localizer Location => ParentParent;
 }
@@ -119,7 +119,7 @@ sealed public class GetDirectoryHome : WrappedGetDirectory
     Tab.PathItemType.Directory
   )]
   sealed override public string[] Path
-  { get; init; } = [];
+  { get; set; } = [];
 
   sealed override private protected Localizer Location
   { get; } = Client.Environment.Folder.Home;
@@ -149,7 +149,7 @@ sealed public class GetDirectoryCode : WrappedGetDirectory
     Tab.PathItemType.Directory
   )]
   sealed override public string[] Path
-  { get; init; } = [];
+  { get; set; } = [];
 
   sealed override private protected Localizer Location
   { get; } = Client.Environment.Folder.Code;
@@ -179,7 +179,7 @@ sealed public class GetDirectoryDrive : WrappedGetDirectory
     Tab.PathItemType.Directory
   )]
   sealed override public string[] Path
-  { get; init; } = [];
+  { get; set; } = [];
 
   sealed override private protected Localizer Location => Drive;
 }

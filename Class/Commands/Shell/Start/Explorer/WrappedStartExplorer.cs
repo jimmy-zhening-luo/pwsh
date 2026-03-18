@@ -2,12 +2,16 @@ namespace PowerModule.Commands.Shell.Start.Explorer;
 
 abstract public class WrappedStartExplorer() : WrappedCommand(
   @"Microsoft.PowerShell.Management\Invoke-Item",
-  StandardParameter.Path,
   SkipSsh: true
 )
 {
+  sealed override private protected PipelineInputSource PipelineInput => () => (
+    StandardParameter.Path,
+    Path
+  );
+
   abstract public string[] Path
-  { get; init; }
+  { get; set; }
 
   [Parameter]
   [SupportsWildcards]
@@ -30,8 +34,5 @@ abstract public class WrappedStartExplorer() : WrappedCommand(
     init => _ = value;
   }
 
-  sealed override private protected void TransformPipelineInput() => SetBoundParameter(
-    StandardParameter.Path,
-    ReanchorPath(Path)
-  );
+  sealed override private protected void TransformPipelineInput() => Path = ReanchorPath(Path);
 }

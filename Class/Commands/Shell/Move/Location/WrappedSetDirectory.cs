@@ -1,12 +1,16 @@
 namespace PowerModule.Commands.Shell.Move.Location;
 
 abstract public class WrappedSetDirectory() : WrappedCommand(
-  @"Microsoft.PowerShell.Management\Set-Location",
-  StandardParameter.Path
+  @"Microsoft.PowerShell.Management\Set-Location"
 )
 {
+  sealed override private protected PipelineInputSource PipelineInput => () => (
+    StandardParameter.Path,
+    Path
+  );
+
   abstract public string Path
-  { get; init; }
+  { get; set; }
 
   [Parameter]
   public SwitchParameter PassThru
@@ -23,18 +27,12 @@ abstract public class WrappedSetDirectory() : WrappedCommand(
         && Path is ""
       )
       {
-        SetBoundParameter(
-          StandardParameter.Path,
-          Parent()
-        );
+        Path = Parent();
       }
     }
     else
     {
-      SetBoundParameter(
-        StandardParameter.Path,
-        ReanchorPath(Path)
-      );
+      Path = ReanchorPath(Path);
     }
   }
 }

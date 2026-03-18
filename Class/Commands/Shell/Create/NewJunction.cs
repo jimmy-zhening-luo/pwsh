@@ -11,10 +11,14 @@ namespace PowerModule.Commands.Shell.Create;
 [Alias("mj")]
 [OutputType(typeof(System.IO.DirectoryInfo))]
 sealed public class NewJunction() : WrappedCommand(
-  @"Microsoft.PowerShell.Management\New-Item",
-  "Value"
+  @"Microsoft.PowerShell.Management\New-Item"
 )
 {
+  sealed override private protected PipelineInputSource PipelineInput => () => (
+    StandardParameter.Value,
+    Value
+  );
+
   sealed override private protected Dictionary<string, object?> CoercedParameters
   { get; } = new()
   {

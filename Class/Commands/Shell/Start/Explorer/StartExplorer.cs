@@ -20,7 +20,7 @@ sealed public class StartExplorer : WrappedStartExplorer
   [SupportsWildcards]
   [Tab.PathCompletions]
   sealed override public string[] Path
-  { get; init; } = [];
+  { get; set; } = [];
 
   [Parameter(
     ParameterSetName = StandardParameter.LiteralPath,
@@ -53,7 +53,7 @@ sealed public class StartExplorerSibling : WrappedStartExplorer
   [SupportsWildcards]
   [Tab.PathCompletions(Client.File.PathString.Parent)]
   sealed override public string[] Path
-  { get; init; } = [];
+  { get; set; } = [];
 
   sealed override private protected Localizer Location => Parent;
 }
@@ -78,7 +78,7 @@ sealed public class StartExplorerRelative : WrappedStartExplorer
   [SupportsWildcards]
   [Tab.PathCompletions(Client.File.PathString.ParentParent)]
   sealed override public string[] Path
-  { get; init; } = [];
+  { get; set; } = [];
 
   sealed override private protected Localizer Location => ParentParent;
 }
@@ -103,7 +103,7 @@ sealed public class StartExplorerHome : WrappedStartExplorer
   [SupportsWildcards]
   [Tab.PathCompletions("~")]
   sealed override public string[] Path
-  { get; init; } = [];
+  { get; set; } = [];
 
   sealed override private protected Localizer Location
   { get; } = Client.Environment.Folder.Home;
@@ -129,7 +129,7 @@ sealed public class StartExplorerCode : WrappedStartExplorer
   [SupportsWildcards]
   [Tab.PathCompletions(@"~\code")]
   sealed override public string[] Path
-  { get; init; } = [];
+  { get; set; } = [];
 
   sealed override private protected Localizer Location
   { get; } = Client.Environment.Folder.Code;
@@ -155,7 +155,7 @@ sealed public class StartExplorerDrive : WrappedStartExplorer
   [SupportsWildcards]
   [Tab.PathCompletions(@"\")]
   sealed override public string[] Path
-  { get; init; } = [];
+  { get; set; } = [];
 
   sealed override private protected Localizer Location => Drive;
 }

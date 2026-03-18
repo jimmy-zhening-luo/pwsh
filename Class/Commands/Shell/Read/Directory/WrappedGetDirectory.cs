@@ -1,12 +1,16 @@
 namespace PowerModule.Commands.Shell.Read.Directory;
 
 abstract public class WrappedGetDirectory() : WrappedCommand(
-  @"Microsoft.PowerShell.Management\Get-ChildItem",
-  StandardParameter.Path
+  @"Microsoft.PowerShell.Management\Get-ChildItem"
 )
 {
+  sealed override private protected PipelineInputSource PipelineInput => () => (
+    StandardParameter.Path,
+    Path
+  );
+
   abstract public string[] Path
-  { get; init; }
+  { get; set; }
 
   sealed override private protected Dictionary<string, object?> CoercedParameters => new()
   {
@@ -128,10 +132,7 @@ abstract public class WrappedGetDirectory() : WrappedCommand(
   {
     if (!InCurrentLocation)
     {
-      SetBoundParameter(
-        StandardParameter.Path,
-        ReanchorPath(Path)
-      );
+      Path = ReanchorPath(Path);
     }
   }
 }
