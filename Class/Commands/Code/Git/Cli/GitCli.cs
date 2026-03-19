@@ -16,7 +16,7 @@ sealed public class GitCli() : Git(default)
     HelpMessage = "Git command"
   )]
   [ValidateNotNullOrWhiteSpace]
-  [ValidateSet(
+  [ArgumentCompletions(
     "switch",
     "merge",
     "diff",

@@ -15,7 +15,7 @@ sealed public class NpmCli() : Npm(default)
     Position = default,
     HelpMessage = "npm command"
   )]
-  [ValidateSet(
+  [ArgumentCompletions(
     "access",
     "adduser",
     "audit",
