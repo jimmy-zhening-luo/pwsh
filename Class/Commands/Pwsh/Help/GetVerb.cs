@@ -26,8 +26,8 @@ sealed public class GetVerb : CoreCommand
     HelpMessage = "Get only the specified verbs or verb patterns"
   )]
   [SupportsWildcards]
+  [ValidateNotNullOrEmpty]
   [ValidateNotNullOrWhiteSpace]
-  [Tab.Completions("*")]
   public string[] Verb
   {
     private get => [.. verbs];
@@ -35,26 +35,18 @@ sealed public class GetVerb : CoreCommand
     {
       verbs.Clear();
 
-      if (value is null)
-      {
-        return;
-      }
-
       foreach (var verb in value)
       {
-        if (verb is not "")
-        {
-          _ = verbs.Add(
-            verb.Contains(
-              '*',
-              System.StringComparison.Ordinal
-            )
-              ? verb
-              : verb.Length > 2
-                ? $"*{verb}*"
-                : $"{verb}*"
-          );
-        }
+        _ = verbs.Add(
+          verb.Contains(
+            '*',
+            System.StringComparison.Ordinal
+          )
+            ? verb
+            : verb.Length > 2
+              ? $"*{verb}*"
+              : $"{verb}*"
+        );
       }
     }
   }
@@ -72,12 +64,15 @@ sealed public class GetVerb : CoreCommand
   {
     const string GET_VERB = @"Microsoft.PowerShell.Utility\Get-Verb";
 
-    if (Verb is [] or ["*"])
+    if (
+      Verb is []
+      or [Client.StringInput.Wildcard]
+    )
     {
       _ = AddCommand(GET_VERB)
         .AddParameter(
           "Verb",
-          "*"
+          Client.StringInput.Wildcard
         );
 
       if (Group is not [])

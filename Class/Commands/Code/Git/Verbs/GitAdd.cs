@@ -18,10 +18,9 @@ sealed public class GitAdd() : Git("add")
   [Tab.PathCompletions(ItemType: Tab.PathItemType.File)]
   public string Name
   {
-    private get => name ?? ".";
-    init => name = value;
+    private get => field ?? ".";
+    init;
   }
-  string? name;
 
   [Parameter(
     HelpMessage = "Equivalent to --renormalize"

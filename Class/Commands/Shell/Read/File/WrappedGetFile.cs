@@ -63,7 +63,7 @@ abstract public class WrappedGetFile() : WrappedCommand(
   }
 
   [Parameter]
-  [ValidateNotNullOrEmpty]
+  [ValidateNotNullOrWhiteSpace]
   [Tab.EnumCompletions(typeof(Client.File.Encoding))]
   required public string Encoding
   {

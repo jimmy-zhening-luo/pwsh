@@ -19,11 +19,6 @@ sealed public class NewDirectory() : WrappedCommand(
     Value
   );
 
-  sealed override private protected Dictionary<string, object?> CoercedParameters => new()
-  {
-    ["ItemType"] = itemType ?? "directory",
-  };
-
   [Parameter(
     ParameterSetName = "pathSet",
     Mandatory = true,
@@ -52,7 +47,7 @@ sealed public class NewDirectory() : WrappedCommand(
 
   [Parameter]
   [Alias("Type")]
-  [Tab.Completions(
+  [ValidateSet(
     "file",
     "symboliclink",
     "hardlink",
@@ -60,10 +55,7 @@ sealed public class NewDirectory() : WrappedCommand(
     "directory"
   )]
   public string ItemType
-  {
-    init => itemType = value;
-  }
-  string? itemType;
+  { private get; init; } = string.Empty;
 
   [Parameter(ValueFromPipeline = true)]
   [Alias("Target")]
@@ -76,5 +68,13 @@ sealed public class NewDirectory() : WrappedCommand(
   public SwitchParameter Force
   {
     init => _ = value;
+  }
+
+  sealed override private protected void TransformParameters()
+  {
+    if (ItemType is "")
+    {
+      CoercedParameters["ItemType"] = "directory";
+    }
   }
 }

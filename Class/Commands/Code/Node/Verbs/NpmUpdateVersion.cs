@@ -35,12 +35,11 @@ sealed public class NpmUpdateVersion() : Npm("version")
   [NpmVersionCompletions]
   public string Version
   {
-    private get => version;
-    init => version = value.ToLower(
+    private get;
+    init => field = value.ToLower(
       Client.StringInput.InvariantCulture
     ) switch
     {
-      "" => DefaultNodePackageVersion,
       var version when NodePackageVersion.Contains(
         version
       ) => version,
@@ -55,8 +54,7 @@ sealed public class NpmUpdateVersion() : Npm("version")
       ) => semver.ToString(),
       _ => string.Empty,
     };
-  }
-  string version = DefaultNodePackageVersion;
+  } = DefaultNodePackageVersion;
 
   sealed override private protected void FinishSetup() => System.ArgumentException.ThrowIfNullOrEmpty(
     Version,

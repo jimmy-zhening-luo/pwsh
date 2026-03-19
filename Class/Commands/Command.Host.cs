@@ -28,11 +28,10 @@ partial class CoreCommand
       {
         System.ObjectDisposedException.ThrowIf(Disposed, this);
 
-        return pipeline;
+        return field;
       }
-      set => pipeline = value;
+      set;
     }
-    SteppablePipeline? pipeline;
 
     [System.Diagnostics.CodeAnalysis.MemberNotNullWhen(
       default,
@@ -115,14 +114,14 @@ partial class CoreCommand
 
     internal void EndSteppablePipeline()
     {
-      if (pipeline is not null)
+      if (Pipeline is not null)
       {
-        _ = pipeline.End();
-        pipeline.Clean();
-        pipeline.Dispose();
+        _ = Pipeline.End();
+        Pipeline.Clean();
+        Pipeline.Dispose();
       }
 
-      pipeline = default;
+      Pipeline = default;
     }
 
     void Dispose(bool disposing)

@@ -149,7 +149,8 @@ sealed class PathCompleter : Intrinsics.Completer
 
     return new(
       new(searchPath),
-      lineRemaining + "*",
+      lineRemaining
+      + Client.StringInput.Wildcard,
       new()
       {
         IgnoreInaccessible = default,

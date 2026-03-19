@@ -16,7 +16,31 @@ sealed public class GitCli() : Git(default)
     HelpMessage = "Git command"
   )]
   [ValidateNotNullOrWhiteSpace]
-  [GitVerbCompletions]
+  [ValidateSet(
+    "switch",
+    "merge",
+    "diff",
+    "stash",
+    "tag",
+    "config",
+    "remote",
+    "submodule",
+    "fetch",
+    "checkout",
+    "branch",
+    "rm",
+    "mv",
+    "ls-files",
+    "ls-tree",
+    "init",
+    "status",
+    "clone",
+    "pull",
+    "add",
+    "commit",
+    "push",
+    "reset"
+  )]
   public string Verb
   {
     init => IntrinsicVerb = value.ToLower(

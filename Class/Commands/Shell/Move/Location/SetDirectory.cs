@@ -118,6 +118,7 @@ sealed public class SetDirectorySibling : WrappedSetDirectory
     ValueFromPipeline = true
   )]
   [SupportsWildcards]
+  [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions(
     Client.File.PathString.Parent,
     Tab.PathItemType.Directory
@@ -144,6 +145,7 @@ sealed public class SetDirectoryRelative : WrappedSetDirectory
     ValueFromPipeline = true
   )]
   [SupportsWildcards]
+  [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions(
     Client.File.PathString.ParentParent,
     Tab.PathItemType.Directory
@@ -170,6 +172,7 @@ sealed public class SetDirectoryHome : WrappedSetDirectory
     ValueFromPipeline = true
   )]
   [SupportsWildcards]
+  [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions(
     "~",
     Tab.PathItemType.Directory
@@ -197,6 +200,7 @@ sealed public class SetDirectoryCode : WrappedSetDirectory
     ValueFromPipeline = true
   )]
   [SupportsWildcards]
+  [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions(
     @"~\code",
     Tab.PathItemType.Directory
@@ -224,6 +228,7 @@ sealed public class SetDrive : WrappedSetDirectory
     ValueFromPipeline = true
   )]
   [SupportsWildcards]
+  [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions(
     Client.File.PathString.StringSeparator,
     Tab.PathItemType.Directory

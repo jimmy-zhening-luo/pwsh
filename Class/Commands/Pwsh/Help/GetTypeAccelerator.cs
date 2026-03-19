@@ -9,6 +9,11 @@ namespace PowerModule.Commands.Pwsh.Help;
 [OutputType(typeof(string))]
 sealed public class GetTypeAccelerator : Cmdlet
 {
+  [System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "Microsoft.Style",
+    "IDE0028: Use collection initializers or expressions",
+    Justification = "Incorrect suggestion, .NET fix expected in 10.0.3xx: https://github.com/dotnet/Roslyn/issues/82586"
+  )]
   sealed override protected void EndProcessing()
   {
     if (

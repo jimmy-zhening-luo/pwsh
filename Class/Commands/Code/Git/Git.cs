@@ -4,7 +4,7 @@ namespace PowerModule.Commands.Code.Git;
   "Microsoft.Naming",
   "CA1724: Type names should not match namespaces"
 )]
-abstract public partial class Git(string? IntrinsicVerb) : NativeCodeCommand(
+abstract public class Git(string? IntrinsicVerb) : NativeCodeCommand(
   "git",
   IntrinsicVerb,
   [
@@ -15,6 +15,12 @@ abstract public partial class Git(string? IntrinsicVerb) : NativeCodeCommand(
 )
 {
   private protected const string GitHelpLink = "https://git-scm.com/docs";
+
+  static readonly HashSet<string> NewableVerb = [
+    "switch",
+    "merge",
+    "diff",
+  ];
 
   bool newable;
 

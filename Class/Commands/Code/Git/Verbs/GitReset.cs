@@ -24,40 +24,39 @@ sealed public partial class GitReset() : Git("reset")
   [Tab.PathCompletions(ItemType: Tab.PathItemType.File)]
   public string Tree
   {
-    private get => tree;
+    private get;
     set
     {
       if (
-        GitTreeRegex().Match(
-          tree
-        ) is var treeMatch
+        GitTreeRegex().Match(value)
+        is var treeMatch
         && treeMatch.Success
         && treeMatch.Groups["Step"].Value is var step
         && (
           step is ""
           || int.TryParse(
             step,
-            out var _
+            out _
           )
         )
       )
       {
-        var branching = treeMatch.Groups["Branching"].Value is not ""
+        var branching = treeMatch.Groups["Branching"].Value
+        is not ""
         and var b
           ? b
           : "~";
 
-        tree = $"HEAD{branching}{step}";
+        field = $"HEAD{branching}{step}";
       }
       else
       {
-        _ = Arguments.AddFirst(tree);
+        _ = Arguments.AddFirst(value);
 
-        tree = string.Empty;
+        field = string.Empty;
       }
     }
-  }
-  string tree = string.Empty;
+  } = string.Empty;
 
   [Parameter(
     HelpMessage = "Perform a non-destructive reset, equivalent to [--hard=false]"

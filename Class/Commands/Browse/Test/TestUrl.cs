@@ -17,7 +17,6 @@ sealed public class TestUrl : CoreCommand
     HelpMessage = "URL to test"
   )]
   [AllowEmptyCollection]
-  [ValidateNotNull]
   required public System.Uri[] Uri
   { get; init; }
 

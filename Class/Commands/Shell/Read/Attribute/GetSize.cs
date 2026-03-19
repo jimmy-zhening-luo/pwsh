@@ -37,16 +37,14 @@ sealed public class GetSize : CoreCommand
     ValueFromPipeline = true,
     HelpMessage = "Path of the file or directory of which to get the size"
   )]
-  [ValidateLength(1, int.MaxValue)]
+  [ValidateNotNullOrEmpty]
+  [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions]
   public string[] Path
   {
-    get => paths is []
-      ? [""]
-      : paths;
-    init => paths = value;
+    get => field ?? [""];
+    init;
   }
-  string[] paths = [];
 
   [Parameter(
     ParameterSetName = "Unit",
@@ -82,7 +80,7 @@ sealed public class GetSize : CoreCommand
       {
         foreach (
           var file in new System.IO.DirectoryInfo(fullPath).EnumerateFiles(
-            "*",
+            Client.StringInput.Wildcard,
             new System.IO.EnumerationOptions()
             {
               RecurseSubdirectories = true,

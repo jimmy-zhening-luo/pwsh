@@ -12,11 +12,6 @@ abstract public class WrappedGetDirectory() : WrappedCommand(
   abstract public string[] Path
   { get; set; }
 
-  sealed override private protected Dictionary<string, object?> CoercedParameters => new()
-  {
-    ["Filter"] = filter,
-  };
-
   [Parameter(
     Position = 1
   )]
@@ -24,17 +19,14 @@ abstract public class WrappedGetDirectory() : WrappedCommand(
   [ValidateNotNullOrEmpty]
   public string Filter
   {
-    init => filter = value switch
-    {
-      null or "" => "*",
-      _ when value.Contains(
-        '*',
-        global::System.StringComparison.Ordinal
-      ) => value,
-      _ => $"{value}*",
-    };
-  }
-  string filter = string.Empty;
+    private get;
+    init => field = value.Contains(
+      '*',
+      global::System.StringComparison.Ordinal
+    )
+      ? value
+      : $"{value}*";
+  } = string.Empty;
 
   [Parameter]
   [SupportsWildcards]
@@ -126,6 +118,14 @@ abstract public class WrappedGetDirectory() : WrappedCommand(
   required public FlagsExpression<System.IO.FileAttributes> Attributes
   {
     init => _ = value;
+  }
+
+  sealed override private protected void TransformParameters()
+  {
+    if (Filter is not "")
+    {
+      CoercedParameters["Filter"] = Filter;
+    }
   }
 
   sealed override private protected void TransformPipelineInput()

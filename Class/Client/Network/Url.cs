@@ -2,20 +2,18 @@ namespace PowerModule.Client.Network;
 
 static class Url
 {
-  static System.Net.Http.HttpClient HttpClient => client ??= new System.Net.Http.HttpClient(
+  static System.Net.Http.HttpClient HttpClient => field ??= new System.Net.Http.HttpClient(
     HttpHandler
   )
   {
     Timeout = System.TimeSpan.FromMilliseconds(3500),
   };
-  static System.Net.Http.HttpClient? client;
 
-  static internal System.Net.Http.SocketsHttpHandler HttpHandler => handler ??= new System.Net.Http.SocketsHttpHandler()
+  static internal System.Net.Http.SocketsHttpHandler HttpHandler => field ??= new System.Net.Http.SocketsHttpHandler()
   {
     PooledConnectionLifetime = System.TimeSpan.FromMinutes(2),
     ConnectTimeout = System.TimeSpan.FromMilliseconds(3000),
   };
-  static System.Net.Http.SocketsHttpHandler? handler;
 
   static internal bool IsHttp(System.Uri uri) => uri is
   {

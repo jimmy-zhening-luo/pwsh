@@ -12,12 +12,11 @@ static class StringInput
   internal const string StringDoubleQuote = "\"";
   internal const string EscapedSingleQuote = "''";
   internal const string EscapedDoubleQuote = "\\\"";
+  internal const string Wildcard = "*";
 
-  static internal CultureInfo CurrentCulture => currentCulture ??= CultureInfo.CurrentCulture;
-  static CultureInfo? currentCulture;
+  static internal CultureInfo CurrentCulture => field ??= CultureInfo.CurrentCulture;
 
-  static internal CultureInfo InvariantCulture => invariantCulture ??= CultureInfo.InvariantCulture;
-  static CultureInfo? invariantCulture;
+  static internal CultureInfo InvariantCulture => field ??= CultureInfo.InvariantCulture;
 
   static internal string EscapeSingleQuoted(string text) => IsUnsafe(text)
     ? string.Concat(

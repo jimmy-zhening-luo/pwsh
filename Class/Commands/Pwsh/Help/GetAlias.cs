@@ -14,19 +14,14 @@ sealed public class GetCommandAlias : CoreCommand
   )]
   [Alias("Command")]
   [SupportsWildcards]
+  [ValidateNotNullOrEmpty]
   [ValidateNotNullOrWhiteSpace]
-  [Tab.Completions("*")]
   public string[] Definition
   {
     private get => [.. definitions];
     init
     {
       definitions.Clear();
-
-      if (value is null)
-      {
-        return;
-      }
 
       foreach (var definition in value)
       {
@@ -49,7 +44,6 @@ sealed public class GetCommandAlias : CoreCommand
     Position = 1,
     HelpMessage = "Specifies the scope for which this cmdlet gets aliases. The acceptable values for this parameter are: Global, Local, Script, and a positive integer relative to the current scope (0 through the number of scopes, where 0 is the current scope and 1 is its parent). Global is the default, which differs from Get-Alias where Local is the default."
   )]
-  [SupportsWildcards]
   [ValidateNotNullOrWhiteSpace]
   [Tab.Completions(
     "global",
@@ -61,21 +55,29 @@ sealed public class GetCommandAlias : CoreCommand
     "3"
   )]
   public string Scope
-  { private get; init; } = "Global";
+  { private get; init; } = "global";
 
   [Parameter(
     Position = 2
   )]
   [SupportsWildcards]
+  [ValidateNotNullOrEmpty]
   [ValidateNotNullOrWhiteSpace]
   public string[] Exclude
   { private get; init; } = [];
 
+  [System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "Microsoft.Style",
+    "IDE0028: Use collection initializers or expressions",
+    Justification = "Incorrect suggestion, .NET fix expected in 10.0.3xx: https://github.com/dotnet/Roslyn/issues/82586"
+  )]
   sealed override private protected void Postprocess()
   {
     if (Definition is [])
     {
-      _ = definitions.Add("*");
+      _ = definitions.Add(
+        Client.StringInput.Wildcard
+      );
     }
 
     SortedDictionary<string, AliasInfo> commandAliasDictionary = new(

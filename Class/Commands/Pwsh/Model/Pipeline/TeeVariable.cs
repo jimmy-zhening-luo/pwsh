@@ -67,7 +67,7 @@ sealed public class TeeVariable() : WrappedCommand(
   [Parameter(
     ParameterSetName = "LiteralFile"
   )]
-  [ValidateNotNullOrEmpty]
+  [ValidateNotNullOrWhiteSpace]
   [Tab.EnumCompletions(typeof(Client.File.Encoding))]
   required public string Encoding
   {

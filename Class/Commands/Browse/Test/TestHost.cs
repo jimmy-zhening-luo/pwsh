@@ -46,10 +46,9 @@ sealed public class TestHost() : WrappedCommand(
   [ValidateNotNullOrWhiteSpace]
   public string ComputerName
   {
-    get => computerName ?? "google.com";
-    set => computerName = value;
+    get => field ?? "google.com";
+    set;
   }
-  string? computerName;
 
   [Parameter(
     ParameterSetName = CommonPortParameterName,

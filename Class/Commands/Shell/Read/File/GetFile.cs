@@ -12,6 +12,7 @@ sealed public class GetFile : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = StandardParameter.Path,
+    Mandatory = true,
     Position = default
   )]
   [SupportsWildcards]
@@ -45,6 +46,7 @@ sealed public class GetFileSibling : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = StandardParameter.Path,
+    Mandatory = true,
     Position = default
   )]
   [SupportsWildcards]
@@ -70,6 +72,7 @@ sealed public class GetFileRelative : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = StandardParameter.Path,
+    Mandatory = true,
     Position = default
   )]
   [SupportsWildcards]
@@ -95,6 +98,7 @@ sealed public class GetFileHome : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = StandardParameter.Path,
+    Mandatory = true,
     Position = default
   )]
   [SupportsWildcards]
@@ -121,6 +125,7 @@ sealed public class GetFileCode : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = StandardParameter.Path,
+    Mandatory = true,
     Position = default
   )]
   [SupportsWildcards]
@@ -147,6 +152,7 @@ sealed public class GetFileDrive : WrappedGetFile
 {
   [Parameter(
     ParameterSetName = StandardParameter.Path,
+    Mandatory = true,
     Position = default
   )]
   [SupportsWildcards]

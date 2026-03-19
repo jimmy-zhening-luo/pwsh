@@ -14,7 +14,6 @@ sealed public class GetInputType : CoreCommand
     ValueFromPipeline = true,
     HelpMessage = "Object to type-check"
   )]
-  [ValidateNotNull]
   required public object InputObject
   { get; init; }
 

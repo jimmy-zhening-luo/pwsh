@@ -15,6 +15,7 @@ sealed public class GetHelpOnline : CoreCommand
   )]
   [Alias("Command")]
   [SupportsWildcards]
+  [ValidateNotNullOrEmpty]
   [ValidateNotNullOrWhiteSpace]
   public string[] Name
   {
@@ -23,9 +24,10 @@ sealed public class GetHelpOnline : CoreCommand
       value
     );
   }
-  string topic = string.Empty;
+  string? topic;
 
   [Parameter]
+  [ValidateNotNullOrEmpty]
   [ValidateNotNullOrWhiteSpace]
   public string[] Parameter
   { private get; init; } = [];
@@ -66,7 +68,7 @@ sealed public class GetHelpOnline : CoreCommand
   {
     const string GET_HELP = "Get-Help";
 
-    if (topic is "")
+    if (topic is null)
     {
       WriteObject(
         AddCommand(GET_HELP)

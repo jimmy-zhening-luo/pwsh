@@ -14,10 +14,10 @@ sealed public class GitClone() : Git("clone")
     HelpMessage = "Remote repository URL or 'org/repo'"
   )]
   [ValidateNotNullOrWhiteSpace]
-  public string Repository
+  required public string Repository
   {
-    private get => remote;
-    init => remote = value?.Split(
+    private get;
+    init => field = value?.Split(
       Client.File.PathString.AltSeparator,
       System.StringSplitOptions.RemoveEmptyEntries
       | System.StringSplitOptions.TrimEntries
@@ -28,7 +28,6 @@ sealed public class GitClone() : Git("clone")
       _ => string.Empty
     };
   }
-  string remote = string.Empty;
 
   [Parameter(
     HelpMessage = "Use git@github.com remote protocol instead of HTTPS"
