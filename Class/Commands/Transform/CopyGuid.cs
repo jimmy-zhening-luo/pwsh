@@ -32,7 +32,7 @@ sealed public class CopyGuid : CoreCommand
     WriteObject(guid);
 
     _ = AddCommand(
-      @"Microsoft.PowerShell.Management\Set-Clipboard"
+      $@"{StandardModule.Management}\Set-Clipboard"
     )
       .AddParameter(
         StandardParameter.Value,

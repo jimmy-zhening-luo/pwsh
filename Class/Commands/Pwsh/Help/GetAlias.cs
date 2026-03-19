@@ -85,7 +85,7 @@ sealed public class GetCommandAlias : CoreCommand
     );
 
     _ = AddCommand(
-      @"Microsoft.PowerShell.Utility\Get-Alias"
+      $@"{StandardModule.Utility}\Get-Alias"
     )
       .AddParameter(
         "Definition",

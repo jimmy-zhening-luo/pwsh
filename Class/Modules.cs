@@ -1,7 +1,10 @@
 namespace PowerModule;
 
-static class PowerModule
+static class StandardModule
 {
+  internal const string Management = "Microsoft.PowerShell.Management";
+  internal const string Utility = "Microsoft.PowerShell.Utility";
+
   static internal string GetPowerShellHostLocation()
   {
     using var ps = PowerShell.Create(
@@ -10,7 +13,7 @@ static class PowerModule
 
     var currentLocation = ps
       .AddCommand(
-        $@"{StandardModule.Management}\Get-Location"
+        $@"{Management}\Get-Location"
       )
       .Invoke()[default]
       .BaseObject

@@ -1,7 +1,7 @@
 namespace PowerModule.Commands.Shell.Move.Location;
 
 abstract public class WrappedSetDirectory() : WrappedCommand(
-  @"Microsoft.PowerShell.Management\Set-Location"
+  $@"{StandardModule.Management}\Set-Location"
 )
 {
   sealed override private protected PipelineInputSource PipelineInput => () => (

@@ -76,7 +76,7 @@ sealed public class ClearLine : CoreCommand
     else
     {
       _ = AddCommand(
-        @"Microsoft.PowerShell.Management\Clear-Content"
+        $@"{StandardModule.Management}\Clear-Content"
       );
       _ = AddBoundParameters();
 

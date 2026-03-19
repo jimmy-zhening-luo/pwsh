@@ -11,7 +11,7 @@ namespace PowerModule.Commands.Shell.Create;
 [Alias("mk")]
 [OutputType(typeof(System.IO.DirectoryInfo))]
 sealed public class NewDirectory() : WrappedCommand(
-  @"Microsoft.PowerShell.Management\New-Item"
+  $@"{StandardModule.Management}\New-Item"
 )
 {
   sealed override private protected PipelineInputSource PipelineInput => () => (

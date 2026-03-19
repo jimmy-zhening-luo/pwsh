@@ -1,7 +1,7 @@
 namespace PowerModule.Commands.Shell.Start.Explorer;
 
 abstract public class WrappedStartExplorer() : WrappedCommand(
-  @"Microsoft.PowerShell.Management\Invoke-Item",
+  $@"{StandardModule.Management}\Invoke-Item",
   SkipSsh: true
 )
 {

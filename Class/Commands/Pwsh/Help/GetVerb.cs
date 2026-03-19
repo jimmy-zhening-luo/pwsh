@@ -62,7 +62,7 @@ sealed public class GetVerb : CoreCommand
 
   sealed override private protected void Postprocess()
   {
-    const string GET_VERB = @"Microsoft.PowerShell.Utility\Get-Verb";
+    const string GET_VERB = $@"{StandardModule.Utility}\Get-Verb";
 
     if (
       Verb is []
@@ -85,14 +85,14 @@ sealed public class GetVerb : CoreCommand
 
       WriteObject(
         AddCommand(
-          @"Microsoft.PowerShell.Utility\Select-Object"
+          $@"{StandardModule.Utility}\Select-Object"
         )
           .AddParameter(
             "ExpandProperty",
             "Verb"
           )
           .AddCommand(
-            @"Microsoft.PowerShell.Utility\Sort-Object"
+            $@"{StandardModule.Utility}\Sort-Object"
           )
           .Invoke(),
         true
