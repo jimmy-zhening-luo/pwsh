@@ -1,12 +1,12 @@
 @{
   RootModule           = 'PowerModule.dll'
-  ModuleVersion        = '3.0.0.0'
+  ModuleVersion        = '7.6.0.0'
   CompatiblePSEditions = @('Desktop', 'Core')
   GUID                 = '1af8158b-1120-4da8-9f20-664173671c6c'
   Author               = 'Jimmy Zhening Luo'
   CompanyName          = 'Jimmy Zhening Luo'
   Copyright            = '(c) 2025 Jimmy Zhening Luo. All rights reserved.'
-  PowerShellVersion    = '7.5'
+  PowerShellVersion    = '7.6'
   FunctionsToExport    = @()
   CmdletsToExport      = @(
     'Test-Command'
