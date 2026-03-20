@@ -60,7 +60,7 @@ sealed public class TestHost() : WrappedCommand(
     Position = 1
   )]
   [ValidateNotNullOrWhiteSpace]
-  [Tab.Completions(
+  [ArgumentCompletions(
     "http",
     "rdp",
     "smb",
