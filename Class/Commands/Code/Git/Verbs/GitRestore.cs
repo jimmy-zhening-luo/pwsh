@@ -2,7 +2,7 @@ namespace PowerModule.Commands.Code.Git.Verbs;
 
 [Cmdlet(
   VerbsData.Restore,
-  "GitRepository",
+  GitNoun,
   HelpUri = $"{GitHelpLink}/git-reset"
 )]
 [Alias("grp")]
@@ -13,7 +13,7 @@ sealed public class GitRestore() : Git("pull")
     ClearArguments();
 
     _ = AddCommand(
-      @"PowerModule\Reset-GitRepository"
+      $@"{nameof(PowerModule)}\Reset-GitRepository"
     );
 
     _ = AddBoundParameters();

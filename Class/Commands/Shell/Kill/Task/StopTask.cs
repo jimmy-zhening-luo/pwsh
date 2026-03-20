@@ -5,7 +5,7 @@ using SystemProcess = System.Diagnostics.Process;
 [Cmdlet(
   VerbsLifecycle.Stop,
   "Task",
-  DefaultParameterSetName = StandardParameter.Name,
+  DefaultParameterSetName = nameof(Name),
   SupportsShouldProcess = true,
   ConfirmImpact = ConfirmImpact.Medium,
   HelpUri = $"{HelpLink}2097058"
@@ -14,10 +14,13 @@ using SystemProcess = System.Diagnostics.Process;
 [OutputType(typeof(void))]
 public class StopTask : CoreCommand
 {
+  const string ShouldProcessAction = "Stop process";
+
+  const string DefaultProcess = "explorer";
+
   [Parameter(
-    ParameterSetName = StandardParameter.Name,
-    Position = default,
-    HelpMessage = "Names of the processes to stop"
+    ParameterSetName = nameof(Name),
+    Position = default
   )]
   [Alias("ProcessName")]
   [SupportsWildcards]
@@ -27,21 +30,19 @@ public class StopTask : CoreCommand
   { private get; init; } = [];
 
   [Parameter(
-    ParameterSetName = "Id",
+    ParameterSetName = nameof(Id),
     Mandatory = true,
-    Position = default,
-    HelpMessage = "Process IDs of the processes to stop"
+    Position = default
   )]
   [ValidateRange(ValidateRangeKind.NonNegative)]
   required public int[] Id
   { private get; init; }
 
   [Parameter(
-    ParameterSetName = "InputObject",
+    ParameterSetName = nameof(InputObject),
     Mandatory = true,
     Position = default,
-    ValueFromPipeline = true,
-    HelpMessage = "Process items to stop"
+    ValueFromPipeline = true
   )]
   required public SystemProcess[] InputObject
   { get; init; }
@@ -82,14 +83,14 @@ public class StopTask : CoreCommand
 
   sealed override private protected void Process()
   {
-    if (ParameterSetName is "InputObject")
+    if (ParameterSetName is nameof(InputObject))
     {
       foreach (var process in InputObject)
       {
         if (
           ShouldProcess(
-            $"{process.ProcessName} : {process.Id} (Descendants: {Descendant})",
-            "Stop process"
+            $"{process.ProcessName} : {process.Id} ({nameof(Descendant)}: {Descendant})",
+            ShouldProcessAction
           )
         )
         {
@@ -103,13 +104,13 @@ public class StopTask : CoreCommand
   {
     switch (ParameterSetName)
     {
-      case "Id":
+      case nameof(Id):
         foreach (var pid in Id)
         {
           if (
             ShouldProcess(
-              $"PID: {pid} (Descendants: {Descendant})",
-              "Stop process"
+              $"{nameof(Id)}: {pid} ({nameof(Descendant)}: {Descendant})",
+              ShouldProcessAction
             )
           )
           {
@@ -122,20 +123,20 @@ public class StopTask : CoreCommand
 
         break;
 
-      case StandardParameter.Name when Name is []:
+      case nameof(Name) when Name is []:
         if (
           ShouldProcess(
-            "explorer",
-            "Stop processes by name"
+            DefaultProcess,
+            $"{ShouldProcessAction}es by name"
           )
         )
         {
-          KillProcesses("explorer");
+          KillProcesses(DefaultProcess);
         }
 
         break;
 
-      case StandardParameter.Name:
+      case nameof(Name):
         foreach (var name in Name)
         {
           if (
@@ -147,8 +148,8 @@ public class StopTask : CoreCommand
           {
             if (
               ShouldProcess(
-                $"PID: {pid} (Descendants: {Descendant})",
-                "Stop process"
+                $"{nameof(Id)}: {pid} ({nameof(Descendant)}: {Descendant})",
+                ShouldProcessAction
               )
             )
             {
@@ -162,8 +163,8 @@ public class StopTask : CoreCommand
           {
             if (
               ShouldProcess(
-                $"{name} (Descendants: {Descendant})",
-                "Stop processes by name"
+                $"{name} ({nameof(Descendant)}: {Descendant})",
+                $"{ShouldProcessAction}es by name"
               )
             )
             {

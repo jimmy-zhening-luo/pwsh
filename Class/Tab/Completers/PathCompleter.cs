@@ -149,8 +149,7 @@ sealed class PathCompleter : Intrinsics.Completer
 
     return new(
       new(searchPath),
-      lineRemaining
-      + Client.StringInput.Wildcard,
+      $@"{lineRemaining}{Client.StringInput.StringWildcard}",
       new()
       {
         IgnoreInaccessible = default,
@@ -273,7 +272,7 @@ sealed class PathCompleter : Intrinsics.Completer
           Client.File.PathString.Parent
         ),
         searchContext.Accumulator,
-        @"..\"
+        $@"{Client.File.PathString.Parent}{Client.File.PathString.StringSeparator}"
       );
     }
 

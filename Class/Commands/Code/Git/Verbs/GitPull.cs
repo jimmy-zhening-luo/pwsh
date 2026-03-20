@@ -2,7 +2,7 @@ namespace PowerModule.Commands.Code.Git.Verbs;
 
 [Cmdlet(
   VerbsCommon.Get,
-  "GitRepository",
+  GitNoun,
   HelpUri = $"{GitHelpLink}/git-pull"
 )]
 [Alias("gp")]

@@ -1,5 +1,7 @@
 namespace PowerModule.Commands.Pwsh.Help;
 
+using CommonParameter = System.Management.Automation.Internal.CommonParameters;
+
 [Cmdlet(
   VerbsCommon.Get,
   "HelpOnline",
@@ -9,6 +11,8 @@ namespace PowerModule.Commands.Pwsh.Help;
 [OutputType(typeof(object))]
 sealed public class GetHelpOnline : CoreCommand
 {
+  const string GetHelpCommand = "Get-Help";
+
   [Parameter(
     Position = default,
     ValueFromRemainingArguments = true
@@ -66,15 +70,13 @@ sealed public class GetHelpOnline : CoreCommand
 
   sealed override private protected void Postprocess()
   {
-    const string GET_HELP = "Get-Help";
-
     if (topic is null)
     {
       WriteObject(
-        AddCommand(GET_HELP)
+        AddCommand(GetHelpCommand)
           .AddParameter(
-            StandardParameter.Name,
-            GET_HELP
+            nameof(Name),
+            GetHelpCommand
           )
           .Invoke(),
         true
@@ -83,17 +85,17 @@ sealed public class GetHelpOnline : CoreCommand
       return;
     }
 
-    var helpContent = AddCommand(GET_HELP)
+    var helpContent = AddCommand(GetHelpCommand)
       .AddParameter(
-        StandardParameter.Name,
+        nameof(Name),
         topic
       )
       .AddParameter(
-        "ErrorAction",
+        nameof(CommonParameter.ErrorAction),
         ActionPreference.SilentlyContinue
       )
       .AddParameter(
-        "ProgressAction",
+        nameof(CommonParameter.ProgressAction),
         ActionPreference.SilentlyContinue
       )
       .Invoke();
@@ -116,7 +118,7 @@ sealed public class GetHelpOnline : CoreCommand
       if (Parameter is not [])
       {
         var parameterHelpContent = AddParameter(
-          "Parameter",
+          nameof(Parameter),
           Parameter
         )
           .Invoke();
@@ -151,17 +153,17 @@ sealed public class GetHelpOnline : CoreCommand
       {
         ClearCommands();
 
-        _ = AddCommand(GET_HELP)
+        _ = AddCommand(GetHelpCommand)
           .AddParameter(
-            StandardParameter.Name,
+            nameof(Name),
             topic
           )
           .AddParameter(
-            "ErrorAction",
+            nameof(CommonParameter.ErrorAction),
             ActionPreference.SilentlyContinue
           )
           .AddParameter(
-            "ProgressAction",
+            nameof(CommonParameter.ProgressAction),
             ActionPreference.SilentlyContinue
           );
 

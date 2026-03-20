@@ -10,12 +10,11 @@ sealed public class NpmRunScript() : Npm("run")
 {
   [Parameter(
     Mandatory = true,
-    Position = default,
-    HelpMessage = "Name of the npm script to run"
+    Position = default
   )]
   [ValidateNotNullOrWhiteSpace]
-  required public string Script
+  required public string Name
   { private get; init; }
 
-  sealed override private protected string[] GetVerbBaseArguments() => [Script];
+  sealed override private protected string[] GetVerbBaseArguments() => [Name];
 }

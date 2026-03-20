@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Shell.Read.File;
 [Cmdlet(
   VerbsCommon.Get,
   "File",
-  DefaultParameterSetName = StandardParameter.Path,
+  DefaultParameterSetName = nameof(Path),
   HelpUri = $"{HelpLink}2096490"
 )]
 [Alias("p")]
@@ -11,7 +11,7 @@ namespace PowerModule.Commands.Shell.Read.File;
 sealed public class GetFile : WrappedGetFile
 {
   [Parameter(
-    ParameterSetName = StandardParameter.Path,
+    ParameterSetName = nameof(Path),
     Mandatory = true,
     Position = default
   )]
@@ -24,7 +24,7 @@ sealed public class GetFile : WrappedGetFile
   { private protected get; init; } = [];
 
   [Parameter(
-    ParameterSetName = StandardParameter.LiteralPath,
+    ParameterSetName = nameof(LiteralPath),
     Mandatory = true
   )]
   [Alias(StandardAlias.PSPath, StandardAlias.LP)]
@@ -37,7 +37,7 @@ sealed public class GetFile : WrappedGetFile
 [Cmdlet(
   VerbsCommon.Get,
   "FileSibling",
-  DefaultParameterSetName = StandardParameter.Path,
+  DefaultParameterSetName = nameof(Path),
   HelpUri = $"{HelpLink}2096490"
 )]
 [Alias("px")]
@@ -45,7 +45,7 @@ sealed public class GetFile : WrappedGetFile
 sealed public class GetFileSibling : WrappedGetFile
 {
   [Parameter(
-    ParameterSetName = StandardParameter.Path,
+    ParameterSetName = nameof(Path),
     Mandatory = true,
     Position = default
   )]
@@ -63,7 +63,7 @@ sealed public class GetFileSibling : WrappedGetFile
 [Cmdlet(
   VerbsCommon.Get,
   "FileRelative",
-  DefaultParameterSetName = StandardParameter.Path,
+  DefaultParameterSetName = nameof(Path),
   HelpUri = $"{HelpLink}2096490"
 )]
 [Alias("pxx")]
@@ -71,7 +71,7 @@ sealed public class GetFileSibling : WrappedGetFile
 sealed public class GetFileRelative : WrappedGetFile
 {
   [Parameter(
-    ParameterSetName = StandardParameter.Path,
+    ParameterSetName = nameof(Path),
     Mandatory = true,
     Position = default
   )]
@@ -89,7 +89,7 @@ sealed public class GetFileRelative : WrappedGetFile
 [Cmdlet(
   VerbsCommon.Get,
   "FileHome",
-  DefaultParameterSetName = StandardParameter.Path,
+  DefaultParameterSetName = nameof(Path),
   HelpUri = $"{HelpLink}2096490"
 )]
 [Alias("ph")]
@@ -97,7 +97,7 @@ sealed public class GetFileRelative : WrappedGetFile
 sealed public class GetFileHome : WrappedGetFile
 {
   [Parameter(
-    ParameterSetName = StandardParameter.Path,
+    ParameterSetName = nameof(Path),
     Mandatory = true,
     Position = default
   )]
@@ -116,7 +116,7 @@ sealed public class GetFileHome : WrappedGetFile
 [Cmdlet(
   VerbsCommon.Get,
   "FileCode",
-  DefaultParameterSetName = StandardParameter.Path,
+  DefaultParameterSetName = nameof(Path),
   HelpUri = $"{HelpLink}2096490"
 )]
 [Alias("pc")]
@@ -124,7 +124,7 @@ sealed public class GetFileHome : WrappedGetFile
 sealed public class GetFileCode : WrappedGetFile
 {
   [Parameter(
-    ParameterSetName = StandardParameter.Path,
+    ParameterSetName = nameof(Path),
     Mandatory = true,
     Position = default
   )]
@@ -143,7 +143,7 @@ sealed public class GetFileCode : WrappedGetFile
 [Cmdlet(
   VerbsCommon.Get,
   "FileDrive",
-  DefaultParameterSetName = StandardParameter.Path,
+  DefaultParameterSetName = nameof(Path),
   HelpUri = $"{HelpLink}2096490"
 )]
 [Alias("p/")]
@@ -151,7 +151,7 @@ sealed public class GetFileCode : WrappedGetFile
 sealed public class GetFileDrive : WrappedGetFile
 {
   [Parameter(
-    ParameterSetName = StandardParameter.Path,
+    ParameterSetName = nameof(Path),
     Mandatory = true,
     Position = default
   )]

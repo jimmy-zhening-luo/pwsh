@@ -18,7 +18,7 @@ static class PowerModule
 
     System.ArgumentException.ThrowIfNullOrEmpty(
       currentLocation,
-      "PowerShell host current location"
+      nameof(GetPowerShellHostLocation)
     );
 
     return currentLocation;

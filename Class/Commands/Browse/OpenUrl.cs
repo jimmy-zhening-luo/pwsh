@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Browse;
 [Cmdlet(
   VerbsCommon.Open,
   "Url",
-  DefaultParameterSetName = StandardParameter.Path,
+  DefaultParameterSetName = nameof(Path),
   HelpUri = "https://www.chromium.org/developers/how-tos/run-chromium-with-flags/"
 )]
 [Alias("o", "open")]
@@ -11,7 +11,7 @@ namespace PowerModule.Commands.Browse;
 sealed public class OpenUrl() : CoreCommand(true)
 {
   [Parameter(
-    ParameterSetName = StandardParameter.Path,
+    ParameterSetName = nameof(Path),
     Position = default,
     HelpMessage = "File path or URL to open"
   )]
@@ -21,11 +21,10 @@ sealed public class OpenUrl() : CoreCommand(true)
   { private get; init; } = string.Empty;
 
   [Parameter(
-    ParameterSetName = StandardParameter.Uri,
+    ParameterSetName = nameof(Uri),
     Mandatory = true,
     Position = default,
-    ValueFromPipeline = true,
-    HelpMessage = "URLs to open"
+    ValueFromPipeline = true
   )]
   [AllowEmptyCollection]
   required public System.Uri[] Uri
@@ -33,7 +32,7 @@ sealed public class OpenUrl() : CoreCommand(true)
 
   sealed override private protected void Process()
   {
-    if (ParameterSetName is StandardParameter.Uri)
+    if (ParameterSetName is nameof(Uri))
     {
       foreach (var uri in Uri)
       {
@@ -47,7 +46,7 @@ sealed public class OpenUrl() : CoreCommand(true)
 
   sealed override private protected void Postprocess()
   {
-    if (ParameterSetName is StandardParameter.Path)
+    if (ParameterSetName is nameof(Path))
     {
       switch (Path)
       {

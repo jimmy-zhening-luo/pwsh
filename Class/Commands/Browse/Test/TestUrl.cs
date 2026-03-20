@@ -13,8 +13,7 @@ sealed public class TestUrl : CoreCommand
     Mandatory = true,
     Position = default,
     ValueFromPipeline = true,
-    ValueFromRemainingArguments = true,
-    HelpMessage = "URL to test"
+    ValueFromRemainingArguments = true
   )]
   [AllowEmptyCollection]
   required public System.Uri[] Uri

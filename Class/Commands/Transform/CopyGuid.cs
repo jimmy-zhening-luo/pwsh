@@ -9,9 +9,7 @@ namespace PowerModule.Commands.Transform;
 [OutputType(typeof(string))]
 sealed public class CopyGuid : CoreCommand
 {
-  [Parameter(
-    HelpMessage = "Get Guid in uppercase"
-  )]
+  [Parameter]
   [Alias("Case")]
   public SwitchParameter Uppercase
   { private get; init; }
@@ -35,7 +33,7 @@ sealed public class CopyGuid : CoreCommand
       $@"{StandardModule.Management}\Set-Clipboard"
     )
       .AddParameter(
-        StandardParameter.Value,
+        "Value",
         guid
       )
       .Invoke();

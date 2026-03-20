@@ -2,7 +2,7 @@ namespace PowerModule.Commands.Code.Git.Verbs;
 
 [Cmdlet(
   VerbsCommunications.Write,
-  "GitRepository",
+  GitNoun,
   HelpUri = $"{GitHelpLink}/git-commit"
 )]
 [Alias("gm")]
@@ -10,9 +10,11 @@ sealed public class GitCommit() : Git("commit")
 {
   const string FlagAllowEmpty = "--allow-empty";
 
+  const string DefaultMessage = "No message";
+
   [Parameter(
     Position = 60,
-    HelpMessage = "Commit message, defaulting to 'No message' on an empty commit"
+    HelpMessage = $"Commit message, defaulting to '{DefaultMessage}' on an empty commit"
   )]
   [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions(ItemType: Tab.PathItemType.File)]
@@ -20,7 +22,7 @@ sealed public class GitCommit() : Git("commit")
   { private get; set; } = string.Empty;
 
   [Parameter(
-    HelpMessage = "Allow commit with no changes, equivalent to --allow-empty"
+    HelpMessage = $"Allow commit with no changes, equivalent to {FlagAllowEmpty}"
   )]
   public SwitchParameter AllowEmpty
   { private get; set; }
@@ -55,7 +57,7 @@ sealed public class GitCommit() : Git("commit")
 
     if (AllowEmpty && Arguments.Count is 0)
     {
-      _ = Arguments.AddLast("No message");
+      _ = Arguments.AddLast(DefaultMessage);
     }
 
     Message = string.Join(
@@ -72,13 +74,13 @@ sealed public class GitCommit() : Git("commit")
     if (!Staged)
     {
       _ = AddCommand(
-        @"PowerModule\Add-GitRepository"
+        $@"{nameof(PowerModule)}\Add-GitRepository"
       );
 
       if (WorkingDirectory is not "")
       {
         _ = AddParameter(
-          "WorkingDirectory",
+          nameof(WorkingDirectory),
           WorkingDirectory
         );
       }

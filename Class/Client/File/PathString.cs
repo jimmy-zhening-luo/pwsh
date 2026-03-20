@@ -7,6 +7,7 @@ static partial class PathString
   internal const char Separator = '\\';
   internal const char AltSeparator = '/';
   internal const string StringSeparator = @"\";
+  internal const string StringHere = ".";
   internal const string Parent = "..";
   internal const string ParentParent = @"..\..";
 

@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Shell.Read.Directory;
 [Cmdlet(
   VerbsCommon.Get,
   "Directory",
-  DefaultParameterSetName = "Items",
+  DefaultParameterSetName = DefaultParameterSet,
   HelpUri = $"{HelpLink}2096492"
 )]
 [Alias("l")]
@@ -14,7 +14,7 @@ namespace PowerModule.Commands.Shell.Read.Directory;
 sealed public class GetDirectory : WrappedGetDirectory
 {
   [Parameter(
-    ParameterSetName = "Items",
+    ParameterSetName = DefaultParameterSet,
     Position = default,
     ValueFromPipeline = true
   )]
@@ -40,7 +40,7 @@ sealed public class GetDirectory : WrappedGetDirectory
 [Cmdlet(
   VerbsCommon.Get,
   "DirectorySibling",
-  DefaultParameterSetName = "Items",
+  DefaultParameterSetName = DefaultParameterSet,
   HelpUri = $"{HelpLink}2096492"
 )]
 [Alias("lx")]
@@ -51,7 +51,7 @@ sealed public class GetDirectory : WrappedGetDirectory
 sealed public class GetDirectorySibling : WrappedGetDirectory
 {
   [Parameter(
-    ParameterSetName = "Items",
+    ParameterSetName = DefaultParameterSet,
     Position = default,
     ValueFromPipeline = true
   )]
@@ -69,7 +69,7 @@ sealed public class GetDirectorySibling : WrappedGetDirectory
 [Cmdlet(
   VerbsCommon.Get,
   "DirectoryRelative",
-  DefaultParameterSetName = "Items",
+  DefaultParameterSetName = DefaultParameterSet,
   HelpUri = $"{HelpLink}2096492"
 )]
 [Alias("lxx")]
@@ -80,7 +80,7 @@ sealed public class GetDirectorySibling : WrappedGetDirectory
 sealed public class GetDirectoryRelative : WrappedGetDirectory
 {
   [Parameter(
-    ParameterSetName = "Items",
+    ParameterSetName = DefaultParameterSet,
     Position = default,
     ValueFromPipeline = true
   )]
@@ -98,7 +98,7 @@ sealed public class GetDirectoryRelative : WrappedGetDirectory
 [Cmdlet(
   VerbsCommon.Get,
   "DirectoryHome",
-  DefaultParameterSetName = "Items",
+  DefaultParameterSetName = DefaultParameterSet,
   HelpUri = $"{HelpLink}2096492"
 )]
 [Alias("lh")]
@@ -109,7 +109,7 @@ sealed public class GetDirectoryRelative : WrappedGetDirectory
 sealed public class GetDirectoryHome : WrappedGetDirectory
 {
   [Parameter(
-    ParameterSetName = "Items",
+    ParameterSetName = DefaultParameterSet,
     Position = default,
     ValueFromPipeline = true
   )]
@@ -128,7 +128,7 @@ sealed public class GetDirectoryHome : WrappedGetDirectory
 [Cmdlet(
   VerbsCommon.Get,
   "DirectoryCode",
-  DefaultParameterSetName = "Items",
+  DefaultParameterSetName = DefaultParameterSet,
   HelpUri = $"{HelpLink}2096492"
 )]
 [Alias("lc")]
@@ -139,7 +139,7 @@ sealed public class GetDirectoryHome : WrappedGetDirectory
 sealed public class GetDirectoryCode : WrappedGetDirectory
 {
   [Parameter(
-    ParameterSetName = "Items",
+    ParameterSetName = DefaultParameterSet,
     Position = default,
     ValueFromPipeline = true
   )]
@@ -158,7 +158,7 @@ sealed public class GetDirectoryCode : WrappedGetDirectory
 [Cmdlet(
   VerbsCommon.Get,
   "DirectoryDrive",
-  DefaultParameterSetName = "Items",
+  DefaultParameterSetName = DefaultParameterSet,
   HelpUri = $"{HelpLink}2096492"
 )]
 [Alias("l/")]
@@ -169,7 +169,7 @@ sealed public class GetDirectoryCode : WrappedGetDirectory
 sealed public class GetDirectoryDrive : WrappedGetDirectory
 {
   [Parameter(
-    ParameterSetName = "Items",
+    ParameterSetName = DefaultParameterSet,
     Position = default,
     ValueFromPipeline = true
   )]

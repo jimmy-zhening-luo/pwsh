@@ -14,8 +14,10 @@ sealed public class NewDirectory() : WrappedCommand(
   $@"{StandardModule.Management}\New-Item"
 )
 {
+  const string DefaultItemType = "directory";
+
   sealed override private protected PipelineInputSource PipelineInput => () => (
-    StandardParameter.Value,
+    nameof(Value),
     Value
   );
 
@@ -52,7 +54,7 @@ sealed public class NewDirectory() : WrappedCommand(
     "symboliclink",
     "hardlink",
     "junction",
-    "directory"
+    DefaultItemType
   )]
   public string ItemType
   { private get; init; } = string.Empty;
@@ -74,7 +76,7 @@ sealed public class NewDirectory() : WrappedCommand(
   {
     if (ItemType is "")
     {
-      CoercedParameters["ItemType"] = "directory";
+      CoercedParameters[nameof(ItemType)] = DefaultItemType;
     }
   }
 }

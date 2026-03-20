@@ -2,8 +2,7 @@ namespace PowerModule.Commands.Transform;
 
 [Cmdlet(
   VerbsData.ConvertTo,
-  "Hex",
-  HelpUri = "https://learn.microsoft.com/dotnet/standard/base-types/composite-formatting"
+  "Hex"
 )]
 [Alias("hex")]
 [OutputType(typeof(string))]
@@ -13,17 +12,14 @@ sealed public class ConvertToHex : Cmdlet
     Mandatory = true,
     Position = default,
     ValueFromPipeline = true,
-    ValueFromRemainingArguments = true,
-    HelpMessage = "Integers to convert"
+    ValueFromRemainingArguments = true
   )]
   [AllowEmptyCollection]
   [ValidateRange(ValidateRangeKind.NonNegative)]
   required public long[] Number
   { get; init; }
 
-  [Parameter(
-    HelpMessage = "Output in lowercase"
-  )]
+  [Parameter]
   [Alias("Case")]
   public SwitchParameter Lowercase
   { private get; init; }

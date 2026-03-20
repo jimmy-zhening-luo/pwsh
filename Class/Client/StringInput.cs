@@ -8,11 +8,12 @@ static class StringInput
   internal const char Space = ' ';
   internal const char SingleQuote = '\'';
   internal const char DoubleQuote = '"';
+  internal const char Wildcard = '*';
   internal const string StringSingleQuote = "'";
   internal const string StringDoubleQuote = "\"";
   internal const string EscapedSingleQuote = "''";
   internal const string EscapedDoubleQuote = "\\\"";
-  internal const string Wildcard = "*";
+  internal const string StringWildcard = "*";
 
   static internal CultureInfo CurrentCulture => field ??= CultureInfo.CurrentCulture;
 

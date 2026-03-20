@@ -21,10 +21,9 @@ sealed public class GetVerb : CoreCommand
     security,
   }
 
-  [Parameter(
-    Position = default,
-    HelpMessage = "Get only the specified verbs or verb patterns"
-  )]
+  const string GetVerbCommand = $@"{StandardModule.Utility}\Get-Verb";
+
+  [Parameter(Position = default)]
   [SupportsWildcards]
   [ValidateNotNullOrEmpty]
   [ValidateNotNullOrWhiteSpace]
@@ -39,46 +38,41 @@ sealed public class GetVerb : CoreCommand
       {
         _ = verbs.Add(
           verb.Contains(
-            '*',
+            Client.StringInput.Wildcard,
             System.StringComparison.Ordinal
           )
             ? verb
             : verb.Length > 2
-              ? $"*{verb}*"
-              : $"{verb}*"
+              ? $"{Client.StringInput.StringWildcard}{verb}{Client.StringInput.StringWildcard}"
+              : $"{verb}{Client.StringInput.StringWildcard}"
         );
       }
     }
   }
   readonly HashSet<string> verbs = [];
 
-  [Parameter(
-    Position = 1,
-    HelpMessage = "Get only the specified verb groups"
-  )]
+  [Parameter(Position = 1)]
   [ValidateNotNullOrEmpty]
   public VerbGroup[] Group
   { private get; init; } = [];
 
   sealed override private protected void Postprocess()
   {
-    const string GET_VERB = $@"{StandardModule.Utility}\Get-Verb";
-
     if (
       Verb is []
-      or [Client.StringInput.Wildcard]
+      or [Client.StringInput.StringWildcard]
     )
     {
-      _ = AddCommand(GET_VERB)
+      _ = AddCommand(GetVerbCommand)
         .AddParameter(
-          "Verb",
-          Client.StringInput.Wildcard
+          nameof(Verb),
+          Client.StringInput.StringWildcard
         );
 
       if (Group is not [])
       {
         _ = AddParameter(
-          "Group",
+          nameof(Group),
           Group
         );
       }
@@ -89,7 +83,7 @@ sealed public class GetVerb : CoreCommand
         )
           .AddParameter(
             "ExpandProperty",
-            "Verb"
+            nameof(Verb)
           )
           .AddCommand(
             $@"{StandardModule.Utility}\Sort-Object"
@@ -102,16 +96,16 @@ sealed public class GetVerb : CoreCommand
     {
       SortedDictionary<string, VerbInfo> verbDictionary = [];
 
-      _ = AddCommand(GET_VERB)
+      _ = AddCommand(GetVerbCommand)
         .AddParameter(
-          "Verb",
+          nameof(Verb),
           Verb
         );
 
       if (Group is not [])
       {
         _ = AddParameter(
-          "Group",
+          nameof(Group),
           Group
         );
       }

@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Shell.Move.Location;
 [Cmdlet(
   VerbsCommon.Set,
   "Directory",
-  DefaultParameterSetName = StandardParameter.Path,
+  DefaultParameterSetName = nameof(Path),
   HelpUri = $"{HelpLink}2097049"
 )]
 [Alias("c")]
@@ -14,7 +14,7 @@ namespace PowerModule.Commands.Shell.Move.Location;
 sealed public class SetDirectory : WrappedSetDirectory
 {
   [Parameter(
-    ParameterSetName = StandardParameter.Path,
+    ParameterSetName = nameof(Path),
     Position = default,
     ValueFromPipeline = true
   )]
@@ -28,7 +28,7 @@ sealed public class SetDirectory : WrappedSetDirectory
   { get; set; } = string.Empty;
 
   [Parameter(
-    ParameterSetName = StandardParameter.LiteralPath,
+    ParameterSetName = nameof(LiteralPath),
     Mandatory = true
   )]
   [Alias(StandardAlias.PSPath, StandardAlias.LP)]
@@ -38,7 +38,7 @@ sealed public class SetDirectory : WrappedSetDirectory
   }
 
   [Parameter(
-    ParameterSetName = "Stack"
+    ParameterSetName = nameof(Stack)
   )]
   required public string Stack
   {
@@ -46,7 +46,7 @@ sealed public class SetDirectory : WrappedSetDirectory
   }
 
   [Parameter(
-    ParameterSetName = "DriveC"
+    ParameterSetName = nameof(C)
   )]
   public SwitchParameter C
   {
@@ -54,7 +54,7 @@ sealed public class SetDirectory : WrappedSetDirectory
   }
 
   [Parameter(
-    ParameterSetName = "DriveD"
+    ParameterSetName = nameof(D)
   )]
   public SwitchParameter D
   {
@@ -62,7 +62,7 @@ sealed public class SetDirectory : WrappedSetDirectory
   }
 
   [Parameter(
-    ParameterSetName = "DriveE"
+    ParameterSetName = nameof(E)
   )]
   public SwitchParameter E
   {
@@ -72,27 +72,36 @@ sealed public class SetDirectory : WrappedSetDirectory
   sealed override private protected Dictionary<string, object?> CoercedParameters
   { get; } = new()
   {
-    ["C"] = default,
-    ["D"] = default,
-    ["E"] = default,
+    [nameof(C)] = default,
+    [nameof(D)] = default,
+    [nameof(E)] = default,
   };
 
   sealed override private protected void TransformParameters()
   {
     switch (ParameterSetName)
     {
-      case "DriveC":
-        SetBoundParameter(StandardParameter.Path, "C:");
+      case nameof(C):
+        SetBoundParameter(
+          nameof(Path),
+          $"{nameof(C)}:"
+        );
 
         break;
 
-      case "DriveD":
-        SetBoundParameter(StandardParameter.Path, "D:");
+      case nameof(D):
+        SetBoundParameter(
+          nameof(Path),
+          $"{nameof(D)}:"
+        );
 
         break;
 
-      case "DriveE":
-        SetBoundParameter(StandardParameter.Path, "E:");
+      case nameof(E):
+        SetBoundParameter(
+          nameof(Path),
+          $"{nameof(E)}:"
+        );
 
         break;
 
@@ -105,7 +114,7 @@ sealed public class SetDirectory : WrappedSetDirectory
 [Cmdlet(
   VerbsCommon.Set,
   "DirectorySibling",
-  DefaultParameterSetName = StandardParameter.Path,
+  DefaultParameterSetName = nameof(Path),
   HelpUri = $"{HelpLink}2097049"
 )]
 [Alias("cx")]
@@ -113,7 +122,7 @@ sealed public class SetDirectory : WrappedSetDirectory
 sealed public class SetDirectorySibling : WrappedSetDirectory
 {
   [Parameter(
-    ParameterSetName = StandardParameter.Path,
+    ParameterSetName = nameof(Path),
     Position = default,
     ValueFromPipeline = true
   )]
@@ -132,7 +141,7 @@ sealed public class SetDirectorySibling : WrappedSetDirectory
 [Cmdlet(
   VerbsCommon.Set,
   "DirectoryRelative",
-  DefaultParameterSetName = StandardParameter.Path,
+  DefaultParameterSetName = nameof(Path),
   HelpUri = $"{HelpLink}2097049"
 )]
 [Alias("cxx")]
@@ -140,7 +149,7 @@ sealed public class SetDirectorySibling : WrappedSetDirectory
 sealed public class SetDirectoryRelative : WrappedSetDirectory
 {
   [Parameter(
-    ParameterSetName = StandardParameter.Path,
+    ParameterSetName = nameof(Path),
     Position = default,
     ValueFromPipeline = true
   )]
@@ -159,7 +168,7 @@ sealed public class SetDirectoryRelative : WrappedSetDirectory
 [Cmdlet(
   VerbsCommon.Set,
   "DirectoryHome",
-  DefaultParameterSetName = StandardParameter.Path,
+  DefaultParameterSetName = nameof(Path),
   HelpUri = $"{HelpLink}2097049"
 )]
 [Alias("ch")]
@@ -167,7 +176,7 @@ sealed public class SetDirectoryRelative : WrappedSetDirectory
 sealed public class SetDirectoryHome : WrappedSetDirectory
 {
   [Parameter(
-    ParameterSetName = StandardParameter.Path,
+    ParameterSetName = nameof(Path),
     Position = default,
     ValueFromPipeline = true
   )]
@@ -187,7 +196,7 @@ sealed public class SetDirectoryHome : WrappedSetDirectory
 [Cmdlet(
   VerbsCommon.Set,
   "DirectoryCode",
-  DefaultParameterSetName = StandardParameter.Path,
+  DefaultParameterSetName = nameof(Path),
   HelpUri = $"{HelpLink}2097049"
 )]
 [Alias("cc")]
@@ -195,7 +204,7 @@ sealed public class SetDirectoryHome : WrappedSetDirectory
 sealed public class SetDirectoryCode : WrappedSetDirectory
 {
   [Parameter(
-    ParameterSetName = StandardParameter.Path,
+    ParameterSetName = nameof(Path),
     Position = default,
     ValueFromPipeline = true
   )]
@@ -215,7 +224,7 @@ sealed public class SetDirectoryCode : WrappedSetDirectory
 [Cmdlet(
   VerbsCommon.Set,
   "Drive",
-  DefaultParameterSetName = StandardParameter.Path,
+  DefaultParameterSetName = nameof(Path),
   HelpUri = $"{HelpLink}2097049"
 )]
 [Alias("c/")]
@@ -223,7 +232,7 @@ sealed public class SetDirectoryCode : WrappedSetDirectory
 sealed public class SetDrive : WrappedSetDirectory
 {
   [Parameter(
-    ParameterSetName = StandardParameter.Path,
+    ParameterSetName = nameof(Path),
     Position = default,
     ValueFromPipeline = true
   )]

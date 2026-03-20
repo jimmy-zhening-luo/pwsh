@@ -4,8 +4,10 @@ abstract public class WrappedGetDirectory() : WrappedCommand(
   $@"{StandardModule.Management}\Get-ChildItem"
 )
 {
+  private protected const string DefaultParameterSet = "Items";
+
   sealed override private protected PipelineInputSource PipelineInput => () => (
-    StandardParameter.Path,
+    nameof(Path),
     Path
   );
 
@@ -21,11 +23,11 @@ abstract public class WrappedGetDirectory() : WrappedCommand(
   {
     private get;
     init => field = value.Contains(
-      '*',
+      Client.StringInput.Wildcard,
       global::System.StringComparison.Ordinal
     )
       ? value
-      : $"{value}*";
+      : $@"{value}{Client.StringInput.StringWildcard}";
   } = string.Empty;
 
   [Parameter]
@@ -124,7 +126,7 @@ abstract public class WrappedGetDirectory() : WrappedCommand(
   {
     if (Filter is not "")
     {
-      CoercedParameters["Filter"] = Filter;
+      CoercedParameters[nameof(Filter)] = Filter;
     }
   }
 

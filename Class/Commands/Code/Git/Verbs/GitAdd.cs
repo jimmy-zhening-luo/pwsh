@@ -2,7 +2,7 @@ namespace PowerModule.Commands.Code.Git.Verbs;
 
 [Cmdlet(
   VerbsCommon.Add,
-  "GitRepository",
+  GitNoun,
   HelpUri = $"{GitHelpLink}/git-add"
 )]
 [Alias("ga")]
@@ -10,20 +10,22 @@ sealed public class GitAdd() : Git("add")
 {
   const string FlagRenormalize = "--renormalize";
 
+  const string DefaultPattern = Client.File.PathString.StringHere;
+
   [Parameter(
     Position = default,
-    HelpMessage = "File pattern of files to add, defaulting to '.' (all)"
+    HelpMessage = $"File pattern of files to add, defaulting to '{DefaultPattern}' (all)"
   )]
   [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions(ItemType: Tab.PathItemType.File)]
   public string Name
   {
-    private get => field ?? ".";
+    private get => field ?? DefaultPattern;
     init;
   }
 
   [Parameter(
-    HelpMessage = "Equivalent to --renormalize"
+    HelpMessage = $"Equivalent to {FlagRenormalize}"
   )]
   public SwitchParameter Renormalize
   { private get; init; }

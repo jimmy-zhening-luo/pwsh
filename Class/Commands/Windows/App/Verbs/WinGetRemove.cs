@@ -2,7 +2,7 @@ namespace PowerModule.Commands.Windows.App.Verbs;
 
 [Cmdlet(
   VerbsCommon.Remove,
-  "WinGetApp",
+  WinGetNoun,
   HelpUri = $"{WinGetHelpLink}uninstall"
 )]
 [Alias("wgr")]

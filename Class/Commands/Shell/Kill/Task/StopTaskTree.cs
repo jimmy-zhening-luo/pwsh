@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Shell.Kill.Task;
 [Cmdlet(
   VerbsLifecycle.Stop,
   "TaskTree",
-  DefaultParameterSetName = StandardParameter.Name,
+  DefaultParameterSetName = nameof(Name),
   SupportsShouldProcess = true,
   ConfirmImpact = ConfirmImpact.Medium,
   HelpUri = $"{HelpLink}2097058"

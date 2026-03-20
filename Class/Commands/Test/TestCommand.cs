@@ -36,8 +36,8 @@ sealed public class TestCommand : CoreCommand
 
   sealed override private protected void Postprocess()
   {
-    WriteObject($"The greeting was: {Greeting}");
-    WriteObject($"The value of 'Switch' is: {Switch}");
+    WriteObject($"The {nameof(Greeting)} was: {Greeting}");
+    WriteObject($"The value of '{nameof(Switch)}' is: {Switch}");
   }
 
   string Greet(string name) => $"{Greeting}, {name}!";

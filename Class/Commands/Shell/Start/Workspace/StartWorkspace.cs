@@ -3,8 +3,7 @@ namespace PowerModule.Commands.Shell.Start.Workspace;
 [Cmdlet(
   VerbsLifecycle.Start,
   "Workspace",
-  DefaultParameterSetName = StandardParameter.Path,
-  HelpUri = "https://code.visualstudio.com/docs/configure/command-line#_core-cli-options"
+  DefaultParameterSetName = nameof(Path)
 )]
 [Alias("i")]
 [OutputType(typeof(void))]
@@ -22,8 +21,7 @@ sealed public class StartWorkspace : VirtualStartWorkspace
 [Cmdlet(
   VerbsLifecycle.Start,
   "WorkspaceSibling",
-  DefaultParameterSetName = StandardParameter.Path,
-  HelpUri = "https://code.visualstudio.com/docs/configure/command-line#_core-cli-options"
+  DefaultParameterSetName = nameof(Path)
 )]
 [Alias("ix")]
 [OutputType(typeof(void))]
@@ -43,8 +41,7 @@ sealed public class StartWorkspaceSibling : VirtualStartWorkspace
 [Cmdlet(
   VerbsLifecycle.Start,
   "WorkspaceRelative",
-  DefaultParameterSetName = StandardParameter.Path,
-  HelpUri = "https://code.visualstudio.com/docs/configure/command-line#_core-cli-options"
+  DefaultParameterSetName = nameof(Path)
 )]
 [Alias("ixx")]
 [OutputType(typeof(void))]
@@ -64,8 +61,7 @@ sealed public class StartWorkspaceRelative : VirtualStartWorkspace
 [Cmdlet(
   VerbsLifecycle.Start,
   "WorkspaceHome",
-  DefaultParameterSetName = StandardParameter.Path,
-  HelpUri = "https://code.visualstudio.com/docs/configure/command-line#_core-cli-options"
+  DefaultParameterSetName = nameof(Path)
 )]
 [Alias("ih")]
 [OutputType(typeof(void))]
@@ -86,8 +82,7 @@ sealed public class StartWorkspaceHome : VirtualStartWorkspace
 [Cmdlet(
   VerbsLifecycle.Start,
   "WorkspaceCode",
-  DefaultParameterSetName = StandardParameter.Path,
-  HelpUri = "https://code.visualstudio.com/docs/configure/command-line#_core-cli-options"
+  DefaultParameterSetName = nameof(Path)
 )]
 [Alias("ic")]
 [OutputType(typeof(void))]
@@ -108,8 +103,7 @@ sealed public class StartWorkspaceCode : VirtualStartWorkspace
 [Cmdlet(
   VerbsLifecycle.Start,
   "WorkspaceDrive",
-  DefaultParameterSetName = StandardParameter.Path,
-  HelpUri = "https://code.visualstudio.com/docs/configure/command-line#_core-cli-options"
+  DefaultParameterSetName = nameof(Path)
 )]
 [Alias("i/")]
 [OutputType(typeof(void))]

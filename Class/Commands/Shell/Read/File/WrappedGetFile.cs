@@ -100,7 +100,7 @@ abstract public class WrappedGetFile() : WrappedCommand(
     if (!InCurrentLocation)
     {
       SetBoundParameter(
-        StandardParameter.Path,
+        nameof(Path),
         ReanchorPath(Path)
       );
     }

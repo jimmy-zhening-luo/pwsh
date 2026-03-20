@@ -20,10 +20,7 @@ abstract public class NativeCodeCommand(
   sealed override private protected Localizer? Location => location;
   Localizer? location;
 
-  [Parameter(
-    Position = 50,
-    HelpMessage = "Working directory path"
-  )]
+  [Parameter(Position = 50)]
   [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions(
     @"~\code",

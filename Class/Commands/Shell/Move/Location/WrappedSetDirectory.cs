@@ -5,7 +5,7 @@ abstract public class WrappedSetDirectory() : WrappedCommand(
 )
 {
   sealed override private protected PipelineInputSource PipelineInput => () => (
-    StandardParameter.Path,
+    nameof(Path),
     Path
   );
 
@@ -23,7 +23,7 @@ abstract public class WrappedSetDirectory() : WrappedCommand(
     if (InCurrentLocation)
     {
       if (
-        ParameterSetName is StandardParameter.Path
+        ParameterSetName is nameof(Path)
         && Path is ""
       )
       {

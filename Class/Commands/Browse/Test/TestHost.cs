@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Browse.Test;
 [Cmdlet(
   VerbsDiagnostic.Test,
   "Host",
-  DefaultParameterSetName = "ICMP",
+  DefaultParameterSetName = ParameterSetICMP,
   HelpUri = $"https://learn.microsoft.com/powershell/module/nettcpip/test-netconnection"
 )]
 [Alias("tn")]
@@ -13,7 +13,11 @@ sealed public class TestHost() : WrappedCommand(
   CommandTypes.Function
 )
 {
-  const string CommonPortParameterName = "CommonTCPPort";
+  const string ParameterSetICMP = "ICMP";
+  const string ParameterSetRemotePort = "RemotePort";
+  const string ParameterSetDiagnostics = "NetRouteDiagnostics";
+
+  const string DefaultHost = "google.com";
 
   public enum Verbosity
   {
@@ -22,14 +26,14 @@ sealed public class TestHost() : WrappedCommand(
   }
 
   sealed override private protected PipelineInputSource PipelineInput => () => (
-    "ComputerName",
+    nameof(ComputerName),
     ComputerName
   );
 
   sealed override private protected Dictionary<string, object?> CoercedParameters => new()
   {
-    ["Detailed"] = default,
-    ["InformationLevel"] = Detailed
+    [nameof(Detailed)] = default,
+    [nameof(InformationLevel)] = Detailed
       ? Verbosity.detailed
       : InformationLevel,
   };
@@ -39,19 +43,19 @@ sealed public class TestHost() : WrappedCommand(
     ValueFromPipeline = true
   )]
   [Alias(
-    StandardParameter.Name,
+    "Name",
     "RemoteAddress",
     "cn"
   )]
   [ValidateNotNullOrWhiteSpace]
   public string ComputerName
   {
-    get => field ?? "google.com";
+    get => field ?? DefaultHost;
     set;
   }
 
   [Parameter(
-    ParameterSetName = CommonPortParameterName,
+    ParameterSetName = nameof(CommonTCPPort),
     Mandatory = true,
     Position = 1
   )]
@@ -66,10 +70,10 @@ sealed public class TestHost() : WrappedCommand(
   { private get; init; }
 
   [Parameter(
-    ParameterSetName = "RemotePort",
+    ParameterSetName = ParameterSetRemotePort,
     Mandatory = true
   )]
-  [Alias("RemotePort")]
+  [Alias(ParameterSetRemotePort)]
   [ValidateRange(ValidateRangeKind.Positive)]
   public int Port
   { private get; init; }
@@ -83,7 +87,7 @@ sealed public class TestHost() : WrappedCommand(
   { private get; init; }
 
   [Parameter(
-    ParameterSetName = "ICMP"
+    ParameterSetName = ParameterSetICMP
   )]
   public SwitchParameter TraceRoute
   {
@@ -91,7 +95,7 @@ sealed public class TestHost() : WrappedCommand(
   }
 
   [Parameter(
-    ParameterSetName = "ICMP"
+    ParameterSetName = ParameterSetICMP
   )]
   [ValidateRange(1, 120)]
   public int Hops
@@ -100,7 +104,7 @@ sealed public class TestHost() : WrappedCommand(
   }
 
   [Parameter(
-    ParameterSetName = "NetRouteDiagnostics",
+    ParameterSetName = ParameterSetDiagnostics,
     Mandatory = true
   )]
   public SwitchParameter DiagnoseRouting
@@ -109,7 +113,7 @@ sealed public class TestHost() : WrappedCommand(
   }
 
   [Parameter(
-    ParameterSetName = "NetRouteDiagnostics"
+    ParameterSetName = ParameterSetDiagnostics
   )]
   required public string ConstrainSourceAddress
   {
@@ -117,7 +121,7 @@ sealed public class TestHost() : WrappedCommand(
   }
 
   [Parameter(
-    ParameterSetName = "NetRouteDiagnostics"
+    ParameterSetName = ParameterSetDiagnostics
   )]
   public uint ConstrainInterface
   {
@@ -127,16 +131,18 @@ sealed public class TestHost() : WrappedCommand(
   sealed override private protected void TransformParameters()
   {
     if (
-      ParameterSetName is CommonPortParameterName
+      ParameterSetName is nameof(CommonTCPPort)
       && ushort.TryParse(
         CommonTCPPort,
         out var numericPort
       )
     )
     {
-      RemoveBoundParameter(CommonPortParameterName);
+      RemoveBoundParameter(
+        nameof(CommonTCPPort)
+      );
       SetBoundParameter(
-        "Port",
+        nameof(Port),
         (int)numericPort
       );
     }

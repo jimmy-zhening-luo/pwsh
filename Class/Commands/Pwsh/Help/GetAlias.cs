@@ -9,9 +9,9 @@ namespace PowerModule.Commands.Pwsh.Help;
 [OutputType(typeof(AliasInfo))]
 sealed public class GetCommandAlias : CoreCommand
 {
-  [Parameter(
-    Position = default
-  )]
+  const string DefaultScope = "global";
+
+  [Parameter(Position = default)]
   [Alias("Command")]
   [SupportsWildcards]
   [ValidateNotNullOrEmpty]
@@ -27,26 +27,23 @@ sealed public class GetCommandAlias : CoreCommand
       {
         _ = definitions.Add(
           definition.Contains(
-            '*',
+            Client.StringInput.Wildcard,
             System.StringComparison.Ordinal
           )
             ? definition
             : definition.Length > 2
-              ? $"*{definition}*"
-              : $"{definition}*"
+              ? $"{Client.StringInput.StringWildcard}{definition}{Client.StringInput.StringWildcard}"
+              : $"{definition}{Client.StringInput.StringWildcard}"
         );
       }
     }
   }
   readonly HashSet<string> definitions = [];
 
-  [Parameter(
-    Position = 1,
-    HelpMessage = "Specifies the scope for which this cmdlet gets aliases. The acceptable values for this parameter are: Global, Local, Script, and a positive integer relative to the current scope (0 through the number of scopes, where 0 is the current scope and 1 is its parent). Global is the default, which differs from Get-Alias where Local is the default."
-  )]
+  [Parameter(Position = 1)]
   [ValidateNotNullOrWhiteSpace]
-  [Tab.Completions(
-    "global",
+  [ArgumentCompletions(
+    DefaultScope,
     "local",
     "script",
     "0",
@@ -55,11 +52,9 @@ sealed public class GetCommandAlias : CoreCommand
     "3"
   )]
   public string Scope
-  { private get; init; } = "global";
+  { private get; init; } = DefaultScope;
 
-  [Parameter(
-    Position = 2
-  )]
+  [Parameter(Position = 2)]
   [SupportsWildcards]
   [ValidateNotNullOrEmpty]
   [ValidateNotNullOrWhiteSpace]
@@ -76,7 +71,7 @@ sealed public class GetCommandAlias : CoreCommand
     if (Definition is [])
     {
       _ = definitions.Add(
-        Client.StringInput.Wildcard
+        Client.StringInput.StringWildcard
       );
     }
 
@@ -88,17 +83,20 @@ sealed public class GetCommandAlias : CoreCommand
       $@"{StandardModule.Utility}\Get-Alias"
     )
       .AddParameter(
-        "Definition",
+        nameof(Definition),
         Definition
       )
       .AddParameter(
-        "Scope",
+        nameof(Scope),
         Scope
       );
 
     if (Exclude is not [])
     {
-      _ = AddParameter("Exclude", Exclude);
+      _ = AddParameter(
+        nameof(Exclude),
+        Exclude
+      );
     }
 
     foreach (var aliasInfo in InvokePowerShell<AliasInfo>())

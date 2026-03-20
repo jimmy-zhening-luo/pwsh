@@ -2,7 +2,7 @@ namespace PowerModule.Commands.Windows.App.Verbs;
 
 [Cmdlet(
   VerbsCommon.Add,
-  "WinGetApp",
+  WinGetNoun,
   HelpUri = $"{WinGetHelpLink}upgrade"
 )]
 [Alias("wga")]

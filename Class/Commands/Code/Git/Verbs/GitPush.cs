@@ -2,7 +2,7 @@ namespace PowerModule.Commands.Code.Git.Verbs;
 
 [Cmdlet(
   VerbsCommon.Push,
-  "GitRepository",
+  GitNoun,
   HelpUri = $"{GitHelpLink}/git-push"
 )]
 [Alias("gs")]
@@ -17,13 +17,13 @@ sealed public class GitPush() : Git("push")
     }
 
     _ = AddCommand(
-      @"PowerModule\Get-GitRepository"
+      $@"{nameof(PowerModule)}\Get-GitRepository"
     );
 
     if (WorkingDirectory is not "")
     {
       _ = AddParameter(
-        "WorkingDirectory",
+        nameof(WorkingDirectory),
         WorkingDirectory
       );
     }

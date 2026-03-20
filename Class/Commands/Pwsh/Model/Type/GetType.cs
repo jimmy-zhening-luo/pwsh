@@ -11,8 +11,7 @@ sealed public class GetInputType : CoreCommand
   [Parameter(
     Mandatory = true,
     Position = default,
-    ValueFromPipeline = true,
-    HelpMessage = "Object to type-check"
+    ValueFromPipeline = true
   )]
   required public object InputObject
   { get; init; }

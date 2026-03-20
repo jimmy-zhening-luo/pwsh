@@ -11,7 +11,7 @@ sealed public class NpmOutdated() : Npm("outdated")
   const string FlagAll = "--all";
 
   [Parameter(
-    HelpMessage = "In addition to direct dependencies, check for outdated meta-dependencies (--all)"
+    HelpMessage = $"In addition to direct dependencies, check for outdated meta-dependencies ({FlagAll})"
   )]
   [Alias("a")]
   public SwitchParameter All

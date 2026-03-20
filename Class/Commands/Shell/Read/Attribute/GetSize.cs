@@ -3,16 +3,16 @@ namespace PowerModule.Commands.Shell.Read.Attribute;
 [Cmdlet(
   VerbsCommon.Get,
   "Size",
-  DefaultParameterSetName = "Unit"
+  DefaultParameterSetName = nameof(Unit)
 )]
 [Alias("sz", "size")]
 [OutputType(
   typeof(string),
-  ParameterSetName = ["Unit"]
+  ParameterSetName = [nameof(Unit)]
 )]
 [OutputType(
   typeof(double),
-  ParameterSetName = ["Number"]
+  ParameterSetName = [nameof(Number)]
 )]
 sealed public class GetSize : CoreCommand
 {
@@ -27,35 +27,33 @@ sealed public class GetSize : CoreCommand
   }
 
   [Parameter(
-    ParameterSetName = "Unit",
+    ParameterSetName = nameof(Unit),
     Position = default,
     ValueFromPipeline = true
   )]
   [Parameter(
-    ParameterSetName = "Number",
+    ParameterSetName = nameof(Number),
     Position = default,
-    ValueFromPipeline = true,
-    HelpMessage = "Path of the file or directory of which to get the size"
+    ValueFromPipeline = true
   )]
   [ValidateNotNullOrEmpty]
   [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions]
   public string[] Path
   {
-    get => field ?? [""];
+    get => field ?? [string.Empty];
     init;
   }
 
   [Parameter(
-    ParameterSetName = "Unit",
-    Position = 1,
-    HelpMessage = "Get the size as the specified unit"
+    ParameterSetName = nameof(Unit),
+    Position = 1
   )]
   public DiskSizeUnit Unit
   { private get; init; } = DiskSizeUnit.kb;
 
   [Parameter(
-    ParameterSetName = "Number",
+    ParameterSetName = nameof(Number),
     HelpMessage = "Get the size as total byte count"
   )]
   public SwitchParameter Number
@@ -80,7 +78,7 @@ sealed public class GetSize : CoreCommand
       {
         foreach (
           var file in new System.IO.DirectoryInfo(fullPath).EnumerateFiles(
-            Client.StringInput.Wildcard,
+            Client.StringInput.StringWildcard,
             new System.IO.EnumerationOptions()
             {
               RecurseSubdirectories = true,
@@ -98,7 +96,7 @@ sealed public class GetSize : CoreCommand
       }
 
       WriteObject(
-        ParameterSetName is "Number"
+        ParameterSetName is nameof(Number)
           ? bytes
           : $"{System.Math.Round(
               (double)bytes / (1L << ((int)Unit * 10)),

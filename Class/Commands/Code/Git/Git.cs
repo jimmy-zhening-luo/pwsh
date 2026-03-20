@@ -14,7 +14,10 @@ abstract public class Git(string? IntrinsicVerb) : NativeCodeCommand(
   "-C"
 )
 {
+  private protected const string GitNoun = "GitRepository";
   private protected const string GitHelpLink = "https://git-scm.com/docs";
+
+  const string DefaultVerb = "status";
 
   static readonly HashSet<string> NewableVerb = [
     "switch",
@@ -44,7 +47,7 @@ abstract public class Git(string? IntrinsicVerb) : NativeCodeCommand(
         break;
 
       case null:
-        IntrinsicVerb = "status";
+        IntrinsicVerb = DefaultVerb;
 
         break;
 

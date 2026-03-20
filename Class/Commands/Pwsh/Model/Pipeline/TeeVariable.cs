@@ -12,6 +12,9 @@ sealed public class TeeVariable() : WrappedCommand(
   $@"{StandardModule.Utility}\Tee-Object"
 )
 {
+  const string ParameterSetFile = "File";
+  const string ParameterSetLiteralFile = "LiteralFile";
+
   sealed override private protected PipelineInputSource PipelineInput => () => (
     "InputObject",
     InputObject
@@ -24,7 +27,7 @@ sealed public class TeeVariable() : WrappedCommand(
   { get; init; }
 
   [Parameter(
-    ParameterSetName = "Variable",
+    ParameterSetName = nameof(Variable),
     Mandatory = true,
     Position = default
   )]
@@ -34,17 +37,17 @@ sealed public class TeeVariable() : WrappedCommand(
   }
 
   [Parameter(
-    ParameterSetName = "File",
+    ParameterSetName = ParameterSetFile,
     Mandatory = true
   )]
-  [Alias(StandardParameter.Path)]
+  [Alias("Path")]
   required public string FilePath
   {
     init => _ = value;
   }
 
   [Parameter(
-    ParameterSetName = "LiteralFile",
+    ParameterSetName = ParameterSetLiteralFile,
     Mandatory = true
   )]
   [Alias(StandardAlias.PSPath, StandardAlias.LP)]
@@ -54,7 +57,7 @@ sealed public class TeeVariable() : WrappedCommand(
   }
 
   [Parameter(
-    ParameterSetName = "File"
+    ParameterSetName = ParameterSetFile
   )]
   public SwitchParameter Append
   {
@@ -62,10 +65,10 @@ sealed public class TeeVariable() : WrappedCommand(
   }
 
   [Parameter(
-    ParameterSetName = "File"
+    ParameterSetName = ParameterSetFile
   )]
   [Parameter(
-    ParameterSetName = "LiteralFile"
+    ParameterSetName = ParameterSetLiteralFile
   )]
   [ValidateNotNullOrWhiteSpace]
   [Tab.EnumCompletions(typeof(Client.File.Encoding))]

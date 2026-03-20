@@ -24,8 +24,7 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
   [Parameter(
     Position = 2,
     ValueFromRemainingArguments = true,
-    DontShow = true,
-    HelpMessage = "Additional arguments"
+    DontShow = true
   )]
   [ValidateNotNullOrEmpty]
   [ValidateNotNullOrWhiteSpace]

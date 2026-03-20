@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Shell.Remove.Directory;
 [Cmdlet(
   VerbsCommon.Remove,
   "Directory",
-  DefaultParameterSetName = StandardParameter.Path,
+  DefaultParameterSetName = nameof(Path),
   SupportsShouldProcess = true,
   ConfirmImpact = ConfirmImpact.Medium,
   HelpUri = $"{HelpLink}2097103"
@@ -13,7 +13,7 @@ namespace PowerModule.Commands.Shell.Remove.Directory;
 sealed public class RemoveDirectory : WrappedRemoveDirectory
 {
   [Parameter(
-    ParameterSetName = StandardParameter.Path,
+    ParameterSetName = nameof(Path),
     Mandatory = true,
     Position = default,
     ValueFromPipeline = true
@@ -24,7 +24,7 @@ sealed public class RemoveDirectory : WrappedRemoveDirectory
   { get; init; }
 
   [Parameter(
-    ParameterSetName = StandardParameter.LiteralPath,
+    ParameterSetName = nameof(LiteralPath),
     Mandatory = true
   )]
   [Alias(StandardAlias.PSPath, StandardAlias.LP)]

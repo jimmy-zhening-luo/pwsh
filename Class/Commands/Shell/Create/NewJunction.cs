@@ -15,7 +15,7 @@ sealed public class NewJunction() : WrappedCommand(
 )
 {
   sealed override private protected PipelineInputSource PipelineInput => () => (
-    StandardParameter.Value,
+    nameof(Value),
     Value
   );
 

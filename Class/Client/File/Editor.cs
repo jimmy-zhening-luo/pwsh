@@ -9,6 +9,9 @@ static class Editor
     Reuse,
   }
 
+  internal const string FlagReuseWindow = "--reuse-window";
+  internal const string FlagNewWindow = "--new-window";
+
   internal const string DefaultProfile = "Default";
   internal const string ProfileSetting = "Setting";
   internal const string ProfileSvelte = "Svelte";
@@ -76,11 +79,11 @@ static class Editor
     window switch
     {
       Window.New => [
-        "--new-window",
+        FlagNewWindow,
         .. arguments,
       ],
       Window.Reuse => [
-        "--reuse-window",
+        FlagReuseWindow,
         .. arguments,
       ],
       _ => arguments,

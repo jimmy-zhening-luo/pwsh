@@ -11,10 +11,7 @@ sealed public class GitCli() : Git(default)
   new internal SwitchParameter V
   { get; }
 
-  [Parameter(
-    Position = default,
-    HelpMessage = "Git command"
-  )]
+  [Parameter(Position = default)]
   [ValidateNotNullOrWhiteSpace]
   [ArgumentCompletions(
     "switch",
@@ -48,10 +45,7 @@ sealed public class GitCli() : Git(default)
     );
   }
 
-  [Parameter(
-    HelpMessage = "Show git version if no command is specified. Otherwise, pass the -v flag as argument."
-  )]
-  [Alias("v")]
+  [Alias(nameof(V))]
   public SwitchParameter Version
   {
     init => base.V = value;

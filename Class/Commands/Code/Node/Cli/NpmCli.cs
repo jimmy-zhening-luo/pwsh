@@ -11,10 +11,7 @@ sealed public class NpmCli() : Npm(default)
   new internal SwitchParameter V
   { get; }
 
-  [Parameter(
-    Position = default,
-    HelpMessage = "npm command"
-  )]
+  [Parameter(Position = default)]
   [ArgumentCompletions(
     "access",
     "adduser",
@@ -88,10 +85,7 @@ sealed public class NpmCli() : Npm(default)
     );
   }
 
-  [Parameter(
-    HelpMessage = "Show npm version if no command is specified. Otherwise, pass the -v flag as argument."
-  )]
-  [Alias("v")]
+  [Alias(nameof(V))]
   public SwitchParameter Version
   {
     init => base.V = value;

@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Shell.Start.Explorer;
 [Cmdlet(
   VerbsLifecycle.Start,
   "Explorer",
-  DefaultParameterSetName = StandardParameter.Path,
+  DefaultParameterSetName = nameof(Path),
   SupportsShouldProcess = true,
   ConfirmImpact = ConfirmImpact.Medium,
   HelpUri = $"{HelpLink}2096590"
@@ -13,7 +13,7 @@ namespace PowerModule.Commands.Shell.Start.Explorer;
 sealed public class StartExplorer : WrappedStartExplorer
 {
   [Parameter(
-    ParameterSetName = StandardParameter.Path,
+    ParameterSetName = nameof(Path),
     Position = default,
     ValueFromPipeline = true
   )]
@@ -23,7 +23,7 @@ sealed public class StartExplorer : WrappedStartExplorer
   { get; set; } = [];
 
   [Parameter(
-    ParameterSetName = StandardParameter.LiteralPath,
+    ParameterSetName = nameof(LiteralPath),
     Mandatory = true
   )]
   [Alias(StandardAlias.PSPath, StandardAlias.LP)]
@@ -36,7 +36,7 @@ sealed public class StartExplorer : WrappedStartExplorer
 [Cmdlet(
   VerbsLifecycle.Start,
   "ExplorerSibling",
-  DefaultParameterSetName = StandardParameter.Path,
+  DefaultParameterSetName = nameof(Path),
   SupportsShouldProcess = true,
   ConfirmImpact = ConfirmImpact.Medium,
   HelpUri = $"{HelpLink}2096590"
@@ -46,7 +46,7 @@ sealed public class StartExplorer : WrappedStartExplorer
 sealed public class StartExplorerSibling : WrappedStartExplorer
 {
   [Parameter(
-    ParameterSetName = StandardParameter.Path,
+    ParameterSetName = nameof(Path),
     Position = default,
     ValueFromPipeline = true
   )]
@@ -61,7 +61,7 @@ sealed public class StartExplorerSibling : WrappedStartExplorer
 [Cmdlet(
   VerbsLifecycle.Start,
   "ExplorerRelative",
-  DefaultParameterSetName = StandardParameter.Path,
+  DefaultParameterSetName = nameof(Path),
   SupportsShouldProcess = true,
   ConfirmImpact = ConfirmImpact.Medium,
   HelpUri = $"{HelpLink}2096590"
@@ -71,7 +71,7 @@ sealed public class StartExplorerSibling : WrappedStartExplorer
 sealed public class StartExplorerRelative : WrappedStartExplorer
 {
   [Parameter(
-    ParameterSetName = StandardParameter.Path,
+    ParameterSetName = nameof(Path),
     Position = default,
     ValueFromPipeline = true
   )]
@@ -86,7 +86,7 @@ sealed public class StartExplorerRelative : WrappedStartExplorer
 [Cmdlet(
   VerbsLifecycle.Start,
   "ExplorerHome",
-  DefaultParameterSetName = StandardParameter.Path,
+  DefaultParameterSetName = nameof(Path),
   SupportsShouldProcess = true,
   ConfirmImpact = ConfirmImpact.Medium,
   HelpUri = $"{HelpLink}2096590"
@@ -96,7 +96,7 @@ sealed public class StartExplorerRelative : WrappedStartExplorer
 sealed public class StartExplorerHome : WrappedStartExplorer
 {
   [Parameter(
-    ParameterSetName = StandardParameter.Path,
+    ParameterSetName = nameof(Path),
     Position = default,
     ValueFromPipeline = true
   )]
@@ -112,7 +112,7 @@ sealed public class StartExplorerHome : WrappedStartExplorer
 [Cmdlet(
   VerbsLifecycle.Start,
   "ExplorerCode",
-  DefaultParameterSetName = StandardParameter.Path,
+  DefaultParameterSetName = nameof(Path),
   SupportsShouldProcess = true,
   ConfirmImpact = ConfirmImpact.Medium,
   HelpUri = $"{HelpLink}2096590"
@@ -122,7 +122,7 @@ sealed public class StartExplorerHome : WrappedStartExplorer
 sealed public class StartExplorerCode : WrappedStartExplorer
 {
   [Parameter(
-    ParameterSetName = StandardParameter.Path,
+    ParameterSetName = nameof(Path),
     Position = default,
     ValueFromPipeline = true
   )]
@@ -138,7 +138,7 @@ sealed public class StartExplorerCode : WrappedStartExplorer
 [Cmdlet(
   VerbsLifecycle.Start,
   "ExplorerDrive",
-  DefaultParameterSetName = StandardParameter.Path,
+  DefaultParameterSetName = nameof(Path),
   SupportsShouldProcess = true,
   ConfirmImpact = ConfirmImpact.Medium,
   HelpUri = $"{HelpLink}2096590"
@@ -148,7 +148,7 @@ sealed public class StartExplorerCode : WrappedStartExplorer
 sealed public class StartExplorerDrive : WrappedStartExplorer
 {
   [Parameter(
-    ParameterSetName = StandardParameter.Path,
+    ParameterSetName = nameof(Path),
     Position = default,
     ValueFromPipeline = true
   )]

@@ -16,6 +16,8 @@ abstract public partial class NativeCommand(
     bool V = default
   );
 
+  const string CallOperator = "&";
+
   private protected readonly LinkedList<string> Arguments = [];
   private protected readonly LinkedList<string> NativeArguments = [];
 
@@ -25,8 +27,7 @@ abstract public partial class NativeCommand(
   [Parameter(
     Position = 100,
     ValueFromRemainingArguments = true,
-    DontShow = true,
-    HelpMessage = "Additional arguments"
+    DontShow = true
   )]
   [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions]
@@ -39,45 +40,27 @@ abstract public partial class NativeCommand(
   public SwitchParameter NoThrow
   { private protected get; set; }
 
-  [Parameter(
-    DontShow = true,
-    HelpMessage = "Pass -v flag as argument"
-  )]
+  [Parameter(DontShow = true)]
   public SwitchParameter V
   { private protected get; set; }
 
-  [Parameter(
-    DontShow = true,
-    HelpMessage = "Pass -d flag as argument"
-  )]
+  [Parameter(DontShow = true)]
   public SwitchParameter D
   { private protected get; set; }
 
-  [Parameter(
-    DontShow = true,
-    HelpMessage = "Pass -e flag as argument"
-  )]
+  [Parameter(DontShow = true)]
   public SwitchParameter E
   { private protected get; set; }
 
-  [Parameter(
-    DontShow = true,
-    HelpMessage = "Pass -i flag as argument"
-  )]
+  [Parameter(DontShow = true)]
   public SwitchParameter I
   { private protected get; set; }
 
-  [Parameter(
-    DontShow = true,
-    HelpMessage = "Pass -o flag as argument"
-  )]
+  [Parameter(DontShow = true)]
   public SwitchParameter O
   { private protected get; set; }
 
-  [Parameter(
-    DontShow = true,
-    HelpMessage = "Pass -p flag as argument"
-  )]
+  [Parameter(DontShow = true)]
   public SwitchParameter P
   { private protected get; set; }
 
@@ -110,7 +93,7 @@ abstract public partial class NativeCommand(
   sealed override private protected void Postprocess()
   {
     List<string> command = [
-      "&",
+      CallOperator,
       CommandPath,
     ];
 

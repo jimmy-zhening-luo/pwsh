@@ -28,7 +28,7 @@ sealed public class NpmUpdateVersion() : Npm("version")
 
   [Parameter(
     Position = default,
-    HelpMessage = "New package version, default 'patch'"
+    HelpMessage = $"New package version, default '{DefaultNodePackageVersion}'"
   )]
   [Alias("v")]
   [ValidateNotNullOrWhiteSpace]

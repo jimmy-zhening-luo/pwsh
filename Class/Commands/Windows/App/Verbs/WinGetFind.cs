@@ -2,7 +2,7 @@ namespace PowerModule.Commands.Windows.App.Verbs;
 
 [Cmdlet(
   VerbsCommon.Find,
-  "WinGetApp",
+  WinGetNoun,
   HelpUri = $"{WinGetHelpLink}search"
 )]
 [Alias("wgf")]

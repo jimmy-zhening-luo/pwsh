@@ -2,16 +2,22 @@ namespace PowerModule.Commands.Code.Git.Verbs;
 
 [Cmdlet(
   VerbsData.Import,
-  "GitRepository",
+  GitNoun,
   HelpUri = $"{GitHelpLink}/git-clone"
 )]
 [Alias("gitcl")]
 sealed public class GitClone() : Git("clone")
 {
+  const string GitBaseUrl = "github.com";
+  const string GitProtocolHttp = $"https://{GitBaseUrl}/";
+  const string GitProtocolSsh = $"git@{GitBaseUrl}:";
+
+  const string DefaultOrganization = "jimmy-zhening-luo";
+
   [Parameter(
     Mandatory = true,
     Position = default,
-    HelpMessage = "Remote repository URL or 'org/repo'"
+    HelpMessage = "Remote repository URL or 'org/repo' shorthand"
   )]
   [ValidateNotNullOrWhiteSpace]
   required public string Repository
@@ -24,13 +30,13 @@ sealed public class GitClone() : Git("clone")
     ) switch
     {
       [string org, string repo] => $"{org}/{repo}",
-      [string repo] => $"jimmy-zhening-luo/{repo}",
+      [string repo] => $"{DefaultOrganization}/{repo}",
       _ => string.Empty
     };
   }
 
   [Parameter(
-    HelpMessage = "Use git@github.com remote protocol instead of HTTPS"
+    HelpMessage = "Use SSH protocol instead of HTTP"
   )]
   [Alias("ssh")]
   public SwitchParameter ForceSsh
@@ -44,8 +50,8 @@ sealed public class GitClone() : Git("clone")
   sealed override private protected string[] GetVerbBaseArguments() => [
     string.Concat(
       ForceSsh
-        ? "git@github.com:"
-        : "https://github.com/",
+        ? GitProtocolSsh
+        : GitProtocolHttp,
       Repository
     ),
   ];

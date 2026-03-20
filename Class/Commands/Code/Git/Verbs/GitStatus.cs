@@ -2,7 +2,7 @@ namespace PowerModule.Commands.Code.Git.Verbs;
 
 [Cmdlet(
   VerbsDiagnostic.Measure,
-  "GitRepository",
+  GitNoun,
   HelpUri = $"{GitHelpLink}/git-status"
 )]
 [Alias("gg")]

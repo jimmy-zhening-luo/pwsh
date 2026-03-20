@@ -6,7 +6,7 @@ abstract public class WrappedStartExplorer() : WrappedCommand(
 )
 {
   sealed override private protected PipelineInputSource PipelineInput => () => (
-    StandardParameter.Path,
+    nameof(Path),
     Path
   );
 

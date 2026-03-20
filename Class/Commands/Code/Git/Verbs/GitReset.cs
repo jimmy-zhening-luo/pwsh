@@ -2,7 +2,7 @@ namespace PowerModule.Commands.Code.Git.Verbs;
 
 [Cmdlet(
   VerbsCommon.Reset,
-  "GitRepository",
+  GitNoun,
   HelpUri = $"{GitHelpLink}/git-reset"
 )]
 [Alias("gr")]
@@ -59,7 +59,7 @@ sealed public partial class GitReset() : Git("reset")
   } = string.Empty;
 
   [Parameter(
-    HelpMessage = "Perform a non-destructive reset, equivalent to [--hard=false]"
+    HelpMessage = $"Perform a non-destructive reset, equivalent to [{FlagHard}=false]"
   )]
   public SwitchParameter Soft
   { private get; init; }
@@ -90,13 +90,13 @@ sealed public partial class GitReset() : Git("reset")
       _ = NativeArguments.AddFirst(FlagHard);
 
       _ = AddCommand(
-        @"PowerModule\Add-GitRepository"
+        $@"{nameof(PowerModule)}\Add-GitRepository"
       );
 
       if (WorkingDirectory is not "")
       {
         _ = AddParameter(
-          "WorkingDirectory",
+          nameof(WorkingDirectory),
           WorkingDirectory
         );
       }

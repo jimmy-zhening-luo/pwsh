@@ -8,9 +8,7 @@ namespace PowerModule.Commands.Windows.Configure;
 [OutputType(typeof(void))]
 sealed public class EditSystemPath() : CoreCommand(true)
 {
-  [Parameter(
-    HelpMessage = "Launch Environment Variables control panel as Administrator"
-  )]
+  [Parameter]
   public SwitchParameter Administrator
   { private get; init; }
 

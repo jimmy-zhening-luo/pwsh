@@ -3,7 +3,7 @@ namespace PowerModule.Commands.Shell.Clear;
 [Cmdlet(
   VerbsCommon.Clear,
   "Line",
-  DefaultParameterSetName = StandardParameter.Path,
+  DefaultParameterSetName = nameof(Path),
   HelpUri = $"{HelpLink}2096807"
 )]
 [Alias("cl")]
@@ -11,7 +11,7 @@ namespace PowerModule.Commands.Shell.Clear;
 sealed public class ClearLine : CoreCommand
 {
   [Parameter(
-    ParameterSetName = StandardParameter.Path,
+    ParameterSetName = nameof(Path),
     Position = default
   )]
   [SupportsWildcards]
@@ -28,7 +28,7 @@ sealed public class ClearLine : CoreCommand
   }
 
   [Parameter(
-    ParameterSetName = StandardParameter.LiteralPath,
+    ParameterSetName = nameof(LiteralPath),
     Mandatory = true
   )]
   [Alias(StandardAlias.PSPath, StandardAlias.LP)]
@@ -67,7 +67,7 @@ sealed public class ClearLine : CoreCommand
   sealed override private protected void Postprocess()
   {
     if (
-      ParameterSetName is StandardParameter.Path
+      ParameterSetName is nameof(Path)
       && Path is ""
     )
     {
