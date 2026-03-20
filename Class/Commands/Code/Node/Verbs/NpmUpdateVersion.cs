@@ -30,7 +30,7 @@ sealed public class NpmUpdateVersion() : Npm("version")
     Position = default,
     HelpMessage = $"New package version, default '{DefaultNodePackageVersion}'"
   )]
-  [Alias("v")]
+  [Alias(nameof(V))]
   [ValidateNotNullOrWhiteSpace]
   [NpmVersionCompletions]
   public string Version

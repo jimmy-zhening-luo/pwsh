@@ -85,6 +85,7 @@ sealed public class NpmCli() : Npm(default)
     );
   }
 
+  [Parameter]
   [Alias(nameof(V))]
   public SwitchParameter Version
   {

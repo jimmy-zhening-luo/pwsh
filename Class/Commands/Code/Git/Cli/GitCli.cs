@@ -45,6 +45,7 @@ sealed public class GitCli() : Git(default)
     );
   }
 
+  [Parameter]
   [Alias(nameof(V))]
   public SwitchParameter Version
   {
