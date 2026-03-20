@@ -1,6 +1,6 @@
 namespace PowerModule.Tab;
 
-sealed class EnumCompletionsAttribute(System.Type EnumType) : Factory.SetCompleterFactory<System.Type>(EnumType)
+sealed class EnumCompletionsAttribute(System.Type EnumType) : Factory.DomainCompleterFactory<System.Type>(EnumType)
 {
   sealed override public CompletionCase Casing
   { get; init; } = CompletionCase.Lower;

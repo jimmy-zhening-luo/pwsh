@@ -2,7 +2,7 @@ namespace PowerModule.Commands.Shell.Start.Workspace;
 
 abstract public class VirtualStartWorkspace() : CoreCommand(true)
 {
-  sealed class EditorProfileCompletionsAttribute : Tab.CompletionsAttribute<HashSet<string>>
+  sealed class EditorProfileCompletionsAttribute : Tab.Factory.DomainCompleterFactory
   {
     internal EditorProfileCompletionsAttribute() : base(
       Client.File.Editor.Profile

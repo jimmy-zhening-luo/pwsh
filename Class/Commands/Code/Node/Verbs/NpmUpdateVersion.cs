@@ -8,7 +8,7 @@ namespace PowerModule.Commands.Code.Node.Verbs;
 [Alias("nu")]
 sealed public class NpmUpdateVersion() : Npm("version")
 {
-  sealed class NpmVersionCompletionsAttribute() : Tab.CompletionsAttribute<HashSet<string>>(NodePackageVersion);
+  sealed class NpmVersionCompletionsAttribute() : Tab.Factory.DomainCompleterFactory(NodePackageVersion);
 
   const string DefaultNodePackageVersion = "patch";
 
