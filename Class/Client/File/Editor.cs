@@ -112,11 +112,11 @@ static class Editor
     window,
     Profile.TryGetValue(
       profile,
-      out var exactProfile
+      out var p
     )
-    && exactProfile is not DefaultProfile
+    && p is not DefaultProfile
       ? [
-          $"{FlagProfile}={exactProfile}",
+          $"{FlagProfile}={p}",
           .. arguments,
         ]
       : arguments
