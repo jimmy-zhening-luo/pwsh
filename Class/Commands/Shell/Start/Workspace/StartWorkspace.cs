@@ -9,9 +9,7 @@ namespace PowerModule.Commands.Shell.Start.Workspace;
 [OutputType(typeof(void))]
 sealed public class StartWorkspace : VirtualStartWorkspace
 {
-  [Parameter(
-    Position = default
-  )]
+  [Parameter(Position = default)]
   [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions]
   sealed override public string Path
@@ -27,9 +25,7 @@ sealed public class StartWorkspace : VirtualStartWorkspace
 [OutputType(typeof(void))]
 sealed public class StartWorkspaceSibling : VirtualStartWorkspace
 {
-  [Parameter(
-    Position = default
-  )]
+  [Parameter(Position = default)]
   [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions(Client.File.PathString.Parent)]
   sealed override public string Path
@@ -47,9 +43,7 @@ sealed public class StartWorkspaceSibling : VirtualStartWorkspace
 [OutputType(typeof(void))]
 sealed public class StartWorkspaceRelative : VirtualStartWorkspace
 {
-  [Parameter(
-    Position = default
-  )]
+  [Parameter(Position = default)]
   [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions(Client.File.PathString.ParentParent)]
   sealed override public string Path
@@ -67,9 +61,7 @@ sealed public class StartWorkspaceRelative : VirtualStartWorkspace
 [OutputType(typeof(void))]
 sealed public class StartWorkspaceHome : VirtualStartWorkspace
 {
-  [Parameter(
-    Position = default
-  )]
+  [Parameter(Position = default)]
   [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions("~")]
   sealed override public string Path
@@ -88,9 +80,7 @@ sealed public class StartWorkspaceHome : VirtualStartWorkspace
 [OutputType(typeof(void))]
 sealed public class StartWorkspaceCode : VirtualStartWorkspace
 {
-  [Parameter(
-    Position = default
-  )]
+  [Parameter(Position = default)]
   [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions(@"~\code")]
   sealed override public string Path
@@ -109,9 +99,7 @@ sealed public class StartWorkspaceCode : VirtualStartWorkspace
 [OutputType(typeof(void))]
 sealed public class StartWorkspaceDrive : VirtualStartWorkspace
 {
-  [Parameter(
-    Position = default
-  )]
+  [Parameter(Position = default)]
   [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions(@"\")]
   sealed override public string Path

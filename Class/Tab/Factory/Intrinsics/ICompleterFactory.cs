@@ -6,6 +6,5 @@ interface ICompleterFactory : IArgumentCompleterFactory
   { get; init; }
 
   new Completers.Intrinsics.ICompleter Create();
-  IArgumentCompleter IArgumentCompleterFactory.Create()
-    => Create();
+  IArgumentCompleter IArgumentCompleterFactory.Create() => Create();
 }
