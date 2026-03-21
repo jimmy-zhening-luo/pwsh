@@ -32,8 +32,10 @@ sealed public class GetCommandAlias : CoreCommand
           )
             ? definition
             : definition.Length > 2
-              ? $"{Client.StringInput.StringWildcard}{definition}{Client.StringInput.StringWildcard}"
-              : $"{definition}{Client.StringInput.StringWildcard}"
+              ? Client.StringInput.StringWildcard+ definition
+                + Client.StringInput.StringWildcard
+              : definition
+                + Client.StringInput.StringWildcard
         );
       }
     }
