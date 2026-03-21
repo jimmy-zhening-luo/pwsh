@@ -62,7 +62,7 @@ sealed public class NpmUpdateVersion() : Npm("version")
 
   sealed override private protected void FinishSetup() => System.ArgumentException.ThrowIfNullOrEmpty(
     Version,
-    $"{nameof(Version)} is neither SemanticVersion nor NodeVersion"
+    nameof(Version)
   );
 
   sealed override private protected string[] GetVerbBaseArguments() => [Version];
