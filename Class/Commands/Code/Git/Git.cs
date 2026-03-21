@@ -19,12 +19,6 @@ abstract public class Git(string? IntrinsicVerb) : NativeCodeCommand(
 
   const string DefaultVerb = "status";
 
-  static readonly HashSet<string> NewableVerb = [
-    "switch",
-    "merge",
-    "diff",
-  ];
-
   bool newable;
 
   sealed override private protected string WorkingDirectoryArtifactSubpath => newable
@@ -41,6 +35,9 @@ abstract public class Git(string? IntrinsicVerb) : NativeCodeCommand(
   {
     switch (IntrinsicVerb)
     {
+      case "clone":
+      case "config":
+      case "init":
       case null
       when V:
         newable = true;
@@ -49,18 +46,6 @@ abstract public class Git(string? IntrinsicVerb) : NativeCodeCommand(
 
       case null:
         IntrinsicVerb = DefaultVerb;
-
-        break;
-
-      case var verb
-      when NewableVerb.Contains(verb):
-        (
-          newable,
-          IntrinsicVerb
-        ) = (
-          true,
-          verb
-        );
 
         break;
 

@@ -2,8 +2,7 @@ namespace PowerModule.Commands.Browse.Test;
 
 [Cmdlet(
   VerbsDiagnostic.Test,
-  "Url",
-  HelpUri = $"{HelpLink}2097126"
+  "Url"
 )]
 [Alias("tu")]
 [OutputType(typeof(System.Uri))]
