@@ -11,7 +11,7 @@ abstract class DomainCompleterFactory<TDomain>(TDomain Domain) : Intrinsics.Comp
 
   abstract private protected ICollection<string> EvaluateDomain(TDomain domain);
 
-  sealed override public Completers.SetCompleter Create() => new(
+  sealed override public Completers.DomainCompleter Create() => new(
     CompletionType,
     Casing,
     EvaluateDomain(Domain)

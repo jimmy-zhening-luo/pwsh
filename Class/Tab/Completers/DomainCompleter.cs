@@ -1,6 +1,6 @@
 namespace PowerModule.Tab.Completers;
 
-sealed class SetCompleter(
+sealed class DomainCompleter(
   CompletionResultType CompletionType,
   CompletionCase Case,
   ICollection<string> Domain
