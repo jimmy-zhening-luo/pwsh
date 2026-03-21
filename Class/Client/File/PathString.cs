@@ -9,7 +9,7 @@ static partial class PathString
   internal const string StringSeparator = @"\";
   internal const string StringHere = ".";
   internal const string Parent = "..";
-  internal const string ParentParent = @"..\..";
+  internal const string ParentParent = $@"{Parent}{StringSeparator}{Parent}";
 
   static internal string GetFullPathLocal(
     string location,
