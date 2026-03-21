@@ -27,10 +27,16 @@ sealed public class GitClone() : Git("clone")
       Client.File.PathString.AltSeparator,
       System.StringSplitOptions.RemoveEmptyEntries
       | System.StringSplitOptions.TrimEntries
-    ) switch
+    )
+    switch
     {
-      [string org, string repo] => $"{org}/{repo}",
-      [string repo] => $"{DefaultOrganization}/{repo}",
+      [
+        string org,
+        string repo,
+      ] => $"{org}/{repo}",
+      [
+        string repo,
+      ] => $"{DefaultOrganization}/{repo}",
       _ => string.Empty
     };
   }

@@ -27,7 +27,8 @@ sealed public class GetTypeAccelerator : Cmdlet
           System.Reflection.BindingFlags.Public
           | System.Reflection.BindingFlags.Static
         )
-        ?.GetValue(default) is System.Collections.IDictionary typeAccelerators
+        ?.GetValue(default)
+      is System.Collections.IDictionary typeAccelerators
     )
     {
       SortedSet<string> uniqueTypes = new(

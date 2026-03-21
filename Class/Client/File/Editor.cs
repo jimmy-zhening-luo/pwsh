@@ -79,11 +79,13 @@ static class Editor
     path,
     window switch
     {
-      Window.New => [
+      Window.New =>
+      [
         FlagNewWindow,
         .. arguments,
       ],
-      Window.Reuse => [
+      Window.Reuse =>
+      [
         FlagReuseWindow,
         .. arguments,
       ],

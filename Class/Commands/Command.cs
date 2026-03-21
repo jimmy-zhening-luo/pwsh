@@ -133,7 +133,8 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
     if (
       SessionState.PSVariable.GetValue(
         "LASTEXITCODE"
-      ) is not (null or 0)
+      )
+      is not (null or 0)
     )
     {
       if (stop)
@@ -154,7 +155,8 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
   {
     switch (value)
     {
-      case null or false:
+      case null:
+      case false:
         RemoveBoundParameter(parameter);
 
         break;

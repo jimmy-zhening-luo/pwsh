@@ -2,11 +2,15 @@ namespace PowerModule.Client.File;
 
 static partial class PathString
 {
-  internal const char Here = '.';
-  internal const char Home = '~';
   internal const char Separator = '\\';
   internal const char AltSeparator = '/';
+  internal const char Drive = ':';
+  internal const char Home = '~';
+  internal const char Here = '.';
+
   internal const string StringSeparator = @"\";
+  internal const string StringDrive = ":";
+  internal const string StringHome = "~";
   internal const string StringHere = ".";
   internal const string Parent = "..";
   internal const string ParentParent = $@"{Parent}{StringSeparator}{Parent}";

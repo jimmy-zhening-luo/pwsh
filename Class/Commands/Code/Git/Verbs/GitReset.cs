@@ -31,7 +31,8 @@ sealed public partial class GitReset() : Git("reset")
         GitTreeRegex().Match(value)
         is var treeMatch
         && treeMatch.Success
-        && treeMatch.Groups["Step"].Value is var step
+        && treeMatch.Groups["Step"].Value
+        is var step
         && (
           step is ""
           || int.TryParse(

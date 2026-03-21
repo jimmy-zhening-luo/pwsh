@@ -41,7 +41,8 @@ abstract public class Git(string? IntrinsicVerb) : NativeCodeCommand(
   {
     switch (IntrinsicVerb)
     {
-      case null when V:
+      case null
+      when V:
         newable = true;
 
         break;
@@ -51,7 +52,8 @@ abstract public class Git(string? IntrinsicVerb) : NativeCodeCommand(
 
         break;
 
-      case var verb when NewableVerb.Contains(verb):
+      case var verb
+      when NewableVerb.Contains(verb):
         (
           newable,
           IntrinsicVerb

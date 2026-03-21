@@ -103,7 +103,7 @@ sealed public class GetFileHome : WrappedGetFile
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(
-    "~",
+    Client.File.PathString.StringHome,
     Tab.PathItemType.File
   )]
   sealed override public string[] Path

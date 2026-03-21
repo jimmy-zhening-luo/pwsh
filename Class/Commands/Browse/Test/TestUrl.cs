@@ -42,9 +42,14 @@ sealed public class TestUrl : CoreCommand
             );
 
           if (
-            testUri is not null
-            && Client.Network.Dns.Resolve(testUri)
-            && Client.Network.Url.TestHttp(testUri)
+            testUri
+            is not null
+            && Client.Network.Dns.Resolve(
+              testUri
+            )
+            && Client.Network.Url.TestHttp(
+              testUri
+            )
           )
           {
             WriteObject(testUri);

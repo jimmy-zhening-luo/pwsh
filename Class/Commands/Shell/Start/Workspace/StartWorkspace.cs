@@ -63,7 +63,7 @@ sealed public class StartWorkspaceHome : VirtualStartWorkspace
 {
   [Parameter(Position = default)]
   [ValidateNotNullOrWhiteSpace]
-  [Tab.PathCompletions("~")]
+  [Tab.PathCompletions(Client.File.PathString.StringHome)]
   sealed override public string Path
   { private protected get; init; } = string.Empty;
 
@@ -101,7 +101,7 @@ sealed public class StartWorkspaceDrive : VirtualStartWorkspace
 {
   [Parameter(Position = default)]
   [ValidateNotNullOrWhiteSpace]
-  [Tab.PathCompletions(@"\")]
+  [Tab.PathCompletions(Client.File.PathString.StringSeparator)]
   sealed override public string Path
   { private protected get; init; } = string.Empty;
 

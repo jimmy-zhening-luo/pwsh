@@ -123,7 +123,8 @@ public class StopTask : CoreCommand
 
         break;
 
-      case nameof(Name) when Name is []:
+      case nameof(Name)
+      when Name is []:
         if (
           ShouldProcess(
             DefaultProcess,

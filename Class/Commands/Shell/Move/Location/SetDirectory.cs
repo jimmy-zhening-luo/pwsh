@@ -84,7 +84,7 @@ sealed public class SetDirectory : WrappedSetDirectory
       case nameof(C):
         SetBoundParameter(
           nameof(Path),
-          $"{nameof(C)}:"
+          $"{nameof(C)}{Client.File.PathString.StringDrive}"
         );
 
         break;
@@ -92,7 +92,7 @@ sealed public class SetDirectory : WrappedSetDirectory
       case nameof(D):
         SetBoundParameter(
           nameof(Path),
-          $"{nameof(D)}:"
+          $"{nameof(D)}{Client.File.PathString.StringDrive}"
         );
 
         break;
@@ -100,7 +100,7 @@ sealed public class SetDirectory : WrappedSetDirectory
       case nameof(E):
         SetBoundParameter(
           nameof(Path),
-          $"{nameof(E)}:"
+          $"{nameof(E)}{Client.File.PathString.StringDrive}"
         );
 
         break;
@@ -183,7 +183,7 @@ sealed public class SetDirectoryHome : WrappedSetDirectory
   [SupportsWildcards]
   [ValidateNotNullOrWhiteSpace]
   [Tab.PathCompletions(
-    "~",
+    Client.File.PathString.StringHome,
     Tab.PathItemType.Directory
   )]
   sealed override public string Path

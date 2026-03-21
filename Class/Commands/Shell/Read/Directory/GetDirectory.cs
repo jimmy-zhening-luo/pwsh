@@ -115,7 +115,7 @@ sealed public class GetDirectoryHome : WrappedGetDirectory
   )]
   [SupportsWildcards]
   [Tab.PathCompletions(
-    "~",
+    Client.File.PathString.StringHome,
     Tab.PathItemType.Directory
   )]
   sealed override public string[] Path

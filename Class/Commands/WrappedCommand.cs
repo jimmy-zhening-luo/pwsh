@@ -46,7 +46,10 @@ abstract public class WrappedCommand(
       );
     }
 
-    if (PipelineInput is not null && MyInvocation.ExpectingInput)
+    if (
+      PipelineInput is not null
+      && MyInvocation.ExpectingInput
+    )
     {
       InPipeline = true;
     }

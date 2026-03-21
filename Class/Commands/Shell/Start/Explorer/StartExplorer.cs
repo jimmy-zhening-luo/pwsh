@@ -101,7 +101,7 @@ sealed public class StartExplorerHome : WrappedStartExplorer
     ValueFromPipeline = true
   )]
   [SupportsWildcards]
-  [Tab.PathCompletions("~")]
+  [Tab.PathCompletions(Client.File.PathString.StringHome)]
   sealed override public string[] Path
   { get; set; } = [];
 
@@ -153,7 +153,7 @@ sealed public class StartExplorerDrive : WrappedStartExplorer
     ValueFromPipeline = true
   )]
   [SupportsWildcards]
-  [Tab.PathCompletions(@"\")]
+  [Tab.PathCompletions(Client.File.PathString.StringSeparator)]
   sealed override public string[] Path
   { get; set; } = [];
 

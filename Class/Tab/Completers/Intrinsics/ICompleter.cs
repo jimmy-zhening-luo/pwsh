@@ -49,7 +49,8 @@ interface ICompleter : IArgumentCompleter
     foreach (var completion in completions)
     {
       var result = completion.Result;
-      var casedResult = Casing switch
+      var casedResult = Casing
+      switch
       {
         CompletionCase.Upper => result.ToUpper(
           Client.StringInput.CurrentCulture

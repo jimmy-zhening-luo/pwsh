@@ -38,13 +38,17 @@ sealed public class NpmUpdateVersion() : Npm("version")
     private get;
     init => field = value.ToLower(
       Client.StringInput.InvariantCulture
-    ) switch
+    )
+    switch
     {
-      var version when NodePackageVersion.Contains(
+      var version
+      when NodePackageVersion.Contains(
         version
       ) => version,
-      var version when SemanticVersion.TryParse(
-        version is [
+      var version
+      when SemanticVersion.TryParse(
+        version is
+        [
           'v',
           .. var numericPart,
         ]

@@ -46,24 +46,31 @@ abstract public class NativeCodeCommand(
       case "":
         break;
 
-      case var arg when IsNativeArgument(arg):
+      case var arg
+      when IsNativeArgument(arg):
         _ = NativeArguments.AddFirst(arg);
 
         WorkingDirectory = string.Empty;
 
         break;
 
-      case var path when System.IO.Path.Exists(
+      case var path
+      when System.IO.Path.Exists(
         System.IO.Path.Combine(
-          Pwd(path),
+          Pwd(
+            path
+          ),
           WorkingDirectoryArtifactSubpath
         )
       ):
         break;
 
-      case var path when System.IO.Path.Exists(
+      case var path
+      when System.IO.Path.Exists(
         System.IO.Path.Combine(
-          Client.Environment.Folder.Code(path),
+          Client.Environment.Folder.Code(
+            path
+          ),
           WorkingDirectoryArtifactSubpath
         )
       ):

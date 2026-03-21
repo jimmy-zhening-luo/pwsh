@@ -54,14 +54,13 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
     if (Name is not "")
     {
       if (
-        new List<string>(
-           Client.File.Editor.Profile
-        ).Find(
-          pn => pn.StartsWith(
+        new List<string>(Client.File.Editor.Profile).Find(
+          p => p.StartsWith(
             Name,
             System.StringComparison.OrdinalIgnoreCase
           )
-        ) is { } profileName
+        )
+        is { } profileName
       )
       {
         profile = profileName;

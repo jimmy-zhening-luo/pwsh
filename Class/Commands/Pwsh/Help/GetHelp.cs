@@ -47,7 +47,8 @@ sealed public class GetHelpOnline : CoreCommand
       if (
         pscustomobject
           ?.relatedLinks
-          ?.navigationLink is object[] links
+          ?.navigationLink
+        is object[] links
       )
       {
         foreach (var link in links)
@@ -55,8 +56,12 @@ sealed public class GetHelpOnline : CoreCommand
           dynamic navigationLink = link;
 
           if (
-            navigationLink?.Uri?.ToString() is string uri
-            && Client.Network.Url.ToAbsoluteHttpOrFileUri(uri) is { } url
+            navigationLink
+              ?.Uri
+              ?.ToString()
+            is string uri
+            && Client.Network.Url.ToAbsoluteHttpOrFileUri(uri)
+            is { } url
           )
           {
             helpLinks.Add(url);

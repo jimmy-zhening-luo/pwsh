@@ -60,12 +60,8 @@ sealed public class GitPullChild : CoreCommand
       ++progress;
     }
 
-    var suffix = progress is 1
-      ? string.Empty
-      : "ies";
-
     WriteInformation(
-      $"Pulled {progress} repositor{suffix}."
+      $"Pulled {progress} repositor{progress is 1 ? "" : "ies"}."
     );
   }
 }
