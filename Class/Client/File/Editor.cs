@@ -11,6 +11,7 @@ static class Editor
 
   internal const string FlagReuseWindow = "--reuse-window";
   internal const string FlagNewWindow = "--new-window";
+  internal const string FlagProfile = "--profile";
 
   internal const string DefaultProfile = "Default";
   internal const string ProfileSetting = "Setting";
@@ -113,7 +114,7 @@ static class Editor
     )
     && exactProfile is not DefaultProfile
       ? [
-          $"--profile={exactProfile}",
+          $"{FlagProfile}={exactProfile}",
           .. arguments,
         ]
       : arguments
