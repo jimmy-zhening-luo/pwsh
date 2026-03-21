@@ -61,7 +61,7 @@ sealed public class GitPullChild : CoreCommand
     }
 
     WriteInformation(
-      $"Pulled {progress} repositor{progress is 1 ? "" : "ies"}."
+      $"Pulled {progress} repositories."
     );
   }
 }
