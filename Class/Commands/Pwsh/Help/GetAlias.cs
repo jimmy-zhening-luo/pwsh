@@ -32,7 +32,7 @@ sealed public class GetCommandAlias : CoreCommand
           )
             ? definition
             : definition.Length > 2
-              ? Client.StringInput.StringWildcard+ definition
+              ? Client.StringInput.StringWildcard + definition
                 + Client.StringInput.StringWildcard
               : definition
                 + Client.StringInput.StringWildcard
@@ -63,11 +63,6 @@ sealed public class GetCommandAlias : CoreCommand
   public string[] Exclude
   { private get; init; } = [];
 
-  [System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "Microsoft.Style",
-    "IDE0028: Use collection initializers or expressions",
-    Justification = "Incorrect suggestion, .NET fix expected in 10.0.3xx: https://github.com/dotnet/Roslyn/issues/82586"
-  )]
   sealed override private protected void Postprocess()
   {
     if (Definition is [])

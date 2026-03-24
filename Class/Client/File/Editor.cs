@@ -17,11 +17,6 @@ static class Editor
   internal const string ProfileSetting = "Setting";
   internal const string ProfileSvelte = "Svelte";
 
-  [System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "Microsoft.Style",
-    "IDE0028: Use collection initializers or expressions",
-    Justification = "Incorrect suggestion, .NET fix expected in 10.0.3xx: https://github.com/dotnet/Roslyn/issues/82586"
-  )]
   static internal HashSet<string> Profile = new(
     System.StringComparer.OrdinalIgnoreCase
   ) {
