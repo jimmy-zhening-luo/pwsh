@@ -19,7 +19,6 @@ function Update-PSProfile {
   )
 
   $PROFILE_REPO_ROOT = "$HOME\code\pwsh"
-  $GIT = "$env:ProgramFiles\Git\cmd\git.exe"
   $GitArgument = @(
     '-c'
     'color.ui=always'
@@ -28,15 +27,15 @@ function Update-PSProfile {
   )
 
   if ($Restore) {
-    & $GIT @GitArgument add .
-    & $GIT @GitArgument reset --hard
+    & git @GitArgument add .
+    & git @GitArgument reset --hard
 
     if ($LASTEXITCODE -notin 0, 1) {
       throw "Git failed to reset profile repository, with exit code: $LASTEXITCODE"
     }
   }
 
-  & $GIT @GitArgument pull
+  & git @GitArgument pull
 
   if ($LASTEXITCODE -notin 0, 1) {
     throw "Git failed to pull profile repository, with exit code: $LASTEXITCODE"
@@ -47,14 +46,13 @@ function Update-PSProfile {
   }
 
   try {
-    $DOTNET = "$env:ProgramFiles\dotnet\dotnet.exe"
     $DotnetArgument = @(
       "$PROFILE_REPO_ROOT\Class.slnx"
       '--configuration=Release'
     )
 
     if ($Restore) {
-      & $DOTNET clean @DotnetArgument --verbosity=quiet
+      & dotnet clean @DotnetArgument --verbosity=quiet
 
       if ($LASTEXITCODE -notin 0, 1) {
         throw "dotnet failed to clean profile project, with exit code: $LASTEXITCODE"
@@ -66,7 +64,7 @@ function Update-PSProfile {
       )
     }
 
-    & $DOTNET build @DotnetArgument --force
+    & dotnet build @DotnetArgument --force
 
     if ($LASTEXITCODE -notin 0, 1) {
       throw "dotnet failed to build profile project, with exit code: $LASTEXITCODE"
