@@ -10,7 +10,6 @@ $PSDefaultParameterValues = @{
   'Install-Module:Force'     = $True
   'Install-Module:Scope'     = 'AllUsers'
   'Invoke-WebRequest:Method' = 'GET'
-  'Remove-Item:Force'        = $True
   'Stop-Service:Force'       = $True
   'Update-Help:Scope'        = 'AllUsers'
 }
