@@ -46,13 +46,13 @@ abstract public partial class NativeCommand(
   {
     set
     {
-      if (value && verbosity is Verbosity.Error)
+      if (value && exit is Verbosity.Error)
       {
-        verbosity = Verbosity.Warning;
+        exit = Verbosity.Warning;
       }
     }
   }
-  private protected Verbosity verbosity = Verbosity.Error;
+  private protected Verbosity exit = Verbosity.Error;
 
   [Parameter(DontShow = true)]
   public SwitchParameter V
@@ -192,7 +192,7 @@ abstract public partial class NativeCommand(
     ProcessSteppablePipeline();
     EndSteppablePipeline();
 
-    switch (verbosity)
+    switch (exit)
     {
       case Verbosity.Error:
         CheckNativeError(
