@@ -19,7 +19,7 @@ sealed public class NpmOutdated() : Npm("outdated")
 
   sealed override private protected void FinishSetup()
   {
-    NoThrow = true;
+    verbosity = default;
 
     if (All && !NativeArguments.Contains(FlagAll))
     {

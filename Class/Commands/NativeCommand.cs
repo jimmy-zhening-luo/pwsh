@@ -7,6 +7,13 @@ abstract public partial class NativeCommand(
   bool SkipSsh = default
 ) : CoreCommand(SkipSsh)
 {
+  private protected enum Verbosity
+  {
+    Silent,
+    Warning,
+    Error,
+  }
+
   private protected record struct SwitchBoard(
     bool D = default,
     bool E = default,
@@ -36,7 +43,16 @@ abstract public partial class NativeCommand(
 
   [Parameter]
   public SwitchParameter NoThrow
-  { private protected get; set; }
+  {
+    set
+    {
+      if (value && verbosity is Verbosity.Error)
+      {
+        verbosity = Verbosity.Warning;
+      }
+    }
+  }
+  private protected Verbosity verbosity = Verbosity.Error;
 
   [Parameter(DontShow = true)]
   public SwitchParameter V
@@ -176,10 +192,26 @@ abstract public partial class NativeCommand(
     ProcessSteppablePipeline();
     EndSteppablePipeline();
 
-    CheckNativeError(
-      $"{CommandPath} error",
-      !NoThrow
-    );
+    switch (verbosity)
+    {
+      case Verbosity.Error:
+        CheckNativeError(
+          $"{CommandPath} error",
+          true
+        );
+
+        break;
+
+      case Verbosity.Warning:
+        CheckNativeError(
+          $"{CommandPath} error"
+        );
+
+        break;
+
+      default:
+        break;
+    }
   }
 
   virtual private protected void ClearArguments()
