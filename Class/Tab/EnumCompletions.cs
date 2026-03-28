@@ -8,11 +8,11 @@ sealed class EnumCompletionsAttribute(System.Type EnumType) : Factory.DomainComp
   public System.Type EnumType
   { get; } = EnumType;
 
-  public string[]? Include
-  { get; init; }
+  public string[] Include
+  { get; init; } = [];
 
-  public string[]? Exclude
-  { get; init; }
+  public string[] Exclude
+  { get; init; } = [];
 
   sealed override private protected ICollection<string> EvaluateDomain(System.Type enumType)
   {
@@ -22,7 +22,7 @@ sealed class EnumCompletionsAttribute(System.Type EnumType) : Factory.DomainComp
 
     List<string> domain = [];
 
-    if (Exclude is null or [])
+    if (Exclude is [])
     {
       domain.AddRange(names);
     }
@@ -39,10 +39,7 @@ sealed class EnumCompletionsAttribute(System.Type EnumType) : Factory.DomainComp
       }
     }
 
-    if (Include is not null)
-    {
-      domain.AddRange(Include);
-    }
+    domain.AddRange(Include);
 
     return domain;
   }
