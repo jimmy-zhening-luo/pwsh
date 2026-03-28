@@ -1,5 +1,12 @@
 namespace PowerModule.Tab;
 
+enum PathItemType
+{
+  Any,
+  File,
+  Directory,
+}
+
 sealed class PathCompletionsAttribute(
   string Location = "",
   PathItemType ItemType = default
