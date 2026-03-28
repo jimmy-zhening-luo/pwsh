@@ -22,6 +22,9 @@ sealed public class GetCommandAlias : CoreCommand
     init
     {
       definitions.Clear();
+      definitions.EnsureCapacity(
+        value.Length
+      );
 
       foreach (var definition in value)
       {

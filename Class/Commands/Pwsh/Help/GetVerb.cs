@@ -33,6 +33,9 @@ sealed public class GetVerb : CoreCommand
     init
     {
       verbs.Clear();
+      verbs.EnsureCapacity(
+        value.Length
+      );
 
       foreach (var verb in value)
       {

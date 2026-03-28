@@ -166,7 +166,9 @@ abstract public partial class NativeCommand(
     command.AddRange(Arguments);
     command.AddRange(NativeArguments);
 
-    List<string> escapedCommand = [];
+    List<string> escapedCommand = new(
+      command.Count
+    );
 
     foreach (var word in command)
     {
