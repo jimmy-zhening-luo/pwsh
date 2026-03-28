@@ -224,7 +224,9 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
       return [(Location ?? Pwd)(string.Empty)];
     }
 
-    List<string> reanchoredPaths = [];
+    List<string> reanchoredPaths = new(
+      paths.Length
+    );
 
     foreach (var path in paths)
     {
@@ -233,7 +235,7 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
       );
     }
 
-    return [.. reanchoredPaths];
+    return reanchoredPaths.ToArray();
   }
   private protected string ReanchorPath(string path) => (
     Location ?? Pwd
