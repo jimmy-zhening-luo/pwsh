@@ -20,7 +20,10 @@ sealed class EnumCompletionsAttribute(System.Type EnumType) : Factory.DomainComp
       enumType
     );
 
-    List<string> domain = [];
+    List<string> domain = new(
+      names.Length
+      + Include.Count
+    );
 
     if (Exclude is [])
     {
