@@ -22,7 +22,7 @@ sealed class EnumCompletionsAttribute(System.Type EnumType) : Factory.DomainComp
 
     List<string> domain = new(
       names.Length
-      + Include.Count
+      + Include.Length
     );
 
     if (Exclude is [])
