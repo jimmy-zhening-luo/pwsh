@@ -44,7 +44,7 @@ sealed public class GetCommandAlias : CoreCommand
 
       field = [.. definitions];
     }
-  } = [];
+  } = [Client.StringInput.StringWildcard];
 
   [Parameter(Position = 1)]
   [ValidateNotNullOrWhiteSpace]
@@ -69,13 +69,6 @@ sealed public class GetCommandAlias : CoreCommand
 
   sealed override private protected void Postprocess()
   {
-    if (Definition is [])
-    {
-      _ = definitions.Add(
-        Client.StringInput.StringWildcard
-      );
-    }
-
     SortedDictionary<string, AliasInfo> commandAliasDictionary = new(
       System.StringComparer.OrdinalIgnoreCase
     );
