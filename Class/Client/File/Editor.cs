@@ -17,7 +17,7 @@ static class Editor
   internal const string ProfileSetting = "Setting";
   internal const string ProfileSvelte = "Svelte";
 
-  static List<string> Profile => new(profiles);
+  internal static List<string> Profile => new(profiles);
   static readonly HashSet<string> profiles = new(
     System.StringComparer.OrdinalIgnoreCase
   ) {
