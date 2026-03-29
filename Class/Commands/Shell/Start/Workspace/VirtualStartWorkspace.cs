@@ -54,7 +54,7 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
     if (Name is not "")
     {
       if (
-        new List<string>(Client.File.Editor.Profile).Find(
+        Client.File.Editor.Profile.Find(
           p => p.StartsWith(
             Name,
             System.StringComparison.OrdinalIgnoreCase
