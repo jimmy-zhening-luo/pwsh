@@ -9,7 +9,7 @@ static class Url
     Timeout = System.TimeSpan.FromMilliseconds(3500),
   };
 
-  static internal System.Net.Http.SocketsHttpHandler HttpHandler => field ??= new System.Net.Http.SocketsHttpHandler()
+  static System.Net.Http.SocketsHttpHandler HttpHandler => field ??= new System.Net.Http.SocketsHttpHandler()
   {
     PooledConnectionLifetime = System.TimeSpan.FromMinutes(2),
     ConnectTimeout = System.TimeSpan.FromMilliseconds(3000),

@@ -2,6 +2,8 @@ namespace PowerModule.Commands;
 
 abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, System.IDisposable
 {
+  bool disposed;
+
   ~CoreCommand()
   {
     Dispose(false);
@@ -20,15 +22,12 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
   {
     get
     {
-      System.ObjectDisposedException.ThrowIf(Disposed, this);
+      System.ObjectDisposedException.ThrowIf(disposed, this);
 
       return pshost ??= new();
     }
   }
   PowerShellHost? pshost;
-
-  bool Disposed
-  { get; set; }
 
   public void Dispose()
   {
@@ -39,7 +38,7 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
 
   virtual protected void Dispose(bool disposing)
   {
-    if (!Disposed)
+    if (!disposed)
     {
       if (disposing)
       {
@@ -50,13 +49,13 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
         }
       }
 
-      Disposed = true;
+      disposed = true;
     }
   }
 
   sealed override protected void BeginProcessing()
   {
-    System.ObjectDisposedException.ThrowIf(Disposed, this);
+    System.ObjectDisposedException.ThrowIf(disposed, this);
 
     if (!BlockedBySsh)
     {
@@ -66,7 +65,7 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
 
   sealed override protected void ProcessRecord()
   {
-    System.ObjectDisposedException.ThrowIf(Disposed, this);
+    System.ObjectDisposedException.ThrowIf(disposed, this);
 
     if (!BlockedBySsh)
     {
@@ -76,7 +75,7 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
 
   sealed override protected void EndProcessing()
   {
-    System.ObjectDisposedException.ThrowIf(Disposed, this);
+    System.ObjectDisposedException.ThrowIf(disposed, this);
 
     if (!BlockedBySsh)
     {
