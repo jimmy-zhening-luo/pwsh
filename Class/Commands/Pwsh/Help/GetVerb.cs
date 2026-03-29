@@ -29,12 +29,12 @@ sealed public class GetVerb : CoreCommand
   [ValidateNotNullOrWhiteSpace]
   public string[] Verb
   {
-    private get => [.. verbs];
+    private get => field;
     init
     {
-      verbs.Clear();
-      verbs.EnsureCapacity(
-        value.Length
+      HashSet<string> verbs = new(
+        value.Length,
+        System.StringComparer.OrdinalIgnoreCase
       );
 
       foreach (var verb in value)
@@ -46,13 +46,16 @@ sealed public class GetVerb : CoreCommand
           )
             ? verb
             : verb.Length > 2
-              ? $"{Client.StringInput.StringWildcard}{verb}{Client.StringInput.StringWildcard}"
-              : $"{verb}{Client.StringInput.StringWildcard}"
+              ? Client.StringInput.StringWildcard + verb
+                + Client.StringInput.StringWildcard
+              : verb
+                + Client.StringInput.StringWildcard
         );
       }
+
+      field = [.. verbs];
     }
-  }
-  readonly HashSet<string> verbs = [];
+  } = [];
 
   [Parameter(Position = 1)]
   [ValidateNotNullOrEmpty]

@@ -18,12 +18,12 @@ sealed public class GetCommandAlias : CoreCommand
   [ValidateNotNullOrWhiteSpace]
   public string[] Definition
   {
-    private get => [.. definitions];
+    private get => field;
     init
     {
-      definitions.Clear();
-      definitions.EnsureCapacity(
-        value.Length
+      HashSet<string> definitions = new(
+        value.Length,
+        System.StringComparer.OrdinalIgnoreCase
       );
 
       foreach (var definition in value)
@@ -41,9 +41,10 @@ sealed public class GetCommandAlias : CoreCommand
                 + Client.StringInput.StringWildcard
         );
       }
+
+      field = [.. definitions];
     }
-  }
-  readonly HashSet<string> definitions = [];
+  } = [];
 
   [Parameter(Position = 1)]
   [ValidateNotNullOrWhiteSpace]
