@@ -140,10 +140,8 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
       {
         throw new System.InvalidOperationException(message);
       }
-      else
-      {
-        WriteWarning(message);
-      }
+
+      WriteWarning(message);
     }
   }
 
