@@ -36,7 +36,7 @@ abstract public class WrappedSetDirectory() : WrappedCommand(
         Path = Parent();
         break;
 
-      case (true):
+      case (true, _, _):
         break;
 
       default:
