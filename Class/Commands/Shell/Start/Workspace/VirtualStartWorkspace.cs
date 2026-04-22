@@ -51,24 +51,25 @@ abstract public class VirtualStartWorkspace() : CoreCommand(true)
       window = Client.File.Editor.Window.Reuse;
     }
 
-    if (Name is not "")
+    switch (Name)
     {
-      if (
-        Client.File.Editor.Profile.Find(
-          p => p.StartsWith(
-            Name,
-            System.StringComparison.OrdinalIgnoreCase
-          )
+      case "":
+       break;
+
+      case var name
+      when Client.File.Editor.Profile.Find(
+        p => p.StartsWith(
+          name,
+          System.StringComparison.OrdinalIgnoreCase
         )
-        is { } profileName
       )
-      {
+      is { } profileName:
         profile = profileName;
-      }
-      else
-      {
+        break;
+
+      default:
         argument = Name;
-      }
+        break;
     }
   }
 
