@@ -1,6 +1,6 @@
 @{
   RootModule           = 'PowerModule.dll'
-  ModuleVersion        = '7.6.0.0'
+  ModuleVersion        = '7.6.1.0'
   CompatiblePSEditions = @('Desktop', 'Core')
   GUID                 = '1af8158b-1120-4da8-9f20-664173671c6c'
   Author               = 'Jimmy Zhening Luo'
