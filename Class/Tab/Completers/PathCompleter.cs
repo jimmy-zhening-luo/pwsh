@@ -17,13 +17,13 @@ sealed class PathCompleter : Intrinsics.Completer
   bool matched;
 
   internal PathCompleter(
-    CompletionCase Case,
+    CompletionCase Casing,
     string location,
     PathItemType itemType,
     bool flat
   ) : base(
     CompletionResultType.ProviderItem,
-    Case
+    Casing
   ) => (
     Location,
     ItemType,

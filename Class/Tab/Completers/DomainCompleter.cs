@@ -2,9 +2,9 @@ namespace PowerModule.Tab.Completers;
 
 sealed class DomainCompleter(
   CompletionResultType CompletionType,
-  CompletionCase Case,
+  CompletionCase Casing,
   ICollection<string> Domain
-) : Intrinsics.Completer(CompletionType, Case)
+) : Intrinsics.Completer(CompletionType, Casing)
 {
   sealed override private protected IEnumerable<Intrinsics.ICompleter.Completion> GenerateCompletion(string wordToComplete)
   {
