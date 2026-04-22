@@ -20,19 +20,28 @@ abstract public class WrappedSetDirectory() : WrappedCommand(
 
   sealed override private protected void TransformPipelineInput()
   {
-    if (InCurrentLocation)
-    {
-      if (
-        ParameterSetName is nameof(Path)
-        && Path is ""
+    switch (
+      (
+        InCurrentLocation,
+        ParameterSetName,
+        Path
       )
-      {
-        Path = Parent();
-      }
-    }
-    else
+    )
     {
-      Path = ReanchorPath(Path);
+      case (
+        true,
+        nameof(Path),
+        ""
+      ):
+        Path = Parent();
+        break;
+
+      case (true):
+        break;
+
+      default:
+        Path = ReanchorPath(Path);
+        break;
     }
   }
 }
