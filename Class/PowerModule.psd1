@@ -1,6 +1,6 @@
 @{
   RootModule           = 'PowerModule.dll'
-  ModuleVersion        = '7.6.1.0'
+  ModuleVersion        = '7.6.1.1'
   CompatiblePSEditions = @('Desktop', 'Core')
   GUID                 = '1af8158b-1120-4da8-9f20-664173671c6c'
   Author               = 'Jimmy Zhening Luo'
@@ -9,7 +9,6 @@
   PowerShellVersion    = '7.6'
   FunctionsToExport    = @()
   CmdletsToExport      = @(
-    'Test-Command'
     'Clear-Line'
     'Set-Directory'
     'Set-DirectorySibling'
@@ -86,7 +85,6 @@
   )
   VariablesToExport    = @()
   AliasesToExport      = @(
-    'tt'
     'cl'
     'c'
     'cx'

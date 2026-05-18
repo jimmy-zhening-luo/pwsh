@@ -179,7 +179,8 @@ sealed class PathCompleter : Intrinsics.Completer
     description
   );
 
-  sealed override private protected IEnumerable<Intrinsics.ICompleter.Completion> GenerateCompletion(string wordToComplete)
+  sealed override private protected IEnumerable<Intrinsics.ICompleter.Completion> GenerateCompletionlaa
+    (string wordToComplete)
   {
     matched = default;
 
@@ -329,7 +330,7 @@ sealed class PathCompleter : Intrinsics.Completer
           );
 
           break;
-
+lq
         case (_, 0):
           deferredItems.Add(item);
 
