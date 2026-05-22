@@ -82,10 +82,7 @@ sealed public class SetDirectory : WrappedSetDirectory
     switch (ParameterSetName)
     {
       case nameof(C):
-        SetBoundParameter(
-          nameof(Path),
-          $"{nameof(C)}{Client.File.PathString.StringDrive}"
-        );
+        Path = $"{nameof(C)}{Client.File.PathString.StringDrive}";
 
         break;
 
@@ -95,10 +92,7 @@ sealed public class SetDirectory : WrappedSetDirectory
         break;
 
       case nameof(E):
-        SetBoundParameter(
-          nameof(Path),
-          $"{nameof(E)}{Client.File.PathString.StringDrive}"
-        );
+        Path = $"{nameof(E)}{Client.File.PathString.StringDrive}";
 
         break;
 
