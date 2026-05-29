@@ -31,6 +31,32 @@ abstract public class Git(string? IntrinsicVerb) : NativeCodeCommand(
     P: true
   );
 
+  static private protected List<string> ListRepositories()
+  {
+    List<string> repositories = [];
+
+    foreach (
+      var directory in System.IO.Directory.EnumerateDirectories(
+        Client.Environment.Folder.Code()
+      )
+    )
+    {
+      if (
+        System.IO.Directory.Exists(
+          System.IO.Path.Combine(
+            directory,
+            ".git"
+          )
+        )
+      )
+      {
+        repositories.Add(directory);
+      }
+    }
+
+    return repositories;
+  }
+
   sealed override private protected void CanonicalizeVerb()
   {
     switch (IntrinsicVerb)

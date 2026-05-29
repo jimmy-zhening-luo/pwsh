@@ -7,32 +7,6 @@ namespace PowerModule.Commands.Code.Git.Verbs;
 [Alias("gpp")]
 sealed public class GitPullChild : CoreCommand
 {
-  static List<string> ListRepositories()
-  {
-    List<string> repositories = [];
-
-    foreach (
-      var directory in System.IO.Directory.EnumerateDirectories(
-        Client.Environment.Folder.Code()
-      )
-    )
-    {
-      if (
-        System.IO.Directory.Exists(
-          System.IO.Path.Combine(
-            directory,
-            ".git"
-          )
-        )
-      )
-      {
-        repositories.Add(directory);
-      }
-    }
-
-    return repositories;
-  }
-
   sealed override private protected void Postprocess()
   {
     ushort progress = default;
