@@ -232,7 +232,7 @@ abstract public partial class CoreCommand(bool SkipSsh = default) : PSCmdlet, Sy
       );
     }
 
-    return reanchoredPaths.ToArray();
+    return [.. reanchoredPaths];
   }
   private protected string ReanchorPath(string path) => (
     Location ?? Pwd

@@ -29,7 +29,7 @@ sealed public class GetVerb : CoreCommand
   [ValidateNotNullOrWhiteSpace]
   public string[] Verb
   {
-    private get => field;
+    private get;
     init
     {
       HashSet<string> verbs = new(

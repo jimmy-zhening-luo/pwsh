@@ -211,6 +211,7 @@ abstract public partial class NativeCommand(
 
         break;
 
+      case Verbosity.Silent:
       default:
         break;
     }

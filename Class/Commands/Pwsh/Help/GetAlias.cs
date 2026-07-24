@@ -18,7 +18,7 @@ sealed public class GetCommandAlias : CoreCommand
   [ValidateNotNullOrWhiteSpace]
   public string[] Definition
   {
-    private get => field;
+    private get;
     init
     {
       HashSet<string> definitions = new(
